@@ -1,0 +1,63 @@
+---
+title: "Gather and Clean KoBoToolbox Data"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    code_folding: hide
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  kb_dir: '~/Box/PLAY-Project@/'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document summarizes the development of an automated workflow for gathering and cleaning [PLAY Project](https://play-project.org) survey data from the [KoBoToolbox](https://www.kobotoolbox.org/) tool.
+
+The basic steps can be summarized as follows:
+
+1. Download data files from KoBoToolbox
+
+2. Session-level data
+  a. Clean session-level data
+  b. Export session-level data
+  
+3. Measure-level data
+  a. Extract measure-level data from each session
+  b. Clean measure-level data for each session
+  c. Export measure-level data
+
+For the time being, we will take already-downloaded data from the PLAY Project Box folder, thereby skipping 1, and we will focus on tasks 2a and 2b. 
+We will also defer work on Task 3.
+
+# Gather data
+
+KoBoToolbox data are stored in a private Box folder shared only with the PLAY Project team. 
+The folder URL is `https://psu.app.box.com/folder/129677673243`.
+
+This is a list of the files in the PLAY Box folder `(`r params$kb_dir`)`:
+
+```{r}
+list.files(params$kb_dir)
+```
+
+## Import screening data
+
+Screening questions asked during the initial phone call are pushed via the KoBoToolbox form called `SCREENING DATA FILE NAME.`
+
+## Import questionnaire data
+
+There are three age groups (12, 18, and 24 months), and three different KoBoToolbox forms depending on the family language environment (English, Spanish, English/Spanish bilingual).
+So, there are nine (9) KoBoToolbox data forms we need to import.
+
+## Import post-hoc comments
+
+
+
