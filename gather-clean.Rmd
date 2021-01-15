@@ -10,11 +10,14 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  kb_dir: '~/Box/PLAY-Project@/'
+  kb_dir: '~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files'
+  demog_csv_fn: 'csv/play_demog_clean_all.csv'
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse) # for pipe '%>%'
 ```
 
 # Purpose
@@ -48,16 +51,279 @@ This is a list of the files in the PLAY Box folder `(`r params$kb_dir`)`:
 list.files(params$kb_dir)
 ```
 
-## Import screening data
+# Screening data
 
-Screening questions asked during the initial phone call are pushed via the KoBoToolbox form called `SCREENING DATA FILE NAME.`
+## Import
 
-## Import questionnaire data
+Screening questions asked during the initial phone call are pushed via the KoBoToolbox form with a name beginning `PLAY_Demographic_Questionnaire_2020-03-04...`
+
+We will have to handle the case where there are more than one of these files in the target directory.
+For now, let's import this one: `PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-14-19-02-27.xlsx`.
+
+```{r}
+demog_fn_short <- 'PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx'
+demog_fn_full <- paste0(params$kb_dir, "/", demog_fn_short)
+demog <- xlsx::read.xlsx(demog_fn_full, sheetIndex = 1)
+demog <- as.tibble(demog)
+```
+
+## Clean
+
+First, let's rename the columns.
+
+```{r}
+omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
+               105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
+               176:177, 189:228)
+
+demog_clean <- demog %>%
+  dplyr::rename(., start_time = start,
+                end_time = end,
+                call_date = c_today,
+                last_update = 4,
+                # expt_inst = 5,
+                recruiter_name = 6,
+                # expt_say = 7,
+                # family_phone = 8,
+                # family_email = 9,
+                # address_quest = 10,
+                # family_address_1 = 11,
+                # family_address_2 = 12,
+                # family_city = 13,
+                # family_state = 14,
+                # expt_check = 15,
+                # expt_say = 16,
+                # child_first = 17,
+                # child_middle = 18,
+                # child_last = 19,
+                child_dob = 20,
+                child_mos_check = 21,
+                child_mos_trunc = 22,
+                child_weeks_cutoff = 23,
+                # skip 24
+                child_sex = 25,
+                child_birth_city = 26,
+                play_site_id = 27,
+                child_sub_id = 28,
+                # skip 29:41
+                child_play_id = 42,
+                # skip 43:44
+                lang_at_home = 45, # should parse,
+                eng_at_home = 46,
+                span_at_home = 47,
+                oth_lang_at_home = 48,
+                oth_lang_which = 49,
+                lang_mom_to_child = 50,
+                eng_mom_to_child = 51,
+                span_mom_to_child = 52,
+                oth_mom_to_child = 53,
+                oth_lang_mom_to_child_which = 54,
+                ineligible_mom_lang_continue = 55,
+                ineligible_mom_lang_recontact = 56,
+                lang_oth_to_child = 57,
+                eng_oth_to_child = 58,
+                span_oth_to_child = 59,
+                oth_oth_to_child = 60, # What languages do other household members...
+                any_oth_lang_to_child = 61,
+                ineligible_other_lang_continue = 62,
+                ineligible_other_lang_recontact = 63,
+                # skip 64:68 checks
+                know_due_date = 69,
+                born_on_term = 70,
+                ineligible_notterm_continue = 71,
+                ineligible_notterm_recontact = 72,
+                ineligible_term_unclear_continue = 73,
+                ineligible_term_unclear_recontact = 74,
+                child_due_date = 75,
+                child_birthage = 76,
+                ineligible_preterm_wks_continue = 77,
+                ineligible_preterm_wks_recontact = 78,
+                birthwt_lbs = 79,
+                birthwt_oz = 80,
+                # skip 81 bw calculator
+                ineligible_birthwt_continue = 82,
+                ineligible_birtwt_recontact = 83,
+                birth_complications_yes_no = 84,
+                birth_complications_specify = 85,
+                ineligible_complications_continue = 86,
+                ineligible_complications_recontact = 87,
+                disability_hearing = 87,
+                disability_hearing_specify = 88,
+                ineligible_hearing_continue = 89,
+                disability_vision = 90,
+                disability_vision_specify = 91,
+                ineligible_vision_continue = 92,
+                illness_injury = 93,
+                illness_injury_specify = 94,
+                ineligible_illness_injury_continue = 95,
+                child_race = 96,
+                child_ethnicity = 97,
+                # skip 98:99
+                time_to_sleep = 100,
+                time_to_wake = 101,
+                nap_hrs = 102,
+                where_sleep = 103,
+                where_sleep_specify = 104,
+                # skip 105:106
+                relations_live_with_child = 107, # Need to parse
+                biofather_live_with_child = 108,
+                male_partner_live_with_child = 109,
+                mother_bio_live_with_child = 110,
+                female_partner_live_with_child = 111,
+                other_gender_partner_live_with_child = 112,
+                grandmother_live_with_child = 113,
+                grandfather_live_with_child = 114,
+                grgrandmother_live_with_child = 115,
+                grgrandfather_live_with_child = 116,
+                aunt_live_with_child = 117,
+                uncle_live_with_child = 118,
+                cousin_live_with_child = 119,
+                oth_relative_live_with_child = 120,
+                non_relative_live_with_child = 121,
+                no_one_else_lives_with_child = 122,
+                oth_relative_relation_to_child = 123,
+                oth_non_relative_relation_to_child = 124,
+                # skip 125:126
+                caregiver_dob = 127,
+                caregiver_child_biomom = 128,
+                caregiver_relation_to_child = 129,
+                caregiver_start_care = 130,
+                caregiver_childbirth_age = 131,
+                caregiver_age_at_childbirth = 132,
+                ineligible_caregiver_young_continue = 133,
+                caregiver_race = 134,
+                caregiver_ethnicity = 135,
+                caregiver_country_born = 136,
+                caregiver_country_specify = 137,
+                caregiver_when_to_us = 138,
+                caregiver_highest_grade = 139,
+                caregiver_pd_employment = 140,
+                caregiver_occupation = 141,
+                caregiver_n_jobs = 142,
+                caregiver_job_training = 143,
+                # skip 144:145
+                know_biodad_dob = 146,
+                biodad_dob = 147,
+                biodad_childbirth_age = 148,
+                # skip 149
+                ineligible_biodad_young_continue = 150,
+                biodad_race = 151,
+                biodad_ethnicity = 152,
+                # skip 153:155
+                know_biomom_dob = 156,
+                biomom_dob = 157,
+                biomom_childbirth_age = 158,
+                # skip 159
+                ineligible_biomom_young_continue = 160,
+                biomom_race = 161,
+                biomom_ethnicity = 162,
+                # skip 163:164
+                know_partner_dob = 165,
+                partner_dob = 166,
+                partner_race = 167,
+                partner_ethnicity = 168,
+                # skip 169:170
+                partner_highest_grade = 171,
+                partner_pd_employment = 172,
+                partner_occupation = 173,
+                partner_n_jobs = 174,
+                partner_job_training = 175,
+                # skip 176:177
+                nonparental_childcare = 178,
+                childcare_inhome = 179,
+                childcare_not_inhome = 180,
+                childcare_relative = 181,
+                childcare_center = 182,
+                childcare_none = 183,
+                childcare_location = 184,
+                childcare_hrs_per_wk = 185,
+                childcare_n_children = 186,
+                childcare_age_mos_began = 187,
+                childcare_provider_lang = 188
+                # skip 189:228
+  ) %>%
+  dplyr::select(., -all_of(omit_cols))
+```
+
+## Export aggregate file
+
+Now, let's sort them by data collection site, then export as a CSV.
+
+```{r}
+demog_clean %>%
+  dplyr::arrange(., play_site_id, child_sub_id) %>%
+  readr::write_csv(., paste0(params$kb_dir, '/', params$demog_csv_fn))
+```
+
+## Export session-level files
+
+For each valid row in the data frame, we 
+
+1. Extract the site id and session or participant id
+2. Save the row as a CSV with a name like `<site-id>-<session-id>.csv`.
+
+```{r}
+child_ids <- unique(demog_clean$child_play_id)
+
+select_export_session <- function(this_child_id, df, 
+                                  csv_path = paste0(params$kb_dir, '/csv'), 
+                                  export_file = TRUE, return_df = FALSE) {
+  # if (!is.character(this_child_id)) {
+  #   stop(paste0('`this_child_id` must be a string'))
+  # }
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('Invalid directory: ', csv_path))
+  }
+  
+  this_session <- dplyr::filter(df, child_play_id == this_child_id)
+  
+  if (export_file) {
+    if (!is_empty(this_session)) {
+      session_fn <- paste0(this_session$play_site_id, "-", 
+                           this_session$child_sub_id, ".csv")
+      readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
+      message(paste0('Saved ', paste0(csv_path, "/", session_fn)))
+    }  
+  }
+  
+  if (return_df) {
+    this_session    
+  }
+}
+
+```
+
+In trying to run this code across the set of unique `child_sub_id`s, the following code fails:
+
+```{r, eval=FALSE}
+purrr::map(child_ids, select_export_session, demog_clean)
+```
+
+I think we need to address some of the anomalies in the exported file to fix the error.
+
+This shows some of what we need to address:
+
+```{r}
+demog_clean %>%
+  dplyr::arrange(., play_site_id, child_play_id) %>%
+  dplyr::select(., play_site_id, child_play_id, child_sub_id) %>%
+  kableExtra::kable(., format = 'html')
+```
+
+</br>
+</br>
+Note that there is a duplicate record for Georgetown 006, Georgetown subs 005 and 007 seem to have the same identifier, and the identifier we generate sometimes has an initial slash '/' character.
+
+We should also process the site ids so that the file names do not have spaces.
+
+# Questionnaire data
 
 There are three age groups (12, 18, and 24 months), and three different KoBoToolbox forms depending on the family language environment (English, Spanish, English/Spanish bilingual).
 So, there are nine (9) KoBoToolbox data forms we need to import.
 
-## Import post-hoc comments
+# Post-visit notes
 
-
-
+There is one post-hoc comments file to import.
