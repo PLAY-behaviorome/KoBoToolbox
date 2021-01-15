@@ -11,7 +11,7 @@ output:
     toc_float: yes
 params:
   kb_dir: '~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files'
-  demog_csv_fn: 'csv/play_demog_clean_all.csv'
+  demog_csv_fn: 'csv/PLAY_demog_clean_all.csv'
 ---
 
 ```{r setup, include=FALSE}
@@ -63,15 +63,14 @@ For now, let's import this one: `PLAY_Demographic_Questionnaire_2020-03-04_-_all
 ```{r}
 demog_fn_short <- 'PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx'
 demog_fn_full <- paste0(params$kb_dir, "/", demog_fn_short)
-demog <- xlsx::read.xlsx(demog_fn_full, sheetIndex = 1)
-demog <- as.tibble(demog)
+demog <- readxl::read_excel(demog_fn_full)
 ```
 
 ## Clean
 
 First, let's rename the columns.
 
-```{r}
+```{r, rename-omit-cols}
 omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
                105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
                176:177, 189:228)
@@ -104,9 +103,9 @@ demog_clean <- demog %>%
                 child_sex = 25,
                 child_birth_city = 26,
                 play_site_id = 27,
-                child_sub_id = 28,
+                site_child_id = 28,
                 # skip 29:41
-                child_play_id = 42,
+                play_child_id = 42,
                 # skip 43:44
                 lang_at_home = 45, # should parse,
                 eng_at_home = 46,
@@ -242,6 +241,8 @@ demog_clean <- demog %>%
                 childcare_provider_lang = 188
                 # skip 189:228
   ) %>%
+  # The `play_child_id` field has a "/" character in some entries. The next line fixes that.
+  dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|")) %>%
   dplyr::select(., -all_of(omit_cols))
 ```
 
@@ -249,9 +250,9 @@ demog_clean <- demog %>%
 
 Now, let's sort them by data collection site, then export as a CSV.
 
-```{r}
+```{r, sort-export-aggregate}
 demog_clean %>%
-  dplyr::arrange(., play_site_id, child_sub_id) %>%
+  dplyr::arrange(., play_site_id, play_child_id, call_date) %>%
   readr::write_csv(., paste0(params$kb_dir, '/', params$demog_csv_fn))
 ```
 
@@ -259,13 +260,13 @@ demog_clean %>%
 
 For each valid row in the data frame, we 
 
-1. Extract the site id and session or participant id
-2. Save the row as a CSV with a name like `<site-id>-<session-id>.csv`.
+1. Extract session based on its unique date/timestamp.
+2. Save the row as a CSV with a name like `PLAY-demog-<play_site_id>-<site_child_id>-<play_child_id>-<call_date>.csv`.
 
-```{r}
-child_ids <- unique(demog_clean$child_play_id)
+We need the extended information in the file name because sometimes the recruiting call occurs over multiple days.
 
-select_export_session <- function(this_child_id, df, 
+```{r, load-export-function}
+select_session_by_datestamp <- function(this_datestamp, df, 
                                   csv_path = paste0(params$kb_dir, '/csv'), 
                                   export_file = TRUE, return_df = FALSE) {
   # if (!is.character(this_child_id)) {
@@ -278,15 +279,18 @@ select_export_session <- function(this_child_id, df,
     stop(paste0('Invalid directory: ', csv_path))
   }
   
-  this_session <- dplyr::filter(df, child_play_id == this_child_id)
+  this_session <- dplyr::filter(df, start_time == this_datestamp)
   
   if (export_file) {
     if (!is_empty(this_session)) {
-      session_fn <- paste0(this_session$play_site_id, "-", 
-                           this_session$child_sub_id, ".csv")
+      session_fn <- paste0('PLAY-demog-',
+                           this_session$play_site_id, "-", 
+                           this_session$site_child_id, '-', 
+                           this_session$play_child_id, '-',
+                           this_session$call_date, ".csv")
       readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
       message(paste0('Saved ', paste0(csv_path, "/", session_fn)))
-    }  
+    } 
   }
   
   if (return_df) {
@@ -296,33 +300,240 @@ select_export_session <- function(this_child_id, df,
 
 ```
 
-In trying to run this code across the set of unique `child_sub_id`s, the following code fails:
-
-```{r, eval=FALSE}
-purrr::map(child_ids, select_export_session, demog_clean)
-```
-
-I think we need to address some of the anomalies in the exported file to fix the error.
-
-This shows some of what we need to address:
 
 ```{r}
-demog_clean %>%
-  dplyr::arrange(., play_site_id, child_play_id) %>%
-  dplyr::select(., play_site_id, child_play_id, child_sub_id) %>%
-  kableExtra::kable(., format = 'html')
+these_sessions <- unique(demog_clean$start_time)
+purrr::map(these_sessions, select_session_by_datestamp, demog_clean)
 ```
-
-</br>
-</br>
-Note that there is a duplicate record for Georgetown 006, Georgetown subs 005 and 007 seem to have the same identifier, and the identifier we generate sometimes has an initial slash '/' character.
-
-We should also process the site ids so that the file names do not have spaces.
 
 # Questionnaire data
 
 There are three age groups (12, 18, and 24 months), and three different KoBoToolbox forms depending on the family language environment (English, Spanish, English/Spanish bilingual).
 So, there are nine (9) KoBoToolbox data forms we need to import.
+
+## Import
+
+Let's start with the 12-mo-old English speakers.
+
+```{r}
+eng_12_mo_fn <- 'PLAY_Home_Questionnaires_-_12_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-03-35.xlsx'
+
+qs <- readxl::read_excel(paste0(params$kb_dir, "/", eng_12_mo_fn))
+```
+
+## Drop, rename, & clean
+
+The following does _not_ read in a subsetted range, but I think we will want to using that facility in `readxl::read_excel`.
+
+### Basic info
+
+```{r}
+qs_basic <- qs %>%
+  dplyr::rename(., start_time = 1) %>%
+  dplyr::rename(., end_time = 2) %>%
+  # skip 3
+  # skip 4
+  dplyr::rename(., todays_date = 5) %>%
+  dplyr::rename(., play_site_id = 6) %>%
+  dplyr::rename(., experimenter_name = 7) %>%
+  dplyr::rename(., session_date = 8) %>%
+  dplyr::rename(., site_child_id = 9) %>%
+  # dplyr::rename(., child_first = 10) %>%
+  # dplyr::rename(., child_middle = 11) %>%
+  # dplyr::rename(., child_last = 12) %>%
+  dplyr::rename(., child_dob = 13) %>%
+  dplyr::rename(., child_sex = 14) %>%
+  dplyr::rename(., child_birth_city = 15) %>%
+  # skip 16:28
+  dplyr::rename(., play_child_id = 29) %>%
+  dplyr::rename(., child_age_grp = 30) %>%
+  dplyr::rename(., langs_spoken_to_child = 31) %>%
+  dplyr::rename(., eng_to_child = 32) %>%
+  dplyr::rename(., span_to_child = 33) %>%
+  dplyr::rename(., instr_lang = 34) %>%
+  dplyr::select(., 1:2, 5:9, 13:15, 29:34)
+```
+
+```{r}
+select_visit_by_datestamp <- function(this_datestamp, df, 
+                                  csv_path = paste0(params$kb_dir, '/csv'), 
+                                  export_file = TRUE, return_df = FALSE) {
+  # if (!is.character(this_child_id)) {
+  #   stop(paste0('`this_child_id` must be a string'))
+  # }
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('Invalid directory: ', csv_path))
+  }
+  
+  this_session <- dplyr::filter(df, start_time == this_datestamp)
+  
+  if (export_file) {
+    if (!is_empty(this_session)) {
+      session_fn <- paste0('PLAY-visit-basic-',
+                           this_session$play_site_id, "-", 
+                           this_session$site_child_id, '-', 
+                           this_session$play_child_id, ".csv")
+      readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
+      message(paste0('Saved ', paste0(csv_path, "/", session_fn)))
+    } 
+  }
+  
+  if (return_df) {
+    this_session    
+  }
+}
+```
+
+Write all `PLAY-visit-basic-*` data files.
+
+```{r}
+these_sessions <- unique(qs_basic$start_time)
+purrr::map(these_sessions, select_visit_by_datestamp, qs_basic)
+```
+
+### MB-CDI short form
+
+Columns `AU` to `EF` are MB-CDI short form.
+That corresponds to columns 47:??.
+
+```{r}
+qs_mbcdi_short <- qs %>%
+  dplyr::rename(., choo_choo = 47) %>%
+  dplyr::rename(., meow = 48) %>%
+  dplyr::rename(., ouch = 49) %>%
+  dplyr::rename(., uh_oh = 50) %>%
+  dplyr::rename(., bird = 51) %>%
+  dplyr::rename(., dog = 52) %>%
+  dplyr::rename(., duck = 53) %>%
+  dplyr::rename(., kitty = 54) %>%
+  dplyr::rename(., lion = 55) %>%
+  dplyr::rename(., mouse = 56) %>%
+  dplyr::rename(., car = 57) %>%
+  dplyr::rename(., stroller = 58) %>%
+  dplyr::rename(., ball = 59) %>%
+  dplyr::rename(., book = 60) %>%
+  dplyr::rename(., doll = 61) %>%
+  dplyr::rename(., bread = 62) %>%
+  dplyr::rename(., candy = 63) %>%
+  dplyr::rename(., cereal = 64) %>%
+  dplyr::rename(., cookie = 65) %>%
+  dplyr::rename(., juice = 66) %>%
+  dplyr::rename(., toast = 67) %>%
+  dplyr::rename(., hat = 68) %>%
+  dplyr::rename(., pants = 69) %>%
+  dplyr::rename(., shoe = 70) %>%
+  dplyr::rename(., sock = 71) %>%
+  dplyr::rename(., eye = 72) %>%
+  dplyr::rename(., head = 73) %>%
+  dplyr::rename(., leg = 74) %>%
+  dplyr::rename(., nose = 75) %>%
+  dplyr::rename(., tooth = 76) %>%
+  dplyr::rename(., chair = 77) %>%
+  dplyr::rename(., couch = 78) %>%
+  dplyr::rename(., kitchen = 79) %>%
+  dplyr::rename(., table = 80) %>%
+  dplyr::rename(., television = 81) %>%
+  dplyr::rename(., blanket = 82) %>%
+  dplyr::rename(., bottle = 83) %>%
+  dplyr::rename(., cup = 84) %>%
+  dplyr::rename(., dish = 85) %>%
+  dplyr::rename(., lamp = 86) %>%
+  dplyr::rename(., radio = 87) %>%
+  dplyr::rename(., spoon = 88) %>%
+  dplyr::rename(., who = 89) %>%
+  dplyr::rename(., away = 90) %>%
+  dplyr::rename(., outside_1 = 91) %>%
+  dplyr::rename(., flower = 92) %>%
+  dplyr::rename(., home = 93) %>%
+  dplyr::rename(., moon = 94) %>%
+  dplyr::rename(., outside_2 = 95) %>%
+  dplyr::rename(., plant = 96) %>%  
+  dplyr::rename(., rain = 97) %>%
+  dplyr::rename(., rock = 98) %>%
+  dplyr::rename(., water = 99) %>%
+  dplyr::rename(., babysitter = 100) %>%
+  dplyr::rename(., girl = 101) %>%
+  dplyr::rename(., grandma = 102) %>%
+  dplyr::rename(., mommy = 103) %>%
+  dplyr::rename(., bath = 104) %>%  
+  dplyr::rename(., dont = 105) %>%
+  dplyr::rename(., hi = 106) %>%
+  dplyr::rename(., night_night = 107) %>%
+  dplyr::rename(., patty_cake = 108) %>%
+  dplyr::rename(., please = 109) %>%
+  dplyr::rename(., wait = 110) %>%
+  dplyr::rename(., `break` = 111) %>%
+  dplyr::rename(., feed = 112) %>%
+  dplyr::rename(., finish = 113) %>%
+  dplyr::rename(., help = 114) %>%
+  dplyr::rename(., jump = 115) %>%
+  dplyr::rename(., kick = 116) %>%
+  dplyr::rename(., kiss = 117) %>%
+  dplyr::rename(., push = 118) %>%
+  dplyr::rename(., sing = 119) %>%
+  dplyr::rename(., smile = 120) %>%
+  dplyr::rename(., night = 121) %>%
+  dplyr::rename(., today = 122) %>%
+  dplyr::rename(., all_gone = 123) %>%
+  dplyr::rename(., big = 124) %>%
+  dplyr::rename(., broken = 125) %>%
+  dplyr::rename(., dark = 126) %>%
+  dplyr::rename(., fast = 127) %>%
+  dplyr::rename(., hurt = 128) %>%
+  dplyr::rename(., pretty = 129) %>%
+  dplyr::rename(., soft = 130) %>%  
+  dplyr::rename(., I = 131) %>%
+  dplyr::rename(., me = 132) %>%
+  dplyr::rename(., how = 133) %>%
+  dplyr::rename(., other = 134) %>%
+  dplyr::rename(., some = 135) %>%
+  dplyr::rename(., mbcdi_comments = 136) %>%
+  dplyr::select(., 6:9, 47:136)
+```
+
+Create function to export MB-CDI short.
+
+```{r}
+select_mbcdi_short_by_datestamp <- function(this_datestamp, df, 
+                                  csv_path = paste0(params$kb_dir, '/csv'), 
+                                  export_file = TRUE, return_df = FALSE) {
+  # if (!is.character(this_child_id)) {
+  #   stop(paste0('`this_child_id` must be a string'))
+  # }
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('Invalid directory: ', csv_path))
+  }
+  
+  this_session <- dplyr::filter(df, start_time == this_datestamp)
+  
+  if (export_file) {
+    if (!is_empty(this_session)) {
+      session_fn <- paste0('PLAY-visit-MBCDI-short-',
+                           this_session$play_site_id, "-", 
+                           this_session$site_child_id, '-', 
+                           this_session$play_child_id, ".csv")
+      readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
+      message(paste0('Saved ', paste0(csv_path, "/", session_fn)))
+    } 
+  }
+  
+  if (return_df) {
+    this_session    
+  }
+}
+```
+
+
+```{r, export-mbcdi-short}
+these_sessions <- unique(qs_basic$start_time)
+purrr::map(these_sessions, select_mbcdi_short_by_datestamp, qs_basic)
+```
 
 # Post-visit notes
 

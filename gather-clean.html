@@ -1595,7 +1595,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Gather and Clean KoBoToolbox Data</h1>
 <h4 class="author">Rick Gilmore</h4>
-<h4 class="date">2021-01-15 11:44:16</h4>
+<h4 class="date">2021-01-15 14:22:53</h4>
 
 </div>
 
@@ -1627,16 +1627,17 @@ div.tocify {
 <p>KoBoToolbox data are stored in a private Box folder shared only with the PLAY Project team. The folder URL is <code>https://psu.app.box.com/folder/129677673243</code>.</p>
 <p>This is a list of the files in the PLAY Box folder <code>(~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files)</code>:</p>
 <pre class="r"><code>list.files(params$kb_dir)</code></pre>
-<pre><code>##  [1] &quot;csv&quot;                                                                                                            
-##  [2] &quot;PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-14-19-02-27 (rog1@psu.edu).xlsx&quot;    
-##  [3] &quot;PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx&quot;                   
-##  [4] &quot;PLAY_Home_Questionaires_-_12_Bilingual_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-05-34.xlsx&quot;   
-##  [5] &quot;PLAY_Home_Questionnaires_-_12_Bilingual_Spanish_2020-03-04_-_latest_version_-_labels_-_2021-01-15-15-05-54.xlsx&quot;
-##  [6] &quot;PLAY_Home_Questionnaires_-_12_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-03-35.xlsx&quot;            
-##  [7] &quot;PLAY_Home_Questionnaires_-_18_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-06-42.xlsx&quot;            
-##  [8] &quot;PLAY_Home_Questionnaires_-_24_Bilingual_Spanish_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-09-56.xlsx&quot;  
-##  [9] &quot;PLAY_Home_Questionnaires_-_24_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-08-15.xlsx&quot;            
-## [10] &quot;PLAY_Post-Visit_Notes_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-10-38.xlsx&quot;</code></pre>
+<pre><code>##  [1] &quot;~$PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx&quot;                 
+##  [2] &quot;~$PLAY_Home_Questionnaires_-_12_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-03-35.xlsx&quot;          
+##  [3] &quot;csv&quot;                                                                                                            
+##  [4] &quot;PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx&quot;                   
+##  [5] &quot;PLAY_Home_Questionaires_-_12_Bilingual_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-05-34.xlsx&quot;   
+##  [6] &quot;PLAY_Home_Questionnaires_-_12_Bilingual_Spanish_2020-03-04_-_latest_version_-_labels_-_2021-01-15-15-05-54.xlsx&quot;
+##  [7] &quot;PLAY_Home_Questionnaires_-_12_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-03-35.xlsx&quot;            
+##  [8] &quot;PLAY_Home_Questionnaires_-_18_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-06-42.xlsx&quot;            
+##  [9] &quot;PLAY_Home_Questionnaires_-_24_Bilingual_Spanish_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-09-56.xlsx&quot;  
+## [10] &quot;PLAY_Home_Questionnaires_-_24_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-08-15.xlsx&quot;            
+## [11] &quot;PLAY_Post-Visit_Notes_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-10-38.xlsx&quot;</code></pre>
 </div>
 <div id="screening-data" class="section level1">
 <h1>Screening data</h1>
@@ -1646,13 +1647,14 @@ div.tocify {
 <p>We will have to handle the case where there are more than one of these files in the target directory. For now, let’s import this one: <code>PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-14-19-02-27.xlsx</code>.</p>
 <pre class="r"><code>demog_fn_short &lt;- &#39;PLAY_Demographic_Questionnaire_2020-03-04_-_all_versions_-_labels_-_2021-01-15-14-35-07.xlsx&#39;
 demog_fn_full &lt;- paste0(params$kb_dir, &quot;/&quot;, demog_fn_short)
-demog &lt;- xlsx::read.xlsx(demog_fn_full, sheetIndex = 1)
-demog &lt;- as.tibble(demog)</code></pre>
-<pre><code>## Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
-## Please use `as_tibble()` instead.
-## The signature and semantics have changed, see `?as_tibble`.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+demog &lt;- readxl::read_excel(demog_fn_full)</code></pre>
+<pre><code>## New names:
+## * `PLAY Demographic Questionnaire/NOTE: ${child_first_name} is not eligible for the study because he/she speaks or is spoken to in languages other than English and/or Spanish. Would you still like to continue anyway?` -&gt; `PLAY Demographic Questionnaire/NOTE: ${child_first_name} is not eligible for the study because he/she speaks or is spoken to in languages other than English and/or Spanish. Would you still like to continue anyway?...55`
+## * `PLAY Demographic Questionnaire/Experimenter: __&quot;For this study, only mothers and infants are spoken to in just English and/or Spanish are eligible. Is it alright if we contact you in the future for other studies?&quot;__` -&gt; `PLAY Demographic Questionnaire/Experimenter: __&quot;For this study, only mothers and infants are spoken to in just English and/or Spanish are eligible. Is it alright if we contact you in the future for other studies?&quot;__...56`
+## * `PLAY Demographic Questionnaire/NOTE: ${child_first_name} is not eligible for the study because he/she speaks or is spoken to in languages other than English and/or Spanish. Would you still like to continue anyway?` -&gt; `PLAY Demographic Questionnaire/NOTE: ${child_first_name} is not eligible for the study because he/she speaks or is spoken to in languages other than English and/or Spanish. Would you still like to continue anyway?...62`
+## * `PLAY Demographic Questionnaire/Experimenter: __&quot;For this study, only mothers and infants are spoken to in just English and/or Spanish are eligible. Is it alright if we contact you in the future for other studies?&quot;__` -&gt; `PLAY Demographic Questionnaire/Experimenter: __&quot;For this study, only mothers and infants are spoken to in just English and/or Spanish are eligible. Is it alright if we contact you in the future for other studies?&quot;__...63`
+## * `PLAY Demographic Questionnaire/Please indicate that all the questions in the above section (&quot;Languages&quot;) have been answered.` -&gt; `PLAY Demographic Questionnaire/Please indicate that all the questions in the above section (&quot;Languages&quot;) have been answered....64`
+## * ...</code></pre>
 </div>
 <div id="clean" class="section level2">
 <h2>Clean</h2>
@@ -1689,9 +1691,9 @@ demog_clean &lt;- demog %&gt;%
                 child_sex = 25,
                 child_birth_city = 26,
                 play_site_id = 27,
-                child_sub_id = 28,
+                site_child_id = 28,
                 # skip 29:41
-                child_play_id = 42,
+                play_child_id = 42,
                 # skip 43:44
                 lang_at_home = 45, # should parse,
                 eng_at_home = 46,
@@ -1827,25 +1829,26 @@ demog_clean &lt;- demog %&gt;%
                 childcare_provider_lang = 188
                 # skip 189:228
   ) %&gt;%
+  # The `play_child_id` field has a &quot;/&quot; character in some entries. The next line fixes that.
+  dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, &quot;/&quot;, &quot;|&quot;)) %&gt;%
   dplyr::select(., -all_of(omit_cols))</code></pre>
 </div>
 <div id="export-aggregate-file" class="section level2">
 <h2>Export aggregate file</h2>
 <p>Now, let’s sort them by data collection site, then export as a CSV.</p>
 <pre class="r"><code>demog_clean %&gt;%
-  dplyr::arrange(., play_site_id, child_sub_id) %&gt;%
+  dplyr::arrange(., play_site_id, play_child_id, call_date) %&gt;%
   readr::write_csv(., paste0(params$kb_dir, &#39;/&#39;, params$demog_csv_fn))</code></pre>
 </div>
 <div id="export-session-level-files" class="section level2">
 <h2>Export session-level files</h2>
 <p>For each valid row in the data frame, we</p>
 <ol style="list-style-type: decimal">
-<li>Extract the site id and session or participant id</li>
-<li>Save the row as a CSV with a name like <code>&lt;site-id&gt;-&lt;session-id&gt;.csv</code>.</li>
+<li>Extract session based on its unique date/timestamp.</li>
+<li>Save the row as a CSV with a name like <code>PLAY-demog-&lt;play_site_id&gt;-&lt;site_child_id&gt;-&lt;play_child_id&gt;-&lt;call_date&gt;.csv</code>.</li>
 </ol>
-<pre class="r"><code>child_ids &lt;- unique(demog_clean$child_play_id)
-
-select_export_session &lt;- function(this_child_id, df, 
+<p>We need the extended information in the file name because sometimes the recruiting call occurs over multiple days.</p>
+<pre class="r"><code>select_session_by_datestamp &lt;- function(this_datestamp, df, 
                                   csv_path = paste0(params$kb_dir, &#39;/csv&#39;), 
                                   export_file = TRUE, return_df = FALSE) {
   # if (!is.character(this_child_id)) {
@@ -1858,493 +1861,475 @@ select_export_session &lt;- function(this_child_id, df,
     stop(paste0(&#39;Invalid directory: &#39;, csv_path))
   }
   
-  this_session &lt;- dplyr::filter(df, child_play_id == this_child_id)
+  this_session &lt;- dplyr::filter(df, start_time == this_datestamp)
   
   if (export_file) {
     if (!is_empty(this_session)) {
-      session_fn &lt;- paste0(this_session$play_site_id, &quot;-&quot;, 
-                           this_session$child_sub_id, &quot;.csv&quot;)
+      session_fn &lt;- paste0(&#39;PLAY-demog-&#39;,
+                           this_session$play_site_id, &quot;-&quot;, 
+                           this_session$site_child_id, &#39;-&#39;, 
+                           this_session$play_child_id, &#39;-&#39;,
+                           this_session$call_date, &quot;.csv&quot;)
       readr::write_csv(this_session, paste0(csv_path, &quot;/&quot;, session_fn))
       message(paste0(&#39;Saved &#39;, paste0(csv_path, &quot;/&quot;, session_fn)))
-    }  
+    } 
   }
   
   if (return_df) {
     this_session    
   }
 }</code></pre>
-<p>In trying to run this code across the set of unique <code>child_sub_id</code>s, the following code fails:</p>
-<pre class="r"><code>purrr::map(child_ids, select_export_session, demog_clean)</code></pre>
-<p>I think we need to address some of the anomalies in the exported file to fix the error.</p>
-<p>This shows some of what we need to address:</p>
-<pre class="r"><code>demog_clean %&gt;%
-  dplyr::arrange(., play_site_id, child_play_id) %&gt;%
-  dplyr::select(., play_site_id, child_play_id, child_sub_id) %&gt;%
-  kableExtra::kable(., format = &#39;html&#39;)</code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-play_site_id
-</th>
-<th style="text-align:left;">
-child_play_id
-</th>
-<th style="text-align:left;">
-child_sub_id
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-/3N6A8A0A
-</td>
-<td style="text-align:left;">
-002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a0W3B8O1A
-</td>
-<td style="text-align:left;">
-004
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a0W9Z8T0A
-</td>
-<td style="text-align:left;">
-003
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a1W3L8G0A
-</td>
-<td style="text-align:left;">
-007
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a1W3L8G0A
-</td>
-<td style="text-align:left;">
-005
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a2W6O7C0A
-</td>
-<td style="text-align:left;">
-006
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a2W6O7C0A
-</td>
-<td style="text-align:left;">
-???
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-a2W9K7A1A
-</td>
-<td style="text-align:left;">
-009
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-l1A5L9B0A
-</td>
-<td style="text-align:left;">
-010
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-o6R9H8K0A
-</td>
-<td style="text-align:left;">
-008
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-r7A0N8P3A
-</td>
-<td style="text-align:left;">
-011
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:left;">
-u1R3M7R0A
-</td>
-<td style="text-align:left;">
-005
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-/7N1C8A0A
-</td>
-<td style="text-align:left;">
-231
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-a2M6A9H2A
-</td>
-<td style="text-align:left;">
-012
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e0N2N8S1A
-</td>
-<td style="text-align:left;">
-003
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e0N4H8O2A
-</td>
-<td style="text-align:left;">
-005
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e1N1S8M1A
-</td>
-<td style="text-align:left;">
-007
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e1N2J9S2A
-</td>
-<td style="text-align:left;">
-008
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e1N9E7S0A
-</td>
-<td style="text-align:left;">
-006
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e2N7L9E2A
-</td>
-<td style="text-align:left;">
-013
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e2N7S7F1A
-</td>
-<td style="text-align:left;">
-227
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e2N9W8Z0A
-</td>
-<td style="text-align:left;">
-011
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e3N1F8B1A
-</td>
-<td style="text-align:left;">
-014
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e3N1S8S3A
-</td>
-<td style="text-align:left;">
-016
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e3N6A9L1A
-</td>
-<td style="text-align:left;">
-015
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e4N0S8E1A
-</td>
-<td style="text-align:left;">
-004
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e6N1W8S1A
-</td>
-<td style="text-align:left;">
-226
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e6N7M7S1A
-</td>
-<td style="text-align:left;">
-229
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e6N8H7H0A
-</td>
-<td style="text-align:left;">
-230
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e6N9R8M0A
-</td>
-<td style="text-align:left;">
-228
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e7N5J8E2A
-</td>
-<td style="text-align:left;">
-009
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e8N6R8A0A
-</td>
-<td style="text-align:left;">
-010
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-e9N2O8B1A
-</td>
-<td style="text-align:left;">
-001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:left;">
-r9B1A7F2A
-</td>
-<td style="text-align:left;">
-002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-University of California - Riverside
-</td>
-<td style="text-align:left;">
-i8R3J8D1A
-</td>
-<td style="text-align:left;">
-001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-University of Miami
-</td>
-<td style="text-align:left;">
-o2C3P9P2A
-</td>
-<td style="text-align:left;">
-003
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Virginia Commonwealth University
-</td>
-<td style="text-align:left;">
-i1R1H8B0A
-</td>
-<td style="text-align:left;">
-004
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Virginia Commonwealth University
-</td>
-<td style="text-align:left;">
-i2R3W7B1A
-</td>
-<td style="text-align:left;">
-002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Virginia Commonwealth University
-</td>
-<td style="text-align:left;">
-i4R3A8O0A
-</td>
-<td style="text-align:left;">
-005
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Virginia Commonwealth University
-</td>
-<td style="text-align:left;">
-i8R9J8W1A
-</td>
-<td style="text-align:left;">
-003
-</td>
-</tr>
-</tbody>
-</table>
-<p></br> </br> Note that there is a duplicate record for Georgetown 006, Georgetown subs 005 and 007 seem to have the same identifier, and the identifier we generate sometimes has an initial slash ‘/’ character.</p>
-<p>We should also process the site ids so that the file names do not have spaces.</p>
+<pre class="r"><code>these_sessions &lt;- unique(demog_clean$start_time)
+purrr::map(these_sessions, select_session_by_datestamp, demog_clean)</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-230-e6N8H7H0A-2020-02-27.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-229-e6N7M7S1A-2020-02-27.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Virginia Commonwealth University-002-i2R3W7B1A-2020-03-05.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-010-l1A5L9B0A-2020-01-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-008-e1N2J9S2A-2020-03-05.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-009-e7N5J8E2A-2020-03-05.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-011-r7A0N8P3A-2020-01-24.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-010-e8N6R8A0A-2020-01-31.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-011-e2N9W8Z0A-2020-02-03.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Virginia Commonwealth University-003-i8R9J8W1A-2020-02-05.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-012-a2M6A9H2A-2020-02-05.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Virginia Commonwealth University-004-i1R1H8B0A-2020-02-07.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Virginia Commonwealth University-005-i4R3A8O0A-2020-02-07.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-004-a0W3B8O1A-2020-03-02.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-013-e2N7L9E2A-2020-02-20.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-227-e2N7S7F1A-2020-02-27.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-002-|3N6A8A0A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-005-u1R3M7R0A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-003-a0W9Z8T0A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-007-a1W3L8G0A-2020-02-25.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-006-a2W6O7C0A-2020-02-25.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-008-o6R9H8K0A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-009-a2W9K7A1A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-226-e6N1W8S1A-2020-02-27.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-228-e6N9R8M0A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-231-|7N1C8A0A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-001-e9N2O8B1A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-002-r9B1A7F2A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-005-e0N4H8O2A-2020-02-27.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-004-e4N0S8E1A-2020-02-28.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-003-e0N2N8S1A-2020-03-04.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-006-e1N9E7S0A-2020-03-03.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-005-a1W3L8G0A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-007-e1N1S8M1A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-Georgetown University-???-a2W6O7C0A-2020-02-29.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-University of California - Riverside-001-i8R3J8D1A-2020-03-04.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-University of Miami-003-o2C3P9P2A-2020-03-03.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-014-e3N1F8B1A-2020-03-04.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-015-e3N6A9L1A-2020-03-06.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-demog-New York University-016-e3N1S8S3A-2020-03-11.csv</code></pre>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+## 
+## [[5]]
+## NULL
+## 
+## [[6]]
+## NULL
+## 
+## [[7]]
+## NULL
+## 
+## [[8]]
+## NULL
+## 
+## [[9]]
+## NULL
+## 
+## [[10]]
+## NULL
+## 
+## [[11]]
+## NULL
+## 
+## [[12]]
+## NULL
+## 
+## [[13]]
+## NULL
+## 
+## [[14]]
+## NULL
+## 
+## [[15]]
+## NULL
+## 
+## [[16]]
+## NULL
+## 
+## [[17]]
+## NULL
+## 
+## [[18]]
+## NULL
+## 
+## [[19]]
+## NULL
+## 
+## [[20]]
+## NULL
+## 
+## [[21]]
+## NULL
+## 
+## [[22]]
+## NULL
+## 
+## [[23]]
+## NULL
+## 
+## [[24]]
+## NULL
+## 
+## [[25]]
+## NULL
+## 
+## [[26]]
+## NULL
+## 
+## [[27]]
+## NULL
+## 
+## [[28]]
+## NULL
+## 
+## [[29]]
+## NULL
+## 
+## [[30]]
+## NULL
+## 
+## [[31]]
+## NULL
+## 
+## [[32]]
+## NULL
+## 
+## [[33]]
+## NULL
+## 
+## [[34]]
+## NULL
+## 
+## [[35]]
+## NULL
+## 
+## [[36]]
+## NULL
+## 
+## [[37]]
+## NULL
+## 
+## [[38]]
+## NULL
+## 
+## [[39]]
+## NULL
+## 
+## [[40]]
+## NULL</code></pre>
 </div>
 </div>
 <div id="questionnaire-data" class="section level1">
 <h1>Questionnaire data</h1>
 <p>There are three age groups (12, 18, and 24 months), and three different KoBoToolbox forms depending on the family language environment (English, Spanish, English/Spanish bilingual). So, there are nine (9) KoBoToolbox data forms we need to import.</p>
+<div id="import-1" class="section level2">
+<h2>Import</h2>
+<p>Let’s start with the 12-mo-old English speakers.</p>
+<pre class="r"><code>eng_12_mo_fn &lt;- &#39;PLAY_Home_Questionnaires_-_12_English_2020-03-04_-_all_versions_-_labels_-_2021-01-15-15-03-35.xlsx&#39;
+
+qs &lt;- readxl::read_excel(paste0(params$kb_dir, &quot;/&quot;, eng_12_mo_fn))</code></pre>
+<pre><code>## New names:
+## * `Combined Questionnaires (PLAY)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI (12 mo) (English only)/Short Form (English)/outside` -&gt; `Combined Questionnaires (PLAY)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI (12 mo) (English only)/Short Form (English)/outside...91`
+## * `Combined Questionnaires (PLAY)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI (12 mo) (English only)/Short Form (English)/outside` -&gt; `Combined Questionnaires (PLAY)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI (12 mo) (English only)/Short Form (English)/outside...95`
+## * `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Health-Related Questions (ECLS-B)/F. Patient Health Questionnaire (PHQ-4)/__&quot;Over the last two weeks, how often have you been bothered by the following problems?&quot;__` -&gt; `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Health-Related Questions (ECLS-B)/F. Patient Health Questionnaire (PHQ-4)/__&quot;Over the last two weeks, how often have you been bothered by the following problems?&quot;__...351`
+## * `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Locomotor Milestones/Dates/5 mo: ${calc_5mo}` -&gt; `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Locomotor Milestones/Dates/5 mo: ${calc_5mo}...417`
+## * `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Locomotor Milestones/Dates/6 mo: ${calc_6mo}` -&gt; `Combined Questionnaires (PLAY)/Home Visit Questionnaires/Locomotor Milestones/Dates/6 mo: ${calc_6mo}...418`
+## * ...</code></pre>
+</div>
+<div id="drop-rename-clean" class="section level2">
+<h2>Drop, rename, &amp; clean</h2>
+<p>The following does <em>not</em> read in a subsetted range, but I think we will want to using that facility in <code>readxl::read_excel</code>.</p>
+<div id="basic-info" class="section level3">
+<h3>Basic info</h3>
+<pre class="r"><code>qs_basic &lt;- qs %&gt;%
+  dplyr::rename(., start_time = 1) %&gt;%
+  dplyr::rename(., end_time = 2) %&gt;%
+  # skip 3
+  # skip 4
+  dplyr::rename(., todays_date = 5) %&gt;%
+  dplyr::rename(., play_site_id = 6) %&gt;%
+  dplyr::rename(., experimenter_name = 7) %&gt;%
+  dplyr::rename(., session_date = 8) %&gt;%
+  dplyr::rename(., site_child_id = 9) %&gt;%
+  # dplyr::rename(., child_first = 10) %&gt;%
+  # dplyr::rename(., child_middle = 11) %&gt;%
+  # dplyr::rename(., child_last = 12) %&gt;%
+  dplyr::rename(., child_dob = 13) %&gt;%
+  dplyr::rename(., child_sex = 14) %&gt;%
+  dplyr::rename(., child_birth_city = 15) %&gt;%
+  # skip 16:28
+  dplyr::rename(., play_child_id = 29) %&gt;%
+  dplyr::rename(., child_age_grp = 30) %&gt;%
+  dplyr::rename(., langs_spoken_to_child = 31) %&gt;%
+  dplyr::rename(., eng_to_child = 32) %&gt;%
+  dplyr::rename(., span_to_child = 33) %&gt;%
+  dplyr::rename(., instr_lang = 34) %&gt;%
+  dplyr::select(., 1:2, 5:9, 13:15, 29:34)</code></pre>
+<pre class="r"><code>select_visit_by_datestamp &lt;- function(this_datestamp, df, 
+                                  csv_path = paste0(params$kb_dir, &#39;/csv&#39;), 
+                                  export_file = TRUE, return_df = FALSE) {
+  # if (!is.character(this_child_id)) {
+  #   stop(paste0(&#39;`this_child_id` must be a string&#39;))
+  # }
+  if (!is.data.frame(df)) {
+    stop(paste0(&#39;`df` must be a data frame&#39; ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0(&#39;Invalid directory: &#39;, csv_path))
+  }
+  
+  this_session &lt;- dplyr::filter(df, start_time == this_datestamp)
+  
+  if (export_file) {
+    if (!is_empty(this_session)) {
+      session_fn &lt;- paste0(&#39;PLAY-visit-basic-&#39;,
+                           this_session$play_site_id, &quot;-&quot;, 
+                           this_session$site_child_id, &#39;-&#39;, 
+                           this_session$play_child_id, &quot;.csv&quot;)
+      readr::write_csv(this_session, paste0(csv_path, &quot;/&quot;, session_fn))
+      message(paste0(&#39;Saved &#39;, paste0(csv_path, &quot;/&quot;, session_fn)))
+    } 
+  }
+  
+  if (return_df) {
+    this_session    
+  }
+}</code></pre>
+<p>Write all <code>PLAY-visit-basic-*</code> data files.</p>
+<pre class="r"><code>these_sessions &lt;- unique(qs_basic$start_time)
+purrr::map(these_sessions, select_visit_by_datestamp, qs_basic)</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-232-e0N9L8D0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-007-e1N1S8M1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-Georgetown University-010-l1A5L9B0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-Georgetown University-003-C0D9Z8U0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-013-e2N7L9E2A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-226-e6N1W8S1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-228-e6N9R8M0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-231-A7N1C8A0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-Georgetown University-004-a0W3B8O1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-basic-New York University-005-e0N4H8O2A.csv</code></pre>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+## 
+## [[5]]
+## NULL
+## 
+## [[6]]
+## NULL
+## 
+## [[7]]
+## NULL
+## 
+## [[8]]
+## NULL
+## 
+## [[9]]
+## NULL
+## 
+## [[10]]
+## NULL</code></pre>
+</div>
+<div id="mb-cdi-short-form" class="section level3">
+<h3>MB-CDI short form</h3>
+<p>Columns <code>AU</code> to <code>EF</code> are MB-CDI short form. That corresponds to columns 47:??.</p>
+<pre class="r"><code>qs_mbcdi_short &lt;- qs %&gt;%
+  dplyr::rename(., choo_choo = 47) %&gt;%
+  dplyr::rename(., meow = 48) %&gt;%
+  dplyr::rename(., ouch = 49) %&gt;%
+  dplyr::rename(., uh_oh = 50) %&gt;%
+  dplyr::rename(., bird = 51) %&gt;%
+  dplyr::rename(., dog = 52) %&gt;%
+  dplyr::rename(., duck = 53) %&gt;%
+  dplyr::rename(., kitty = 54) %&gt;%
+  dplyr::rename(., lion = 55) %&gt;%
+  dplyr::rename(., mouse = 56) %&gt;%
+  dplyr::rename(., car = 57) %&gt;%
+  dplyr::rename(., stroller = 58) %&gt;%
+  dplyr::rename(., ball = 59) %&gt;%
+  dplyr::rename(., book = 60) %&gt;%
+  dplyr::rename(., doll = 61) %&gt;%
+  dplyr::rename(., bread = 62) %&gt;%
+  dplyr::rename(., candy = 63) %&gt;%
+  dplyr::rename(., cereal = 64) %&gt;%
+  dplyr::rename(., cookie = 65) %&gt;%
+  dplyr::rename(., juice = 66) %&gt;%
+  dplyr::rename(., toast = 67) %&gt;%
+  dplyr::rename(., hat = 68) %&gt;%
+  dplyr::rename(., pants = 69) %&gt;%
+  dplyr::rename(., shoe = 70) %&gt;%
+  dplyr::rename(., sock = 71) %&gt;%
+  dplyr::rename(., eye = 72) %&gt;%
+  dplyr::rename(., head = 73) %&gt;%
+  dplyr::rename(., leg = 74) %&gt;%
+  dplyr::rename(., nose = 75) %&gt;%
+  dplyr::rename(., tooth = 76) %&gt;%
+  dplyr::rename(., chair = 77) %&gt;%
+  dplyr::rename(., couch = 78) %&gt;%
+  dplyr::rename(., kitchen = 79) %&gt;%
+  dplyr::rename(., table = 80) %&gt;%
+  dplyr::rename(., television = 81) %&gt;%
+  dplyr::rename(., blanket = 82) %&gt;%
+  dplyr::rename(., bottle = 83) %&gt;%
+  dplyr::rename(., cup = 84) %&gt;%
+  dplyr::rename(., dish = 85) %&gt;%
+  dplyr::rename(., lamp = 86) %&gt;%
+  dplyr::rename(., radio = 87) %&gt;%
+  dplyr::rename(., spoon = 88) %&gt;%
+  dplyr::rename(., who = 89) %&gt;%
+  dplyr::rename(., away = 90) %&gt;%
+  dplyr::rename(., outside_1 = 91) %&gt;%
+  dplyr::rename(., flower = 92) %&gt;%
+  dplyr::rename(., home = 93) %&gt;%
+  dplyr::rename(., moon = 94) %&gt;%
+  dplyr::rename(., outside_2 = 95) %&gt;%
+  dplyr::rename(., plant = 96) %&gt;%  
+  dplyr::rename(., rain = 97) %&gt;%
+  dplyr::rename(., rock = 98) %&gt;%
+  dplyr::rename(., water = 99) %&gt;%
+  dplyr::rename(., babysitter = 100) %&gt;%
+  dplyr::rename(., girl = 101) %&gt;%
+  dplyr::rename(., grandma = 102) %&gt;%
+  dplyr::rename(., mommy = 103) %&gt;%
+  dplyr::rename(., bath = 104) %&gt;%  
+  dplyr::rename(., dont = 105) %&gt;%
+  dplyr::rename(., hi = 106) %&gt;%
+  dplyr::rename(., night_night = 107) %&gt;%
+  dplyr::rename(., patty_cake = 108) %&gt;%
+  dplyr::rename(., please = 109) %&gt;%
+  dplyr::rename(., wait = 110) %&gt;%
+  dplyr::rename(., `break` = 111) %&gt;%
+  dplyr::rename(., feed = 112) %&gt;%
+  dplyr::rename(., finish = 113) %&gt;%
+  dplyr::rename(., help = 114) %&gt;%
+  dplyr::rename(., jump = 115) %&gt;%
+  dplyr::rename(., kick = 116) %&gt;%
+  dplyr::rename(., kiss = 117) %&gt;%
+  dplyr::rename(., push = 118) %&gt;%
+  dplyr::rename(., sing = 119) %&gt;%
+  dplyr::rename(., smile = 120) %&gt;%
+  dplyr::rename(., night = 121) %&gt;%
+  dplyr::rename(., today = 122) %&gt;%
+  dplyr::rename(., all_gone = 123) %&gt;%
+  dplyr::rename(., big = 124) %&gt;%
+  dplyr::rename(., broken = 125) %&gt;%
+  dplyr::rename(., dark = 126) %&gt;%
+  dplyr::rename(., fast = 127) %&gt;%
+  dplyr::rename(., hurt = 128) %&gt;%
+  dplyr::rename(., pretty = 129) %&gt;%
+  dplyr::rename(., soft = 130) %&gt;%  
+  dplyr::rename(., I = 131) %&gt;%
+  dplyr::rename(., me = 132) %&gt;%
+  dplyr::rename(., how = 133) %&gt;%
+  dplyr::rename(., other = 134) %&gt;%
+  dplyr::rename(., some = 135) %&gt;%
+  dplyr::rename(., mbcdi_comments = 136) %&gt;%
+  dplyr::select(., 6:9, 47:136)</code></pre>
+<p>Create function to export MB-CDI short.</p>
+<pre class="r"><code>select_mbcdi_short_by_datestamp &lt;- function(this_datestamp, df, 
+                                  csv_path = paste0(params$kb_dir, &#39;/csv&#39;), 
+                                  export_file = TRUE, return_df = FALSE) {
+  # if (!is.character(this_child_id)) {
+  #   stop(paste0(&#39;`this_child_id` must be a string&#39;))
+  # }
+  if (!is.data.frame(df)) {
+    stop(paste0(&#39;`df` must be a data frame&#39; ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0(&#39;Invalid directory: &#39;, csv_path))
+  }
+  
+  this_session &lt;- dplyr::filter(df, start_time == this_datestamp)
+  
+  if (export_file) {
+    if (!is_empty(this_session)) {
+      session_fn &lt;- paste0(&#39;PLAY-visit-MBCDI-short-&#39;,
+                           this_session$play_site_id, &quot;-&quot;, 
+                           this_session$site_child_id, &#39;-&#39;, 
+                           this_session$play_child_id, &quot;.csv&quot;)
+      readr::write_csv(this_session, paste0(csv_path, &quot;/&quot;, session_fn))
+      message(paste0(&#39;Saved &#39;, paste0(csv_path, &quot;/&quot;, session_fn)))
+    } 
+  }
+  
+  if (return_df) {
+    this_session    
+  }
+}</code></pre>
+<pre class="r"><code>these_sessions &lt;- unique(qs_basic$start_time)
+purrr::map(these_sessions, select_mbcdi_short_by_datestamp, qs_basic)</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-232-e0N9L8D0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-007-e1N1S8M1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-Georgetown University-010-l1A5L9B0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-Georgetown University-003-C0D9Z8U0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-013-e2N7L9E2A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-226-e6N1W8S1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-228-e6N9R8M0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-231-A7N1C8A0A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-Georgetown University-004-a0W3B8O1A.csv</code></pre>
+<pre><code>## Saved ~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files/csv/PLAY-visit-MBCDI-short-New York University-005-e0N4H8O2A.csv</code></pre>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+## 
+## [[5]]
+## NULL
+## 
+## [[6]]
+## NULL
+## 
+## [[7]]
+## NULL
+## 
+## [[8]]
+## NULL
+## 
+## [[9]]
+## NULL
+## 
+## [[10]]
+## NULL</code></pre>
+</div>
+</div>
 </div>
 <div id="post-visit-notes" class="section level1">
 <h1>Post-visit notes</h1>

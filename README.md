@@ -9,5 +9,5 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 
 ## Workflows
 
-- [Working document](gather-clean.html) to develop and test import, cleaning, and export procedures.
+- [Working document](http://PLAY-behaviorome.github.io/KoBoToolbox/gather-clean.html) to develop and test import, cleaning, and export procedures.
 
