@@ -17,7 +17,8 @@ params:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(tidyverse) # for pipe '%>%'
+library(tidyverse)  # for pipe '%>%'
+library(readxl)     # for cell_cols()
 ```
 
 # Purpose
@@ -323,12 +324,13 @@ qs <- readxl::read_excel(paste0(params$kb_dir, "/", eng_12_mo_fn))
 
 ## Drop, rename, & clean
 
-The following does _not_ read in a subsetted range, but I think we will want to using that facility in `readxl::read_excel`.
-
 ### Basic info
 
 ```{r}
-qs_basic <- qs %>%
+qs_basic <- readxl::read_excel(paste0(params$kb_dir, "/", 
+                                eng_12_mo_fn), range = cell_cols("A:AH"))
+
+qs_basic <- qs_basic %>%
   dplyr::rename(., start_time = 1) %>%
   dplyr::rename(., end_time = 2) %>%
   # skip 3
@@ -398,6 +400,12 @@ purrr::map(these_sessions, select_visit_by_datestamp, qs_basic)
 
 Columns `AU` to `EF` are MB-CDI short form.
 That corresponds to columns 47:??.
+
+```{r}
+qs_mbcdi_short <- readxl::read_excel(paste0(params$kb_dir, "/", 
+                                eng_12_mo_fn), range = cell_cols("AU:EF"))
+
+```
 
 ```{r}
 qs_mbcdi_short <- qs %>%
@@ -529,10 +537,92 @@ select_mbcdi_short_by_datestamp <- function(this_datestamp, df,
 }
 ```
 
-
 ```{r, export-mbcdi-short}
 these_sessions <- unique(qs_basic$start_time)
 purrr::map(these_sessions, select_mbcdi_short_by_datestamp, qs_basic)
+```
+
+### A better way
+
+```{r}
+# Could be much better and faster
+mbcdi_names <- stringr::str_split(string = names(qs_mbcdi_short), pattern = "/")
+mbcdi_names_short <- lapply(mbcdi_names, `[`, 7)
+
+# Now clean anomalous names
+mbcdi_names_clean <- mbcdi_names_short %>%
+  stringr::str_replace(., " \\([a-z ]+\\)", "") %>% # parenthetical
+  stringr::str_replace(., ' ', '_') %>% # spaces
+  stringr::str_replace(., "'", "") %>% # apostrophe
+  stringr::str_replace(., "...45", "_1") %>% # ellipsis
+  stringr::str_replace(., "...49", "_2") %>% # ellipsis
+  stringr::str_replace(., "\\([a-z ]+\\)", "") # parenthetical
+
+names(qs_mbcdi_short) <- mbcdi_names_clean
+```
+
+### DLL-English short
+
+```{r}
+dll_eng_short <- readxl::read_excel(paste0(params$kb_dir, "/", 
+                                eng_12_mo_fn), range = cell_cols("EI:HE"))
+
+dll_eng_short_names <- stringr::str_split(string = names(dll_eng_short), pattern = "/")
+
+dll_eng_short_names_trim <- unlist(lapply(dll_eng_short_names, `[`, 7))
+
+# Now clean anomalous names
+dll_eng_short_names_clean <- dll_eng_short_names_trim %>%
+  stringr::str_replace(., " \\([a-z ]+", "") %>% # parenthetical
+  stringr::str_replace(., "\\)", "") %>% # parenthetical
+  stringr::str_replace_all(., ' ', '_') %>% # spaces
+  stringr::str_replace_all(., "[',]", "") %>% # apostrophe
+  stringr::str_replace(., "...45", "_1") %>% # ellipsis
+  stringr::str_replace(., "...49", "_2") # ellipsis
+
+names(dll_eng_short) <- dll_eng_short_names_clean
+```
+
+Let's view to confirm.
+
+```{r}
+str(dll_eng_short)
+```
+
+Now, to export, I need to concatentate the basic info.
+
+```{r}
+dll_eng_short_full <- cbind(qs_basic, dll_eng_short)
+```
+
+View again just to check.
+
+```{r}
+str(dll_eng_short_full)
+```
+
+Ok. We can do this, and it won't be too bad.
+
+### DLL English long
+
+```{r}
+dll_eng_long <- readxl::read_excel(paste0(params$kb_dir, "/", 
+                                eng_12_mo_fn), range = cell_cols("HH:KC"))
+
+dll_eng_long_names <- stringr::str_split(string = names(dll_eng_long), pattern = "/")
+
+dll_eng_long_names_trim <- unlist(lapply(dll_eng_long_names, `[`, 7))
+
+# Now clean anomalous names
+dll_eng_long_names_clean <- dll_eng_long_names_trim %>%
+  stringr::str_replace(., " \\([a-z ]+", "") %>% # parenthetical
+  stringr::str_replace(., "\\)", "") %>% # parenthetical
+  stringr::str_replace_all(., ' ', '_') %>% # spaces
+  stringr::str_replace_all(., "[',]", "") %>% # apostrophe
+  stringr::str_replace(., "...45", "_1") %>% # ellipsis
+  stringr::str_replace(., "...49", "_2") # ellipsis
+
+names(dll_eng_long) <- dll_eng_long_names_clean
 ```
 
 # Post-visit notes
