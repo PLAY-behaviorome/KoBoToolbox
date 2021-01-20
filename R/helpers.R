@@ -55,7 +55,7 @@ extract_range_for_form_measure <- function(this_form = '18_English', this_measur
   as.character(this_cell_range)
 }
 
-extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '18_English') {
+extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '12_English') {
   require(tidyverse)
   
   these_measures <- extract_measures_for_form(this_form)
@@ -82,6 +82,8 @@ extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '1
   }
   df
 }
+
+# Specific cleaning functions for each measure
 
 clean_basic_demog <- function(df) {
   require(tidyverse)
@@ -314,6 +316,320 @@ clean_demog_quest <- function(df) {
     dplyr::select(., -all_of(omit_cols))
 }
 
+clean_health <- function(df, omit_non_answers = TRUE) {
+  require(tidyverse) # for pipe
+  
+  if (!is.data.frame(df)) {
+    stop('`df` must be data frame')
+  }
+  if (is.null(df)) {
+    NULL
+  }
+  
+  omit_cols = c(1, 14, 33, 43, 60:62)
+  
+  health_clean <- df %>%
+    dplyr::rename(., breastfeed_ever = 2,
+                  breastfeed_mos = 3,
+                  how_fed_last_7d_breastfed = 4,
+                  how_fed_last_7d = 5,
+                  how_fed_last_7d_formula = 6,
+                  how_fed_last_7d_cows_milk = 7,
+                  how_fed_last_7d_refused = 8,
+                  how_fed_last_7d_dont_know = 9,
+                  how_fed_last_7d_nondairy = 10,
+                  how_fed_last_7d_none_above = 11,
+                  age_mos_1st_solid_food = 12,
+                  ecls_b_a_nutrition_comments = 13,
+                  # skip 14
+                  sleep_position = 15,
+                  health_rating = 16,
+                  age_mos_last_wellbaby = 17,
+                  vaccinated_last_4w = 18,
+                  specialist_care = 19,
+                  specialist_care_specify = 20,
+                  hearing_tested = 21,
+                  hearing_tested_birth_hosp = 22,
+                  hearing_tested_after_home = 23,
+                  hearing_tested_no = 24,
+                  hearing_tested_refused = 25,
+                  hearing_tested_dont_know = 26,
+                  vision_tested = 27,
+                  vision_tested_birth_hosp = 28,
+                  vision_tested_after_home = 29,
+                  vision_tested_no = 30,
+                  vision_tested_refused = 31,
+                  vision_tested_dont_know = 32,
+                  # skip 33
+                  food_med_allergies = 34,
+                  ear_infection = 35,
+                  asthma = 36,
+                  respiratory_illness = 37,
+                  gi_illness = 38,
+                  eclsb_a_genl_health_injury_comments = 39,
+                  injury_n_times = 40,
+                  injury_describe = 41,
+                  eclsb_a_genl_health_comments = 42,
+                  # skip 43
+                  prenatal_care = 44,
+                  prenatal_care_comments = 45,
+                  smoke_while_pregnant = 46,
+                  smoke_packs_daily_1st_tri = 47,
+                  smoke_packs_daily_2nd_tri = 48,
+                  smoke_packs_daily_3rd_tri = 49,
+                  smoke_now = 50,
+                  smoke_packs_daily_now = 51,
+                  smoking_in_house = 52,
+                  smoking_in_car = 53,
+                  ecls_b_a_smoking_comments = 54,
+                  drink_while_pregnant = 55,
+                  drinks_weekly_1st_tri = 56,
+                  drinks_weekly_2nd_tri = 57,
+                  drinks_weekly_3rd_tri = 58,
+                  eclsb_a_drinking_comments = 59,
+                  # skip 60:62
+                  # These are text + numeric; might want to recode
+                  feel_anxious = 63,
+                  cant_stop_worrying = 64,
+                  little_interest_pleasure = 65,
+                  feel_depressed = 66,
+                  ecls_b_f_phq_comments = 67
+     )
+                  
+  if (omit_non_answers) {
+    health_clean <- dplyr::select(health_clean, -all_of(omit_cols))
+  }
+  health_clean
+}
+
+clean_ecbq <- function(df, omit_non_answers = TRUE) {
+    require(tidyverse) # for pipe
+    
+    if (!is.data.frame(df)) {
+      stop('`df` must be data frame')
+    }
+    if (is.null(df)) {
+      NULL
+    }
+    
+    omit_cols = c(1:3)
+    
+    ecbq_clean <- df %>%
+      dplyr::rename(., cling_on_stranger_approach = 4,
+                    easily_irritated = 5,
+                    seek_familiar_child = 6,
+                    decide_quickly = 7,
+                    enjoy_sung_to = 8,
+                    take_chances = 9,
+                    play_10_mins = 10,
+                    respond_while_engaged = 11,
+                    excited_abt_visit = 12,
+                    fiddle_w_hair = 13,
+                    like_rowdy = 14,
+                    hug_eager_getaway = 15,
+                    get_involved_new = 16,
+                    tire_quickly = 17,
+                    pay_attention_when_called = 18,
+                    irritated_by_clothes = 19,
+                    bothered_by_noise = 20,
+                    full_of_energy = 21,
+                    fear_noisy_vehicles = 22,
+                    most_active = 23,
+                    stop_forbidden = 24,
+                    no_sadly_fearful = 25,
+                    down_blue = 26,
+                    run_indoors = 27,
+                    excitement_new_toy = 28,
+                    tantrum = 29,
+                    wait_patiently = 30,
+                    smile_when_rocked = 31,
+                    mold_when_held =32,
+                    interact_w_fam_adult = 33,
+                    care_with_breakable = 34,
+                    not_enter_new_place = 35,
+                    cry_3mins = 36,
+                    easily_soothed = 37,
+                    find_other_activity = 38,
+                    enjoy_diff_people = 39,
+                    ebcq_comments = 40
+                    )
+      
+    if (omit_non_answers) {
+      ecbq_clean <- dplyr::select(ecbq_clean, -all_of(omit_cols))
+    }
+    ecbq_clean
+}
+
+clean_media_use <- function(df, omit_non_answers = TRUE) {
+  require(tidyverse) # for pipe
+  
+  if (!is.data.frame(df)) {
+    stop('`df` must be data frame')
+  }
+  if (is.null(df)) {
+    NULL
+  }
+  
+  omit_cols = c(1, 25:26)  
+  
+  media_clean <- df %>%
+    dplyr::rename(., 
+                  have_devices = 2,
+                  have_tv = 3,
+                  have_dvd = 4,
+                  have_computer = 5,
+                  have_smartphone = 6,
+                  have_tablet = 7,
+                  have_ed_game = 8,
+                  have_game_console = 9,
+                  child_used_tv = 10,
+                  how_use_tv = 11,
+                  child_used_dvd = 12,
+                  how_use_dvd = 13,
+                  child_use_computer = 14,
+                  how_use_computer = 15,
+                  child_use_smartphone = 16,
+                  how_use_smartphone = 17,
+                  child_use_tablet = 18,
+                  how_use_tablet = 19,
+                  child_use_ed_game = 20,
+                  how_use_ed_game = 21,
+                  child_use_game_console = 22,
+                  how_use_game_console = 23,
+                  tv_on_no_watching = 24,
+                  # skip 25-26,
+                  use_device_meals = 27,
+                  use_device_playtime = 28,
+                  use_device_bedtime = 29,
+                  use_device_travel = 30,
+                  media_use_comments = 31)
+  
+  if (omit_non_answers) {
+    media_clean <- dplyr::select(media_clean, -all_of(omit_cols))
+  }
+  media_clean  
+}
+
+clean_pets <- function(df, omit_non_answers = TRUE) {
+  require(tidyverse) # for pipe
+  
+  if (!is.data.frame(df)) {
+    stop('`df` must be data frame')
+  }
+  if (is.null(df)) {
+    NULL
+  }
+  
+  omit_cols = c()  
+  
+  pets_clean <- df %>%
+    dplyr::rename(., 
+                  pets_at_home = 1,
+                  type_number = 2,
+                  where_live = 3,
+                  pets_comments = 4)
+  
+  if (omit_non_answers) {
+    pets_clean <- dplyr::select(pets_clean, -all_of(omit_cols))
+  }
+  pets_clean  
+}
+
+clean_household_labor <- function(df, omit_non_answers = TRUE) {
+  require(tidyverse) # for pipe
+  
+  if (!is.data.frame(df)) {
+    stop('`df` must be data frame')
+  }
+  if (is.null(df)) {
+    NULL
+  }
+  
+  omit_cols = c(1:4, 9, 14, 19, 24, 29, 34, 39)  
+  
+  household_labor_clean <- df %>%
+    dplyr::rename(.,
+                  # Skip 1:4
+                  laundry_caregiver = 5,
+                  laundry_partner = 6,
+                  laundry_other = 7,
+                  laundry_who_else = 8,
+                  # skip 9
+                  cleaning_caregiver = 10,
+                  cleaning_partner = 11,
+                  cleaning_other = 12,
+                  cleaning_who_else = 13,
+                  # skip 14
+                  dishes_caregiver = 15,
+                  dishes_partner = 16,
+                  dishes_other = 17,
+                  dishes_who_else = 18,
+                  # skip 19
+                  cooking_caregiver = 20,
+                  cooking_partner = 21,
+                  cooking_other = 22,
+                  cooking_who_else = 23,
+                  # skip 24
+                  feed_child_caregiver = 25,
+                  feed_child_partner = 26,
+                  feed_child_other = 27,
+                  feed_child_who_else = 28,
+                  # skip 29
+                  dropoff_child_caregiver = 30,
+                  dropoff_child_partner = 31,
+                  dropoff_child_other = 32,
+                  dropoff_child_who_else = 33,
+                  # skip 34
+                  to_bed_child_caregiver = 35,
+                  to_bed_child_partner = 36,
+                  to_bed_child_other = 37,
+                  to_bed_child_who_else = 38,
+                  # skip 39
+                  discipline_child_caregiver = 40,
+                  discipline_child_partner = 41,
+                  discipline_child_other = 42,
+                  discipline_child_who_else = 43,
+                  household_labor_comments = 44)
+  
+  if (omit_non_answers) {
+    household_labor_clean <- dplyr::select(household_labor_clean, -all_of(omit_cols))
+  }
+  household_labor_clean  
+}
+
+clean_typical_day <- function(df, omit_non_answers = TRUE) {
+  require(tidyverse) # for pipe
+  
+  if (!is.data.frame(df)) {
+    stop('`df` must be data frame')
+  }
+  if (is.null(df)) {
+    NULL
+  }
+  
+  omit_cols = c(9)  
+  
+  typical_day_clean <- df %>%
+    dplyr::rename(., 
+                  typical_day = 1,
+                  day_how_different = 2,
+                  activities_similar = 3,
+                  activities_different = 4,
+                  typical_night_morning = 5,
+                  night_morning_how_different = 6,
+                  unusual_feelings = 7,
+                  feelings_how_different = 8)
+                  # Skip 9)
+  
+  if (omit_non_answers) {
+    typical_day_clean <- dplyr::select(typical_day_clean, -all_of(omit_cols))
+  }
+  typical_day_clean  
+}
+
+#-------------------------------------------------------------------
+# Extract and clean by measure, given form
+
 extract_clean_basic_demog <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'basic_demog', this_form = this_form)
   clean_basic_demog(df)
@@ -324,41 +640,149 @@ extract_clean_mb_cdi_eng_short <- function(this_form = '12_English') {
   clean_mb_cdi_eng_short(df)
 }
 
-extract_clean_demo_quest <- function(this_form = 'Demographic_Questionnaire') {
+extract_clean_demo_quest <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'demog_quest', this_form = this_form)
   clean_demog_quest(df)
 }
-  
+
+extract_clean_health <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'health', this_form = this_form)
+  clean_health(df)
+}
+
+extract_clean_ecbq <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'ecbq_very_short', this_form = this_form)
+  clean_ecbq(df)
+}
+
+extract_clean_media <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'media_use', this_form = this_form)
+  clean_media_use(df)
+}
+
+extract_clean_pets <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'pets', this_form = this_form)
+  clean_pets(df)
+}
+
+extract_clean_household_labor <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'household_labor', this_form = this_form)
+  clean_household_labor(df)
+}
+
+extract_clean_typical_day <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'typical_day', this_form = this_form)
+  clean_typical_day(df)
+}
+
+#-------------------------------------------------------------------
+# Make exportable data frames with reference demographics
+
 make_exportable_df_mb_cdi_eng_short <- function(this_form = '12_English') {
   mb <- extract_clean_mb_cdi_eng_short(this_form)
   dm <- extract_clean_basic_demog(this_form)
   cbind(dm, mb)
 }
 
-save_mbcdi_file <- function(this_row, df, csv_path = 'csv') {
-  if (!is.numeric(this_row)) {
-    stop('`this_row` must be numeric.')
-  }
-  if (!is.data.frame(df)) {
-    stop('`df` must be a data frame.')
-  }
-  if (!dir.exists(csv_path)) {
-    stop(paste0('CSV path not found: ', csv_path))
-  }
+make_exportable_health <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  hd <- extract_clean_health(this_form)
   
-  this_session <- df[this_row,]
-  
-  if (!is_empty(this_session)) {
-    session_fn <- paste0('PLAY-visit-MBCDI-eng-short-',
-                         this_session$play_site_id, "-", 
-                         this_session$site_child_id, '-', 
-                         this_session$play_child_id, ".csv")
-    readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
-    message(paste0('Saved ', paste0(csv_path, "/", session_fn)))    
+  if (dim(dm)[1] == dim(hd)[1]) {
+    cbind(dm, hd)    
   } else {
-   message(paste0("Session ", this_row, ' had no data')) 
+    warning(paste0("Health data and demographics do not align for form ", this_form))
+    NULL
   }
 }
+
+make_exportable_ecbq <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  df <- extract_clean_ecbq(this_form)
+  
+  if (dim(dm)[1] == dim(df)[1]) {
+    cbind(dm, df)    
+  } else {
+    warning(paste0("ECBQ data and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+make_exportable_media <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  df <- extract_clean_media(this_form)
+  
+  if (dim(dm)[1] == dim(df)[1]) {
+    cbind(dm, df)    
+  } else {
+    warning(paste0("Media use data and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+make_exportable_pets <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  df <- extract_clean_pets(this_form)
+  
+  if (dim(dm)[1] == dim(df)[1]) {
+    cbind(dm, df)    
+  } else {
+    warning(paste0("Pets data and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+make_exportable_household_labor <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  df <- extract_clean_household_labor(this_form)
+  
+  if (dim(dm)[1] == dim(df)[1]) {
+    cbind(dm, df)    
+  } else {
+    warning(paste0("Household labor data and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+make_exportable_typical_day <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  df <- extract_clean_typical_day(this_form)
+  
+  if (dim(dm)[1] == dim(df)[1]) {
+    cbind(dm, df)    
+  } else {
+    warning(paste0("Typical day data and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+#-------------------------------------------------------------------
+# File saving functions
+
+# save_mbcdi_file <- function(this_row, df, csv_path = 'csv') {
+#   if (!is.numeric(this_row)) {
+#     stop('`this_row` must be numeric.')
+#   }
+#   if (!is.data.frame(df)) {
+#     stop('`df` must be a data frame.')
+#   }
+#   if (!dir.exists(csv_path)) {
+#     stop(paste0('CSV path not found: ', csv_path))
+#   }
+#   
+#   this_session <- df[this_row,]
+#   
+#   if (!is_empty(this_session)) {
+#     session_fn <- paste0('PLAY-visit-MBCDI-eng-short-',
+#                          this_session$play_site_id, "-", 
+#                          this_session$site_child_id, '-', 
+#                          this_session$play_child_id, ".csv")
+#     readr::write_csv(this_session, paste0(csv_path, "/", session_fn))
+#     message(paste0('Saved ', paste0(csv_path, "/", session_fn)))    
+#   } else {
+#    message(paste0("Session ", this_row, ' had no data')) 
+#   }
+# }
 
 save_session_file <- function(this_row, df, file_stem = 'PLAY-visit-demog-',
                               csv_path = 'csv') {
@@ -389,16 +813,8 @@ save_session_file <- function(this_row, df, file_stem = 'PLAY-visit-demog-',
   }
 }
 
-export_forms_mbcdi_eng_short <- function(df, csv_path = 'csv') {
-  if (!is.data.frame(df)) {
-    stop(paste0('`df` must be a data frame' ))
-  }
-  if (!dir.exists(csv_path)) {
-    stop(paste0('CSV path not found: ', csv_path))
-  }
-  file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-MBCDI-eng-short-', csv_path)
-}
+#-------------------------------------------------------------------
+# Export forms given aggregate data frame for measure
 
 export_forms_basic_demog <- function(df, csv_path = 'csv') {
   if (!is.data.frame(df)) {
@@ -410,6 +826,86 @@ export_forms_basic_demog <- function(df, csv_path = 'csv') {
   file_list <- 1:dim(df)[1]
   purrr::map(file_list, save_session_file, df, 'PLAY-visit-basic-demog-', csv_path)
 }
+
+export_forms_mbcdi_eng_short <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-MBCDI-eng-short-', csv_path)
+}
+
+export_forms_health <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-health-', csv_path)
+}
+
+export_forms_ebcq <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-ECBQ-', csv_path)
+}
+
+export_forms_media <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-media-', csv_path)
+}
+
+export_forms_pets <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-pets-', csv_path)
+}
+
+export_forms_household_labor <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-household-labor-', csv_path)
+}
+
+export_forms_typical_day <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-typical-day-', csv_path)
+}
+
+#-------------------------------------------------------------------
+# Export all forms for given measure
 
 export_all_forms_mbcdi_eng_short <- function(csv_path = 'csv') {
   ff <- purrr::map(c('12_English', '18_English', '24_English',
@@ -427,4 +923,57 @@ export_all_forms_basic_demog <- function(csv_path = 'csv') {
   purrr::map(ff, export_forms_basic_demog, csv_path)
 }
 
+export_all_forms_health <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_health)
+  purrr::map(ff, export_forms_health, csv_path)
+}
 
+export_all_forms_ecbq <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_ecbq)
+  purrr::map(ff, export_forms_ebcq, csv_path)
+}
+
+export_all_forms_media <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_media)
+  purrr::map(ff, export_forms_media, csv_path)
+}
+
+export_all_household_labor <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_household_labor)
+  purrr::map(ff, export_forms_household_labor, csv_path)
+}
+
+export_all_forms_pets <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_pets)
+  purrr::map(ff, export_forms_pets, csv_path)
+}
+
+export_all_forms_typical_day <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English', 
+                     '12_Bilingual_Spanish', 
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_typical_day)
+  purrr::map(ff, export_forms_typical_day, csv_path)
+}
+
+#-------------------------------------------------------------------
+# Export all forms for all measures
+
+export_all_measures_all_forms <- function() {
+  
+}
