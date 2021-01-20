@@ -140,6 +140,35 @@ clean_mb_cdi_eng_short <- function(df, omit_these = c(1:9)) {
   df
 }
 
+clean_dll_eng_short <- function(df, omit_these = c(1:2)) {
+  df_names <- stringr::str_split(string = names(df), pattern = "/")
+  
+  name_lengths <- unlist(lapply(df_names, length))
+  df_names_trim <- unlist(mapply(`[`, df_names, name_lengths))
+  
+  # Now clean anomalous names
+  df_names_trim <- df_names_trim %>%
+    stringr::str_replace(., " \\([a-z ]+", "") %>% # parenthetical
+    stringr::str_replace(., "\\)", "") %>% # parenthetical
+    stringr::str_replace_all(., ' ', '_') %>% # spaces
+    stringr::str_replace_all(., "[',]", "") %>% # apostrophe
+    stringr::str_replace(., "...45", "_1") %>% # ellipsis
+    stringr::str_replace(., "...49", "_2") %>% # ellipsis
+    stringr::str_replace(., '...54', "") %>%
+    stringr::str_replace(., "...58", "")
+  
+  na_names <- is.na(df_names_trim)
+  df_names_trim[na_names] <- as.character(1:length(sum(na_names)))
+  names(df) <- df_names_trim
+  
+  df <- df %>%
+    dplyr::rename(., dll_eng_short_comments = 77)
+  
+  df <- df[-omit_these]
+  
+  df
+}
+
 clean_demog_quest <- function(df) {
   omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
                  105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
@@ -331,8 +360,8 @@ clean_health <- function(df, omit_non_answers = TRUE) {
   health_clean <- df %>%
     dplyr::rename(., breastfeed_ever = 2,
                   breastfeed_mos = 3,
-                  how_fed_last_7d_breastfed = 4,
-                  how_fed_last_7d = 5,
+                  how_fed_last_7d = 4,
+                  how_fed_last_7d_breastfed = 5,
                   how_fed_last_7d_formula = 6,
                   how_fed_last_7d_cows_milk = 7,
                   how_fed_last_7d_refused = 8,
@@ -628,6 +657,101 @@ clean_typical_day <- function(df, omit_non_answers = TRUE) {
 }
 
 #-------------------------------------------------------------------
+# Clean questions
+
+# Clean KoBoToolbox headers to create a nice list of questions.
+clean_qs_basic_demog <- function(df) {
+  require(tidyverse)
+  
+  df_names <- stringr::str_split(string = names(df), pattern = "/")
+  
+  omit_qs <- c(3:4, 35:37)
+  
+  name_lengths <- unlist(lapply(df_names, length))
+  df_names_trim_1 <- unlist(mapply(`[`, df_names, 1))
+  # Looks like item 2 contains most of the question info
+  df_names_trim_2 <- unlist(mapply(`[`, df_names, 2))
+  df_names_trim_3 <- unlist(mapply(`[`, df_names, 3))
+  
+  qs <- tibble::tibble(question = paste(df_names_trim_1, df_names_trim_2, df_names_trim_3, sep = " "))
+  qs <- qs %>%
+    dplyr::mutate(., question = stringr::str_remove(question, "Combined Questionnaires \\(PLAY\\)")) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, "^ ")) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, " $")) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, "\\:")) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, "NA "))
+  
+  # Seems not to work if this final str_remove() is part of the above chain
+  qs <- qs %>%
+    dplyr::mutate(., question = stringr::str_remove(question, " NA$"))
+    
+  qs <- qs[-omit_qs,]
+  l_qs <- dim(qs)[1]
+  qs <- qs %>%
+    dplyr::mutate(., q_index = 1:l_qs) %>%
+    dplyr::select(q_index, question)
+  qs
+}
+
+clean_qs_pets <- function(df) {
+  require(tidyverse)
+  
+  df_names <- stringr::str_split(string = names(df), pattern = "/")
+  
+  omit_qs <- c()
+  df_names_trim_4 <- unlist(mapply(`[`, df_names, 4))
+  
+  qs <- tibble::tibble(question = df_names_trim_4)
+  qs <- qs %>%
+    dplyr::mutate(., question = stringr::str_remove_all(question, '\\"')) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, '\\:'))
+
+  # qs <- qs[-omit_qs,]
+  l_qs <- dim(qs)[1]
+  qs <- qs %>%
+    dplyr::mutate(., q_index = 1:l_qs) %>%
+    dplyr::select(q_index, question)
+  qs
+}
+
+clean_qs_typical_day <- function(df) {
+  require(tidyverse)
+  
+  df_names <- stringr::str_split(string = names(df), pattern = "/")
+  df_names
+  
+  omit_qs <- c(9)
+  df_names_trim_4 <- unlist(mapply(`[`, df_names, 4))
+  df_names_trim_5 <- unlist(mapply(`[`, df_names, 5))
+
+  qs <- tibble::tibble(question = paste(df_names_trim_4, df_names_trim_5, sep = " "))
+  qs <- qs %>%
+    dplyr::mutate(., question = stringr::str_remove_all(question, '\\"')) %>%
+    dplyr::mutate(., question = stringr::str_remove(question, '\\:')) %>%
+    dplyr::mutate(., question = stringr::str_remove_all(question, " NA"))
+
+  qs <- qs[-omit_qs,]
+  l_qs <- dim(qs)[1]
+  qs <- qs %>%
+    dplyr::mutate(., q_index = 1:l_qs) %>%
+    dplyr::select(q_index, question)
+  qs
+}
+
+#-------------------------------------------------------------------
+# Extract and clean questions
+
+extract_clean_qs_basic_demog <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'basic_demog', this_form = this_form)
+  clean_qs_basic_demog(df)
+}
+
+extract_clean_qs_pets <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'basic_demog', this_form = this_form)
+  clean_qs_basic_demog(df)
+}
+
+#-------------------------------------------------------------------
 # Extract and clean by measure, given form
 
 extract_clean_basic_demog <- function(this_form = '12_English') {
@@ -638,6 +762,11 @@ extract_clean_basic_demog <- function(this_form = '12_English') {
 extract_clean_mb_cdi_eng_short <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'mb_cdi_eng_short', this_form = this_form)
   clean_mb_cdi_eng_short(df)
+}
+
+extract_clean_dll_eng_short <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'dll_eng_short', this_form = this_form)
+  clean_dll_eng_short(df)
 }
 
 extract_clean_demo_quest <- function(this_form = '12_English') {
@@ -682,6 +811,18 @@ make_exportable_df_mb_cdi_eng_short <- function(this_form = '12_English') {
   mb <- extract_clean_mb_cdi_eng_short(this_form)
   dm <- extract_clean_basic_demog(this_form)
   cbind(dm, mb)
+}
+
+make_exportable_dll_eng_short <- function(this_form = '12_English') {
+  dm <- extract_clean_basic_demog(this_form)
+  hd <- extract_clean_dll_eng_short(this_form)
+  
+  if (dim(dm)[1] == dim(hd)[1]) {
+    cbind(dm, hd)    
+  } else {
+    warning(paste0("DLL English Short and demographics do not align for form ", this_form))
+    NULL
+  }
 }
 
 make_exportable_health <- function(this_form = '12_English') {
@@ -838,6 +979,17 @@ export_forms_mbcdi_eng_short <- function(df, csv_path = 'csv') {
   purrr::map(file_list, save_session_file, df, 'PLAY-visit-MBCDI-eng-short-', csv_path)
 }
 
+export_forms_dll_eng_short <- function(df, csv_path = 'csv') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'PLAY-visit-DLL-eng-short-', csv_path)
+}
+
 export_forms_health <- function(df, csv_path = 'csv') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
@@ -915,6 +1067,14 @@ export_all_forms_mbcdi_eng_short <- function(csv_path = 'csv') {
   purrr::map(ff, export_forms_mbcdi_eng_short, csv_path)
 }
 
+export_all_forms_dll_eng_short <- function(csv_path = 'csv') {
+  ff <- purrr::map(c('12_English', '18_English', '24_English',
+                     '12_Bilingual_Spanish',
+                     '12_Bilingual_English',
+                     '24_Bilingual_Spanish'), make_exportable_dll_eng_short)
+  purrr::map(ff, export_forms_dll_eng_short, csv_path)
+}
+
 export_all_forms_basic_demog <- function(csv_path = 'csv') {
   ff <- purrr::map(c('12_English', '18_English', '24_English', 
                      '12_Bilingual_Spanish', 
@@ -975,5 +1135,12 @@ export_all_forms_typical_day <- function(csv_path = 'csv') {
 # Export all forms for all measures
 
 export_all_measures_all_forms <- function() {
-  
+  export_all_forms_basic_demog()
+  export_all_forms_mbcdi_eng_short()
+  export_all_forms_health()
+  export_all_forms_ecbq()
+  export_all_forms_media()
+  export_all_household_labor()
+  export_all_forms_pets()
+  export_all_forms_typical_day()
 }
