@@ -1,7 +1,9 @@
 # Functions to interact with Databrary
 
 check_db_authentication <- function() {
-  if (!file.exists('.databrary.RData')) databraryapi::login_db()
+  if (!file.exists('.databrary.RData')) {
+    databraryapi::login_db()
+  }
 }
 
 match_session_id_from_databrary <- function(df) {
@@ -16,16 +18,14 @@ match_session_id_from_databrary <- function(df) {
   }
   
   # Get session list from Databrary
-  #databraryapi::login_db()
   db_session_list_for_vol <- databraryapi::list_sessions_in_volume(db_site_info$db_vol_id)
-  #databraryapi::logout_db()
   
   if (is.null(db_session_list_for_vol)) {
     stop(paste0('Unable to retrieve info for volume `', db_site_info$db_vol_id, '` from Databrary.'))
   }
   
   this_session <- db_session_list_for_vol %>%
-    dplyr::filter(., stringr::str_detect(name, df$site_child_id)) %>%
+    dplyr::filter(., stringr::str_detect(name, as.character(df$site_child_id))) %>%
     dplyr::select(., session_id)
   
   if (dim(this_session)[1] == 0) {
@@ -43,13 +43,13 @@ get_db_site_info <- function(df) {
     NULL
   }
   
-  # sites_df <- readr::read_csv('csv/sites_databrary.csv')
+  # sites_df <- readr::read_csv('csv/.analysis/sites_databrary.csv')
   # if (dim(sites_df)[1] <= 0) {
   #   stop('Unable to read `sites_databrary.csv`')
   # }
   
   if ('play_site_name' %in% names(df)) {
-    sites_df <- readr::read_csv('csv/sites_databrary.csv')
+    sites_df <- readr::read_csv('csv/.analysis/sites_databrary.csv')
     
     if (dim(sites_df)[1] <= 0) {
       stop('Unable to read `sites_databrary.csv`')

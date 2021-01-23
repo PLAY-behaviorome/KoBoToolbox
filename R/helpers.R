@@ -1,7 +1,7 @@
 # kobo helper functions
 
 # Lists unique KB form "fragments" in the forms-measures CSV database
-list_kobo_form_frags <- function(csv_fn = 'csv/form-measures.csv') {
+list_kobo_form_frags <- function(csv_fn = 'csv/.analysis/form_measures.csv') {
   if (!file.exists(csv_fn)) {
     stop(paste0('Kobo form and measures file not found: ', csv_fn))
   }
@@ -26,8 +26,8 @@ return_matching_kobo_form <- function(kobo_form_frag = "18_English",
   unlist(fl)
 }
 
-extract_measures_for_form <- function(this_form = '18_English', 
-                                               csv_fn = 'csv/form-measures.csv') {
+extract_measures_for_form <- function(this_form = '12_English', 
+                                               csv_fn = 'csv/.analysis/form_measures.csv') {
   
   if (!file.exists(csv_fn)) {
     stop(paste0('Kobo form `', this_form,'` and measures file `', csv_fn, '` not found.'))
@@ -43,7 +43,7 @@ extract_measures_for_form <- function(this_form = '18_English',
   }
 }
 
-extract_range_for_form_measure <- function(this_form = '18_English', this_measure = 'basic_demog') {
+extract_range_for_form_measure <- function(this_form = '12_English', this_measure = 'basic_demog') {
   require(tidyverse)
   
   these_measures <- extract_measures_for_form(this_form)
@@ -71,11 +71,7 @@ extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '1
   }
   
   this_cell_range <- extract_range_for_form_measure(this_form, this_measure)
-  # this_cell_range <- these_measures %>%
-  #   dplyr::filter(., measure_type == this_measure) %>%
-  #   dplyr::select(., col_range) 
-  # 
-  # this_cell_range <- as.character(this_cell_range)
+
   if (this_cell_range == "") {
     warning("No valid cell range specified for form `", this_form, '` and measure `', this_measure, '`.')
     NULL
@@ -91,8 +87,10 @@ extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '1
 
 # Specific cleaning functions for each measure
 
-clean_basic_demog <- function(df, omit_these = c(7, 3:4, 10:12, 16:28, 35:37),
-                              drop_site_name = TRUE) {
+clean_basic_demog <- function(df = extract_obs_for_measure(), omit_these = c(3:4, 10:12, 16:28, 35:37),
+                              add_site_id = TRUE,
+                              drop_site_name = FALSE,
+                              drop_experimenter_name = FALSE) {
   require(tidyverse)
   clean_df <- df %>%
     dplyr::rename(., start_time = 1,
@@ -100,7 +98,7 @@ clean_basic_demog <- function(df, omit_these = c(7, 3:4, 10:12, 16:28, 35:37),
                   # omit 3, 4
                   todays_date = 5,
                   play_site_name = 6,
-                  # experimenter_name = 7,
+                  experimenter_name = 7,
                   session_date = 8,
                   site_child_id = 9,
                   # child_first = 10,
@@ -116,21 +114,31 @@ clean_basic_demog <- function(df, omit_these = c(7, 3:4, 10:12, 16:28, 35:37),
                   eng_to_child = 32,
                   span_to_child = 33,
                   instr_lang = 34) %>%
-    dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|"))
-
-  clean_df <- clean_df %>%
-    dplyr::mutate(., play_site_id = get_play_site_codes(clean_df))
+    dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|")) 
+  
+  if (add_site_id) {
+    clean_df <- clean_df %>%
+      dplyr::mutate(., play_site_id = get_play_site_codes(clean_df))
+  }
+  
   clean_df <- clean_df[-omit_these]
   
   if (drop_site_name) {
     clean_df <- clean_df %>%
       dplyr::select(., -play_site_name)
   }
+  if (drop_experimenter_name) {
+    clean_df <- clean_df %>%
+      dplyr::select(., -experimenter_name)
+  }
+  
+  # Hack to fix format for one of forms
+  clean_df$site_child_id <- as.numeric(clean_df$site_child_id)
   
   clean_df
 }
 
-clean_mb_cdi_eng_short <- function(df, omit_these = c(1:9)) {
+clean_mbcdi_eng_short <- function(df = extract_obs_for_measure('mbcdi_eng_short'), omit_these = c(1:9)) {
   df_names <- stringr::str_split(string = names(df), pattern = "/")
   
   name_lengths <- unlist(lapply(df_names, length))
@@ -157,7 +165,7 @@ clean_mb_cdi_eng_short <- function(df, omit_these = c(1:9)) {
   df
 }
 
-clean_dll_eng_short <- function(df, omit_these = c(1:2)) {
+clean_dll_eng_short <- function(df = extract_obs_for_measure('dll_eng_short'), omit_these = c(1:2)) {
   df_names <- stringr::str_split(string = names(df), pattern = "/")
   
   name_lengths <- unlist(lapply(df_names, length))
@@ -186,10 +194,13 @@ clean_dll_eng_short <- function(df, omit_these = c(1:2)) {
   df
 }
 
-clean_dll_span_short_12 <- function(df, omit_these = c(1:2)) {
+clean_dll_span_short_12 <- function(df = extract_obs_for_measure('dll_span_short', this_form = '12_Bilingual_Spanish'), omit_these = c(1:2)) {
   
   df_names <- names(df)
-  df_names_trim <- stringr::str_remove_all(df_names, 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI \\(12 mo\\) \\(English only\\)/Short Form Supplement \\(Spanish\\)/')
+  df_names_trim <- df_names %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI \\(12 mo\\)') %>%
+    stringr::str_remove_all(., '\\(English only\\)/Short Form Supplement \\(Spanish\\)/')
+  df_names_trim <- stringr::str_remove_all(df_names_trim, '^ ')
   
   names(df) <- df_names_trim
   
@@ -199,7 +210,8 @@ clean_dll_span_short_12 <- function(df, omit_these = c(1:2)) {
   df
 }
 
-clean_dll_span_short_24 <- function(df, omit_these = c(1:3)) {
+clean_dll_span_short_24 <- function(df = extract_obs_for_measure('dll_span_short', this_form = '24_Bilingual_Spanish'), 
+                                    omit_these = c(1:3)) {
   
   df_names <- names(df)
   
@@ -220,28 +232,25 @@ clean_dll_span_short_24 <- function(df, omit_these = c(1:3)) {
   df
 }
 
-clean_dll_eng_long_12 <- function(df, omit_these = c(1:2)) {
+clean_dll_eng_long_12 <- function(df = extract_obs_for_measure('dll_eng_long', this_form = '12_English'), 
+                                  omit_these = c(1:2)) {
   df_names <- names(df)
   
   df_names_trim <- df_names %>%
     stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/12 mo/MCDI \\(12 mo\\)') %>%
     stringr::str_remove_all(., '\\(English only\\)/Long Form Supplement \\(English\\)/') #%>%
-  #   stringr::str_remove_all(., '\\(Nota\\: Seleccione todas las palabras que la madre dice que') %>%
-  #   stringr::str_remove_all(., ' \\$\\{child_first_name\\}') %>%
-  #   stringr::str_remove_all(., ' DICE EN ESPAÑOL\\.\\)/')
   df_names_trim <- stringr::str_remove_all(df_names_trim, '^ ')
   
   names(df) <- df_names_trim
   
-  # df <- df %>%
-  #   dplyr::rename(., dll_span_short_comments = `Spanish Short Form Matched Supplement Comments`)
   df <- df[-omit_these]
   
   df
   
 }
 
-clean_dll_eng_long_18_24 <- function(df, omit_these = c(1:3)) {
+clean_dll_eng_long_18_24 <- function(df = extract_obs_for_measure('dll_eng_long', this_form = '18_English'), 
+                                     omit_these = c(1:3)) {
   df_names <- names(df)
   
   df_names_trim <- df_names %>%
@@ -257,18 +266,19 @@ clean_dll_eng_long_18_24 <- function(df, omit_these = c(1:3)) {
   
   names(df) <- df_names_trim
   
-  # df <- df %>%
-  #   dplyr::rename(., dll_span_short_comments = `Spanish Short Form Matched Supplement Comments`)
   df <- df[-omit_these]
   
   df
   
 }
 
-clean_demog_quest <- function(df) {
-  omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
-                 105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
-                 176:177, 189:228)
+clean_demog_quest <- function(df = extract_obs_for_measure('demog_quest', 'Demographic_Questionnaire'),
+                              omit_these = c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
+                                             105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
+                                             176:177, 189:228)) {
+  # omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
+  #                105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
+  #                176:177, 189:228)
   
   demog_clean <- df %>%
     dplyr::rename(., start_time = start,
@@ -438,7 +448,7 @@ clean_demog_quest <- function(df) {
     ) %>%
     # The `play_child_id` field has a "/" character in some entries. The next line fixes that.
     dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|")) %>%
-    dplyr::select(., -all_of(omit_cols))
+    dplyr::select(., -all_of(omit_these))
 }
 
 clean_health <- function(df, omit_non_answers = TRUE) {
@@ -855,19 +865,19 @@ extract_clean_qs_typical_day <- function(this_form = '12_English') {
 #-------------------------------------------------------------------
 # Extract and clean by measure, given form
 
-extract_clean_basic_demog <- function(this_form = '12_English', drop_site_info = FALSE) {
+extract_clean_basic_demog <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'basic_demog', this_form = this_form)
   df <- clean_basic_demog(df)
-  if (drop_site_info) {
-    df <- df %>%
-      dplyr::select(., -play_site_name)
-  }
+  # if (drop_site_info) {
+  #   df <- df %>%
+  #     dplyr::select(., -play_site_name)
+  # }
   df
 }
 
-extract_clean_mb_cdi_eng_short <- function(this_form = '12_English') {
-  df <- extract_obs_for_measure(this_measure = 'mb_cdi_eng_short', this_form = this_form)
-  clean_mb_cdi_eng_short(df)
+extract_clean_mbcdi_eng_short <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'mbcdi_eng_short', this_form = this_form)
+  clean_mbcdi_eng_short(df)
 }
 
 extract_clean_dll_eng_short <- function(this_form = '12_English') {
@@ -877,8 +887,8 @@ extract_clean_dll_eng_short <- function(this_form = '12_English') {
 
 extract_clean_dll_span_short <- function(this_form = '12_Bilingual_Spanish') {
   
+  df <- extract_obs_for_measure(this_measure = 'dll_span_short', this_form = this_form)
   if (this_form == '12_Bilingual_Spanish' || this_form == '12_Bilingual_English') {
-    df <- extract_obs_for_measure(this_measure = 'dll_span_short', this_form = this_form)
     if (!is.null(df)) {
       clean_dll_span_short_12(df, omit_these = c(1,2))      
     } else {
@@ -902,8 +912,8 @@ extract_clean_dll_span_short <- function(this_form = '12_Bilingual_Spanish') {
 
 extract_clean_dll_eng_long <- function(this_form = '12_English') {
   
+  df <- extract_obs_for_measure(this_measure = 'dll_eng_long', this_form = this_form)
   if (this_form == '12_English') {
-    df <- extract_obs_for_measure(this_measure = 'dll_eng_long', this_form = this_form)
     if (!is.null(df)) {
       clean_dll_eng_long_12(df, omit_these = c(1,2))      
     } else {
@@ -918,12 +928,12 @@ extract_clean_dll_eng_long <- function(this_form = '12_English') {
       NULL
     }
   } else {
-    warning(paste0('Invalid form designation ', this_form))
+    warning(paste0('No DLL English Long measure for form `', this_form, '`.'))
     NULL
   }
 }
 
-extract_clean_demo_quest <- function(this_form = '12_English') {
+extract_clean_demo_quest <- function(this_form = 'Demographic_Questionnaires') {
   df <- extract_obs_for_measure(this_measure = 'demog_quest', this_form = this_form)
   clean_demog_quest(df)
 }
@@ -961,10 +971,15 @@ extract_clean_typical_day <- function(this_form = '12_English') {
 #-------------------------------------------------------------------
 # Make exportable data frames with reference demographics
 
-make_exportable_df_mb_cdi_eng_short <- function(this_form = '12_English') {
-  mb <- extract_clean_mb_cdi_eng_short(this_form)
-  dm <- extract_clean_basic_demog(this_form)
-  cbind(dm, mb)
+make_exportable_mbcdi_eng_short <- function(this_form = '12_English') {
+  dm <- extract_clean_mbcdi_eng_short(this_form)
+  hd <- extract_clean_basic_demog(this_form)
+  if (dim(dm)[1] == dim(hd)[1]) {
+    cbind(dm, hd)    
+  } else {
+    warning(paste0("MBCDI English short and demographics do not align for form ", this_form))
+    NULL
+  }
 }
 
 make_exportable_dll_eng_short <- function(this_form = '12_English') {
@@ -986,7 +1001,7 @@ make_exportable_dll_span_short <- function(this_form = '12_Bilingual_Spanish') {
   if (dim(dm)[1] == dim(hd)[1]) {
     cbind(dm, hd)    
   } else {
-    warning(paste0("DLL English Short and demographics do not align for form ", this_form))
+    warning(paste0("DLL Spanish Short and demographics do not align for form ", this_form))
     NULL
   }
 }
@@ -1091,7 +1106,7 @@ make_exportable_typical_day <- function(this_form = '12_English') {
 #   }
 # }
 
-save_session_file <- function(this_row, df, file_stem = 'PLAY_',
+save_session_file <- function(this_row, df, file_stem = 'file',
                               csv_path = 'csv') {
   if (!is.numeric(this_row)) {
     stop('`this_row` must be numeric.')
@@ -1124,7 +1139,7 @@ save_session_file <- function(this_row, df, file_stem = 'PLAY_',
 #-------------------------------------------------------------------
 # Export forms given aggregate data frame for measure
 
-export_forms_basic_demog <- function(df, csv_path = 'csv') {
+export_forms_basic_demog <- function(df = extract_clean_basic_demog(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1133,9 +1148,10 @@ export_forms_basic_demog <- function(df, csv_path = 'csv') {
   }
   file_list <- 1:dim(df)[1]
   purrr::map(file_list, save_session_file, df, file_stem = 'basic_demog', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_basic_demog.csv'))
 }
 
-export_forms_mbcdi_eng_short <- function(df, csv_path = 'csv') {
+export_forms_mbcdi_eng_short <- function(df = make_exportable_mbcdi_eng_short(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1143,11 +1159,11 @@ export_forms_mbcdi_eng_short <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-MBCDI-eng-short-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-MBCDI-eng-short-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'MBCDI_eng_short', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_MBCDI_eng_short.csv'))
 }
 
-export_forms_dll_eng_short <- function(df, csv_path = 'csv') {
+export_forms_dll_eng_short <- function(df = make_exportable_dll_eng_short(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1155,11 +1171,11 @@ export_forms_dll_eng_short <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-DLL-eng-short-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-DLL-eng-short-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'DLL_eng_short', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_eng_short.csv'))
 }
 
-export_forms_dll_span_short <- function(df, csv_path = 'csv') {
+export_forms_dll_span_short <- function(df = make_exportable_dll_span_short(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1167,11 +1183,11 @@ export_forms_dll_span_short <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-DLL-span-short-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-DLL-span-short-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'DLL_span_short', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_span_short.csv'))
 }
 
-export_forms_health <- function(df, csv_path = 'csv') {
+export_forms_health <- function(df = make_exportable_health(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1179,11 +1195,11 @@ export_forms_health <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-health-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-health-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'health', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_health.csv'))
 }
 
-export_forms_ebcq <- function(df, csv_path = 'csv') {
+export_forms_ebcq <- function(df = make_exportable_ecbq(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1191,11 +1207,11 @@ export_forms_ebcq <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-ECBQ-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-ECBQ.csv'))
+  purrr::map(file_list, save_session_file, df, 'ECBQ', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_ECBQ.csv'))
 }
 
-export_forms_media <- function(df, csv_path = 'csv') {
+export_forms_media <- function(df = make_exportable_media(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1203,11 +1219,11 @@ export_forms_media <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-media-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-media-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'media', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_media.csv'))
 }
 
-export_forms_pets <- function(df, csv_path = 'csv') {
+export_forms_pets <- function(df = make_exportable_pets(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1215,11 +1231,11 @@ export_forms_pets <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-pets-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-pets-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'pets', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_pets.csv'))
 }
 
-export_forms_household_labor <- function(df, csv_path = 'csv') {
+export_forms_household_labor <- function(df = make_exportable_household_labor(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1227,11 +1243,11 @@ export_forms_household_labor <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-household-labor-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-household-labor-all.csv'))
+  purrr::map(file_list, save_session_file, df, 'household_labor', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_household_labor.csv'))
 }
 
-export_forms_typical_day <- function(df, csv_path = 'csv') {
+export_forms_typical_day <- function(df = make_exportable_typical_day(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
   }
@@ -1239,92 +1255,99 @@ export_forms_typical_day <- function(df, csv_path = 'csv') {
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'PLAY-visit-typical-day-', csv_path)
-  readr::write_csv(df, paste0(csv_path, '/PLAY-visit-household-typical-day.csv'))
+  purrr::map(file_list, save_session_file, df, 'typical_day', csv_path)
+  #readr::write_csv(df, paste0('csv/by_form/', 'PLAY_all_typical_day.csv'))
 }
 
 #-------------------------------------------------------------------
 # Export all forms for given measure
 
-export_all_forms_mbcdi_eng_short <- function(csv_path = 'csv', 
-                                             these_forms = c('12_English', '18_English', '24_English',
+export_all_forms_mbcdi_eng_short <- function(these_forms = c('12_English', '18_English', '24_English',
                                                              '12_Bilingual_Spanish',
                                                              '12_Bilingual_English',
-                                                             '24_Bilingual_Spanish')
-) {
-  ff <- purrr::map(these_forms, make_exportable_df_mb_cdi_eng_short)
+                                                             '24_Bilingual_Spanish'),
+                                             csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_mbcdi_eng_short)
   purrr::map(ff, export_forms_mbcdi_eng_short, csv_path)
 }
 
-export_all_forms_dll_eng_short <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English',
-                     '12_Bilingual_Spanish',
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_dll_eng_short)
+export_all_forms_dll_eng_short <- function(these_forms = c('12_English', '18_English', '24_English',
+                                                           '12_Bilingual_Spanish',
+                                                           '12_Bilingual_English',
+                                                           '24_Bilingual_Spanish'),
+                                           csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_dll_eng_short)
   purrr::map(ff, export_forms_dll_eng_short, csv_path)
 }
 
-export_all_forms_dll_span_short <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_Bilingual_Spanish',
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_dll_span_short)
+export_all_forms_dll_span_short <- function(these_forms = c('12_Bilingual_Spanish',
+                                                            '12_Bilingual_English',
+                                                            '24_Bilingual_Spanish'),
+                                            csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_dll_span_short)
   purrr::map(ff, export_forms_dll_span_short, csv_path)
 }
 
-export_all_forms_basic_demog <- function(csv_path = 'csv',
-                                         these_forms = c('12_English', '18_English', '24_English', 
+export_all_forms_basic_demog <- function(these_forms = c('12_English', '18_English', '24_English', 
                                                          '12_Bilingual_Spanish', 
                                                          '12_Bilingual_English',
-                                                         '24_Bilingual_Spanish')) {
+                                                         '24_Bilingual_Spanish'),
+                                         csv_path = 'csv/by_session') {
   ff <- purrr::map(these_forms, extract_clean_basic_demog)
   purrr::map(ff, export_forms_basic_demog, csv_path)
 }
 
-export_all_forms_health <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_health)
+export_all_forms_health <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                    '12_Bilingual_Spanish', 
+                                                    '12_Bilingual_English',
+                                                    '24_Bilingual_Spanish'),
+                                    csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_health)
   purrr::map(ff, export_forms_health, csv_path)
 }
 
-export_all_forms_ecbq <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_ecbq)
+export_all_forms_ecbq <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                  '12_Bilingual_Spanish', 
+                                                  '12_Bilingual_English',
+                                                  '24_Bilingual_Spanish'),
+                                  csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_ecbq)
   purrr::map(ff, export_forms_ebcq, csv_path)
 }
 
-export_all_forms_media <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_media)
+export_all_forms_media <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                   '12_Bilingual_Spanish', 
+                                                   '12_Bilingual_English',
+                                                   '24_Bilingual_Spanish'),
+                                   csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_media)
   purrr::map(ff, export_forms_media, csv_path)
 }
 
-export_all_household_labor <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_household_labor)
+export_all_household_labor <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                       '12_Bilingual_Spanish', 
+                                                       '12_Bilingual_English',
+                                                       '24_Bilingual_Spanish'),
+                                       csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_household_labor)
   purrr::map(ff, export_forms_household_labor, csv_path)
 }
 
-export_all_forms_pets <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_pets)
+export_all_forms_pets <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                  '12_Bilingual_Spanish', 
+                                                  '12_Bilingual_English',
+                                                  '24_Bilingual_Spanish'),
+                                  csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_pets)
   purrr::map(ff, export_forms_pets, csv_path)
 }
 
-export_all_forms_typical_day <- function(csv_path = 'csv') {
-  ff <- purrr::map(c('12_English', '18_English', '24_English', 
-                     '12_Bilingual_Spanish', 
-                     '12_Bilingual_English',
-                     '24_Bilingual_Spanish'), make_exportable_typical_day)
+export_all_forms_typical_day <- function(these_forms = c('12_English', '18_English', '24_English', 
+                                                         '12_Bilingual_Spanish', 
+                                                         '12_Bilingual_English',
+                                                         '24_Bilingual_Spanish'),
+                                         csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_typical_day)
   purrr::map(ff, export_forms_typical_day, csv_path)
 }
 
