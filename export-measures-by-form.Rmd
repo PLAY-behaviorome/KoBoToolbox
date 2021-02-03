@@ -1,0 +1,1210 @@
+---
+title: "Export measures by form"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    code_folding: hide
+    self_contained: yes
+params:
+  kb_dir: '~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files'
+  csv_dir: 'csv/by_form'
+  db_login: 'email@provider.com'
+  force_regeneration: False
+---
+
+# Purpose
+
+This report generates a set of CSV files for each KoBoToolbox form and measure.
+
+To render the report, `rmarkdown::render('export-measures-by-form.Rmd', params=list(db_login='<YOUR_DB_LOGIN>'))`.
+
+# Set-up
+
+We source two packages for specific commands, source a set of specific functions needed for these operations, and log-in to Databrary.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+
+library(tidyverse)  # for pipe '%>%'
+library(readxl)     # for cell_cols()
+
+source("R/kobotoolbox.R")
+
+databraryapi::login_db(params$db_login)
+```
+
+# By form {.tabset}
+
+## `12_English`
+
+```{r}
+this_form <- '12_English'
+```
+
+### Day of visit demog
+
+```{r}
+basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(basic_demog)
+```
+
+### MBCDI English Short
+
+```{r}
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)
+```
+
+### DLL English Long
+
+```{r}
+dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
+```
+
+### Health
+
+```{r}
+health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(health)
+```
+
+### ECBQ
+
+```{r}
+ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(ecbq)
+```
+
+### Household labor
+
+```{r}
+household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(household_labor)
+```
+
+### Media
+
+```{r}
+media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(media)
+```
+
+### Pets
+
+```{r}
+pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(pets)
+```
+
+### Typical day
+
+```{r}
+typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(typical_day)
+```
+
+### Compare with Databrary
+
+```{r}
+these_play_ids <- basic_demog$play_site_id
+qa_db <- tibble::tibble(these_play_ids)
+
+qa_db <- qa_db %>%
+  dplyr::mutate(., child_dob = basic_demog$child_dob,
+                dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                child_sex = basic_demog$child_sex,
+                sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+                )
+
+qa_db %>%
+  kableExtra::kable(., format = 'html') %>%
+  kableExtra::kable_styling(.)
+```
+
+
+## `18_English`
+
+```{r}
+this_form <- '18_English'
+```
+
+### Day of visit demog
+
+```{r}
+basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(basic_demog)
+```
+
+### MBCDI English Short
+
+```{r}
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)
+```
+
+### DLL English Long
+
+```{r}
+dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
+```
+
+### Health
+
+```{r}
+health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(health)
+```
+
+### ECBQ
+
+```{r}
+ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(ecbq)
+```
+
+### Household labor
+
+```{r}
+household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(household_labor)
+```
+
+### Media
+
+```{r}
+media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(media)
+```
+
+### Pets
+
+```{r}
+pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(pets)
+```
+
+### Typical day
+
+```{r}
+typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(typical_day)
+```
+
+### Compare with Databrary
+
+```{r}
+these_play_ids <- basic_demog$play_site_id
+qa_db <- tibble::tibble(these_play_ids)
+
+qa_db <- qa_db %>%
+  dplyr::mutate(., child_dob = basic_demog$child_dob,
+                dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                child_sex = basic_demog$child_sex,
+                sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+                )
+
+qa_db %>%
+  kableExtra::kable(., format = 'html') %>%
+  kableExtra::kable_styling(.)
+```
+
+## `24_English`
+
+```{r}
+this_form <- '24_English'
+```
+
+### Day of visit demog
+
+```{r}
+basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(basic_demog)
+```
+
+### MBCDI English Short
+
+```{r}
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)
+```
+
+### DLL English Long
+
+```{r}
+dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
+```
+
+### Health
+
+```{r}
+health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(health)
+```
+
+### ECBQ
+
+```{r}
+ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(ecbq)
+```
+
+### Household labor
+
+```{r}
+household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(household_labor)
+```
+
+### Media
+
+```{r}
+media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(media)
+```
+
+### Pets
+
+```{r}
+pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(pets)
+```
+
+### Typical day
+
+```{r}
+typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(typical_day)
+```
+
+### Compare with Databrary
+
+```{r}
+these_play_ids <- basic_demog$play_site_id
+qa_db <- tibble::tibble(these_play_ids)
+
+qa_db <- qa_db %>%
+  dplyr::mutate(., child_dob = basic_demog$child_dob,
+                dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                child_sex = basic_demog$child_sex,
+                sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+                )
+
+qa_db %>%
+  kableExtra::kable(., format = 'html') %>%
+  kableExtra::kable_styling(.)
+```
+
+## `12_Bilingual_English`
+
+```{r}
+this_form <- '12_Bilingual_English'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r}
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
+```
+
+### DLL Spanish Short
+
+```{r}
+dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_span_short)
+```
+
+### Health
+
+```{r}
+health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(health)
+```
+
+### ECBQ
+
+```{r}
+ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(ecbq)
+```
+
+### Household labor
+
+```{r}
+household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(household_labor)
+```
+
+### Media
+
+```{r}
+media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(media)
+```
+
+### Pets
+
+```{r}
+pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(pets)
+```
+
+### Typical day
+
+```{r}
+typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(typical_day)
+```
+
+### Compare with Databrary
+
+```{r}
+these_play_ids <- basic_demog$play_site_id
+qa_db <- tibble::tibble(these_play_ids)
+
+qa_db <- qa_db %>%
+  dplyr::mutate(., child_dob = basic_demog$child_dob,
+                dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                child_sex = basic_demog$child_sex,
+                sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+                )
+
+qa_db %>%
+  kableExtra::kable(., format = 'html') %>%
+  kableExtra::kable_styling(.)
+```
+
+## `18_Bilingual_English`
+
+```{r}
+this_form <- '18_Bilingual_English'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r, eval=FALSE}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r, eval=FALSE}
+if (run_form) {
+  mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(mbcdi_eng_short)  
+}
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                                      save_regenerated = TRUE,
+                                      force_regeneration = params$force_regeneration)
+  str(dll_eng_long)  
+}
+```
+
+### DLL Spanish Short
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                                        save_regenerated = TRUE,
+                                        force_regeneration = params$force_regeneration)
+  str(dll_span_short)  
+}
+```
+
+### Health
+
+```{r, eval=FALSE}
+if (run_form) {
+  health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                                save_regenerated = TRUE,
+                                force_regeneration = params$force_regeneration)
+  str(health)  
+}
+```
+
+### ECBQ
+
+```{r, eval=FALSE}
+if (run_form) {
+  ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(ecbq)  
+}
+```
+
+### Household labor
+
+```{r, eval=FALSE}
+if (run_form) {
+  household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(household_labor)  
+}
+```
+
+### Media
+
+```{r, eval=FALSE}
+if (run_form) {
+  media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                               save_regenerated = TRUE,
+                               force_regeneration = params$force_regeneration)
+  str(media)  
+}
+```
+
+### Pets
+
+```{r, eval=FALSE}
+if (run_form) {
+  pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(pets)  
+}
+```
+
+### Typical day
+
+```{r, eval=FALSE}
+if (run_form) {
+  typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(typical_day)  
+}
+```
+
+### Compare with Databrary
+
+```{r, eval=FALSE}
+if (run_form) {
+  these_play_ids <- basic_demog$play_site_id
+  qa_db <- tibble::tibble(these_play_ids)
+  
+  qa_db <- qa_db %>%
+    dplyr::mutate(., child_dob = basic_demog$child_dob,
+                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                  child_sex = basic_demog$child_sex,
+                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    )
+  
+  qa_db %>%
+    kableExtra::kable(., format = 'html') %>%
+    kableExtra::kable_styling(.)  
+}
+```
+
+## `24_Bilingual_English`
+
+```{r}
+this_form <- '24_Bilingual_English'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r}
+if (run_form) {
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)  
+}
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                                      save_regenerated = TRUE,
+                                      force_regeneration = params$force_regeneration)
+  str(dll_eng_long)  
+}
+```
+
+### DLL Spanish Short
+
+```{r}
+if (run_form) {
+  dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                                        save_regenerated = TRUE,
+                                        force_regeneration = params$force_regeneration)
+  str(dll_span_short)  
+}
+```
+
+### Health
+
+```{r}
+if (run_form) {
+  health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                                save_regenerated = TRUE,
+                                force_regeneration = params$force_regeneration)
+  str(health)  
+}
+```
+
+### ECBQ
+
+```{r}
+if (run_form) {
+  ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(ecbq)  
+}
+```
+
+### Household labor
+
+```{r}
+if (run_form) {
+  household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(household_labor)  
+}
+```
+
+### Media
+
+```{r}
+if (run_form) {
+  media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                               save_regenerated = TRUE,
+                               force_regeneration = params$force_regeneration)
+  str(media)  
+}
+```
+
+### Pets
+
+```{r}
+if (run_form) {
+  pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(pets)  
+}
+```
+
+### Typical day
+
+```{r}
+if (run_form) {
+  typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(typical_day)  
+}
+```
+
+### Compare with Databrary
+
+```{r}
+if (run_form) {
+  these_play_ids <- basic_demog$play_site_id
+  qa_db <- tibble::tibble(these_play_ids)
+  
+  qa_db <- qa_db %>%
+    dplyr::mutate(., child_dob = basic_demog$child_dob,
+                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                  child_sex = basic_demog$child_sex,
+                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    )
+  
+  qa_db %>%
+    kableExtra::kable(., format = 'html') %>%
+    kableExtra::kable_styling(.)  
+}
+```
+
+## `12_Bilingual_Spanish`
+
+```{r}
+this_form <- '12_Bilingual_Spanish'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r}
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
+```
+
+### DLL Spanish Short
+
+```{r}
+dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_span_short)
+```
+
+### Health
+
+```{r}
+health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(health)
+```
+
+### ECBQ
+
+```{r}
+ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(ecbq)
+```
+
+### Household labor
+
+```{r}
+household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(household_labor)
+```
+
+### Media
+
+```{r}
+media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(media)
+```
+
+### Pets
+
+```{r}
+pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(pets)
+```
+
+### Typical day
+
+```{r}
+typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(typical_day)
+```
+
+### Compare with Databrary
+
+```{r}
+these_play_ids <- basic_demog$play_site_id
+qa_db <- tibble::tibble(these_play_ids)
+
+qa_db <- qa_db %>%
+  dplyr::mutate(., child_dob = basic_demog$child_dob,
+                dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                child_sex = basic_demog$child_sex,
+                sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+                )
+
+qa_db %>%
+  kableExtra::kable(., format = 'html') %>%
+  kableExtra::kable_styling(.)
+```
+
+## `18_Bilingual_Spanish`
+
+```{r}
+this_form <- '18_Bilingual_Spanish'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r, eval=FALSE}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r, eval=FALSE}
+if (run_form) {
+  mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(mbcdi_eng_short)  
+}
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                                      save_regenerated = TRUE,
+                                      force_regeneration = params$force_regeneration)
+  str(dll_eng_long)  
+}
+```
+
+### DLL Spanish Short
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                                        save_regenerated = TRUE,
+                                        force_regeneration = params$force_regeneration)
+  str(dll_span_short)  
+}
+```
+
+### Health
+
+```{r, eval=FALSE}
+if (run_form) {
+  health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                                save_regenerated = TRUE,
+                                force_regeneration = params$force_regeneration)
+  str(health)  
+}
+```
+
+### ECBQ
+
+```{r, eval=FALSE}
+if (run_form) {
+  ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(ecbq)  
+}
+```
+
+### Household labor
+
+```{r, eval=FALSE}
+if (run_form) {
+  household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(household_labor)  
+}
+```
+
+### Media
+
+```{r, eval=FALSE}
+if (run_form) {
+  media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                               save_regenerated = TRUE,
+                               force_regeneration = params$force_regeneration)
+  str(media)  
+}
+```
+
+### Pets
+
+```{r, eval=FALSE}
+if (run_form) {
+  pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(pets)  
+}
+```
+
+### Typical day
+
+```{r, eval=FALSE}
+if (run_form) {
+  typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(typical_day)  
+}
+```
+
+### Compare with Databrary
+
+```{r, eval=FALSE}
+if (run_form) {
+  these_play_ids <- basic_demog$play_site_id
+  qa_db <- tibble::tibble(these_play_ids)
+  
+  qa_db <- qa_db %>%
+    dplyr::mutate(., child_dob = basic_demog$child_dob,
+                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                  child_sex = basic_demog$child_sex,
+                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    )
+  
+  qa_db %>%
+    kableExtra::kable(., format = 'html') %>%
+    kableExtra::kable_styling(.)  
+}
+```
+
+## `24_Bilingual_Spanish`
+
+```{r}
+this_form <- '24_Bilingual_Spanish'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+### Day of visit demog
+
+```{r}
+if (run_form) {
+  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(basic_demog)  
+}
+```
+
+### MBCDI English Short
+
+```{r}
+if (run_form) {
+mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', 
+                                       regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(mbcdi_eng_short)  
+}
+```
+
+### DLL English Long
+
+This measure is not collected from `r this_form` participants.
+
+```{r, eval=FALSE}
+if (run_form) {
+  dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
+                                      save_regenerated = TRUE,
+                                      force_regeneration = params$force_regeneration)
+  str(dll_eng_long)  
+}
+```
+
+### DLL Spanish Short
+
+```{r}
+if (run_form) {
+  dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
+                                        save_regenerated = TRUE,
+                                        force_regeneration = params$force_regeneration)
+  str(dll_span_short)  
+}
+```
+
+### DLL Bilingual Long
+
+```{r}
+if (run_form) {
+  dll_biling_long <- load_kbform_measure(this_form, 'dll_biling_long',
+                                         regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration =
+                                           params$force_regeneration)
+  str(dll_biling_long)  
+}
+```
+
+### Health
+
+```{r}
+if (run_form) {
+  health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
+                                save_regenerated = TRUE,
+                                force_regeneration = params$force_regeneration)
+  str(health)  
+}
+```
+
+### ECBQ
+
+```{r}
+if (run_form) {
+  ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(ecbq)  
+}
+```
+
+### Household labor
+
+```{r}
+if (run_form) {
+  household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
+                                         save_regenerated = TRUE,
+                                         force_regeneration = params$force_regeneration)
+  str(household_labor)  
+}
+```
+
+### Media
+
+```{r}
+if (run_form) {
+  media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
+                               save_regenerated = TRUE,
+                               force_regeneration = params$force_regeneration)
+  str(media)  
+}
+```
+
+### Pets
+
+```{r}
+if (run_form) {
+  pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+  str(pets)  
+}
+```
+
+### Typical day
+
+```{r}
+if (run_form) {
+  typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
+                                     save_regenerated = TRUE,
+                                     force_regeneration = params$force_regeneration)
+  str(typical_day)  
+}
+```
+
+### Compare with Databrary
+
+```{r}
+if (run_form) {
+  these_play_ids <- basic_demog$play_site_id
+  qa_db <- tibble::tibble(these_play_ids)
+  
+  qa_db <- qa_db %>%
+    dplyr::mutate(., child_dob = basic_demog$child_dob,
+                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+                  child_sex = basic_demog$child_sex,
+                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    )
+  
+  qa_db %>%
+    kableExtra::kable(., format = 'html') %>%
+    kableExtra::kable_styling(.)  
+}
+```
+
+
+# Clean-up
+
+```{r}
+databraryapi::logout_db()
+```
+

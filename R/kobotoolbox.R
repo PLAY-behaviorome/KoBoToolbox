@@ -23,7 +23,12 @@ return_matching_kobo_form <- function(kobo_form_frag = "18_English",
   }
   
   fl <- list.files(xlsx_dir, kobo_form_frag, full.names = TRUE)
-  unlist(fl)
+  if (length(fl) > 0) {
+    unlist(fl)    
+  } else {
+    warning('No form found `', kobo_form_frag, '`.')
+    NULL
+  }
 }
 
 extract_measures_for_form <- function(this_form = '12_English', 
@@ -67,7 +72,7 @@ extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '1
   
   this_form_fn <- return_matching_kobo_form(this_form)
   if (length(this_form_fn) > 1) {
-    stop('More than one file for this form.')
+    stop('More than one file for this form. Is it open in another program (e.g., Excel)?')
   }
   
   this_cell_range <- extract_range_for_form_measure(this_form, this_measure)
@@ -270,6 +275,30 @@ clean_dll_eng_long_18_24 <- function(df = extract_obs_for_measure('dll_eng_long'
   
   df
   
+}
+
+clean_dll_biling_long_18_24 <- function(df = extract_obs_for_measure('dll_biling_long', this_form = '24_Bilingual_Spanish'), 
+                                     omit_these = c(1, 2, 7, 8)) {
+  df_names <- names(df)
+  
+  df_names_trim <- df_names %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/18 mo/MCDI \\(18 mo\\)') %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/24 mo/MCDI \\(24 mo\\)') %>%
+    stringr::str_remove_all(., '\\(Bilingual - Spanish first\\)/Long Form Supplement \\(English\\)/') %>%
+    stringr::str_remove_all(., '\\(Note\\: Select all the words that the mother says') %>%
+    stringr::str_remove_all(., ' \\$\\{child_first_name\\}') %>%
+    stringr::str_remove_all(., ' SAYS\\.\\)/') %>%
+    stringr::str_remove_all(., '\\"Las primeras palabras van a ser SONIDOS. ¿Alguna vez ha escuchado a decir o hacer los siguientes SONIDOS por si solo') %>%
+    stringr::str_remove_all(., '/a\\?/') %>%
+    stringr::str_remove_all(., '...[0-9]+')
+  
+  df_names_trim <- stringr::str_remove_all(df_names_trim, '^ ')
+  
+  names(df) <- df_names_trim
+  
+  df <- df[-omit_these]
+  
+  df
 }
 
 clean_demog_quest <- function(df = extract_obs_for_measure('demog_quest', 'Demographic_Questionnaire'),
@@ -933,6 +962,29 @@ extract_clean_dll_eng_long <- function(this_form = '12_English') {
   }
 }
 
+extract_clean_dll_biling_long <- function(this_form = '24_Bilingual_Spanish') {
+  
+  df <- extract_obs_for_measure(this_measure = 'dll_biling_long', this_form = this_form)
+  if (this_form == '12_Bilingual_Spanish') {
+    if (!is.null(df)) {
+      clean_dll_biling_long_12(df, omit_these = c(1,2))      
+    } else {
+      warning('Cannot extract `dll_biling_long` for form `', this_form, '`.')
+      NULL
+    }
+  } else if (this_form == '18_Bilingual_Spanish' || this_form == '24_Bilingual_Spanish') {
+    if (!is.null(df)) {
+      clean_dll_biling_long_18_24(df, omit_these = c(1, 2, 7, 8))      
+    } else {
+      warning('Cannot extract `dll_biling_long` for form `', this_form, '`.')
+      NULL
+    }
+  } else {
+    warning(paste0('No DLL English Long measure for form `', this_form, '`.'))
+    NULL
+  }
+}
+
 extract_clean_demo_quest <- function(this_form = 'Demographic_Questionnaires') {
   df <- extract_obs_for_measure(this_measure = 'demog_quest', this_form = this_form)
   clean_demog_quest(df)
@@ -1002,6 +1054,18 @@ make_exportable_dll_span_short <- function(this_form = '12_Bilingual_Spanish') {
     cbind(dm, hd)    
   } else {
     warning(paste0("DLL Spanish Short and demographics do not align for form ", this_form))
+    NULL
+  }
+}
+
+make_exportable_dll_biling_long <- function(this_form = '24_Bilingual_Spanish') {
+  dm <- extract_clean_basic_demog(this_form)
+  hd <- extract_clean_dll_span_short(this_form)
+  
+  if (dim(dm)[1] == dim(hd)[1]) {
+    cbind(dm, hd)    
+  } else {
+    warning(paste0("DLL Bilingual Long and demographics do not align for form ", this_form))
     NULL
   }
 }
@@ -1187,6 +1251,18 @@ export_forms_dll_span_short <- function(df = make_exportable_dll_span_short(), c
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_span_short.csv'))
 }
 
+export_forms_dll_biling_long <- function(df = make_exportable_dll_biling_long(), csv_path = 'csv/by_session') {
+  if (!is.data.frame(df)) {
+    stop(paste0('`df` must be a data frame' ))
+  }
+  if (!dir.exists(csv_path)) {
+    stop(paste0('CSV path not found: ', csv_path))
+  }
+  file_list <- 1:dim(df)[1]
+  purrr::map(file_list, save_session_file, df, 'DLL_biling_long', csv_path)
+  #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_span_short.csv'))
+}
+
 export_forms_health <- function(df = make_exportable_health(), csv_path = 'csv/by_session') {
   if (!is.data.frame(df)) {
     stop(paste0('`df` must be a data frame' ))
@@ -1288,6 +1364,14 @@ export_all_forms_dll_span_short <- function(these_forms = c('12_Bilingual_Spanis
   purrr::map(ff, export_forms_dll_span_short, csv_path)
 }
 
+export_all_forms_dll_biling_long <- function(these_forms = c('12_Bilingual_Spanish',
+                                                            '12_Bilingual_English',
+                                                            '24_Bilingual_Spanish'),
+                                            csv_path = 'csv/by_session') {
+  ff <- purrr::map(these_forms, make_exportable_dll_biling_long)
+  purrr::map(ff, export_forms_dll_biling_long, csv_path)
+}
+
 export_all_forms_basic_demog <- function(these_forms = c('12_English', '18_English', '24_English', 
                                                          '12_Bilingual_Spanish', 
                                                          '12_Bilingual_English',
@@ -1359,10 +1443,334 @@ export_all_measures_all_forms <- function() {
   export_all_forms_mbcdi_eng_short()
   export_all_forms_dll_eng_short()
   export_all_forms_dll_span_short()
+  export_all_forms_dll_biling_long()
   export_all_forms_health()
   export_all_forms_ecbq()
   export_all_forms_media()
   export_all_household_labor()
   export_all_forms_pets()
   export_all_forms_typical_day()
+}
+
+# Functions to interact with Databrary
+
+check_db_authentication <- function() {
+  if (!file.exists('.databrary.RData')) {
+    databraryapi::login_db()
+  }
+}
+
+match_session_id_from_databrary <- function(df) {
+  require(tidyverse)
+  
+  check_db_authentication()
+  # Given a data frame with a session-specific data, determine if the session is on Databrary
+  db_site_info <- get_db_site_info(df)
+  if (is.null(db_site_info)) {
+    stop(paste0('Unable to match this session to known sites.'))
+    df
+  }
+  
+  # Get session list from Databrary
+  db_session_list_for_vol <- databraryapi::list_sessions_in_volume(db_site_info$db_vol_id)
+  
+  if (is.null(db_session_list_for_vol)) {
+    stop(paste0('Unable to retrieve info for volume `', db_site_info$db_vol_id, '` from Databrary.'))
+  }
+  
+  this_session <- db_session_list_for_vol %>%
+    dplyr::filter(., stringr::str_detect(name, as.character(df$site_child_id))) %>%
+    dplyr::select(., session_id)
+  
+  if (dim(this_session)[1] == 0) {
+    paste0("_", df$site_child_id, "_NODB")
+  } else {
+    this_session
+  }
+}
+
+get_db_site_info <- function(df) {
+  require(tidyverse)
+  
+  if (is.null(df)) {
+    stop('Data frame must not be NULL.')
+    NULL
+  }
+  
+  # sites_df <- readr::read_csv('csv/.analysis/sites_databrary.csv')
+  # if (dim(sites_df)[1] <= 0) {
+  #   stop('Unable to read `sites_databrary.csv`')
+  # }
+  
+  if ('play_site_name' %in% names(df)) {
+    sites_df <- readr::read_csv('csv/.analysis/sites_databrary.csv')
+    
+    if (dim(sites_df)[1] <= 0) {
+      stop('Unable to read `sites_databrary.csv`')
+    }
+    
+    this_site <- sites_df %>%
+      dplyr::filter(., site_name == df$play_site_name)
+    this_site
+    
+  } else {
+    message("`play_site_id` not found in data frame.")
+    NULL
+  }
+}
+
+make_play_site_code <- function(df) {
+  this_site <- get_db_site_info(df)
+  this_session <- match_session_id_from_databrary(df)
+  paste0("PLAY_", this_site$db_vol_id, this_session)
+}
+
+get_play_site_code <- function(row_index, df) {
+  if (row_index > dim(df)[1]) {
+    stop('Row `', row_index, '` out of range.')
+  }
+  if (row_index <= 0) {
+    stop('`row_index` must be > 0.')
+  }
+  #cat(row_index, "\n")
+  make_play_site_code(df[row_index,])
+}
+
+get_play_site_codes <- function(df) {
+  row_index <- 1:dim(df)[1]
+  unlist(purrr::map(row_index, get_play_site_code, df))
+}
+
+# QA
+
+create_agg_basic_demo <- function(csv_dir = 'csv/by_form') {
+  fl <- list.files(csv_dir, 'basic_demog_[0-9]{2}', full.names = TRUE)
+  if (length(fl) > 0) {
+    purrr::map_df(fl, readr::read_csv)
+  }
+}
+
+create_agg_pets <- function() {
+  purrr::map_df(c('12_English', '18_English', '24_English', 
+                  '12_Bilingual_Spanish', '24_Bilingual_Spanish'), 
+                load_kbform_measure, this_measure = 'pets', force_regeneration = FALSE)
+}
+
+create_agg_measure <- function(this_measure, 
+                               these_forms = c('12_English', '18_English', '24_English', 
+                                               '12_Bilingual_Spanish', '24_Bilingual_Spanish',
+                                               '12_Bilingual_English')) {
+  purrr::map_df(these_forms, 
+                load_kbform_measure, this_measure = this_measure, force_regeneration = FALSE)
+}
+
+create_agg_all <- function() {
+  purrr::map(these_measures, create_agg_measure)
+}
+
+find_session_in_kbform <- function(this_form = '12_English', this_vol = 899, this_session = 41894) {
+  require(tidyverse)
+  
+  if (!is.character(this_form)) {
+    stop('`this_form` must be a string.')
+  }
+  
+  df <- load_kbform_measure(this_form)
+  
+  if (is.null(df)) {
+    stop(paste0('No basic_demog data extracted for form `', this_form, '`.'))
+  }
+  
+  if ('play_site_id' %in% names(df)) {
+    this_kbt <- df %>%
+      dplyr::filter(., stringr::str_detect(play_site_id, paste0(this_vol, this_session)))
+    if (dim(this_kbt)[1] > 0) {
+      this_kbt          
+    } else {
+      warning(paste0('No `play_site_id` == `', "PLAY_", this_vol, this_session, '` found for form `', this_form, '`'))
+      NULL 
+    }
+  } else {
+    warning(paste0('No `play_site_id` == `', "PLAY_", this_vol, this_session, '` found for form `', this_form, '`.'))
+    NULL
+  }
+}
+
+# load_basic_demog()
+# Loads data frame of basic demographic info from a specified KoBoToolbox form from a specified directory
+# where a CSV might reside. If there is no CSV, then the function regenerates the data frame.
+load_kbform_measure <- function(this_form = '12_English', this_measure = 'basic_demog', 
+                                csv_dir = 'csv',
+                                regenerate_if_missing = TRUE,
+                                save_regenerated = TRUE,
+                                force_regeneration = FALSE) {
+  require(tidyverse)
+  
+  if (!is.character(this_form)) {
+    stop('`this_form` must be a string.')
+  }
+  if (!is.character(this_measure)) {
+    stop('`this_measure` must be a string.')
+  }
+  if (!is.character(csv_dir)) {
+    stop('`csv_dir` must be a string.')
+  }
+  if (!dir.exists(paste(csv_dir, 'by_form', sep="/"))) {
+    stop('Directory `', csv_dir, '` not found.')
+  }
+  
+  this_fn <- paste0(csv_dir, "/by_form/", this_measure, "_", this_form, ".csv")
+  if (!file.exists(this_fn)) {
+    message('  File `', this_fn, '` not found.')
+    if (regenerate_if_missing) {
+      df <- extract_clean_form_measure(this_form, this_measure)
+      if (save_regenerated) {
+        readr::write_csv(df, this_fn)
+        message("  Saved file `", this_fn, '`.')
+      }
+      df
+    }
+  } else {
+    if (force_regeneration) {
+      message("  Regenerating data for form `", this_form, '` and measure `', this_measure, '`.')
+      df <- extract_clean_form_measure(this_form, this_measure)
+      df$site_child_id <- as.numeric(df$site_child_id)
+      if (save_regenerated) {
+        readr::write_csv(df, this_fn)
+        message("  Saved file `", this_fn, '`.')
+      }
+      df
+    } else {
+      readr::read_csv(this_fn)      
+    }
+  }
+}
+
+extract_clean_form_measure <- function(this_form = '12_English', this_measure = 'basic_demog') {
+  if (!is.character(this_form)) {
+    stop('`this_form` must be a string.')
+  }
+  if (!is.character(this_measure)) {
+    stop('`this_measure` must be a string.')
+  }
+  if (this_measure == 'basic_demog') {
+    df <- extract_clean_basic_demog(this_form)
+  }
+  if (this_measure == 'health') {
+    df <- extract_clean_health(this_form)
+  }
+  if (this_measure == 'pets') {
+    df <- extract_clean_pets(this_form)
+  }
+  if (this_measure == 'mbcdi_eng_short') {
+    df <- extract_clean_mbcdi_eng_short(this_form)
+  }
+  if (this_measure == 'dll_span_short') {
+    df <- extract_clean_dll_span_short(this_form)
+  }
+  if (this_measure == 'dll_eng_long') {
+    df <- extract_clean_dll_eng_long(this_form)
+  }
+  if (this_measure == 'dll_biling_long') {
+    df <- extract_clean_dll_biling_long(this_form)
+  }
+  if (this_measure == 'ecbq') {
+    df <- extract_clean_ecbq(this_form)
+  }  
+  if (this_measure == 'media') {
+    df <- extract_clean_media(this_form)
+  }
+  if (this_measure == 'household_labor') {
+    df <- extract_clean_household_labor(this_form)
+  }
+  if (this_measure == 'typical_day') {
+    df <- extract_clean_typical_day(this_form)
+  }
+  if (this_measure == 'demog_quest') {
+    df <- extract_clean_demo_quest(this_form)
+  }
+  df
+}
+
+session_from_play_id <- function(this_play_session_id = 'PLAY_89938196') {
+  stringr::str_extract(this_play_session_id, '[0-9]{5}$')
+}
+
+vol_from_play_id <- function(this_play_session_id = 'PLAY_89938196') {
+  require(tidyverse)
+  
+  this_play_session_id %>%
+    stringr::str_remove(., stringr::str_extract(this_play_session_id, '[0-9]{5}$')) %>%
+    stringr::str_remove(., 'PLAY_')  
+}
+
+load_databrary_session <- function(this_play_session_id = 'PLAY_89938196') {
+  require(tidyverse)
+  
+  if (stringr::str_detect(this_play_session_id, 'NODB')) {
+    warning('No Databrary session for `', this_play_session_id, '`.')
+    return(NULL)
+  }
+  
+  this_session <- session_from_play_id(this_play_session_id)
+  this_vol <- vol_from_play_id(this_play_session_id)
+  db_sessions <- databraryapi::download_session_csv(vol_id = as.numeric(this_vol))
+  
+  if (is.null(db_sessions)) {
+    message('Cannot access Databrary session for `', this_play_session_id, '`. Are you logged in to Databrary?' )
+    NULL
+  } else {
+    this_db_session <- db_sessions %>%
+      dplyr::filter(., vol_id == this_vol,
+                    session_id == this_session)
+    this_db_session    
+  }
+}
+
+# compare Kb data to that on Databrary
+
+kb_eq_db_dob_by_id <- function( this_play_session_id = 'PLAY_89938196', this_form = '18_English') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  kb_df$child_dob == db_df$participant.birthdate
+}
+
+kb_eq_db_dob <- function(this_form = '18_English', this_play_session_id = 'PLAY_89938196') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  kb_df$child_dob == db_df$participant.birthdate
+}
+
+kb_eq_db_session_date_by_id <- function(this_play_session_id = 'PLAY_89938196', this_form = '18_English') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  
+  kb_df$todays_date == db_df$session_date
+}
+
+kb_eq_db_session_date <- function(this_form = '18_English', this_play_session_id = 'PLAY_89938196') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  
+  kb_df$todays_date == db_df$session_date
+}
+
+kb_eq_db_sex <- function(this_form = '18_English', this_play_session_id = 'PLAY_89938196') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  
+  tolower(kb_df$child_sex) == tolower(db_df$participant.gender)
+}
+
+kb_eq_db_sex_by_id <- function(this_play_session_id = 'PLAY_89938196', this_form = '18_English') {
+  db_df <- load_databrary_session(this_play_session_id)
+  kb_df <- find_session_in_kbform(this_form, this_session = session_from_play_id(this_play_session_id),
+                                  this_vol = vol_from_play_id(this_play_session_id))
+  
+  tolower(kb_df$child_sex) == tolower(db_df$participant.gender)
 }
