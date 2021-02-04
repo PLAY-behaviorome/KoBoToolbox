@@ -38,7 +38,7 @@ databraryapi::login_db(params$db_login)
 
 # By form {.tabset}
 
-## `12_English`
+## 12_English
 
 ```{r}
 this_form <- '12_English'
@@ -47,54 +47,84 @@ this_form <- '12_English'
 ### Day of visit demog
 
 ```{r}
-basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+basic_demog <-
+  load_kbform_measure(
+    this_form,
+    'basic_demog',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(basic_demog)
 ```
 
 ### MBCDI English Short
 
 ```{r}
-mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+mbcdi_eng_short <-
+  load_kbform_measure(
+    this_form,
+    'mbcdi_eng_short',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(mbcdi_eng_short)
 ```
 
 ### DLL English Long
 
 ```{r}
-dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+dll_eng_long <-
+  load_kbform_measure(
+    this_form,
+    'dll_eng_long',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(dll_eng_long)
 ```
 
 ### Health
 
 ```{r}
-health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+health <-
+  load_kbform_measure(
+    this_form,
+    'health',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(health)
 ```
 
 ### ECBQ
 
 ```{r}
-ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+ecbq <-
+  load_kbform_measure(
+    this_form,
+    'ecbq',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(ecbq)
 ```
 
 ### Household labor
 
 ```{r}
-household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+household_labor <-
+  load_kbform_measure(
+    this_form,
+    'household_labor',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(household_labor)
 ```
 
@@ -145,7 +175,7 @@ qa_db %>%
 ```
 
 
-## `18_English`
+## 18_English
 
 ```{r}
 this_form <- '18_English'
@@ -251,7 +281,7 @@ qa_db %>%
   kableExtra::kable_styling(.)
 ```
 
-## `24_English`
+## 24_English
 
 ```{r}
 this_form <- '24_English'
@@ -357,7 +387,7 @@ qa_db %>%
   kableExtra::kable_styling(.)
 ```
 
-## `12_Bilingual_English`
+## 12_Bilingual_English
 
 ```{r}
 this_form <- '12_Bilingual_English'
@@ -389,16 +419,9 @@ mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_
 str(mbcdi_eng_short)
 ```
 
-### DLL English Long
+### MBCDI Spanish Short
 
-This measure is not collected from `r this_form` participants.
-
-```{r, eval=FALSE}
-dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
-str(dll_eng_long)
-```
+### DLL English Short
 
 ### DLL Spanish Short
 
@@ -407,6 +430,15 @@ dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if
                               save_regenerated = TRUE,
                               force_regeneration = params$force_regeneration)
 str(dll_span_short)
+```
+
+### DLL Bilingual Long
+
+```{r, eval=FALSE}
+dll_biling_long <- load_kbform_measure(this_form, 'dll_biling_long', regenerate_if_missing = TRUE,
+                              save_regenerated = TRUE,
+                              force_regeneration = params$force_regeneration)
+str(dll_eng_long)
 ```
 
 ### Health
@@ -482,7 +514,7 @@ qa_db %>%
   kableExtra::kable_styling(.)
 ```
 
-## `18_Bilingual_English`
+## 18_Bilingual_English
 
 ```{r}
 this_form <- '18_Bilingual_English'
@@ -627,7 +659,7 @@ if (run_form) {
 }
 ```
 
-## `24_Bilingual_English`
+## 24_Bilingual_English
 
 ```{r}
 this_form <- '24_Bilingual_English'
@@ -759,20 +791,22 @@ if (run_form) {
   qa_db <- tibble::tibble(these_play_ids)
   
   qa_db <- qa_db %>%
-    dplyr::mutate(., child_dob = basic_demog$child_dob,
-                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
-                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
-                  child_sex = basic_demog$child_sex,
-                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    dplyr::mutate(
+      .,
+      child_dob = basic_demog$child_dob,
+      dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+      session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
+      child_sex = basic_demog$child_sex,
+      sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
     )
   
   qa_db %>%
     kableExtra::kable(., format = 'html') %>%
-    kableExtra::kable_styling(.)  
+    kableExtra::kable_styling(.)
 }
 ```
 
-## `12_Bilingual_Spanish`
+## 12_Bilingual_Spanish
 
 ```{r}
 this_form <- '12_Bilingual_Spanish'
@@ -788,39 +822,60 @@ if (is.null(return_matching_kobo_form(this_form))) {
 
 ```{r}
 if (run_form) {
-  basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
-                                     save_regenerated = TRUE,
-                                     force_regeneration = params$force_regeneration)
-  str(basic_demog)  
+  basic_demog <-
+    load_kbform_measure(
+      this_form,
+      'basic_demog',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(basic_demog)
 }
 ```
 
 ### MBCDI English Short
 
 ```{r}
-mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+mbcdi_eng_short <-
+  load_kbform_measure(
+    this_form,
+    'mbcdi_eng_short',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(mbcdi_eng_short)
 ```
 
-### DLL English Long
 
-This measure is not collected from `r this_form` participants.
-
-```{r, eval=FALSE}
-dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
-str(dll_eng_long)
-```
 
 ### DLL Spanish Short
 
+
 ```{r}
-dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
-                              save_regenerated = TRUE,
-                              force_regeneration = params$force_regeneration)
+dll_span_short <-
+  load_kbform_measure(
+    this_form,
+    'dll_span_short',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
+str(dll_span_short)
+```
+
+### DLL Bilingual Long
+
+```{r}
+dll_biling_long <-
+  load_kbform_measure(
+    this_form,
+    'dll_biling_long',
+    regenerate_if_missing = TRUE,
+    save_regenerated = TRUE,
+    force_regeneration = params$force_regeneration
+  )
 str(dll_span_short)
 ```
 
@@ -897,7 +952,7 @@ qa_db %>%
   kableExtra::kable_styling(.)
 ```
 
-## `18_Bilingual_Spanish`
+## 18_Bilingual_Spanish
 
 ```{r}
 this_form <- '18_Bilingual_Spanish'
@@ -1042,7 +1097,7 @@ if (run_form) {
 }
 ```
 
-## `24_Bilingual_Spanish`
+## 24_Bilingual_Spanish
 
 ```{r}
 this_form <- '24_Bilingual_Spanish'
@@ -1201,6 +1256,26 @@ if (run_form) {
 }
 ```
 
+
+
+# Create by-measure CSVs
+
+```{r create-by-measure-csvs}
+these_measures <- c(
+  'basic_demog',
+  'mbcdi_eng_short',
+  'dll_eng_long',
+  'dll_span_short',
+  'dll_biling_long',
+  'ECBQ',
+  'pets',
+  'media',
+  'household_labor',
+  'typical_day'
+)
+
+purrr::map(these_measures, export_aggregate_csv_for_measure)
+```
 
 # Clean-up
 
