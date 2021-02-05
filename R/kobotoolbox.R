@@ -193,6 +193,45 @@ clean_mbcdi_eng_short <- function(df = extract_obs_for_measure('mbcdi_eng_short'
   df
 }
 
+clean_mbcdi_span_short_12 <- function(df = extract_obs_for_measure('mbcdi_span_short'), 
+                                      omit_these = c(1:10)) {
+  
+  df_names <- names(df)
+  
+  df_names_trim <- df_names %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/12 mo/') %>%
+    stringr::str_remove_all(., 'Short Form \\(Spanish\\)//') %>%
+    stringr::str_remove_all(., 'MCDI \\(12 mo\\) \\(English only\\)/') %>%
+    stringr::str_remove_all(., 'Investigador: “Primero revisaremos una lista de palabras en ESPAÑOL. Por favor indique cuales palabras') %>%
+    stringr::str_remove_all(., '\\$\\{child_first_name\\} comprende y cuales palabras \\$\\{child_first_name\\} es capaz de comprender y decir.\\"__') %>%
+    stringr::str_remove_all(., 'Short Form \\(Spanish\\)/')
+  
+  names(df) <- df_names_trim
+  
+  df <- df[-omit_these]
+  
+  df
+}
+
+clean_mbcdi_span_short_18_24 <- function(df = extract_obs_for_measure('mbcdi_span_short'), 
+                                      omit_these = c(1:9)) {
+  
+  df_names <- names(df)
+  
+  df_names_trim <- df_names %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/24 mo/MCDI \\(24 mo\\)') %>%
+    stringr::str_remove_all(., 'Combined Questionnaires \\(PLAY\\)/Home Visit Questionnaires/MacArthur CDI/18 mo/MCDI \\(18 mo\\)') %>%
+    stringr::str_remove_all(., ' \\(Bilingual - Spanish first\\)') %>%
+    stringr::str_remove_all(., '/Short Form \\(Spanish\\)/') %>%
+    stringr::str_remove_all(., '\\(Nota\\: Seleccione todas las palabras que la madre dice que \\$\\{child_first_name\\} DICE EN ESPAÑOL.\\)/')
+
+  names(df) <- df_names_trim
+  
+  df <- df[-omit_these]
+  
+  df
+}
+
 clean_dll_eng_short <- function(df = extract_obs_for_measure('dll_eng_short'), omit_these = c(1:2)) {
   df_names <- stringr::str_split(string = names(df), pattern = "/")
   
@@ -335,7 +374,8 @@ clean_dll_biling_long_12 <- function(df = extract_obs_for_measure('dll_biling_lo
 }
 
 clean_dll_biling_long_18_24 <- function(df = extract_obs_for_measure('dll_biling_long', this_form = '24_Bilingual_Spanish'), 
-                                     omit_these = c(1, 2, 7, 8)) {
+                                     omit_these = c(1, 2, 7, 8,
+                                                    seq(9, 435, by=3))) {
   df_names <- names(df)
   
   df_names_trim <- df_names %>%
@@ -991,6 +1031,30 @@ extract_clean_mbcdi_eng_short <- function(this_form = '12_English') {
   df
 }
 
+extract_clean_mbcdi_span_short <- function(this_form = '12_Bilingual_Spanish') {
+  df <- extract_obs_for_measure(this_measure = 'mbcdi_span_short', this_form = this_form)
+  
+  if (this_form == '12_Bilingual_Spanish' || this_form == '12_Bilingual_English') {
+    if (!is.null(df)) {
+      clean_mbcdi_span_short_12(df)      
+    } else {
+      warning('Cannot extract `mbcdi_span_short` for form `', this_form, '`.')
+      NULL
+    }
+  } else if (this_form == '18_Bilingual_Spanish' || this_form == '18_Bilingual_English'
+             || this_form == '24_Bilingual_Spanish' || this_form == '24_Bilingual_English') {
+    if (!is.null(df)) {
+      clean_mbcdi_span_short_18_24(df)      
+    } else {
+      warning('Cannot extract `mbcdi_span_short` for form `', this_form, '`.')
+      NULL
+    }
+  } else {
+    warning(paste0('Invalid form designation ', this_form))
+    NULL
+  }
+}
+
 extract_clean_dll_eng_short <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'dll_eng_short', this_form = this_form)
   if (is.null(df)) {
@@ -1056,14 +1120,15 @@ extract_clean_dll_eng_long <- function(this_form = '12_English') {
 extract_clean_dll_biling_long <- function(this_form = '24_Bilingual_Spanish') {
   
   df <- extract_obs_for_measure(this_measure = 'dll_biling_long', this_form = this_form)
-  if (this_form == '12_Bilingual_Spanish') {
+  if (this_form == '12_Bilingual_Spanish' || this_form == '12_Bilingual_English') {
     if (!is.null(df)) {
       clean_dll_biling_long_12(df, omit_these = c(1,2))      
     } else {
       warning('Cannot extract `dll_biling_long` for form `', this_form, '`.')
       NULL
     }
-  } else if (this_form == '18_Bilingual_Spanish' || this_form == '24_Bilingual_Spanish') {
+  } else if (this_form == '18_Bilingual_Spanish' || this_form == '24_Bilingual_Spanish'
+             || this_form == '18_Bilingual_English' || this_form == '24_Bilingual_English') {
     if (!is.null(df)) {
       clean_dll_biling_long_18_24(df, omit_these = c(1, 2, 7, 8))      
     } else {
@@ -1071,7 +1136,7 @@ extract_clean_dll_biling_long <- function(this_form = '24_Bilingual_Spanish') {
       NULL
     }
   } else {
-    warning(paste0('No DLL English Long measure for form `', this_form, '`.'))
+    warning(paste0('No DLL bilingual Long measure for form `', this_form, '`.'))
     NULL
   }
 }
@@ -1900,6 +1965,9 @@ extract_clean_form_measure <- function(this_form = '12_English', this_measure = 
   }
   if (this_measure == 'mbcdi_eng_short') {
     df <- extract_clean_mbcdi_eng_short(this_form)
+  }
+  if (this_measure == 'mbcdi_span_short') {
+    df <- extract_clean_mbcdi_span_short(this_form)
   }
   if (this_measure == 'dll_span_short') {
     df <- extract_clean_dll_span_short(this_form)
