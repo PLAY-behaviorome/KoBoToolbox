@@ -1582,25 +1582,25 @@ if (run_form) {
 }
 ```
 
-
-
 # Create by-measure CSVs
 
 ```{r create-by-measure-csvs}
 these_measures <- c(
   'basic_demog',
   'mbcdi_eng_short',
+  'mbcdi_span_short',
   'dll_eng_long',
+  'dll_eng_short',
   'dll_span_short',
   'dll_biling_long',
-  'ECBQ',
+  'ecbq',
   'pets',
   'media',
   'household_labor',
   'typical_day'
 )
 
-purrr::map(these_measures, export_aggregate_csv_for_measure)
+purrr::map(these_measures, export_aggregate_csv_for_measure, force_overwrite = TRUE)
 ```
 
 # Clean-up

@@ -6,7 +6,7 @@ list_kobo_form_frags <- function(csv_fn = 'csv/.analysis/form_measures.csv') {
     stop(paste0('Kobo form and measures file not found: ', csv_fn))
   }
   
-  fm <- readr::read_csv(csv_fn)
+  fm <- read.csv(csv_fn, colClasses = 'character')
   if (!is.data.frame(fm)) {
     stop(paste0('Cannot parse form-measures.csv into data frame'))
   }
@@ -38,7 +38,7 @@ extract_measures_for_form <- function(this_form = '12_English',
     stop(paste0('Kobo form `', this_form,'` and measures file `', csv_fn, '` not found.'))
   }
   
-  fm <- readr::read_csv(csv_fn)
+  fm <- read.csv(csv_fn, colClasses = 'character')
   if (!is.data.frame(fm)) {
     warning(paste0('Cannot parse, `', csv_fn, '` into data frame.'))
     NULL
@@ -117,8 +117,8 @@ extract_part_info_for_form <- function(this_form = '12_English') {
 
 clean_basic_demog <- function(df = extract_obs_for_measure(), omit_these = c(3:4, 10:12, 16:28, 35:37),
                               add_site_id = TRUE,
-                              drop_site_name = FALSE,
-                              drop_experimenter_name = FALSE) {
+                              drop_site_name = TRUE,
+                              drop_experimenter_name = TRUE) {
   require(tidyverse)
   clean_df <- df %>%
     dplyr::rename(., start_time = 1,
@@ -153,7 +153,7 @@ clean_basic_demog <- function(df = extract_obs_for_measure(), omit_these = c(3:4
   
   if (drop_site_name) {
     clean_df <- clean_df %>%
-      dplyr::select(., -play_site_name)
+      dplyr::select(., -play_site_name, -child_birth_city)
   }
   if (drop_experimenter_name) {
     clean_df <- clean_df %>%
@@ -1588,7 +1588,7 @@ export_aggregate_csv_for_measure <- function(this_measure = 'basic_demog',
     message('No forms found for measure: `', this_measure, '`.')
     return(NULL)
   } else {
-    df <- purrr::map_df(these_form_csvs, readr::read_csv)
+    df <- purrr::map_df(these_form_csvs, read.csv, colClasses = 'character')
     out_fn <- paste0(csv_path_agg, '/PLAY_all_', this_measure, '.csv')
     if (file.exists(out_fn)) {
       if (vb) message(paste0('File exists: `', out_fn, '`.'))
@@ -1778,7 +1778,7 @@ get_db_site_info <- function(df) {
   # }
   
   if ('play_site_name' %in% names(df)) {
-    sites_df <- readr::read_csv('csv/.analysis/sites_databrary.csv')
+    sites_df <- read_csv('csv/.analysis/sites_databrary.csv')
     
     if (dim(sites_df)[1] <= 0) {
       stop('Unable to read `sites_databrary.csv`')
@@ -1821,7 +1821,7 @@ get_play_site_codes <- function(df) {
 create_agg_basic_demo <- function(csv_dir = 'csv/by_form') {
   fl <- list.files(csv_dir, 'basic_demog_[0-9]{2}', full.names = TRUE)
   if (length(fl) > 0) {
-    purrr::map_df(fl, readr::read_csv)
+    purrr::map_df(fl, read.csv, colClasses = 'character')
   }
 }
 
@@ -1880,7 +1880,8 @@ load_kbform_measure <-
            csv_dir = 'csv',
            regenerate_if_missing = TRUE,
            save_regenerated = TRUE,
-           force_regeneration = FALSE) {
+           force_regeneration = FALSE,
+           drop_investigator_info = TRUE) {
     require(tidyverse)
     
     if (!is.character(this_form)) {
@@ -1943,6 +1944,7 @@ load_kbform_measure <-
           message("  Saved file `", this_fn, '`.')
         }
       }
+      df <- read.csv(this_fn, colClasses = 'character')
     }
     df
   }
