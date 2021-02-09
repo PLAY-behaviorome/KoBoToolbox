@@ -401,10 +401,12 @@ clean_dll_biling_long_18_24 <- function(df = extract_obs_for_measure('dll_biling
 clean_demog_quest <- function(df = extract_obs_for_measure('demog_quest', 'Demographic_Questionnaire'),
                               omit_these = c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
                                              105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
-                                             176:177, 189:228)) {
-  # omit_cols <- c(5, 7:19, 24, 29:41, 43:44, 64:68, 81, 98:99, 
-  #                105:106, 125:126, 144:145, 149, 153:155, 159, 163:164, 169:170,
-  #                176:177, 189:228)
+                                             176:177, 189:228),
+                              add_play_site_id = TRUE,
+                              drop_site_name = TRUE,
+                              drop_recruiter_name = TRUE) {
+  
+  require(tidyverse)
   
   demog_clean <- df %>%
     dplyr::rename(., start_time = start,
@@ -573,8 +575,24 @@ clean_demog_quest <- function(df = extract_obs_for_measure('demog_quest', 'Demog
                   # skip 189:228
     ) %>%
     # The `play_child_id` field has a "/" character in some entries. The next line fixes that.
-    dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|")) %>%
-    dplyr::select(., -all_of(omit_these))
+    dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|"))
+  
+  if (add_play_site_id) {
+    demog_clean <- demog_clean %>%
+      dplyr::mutate(., play_site_id = get_play_site_codes(demog_clean))    
+  }
+
+  demog_clean <- demog_clean[-omit_these]
+  
+  if (drop_site_name) {
+    demog_clean <- demog_clean %>%
+      dplyr::select(., -play_site_name, -child_birth_city)
+  }
+  if (drop_recruiter_name) {
+    demog_clean <- demog_clean %>%
+      dplyr::select(., -recruiter_name)
+  }
+  demog_clean
 }
 
 clean_health <- function(df, omit_non_answers = TRUE) {
@@ -1710,6 +1728,78 @@ export_all_forms_typical_day <- function(these_forms = c('12_English', '18_Engli
   purrr::map(ff, export_forms_typical_day, csv_path)
 }
 
+export_session_forms <- function(session_index, sessions_df, this_measure,
+                                 csv_dir = 'csv/by_session',
+                                 force_overwrite = TRUE,
+                                 vb = TRUE) {
+  if (!is.numeric(session_index)) {
+    stop('`session_index` must be a number.')
+    NULL
+  }
+  if (session_index <= 0) {
+    stop('`session_index` must be > 0.')
+    NULL
+  }
+  
+  n_sessions <- dim(sessions_df)[1]
+  if (n_sessions < 1) {
+    stop('Data frame empty.')
+  }
+  if (session_index > n_sessions) {
+    stop('`session_index` must be <= length of data frame.')
+  }
+  
+  this_session <- sessions_df[session_index,]
+  out_fn <- paste0(csv_dir, '/', this_session$play_site_id, '_', this_measure, '.csv')
+  if (file.exists(out_fn)) {
+    if (vb) message(paste0('File exists: `', out_fn, '`.'))
+    if (force_overwrite) {
+      readr::write_csv(this_session, file.path(out_fn))
+      if (vb) message(paste0('Overwrote file: `', out_fn, '`.'))
+    } else {
+      if (vb) message(paste0('`force_overwrite` is FALSE. No file saved.'))
+    }
+  } else {
+    readr::write_csv(this_session, out_fn)
+    if (vb) message(paste0('Saved file: `', out_fn, '`.'))
+  }
+}
+
+export_sessions_and_forms <- function(sessions_df, this_measure) {
+  n_sessions <- dim(sessions_df)[1]
+  if (n_sessions < 1) {
+    stop('Data frame empty.')
+  }
+  #sessions_index <- 1:n_sessions
+  purrr::map(1:n_sessions, export_session_forms, sessions_df, this_measure)
+}
+
+# export_sessions_measures_forms <- function(csv_dir = 'csv/by_form') {
+#   fl <- list.files(csv_dir, full.names = TRUE)
+#   these_forms <- extract_form_from_csv_fn(fl)
+#   
+#   form_index <- 1:length(fl)
+#   these_df <- purrr::map(fl, readr::read_csv)
+#   purrr::map(these_df, export_sessions_and_forms)
+# }
+
+extract_form_from_csv_fn <- function(fn) {
+  require(tidyverse)
+  fn %>%
+    stringr::str_remove_all(., 'csv/by_form/') %>%
+    stringr::str_remove_all(., '_[0-9]{2}_[a-zA-Z_]+\\.csv$') %>%
+    stringr::str_remove_all(., '_Demographic_Questionnaire.csv$') %>%
+    stringr::str_extract_all(., '[a-z]+[_]?[a-z]+[_]?[a-z]+') %>%
+    unlist(.)
+}
+
+export_sessions_measures_forms <- function(fn) {
+  this_measure <- extract_form_from_csv_fn(fn)
+  this_df <- readr::read_csv(fn)
+  export_sessions_and_forms(this_df, this_measure)
+}
+
+
 #-------------------------------------------------------------------
 # Export all forms for all measures
 
@@ -1753,14 +1843,20 @@ match_session_id_from_databrary <- function(df) {
     stop(paste0('Unable to retrieve info for volume `', db_site_info$db_vol_id, '` from Databrary.'))
   }
   
-  this_session <- db_session_list_for_vol %>%
-    dplyr::filter(., stringr::str_detect(name, as.character(df$site_child_id))) %>%
-    dplyr::select(., session_id)
-  
-  if (dim(this_session)[1] == 0) {
+  #child_id_found <- stringr::str_detect(as.character(df$site_child_id))
+  if (df$site_child_id == "???") {
+    #message('No session found for `site_child_id`: ', df$site_child_id, '`.')
     paste0("_", df$site_child_id, "_NODB")
   } else {
-    this_session
+    this_session <- db_session_list_for_vol %>%
+      dplyr::filter(., stringr::str_detect(name, as.character(df$site_child_id))) %>%
+      dplyr::select(., session_id)
+    
+    if (dim(this_session)[1] == 0) {
+      paste0("_", df$site_child_id, "_NODB")
+    } else {
+      this_session
+    }    
   }
 }
 
@@ -1929,15 +2025,25 @@ load_kbform_measure <-
                 '`.')
         
         df <- extract_clean_form_measure(this_form, this_measure)
-        demog <- extract_part_info_for_form(this_form)
-        
+         
         if (this_measure != 'basic_demog') {
-          if (dim(df)[1] == dim(demog)[1]) {
-            df <- cbind(demog, df)
-          } else {
-            warning(paste0("Data and demographics do not align for form ", this_form))
-            return(NULL)
+          if (this_measure != 'demog_quest') {
+            demog <- extract_part_info_for_form(this_form)
+            if (dim(df)[1] == dim(demog)[1]) {
+              df <- cbind(demog, df)
+            } else {
+              warning(paste0("Data and demographics do not align for form ", this_form))
+              return(NULL)
+            }
+            
           }
+          # demog <- extract_part_info_for_form(this_form)
+          # if (dim(df)[1] == dim(demog)[1]) {
+          #   df <- cbind(demog, df)
+          # } else {
+          #   warning(paste0("Data and demographics do not align for form ", this_form))
+          #   return(NULL)
+          # }
         }
         if (save_regenerated) {
           readr::write_csv(df, this_fn)

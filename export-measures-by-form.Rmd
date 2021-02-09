@@ -1569,24 +1569,57 @@ if (run_form) {
   qa_db <- tibble::tibble(these_play_ids)
   
   qa_db <- qa_db %>%
-    dplyr::mutate(., child_dob = basic_demog$child_dob,
-                  dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
-                  session_date_equate = purrr::map(these_play_ids, kb_eq_db_session_date_by_id, this_form),
-                  child_sex = basic_demog$child_sex,
-                  sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
+    dplyr::mutate(
+      .,
+      child_dob = basic_demog$child_dob,
+      dob_equate = purrr::map(these_play_ids, kb_eq_db_dob_by_id, this_form),
+      session_date_equate = purrr::map(these_play_ids, 
+                                       kb_eq_db_session_date_by_id, this_form),
+      child_sex = basic_demog$child_sex,
+      sex_equate = purrr::map(these_play_ids, kb_eq_db_sex_by_id, this_form),
     )
   
   qa_db %>%
     kableExtra::kable(., format = 'html') %>%
-    kableExtra::kable_styling(.)  
+    kableExtra::kable_styling(.)
+}
+```
+
+## Demographic Questionnaire
+
+```{r}
+this_form <- 'Demographic_Questionnaire'
+if (is.null(return_matching_kobo_form(this_form))) {
+  message('No form found for `', this_form, '`.')
+  run_form = FALSE
+} else {
+  run_form = TRUE
+}
+```
+
+```{r}
+if (run_form) {
+  demog_quest <-
+    load_kbform_measure(
+      this_form,
+      'demog_quest',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(demog_quest)
 }
 ```
 
 # Create by-measure CSVs
 
+**Note**: Some of the language measures should not be combined across 12 and 18/24 months.
+We need to handle this.
+
 ```{r create-by-measure-csvs}
 these_measures <- c(
   'basic_demog',
+  'health',
   'mbcdi_eng_short',
   'mbcdi_span_short',
   'dll_eng_long',
@@ -1597,10 +1630,19 @@ these_measures <- c(
   'pets',
   'media',
   'household_labor',
-  'typical_day'
+  'typical_day',
+  'demog_quest'
 )
 
 purrr::map(these_measures, export_aggregate_csv_for_measure, force_overwrite = TRUE)
+```
+
+# Create by-session, by-measure CSVs
+
+For all by-measure CSVs in the `by_form` directory `r params$csv_dir`, export a CSV for each session and store in `csv/by_session`. 
+
+```{r}
+purrr::map(list.files(params$csv_dir, full.names = TRUE), export_sessions_measures_forms)
 ```
 
 # Clean-up
