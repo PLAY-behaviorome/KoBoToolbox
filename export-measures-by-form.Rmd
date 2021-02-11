@@ -10,7 +10,8 @@ params:
   kb_dir: '~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files'
   csv_dir: 'csv/by_form'
   db_login: 'email@provider.com'
-  force_regeneration: False
+  force_regeneration: True
+  force_overwrite_agg_files: True
 ---
 
 # Purpose
@@ -640,7 +641,7 @@ if (run_form) {
 
 ### DLL English Short
 
-```{r 12-biling-eng-dll-eng-short}
+```{r 12-biling-eng-dll-eng-short, eval=FALSE}
 if (run_form) {
   dll_eng_short <-
     load_kbform_measure(
@@ -656,7 +657,7 @@ if (run_form) {
 
 ### DLL Spanish Short
 
-```{r 12-biling-eng-dll-span-short}
+```{r 12-biling-eng-dll-span-short, eval=FALSE}
 if (run_form) {
   dll_span_short <-
     load_kbform_measure(
@@ -672,7 +673,7 @@ if (run_form) {
 
 ### DLL Bilingual Long
 
-```{r 12-biling-eng-dll-biling-long}
+```{r 12-biling-eng-dll-biling-long, eval=FALSE}
 if (run_form) {
   dll_biling_long <-
     load_kbform_measure(
@@ -1076,7 +1077,7 @@ if (run_form) {
 
 ### Compare with Databrary
 
-```{r}
+```{r, eval=FALSE}
 if (run_form) {
   these_play_ids <- basic_demog$play_site_id
   qa_db <- tibble::tibble(these_play_ids)
@@ -1175,7 +1176,7 @@ if (run_form) {
 
 ### DLL English Short
 
-```{r 12-biling-span-dll-eng-short}
+```{r 12-biling-span-dll-eng-short, eval=FALSE}
 if (run_form) {
   dll_span_short <-
     load_kbform_measure(
@@ -1191,7 +1192,7 @@ if (run_form) {
 
 ### DLL Bilingual Long
 
-```{r 12-biling-span-dll-biling-long}
+```{r 12-biling-span-dll-biling-long, eval=FALSE}
 if (run_form) {
   dll_biling_long <-
     load_kbform_measure(
@@ -1613,19 +1614,20 @@ if (run_form) {
 
 # Create by-measure CSVs
 
-**Note**: Some of the language measures should not be combined across 12 and 18/24 months.
-We need to handle this.
+**Note**: Some of the language measures should *not* be combined across 12 and 18/24 months.
+We need to handle this more gracefully.
+Until we do, I've commented-out the vocabulary measures.
 
 ```{r create-by-measure-csvs}
 these_measures <- c(
   'basic_demog',
   'health',
-  'mbcdi_eng_short',
-  'mbcdi_span_short',
-  'dll_eng_long',
-  'dll_eng_short',
-  'dll_span_short',
-  'dll_biling_long',
+  # 'mbcdi_eng_short',
+  # 'mbcdi_span_short',
+  # 'dll_eng_long',
+  # 'dll_eng_short',
+  # 'dll_span_short',
+  # 'dll_biling_long',
   'ecbq',
   'pets',
   'media',
@@ -1634,7 +1636,7 @@ these_measures <- c(
   'demog_quest'
 )
 
-purrr::map(these_measures, export_aggregate_csv_for_measure, force_overwrite = TRUE)
+purrr::map(these_measures, export_aggregate_csv_for_measure, force_overwrite = params$force_overwrite_agg_files)
 ```
 
 # Create by-session, by-measure CSVs

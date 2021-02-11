@@ -26,7 +26,7 @@ return_matching_kobo_form <- function(kobo_form_frag = "18_English",
   if (length(fl) > 0) {
     unlist(fl)    
   } else {
-    message('Form not found: `', kobo_form_frag, '`.')
+    warning('Form not found: `', kobo_form_frag, '`.')
     return(NULL)
   }
 }
@@ -72,7 +72,7 @@ extract_obs_for_measure <- function(this_measure = 'basic_demog', this_form = '1
   
   this_form_fn <- return_matching_kobo_form(this_form)
   if (is.null(this_form_fn)) {
-    message(paste0('Form not found: `', this_form, '`.'))
+    warning(paste0('Form not found: `', this_form, '`.'))
     return(NULL)
   }
   if (length(this_form_fn) > 1) {
@@ -103,7 +103,7 @@ extract_part_info_for_form <- function(this_form = '12_English') {
   }
   these_demog <- extract_clean_basic_demog(this_form)
   if (dim(these_demog)[1] <= 0 || is.null(these_demog)) {
-    message('No demographic data found for form: `', this_form, '`.')
+    warning('No demographic data found for form: `', this_form, '`.')
     NULL
   } else {
     df <- dplyr::select(these_demog, play_site_id, 
@@ -144,13 +144,19 @@ clean_basic_demog <- function(df = extract_obs_for_measure(), omit_these = c(3:4
                   instr_lang = 34) %>%
     dplyr::mutate(., play_child_id = stringr::str_replace(play_child_id, "/", "|")) 
   
+  # Add site ID using Databrary info
   if (add_site_id) {
     clean_df <- clean_df %>%
       dplyr::mutate(., play_site_id = get_play_site_codes(clean_df))
   }
   
+  # Variable reformatting
+  clean_df$child_sex <- tolower(clean_df$child_sex)
+  
+  # Drop omits
   clean_df <- clean_df[-omit_these]
   
+  # Drop site_name and experimenter_name for release
   if (drop_site_name) {
     clean_df <- clean_df %>%
       dplyr::select(., -play_site_name, -child_birth_city)
@@ -609,78 +615,71 @@ clean_health <- function(df, omit_non_answers = TRUE) {
   
   health_clean <- df %>%
     dplyr::rename(., breastfeed_ever = 2,
-                  breastfeed_mos = 3,
-                  how_fed_last_7d = 4,
-                  how_fed_last_7d_breastfed = 5,
-                  how_fed_last_7d_formula = 6,
-                  how_fed_last_7d_cows_milk = 7,
-                  how_fed_last_7d_refused = 8,
-                  how_fed_last_7d_dont_know = 9,
-                  how_fed_last_7d_nondairy = 10,
-                  how_fed_last_7d_none_above = 11,
-                  age_mos_1st_solid_food = 12,
+                  ecls_b_a_nutrition_breastfeed_mos = 3,
+                  ecls_b_a_nutrition_how_fed_last_7d = 4,
+                  ecls_b_a_nutrition_how_fed_last_7d_breastfed = 5,
+                  ecls_b_a_nutrition_how_fed_last_7d_formula = 6,
+                  ecls_b_a_nutrition_how_fed_last_7d_cows_milk = 7,
+                  ecls_b_a_nutrition_how_fed_last_7d_refused = 8,
+                  ecls_b_a_nutrition_how_fed_last_7d_dont_know = 9,
+                  ecls_b_a_nutrition_how_fed_last_7d_nondairy = 10,
+                  ecls_b_a_nutrition_how_fed_last_7d_none_above = 11,
+                  ecls_b_a_nutrition_age_mos_1st_solid_food = 12,
                   ecls_b_a_nutrition_comments = 13,
                   # skip 14
-                  sleep_position = 15,
-                  health_rating = 16,
-                  age_mos_last_wellbaby = 17,
-                  vaccinated_last_4w = 18,
-                  specialist_care = 19,
-                  specialist_care_specify = 20,
-                  hearing_tested = 21,
-                  hearing_tested_birth_hosp = 22,
-                  hearing_tested_after_home = 23,
-                  hearing_tested_no = 24,
-                  hearing_tested_refused = 25,
-                  hearing_tested_dont_know = 26,
-                  vision_tested = 27,
-                  vision_tested_birth_hosp = 28,
-                  vision_tested_after_home = 29,
-                  vision_tested_no = 30,
-                  vision_tested_refused = 31,
-                  vision_tested_dont_know = 32,
+                  ecls_b_b_gen_health_sleep_position = 15,
+                  ecls_b_b_gen_health_health_rating = 16,
+                  ecls_b_b_gen_health_age_mos_last_wellbaby = 17,
+                  ecls_b_b_gen_health_vaccinated_last_4w = 18,
+                  ecls_b_b_gen_health_specialist_care = 19,
+                  ecls_b_b_gen_health_specialist_care_specify = 20,
+                  ecls_b_b_gen_health_hearing_tested = 21,
+                  ecls_b_b_gen_health_hearing_tested_birth_hosp = 22,
+                  ecls_b_b_gen_health_hearing_tested_after_home = 23,
+                  ecls_b_b_gen_health_hearing_tested_no = 24,
+                  ecls_b_b_gen_health_hearing_tested_refused = 25,
+                  ecls_b_b_gen_health_hearing_tested_dont_know = 26,
+                  ecls_b_b_gen_health_vision_tested = 27,
+                  ecls_b_b_gen_health_vision_tested_birth_hosp = 28,
+                  ecls_b_b_gen_health_vision_tested_after_home = 29,
+                  ecls_b_b_gen_health_vision_tested_no = 30,
+                  ecls_b_b_gen_health_vision_tested_refused = 31,
+                  ecls_b_b_gen_health_vision_tested_dont_know = 32,
                   # skip 33
-                  food_med_allergies = 34,
-                  ear_infection = 35,
-                  asthma = 36,
-                  respiratory_illness = 37,
-                  gi_illness = 38,
-                  eclsb_a_genl_health_injury_comments = 39,
-                  injury_n_times = 40,
-                  injury_describe = 41,
-                  eclsb_a_genl_health_comments = 42,
+                  ecls_b_b_gen_health_food_med_allergies = 34,
+                  ecls_b_b_gen_health_ear_infection = 35,
+                  ecls_b_b_gen_health_asthma = 36,
+                  ecls_b_b_gen_health_respiratory_illness = 37,
+                  ecls_b_b_gen_health_gi_illness = 38,
+                  ecls_b_b_gen_health_comments = 39,
+                  ecls_b_b_gen_health_injury_n_times = 40,
+                  ecls_b_b_gen_health_injury_describe = 41,
+                  ecls_b_b_gen_health_injury_comments = 42,
                   # skip 43
-                  prenatal_care = 44,
-                  prenatal_care_comments = 45,
-                  smoke_while_pregnant = 46,
-                  smoke_packs_daily_1st_tri = 47,
-                  smoke_packs_daily_2nd_tri = 48,
-                  smoke_packs_daily_3rd_tri = 49,
-                  smoke_now = 50,
-                  smoke_packs_daily_now = 51,
-                  smoking_in_house = 52,
-                  smoking_in_car = 53,
-                  ecls_b_a_smoking_comments = 54,
-                  drink_while_pregnant = 55,
-                  drinks_weekly_1st_tri = 56,
-                  drinks_weekly_2nd_tri = 57,
-                  drinks_weekly_3rd_tri = 58,
-                  eclsb_a_drinking_comments = 59,
+                  ecls_b_c_prenatal_care = 44,
+                  ecls_b_c_prenatal_care_comments = 45,
+                  ecls_b_d_smoking_smoke_while_pregnant = 46,
+                  ecls_b_d_smoking_smoke_packs_daily_1st_tri = 47,
+                  ecls_b_d_smoking_smoke_packs_daily_2nd_tri = 48,
+                  ecls_b_d_smoking_smoke_packs_daily_3rd_tri = 49,
+                  ecls_b_d_smoking_smoke_now = 50,
+                  ecls_b_d_smoking_smoke_packs_daily_now = 51,
+                  ecls_b_d_smoking_smoking_in_house = 52,
+                  ecls_b_d_smoking_smoking_in_car = 53,
+                  ecls_b_d_smoking_comments = 54,
+                  ecls_b_e_drinking_drink_while_pregnant = 55,
+                  ecls_b_e_drinking_drinks_weekly_1st_tri = 56,
+                  ecls_b_e_drinking_drinks_weekly_2nd_tri = 57,
+                  ecls_b_e_drinking_drinks_weekly_3rd_tri = 58,
+                  ecls_b_e_drinking_comments = 59,
                   # skip 60:62
                   # These are text + numeric; might want to recode
-                  feel_anxious = 63,
-                  cant_stop_worrying = 64,
-                  little_interest_pleasure = 65,
-                  feel_depressed = 66,
-                  ecls_b_f_phq_comments = 67
-     )  %>%
-    dplyr::mutate(., ecls_b_a_nutrition_comments = as.character(ecls_b_a_nutrition_comments),
-                  eclsb_a_genl_health_injury_comments = as.character(eclsb_a_genl_health_injury_comments),
-                  eclsb_a_genl_health_comments = as.character(eclsb_a_genl_health_comments),
-                  prenatal_care_comments = as.character(prenatal_care_comments),
-                  ecls_b_a_smoking_comments = as.character(ecls_b_a_smoking_comments),
-                  eclsb_a_drinking_comments = as.character(eclsb_a_drinking_comments),
-                  ecls_b_f_phq_comments = as.character(ecls_b_f_phq_comments))
+                  ecls_b_f_phq4_feel_anxious = 63,
+                  ecls_b_f_phq4_cant_stop_worrying = 64,
+                  ecls_b_f_phq4_little_interest_pleasure = 65,
+                  ecls_b_f_phq4_feel_depressed = 66,
+                  ecls_b_f_phq4_comments = 67
+     )
                   
   if (omit_non_answers) {
     health_clean <- dplyr::select(health_clean, -all_of(omit_cols))
@@ -904,8 +903,8 @@ clean_typical_day <- function(df, omit_non_answers = TRUE) {
                   activities_different = 4,
                   typical_night_morning = 5,
                   night_morning_how_different = 6,
-                  unusual_feelings = 7,
-                  feelings_how_different = 8)
+                  today_usual_youre_feeling = 7,
+                  youre_feeling_how_different = 8)
                   # Skip 9)
   
   if (omit_non_answers) {
@@ -1020,12 +1019,12 @@ extract_clean_qs_typical_day <- function(this_form = '12_English') {
 extract_clean_basic_demog <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'basic_demog', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_basic_demog(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   # if (drop_site_info) {
@@ -1038,12 +1037,12 @@ extract_clean_basic_demog <- function(this_form = '12_English') {
 extract_clean_mbcdi_eng_short <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'mbcdi_eng_short', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_mbcdi_eng_short(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1076,13 +1075,13 @@ extract_clean_mbcdi_span_short <- function(this_form = '12_Bilingual_Spanish') {
 extract_clean_dll_eng_short <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'dll_eng_short', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   
   df <- clean_dll_eng_short(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1162,13 +1161,13 @@ extract_clean_dll_biling_long <- function(this_form = '24_Bilingual_Spanish') {
 extract_clean_demo_quest <- function(this_form = 'Demographic_Questionnaires') {
   df <- extract_obs_for_measure(this_measure = 'demog_quest', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   
   df <- clean_demog_quest(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1177,12 +1176,12 @@ extract_clean_demo_quest <- function(this_form = 'Demographic_Questionnaires') {
 extract_clean_health <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'health', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_health(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1191,12 +1190,12 @@ extract_clean_health <- function(this_form = '12_English') {
 extract_clean_ecbq <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'ecbq_very_short', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_ecbq(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1205,12 +1204,12 @@ extract_clean_ecbq <- function(this_form = '12_English') {
 extract_clean_media <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'media_use', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_media_use(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1219,12 +1218,12 @@ extract_clean_media <- function(this_form = '12_English') {
 extract_clean_pets <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'pets', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_pets(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1233,12 +1232,12 @@ extract_clean_pets <- function(this_form = '12_English') {
 extract_clean_household_labor <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'household_labor', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_household_labor(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1247,12 +1246,12 @@ extract_clean_household_labor <- function(this_form = '12_English') {
 extract_clean_typical_day <- function(this_form = '12_English') {
   df <- extract_obs_for_measure(this_measure = 'typical_day', this_form = this_form)
   if (is.null(df)) {
-    message('No data for form: `', this_form, '`.')
+    warning('No data for form: `', this_form, '`.')
     return(NULL)
   }
   df <- clean_typical_day(df)
   if (is.null(df)) {
-    message('Problem cleaning data for form: `', this_form, '`.')
+    warning('Problem cleaning data for form: `', this_form, '`.')
     return(NULL)
   }
   df
@@ -1461,7 +1460,7 @@ export_forms_mbcdi_eng_short <- function(df = make_exportable_mbcdi_eng_short(),
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'MBCDI_eng_short', csv_path)
+  purrr::map(file_list, save_session_file, df, 'mbcdi_eng_short', csv_path)
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_MBCDI_eng_short.csv'))
 }
 
@@ -1473,7 +1472,7 @@ export_forms_dll_eng_short <- function(df = make_exportable_dll_eng_short(), csv
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'DLL_eng_short', csv_path)
+  purrr::map(file_list, save_session_file, df, 'dll_eng_short', csv_path)
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_eng_short.csv'))
 }
 
@@ -1485,7 +1484,7 @@ export_forms_dll_span_short <- function(df = make_exportable_dll_span_short(), c
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'DLL_span_short', csv_path)
+  purrr::map(file_list, save_session_file, df, 'dll_span_short', csv_path)
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_span_short.csv'))
 }
 
@@ -1497,7 +1496,7 @@ export_forms_dll_biling_long <- function(df = make_exportable_dll_biling_long(),
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'DLL_biling_long', csv_path)
+  purrr::map(file_list, save_session_file, df, 'dll_biling_long', csv_path)
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_DLL_span_short.csv'))
 }
 
@@ -1521,7 +1520,7 @@ export_forms_ebcq <- function(df = make_exportable_ecbq(), csv_path = 'csv/by_se
     stop(paste0('CSV path not found: ', csv_path))
   }
   file_list <- 1:dim(df)[1]
-  purrr::map(file_list, save_session_file, df, 'ECBQ', csv_path)
+  purrr::map(file_list, save_session_file, df, 'ecbq', csv_path)
   #readr::write_csv(df, paste0('csv/aggregate/', 'PLAY_all_ECBQ.csv'))
 }
 
@@ -1603,7 +1602,7 @@ export_aggregate_csv_for_measure <- function(this_measure = 'basic_demog',
   
   these_form_csvs <- list.files(csv_path_form, this_measure, full.names = TRUE)
   if (length(these_form_csvs) == 0) {
-    message('No forms found for measure: `', this_measure, '`.')
+    warning('No forms found for measure: `', this_measure, '`.')
     return(NULL)
   } else {
     df <- purrr::map_df(these_form_csvs, read.csv, colClasses = 'character')
@@ -1885,7 +1884,7 @@ get_db_site_info <- function(df) {
     this_site
     
   } else {
-    message("`play_site_id` not found in data frame.")
+    warning("`play_site_id` not found in data frame.")
     NULL
   }
 }
@@ -2001,7 +2000,7 @@ load_kbform_measure <-
       if (regenerate_if_missing) {
         df <- extract_clean_form_measure(this_form, this_measure)
         if (is.null(df)) {
-          message(
+          warning(
             'Unable to extract data for form `',
             this_form,
             '` and measure `',
@@ -2129,7 +2128,7 @@ load_databrary_session <- function(this_play_session_id = 'PLAY_89938196') {
   db_sessions <- databraryapi::download_session_csv(vol_id = as.numeric(this_vol))
   
   if (is.null(db_sessions)) {
-    message('Cannot access Databrary session for `', this_play_session_id, '`. Are you logged in to Databrary?' )
+    warning('Cannot access Databrary session for `', this_play_session_id, '`. Are you logged in to Databrary?' )
     NULL
   } else {
     this_db_session <- db_sessions %>%
