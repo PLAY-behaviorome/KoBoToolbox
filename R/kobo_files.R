@@ -27,10 +27,10 @@ list_kobo_datasets <- function(update_csv = FALSE,
   
   kobo_login <- function() {
     require(getPass)
-    
+    require(keyring)
     kb_user_name <- getPass::getPass("KoBo user name: ")
-    kb_pw <- getPass::getPass("KoBo password: ")
-    
+    # kb_pw <- getPass::getPass("KoBo password: ")
+    kb_pw <- keyring::key_get('kobo', kb_user_name)
     sprintf('%s:%s', kb_user_name, kb_pw)
   }
   
@@ -51,6 +51,16 @@ list_kobo_datasets <- function(update_csv = FALSE,
   }
 }
 
+kobo_login <- function(kb_user_name = NULL) {
+  require(getPass)
+  require(keyring)
+  if (is.null(kb_user_name)) {
+    kb_user_name <- getPass::getPass("KoBo user name: ")    
+  }
+  # kb_pw <- getPass::getPass("KoBo password: ")
+  kb_pw <- keyring::key_get('kobo', kb_user_name)
+  sprintf('%s:%s', kb_user_name, kb_pw)
+}
 
 ###################################################################
 #' Loads a saved CSV of the PLAY KoBoToolbox forms.

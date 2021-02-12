@@ -1,0 +1,173 @@
+---
+title: "Gather and Clean KoBoToolbox Data v2"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    code_folding: hide
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  kb_dir: '~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files'
+  csv_raw_dir: 'csv/raw'
+  my_kobo_login: somelogin
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)  # for pipe '%>%'
+library(readxl)     # for cell_cols()
+library(koboloadeR)
+library(purrr)
+
+source("R/kobo_files.R")
+```
+
+# Purpose
+
+This document summarizes the development of an automated workflow for gathering and cleaning [PLAY Project](https://play-project.org) survey data from the [KoBoToolbox](https://www.kobotoolbox.org/) tool.
+
+The basic steps can be summarized as follows:
+
+1. Download data files from KoBoToolbox.
+
+2. Session-level data
+  a. Clean session-level data
+  b. Export session-level data
+  
+3. Measure-level data
+  a. Extract measure-level data from each session
+  b. Clean measure-level data for each session
+  c. Export measure-level data
+  
+# Download data files
+
+We can download files directly using the KoBoToolbox API.
+
+This chunk lists available forms. If we set `update_csv` to `TRUE`, then a CSV will be written to a default 'hidden' directory.
+
+```{r}
+play_kb <- list_kobo_datasets(update_csv = FALSE)
+```
+
+Let's supplement this with data about the number of submissions to each form.
+
+```{r}
+play_kb <- play_kb %>%
+  dplyr::select(., title, id, url)
+
+# This returns NULL
+n_submissions <- purrr::map(play_kb$id, koboloadeR::kobo_submission_count, kobo_login(params$my_kobo_login))
+```
+
+That did not work.
+So, let's instead download all of these forms and save them as CSVs in `r params$csv_raw_dir`.
+
+```{r}
+# We try one first
+kb1 <- kobo_form_url_to_df(play_kb$url[1])
+```
+
+Then do en masse.
+
+```{r}
+these_forms <- 1:dim(play_kb)[1]
+
+purrr::map(these_forms, save_kobo_forms_csvs)
+```
+
+Now, we open them one by one and see how many entries there are.
+
+```{r}
+get_kobo_form_size <- function(kobo_fn) {
+  if (!is.character(kobo_fn)) {
+    stop('`kobo_fn` must be a character string.')
+  }
+  if (!file.exists(kobo_fn)) {
+    stop('File not found: ', kobo_fn)
+  }
+  df <- readr::read_csv(kobo_fn)
+  
+  tibble::tibble(kobo_fn, n_rows = dim(df)[1], n_cols = dim(df)[2])
+}
+
+kobo_csv_fns <- list.files('csv/raw', '\\.csv', full.names = TRUE)
+
+get_kobo_form_size(kobo_csv_fns[1])
+```
+
+That works for one, let's try it for all of the CSVs.
+
+```{r}
+kobo_csvs_df <- purrr::map_df(kobo_csv_fns, get_kobo_form_size)
+```
+
+From visual inspection, I think the forms with actual entries have `(2020-03-04)` in their names.
+
+```{r}
+kobo_csvs_df <- kobo_csvs_df %>%
+  dplyr::filter(., stringr::str_detect(kobo_fn, '\\(2020\\-03\\-04\\)'))
+```
+
+That trims the relevant list to the following:
+
+```{r}
+kobo_csvs_df %>%
+  kableExtra::kable(.) %>%
+  kableExtra::kable_styling(.,
+                            bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  kableExtra::scroll_box(width = "800px", height = "300px")
+```
+
+# Export column names
+
+Much of the work in cleaning these files comes from renaming variables.
+We also want to provide information about the questions asked so that the renamed variables make sense.
+Extracting the column names as data helps solve both problems.
+
+```{r}
+extract_save_col_names <- function(kobo_csv_fn,
+                                   col_csv_path = 'csv/cols') {
+  if (!is.character(kobo_csv_fn)) {
+    stop('`kobo_csv_fn` must be a character string.')
+  }
+  if (!file.exists(kobo_csv_fn)) {
+    stop('File not found: ', kobo_csv_fn)
+  }
+  if (!is.character(col_csv_path)) {
+    stop('`col_csv_path` must be a character string.')
+  }
+  if (!dir.exists(col_csv_path)) {
+    stop('Directory not found: ', col_csv_path)
+  }
+  
+  df <- readr::read_csv(kobo_csv_fn)
+  df_names <- names(df)
+  
+  names_csv_fn <- file.path(col_csv_path, basename(kobo_csv_fn))
+  
+  cols_df <- tibble::tibble(orig_name = df_names)
+  readr::write_csv(cols_df, names_csv_fn)
+  message('Saved file: ', names_csv_fn)
+}
+```
+
+Test one one.
+
+```{r}
+extract_save_col_names(kobo_csvs_df$kobo_fn[1])
+```
+
+Now, do them all.
+
+```{r}
+purrr::map(kobo_csvs_df$kobo_fn, extract_save_col_names)
+```
+
+Now, we're cookin' with gas, as my grandad used to say.
+
+The point of this is to create a database about each question that we can then use for cleaning and exporting.
+The bonus here is that KoboToolbox does some useful editing of the questions that we can exploit.
