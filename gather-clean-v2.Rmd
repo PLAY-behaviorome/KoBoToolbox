@@ -171,3 +171,67 @@ Now, we're cookin' with gas, as my grandad used to say.
 
 The point of this is to create a database about each question that we can then use for cleaning and exporting.
 The bonus here is that KoboToolbox does some useful editing of the questions that we can exploit.
+
+# Export raw questions
+
+The CSVs exported by KoBoToolbox do not contain the full text of questions.
+
+```{r}
+xlsx_fl <- list.files('~/Box/PLAY-Project@/PLAY_Questionnaires (temporary)/KBTB Files', '\\.xlsx$', full.names = TRUE)
+```
+
+Load one.
+
+```{r}
+this_xl <- readxl::read_excel(xlsx_fl[1])
+```
+And save it.
+
+```{r}
+these_names <- names(this_xl)
+df_names <- tibble::tibble(column_names = these_names)
+readr::write_csv(df_names, file.path('csv', 'raw_qs', paste0(basename(xlsx_fl[1]), '.csv')))
+```
+
+Turn into a function.
+
+```{r}
+extract_save_col_names_from_xlsx <- function(kobo_xlsx_fn,
+                                             col_csv_path = 'csv/raw_qs') {
+  if (!is.character(kobo_xlsx_fn)) {
+    stop('`kobo_xlsx_fn` must be a character string.')
+  }
+  if (!file.exists(kobo_xlsx_fn)) {
+    stop('File not found: ', kobo_xlsx_fn)
+  }
+  if (!is.character(col_csv_path)) {
+    stop('`col_csv_path` must be a character string.')
+  }
+  if (!dir.exists(col_csv_path)) {
+    stop('Directory not found: ', col_csv_path)
+  }
+  
+  df <- readxl::read_excel(kobo_xlsx_fn)
+  df_names <- names(df)
+  
+  names_csv_fn <-
+    file.path(col_csv_path, paste0(tools::file_path_sans_ext(basename(kobo_xlsx_fn)), '.csv'))
+  
+  cols_df <- tibble::tibble(orig_name = df_names)
+  readr::write_csv(cols_df, names_csv_fn)
+  message('Saved file: ', names_csv_fn)
+}
+```
+
+Test the function.
+
+```{r}
+extract_save_col_names_from_xlsx(xlsx_fl[1])
+```
+
+Now run across all files.
+
+```{r}
+purrr::map(xlsx_fl, extract_save_col_names_from_xlsx)
+```
+
