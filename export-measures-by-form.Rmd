@@ -195,6 +195,22 @@ if (run_form) {
 }
 ```
 
+### Locomotor milestones
+
+```{r 12-eng-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r 12-eng-databrary}
@@ -375,6 +391,22 @@ if (run_form) {
 }
 ```
 
+### Locomotor milestones
+
+```{r 18-eng-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r 18-eng-databrary}
@@ -552,6 +584,22 @@ if (run_form) {
       force_regeneration = params$force_regeneration
     )
   str(typical_day)
+}
+```
+
+### Locomotor milestones
+
+```{r 24-eng-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
 }
 ```
 
@@ -783,6 +831,22 @@ if (run_form) {
 }
 ```
 
+### Locomotor milestones
+
+```{r 12-biling-eng-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r 12-biling-eng-databrary}
@@ -930,6 +994,22 @@ if (run_form) {
 }
 ```
 
+### Locomotor milestones
+
+```{r 18-biling-eng-loco, eval=FALSE}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r, eval=FALSE}
@@ -953,7 +1033,7 @@ if (run_form) {
 
 ## 24_Bilingual_English
 
-```{r}
+```{r 24-biling-eng}
 this_form <- '24_Bilingual_English'
 if (is.null(return_matching_kobo_form(this_form))) {
   message('No form found for `', this_form, '`.')
@@ -965,7 +1045,7 @@ if (is.null(return_matching_kobo_form(this_form))) {
 
 ### Day of visit demog
 
-```{r}
+```{r 24-biling-eng-basic-demog}
 if (run_form) {
   basic_demog <- load_kbform_measure(this_form, 'basic_demog', regenerate_if_missing = TRUE,
                                      save_regenerated = TRUE,
@@ -976,7 +1056,7 @@ if (run_form) {
 
 ### MBCDI English Short
 
-```{r}
+```{r 24-biling-eng-mbcdi-eng-short}
 if (run_form) {
 mbcdi_eng_short <- load_kbform_measure(this_form, 'mbcdi_eng_short', regenerate_if_missing = TRUE,
                               save_regenerated = TRUE,
@@ -989,7 +1069,7 @@ str(mbcdi_eng_short)
 
 This measure is not collected from `r this_form` participants.
 
-```{r, eval=FALSE}
+```{r 24-biling-eng-dll-eng-long, eval=FALSE}
 if (run_form) {
   dll_eng_long <- load_kbform_measure(this_form, 'dll_eng_long', regenerate_if_missing = TRUE,
                                       save_regenerated = TRUE,
@@ -1000,7 +1080,7 @@ if (run_form) {
 
 ### DLL Spanish Short
 
-```{r}
+```{r 24-biling-eng-dll-span-short}
 if (run_form) {
   dll_span_short <- load_kbform_measure(this_form, 'dll_span_short', regenerate_if_missing = TRUE,
                                         save_regenerated = TRUE,
@@ -1011,7 +1091,7 @@ if (run_form) {
 
 ### Health
 
-```{r}
+```{r 24-biling-eng-health}
 if (run_form) {
   health <- load_kbform_measure(this_form, 'health', regenerate_if_missing = TRUE,
                                 save_regenerated = TRUE,
@@ -1022,7 +1102,7 @@ if (run_form) {
 
 ### ECBQ
 
-```{r}
+```{r 24-biling-eng-ecbq}
 if (run_form) {
   ecbq <- load_kbform_measure(this_form, 'ecbq', regenerate_if_missing = TRUE,
                               save_regenerated = TRUE,
@@ -1033,7 +1113,7 @@ if (run_form) {
 
 ### Household labor
 
-```{r}
+```{r 24-biling-eng-household-labor}
 if (run_form) {
   household_labor <- load_kbform_measure(this_form, 'household_labor', regenerate_if_missing = TRUE,
                                          save_regenerated = TRUE,
@@ -1044,7 +1124,7 @@ if (run_form) {
 
 ### Media
 
-```{r}
+```{r 24-biling-eng-media}
 if (run_form) {
   media <- load_kbform_measure(this_form, 'media', regenerate_if_missing = TRUE,
                                save_regenerated = TRUE,
@@ -1055,7 +1135,7 @@ if (run_form) {
 
 ### Pets
 
-```{r}
+```{r 24-biling-eng-pets}
 if (run_form) {
   pets <- load_kbform_measure(this_form, 'pets', regenerate_if_missing = TRUE,
                               save_regenerated = TRUE,
@@ -1066,12 +1146,28 @@ if (run_form) {
 
 ### Typical day
 
-```{r}
+```{r 24-biling-eng-typical-day}
 if (run_form) {
   typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missing = TRUE,
                                      save_regenerated = TRUE,
                                      force_regeneration = params$force_regeneration)
   str(typical_day)  
+}
+```
+
+### Locomotor milestones
+
+```{r 24-biling-eng-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
 }
 ```
 
@@ -1260,6 +1356,22 @@ typical_day <- load_kbform_measure(this_form, 'typical_day', regenerate_if_missi
 str(typical_day)
 ```
 
+### Locomotor milestones
+
+```{r 12-biling-span-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r}
@@ -1400,6 +1512,22 @@ if (run_form) {
                                      save_regenerated = TRUE,
                                      force_regeneration = params$force_regeneration)
   str(typical_day)  
+}
+```
+
+### Locomotor milestones
+
+```{r 18-biling-span-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
 }
 ```
 
@@ -1562,6 +1690,22 @@ if (run_form) {
 }
 ```
 
+### Locomotor milestones
+
+```{r 24-biling-span-loco}
+if (run_form) {
+  loco_milestones <-
+    load_kbform_measure(
+      this_form,
+      'loco_milestones',
+      regenerate_if_missing = TRUE,
+      save_regenerated = TRUE,
+      force_regeneration = params$force_regeneration
+    )
+  str(loco_milestones)
+}
+```
+
 ### Compare with Databrary
 
 ```{r}
@@ -1633,6 +1777,7 @@ these_measures <- c(
   'media',
   'household_labor',
   'typical_day',
+  'loco_milestones',
   'demog_quest'
 )
 

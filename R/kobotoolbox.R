@@ -115,6 +115,66 @@ extract_part_info_for_form <- function(this_form = '12_English') {
 
 # Specific cleaning functions for each measure
 
+clean_loco_milestones <- function(df) {
+  require(tidyverse)
+  
+  omit_cols <- c(1:4, 49:68)
+  
+  loco_clean <- df %>%
+    dplyr::rename(.,
+                  instr_1 = 1,
+                  instr_2 = 2,
+                  instr_3 = 3,
+                  instr_4 = 4,
+                  date_05mos = 5,
+                  date_06mos = 6,
+                  date_07mos = 7,
+                  date_08mos = 8,
+                  date_09mos = 9,
+                  date_10mos = 10,
+                  date_11mos = 11,
+                  date_12mos = 12,
+                  date_13mos = 13,
+                  date_14mos = 14,
+                  date_15mos = 15,
+                  date_16mos = 16,
+                  when_walk_5steps = 17,
+                  WHO_walk_month = 18,
+                  WHO_walk_age_mos = 19,
+                  WHO_walk_comments = 20,
+                  instr_5mos = 21,
+                  instr_6mos = 22,
+                  instr_7mos = 23,
+                  instr_8mos = 24,
+                  instr_9mos = 25,
+                  instr_10mos = 26,
+                  instr_11mos = 27,
+                  instr_12mos = 28,
+                  instr_13mos = 29,
+                  instr_14mos = 30,
+                  instr_15mos = 31,
+                  instr_16mos = 32,
+                  instr_MLKday = 33,
+                  instr_Vday = 34,
+                  instr_Momday = 35,
+                  instr_Fday = 36,
+                  instr_Jul4 = 37,
+                  instr_Labday = 38,
+                  instr_Tksgiv = 39,
+                  instr_Xmas = 40,
+                  when_walk_10ft = 41,
+                  walk_onset_month = 42,
+                  walk_onset_mos = 43,
+                  walk_onset_comments = 44,
+                  when_crawl_10ft = 45,
+                  crawl_onset_month = 46,
+                  crawl_onset_mos = 47,
+                  crawl_onset_comments = 48)
+    
+  loco_clean <- dplyr::select(loco_clean, -all_of(omit_cols))
+  loco_clean
+}
+
 clean_basic_demog <- function(df = extract_obs_for_measure(), omit_these = c(3:4, 10:12, 16:28, 35:37),
                               add_site_id = TRUE,
                               drop_site_name = TRUE,
@@ -1257,6 +1317,19 @@ extract_clean_typical_day <- function(this_form = '12_English') {
   df
 }
 
+extract_clean_loco_milestones <- function(this_form = '12_English') {
+  df <- extract_obs_for_measure(this_measure = 'loco_milestones', this_form = this_form)
+  if (is.null(df)) {
+    warning('No data for form: `', this_form, '`.')
+    return(NULL)
+  }
+  df <- clean_loco_milestones(df)
+  if (is.null(df)) {
+    warning('Problem cleaning data for form: `', this_form, '`.')
+    return(NULL)
+  }
+  df
+}
 #-------------------------------------------------------------------
 # Make exportable data frames with reference demographics
 
@@ -2100,6 +2173,10 @@ extract_clean_form_measure <- function(this_form = '12_English', this_measure = 
   if (this_measure == 'demog_quest') {
     df <- extract_clean_demo_quest(this_form)
   }
+  if (this_measure == 'loco_milestones') {
+    df <- extract_clean_loco_milestones(this_form)
+  }
+  
   df
 }
 
