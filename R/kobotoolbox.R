@@ -115,6 +115,134 @@ extract_part_info_for_form <- function(this_form = '12_English') {
 
 # Specific cleaning functions for each measure
 
+clean_post_visit <- function(df = extract_obs_for_measure('post_visit', 'Post-Visit_Notes'), 
+                             add_play_site_id = TRUE)
+                              {
+  require(tidyverse)
+  
+  omit_cols <- c(3:5, 7:10, 12, 17:27, 150:228)
+  
+  post_visit_clean <- df %>%
+    dplyr::rename(.,
+                  # start end version
+                  instr_complete_this = 4,
+                  play_site_name = 5,
+                  todays_date = 6,
+                  experimenter_name = 7,
+                  child_first = 8,
+                  child_middle = 9,
+                  child_last = 10,
+                  child_dob = 11,
+                  child_birth_city = 12,
+                  test_date = 13,
+                  child_sex = 14,
+                  child_age_grp = 15,
+                  site_child_id = 16,
+                  # omit 17:27
+                  play_child_id = 28,
+                  db_session = 29,
+                  db_naturalplay = 30,
+                  db_housewalkthrough = 31,
+                  db_structuredplay = 32,
+                  db_questionnaires = 33,
+                  db_decibel = 34,
+                  instr_upload = 35,
+                  instr_session_name = 36,
+                  instr_play_video_name = 37,
+                  instr_walkthrough_video_name = 38,
+                  inst_structured_play_video_name = 39,
+                  instr_quest_video_name = 40,
+                  instr_decibel = 41,
+                  instr_date_signed = 42,
+                  langs_to_child = 43,
+                  eng_to_child = 44,
+                  span_to_child = 45,
+                  instr_10 = 46,
+                  instr_11 = 47,
+                  basement_in_home = 48,
+                  kitchen_in_home = 49,
+                  eating_area_in_home = 50,
+                  bathroom_in_home = 51,
+                  bedroom_in_home = 52,
+                  living_rm_in_home = 53,
+                  family_rm_in_home = 54,
+                  study_rm_in_home = 55,
+                  access_to_basement = 56,
+                  basement_used_for = 57,
+                  play_space_finished = 58,
+                  basement_odors = 59,
+                  kitchen_odors = 60,
+                  number_bathrooms = 61,
+                  instr_bathrooms = 62,
+                  child_whos_room = 63,
+                  child_room_inhabitants = 64,
+                  number_bedrooms = 65,
+                  instr_bedrooms = 66,
+                  living_rm_couches_chairs = 67,
+                  family_rm_couches_chairs = 68,
+                  front_door_ext_lock = 69,
+                  number_staircases = 70,
+                  outside_maintenance = 71,
+                  playplace_outdoors = 72,
+                  exterior_wall_rating = 73,
+                  house_type = 74,
+                  number_floors_in_building = 75,
+                  home_on_what_floor = 76,
+                  stairs_outside = 77,
+                  handrail_condition = 78,
+                  closest_neighbor_distance = 79,
+                  street_busy = 80,
+                  street_number_lanes = 81,
+                  sidewalk_condition = 82,
+                  litter_on_block = 83,
+                  completed_housing_checklist = 84,
+                  natural_recording_start = 85,
+                  natural_recording_total = 86,
+                  study_parts_complete = 87,
+                  natural_recording_complete = 88,
+                  house_walkthrough_complete = 89,
+                  structured_play_complete = 90,
+                  mcdi_complete = 91,
+                  health_complete = 92,
+                  ecbq_complete = 93,
+                  loco_milestones_complete = 94,
+                  media_complete = 95,
+                  pets_complete = 96,
+                  household_labor_complete = 97,
+                  typical_day_complete = 98,
+                  decibel_tablet_location = 99,
+                  when_house_walkthrough = 100,
+                  room_not_recorded = 101,
+                  room_not_recorded_specify = 102,
+                  room_not_recorded_mom_refuse = 103,
+                  room_not_recorded_mom_refuse_reason = 104,
+                  # Barriers to good recording 105:111
+                  # Mother behaviors 112:119
+                  # Child behavior 120:126
+                  # Protocol violations 127:136
+                  # Experimenter safety 137:138
+                  # Participant safety 139:140
+                  other_comments = 141,
+                  answered_questions = 142,
+                  instr_submit = 143,
+                  instr_cleanup = 144,
+                  instr_id = 145,
+                  instr_participant_id = 146,
+                  instr_12 = 147,
+                  mother_child_injured_upset = 148,
+                  mother_child_injured_upset_comments = 149
+                  # Omit 150:228
+                  )
+  
+  if (add_play_site_id) {
+    post_visit_clean <- post_visit_clean %>%
+      dplyr::mutate(., play_site_id = get_play_site_codes(post_visit_clean))
+  }
+
+  post_visit_clean <- dplyr::select(post_visit_clean, -all_of(omit_cols))
+  post_visit_clean
+}
+
 clean_loco_milestones <- function(df) {
   require(tidyverse)
   
@@ -1330,6 +1458,21 @@ extract_clean_loco_milestones <- function(this_form = '12_English') {
   }
   df
 }
+
+extract_clean_post_visit <- function(this_form = 'Post-Visit_Notes') {
+  df <- extract_obs_for_measure(this_measure = 'post_visit', this_form = this_form)
+  if (is.null(df)) {
+    warning('No data for form: `', this_form, '`.')
+    return(NULL)
+  }
+  df <- clean_post_visit(df)
+  if (is.null(df)) {
+    warning('Problem cleaning data for form: `', this_form, '`.')
+    return(NULL)
+  }
+  df
+}
+
 #-------------------------------------------------------------------
 # Make exportable data frames with reference demographics
 
@@ -1698,8 +1841,6 @@ export_aggregate_csv_for_measure <- function(this_measure = 'basic_demog',
   }
 }
 
-
-
 #-------------------------------------------------------------------
 # Export all forms for given measure
 
@@ -1861,6 +2002,7 @@ extract_form_from_csv_fn <- function(fn) {
     stringr::str_remove_all(., 'csv/by_form/') %>%
     stringr::str_remove_all(., '_[0-9]{2}_[a-zA-Z_]+\\.csv$') %>%
     stringr::str_remove_all(., '_Demographic_Questionnaire.csv$') %>%
+    stringr::str_remove_all(., '_Post-Visit_Notes.csv$') %>%
     stringr::str_extract_all(., '[a-z]+[_]?[a-z]+[_]?[a-z]+') %>%
     unlist(.)
 }
@@ -1916,7 +2058,7 @@ match_session_id_from_databrary <- function(df) {
   }
   
   #child_id_found <- stringr::str_detect(as.character(df$site_child_id))
-  if (df$site_child_id == "???") {
+  if (is.na(df$site_child_id) || df$site_child_id == "???") {
     #message('No session found for `site_child_id`: ', df$site_child_id, '`.')
     paste0("_", df$site_child_id, "_NODB")
   } else {
@@ -2099,7 +2241,7 @@ load_kbform_measure <-
         df <- extract_clean_form_measure(this_form, this_measure)
          
         if (this_measure != 'basic_demog') {
-          if (this_measure != 'demog_quest') {
+          if (!(this_measure %in% c('demog_quest', 'post_visit'))) {
             demog <- extract_part_info_for_form(this_form)
             if (dim(df)[1] == dim(demog)[1]) {
               df <- cbind(demog, df)
@@ -2176,6 +2318,9 @@ extract_clean_form_measure <- function(this_form = '12_English', this_measure = 
   if (this_measure == 'loco_milestones') {
     df <- extract_clean_loco_milestones(this_form)
   }
+  if (this_measure == 'post_visit') {
+    df <- extract_clean_post_visit(this_form)
+  }  
   
   df
 }
