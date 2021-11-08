@@ -1,4 +1,33 @@
 ###################################################################
+#' Installs packages required for use of the KoboToolbox commands.
+#' 
+#' @return
+install_kobo_packages <- function() {
+  if(!(require(koboloadeR))) {
+    if(!require(devtools)) {
+      install.packages('devtools')
+    }
+    devtools::install_github("unhcr/koboloadeR")
+  }
+  
+  if(!require(getPass)) {
+    install.packages('getPass')
+  }
+  
+  if(!require(httr)) {
+    install.packages('httr')
+  }
+  
+  if(!require(readr)) {
+    install.packages('readr')
+  }
+  
+  if(!require(jsonlite)) {
+    install.packages("jsonlite")
+  }
+}
+
+###################################################################
 #' Lists the datasets available using the PLAY credentials.
 #' 
 #' In typical uses, this only needs to be run once on a given machine with `update_csv = TRUE`.
@@ -12,6 +41,8 @@
 list_kobo_datasets <- function(update_csv = FALSE,
                                forms_dir = file.path('csv', '.analysis'),
                                forms_fn = 'kobo_forms.csv') {
+  
+  # Validate input parameters
   if (!is.logical(update_csv)) {
     message('`update_csv` must be a logical value. Coercing to FALSE.')
     update_csv <- FALSE
@@ -164,6 +195,10 @@ save_kobo_form_df_to_csv <- function(df,
 ###################################################################
 get_exports_params_from_kobo <- function(return_df = TRUE) {
 
+  if(!is.logical(return_df)) {
+    stop('`return_df` must be logical value')
+  }
+  
   require(httr)
   
   kobo_api_key <- Sys.getenv("KOBO_API_KEY")
@@ -197,6 +232,9 @@ get_xls_url_for_play_form <- function(id_string = 'esFKTZc924Hu5ebtfE5uSJ',
   if (!is.character(id_string)) {
     stop('`id_string` must be a character string.')
   }
+  if (!is.logical(return_xls_url)) {
+    stop('`return_xls_url` must be a logical value.')
+  }
   
   require(httr)
   
@@ -226,13 +264,22 @@ get_xls_url_for_play_form <- function(id_string = 'esFKTZc924Hu5ebtfE5uSJ',
 }
 
 ###################################################################
-save_xlsx_export_from_url <- function(url, xlsx_fn = 'xlsx/test.xlsx') {
+#' Retrieves an XLSX format spreadsheet using the KoBoToolbox API 
+#' and credentials stored in .Renviron. The file is then stored as 
+#' an Excel spreadsheet in the default `xlsx/`
+#' file directory.  
+#'
+#' @param url The KoBoToolbox URL for the form to export. The `url` field
+#' comes from the output returned by `get_exports_params_from_kobo()`.
+#' @param xlsx_fn The name of the output file that is saved. Default
+#' is to extract the file name from the URL and save it in xlsx/<filename>.
+#'
+save_xlsx_export_from_url <- function(url, xlsx_fn = file.path('xlsx', basename(url))) {
   if (!is.character(url)) {
     stop('`url` must be a character string.')
   }
   if (!is.character(xlsx_fn)) {
     stop('`xlsx_fn` must be a character string.')
-    
   }
   
   require(httr)
