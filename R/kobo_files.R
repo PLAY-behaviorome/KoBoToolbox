@@ -1,7 +1,6 @@
 ###################################################################
 #' Installs packages required for use of the KoboToolbox commands.
 #' 
-#' @return
 install_kobo_packages <- function() {
   if(!(require(koboloadeR))) {
     if(!require(devtools)) {
@@ -24,6 +23,18 @@ install_kobo_packages <- function() {
   
   if(!require(jsonlite)) {
     install.packages("jsonlite")
+  }
+  
+  if(!require(knitr)) {
+    install.packages("knitr")
+  }
+  
+  if(!require(magrittr)) {
+    install.packages("magrittr")
+  }
+  
+  if(!require(readxl)) {
+    install.packages("readxl")
   }
 }
 
@@ -274,7 +285,8 @@ get_xls_url_for_play_form <- function(id_string = 'esFKTZc924Hu5ebtfE5uSJ',
 #' @param xlsx_fn The name of the output file that is saved. Default
 #' is to extract the file name from the URL and save it in xlsx/<filename>.
 #'
-save_xlsx_export_from_url <- function(url, xlsx_fn = file.path('xlsx', basename(url))) {
+save_xlsx_export_from_url <- function(url, 
+                                      xlsx_fn = file.path('xlsx', basename(url))) {
   if (!is.character(url)) {
     stop('`url` must be a character string.')
   }

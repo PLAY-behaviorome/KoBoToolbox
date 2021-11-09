@@ -1,0 +1,115 @@
+---
+title: "Gather KoBoToolbox"
+output: html_notebook
+---
+
+# Purpose
+
+This document describes Rick Gilmore's explorations of the process for downloading and cleaning PLAY Project data from the KoBoToolbox server.
+
+# Setup
+
+The PLAY Project uses KoBoToolbox to collect data from parents and researchers using a tablet application.
+
+The data are stored in an account on <https://kf.kobotoolbox.org>. The login credentials for that account are shared among the PLAY Project staff.
+
+To access the site's API programmatically, an API key was downloaded and added to the local `.Renviron` file.
+
+To test whether the local system has the API key installed, run the following command `Sys.getenv("KOBO_API_KEY")`.
+
+With the API key installed, several custom functions in `R/kobo_files.R` can be run.
+
+## Load/source helper functions
+
+```{r}
+source("R/kobo_files.R")
+```
+
+## Install dependencies
+
+The helper functions require several external packages. To confirm that these are installed, run the following chunk.
+
+```{r}
+install_kobo_packages()
+```
+
+## Confirm connection to KoBoToolbox server
+
+We now confirm that we can access data from the server.
+
+```{r}
+kb_df <- get_exports_params_from_kobo()
+
+str(kb_df)
+```
+
+This function returns a (nested) data frame that has useful information we can use to export data files.
+
+# Exporting files
+
+We are now ready to export data files.
+
+## Retrieve URL for XLSX format export
+
+We can query the API to get a URL for a specific XLSX formatted data file. Let's pick the most recently updated one.
+
+```{r}
+max_date_submission_time <- max(kb_df$last_submission_time)
+
+most_recent_submission <- (max_date_submission_time == kb_df$last_submission_time)
+```
+
+
+```{r}
+get_xls_url_for_play_form(id_string = kb_df$uid[most_recent_submission])
+```
+
+This is a CSV. I was looking for an XLSX file. Let's try number 9 in the array since that worked last time.
+
+```{r}
+get_xls_url_for_play_form(id_string = kb_df$uid[9])
+```
+
+That is an XLSX file. I need to learn more about how to select CSV vs. XLSX exports.
+
+Based on the file name containing `PLAY_Demographic_Questionnaire`, we expect this to contain screening information used in recruiting.
+
+## Download `PLAY_Demographic_Questionnaire`
+
+We now retrieve the XLSX file and save it to a local directory. The default is to save it to `xlsx/` with the same filename as the exported file from KoBoToolbox: `PLAY_Demographic_Questionnaire_-_all_versions_-_labels_-_2021-09-19-00-26-44.xlsx`.
+
+```{r}
+save_xlsx_export_from_url(url = get_xls_url_for_play_form(id_string = kb_df$uid[9]))
+```
+
+That seems to have worked.
+
+# Import XLSX
+
+We'll use the `readxl` package to load the saved XLSX file.
+
+```{r}
+demog <- readxl::read_excel('xlsx/PLAY_Demographic_Questionnaire_-_all_versions_-_labels_-_2021-09-19-00-26-44.xlsx')
+```
+
+Let's list just the questions asked.
+
+```{r}
+names(demog)
+```
+
+We can use this list of column/variable names to derive a list of those to keep and those to discard. Here's a very crude first pass.
+
+```{r}
+demog_selected <- demog %>%
+  dplyr::select(., matches('[A-J]{1}[1-9]{1}'))
+```
+
+**I do not print the output because the file contains identifiable information.**
+
+This lists the variables that were selected.
+
+```{r}
+names(demog_selected)
+```
+
