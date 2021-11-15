@@ -329,3 +329,48 @@ save_kobo_forms_xlsx <- function(export_index, kobo_df) {
     save_xlsx_export_from_url(this_export$result, file.path('xlsx', xlsx_fn))
   }
 }
+
+###################################################################
+#' Queries the KoBoToolbox API and returns a list of assets
+#' associated with the PLAY Project account.
+#' 
+#' @param return_df A boolean value indicating whether the function 
+#' returns a data frame. The default is TRUE.
+#' @param kobo_api_target The API target for the call. The default is 
+#' 'v2/assets/'.
+#' 
+list_kobo_assets<- function(return_df = TRUE, kobo_api_target = "v2/assets/") {
+  # Check parameters
+  if (!is.logical(return_df)) {
+    stop("'return_df' must be a logical value")
+  }
+  if (!is.character(kobo_api_target)) {
+    stop("'kobo_api_target' must be a character string.")
+  }
+  
+  require(httr)
+  
+  kobo_api_key <- Sys.getenv("KOBO_API_KEY")
+  if (!is.character(kobo_api_key)) {
+    stop('No KoBoToolbox API key stored in .Renviron.')
+  }
+  
+  url = paste0("https://kf.kobotoolbox.org/api/", kobo_api_target)
+  
+  config_params <- httr::add_headers(Authorization = paste0('Token ', kobo_api_key),
+                                     Accept = 'application/json')
+  
+  r <- httr::GET(url, config = config_params)
+  if (httr::status_code(r) == 200) {
+    c <- httr::content(r, as = 'text', encoding = 'utf8')
+    j <- jsonlite::fromJSON(c)
+    if (return_df) {
+      j$results      
+    } else { # JSON
+      j 
+    }
+  } else {
+    message('HTTP call to ', url, ' failed with status `', httr::status_code(r), '`.')
+    NULL
+  }  
+}

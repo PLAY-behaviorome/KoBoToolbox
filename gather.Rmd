@@ -101,8 +101,8 @@ names(demog)
 We can use this list of column/variable names to derive a list of those to keep and those to discard. Here's a very crude first pass.
 
 ```{r}
-demog_selected <- demog %>%
-  dplyr::select(., matches('[A-J]{1}[1-9]{1}'))
+demog_selected_1 <- demog %>%
+  dplyr::select(., matches('[A-J]{1}[0-9]{1}[a-z]?\\.'))
 ```
 
 **I do not print the output because the file contains identifiable information.**
@@ -110,6 +110,43 @@ demog_selected <- demog %>%
 This lists the variables that were selected.
 
 ```{r}
-names(demog_selected)
+select_demog <- stringr::str_detect(names(demog), '[A-Z]{1}[0-9]{1}[a-z]?\\.') |
+  stringr::str_detect(names(demog), 'Street Address') |
+  stringr::str_detect(names(demog), 'City') |
+  stringr::str_detect(names(demog), 'State') |
+  stringr::str_detect(names(demog), 'Enter a number') | # For birthweight ounces
+  stringr::str_detect(names(demog), 'c_today') |
+  stringr::str_detect(names(demog), '_full name_ of the person')
+```
+
+```{r}
+names(demog[select_demog])
+```
+
+```{r}
+these_demog <- demog[, select_demog]
+readr::write_csv(these_demog, 'csv/aggregate/PLAY_all_screen.csv')
+```
+
+## Post-visit notes
+
+```{r}
+save_xlsx_export_from_url(url = get_xls_url_for_play_form(id_string = kb_df$uid[7]))
+```
+
+```{r}
+post_visit <- readxl::read_excel('xlsx/PLAY_Post-Visit_Notes_2020-03-04_-_all_versions_-_labels_-_2021-02-08-16-20-56.xlsx')
+```
+```{r}
+select_post_visit <- stringr::str_detect(names(post_visit), 'Please select _all_')
+# Kasey will likely rename the field headers here so we can select them more programmatically.
+```
+
+## Home visit questionnaires
+
+```{r}
+save_xlsx_export_from_url(url = get_xls_url_for_play_form(id_string = kb_df$uid[2]))
+
+home_visit_all <- readxl::read_excel('xlsx/PLAY%20Home%20Questionnaires%20(12%20English)%20-%20all%20versions%20-%20labels%20-%202020-01-08-20-20-26.xlsx')
 ```
 
