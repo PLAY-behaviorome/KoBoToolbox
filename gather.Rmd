@@ -1,5 +1,6 @@
 ---
 title: "Gather KoBoToolbox"
+subtitle: "Version `r Sys.time()`"
 output: html_notebook
 ---
 
@@ -22,7 +23,7 @@ With the API key installed, several custom functions in `R/kobo_files.R` can be 
 ## Load/source helper functions
 
 ```{r}
-source("R/kobo_files.R")
+source("R/kobo_export.R")
 ```
 
 ## Install dependencies
@@ -38,59 +39,42 @@ install_kobo_packages()
 We now confirm that we can access data from the server.
 
 ```{r}
-kb_df <- get_exports_params_from_kobo()
+kb_df <- list_kobo_data()
 
 str(kb_df)
 ```
 
-This function returns a (nested) data frame that has useful information we can use to export data files.
+This function returns data frame that information about *all* of the forms we have created thus far.
 
 # Exporting files
 
 We are now ready to export data files.
 
-## Retrieve URL for XLSX format export
+## Demographic questionnaire
 
-We can query the API to get a URL for a specific XLSX formatted data file. Let's pick the most recently updated one.
-
-```{r}
-max_date_submission_time <- max(kb_df$last_submission_time)
-
-most_recent_submission <- (max_date_submission_time == kb_df$last_submission_time)
-```
-
+We'll focus on the Demographic Questionnaire.
 
 ```{r}
-get_xls_url_for_play_form(id_string = kb_df$uid[most_recent_submission])
+kb_demog <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "[Dd]emographic"))
+
+kb_demog
 ```
-
-This is a CSV. I was looking for an XLSX file. Let's try number 9 in the array since that worked last time.
-
+It looks like there are three of these. Let's download and save the 2nd one, since from the description, it looks like the newer one.
+ 
 ```{r}
-get_xls_url_for_play_form(id_string = kb_df$uid[9])
+saved_fn <- retrieve_save_xls_export(2, kb_demog)
 ```
-
-That is an XLSX file. I need to learn more about how to select CSV vs. XLSX exports.
-
-Based on the file name containing `PLAY_Demographic_Questionnaire`, we expect this to contain screening information used in recruiting.
-
-## Download `PLAY_Demographic_Questionnaire`
-
-We now retrieve the XLSX file and save it to a local directory. The default is to save it to `xlsx/` with the same filename as the exported file from KoBoToolbox: `PLAY_Demographic_Questionnaire_-_all_versions_-_labels_-_2021-09-19-00-26-44.xlsx`.
-
-```{r}
-save_xlsx_export_from_url(url = get_xls_url_for_play_form(id_string = kb_df$uid[9]))
-```
-
-That seems to have worked.
 
 # Import XLSX
 
 We'll use the `readxl` package to load the saved XLSX file.
 
 ```{r}
-demog <- readxl::read_excel('xlsx/PLAY_Demographic_Questionnaire_-_all_versions_-_labels_-_2021-09-19-00-26-44.xlsx')
+demog <- readxl::read_excel(saved_fn)
 ```
+
+Oh, no. The file can't be read. Back to the drawing board.
 
 Let's list just the questions asked.
 

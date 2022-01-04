@@ -285,8 +285,8 @@ get_xls_url_for_play_form <- function(id_string = 'esFKTZc924Hu5ebtfE5uSJ',
 #' @param xlsx_fn The name of the output file that is saved. Default
 #' is to extract the file name from the URL and save it in xlsx/<filename>.
 #'
-save_xlsx_export_from_url <- function(url, 
-                                      xlsx_fn = file.path('xlsx', basename(url))) {
+save_xlsx_export_from_url <- function(url, save_dir = 'xlsx',
+                                      xlsx_fn = file.path(save_dir, basename(url))) {
   if (!is.character(url)) {
     stop('`url` must be a character string.')
   }
@@ -302,7 +302,7 @@ save_xlsx_export_from_url <- function(url,
   }
   
   config_params <- httr::add_headers(Authorization = paste0('Token ', kobo_api_key),
-                                     Accept = '.xlsx')
+                                     Accept = '.xls')
   
   r <- httr::GET(url, config = config_params)
   if (httr::status_code(r) == 200) {
@@ -339,14 +339,17 @@ save_kobo_forms_xlsx <- function(export_index, kobo_df) {
 #' @param kobo_api_target The API target for the call. The default is 
 #' 'v2/assets/'.
 #' 
-list_kobo_assets<- function(return_df = TRUE, kobo_api_target = "v2/assets/") {
+list_kobo_assets <- function(return_df = TRUE, kobo_api_version = "v2", api_target = "assets/") {
   # Check parameters
   if (!is.logical(return_df)) {
     stop("'return_df' must be a logical value")
   }
-  if (!is.character(kobo_api_target)) {
+  if (!is.character(kobo_api_version)) {
     stop("'kobo_api_target' must be a character string.")
   }
+  if (!is.character(api_target)) {
+    stop("'kobo_api_target' must be a character string.")
+  }  
   
   require(httr)
   
@@ -355,7 +358,7 @@ list_kobo_assets<- function(return_df = TRUE, kobo_api_target = "v2/assets/") {
     stop('No KoBoToolbox API key stored in .Renviron.')
   }
   
-  url = paste0("https://kf.kobotoolbox.org/api/", kobo_api_target)
+  url = paste0("https://kf.kobotoolbox.org/api/", kobo_api_version, "/", api_target)
   
   config_params <- httr::add_headers(Authorization = paste0('Token ', kobo_api_key),
                                      Accept = 'application/json')
@@ -373,4 +376,118 @@ list_kobo_assets<- function(return_df = TRUE, kobo_api_target = "v2/assets/") {
     message('HTTP call to ', url, ' failed with status `', httr::status_code(r), '`.')
     NULL
   }  
+}
+
+kobo_available_downloads <- function(kb_assets_df = list_kobo_assets(), asset_index = 2) {
+  if (!is.null(kb_assets_df)) {
+    kb_assets_df$downloads[[asset_index]]
+  } else {
+    NULL
+  }
+}
+
+kobo_form_name <- function(kb_assets_df = list_kobo_assets(), asset_index = 2) {
+  if (!is.null(kb_assets_df)) {
+    kb_assets_df$name[[asset_index]]
+  } else {
+    NULL
+  }
+}
+  
+kobo_asset_url <- function(kb_assets_df = list_kobo_assets(), asset_index = 2) {
+  if (!is.null(kb_assets_df)) {
+    kb_assets_df$url[[asset_index]]
+  } else {
+    NULL
+  }  
+}
+
+clean_kobo_form_name <- function(kb_form_name) {
+  fn <- stringr::str_replace_all(kb_form_name, pattern = "[ ]+", "_")
+  stringr::str_replace_all(fn, pattern = '[\\(,\\)]', "")
+}
+
+list_kobo_data <- function(URL = "https://kc.kobotoolbox.org/api/v1/data",
+                           return_df = TRUE) {
+  if (!is.character(URL)) {
+    stop("`URL` must be a character string.")
+  }
+  
+  require(httr)
+  
+  kobo_api_key <- Sys.getenv("KOBO_API_KEY")
+  if (!is.character(kobo_api_key)) {
+    stop('No KoBoToolbox API key stored in ~/.Renviron.')
+  }
+  
+  config_params <- httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
+  
+  r <- httr::GET(URL, config = config_params)
+  if (httr::status_code(r) == 200) {
+    c <- httr::content(r, as = 'text', encoding = 'utf8')
+    if (return_df) {
+      jsonlite::fromJSON(c)      
+    } else { # JSON
+      c
+    }
+  } else {
+    message('HTTP call to ', URL, ' failed with status `', httr::status_code(r), '`.')
+    NULL
+  }  
+}
+
+retrieve_save_xls_export <- function(form_index = 13, kb_df = list_kobo_data(), save_dir = 'tmp') {
+  if (!is.numeric(form_index)) {
+    stop('`form_index` must be a number')
+  }
+  if (form_index <= 0) {
+    stop('`form_index` must be > 0')
+  }
+  if (!is.character(save_dir)) {
+    stop('`save_dir` must be a character string')
+  }
+  if (!dir.exists(save_dir)) {
+    stop(paste0('Directory not found: ', save_dir))
+  }
+  if (is.null(kb_df)) {
+    message('Unable to return list of KoBoToolbox forms.')
+    NULL
+  } else {
+    form_URL <- kb_df$url[form_index]
+    form_name <- clean_kobo_form_name(extract_kb_form_name(form_index, kb_df))
+    file_name <- file.path(save_dir, paste0(form_name, '.xls'))
+    require(httr)
+    
+    kobo_api_key <- Sys.getenv("KOBO_API_KEY")
+    if (!is.character(kobo_api_key)) {
+      stop('No KoBoToolbox API key stored in ~/.Renviron.')
+    }
+    
+    require(httr)
+    config_params <- httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
+    r <- httr::GET(form_URL, config = config_params)
+    if (httr::status_code(r) == 200) {
+      c <- httr::content(r, as = 'raw')
+      writeBin(c, file_name)
+      message('Saved `', file_name, '`.')
+    } else {
+      message('HTTP call to ', form_URL, ' failed with status `', httr::status_code(r), '`.')
+      NULL
+    }
+  }  
+}
+
+extract_kb_form_name <- function(form_index = 13, kb_df = list_kobo_data()) {
+  if (!is.numeric(form_index)) {
+    stop('`form_index` must be a number')
+  }
+  if (form_index <= 0) {
+    stop('`form_index` must be > 0')
+  }
+  if (is.null(kb_df)) {
+    message('Unable to return list of KoBoToolbox forms.')
+    NULL
+  } else {
+    kb_df$title[form_index]
+  }
 }

@@ -1,0 +1,222 @@
+---
+title: "Gather Clean Visit"
+subtitle: "Version `r Sys.time()`"
+output: html_document
+---
+
+# Purpose
+
+This document documents and implements downloading and cleaning the questionnaires for the PLAY Project data from the KoBoToolbox server.
+
+There are different data files for each home visit because of the need for different instructions and questions depending on the participant age group and language environment.
+
+# Setup
+
+The PLAY Project uses KoBoToolbox to collect data from parents and researchers using a tablet application.
+
+The data are stored in an account on <https://kf.kobotoolbox.org>. The login credentials for that account are shared among the PLAY Project staff.
+
+To access the site's API programmatically, an API key was downloaded and added to the local `.Renviron` file.
+
+To test whether the local system has the API key installed, run the following command `Sys.getenv("KOBO_API_KEY")`.
+
+With the API key installed, several custom functions in `R/kobo_files.R` can be run.
+
+## Load/source helper functions
+
+```{r}
+source("R/kobo_export.R")
+```
+
+## Install dependencies
+
+The helper functions require several external packages. To confirm that these are installed, run the following chunk.
+
+```{r}
+install_kobo_packages()
+```
+
+## Confirm connection to KoBoToolbox server
+
+We now confirm that we can access data from the server.
+
+```{r}
+kb_df <- list_kobo_data()
+
+str(kb_df)
+```
+
+This function returns data frame that information about *all* of the forms we have created thus far.
+
+## Filtering the Home Questionnaires
+
+Let's filter these to focus on the home questionnaires.
+
+```{r}
+kb_home <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "Home"))
+
+kb_home  
+```
+
+There are 22 of these.
+
+Let's further filter to focus on those with 2021 dates.
+
+```{r}
+kb_home_2021 <- kb_home %>%
+  dplyr::filter(., stringr::str_detect(title, "2021"))
+
+kb_home_2021
+```
+
+There are 9 of these. That seems like the right number since there are 3/age group.
+
+# Exporting
+
+We want to see how similar these are, so let's export all 9.
+ 
+```{r}
+purrr::map(1:dim(kb_home_2021)[1], retrieve_save_xls_export, kb_home_2021)
+```
+
+# Importing
+
+We'll use the `readxl` package to load the three versions for 12-month-olds.
+
+```{r}
+home_12_eng <- readxl::read_excel("tmp/740625_PLAY_HomeQuestionaires_12_English-2021-07-29.xlsx")
+home_12_biling_eng <- readxl::read_excel("tmp/740623_PLAY_HomeQuestionaires_12_Bilingual_English-2021-07-29.xlsx")
+home_12_biling_span <- readxl::read_excel("tmp/740624_PLAY_HomeQuestionaires_12_Bilingual_Spanish-2021-07-29.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_12_eng)
+dim(home_12_biling_eng)
+dim(home_12_biling_span)
+```
+
+The good news is that the two bilingual data forms have the same number of columns even though there is no data for them.
+
+Also good news is the fact that we can filter on `mcdi` to select those questions. Let's do that next.
+
+```{r}
+contains_mcdi_12 <- stringr::str_detect(names(home_12_eng), 'mcdi')
+contains_mcdi_12_biling_eng <- stringr::str_detect(names(home_12_biling_eng), 'mcdi')
+contains_mcdi_12_biling_span <- stringr::str_detect(names(home_12_biling_span), 'mcdi')
+
+sum(contains_mcdi_12)
+sum(contains_mcdi_12_biling_eng)
+sum(contains_mcdi_12_biling_span)
+```
+
+Ok, so now we can select variables that do or do not contain 'mcdi' and save those separately.
+
+We'll first define a helper function.
+
+```{r}
+extract_save_mbcdi <- function(df, fn, save_file = FALSE) {
+  play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+  
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  mcdi_cols <- (1:length(names(df)))[mcdi_qs]
+    
+  mcdi <- df %>%
+    dplyr::select(., all_of(play_id_col), all_of(mcdi_cols))    
+  
+  if (save_file) readr::write_csv(mcdi, fn)
+  
+  mcdi
+}
+
+extract_mbcdi_col_names <- function(df) {
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  mcdi_cols <- (1:length(names(df)))[mcdi_qs]
+    
+  names(df)[mcdi_cols]
+}
+```
+
+Then let's test it.
+
+```{r}
+extract_save_mcdi(home_12_eng, 'tmp/mbcdi_12_eng.csv')
+extract_save_mcdi(home_12_biling_eng, 'tmp/mbcdi_12_biling_eng')
+extract_save_mcdi(home_12_biling_span, 'tmp/mbcdi_12_biling_span')
+```
+
+So the MBCDI is going to require additional cleaning beyond the `rename_with(., basename)`.
+
+Let's try extracting these data to see if the other variables line up.
+
+**NOTE**: I made column renaming using the `basename()` function an option with `FALSE` as the default.
+
+Since the non-MBCDI data contain identifiers, we should extract those.
+
+```{r}
+remove_identifiers <- function(df) {
+  contains_name <- stringr::str_detect(names(df), 'name')
+  contains_address <- stringr::str_detect(names(df), 'address')
+  contains_phone <- stringr::str_detect(names(df), 'phone')
+  contains_email <- stringr::str_detect(names(df), 'email')
+  contains_birthdate <- stringr::str_detect(names(df), 'birthdate')
+  
+  identifiable_data <- contains_name | contains_address | 
+    contains_phone | contains_email | contains_birthdate
+  identifiable_cols <- (1:length(names(df)))[identifiable_data]
+  
+  df_deidentified <- df %>%
+    dplyr::select(., -all_of(identifiable_cols))
+  
+  df_deidentified
+}
+```
+
+```{r}
+extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
+  
+  df <- remove_identifiers(df)
+  
+  play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+  
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  non_mcdi_qs <- not(mcdi_qs)
+  non_mcdi_cols <- (1:length(names(df)))[non_mcdi_qs]
+    
+  non_mcdi <- df %>%
+    dplyr::select(., all_of(play_id_col), all_of(non_mcdi_cols))
+  
+  if (rename_cols) {
+    non_mcdi <- dplyr::rename_with(non_mcdi, basename)
+  }
+   
+  readr::write_csv(non_mcdi, fn) 
+}
+```
+
+```{r}
+extract_save_non_mbcdi(home_12_eng, 'tmp/non_mbcdi_12_eng.csv')
+extract_save_non_mbcdi(home_12_biling_eng, 'tmp/non_mbcdi_12_biling_eng.csv')
+extract_save_non_mbcdi(home_12_biling_span, 'tmp/non_mbcdi_12_biling_span.csv')
+```
+
+Let's reimport and check column names.
+
+```{r}
+qs_12_eng <- readr::read_csv('tmp/non_mbcdi_12_eng.csv')
+qs_12_biling_eng <- readr::read_csv('tmp/non_mbcdi_12_biling_eng.csv')
+qs_12_biling_span <- readr::read_csv('tmp/non_mbcdi_12_biling_span.csv')
+```
+
+```{r}
+dim(qs_12_eng)
+dim(qs_12_biling_eng)
+dim(qs_12_biling_span)
+
+names(qs_12_biling_eng) == names(qs_12_biling_span)
+```
+
+So, there is an additional variable in the 'English' file, but the two 'bilingual' files are equivalent at the variable-name level.
+
