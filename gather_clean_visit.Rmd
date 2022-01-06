@@ -1,6 +1,7 @@
 ---
 title: "Gather Clean Visit"
 subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
 output: html_document
 ---
 
@@ -80,7 +81,9 @@ We want to see how similar these are, so let's export all 9.
 purrr::map(1:dim(kb_home_2021)[1], retrieve_save_xls_export, kb_home_2021)
 ```
 
-# Importing
+# Importing 
+
+## 12-mo-olds (2021 versions)
 
 We'll use the `readxl` package to load the three versions for 12-month-olds.
 
@@ -117,7 +120,7 @@ Ok, so now we can select variables that do or do not contain 'mcdi' and save tho
 We'll first define a helper function.
 
 ```{r}
-extract_save_mbcdi <- function(df, fn, save_file = FALSE) {
+extract_save_mcdi <- function(df, fn, save_file = FALSE) {
   play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
   
   mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
@@ -131,7 +134,7 @@ extract_save_mbcdi <- function(df, fn, save_file = FALSE) {
   mcdi
 }
 
-extract_mbcdi_col_names <- function(df) {
+extract_mcdi_col_names <- function(df) {
   mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
   mcdi_cols <- (1:length(names(df)))[mcdi_qs]
     
@@ -220,3 +223,163 @@ names(qs_12_biling_eng) == names(qs_12_biling_span)
 
 So, there is an additional variable in the 'English' file, but the two 'bilingual' files are equivalent at the variable-name level.
 
+## 18-mo-olds (2021 versions)
+
+```{r}
+home_18_eng <- readxl::read_excel("tmp/740628_PLAY_HomeQuestionnaires_18_English-2021-07-29.xlsx")
+home_18_biling_eng <- readxl::read_excel("tmp/740626_PLAY_HomeQuestionaires_18_Bilingual_English-2021-07-29.xlsx")
+home_18_biling_span <- readxl::read_excel("tmp/740627_PLAY_HomeQuestionaires_18_Bilingual_Spanish-2021-07-29.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_18_eng)
+dim(home_18_biling_eng)
+dim(home_18_biling_span)
+```
+
+```{r}
+contains_mcdi_18 <- stringr::str_detect(names(home_18_eng), 'mcdi')
+contains_mcdi_18_biling_eng <- stringr::str_detect(names(home_18_biling_eng), 'mcdi')
+contains_mcdi_18_biling_span <- stringr::str_detect(names(home_18_biling_span), 'mcdi')
+
+sum(contains_mcdi_18)
+sum(contains_mcdi_18_biling_eng)
+sum(contains_mcdi_18_biling_span)
+```
+
+These counts look similar to the 12-mo-olds, so that's good.
+
+Let's extract the MBCDI data.
+
+```{r}
+extract_save_mcdi(home_18_eng, 'tmp/mbcdi_18_eng.csv')
+extract_save_mcdi(home_18_biling_eng, 'tmp/mbcdi_18_biling_eng')
+extract_save_mcdi(home_18_biling_span, 'tmp/mbcdi_18_biling_span')
+```
+
+Then extract (cleaning identifiable vars) the non-MBCDI-data.
+
+```{r}
+extract_save_non_mbcdi(home_18_eng, 'tmp/non_mbcdi_18_eng.csv')
+extract_save_non_mbcdi(home_18_biling_eng, 'tmp/non_mbcdi_18_biling_eng.csv')
+extract_save_non_mbcdi(home_18_biling_span, 'tmp/non_mbcdi_18_biling_span.csv')
+```
+
+Let's reimport and check column names.
+
+```{r}
+qs_18_eng <- readr::read_csv('tmp/non_mbcdi_18_eng.csv')
+qs_18_biling_eng <- readr::read_csv('tmp/non_mbcdi_18_biling_eng.csv')
+qs_18_biling_span <- readr::read_csv('tmp/non_mbcdi_18_biling_span.csv')
+```
+
+```{r}
+dim(qs_18_eng)
+dim(qs_18_biling_eng)
+dim(qs_18_biling_span)
+
+questions_equal <- function(df_a, df_b) {
+  names_a <- names(df_a)
+  names_b <- names(df_b)
+  
+  equal_length <- (length(names_a) == length(names_b))
+  
+  if (equal_length) {
+    message(paste0("Lengths are equal: ", length(names_a)))
+    qs_equal <- names_a == names_b
+    if (sum(qs_equal) == length(names_a)) {
+      message("Qs are identical")
+    } else {
+      message("Qs differ")
+      qs_equal
+    }
+  } else {
+    message("Lengths differ: ", length(names_a), " vs. ", length(names_b))
+  }
+}
+
+questions_equal(qs_18_eng, qs_18_biling_eng)
+questions_equal(qs_18_biling_eng, qs_12_biling_span)
+```
+
+## 24-mo-olds (2021 versions)
+
+```{r}
+home_24_eng <- readxl::read_excel("tmp/740629_PLAY_HomeQuestionnaires_24_English-2021-07-30.xlsx")
+home_24_biling_eng <- readxl::read_excel("tmp/740627_PLAY_HomeQuestionaires_18_Bilingual_Spanish-2021-07-29.xlsx")
+home_24_biling_span <- readxl::read_excel("tmp/740630_PLAY_HomeQuestionaires_24_Bilingual_Spanish-2021-07-30.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_24_eng)
+dim(home_24_biling_eng)
+dim(home_24_biling_span)
+```
+
+```{r}
+contains_mcdi_24 <- stringr::str_detect(names(home_24_eng), 'mcdi')
+contains_mcdi_24_biling_eng <- stringr::str_detect(names(home_24_biling_eng), 'mcdi')
+contains_mcdi_24_biling_span <- stringr::str_detect(names(home_24_biling_span), 'mcdi')
+
+sum(contains_mcdi_24)
+sum(contains_mcdi_24_biling_eng)
+sum(contains_mcdi_24_biling_span)
+```
+
+Let's extract the MBCDI data.
+
+```{r}
+extract_save_mcdi(home_24_eng, 'tmp/mbcdi_24_eng.csv')
+extract_save_mcdi(home_24_biling_eng, 'tmp/mbcdi_24_biling_eng')
+extract_save_mcdi(home_24_biling_span, 'tmp/mbcdi_24_biling_span')
+```
+
+Then extract (cleaning identifiable vars) the non-MBCDI-data.
+
+```{r}
+extract_save_non_mbcdi(home_24_eng, 'tmp/non_mbcdi_24_eng.csv')
+extract_save_non_mbcdi(home_24_biling_eng, 'tmp/non_mbcdi_24_biling_eng.csv')
+extract_save_non_mbcdi(home_24_biling_span, 'tmp/non_mbcdi_24_biling_span.csv')
+```
+
+Let's reimport and check column names.
+
+```{r}
+qs_24_eng <- readr::read_csv('tmp/non_mbcdi_24_eng.csv')
+qs_24_biling_eng <- readr::read_csv('tmp/non_mbcdi_24_biling_eng.csv')
+qs_24_biling_span <- readr::read_csv('tmp/non_mbcdi_24_biling_span.csv')
+```
+
+```{r}
+dim(qs_24_eng)
+dim(qs_24_biling_eng)
+dim(qs_24_biling_span)
+
+questions_equal(qs_24_eng, qs_24_biling_eng)
+questions_equal(qs_24_biling_eng, qs_12_biling_span)
+```
+
+## Provisional summary of 2021 version exploration
+
+- The non-MBCDI data look very similar across 8 of the 9 forms.
+- The 12-mo-old English speaking family data have an additional column.
+
+Let's check to see if the questions (column names) are equal across age groups.
+
+```{r}
+questions_equal(qs_12_biling_eng, qs_12_biling_eng)
+
+questions_equal(qs_12_biling_eng, qs_18_biling_eng)
+questions_equal(qs_12_biling_span, qs_18_biling_span)
+
+questions_equal(qs_18_biling_eng, qs_24_biling_eng)
+
+questions_equal(qs_12_biling_span, qs_18_biling_span)
+questions_equal(qs_18_eng, qs_24_eng)
+```
+
+So, other than the 12-mo-old English anomaly, we can combine the 2021 versions of the non-MBCDI data into a single dataset.
