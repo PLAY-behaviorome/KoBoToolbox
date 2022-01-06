@@ -2,7 +2,13 @@
 title: "Gather Clean Visit"
 subtitle: "Version `r Sys.time()`"
 author: Rick Gilmore
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
 ---
 
 # Purpose
@@ -17,11 +23,11 @@ The PLAY Project uses KoBoToolbox to collect data from parents and researchers u
 
 The data are stored in an account on <https://kf.kobotoolbox.org>. The login credentials for that account are shared among the PLAY Project staff.
 
-To access the site's API programmatically, an API key was downloaded and added to the local `.Renviron` file.
+To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file.
 
 To test whether the local system has the API key installed, run the following command `Sys.getenv("KOBO_API_KEY")`.
 
-With the API key installed, several custom functions in `R/kobo_files.R` can be run.
+With the API key installed, several custom functions in `R/kobo_export.R` can be run.
 
 ## Load/source helper functions
 
@@ -62,6 +68,8 @@ kb_home
 
 There are 22 of these.
 
+# Importing 2021 data
+
 Let's further filter to focus on those with 2021 dates.
 
 ```{r}
@@ -73,19 +81,15 @@ kb_home_2021
 
 There are 9 of these. That seems like the right number since there are 3/age group.
 
-# Exporting
-
-We want to see how similar these are, so let's export all 9.
+We want to see how similar these are, so let's export from KB all 9.
  
 ```{r}
 purrr::map(1:dim(kb_home_2021)[1], retrieve_save_xls_export, kb_home_2021)
 ```
 
-# Importing 
-
 ## 12-mo-olds (2021 versions)
 
-We'll use the `readxl` package to load the three versions for 12-month-olds.
+We'll use the `readxl` package to load the three versions for 12-month-olds from the locally saved XLSX file.
 
 ```{r}
 home_12_eng <- readxl::read_excel("tmp/740625_PLAY_HomeQuestionaires_12_English-2021-07-29.xlsx")
@@ -145,9 +149,9 @@ extract_mcdi_col_names <- function(df) {
 Then let's test it.
 
 ```{r}
-extract_save_mcdi(home_12_eng, 'tmp/mbcdi_12_eng.csv')
-extract_save_mcdi(home_12_biling_eng, 'tmp/mbcdi_12_biling_eng')
-extract_save_mcdi(home_12_biling_span, 'tmp/mbcdi_12_biling_span')
+extract_save_mcdi(home_12_eng, 'tmp/mbcdi_12_eng_2021.csv')
+extract_save_mcdi(home_12_biling_eng, 'tmp/mbcdi_12_biling_eng_2021.csv')
+extract_save_mcdi(home_12_biling_span, 'tmp/mbcdi_12_biling_span_2021.csv')
 ```
 
 So the MBCDI is going to require additional cleaning beyond the `rename_with(., basename)`.
@@ -200,25 +204,25 @@ extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
 ```
 
 ```{r}
-extract_save_non_mbcdi(home_12_eng, 'tmp/non_mbcdi_12_eng.csv')
-extract_save_non_mbcdi(home_12_biling_eng, 'tmp/non_mbcdi_12_biling_eng.csv')
-extract_save_non_mbcdi(home_12_biling_span, 'tmp/non_mbcdi_12_biling_span.csv')
+extract_save_non_mbcdi(home_12_eng, 'tmp/non_mbcdi_12_eng_2021.csv')
+extract_save_non_mbcdi(home_12_biling_eng, 'tmp/non_mbcdi_12_biling_eng_2021.csv')
+extract_save_non_mbcdi(home_12_biling_span, 'tmp/non_mbcdi_12_biling_span_2021.csv')
 ```
 
 Let's reimport and check column names.
 
 ```{r}
-qs_12_eng <- readr::read_csv('tmp/non_mbcdi_12_eng.csv')
-qs_12_biling_eng <- readr::read_csv('tmp/non_mbcdi_12_biling_eng.csv')
-qs_12_biling_span <- readr::read_csv('tmp/non_mbcdi_12_biling_span.csv')
+qs_12_eng_2021 <- readr::read_csv('tmp/non_mbcdi_12_eng_2021.csv')
+qs_12_biling_eng_2021 <- readr::read_csv('tmp/non_mbcdi_12_biling_eng_2021.csv')
+qs_12_biling_span_2021 <- readr::read_csv('tmp/non_mbcdi_12_biling_span_2021.csv')
 ```
 
 ```{r}
-dim(qs_12_eng)
-dim(qs_12_biling_eng)
-dim(qs_12_biling_span)
+dim(qs_12_eng_2021)
+dim(qs_12_biling_eng_2021)
+dim(qs_12_biling_span_2021)
 
-names(qs_12_biling_eng) == names(qs_12_biling_span)
+names(qs_12_biling_eng_2021) == names(qs_12_biling_span_2021)
 ```
 
 So, there is an additional variable in the 'English' file, but the two 'bilingual' files are equivalent at the variable-name level.
@@ -254,31 +258,31 @@ These counts look similar to the 12-mo-olds, so that's good.
 Let's extract the MBCDI data.
 
 ```{r}
-extract_save_mcdi(home_18_eng, 'tmp/mbcdi_18_eng.csv')
-extract_save_mcdi(home_18_biling_eng, 'tmp/mbcdi_18_biling_eng')
-extract_save_mcdi(home_18_biling_span, 'tmp/mbcdi_18_biling_span')
+extract_save_mcdi(home_18_eng, 'tmp/mbcdi_18_eng_2021.csv')
+extract_save_mcdi(home_18_biling_eng, 'tmp/mbcdi_18_biling_eng_2021.csv')
+extract_save_mcdi(home_18_biling_span, 'tmp/mbcdi_18_biling_span_2021.csv')
 ```
 
 Then extract (cleaning identifiable vars) the non-MBCDI-data.
 
 ```{r}
-extract_save_non_mbcdi(home_18_eng, 'tmp/non_mbcdi_18_eng.csv')
-extract_save_non_mbcdi(home_18_biling_eng, 'tmp/non_mbcdi_18_biling_eng.csv')
-extract_save_non_mbcdi(home_18_biling_span, 'tmp/non_mbcdi_18_biling_span.csv')
+extract_save_non_mbcdi(home_18_eng, 'tmp/non_mbcdi_18_eng_2021.csv')
+extract_save_non_mbcdi(home_18_biling_eng, 'tmp/non_mbcdi_18_biling_eng_2021.csv')
+extract_save_non_mbcdi(home_18_biling_span, 'tmp/non_mbcdi_18_biling_span_2021.csv')
 ```
 
 Let's reimport and check column names.
 
 ```{r}
-qs_18_eng <- readr::read_csv('tmp/non_mbcdi_18_eng.csv')
-qs_18_biling_eng <- readr::read_csv('tmp/non_mbcdi_18_biling_eng.csv')
-qs_18_biling_span <- readr::read_csv('tmp/non_mbcdi_18_biling_span.csv')
+qs_18_eng_2021 <- readr::read_csv('tmp/non_mbcdi_18_eng_2021.csv')
+qs_18_biling_eng_2021 <- readr::read_csv('tmp/non_mbcdi_18_biling_eng_2021.csv')
+qs_18_biling_span_2021 <- readr::read_csv('tmp/non_mbcdi_18_biling_span_2021.csv')
 ```
 
 ```{r}
-dim(qs_18_eng)
-dim(qs_18_biling_eng)
-dim(qs_18_biling_span)
+dim(qs_18_eng_2021)
+dim(qs_18_biling_eng_2021)
+dim(qs_18_biling_span_2021)
 
 questions_equal <- function(df_a, df_b) {
   names_a <- names(df_a)
@@ -297,11 +301,13 @@ questions_equal <- function(df_a, df_b) {
     }
   } else {
     message("Lengths differ: ", length(names_a), " vs. ", length(names_b))
+    shorter_length <- min(length(names_a), length(names_b))
+    names_a[1:shorter_length] == names_b[1:shorter_length]
   }
 }
 
-questions_equal(qs_18_eng, qs_18_biling_eng)
-questions_equal(qs_18_biling_eng, qs_12_biling_span)
+questions_equal(qs_18_eng_2021, qs_18_biling_eng_2021)
+questions_equal(qs_18_biling_eng_2021, qs_12_biling_span_2021)
 ```
 
 ## 24-mo-olds (2021 versions)
@@ -333,34 +339,34 @@ sum(contains_mcdi_24_biling_span)
 Let's extract the MBCDI data.
 
 ```{r}
-extract_save_mcdi(home_24_eng, 'tmp/mbcdi_24_eng.csv')
-extract_save_mcdi(home_24_biling_eng, 'tmp/mbcdi_24_biling_eng')
-extract_save_mcdi(home_24_biling_span, 'tmp/mbcdi_24_biling_span')
+extract_save_mcdi(home_24_eng, 'tmp/mbcdi_24_eng_2021.csv')
+extract_save_mcdi(home_24_biling_eng, 'tmp/mbcdi_24_biling_eng_2021.csv')
+extract_save_mcdi(home_24_biling_span, 'tmp/mbcdi_24_biling_span_2021.csv')
 ```
 
 Then extract (cleaning identifiable vars) the non-MBCDI-data.
 
 ```{r}
-extract_save_non_mbcdi(home_24_eng, 'tmp/non_mbcdi_24_eng.csv')
-extract_save_non_mbcdi(home_24_biling_eng, 'tmp/non_mbcdi_24_biling_eng.csv')
-extract_save_non_mbcdi(home_24_biling_span, 'tmp/non_mbcdi_24_biling_span.csv')
+extract_save_non_mbcdi(home_24_eng, 'tmp/non_mbcdi_24_eng_2021.csv')
+extract_save_non_mbcdi(home_24_biling_eng, 'tmp/non_mbcdi_24_biling_eng_2021.csv')
+extract_save_non_mbcdi(home_24_biling_span, 'tmp/non_mbcdi_24_biling_span_2021.csv')
 ```
 
 Let's reimport and check column names.
 
 ```{r}
-qs_24_eng <- readr::read_csv('tmp/non_mbcdi_24_eng.csv')
-qs_24_biling_eng <- readr::read_csv('tmp/non_mbcdi_24_biling_eng.csv')
-qs_24_biling_span <- readr::read_csv('tmp/non_mbcdi_24_biling_span.csv')
+qs_24_eng_2021 <- readr::read_csv('tmp/non_mbcdi_24_eng_2021.csv')
+qs_24_biling_eng_2021 <- readr::read_csv('tmp/non_mbcdi_24_biling_eng_2021.csv')
+qs_24_biling_span_2021 <- readr::read_csv('tmp/non_mbcdi_24_biling_span_2021.csv')
 ```
 
 ```{r}
-dim(qs_24_eng)
-dim(qs_24_biling_eng)
-dim(qs_24_biling_span)
+dim(qs_24_eng_2021)
+dim(qs_24_biling_eng_2021)
+dim(qs_24_biling_span_2021)
 
-questions_equal(qs_24_eng, qs_24_biling_eng)
-questions_equal(qs_24_biling_eng, qs_12_biling_span)
+questions_equal(qs_24_eng_2021, qs_24_biling_eng_2021)
+questions_equal(qs_24_biling_eng_2021, qs_12_biling_span_2021)
 ```
 
 ## Provisional summary of 2021 version exploration
@@ -371,15 +377,262 @@ questions_equal(qs_24_biling_eng, qs_12_biling_span)
 Let's check to see if the questions (column names) are equal across age groups.
 
 ```{r}
-questions_equal(qs_12_biling_eng, qs_12_biling_eng)
+questions_equal(qs_12_biling_eng_2021, qs_12_biling_eng_2021)
 
-questions_equal(qs_12_biling_eng, qs_18_biling_eng)
-questions_equal(qs_12_biling_span, qs_18_biling_span)
+questions_equal(qs_12_biling_eng_2021, qs_18_biling_eng_2021)
+questions_equal(qs_12_biling_span_2021, qs_18_biling_span_2021)
 
-questions_equal(qs_18_biling_eng, qs_24_biling_eng)
+questions_equal(qs_18_biling_eng_2021, qs_24_biling_eng_2021)
 
-questions_equal(qs_12_biling_span, qs_18_biling_span)
-questions_equal(qs_18_eng, qs_24_eng)
+questions_equal(qs_12_biling_span_2021, qs_18_biling_span_2021)
+questions_equal(qs_18_eng_2021, qs_24_eng_2021)
 ```
 
 So, other than the 12-mo-old English anomaly, we can combine the 2021 versions of the non-MBCDI data into a single dataset.
+
+# Importing 2020 data
+
+```{r}
+kb_home_2020 <- kb_home %>%
+  dplyr::filter(., stringr::str_detect(title, "2020"))
+
+kb_home_2020
+```
+Yay, there are 9! Let's save these locally.
+
+```{r}
+purrr::map(1:dim(kb_home_2020)[1], retrieve_save_xls_export, kb_home_2020)
+```
+
+## 12-mo-olds (2020 versions)
+
+```{r}
+home_12_eng <- readxl::read_excel("tmp/363431_PLAY_Home_Questionnaires_-_12_English_2020-03-04.xlsx")
+home_12_biling_eng <- readxl::read_excel("tmp/411456_PLAY_Home_Questionaires_-_12_Bilingual_English_2020-03-04.xlsx")
+home_12_biling_span <- readxl::read_excel("tmp/411469_PLAY_Home_Questionnaires_-_12_Bilingual_Spanish_2020-03-04.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_12_eng)
+dim(home_12_biling_eng)
+dim(home_12_biling_span)
+```
+
+The good news is that the two bilingual data forms have the same number of columns even though there is no data for them.
+
+Also good news is the fact that we can filter on `mcdi` to select those questions. Let's do that next.
+
+```{r}
+contains_mcdi_12 <- stringr::str_detect(names(home_12_eng), 'mcdi')
+contains_mcdi_12_biling_eng <- stringr::str_detect(names(home_12_biling_eng), 'mcdi')
+contains_mcdi_12_biling_span <- stringr::str_detect(names(home_12_biling_span), 'mcdi')
+
+sum(contains_mcdi_12)
+sum(contains_mcdi_12_biling_eng)
+sum(contains_mcdi_12_biling_span)
+```
+
+```{r}
+extract_save_mcdi(home_12_eng, 'tmp/mbcdi_12_eng_2020.csv')
+extract_save_mcdi(home_12_biling_eng, 'tmp/mbcdi_12_biling_eng_2020.csv')
+extract_save_mcdi(home_12_biling_span, 'tmp/mbcdi_12_biling_span_2020.csv')
+```
+
+```{r}
+extract_save_non_mbcdi(home_12_eng, 'tmp/non_mbcdi_12_eng_2020.csv')
+extract_save_non_mbcdi(home_12_biling_eng, 'tmp/non_mbcdi_12_biling_eng_2020.csv')
+extract_save_non_mbcdi(home_12_biling_span, 'tmp/non_mbcdi_12_biling_span_2020.csv')
+```
+
+```{r}
+qs_12_eng_2020 <- readr::read_csv('tmp/non_mbcdi_12_eng_2020.csv')
+qs_12_biling_eng_2020 <- readr::read_csv('tmp/non_mbcdi_12_biling_eng_2020.csv')
+qs_12_biling_span_2020 <- readr::read_csv('tmp/non_mbcdi_12_biling_span_2020.csv')
+```
+
+```{r}
+questions_equal(qs_12_eng_2020, qs_12_biling_eng_2020)
+questions_equal(qs_12_biling_eng_2020, qs_12_biling_span_2020)
+```
+
+So, misalignment occurs at the end of the questions near 298.
+
+
+
+## 18-mo-olds (2020 versions)
+
+```{r}
+home_18_eng <- readxl::read_excel("tmp/363349_PLAY_Home_Questionnaires_-_18_English_2020-03-04.xlsx")
+home_18_biling_eng <- readxl::read_excel("tmp/363466_PLAY_Home_Questionnaires_-_18_Bilingual_English_2020-03-04.xlsx")
+home_18_biling_span <- readxl::read_excel("tmp/411388_PLAY_Home_Questionnaires_-_18_Bilingual_Spanish_2020-03-04.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_18_eng)
+dim(home_18_biling_eng)
+dim(home_18_biling_span)
+```
+
+The good news is that the two bilingual data forms have the same number of columns even though there is no data for them.
+
+Also good news is the fact that we can filter on `mcdi` to select those questions. Let's do that next.
+
+```{r}
+contains_mcdi_18 <- stringr::str_detect(names(home_18_eng), 'mcdi')
+contains_mcdi_18_biling_eng <- stringr::str_detect(names(home_18_biling_eng), 'mcdi')
+contains_mcdi_18_biling_span <- stringr::str_detect(names(home_18_biling_span), 'mcdi')
+
+sum(contains_mcdi_18)
+sum(contains_mcdi_18_biling_eng)
+sum(contains_mcdi_18_biling_span)
+```
+
+```{r}
+extract_save_mcdi(home_18_eng, 'tmp/mbcdi_18_eng_2020.csv')
+extract_save_mcdi(home_18_biling_eng, 'tmp/mbcdi_18_biling_eng_2020.csv')
+extract_save_mcdi(home_18_biling_span, 'tmp/mbcdi_18_biling_span_2020.csv')
+```
+
+```{r}
+extract_save_non_mbcdi(home_18_eng, 'tmp/non_mbcdi_18_eng_2020.csv')
+extract_save_non_mbcdi(home_18_biling_eng, 'tmp/non_mbcdi_18_biling_eng_2020.csv')
+extract_save_non_mbcdi(home_18_biling_span, 'tmp/non_mbcdi_18_biling_span_2020.csv')
+```
+
+```{r}
+qs_18_eng_2020 <- readr::read_csv('tmp/non_mbcdi_18_eng_2020.csv')
+qs_18_biling_eng_2020 <- readr::read_csv('tmp/non_mbcdi_18_biling_eng_2020.csv')
+qs_18_biling_span_2020 <- readr::read_csv('tmp/non_mbcdi_18_biling_span_2020.csv')
+```
+
+```{r}
+questions_equal(qs_18_eng_2020, qs_18_biling_eng_2020)
+questions_equal(qs_18_biling_eng_2020, qs_18_biling_span_2020)
+```
+
+
+
+
+## 24-mo-olds (2020 versions)
+
+```{r}
+home_24_eng <- readxl::read_excel("tmp/363381_PLAY_Home_Questionnaires_-_24_English_2020-03-04.xlsx")
+home_24_biling_eng <- readxl::read_excel("tmp/363465_PLAY_Home_Questionnaires_-_24_Bilingual_English_2020-03-04.xlsx")
+home_24_biling_span <- readxl::read_excel("tmp/408149_PLAY_Home_Questionnaires_-_24_Bilingual_Spanish_2020-03-04.xlsx")
+```
+
+Let's list just the questions asked.
+
+```{r}
+dim(home_24_eng)
+dim(home_24_biling_eng)
+dim(home_24_biling_span)
+```
+
+The good news is that the two bilingual data forms have the same number of columns even though there is no data for them.
+
+Also good news is the fact that we can filter on `mcdi` to select those questions. Let's do that next.
+
+```{r}
+contains_mcdi_24 <- stringr::str_detect(names(home_24_eng), 'mcdi')
+contains_mcdi_24_biling_eng <- stringr::str_detect(names(home_24_biling_eng), 'mcdi')
+contains_mcdi_24_biling_span <- stringr::str_detect(names(home_24_biling_span), 'mcdi')
+
+sum(contains_mcdi_24)
+sum(contains_mcdi_24_biling_eng)
+sum(contains_mcdi_24_biling_span)
+```
+
+```{r}
+extract_save_mcdi(home_24_eng, 'tmp/mbcdi_24_eng_2020.csv')
+extract_save_mcdi(home_24_biling_eng, 'tmp/mbcdi_24_biling_eng_2020.csv')
+extract_save_mcdi(home_24_biling_span, 'tmp/mbcdi_24_biling_span_2020.csv')
+```
+
+```{r}
+extract_save_non_mbcdi(home_24_eng, 'tmp/non_mbcdi_24_eng_2020.csv')
+extract_save_non_mbcdi(home_24_biling_eng, 'tmp/non_mbcdi_24_biling_eng_2020.csv')
+extract_save_non_mbcdi(home_24_biling_span, 'tmp/non_mbcdi_24_biling_span_2020.csv')
+```
+
+```{r}
+qs_24_eng_2020 <- readr::read_csv('tmp/non_mbcdi_24_eng_2020.csv')
+qs_24_biling_eng_2020 <- readr::read_csv('tmp/non_mbcdi_24_biling_eng_2020.csv')
+qs_24_biling_span_2020 <- readr::read_csv('tmp/non_mbcdi_24_biling_span_2020.csv')
+```
+
+```{r}
+questions_equal(qs_24_eng_2020, qs_24_biling_eng_2020)
+questions_equal(qs_24_biling_eng_2020, qs_24_biling_span_2020)
+```
+
+# Cross-checks
+
+## Cross-checking among 2020 forms
+
+### Bilingual English
+
+```{r}
+questions_equal(qs_12_biling_eng_2020, qs_18_biling_eng_2020)
+questions_equal(qs_18_biling_eng_2020, qs_24_biling_eng_2020)
+```
+
+### Bilingual Spanish
+
+```{r}
+questions_equal(qs_12_biling_span_2020, qs_18_biling_span_2020)
+questions_equal(qs_18_biling_span_2020, qs_24_biling_span_2020)
+```
+
+### English speakers only
+
+```{r}
+questions_equal(qs_12_eng_2020, qs_18_eng_2020)
+questions_equal(qs_18_eng_2020, qs_24_eng_2020)
+```
+
+## Checking 2020 and 2021 forms across age by language groups
+
+### English speakers only
+
+```{r}
+questions_equal(qs_12_eng_2020, qs_12_eng_2021)
+questions_equal(qs_18_eng_2020, qs_18_eng_2021)
+questions_equal(qs_24_eng_2020, qs_24_eng_2021)
+```
+
+### Bilingual English
+
+```{r}
+questions_equal(qs_12_biling_eng_2020, qs_12_biling_eng_2021)
+questions_equal(qs_18_biling_eng_2020, qs_18_biling_eng_2021)
+questions_equal(qs_24_biling_eng_2020, qs_24_biling_eng_2021)
+```
+
+### Bilingual Spanish
+
+```{r}
+questions_equal(qs_12_biling_span_2020, qs_12_biling_span_2021)
+questions_equal(qs_18_biling_span_2020, qs_18_biling_span_2021)
+questions_equal(qs_24_biling_span_2020, qs_24_biling_span_2021)
+```
+
+# Joining 2020 and 2021 forms
+
+## English-speakers
+
+```{r, eval = FALSE}
+eng_12 <- dplyr::inner_join(qs_12_eng_2020, qs_12_eng_2021)
+eng_18 <- dplyr::inner_join(qs_18_eng_2020, qs_18_eng_2021)
+eng_24 <- dplyr::inner_join(qs_24_eng_2020, qs_24_eng_2021)
+
+eng <- dplyr::inner_join(eng_12, eng_18)
+eng <- dplyr::inner_join(eng, eng_24)
+eng
+```
+
+So, this is going to be more work. Similar variables don't have the same type. 
