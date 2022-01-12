@@ -1,0 +1,87 @@
+---
+title: "Visit: Gather, Clean, & Export"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: hide
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  update_2020: no
+---
+
+# Purpose
+
+This document documents and implements downloading and cleaning the questionnaires for the PLAY Project data from the KoBoToolbox server.
+
+There are different data files for each home visit because of the need for different instructions and questions depending on the participant age group and language environment.
+
+# Setup
+
+The PLAY Project uses KoBoToolbox to collect data from parents and researchers using a tablet application.
+
+The data are stored in an account on <https://kf.kobotoolbox.org>. The login credentials for that account are shared among the PLAY Project staff.
+
+To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file.
+
+To test whether the local system has the API key installed, run the following command `Sys.getenv("KOBO_API_KEY")`.
+
+With the API key installed, several custom functions in `R/kobo_export.R` can be run.
+
+## Load/source helper functions
+
+```{r source-functions}
+source("R/kobo_export.R")
+```
+
+## Install dependencies
+
+The helper functions require several external packages. To confirm that these are installed, run the following chunk.
+
+```{r install-packages}
+install_kobo_packages()
+```
+
+# Gather data
+
+Let's filter these to focus on the home questionnaires.
+
+```{r list-retrieve-kobo-data}
+# List KoBo data
+kb_df <- list_kobo_data()
+
+if (params$update_2020 == TRUE) {
+  xlsx_search_str <- '202[01]'
+} else {
+  xlsx_search_str <- '2021'
+}
+
+# Download and save updated XLSX files for specific questionnaire, here the home questionnaires
+kb_home <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "[Hh]ome"),
+                stringr::str_detect(title, xlsx_search_str))
+
+purrr::map(1:dim(kb_home)[1], retrieve_save_xls_export, kb_home)
+```
+
+# Clean and export
+
+```{r make-non-mbcdi-csv}
+make_non_mbcdi_csv(update_2020 = params$update_2020) # Sessions using the 2020 form are unlikely to change
+```
+
+# Re-import and visualize
+
+We re-import and do a quick cross-tab just to make sure that the data look reasonable.
+
+```{r}
+play <- readr::read_csv('tmp/PLAY_non_mbcdi_all.csv')
+```
+
+```{r}
+xtabs(~ site_id + age_group, data = play)
+```
+

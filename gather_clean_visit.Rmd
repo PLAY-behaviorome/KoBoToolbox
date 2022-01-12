@@ -169,9 +169,17 @@ remove_identifiers <- function(df) {
   contains_phone <- stringr::str_detect(names(df), 'phone')
   contains_email <- stringr::str_detect(names(df), 'email')
   contains_birthdate <- stringr::str_detect(names(df), 'birthdate')
+  contains_first <- stringr::str_detect(names(df), 'first[12]?')
+  contains_last <- stringr::str_detect(names(df), 'last[12]?')
+  contains_city <- stringr::str_detect(names(df), 'city')
+  contains_year <- stringr::str_detect(names(df), 'year[12]?')
+  contains_month <- stringr::str_detect(names(df), 'month[12]?')
+  contains_day <- stringr::str_detect(names(df), 'day[12]?')
   
   identifiable_data <- contains_name | contains_address | 
-    contains_phone | contains_email | contains_birthdate
+    contains_phone | contains_email | contains_birthdate | contains_first |
+    contains_last | contains_city | contains_year | contains_month | contains_day
+  
   identifiable_cols <- (1:length(names(df)))[identifiable_data]
   
   df_deidentified <- df %>%
@@ -182,12 +190,13 @@ remove_identifiers <- function(df) {
 ```
 
 ```{r}
-extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
+extract_non_mbcdi <- function(df, rename_cols = FALSE) {
   
   df <- remove_identifiers(df)
   
   play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
   
+  # Select non-mcdi cols
   mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
   non_mcdi_qs <- not(mcdi_qs)
   non_mcdi_cols <- (1:length(names(df)))[non_mcdi_qs]
@@ -198,10 +207,23 @@ extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
   if (rename_cols) {
     non_mcdi <- dplyr::rename_with(non_mcdi, basename)
   }
-   
-  readr::write_csv(non_mcdi, fn) 
+  
+  non_mcdi
+}
+
+extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
+  non_mcdi <- extract_non_mbcdi(df, rename_cols)
+  readr::write_csv(non_mcdi, fn)
+  message('Saved ', fn)
 }
 ```
+
+```{r}
+eng_clean_12 <- extract_non_mbcdi(home_12_eng)
+biling_eng_clean_12 <- extract_non_mbcdi(home_12_biling_eng)
+biling_span_clean_12 <- extract_non_mbcdi(home_12_biling_span)
+```
+
 
 ```{r}
 extract_save_non_mbcdi(home_12_eng, 'tmp/non_mbcdi_12_eng_2021.csv')
@@ -636,3 +658,221 @@ eng
 ```
 
 So, this is going to be more work. Similar variables don't have the same type. 
+
+## Clean after manual join
+
+Because of quirks in how `readr::read_csv()` parsed the different forms, I merged the 2020 and 2021 forms for English speaking families manually. The combined file is `tmp/non_mbcdi_all_eng.csv`.
+
+```{r}
+n_valid_sessions <- function(age = '12', group = 'biling_span', year = '2020', fn = 'tmp/non_mbcdi_') {
+  this_fn <- paste0(fn, age, '_', group, '_', year, '.csv')
+  x <- readr::read_csv(this_fn, show_col_types = FALSE)
+  message(paste0(this_fn, ' has ', dim(x)[1], ' rows.'))
+}
+```
+
+```{r}
+n_valid_sessions('12', 'biling_span', '2020')
+n_valid_sessions('12', 'biling_span', '2021')
+n_valid_sessions('18', 'biling_span', '2020')
+n_valid_sessions('18', 'biling_span', '2021')
+n_valid_sessions('24', 'biling_span', '2020')
+n_valid_sessions('24', 'biling_span', '2021')
+```
+
+The (manually) merged `biling_span` files are in `non_mbcdi_all_biling_span.csv`.
+
+```{r}
+n_valid_sessions('12', 'biling_eng', '2020')
+n_valid_sessions('12', 'biling_eng', '2021')
+n_valid_sessions('18', 'biling_eng', '2020')
+n_valid_sessions('18', 'biling_eng', '2021')
+n_valid_sessions('24', 'biling_eng', '2020')
+n_valid_sessions('24', 'biling_eng', '2021')
+
+```
+
+The (manually) merged `biling_eng` files are in `non_mbcdi_all_biling_eng.csv`.
+
+The (manually) merged `biling` files are in `non_mbcdi_all_biling.csv`.
+
+Shall we try joining these?
+
+```{r}
+eng <- readr::read_csv('tmp/non_mbcdi_all_eng.csv', show_col_types = FALSE)
+biling <- readr::read_csv('tmp/non_mbcdi_all_biling.csv', show_col_types = FALSE)
+```
+
+Ok, that didn't work.
+
+```{r}
+length(names(eng))
+length(names(biling))
+
+eng_vars <- names(eng)
+biling_vars <- names(biling)
+
+eng_vars == biling_vars
+```
+
+At this point, I think I should consolidate the operations above into a set of functions and then try merging the 2021 and 2020 forms separately.
+
+## Creating 2021 merge
+
+First, let's consolidate the workflow.
+
+```{r}
+# List KoBo data
+kb_df <- list_kobo_data()
+
+# Download and save updated XLSX files for specific questionnaire, here the home questionnaires
+kb_home <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "[Hh]ome"),
+                stringr::str_detect(title, "202[01]"))
+
+purrr::map(1:dim(kb_home)[1], retrieve_save_xls_export, kb_home)
+```
+
+```{r}
+# Select 2021 data and for all 9 XLSX files
+# Import, clean identifiers, extract non-MBCDI data, and save as CSV
+
+find_xlsx_file <- function(form_year = '2021',
+                           age_group = '12',
+                           lang_grp = 'English',
+                           file_dir = 'tmp') {
+  search_pattern <-
+    paste0(age_group, '_', lang_grp, '.*', form_year, '.*\\.xlsx$')
+  list.files(file_dir, search_pattern, full.names = TRUE)
+}
+
+import_play_xlsx <- function(form_year = '2021',
+                             age_group = '12',
+                             lang_grp = 'English',
+                             file_dir = 'tmp') {
+  this_file <-
+    find_xlsx_file(form_year, age_group, lang_grp, file_dir)
+  
+  if (!is.null(this_file)) {
+    readxl::read_excel(this_file)
+  } else {
+    message('File not found: ', file.path(this_file))
+  }
+}
+
+import_xlsx_clean_save_non_mbcdi <- function(form_year = '2021',
+                                             age_group = '12',
+                                             lang_grp = 'English',
+                                             file_dir = 'tmp',
+                                             vb = TRUE) {
+  
+  require(import_play_xlsx)
+  
+  if (vb) message('Importing data for ', paste0(form_year, '_', age_group, '_', lang_grp))
+  df <- import_play_xlsx(form_year, age_group, lang_grp, file_dir)
+  
+  if (!is.null(df)) {
+    extract_save_non_mbcdi(df, file.path(file_dir, paste0(form_year, '_non_mbcdi_',
+                                                         age_group, '_',
+                                                         lang_grp, '.csv')))
+  } else {
+    message('Error in importing data.')
+  }
+}
+```
+
+Now, let's scale using `mapply()`
+
+```{r}
+mapply(import_xlsx_clean_save_non_mbcdi, rep('2021', 9),
+       rep(c('12', '18', '24'), 3),
+       rep(c('English', 'Bilingual_English', 'Bilingual_Spanish'), each = 3))
+
+mapply(import_xlsx_clean_save_non_mbcdi, rep('2020', 9),
+       rep(c('12', '18', '24'), 3),
+       rep(c('English', 'Bilingual_English', 'Bilingual_Spanish'), each = 3))
+```
+
+Now, let's try to import and join the 2021 data.
+
+```{r}
+non_mbcdi_2021 <- purrr::map_df(list.files('tmp', '2021_non_mbcdi_12', full.names = TRUE), readr::read_csv, show_col_types = FALSE, col_types = rep('c', 255))
+```
+
+There are still column specification errors! Drat!
+
+Let's go old-school and use the `read.csv()` function to import and trim the files before we try to concatenate them.
+
+```{r}
+open_trim_csv <- function(fn, col_index = 246) {
+  df <- read.csv(fn, as.is = TRUE)
+  
+  if (dim(df)[2] > 246) {
+    df[, 1:246]
+  } else {
+    df
+  }
+  
+  if (dim(df)[1] == 0) {
+    message('No data in ', fn)
+    NULL
+  } else {
+    df
+  }
+}
+
+f_all <- list.files('tmp', '202[01]_non_mbcdi_[12]', full.names = TRUE)
+mmm <- purrr::map_df(f_all, open_trim_csv)
+readr::write_csv(mmm, 'tmp/PLAY_non_mbcdi_all.csv')
+xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv', 'group_combinedquestionnaires.', '')
+xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv', 'group_homevisitquestionnaires.', '')
+```
+
+
+```{r}
+play <- readr::read_csv('tmp/PLAY_non_mbcdi_all.csv')
+```
+
+So, I think we need to concatenate the CSVs as text files, dropping the extra column for the 12-mo-olds first.
+
+```{r}
+xtabs(~ site_id + age_group, data = play)
+```
+
+That seems to work.
+
+Let's consolidate again.
+
+```{r}
+make_non_mbcdi_csv <- function() {
+  mapply(import_xlsx_clean_save_non_mbcdi,
+         rep('2021', 9),
+         rep(c('12', '18', '24'), 3),
+         rep(
+           c('English', 'Bilingual_English', 'Bilingual_Spanish'),
+           each = 3
+         ))
+  
+  mapply(import_xlsx_clean_save_non_mbcdi,
+         rep('2020', 9),
+         rep(c('12', '18', '24'), 3),
+         rep(
+           c('English', 'Bilingual_English', 'Bilingual_Spanish'),
+           each = 3
+         ))
+  
+  f_all <-
+    list.files('tmp', '202[01]_non_mbcdi_[12]', 
+               full.names = TRUE)
+  
+  mmm <- purrr::map_df(f_all, open_trim_csv)
+  readr::write_csv(mmm, 'tmp/PLAY_non_mbcdi_all.csv')
+  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+                  'group_combinedquestionnaires.',
+                  '')
+  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+                  'group_homevisitquestionnaires.',
+                  '')
+}
+```
+

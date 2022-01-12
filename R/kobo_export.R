@@ -212,3 +212,160 @@ create_cleaned_augmented_form_name <- function(form_index = 13, kb_df = list_kob
            clean_kobo_form_name(extract_kb_form_name(form_index, kb_df)))
   }
 }
+
+find_xlsx_file <- function(form_year = '2021',
+                           age_group = '12',
+                           lang_grp = 'English',
+                           file_dir = 'tmp') {
+  search_pattern <-
+    paste0(age_group, '_', lang_grp, '.*', form_year, '.*\\.xlsx$')
+  list.files(file_dir, search_pattern, full.names = TRUE)
+}
+
+import_play_xlsx <- function(form_year = '2021',
+                             age_group = '12',
+                             lang_grp = 'English',
+                             file_dir = 'tmp') {
+  this_file <-
+    find_xlsx_file(form_year, age_group, lang_grp, file_dir)
+  
+  if (!is.null(this_file)) {
+    readxl::read_excel(this_file)
+  } else {
+    message('File not found: ', file.path(this_file))
+  }
+}
+
+import_xlsx_clean_save_non_mbcdi <- function(form_year = '2021',
+                                             age_group = '12',
+                                             lang_grp = 'English',
+                                             file_dir = 'tmp',
+                                             vb = TRUE) {
+  
+  require(import_play_xlsx)
+  
+  if (vb) message('Importing data for ', paste0(form_year, '_', age_group, '_', lang_grp))
+  df <- import_play_xlsx(form_year, age_group, lang_grp, file_dir)
+  
+  if (!is.null(df)) {
+    extract_save_non_mbcdi(df, file.path(file_dir, paste0(form_year, '_non_mbcdi_',
+                                                          age_group, '_',
+                                                          lang_grp, '.csv')))
+  } else {
+    message('Error in importing data.')
+  }
+}
+
+open_trim_csv <- function(fn, col_index = 246) {
+  df <- read.csv(fn, as.is = TRUE)
+  
+  if (dim(df)[2] > 246) {
+    df[, 1:246]
+  } else {
+    df
+  }
+  
+  if (dim(df)[1] == 0) {
+    message('No data in ', fn)
+    NULL
+  } else {
+    df
+  }
+}
+
+make_non_mbcdi_csv <- function(update_2020 = FALSE) {
+  mapply(import_xlsx_clean_save_non_mbcdi,
+         rep('2021', 9),
+         rep(c('12', '18', '24'), 3),
+         rep(
+           c('English', 'Bilingual_English', 'Bilingual_Spanish'),
+           each = 3
+         ))
+  
+  if (update_2020) {
+    mapply(import_xlsx_clean_save_non_mbcdi,
+           rep('2020', 9),
+           rep(c('12', '18', '24'), 3),
+           rep(
+             c('English', 'Bilingual_English', 'Bilingual_Spanish'),
+             each = 3
+           ))    
+  }
+
+  f_all <-
+    list.files('tmp', '202[01]_non_mbcdi_[12]', 
+               full.names = TRUE)
+  
+  mmm <- purrr::map_df(f_all, open_trim_csv)
+  readr::write_csv(mmm, 'tmp/PLAY_non_mbcdi_all.csv')
+  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+                  'group_combinedquestionnaires.',
+                  '')
+  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+                  'group_homevisitquestionnaires.',
+                  '')
+}
+
+extract_save_mcdi <- function(df, fn, save_file = FALSE) {
+  play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+  
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  mcdi_cols <- (1:length(names(df)))[mcdi_qs]
+  
+  mcdi <- df %>%
+    dplyr::select(., all_of(play_id_col), all_of(mcdi_cols))    
+  
+  if (save_file) readr::write_csv(mcdi, fn)
+  
+  mcdi
+}
+
+extract_non_mbcdi <- function(df, rename_cols = FALSE) {
+  df <- remove_identifiers(df)
+  play_id_col <- (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+  
+  # Select non-mcdi cols
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  non_mcdi_qs <- not(mcdi_qs)
+  non_mcdi_cols <- (1:length(names(df)))[non_mcdi_qs]
+  
+  non_mcdi <- df %>%
+    dplyr::select(., all_of(play_id_col), all_of(non_mcdi_cols))
+  
+  if (rename_cols) {
+    non_mcdi <- dplyr::rename_with(non_mcdi, basename)
+  }
+  
+  non_mcdi
+}
+
+extract_save_non_mbcdi <- function(df, fn, rename_cols = FALSE) {
+  non_mcdi <- extract_non_mbcdi(df, rename_cols)
+  readr::write_csv(non_mcdi, fn)
+  message('Saved ', fn)
+}
+
+remove_identifiers <- function(df) {
+  contains_name <- stringr::str_detect(names(df), 'name')
+  contains_address <- stringr::str_detect(names(df), 'address')
+  contains_phone <- stringr::str_detect(names(df), 'phone')
+  contains_email <- stringr::str_detect(names(df), 'email')
+  contains_birthdate <- stringr::str_detect(names(df), 'birthdate')
+  contains_first <- stringr::str_detect(names(df), 'first[12]?')
+  contains_last <- stringr::str_detect(names(df), 'last[12]?')
+  contains_city <- stringr::str_detect(names(df), 'city')
+  contains_year <- stringr::str_detect(names(df), 'year[12]?')
+  contains_month <- stringr::str_detect(names(df), 'month[12]?')
+  contains_day <- stringr::str_detect(names(df), 'day[12]?')
+  
+  identifiable_data <- contains_name | contains_address | 
+    contains_phone | contains_email | contains_birthdate | contains_first |
+    contains_last | contains_city | contains_year | contains_month | contains_day
+  
+  identifiable_cols <- (1:length(names(df)))[identifiable_data]
+  
+  df_deidentified <- df %>%
+    dplyr::select(., -all_of(identifiable_cols))
+  
+  df_deidentified
+}
