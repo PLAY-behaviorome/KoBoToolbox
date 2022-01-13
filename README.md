@@ -12,11 +12,14 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 
 - [Working document](http://PLAY-behaviorome.github.io/KoBoToolbox/gather-clean.html) to develop and test import, cleaning, and export procedures.
 - There is an [Rmd document](export-measures-by-form.Rmd) to export all measures by form. It creates an [HTML](export-measures-by-form.html) report with useful information for conducting quality assurance (QA) reviews.
+- [Workbook](gather_clean_visit.html) for gathering and cleaning survey data collected at the visit, and its accompanying [Rmd](gather_clean_visit.Rmd) document.
+- A later [workbook](visit_gather_clean_export) that consolidates the lessons learned.
+- [Workbook](gather_clean_previsit.html) focusing on the screening or previsit questionnaires.
+- An internal (private to PLAY staff) report on the 1.0 Data Release. 
 
 ## Future work
 
 - Export questions for each measure.
-- Automate downloading of forms from KoBoToolbox.
 - Integrate session/subject-specific data files with PLAYmate app.
 - Create QA dashboard for PLAY team.
 

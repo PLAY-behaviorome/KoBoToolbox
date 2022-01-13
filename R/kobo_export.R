@@ -273,7 +273,7 @@ open_trim_csv <- function(fn, col_index = 246) {
   }
 }
 
-make_non_mbcdi_csv <- function(update_2020 = FALSE) {
+make_non_mbcdi_csv <- function(update_2020 = FALSE, out_fn = 'tmp/PLAY_non_mbcdi_all.csv') {
   mapply(import_xlsx_clean_save_non_mbcdi,
          rep('2021', 9),
          rep(c('12', '18', '24'), 3),
@@ -297,13 +297,28 @@ make_non_mbcdi_csv <- function(update_2020 = FALSE) {
                full.names = TRUE)
   
   mmm <- purrr::map_df(f_all, open_trim_csv)
-  readr::write_csv(mmm, 'tmp/PLAY_non_mbcdi_all.csv')
-  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+  readr::write_csv(mmm, out_fn)
+  
+  cleanup_var_names(out_fn)
+  # xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+  #                 'group_combinedquestionnaires.',
+  #                 '')
+  # xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+  #                 'group_homevisitquestionnaires.',
+  #                 '')
+  # xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+  #                 'group_', '')
+}
+
+cleanup_var_names <- function(fn) {
+  xfun::gsub_file(fn,
                   'group_combinedquestionnaires.',
                   '')
-  xfun::gsub_file('tmp/PLAY_non_mbcdi_all.csv',
+  xfun::gsub_file(fn,
                   'group_homevisitquestionnaires.',
                   '')
+  xfun::gsub_file(fn,
+                  'group_', '')
 }
 
 extract_save_mcdi <- function(df, fn, save_file = FALSE) {

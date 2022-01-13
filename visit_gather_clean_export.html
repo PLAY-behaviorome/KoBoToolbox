@@ -253,7 +253,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Visit: Gather, Clean, &amp; Export</h1>
-<h3 class="subtitle">Version 2022-01-12 15:08:15</h3>
+<h3 class="subtitle">Version 2022-01-12 15:40:32</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -402,14 +402,15 @@ purrr::map(1:dim(kb_home)[1], retrieve_save_xls_export, kb_home)</code></pre>
 </div>
 <div id="re-import-and-visualize" class="section level1">
 <h1>Re-import and visualize</h1>
+<p>We re-import and do a quick cross-tab just to make sure that the data look reasonable.</p>
 <pre class="r"><code>play &lt;- readr::read_csv(&#39;tmp/PLAY_non_mbcdi_all.csv&#39;)</code></pre>
 <pre><code>## Rows: 47 Columns: 255</code></pre>
 <pre><code>## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr  (129): participant_id, site_id, child_sex, age_group, language_child, l...
-## dbl   (33): subject_number, group_health.group_feeding_nutrition.solidfood_a...
+## dbl   (33): subject_number, health.feeding_nutrition.solidfood_age, health.s...
 ## lgl   (86): note_fillthisoutbeforestudy, language_child.english, language_ch...
-## dttm   (7): start, end, test_date, group_locomotor_milestones.group_who_walk...</code></pre>
+## dttm   (7): start, end, test_date, locomotor_milestones.who_walk.who_walk_on...</code></pre>
 <pre><code>## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
