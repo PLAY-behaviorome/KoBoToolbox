@@ -284,14 +284,30 @@ media_use <- play_merge %>%
   dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
                 all_of(media_use_col_index)) %>%
   dplyr::rename(., have_tv =  mediause.home_technology.tv,
+                have_dvd = mediause.home_technology.dvd,
                 have_computer = mediause.home_technology.computer,
                 have_tablet = mediause.home_technology.ipad,
                 have_videogame = mediause.home_technology.videogame,
-                have_educationalgame = mediause.home_technology.educationalgame)
+                have_educationalgame = mediause.home_technology.educationalgame,
+                child_use_tv = mediause.technology_child_tv,
+                child_use_tv_how = mediause.tv_how,
+                child_use_dvd = mediause.technology_child_dvd,
+                child_use_dvd_how = mediause.dvd_how,
+                child_use_computer = mediause.technology_child_computer,
+                child_use_computer_how = mediause.computer_how,
+                child_use_tablet = mediause.technology_child_ipad,
+                child_use_tablet_how = mediause.ipad_how,
+                child_use_edugame = mediause.technology_child_educational,
+                child_use_edugame_how = mediause.educational_how,
+                child_use_videogame = mediause.technology_child_videogame,
+                child_use_videogame_how = mediause.videogame_how)
 ```
+
+### Media at home
 
 ```{r}
 xtabs(formula = ~ have_tv, data = media_use)
+xtabs(formula = ~ have_dvd, data = media_use)
 xtabs(formula = ~ have_computer, data = media_use)
 #xtabs(formula = ~ mediause.home_technology.smartphone, data = media_use)
 xtabs(formula = ~  have_tablet, data = media_use)
@@ -304,6 +320,18 @@ xtabs(formula = ~ have_educationalgame, data = media_use)
 ```{r}
 media_use$mediause.home_technology
 ```
+
+### Used by child
+
+```{r}
+xtabs(formula = ~ age_group + child_use_tv, data = media_use)  
+xtabs(formula = ~ age_group + child_use_dvd, data = media_use) 
+xtabs(formula = ~ age_group + child_use_computer, data = media_use) 
+xtabs(formula = ~ age_group + child_use_tablet, data = media_use) 
+xtabs(formula = ~ age_group + child_use_edugame, data = media_use) 
+xtabs(formula = ~ age_group + child_use_videogame, data = media_use)
+```
+
 
 ## Pets
 
