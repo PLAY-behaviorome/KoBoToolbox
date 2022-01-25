@@ -75,3 +75,202 @@ play_selected %>%
   kableExtra::kable_material(c("striped", "hover"))
 ```
 
+## Locomotor milestones
+
+### Crawl onset
+
+```{r}
+play_loco <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                locomotor_milestones.who_walk.who_walk_onset_mo,
+                locomotor_milestones.k_walk.k_walk_onset_mo,
+                locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
+  dplyr::rename(., walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+                walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+                crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo)
+
+play_loco %>%
+  ggplot(.) +
+  aes(crawl_mos, fill = child_sex) +
+  geom_histogram()
+```
+
+### Walk onset
+
+```{r}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_kea, fill = child_sex) +
+  geom_histogram()
+```
+
+```{r}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, fill = child_sex) +
+  geom_histogram()
+```
+
+```{r}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  theme(legend.position="bottom") -> walk_p
+
+ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 
+                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+```
+
+```{r}
+play_loco %>%
+  dplyr::arrange(., group.name, walk_mos_kea) %>%
+  dplyr::select(., group.name, child_sex, crawl_mos, walk_mos_kea, walk_mos_who, databrary_url) %>%
+  knitr::kable(., caption = "Selected PLAY locomotor data") %>%
+  kableExtra::kable_material(c("striped", "hover"))
+```
+
+## PHQ4
+
+The Patient Health Questionnaire (PHQ-4) data should be changed into an ordered factor.
+
+```{r}
+phq4_levels <- c('notatall', 'severaldays', 'morethanhalf', 'nearly')
+
+play_phq <- play_merge %>%
+  dplyr::select(., age_group, child_sex,
+                 health.phq4.phq4_nervous, 
+                 health.phq4.phq4_worrying,
+                 health.phq4.phq4_littleinterest,
+                health.phq4.phq4_down) %>%
+  dplyr::rename(., phq4_nervous = health.phq4.phq4_nervous,
+                phq4_worrying = health.phq4.phq4_worrying,
+                phq4_littleinterest = health.phq4.phq4_littleinterest,
+                phq4_down = health.phq4.phq4_down) %>%
+  dplyr::mutate(., phq4_nervous = factor(phq4_nervous, levels = phq4_levels, ordered = TRUE),
+                phq4_worrying = factor(phq4_worrying, levels = phq4_levels, ordered = TRUE),
+                phq4_littleinterest = factor(phq4_littleinterest, levels = phq4_levels, ordered = TRUE),
+                phq4_down = factor(phq4_down, levels = phq4_levels, ordered = TRUE))
+```
+
+### "Nervous"
+
+```{r}
+l_nervous <- likert::likert(as.data.frame(play_phq$phq4_nervous))
+plot(l_nervous)
+```
+
+### "Worrying"
+
+```{r}
+l_worrying <- likert::likert(as.data.frame(play_phq$phq4_worrying))
+plot(l_worrying)
+```
+
+### "Little interest"
+
+```{r}
+l_littleinterest <- likert::likert(as.data.frame(play_phq$phq4_littleinterest))
+plot(l_littleinterest)
+```
+
+### "Down"
+
+```{r}
+l_down <- likert::likert(as.data.frame(play_phq$phq4_down))
+plot(l_down)
+```
+
+## Health
+
+### Feeding
+
+```{r}
+feeding <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.feeding_nutrition.breastfeed,
+                health.feeding_nutrition.solidfood_age) %>%
+  dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
+                solid_food_mos = health.feeding_nutrition.solidfood_age)
+```
+
+```{r}
+xtabs(formula = ~ child_sex + breastfeed, data = feeding)
+```
+
+```{r}
+feeding %>%
+  ggplot(.) +
+  aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
+  geom_histogram()
+```
+
+### Smoking/drinking
+
+```{r}
+smoking_drinking <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.smoking.pregnant_smoking,
+                health.drinking.pregnant_drinking) %>%
+  dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
+                preg_drinking = health.drinking.pregnant_drinking)
+
+xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
+```
+
+### Sleeping position
+
+```{r}
+sleeping_pos <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.general_health.child_sleeping_position ) %>%
+  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) 
+
+xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
+```
+
+### Child health rating
+
+```{r}
+child_health <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.general_health.child_health ) %>%
+  dplyr::rename(., child_health_rating = health.general_health.child_health) %>%
+  dplyr::mutate(., child_health_rating = factor(child_health_rating, levels = c('good', 'verygood', 'excellent'), ordered = TRUE))
+
+
+plot(likert::likert(as.data.frame(child_health$child_health_rating)))
+```
+
+## See medical specialist
+
+```{r}
+med_specialist <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.general_health.child_medical_specialist,
+                health.general_health.comments_child_medical_special) %>%
+  dplyr::rename(., see_med_specialist = health.general_health.child_medical_specialist,
+                med_specialist_reason = health.general_health.comments_child_medical_special)
+
+xtabs(formula = ~ age_group + see_med_specialist, data = med_specialist)
+```
+
+### Med specialist reasons
+
+```{r}
+med_specialist %>%
+  dplyr::filter(., (!is.na(med_specialist_reason))) %>%
+  dplyr::select(., med_specialist_reason)
+```
+
+## Vaccination status
+
+```{r}
+vaccination <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.general_health.child_vaccination ) %>%  
+  dplyr::rename(., child_vaccinated = health.general_health.child_vaccination )
+
+xtabs(formula = ~ age_group + child_vaccinated, data = vaccination)
+```
+
