@@ -137,7 +137,7 @@ The Patient Health Questionnaire (PHQ-4) data should be changed into an ordered 
 ```{r}
 phq4_levels <- c('notatall', 'severaldays', 'morethanhalf', 'nearly')
 
-play_phq <- play_merge %>%
+play_phq4 <- play_merge %>%
   dplyr::select(., age_group, child_sex,
                  health.phq4.phq4_nervous, 
                  health.phq4.phq4_worrying,
@@ -156,28 +156,28 @@ play_phq <- play_merge %>%
 ### "Nervous"
 
 ```{r}
-l_nervous <- likert::likert(as.data.frame(play_phq$phq4_nervous))
+l_nervous <- likert::likert(as.data.frame(play_phq4$phq4_nervous))
 plot(l_nervous)
 ```
 
 ### "Worrying"
 
 ```{r}
-l_worrying <- likert::likert(as.data.frame(play_phq$phq4_worrying))
+l_worrying <- likert::likert(as.data.frame(play_phq4$phq4_worrying))
 plot(l_worrying)
 ```
 
 ### "Little interest"
 
 ```{r}
-l_littleinterest <- likert::likert(as.data.frame(play_phq$phq4_littleinterest))
+l_littleinterest <- likert::likert(as.data.frame(play_phq4$phq4_littleinterest))
 plot(l_littleinterest)
 ```
 
 ### "Down"
 
 ```{r}
-l_down <- likert::likert(as.data.frame(play_phq$phq4_down))
+l_down <- likert::likert(as.data.frame(play_phq4$phq4_down))
 plot(l_down)
 ```
 
@@ -242,7 +242,7 @@ child_health <- play_merge %>%
 plot(likert::likert(as.data.frame(child_health$child_health_rating)))
 ```
 
-## See medical specialist
+### See medical specialist
 
 ```{r}
 med_specialist <- play_merge %>%
@@ -255,7 +255,7 @@ med_specialist <- play_merge %>%
 xtabs(formula = ~ age_group + see_med_specialist, data = med_specialist)
 ```
 
-### Med specialist reasons
+#### Med specialist reasons
 
 ```{r}
 med_specialist %>%
@@ -263,7 +263,7 @@ med_specialist %>%
   dplyr::select(., med_specialist_reason)
 ```
 
-## Vaccination status
+### Vaccination status
 
 ```{r}
 vaccination <- play_merge %>%
@@ -272,5 +272,65 @@ vaccination <- play_merge %>%
   dplyr::rename(., child_vaccinated = health.general_health.child_vaccination )
 
 xtabs(formula = ~ age_group + child_vaccinated, data = vaccination)
+```
+
+## Media use
+
+```{r}
+media_use_cols <- stringr::str_detect(names(play_merge), 'mediause')
+media_use_col_index <- (1:length(names(play_merge)))[media_use_cols]
+
+media_use <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                all_of(media_use_col_index)) %>%
+  dplyr::rename(., have_tv =  mediause.home_technology.tv,
+                have_computer = mediause.home_technology.computer,
+                have_tablet = mediause.home_technology.ipad,
+                have_videogame = mediause.home_technology.videogame,
+                have_educationalgame = mediause.home_technology.educationalgame)
+```
+
+```{r}
+xtabs(formula = ~ have_tv, data = media_use)
+xtabs(formula = ~ have_computer, data = media_use)
+#xtabs(formula = ~ mediause.home_technology.smartphone, data = media_use)
+xtabs(formula = ~  have_tablet, data = media_use)
+xtabs(formula = ~  have_videogame, data = media_use)
+xtabs(formula = ~ have_educationalgame, data = media_use)
+```
+
+**Note**: The KoBoToolbox export does not generate a column for `smartphone` even though that is one of the permitted values in `mediause.home_technology`. We can generate that *post hoc*, however.
+
+```{r}
+media_use$mediause.home_technology
+```
+
+## Pets
+
+```{r}
+pets <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                pets.pets_at_home,
+                pets.pets_types_number,
+                pets.pets_indoors_outdoors,
+                pets.comments_pets) %>%
+  dplyr::rename(., pets_at_home = pets.pets_at_home,
+                pets_where_live = pets.pets_indoors_outdoors) %>%
+  dplyr::mutate(., have_dog = stringr::str_detect(pets.pets_types_number, '[dD]og'),
+                have_cat = stringr::str_detect(pets.pets_types_number, '[cC]at'),
+                have_bird = stringr::str_detect(pets.pets_types_number, '[bB]ird'),
+                have_fish = stringr::str_detect(pets.pets_types_number, '[fF]ish'))
+```
+
+```{r}
+xtabs(formula = ~ pets_at_home + pets_where_live, data = pets)
+```
+
+Focusing on families that *have* pets at home.
+
+```{r}
+pets %>%
+  dplyr::filter(., pets_at_home == "yes") %>%
+  dplyr::select(., pets_at_home, have_dog, have_cat, have_bird, have_fish)
 ```
 
