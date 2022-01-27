@@ -2,7 +2,9 @@
 title: "Creating a data dictionary"
 subtitle: "Version `r Sys.time()`"
 author: Rick Gilmore
-output: html_notebook
+output: 
+  html_document: default
+  html_notebook: default
 ---
 
 # Purpose
@@ -100,5 +102,81 @@ That looks ok. How about the tail?
 
 ```{r}
 tail(qs_data_df[, c('type', 'name', 'label', 'data_col_index')], 30)
+```
+
+# Import answers and questions and merge
+
+## Import answers
+
+We'll source `R/kobo_export.R` for some helper functions.
+
+```{r}
+source('R/kobo_export.R')
+```
+
+Now, let's import the 12-mo-old English speaking family data.
+
+```{r}
+raw_12_eng <- import_play_xlsx()
+```
+
+Begin to create a data frame for the question metadata.
+
+```{r}
+eng_12_ans_names <- names(raw_12_eng)
+```
+
+The answer data files appear to have the following structure:
+
+- Combined Questionnaires group with prefix 'group_combinedquestionnaires'
+  - Home visit questionnaires group with prefix 'group_homevisitquestionnaires'
+    - Notes or individual questionnaires groups with prefixes like 'group_typical_day'
+  - Databrary group with prefix 'group_databrary'
+- Metadata about the file and sessions with no prefix.
+
+Let's see if we can be smart about parsing the column name (https://stackoverflow.com/questions/29214932/split-a-file-path-into-folder-names-vector).
+
+
+```{r}
+split_path <- function(x) if (dirname(x)==x) x else c(split_path(dirname(x)), basename(x))
+```
+
+```{r}
+split_path(eng_12_ans_names[5])
+```
+
+So, that can be useful, but I think it may be wisest and simplest to create columns/variables based on the following scheme:
+
+1. Delete 'group_combinedquestionnaires' from all column names.
+2. Create a 'major_question_group' variable based on whether 'group_homevisitquestionnaires' or 'group_databrary' are in the name.
+3. Create a 'question_group' variable based on the next level down.
+
+Here's a Markdown table to illustrate what I mean.
+
+| major_question_group | minor_question_group | question_label | answer_types |
+|----------------------|---------------------|---------------------|---------------------|
+| session_data         | site_id              |  site_id       | \{"NYUNI", "PURDU"\} |
+| session_data         |                      | subject_number | \{"022", "023", "001"\} |
+| ...                  |  ...                 |   ...          |  ...                    |
+| session_data         |                      |  age_group     | \{"12mo", "18mo", "24mo"\} |
+| home_questions       | mcdi                 | choo_choo      | \{"NA", "understands", "understands_says"\} |
+
+Here' I've used `session_data` to refer to all of the questions at the top of the data file that lack a 'group_homevisitquestionnaires' label, but that might not be the right way to go. For example, we might want to create a data dictionary that includes the identifiable data, but label it as identifiable and thus excluded from the next level export. For example:
+
+| major_question_group | minor_question_group | question_label | answer_types | personal_identifier | status |
+|---------------------|---------------------|---------------------|---------------------|---------------------|---------------------|
+| ...                  |  ...                 |   ...          |  ...         | ...                 |                      |
+| session_data         |                      | experimenter_name |           | TRUE                | scrubbed_from_export
+| ...                  |  ...                 |   ...          |  ...         | ...                 | ...                  |
+| session_data         |                      | child_first_name |            | TRUE                | scrubbed_from_export |
+| session_data         |                      | child_middle_name |           | TRUE                | scrubbed_from_export |
+| session_data         |                      | child_last_name |           | TRUE                | scrubbed_from_export |
+| session_data         |                      | child_birthdate |           | TRUE                | scrubbed_from_export |
+| session_data         |                      | child_child_birth_city |           | FALSE                | shared |
+
+Just for fun, see the output of the following chunk. Some of the questions go pretty deep into the hierarchy, so maybe two top levels won't work.
+
+```{r}
+purrr::map(eng_12_ans_names, split_path)
 ```
 
