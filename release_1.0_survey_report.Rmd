@@ -45,6 +45,12 @@ play_merge <- readr::read_csv(params$kobo_csv_fn, show_col_types = FALSE)
 
 ## Demographic data summaries
 
+### QA status overall
+
+```{r}
+xtabs(formula = ~ group.name, data = play_merge)
+```
+
 ### Age group by QA status
 
 ```{r}
@@ -269,9 +275,28 @@ med_specialist %>%
 vaccination <- play_merge %>%
   dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
                 health.general_health.child_vaccination ) %>%  
-  dplyr::rename(., child_vaccinated = health.general_health.child_vaccination )
+  dplyr::rename(., child_vaccinated_last_4wks = health.general_health.child_vaccination )
 
-xtabs(formula = ~ age_group + child_vaccinated, data = vaccination)
+xtabs(formula = ~ age_group + child_vaccinated_last_4wks, data = vaccination)
+```
+
+### Vision/Hearing screen
+
+```{r}
+play_vis_aud <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+                health.general_health.child_vision_tested,
+                health.general_health.child_hearing_tested) %>%
+  dplyr::rename(., vision_tested = health.general_health.child_vision_tested,
+                hearing_tested = health.general_health.child_hearing_tested)
+```
+
+```{r}
+xtabs(formula = ~ age_group + vision_tested, data = play_vis_aud)
+```
+
+```{r}
+xtabs(formula = ~ age_group + hearing_tested, data = play_vis_aud)
 ```
 
 ## Media use
