@@ -12,6 +12,7 @@ output:
 params:
   xlsx_download_dir: 'xlsx/release_1.0'
   csv_export_dir: 'csv/release_1.0'
+  data_dict_fn: 'data_dict/xlsx/data_dict/xlsx/a8HyzdxnVjK53dt4fX3Vup.xlsx'
   download_xlsx: true
   update_2020: false
   databrary_login: default@youremail.com
@@ -39,7 +40,7 @@ In addition, this document gathers information from Databrary.org using the `dat
 
 ```{r authenticate-databrary}
 if (params$databrary_login == "default@youremail.com") {
-  stop("Must include Databrary credentials as document parameter.")
+  if (!file.exists('.databrary.RData')) stop("Must include Databrary credentials as document parameter.")
 } else {
   databraryapi::login_db(params$databrary_login)
 }
@@ -110,6 +111,88 @@ if (params$download_xlsx) {
 } else {
   message('params$download_xlsx is FALSE; no data downloaded.')
 }
+```
+
+# Generate data dictionary
+
+We'll use the questions from the 12-mon-old English form as a basis.
+
+```{r}
+qs_12_eng <- readxl::read_excel("data_dict/xlsx/a8HyzdxnVjK53dt4fX3Vup.xlsx")
+```
+
+It might be easiest to merge the field names we get from the completed survey data with this data set and do the cleaning/excerpting on the combined file.
+
+The following chunk is borrowed from `gather_clean_visit.Rmd`.
+
+```{r}
+data_12_eng <- readxl::read_excel("xlsx/release_1.0/740625_PLAY_HomeQuestionaires_12_English-2021-07-29.xlsx")
+data_cols <- names(data_12_eng)
+```
+
+I'm going to add a `data_col_index` variable so that I can track when the data file column names line up with those in the questionnaire form and when they do not.
+
+```{r}
+data_qs_df <- tibble::tibble(data_col_index = 1:length(data_cols), data_col_name = basename(data_cols))
+```
+
+Now, let's try to join these. But let's sort on the indexing variable first.
+
+```{r}
+data_qs_df <- data_qs_df %>%
+  dplyr::arrange(., data_col_name)
+qs_12_eng <- qs_12_eng %>%
+  dplyr::arrange(., name)
+
+qs_data_df <- dplyr::left_join(qs_12_eng, data_qs_df, by = c("name" = "data_col_name"))
+```
+
+Drop rows with no matching column name.
+
+```{r}
+qs_data_selected <- qs_data_df %>%
+  dplyr::filter(., !is.na(data_col_index)) %>%
+  dplyr::arrange(., data_col_index) %>%
+  dplyr::mutate(., data_column_longname = data_cols[data_col_index])
+```
+
+Let's trim some columns that seem unnecessary.
+
+```{r}
+qs_data_trimmed <- qs_data_selected %>%
+  dplyr::select(
+    .,
+    -c(
+      hint,
+      read_only,
+      calculation,
+      appearance,
+      default,
+      constraint,
+      constraint_message,
+      relevant,
+      `$given_name`
+    )
+  )
+```
+
+Remove MB-CDI questions.
+
+```{r}
+qs_data_non_mbcdi <- qs_data_trimmed %>%
+  dplyr::filter(., !stringr::str_detect(data_column_longname, 'mcdi'))
+```
+
+Rename some columns and export.
+
+```{r}
+data_dict_df <- qs_data_non_mbcdi %>%
+  dplyr::rename(., short_name = name,
+                 long_name = data_column_longname,
+                 question = label) %>%
+  dplyr::select(., -c(required, data_col_index, type))
+
+readr::write_csv(data_dict_df, 'data_dict/release_1.0_non_mbcdi_data_dictionary.csv')
 ```
 
 # Create separate MB-CDI/non-MB-CDI CSVs
@@ -709,11 +792,10 @@ if (params$update_2020) {
 }
 ```
 
-
-
-
-
 # Clean non-MB-CDI data
+
+
+
 
 ## Remove personally identifying fields.
 
