@@ -359,7 +359,7 @@ pre code {
 
 
 <h1 class="title toc-ignore">Creating a data dictionary</h1>
-<h3 class="subtitle">Version 2022-01-27 09:46:52</h3>
+<h3 class="subtitle">Version 2022-03-09 08:33:45</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1105,6 +1105,9 @@ trim the ‘path-like’ info and look at alignment there.</p>
 ## [17] &quot;city1&quot;                        &quot;city2&quot;                       
 ## [19] &quot;last1&quot;                        &quot;last2&quot;</code></pre>
 <p>That looks a little closer. I wonder if we can inner_join these?</p>
+<p>I’m going to add a <code>data_col_index</code> variable so that I can
+track when the data file column names line up with those in the
+questionnaire form and when they do not.</p>
 <pre class="r"><code>data_qs_df &lt;- tibble::tibble(data_col_index = 1:length(data_cols), data_col_name = basename(data_cols))</code></pre>
 <p>Now, let’s try to join these.</p>
 <pre class="r"><code>qs_data_df &lt;- dplyr::left_join(qs_12_eng, data_qs_df, by = c(&quot;name&quot; = &quot;data_col_name&quot;))</code></pre>

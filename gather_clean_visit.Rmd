@@ -795,11 +795,11 @@ mapply(import_xlsx_clean_save_non_mbcdi, rep('2020', 9),
 
 Now, let's try to import and join the 2021 data.
 
-```{r}
+```{r, eval=FALSE}
 non_mbcdi_2021 <- purrr::map_df(list.files('tmp', '2021_non_mbcdi_12', full.names = TRUE), readr::read_csv, show_col_types = FALSE, col_types = rep('c', 255))
 ```
 
-There are still column specification errors! Drat!
+There are still column specification errors! Drat! <span class="red">NOTE: As of 2022-03-09, I omitted the evaluation of the prior chunk.</span>
 
 Let's go old-school and use the `read.csv()` function to import and trim the files before we try to concatenate them.
 
@@ -820,7 +820,9 @@ open_trim_csv <- function(fn, col_index = 246) {
     df
   }
 }
+```
 
+```{r}
 f_all <- list.files('tmp', '202[01]_non_mbcdi_[12]', full.names = TRUE)
 mmm <- purrr::map_df(f_all, open_trim_csv)
 readr::write_csv(mmm, 'tmp/PLAY_non_mbcdi_all.csv')

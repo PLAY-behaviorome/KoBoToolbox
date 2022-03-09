@@ -83,6 +83,8 @@ head(qs_12_eng$name, 20)
 
 That looks a little closer. I wonder if we can inner_join these?
 
+I'm going to add a `data_col_index` variable so that I can track when the data file column names line up with those in the questionnaire form and when they do not.
+
 ```{r}
 data_qs_df <- tibble::tibble(data_col_index = 1:length(data_cols), data_col_name = basename(data_cols))
 ```

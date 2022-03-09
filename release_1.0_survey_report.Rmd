@@ -10,7 +10,7 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  kobo_csv_fn: 'tmp/PLAY_non_mbcdi_all_merge.csv'
+  kobo_csv_fn: 'csv/release_1.0/aggregate/PLAY_non_mbcdi_all_merge.csv'
 ---
 
 ```{r setup, include=FALSE}
@@ -122,6 +122,8 @@ play_loco %>%
   ggplot(.) +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
   geom_point() +
+  xlim(8, 18) +
+  ylim(8, 18) +
   theme(legend.position="bottom") -> walk_p
 
 ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 

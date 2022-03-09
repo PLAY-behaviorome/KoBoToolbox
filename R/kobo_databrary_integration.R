@@ -1,3 +1,6 @@
+# These functions enable integration between the data collected via
+# KoBoToolbox and that stored on Databrary
+
 play_vols <- tibble::tibble(
   play_site_id = c(
     'PLAYProject_GEORG',

@@ -10,25 +10,28 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 
 ## Workflows
 
-- [Working document](http://PLAY-behaviorome.github.io/KoBoToolbox/gather-clean.html) to develop and test import, cleaning, and export procedures.
-- There is an [Rmd document](export-measures-by-form.Rmd) to export all measures by form. It creates an [HTML](export-measures-by-form.html) report with useful information for conducting quality assurance (QA) reviews.
-- [Workbook](gather_clean_visit.html) for gathering and cleaning survey data collected at the visit, and its accompanying [Rmd](gather_clean_visit.Rmd) document.
-- A later [workbook](visit_gather_clean_export) that consolidates the lessons learned.
-- [Workbook](gather_clean_previsit.html) focusing on the screening or previsit questionnaires.
-- An internal (private to PLAY staff) report on the 1.0 Data Release. 
+### Release 1.0
 
-## Future work
+- To download the 1.0 release from KoBoToolbox and generate both form-level and aggregate CSV files, run `rmarkdown::render('release_1.0_export_clean.Rmd', params=list(databrary_login="<default@youremail.com>"))`, substituting your actual Databrary account ID (email) for `<default@yourmail.com>`.
+- To generate some summary tables and plots, run `rmarkdown::render("release_1.0_survey_report.Rmd")` with the default parameters. **Note:** Because this report contains potentially sensitive information about site performance, it is not synched to GitHub.
 
-- Export questions for each measure.
-- Integrate session/subject-specific data files with PLAYmate app.
-- Create QA dashboard for PLAY team.
+Preliminary work toward an automatically-generated data dictionary can be found in [`data_dictionary_workbook.html`](data_dictionary_workbook.html).
 
 ## File organization
 
-- Exported `.xlsx` files from KoBoToolbox.org are saved to a restricted directory on Box.
-At present, this export is manual.
-- Local copies of this repo contain a `csv/` directory that is private (and not synched to GitHub) because it contains identifiable data.
-    - Within `csv/` there are directories for
+### Synched to GitHub
+
+- `R/`: Sets of R functions that support the R Markdown documents.
+- `renv/`: Local copies of R packages used.
+
+### Private, not synched to GitHub
+
+-`csv/`:
+    - `release_1.0/`: 
+        - `raw/`: CSV files converted from the most recent KoBoToolbox exported `.xlsx` files.
+        - `identifiers_removed/`: CSV files with names, addresses, birthdates, and other identifying information removed.
+        - `aggregate`: CSV files with (`PLAY_non_mbcdi_all_merge.csv`) and without (`PLAY_non_mbcdi_all.csv`) the accompanying Databrary session-level info.
+    - `_old/:` Files related to an initial effort to download and clean the survey data.
         - `aggregate/`: CSV files by measure for all participants in the latest export.
         - `by_form/`: CSV files by KoBoToolbox form, e.g., \{'12_English', '12_Bilingual_English', etc.\}, and measure, e.g., \{'basic_demog', 'dll_eng_long', etc.\}.
         - `by_session/`: CSV files by session (participant) for each measure.
@@ -36,3 +39,14 @@ At present, this export is manual.
         - There is a hidden directory, `.analysis`, that contains CSV files used by the code base:
             - `form_measures.csv`: table of form stems, e.g., `12_English`, measure labels, e.g., `mbcdi_eng_short`, and the column range in the associated exported `.xlsx` file where the data for the measure can be found, e.g., `ER:HU`. This range helps make the extraction of relevant columns more efficient.
             - `sites_databrary.csv`: table of PLAY site id's, e.g. 'NYUNI, site names, e.g., 'New York University', and the PLAY Project Databrary volume ID, e.g., 899.
+- `data_dict/`: Files supporting the data dictionary. This will eventually be exposed on GitHub.
+- `tmp/`: Temporary directory only available locally.
+- `txt/`: 
+- `xlxs/`:
+    - `release_1.0/`: Exported files for the 1.0 release. Not synched to GitHub.
+            
+## Future work
+
+- Export questions for each measure.
+- Integrate session/subject-specific data files with PLAYmate app.
+- Create QA dashboard for PLAY team.
