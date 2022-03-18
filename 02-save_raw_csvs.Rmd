@@ -1,0 +1,50 @@
+---
+title: "Save raw CSVs"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  xlsx_download_dir: 'xlsx/release_1.0'
+  csv_save_dir: 'csv/release_1.0/raw'
+  form_years: ['2020', '2021']
+  age_grps: ['12', '18', '24']
+  lang_grps: ['English', 'Bilingual_English', 'Bilingual_Spanish']
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document converts the downloaded 'raw' XLSX files from KoBoToolbox and converts them to CSVs for further processing.
+
+By default, the document presumes that we want to convert **all** of the XLSX files that meet the `params$form_years`, `params$age_grps`, and `params$lang_grps` constraints found in `params$xlsx_download_dir` to CSVs and save them in `params$csv_save_dir`.
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source("R/kobo_export.R")
+```
+
+# Open file(s) and process
+
+Because we have parameterized the form year, age groups, and language groups, we can use the `mapply()` function here -- as long as we make sure that the parameter vectors have the right length and composition.
+
+```{r import_save_csv}
+mapply(import_xlsx_save_raw, 
+       form_year = rep(params$form_years, 9), 
+       age_grp = rep(params$age_grps, 3),
+       lang_grp = rep(params$lang_grps, each = 3),
+       xlsx_dir = params$xlsx_download_dir,
+       csv_dir = params$csv_save_dir)
+```
+

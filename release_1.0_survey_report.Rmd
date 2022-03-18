@@ -29,7 +29,6 @@ Import helper functions.
 
 ```{r}
 source("R/kobo_databrary_integration.R")
-
 library(tidyverse) # for %>% pipe
 ```
 
@@ -38,6 +37,7 @@ library(tidyverse) # for %>% pipe
 We import data from KoBoToolbox and from Databrary and merge the files.
 
 ```{r import-kobo-merge-w-databrary}
+if (!file.exists(params$kobo_csv_fn)) stop('Cannot open file `', params$kobo_csv_fn, '`')
 play_merge <- readr::read_csv(params$kobo_csv_fn, show_col_types = FALSE)
 ```
 
