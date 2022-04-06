@@ -1590,7 +1590,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Clean merged aggregate for sharing</h1>
-<h3 class="subtitle">Version 2022-03-25 08:48:18</h3>
+<h3 class="subtitle">Version 2022-04-06 07:16:32</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1628,8 +1628,8 @@ if (!file.exists(in_file)) {
 </div>
 <div id="file-processing" class="section level1">
 <h1>File processing</h1>
-<div id="import" class="section level2">
-<h2>Import</h2>
+<div id="import-data-file" class="section level2">
+<h2>Import data file</h2>
 <pre class="r"><code>play &lt;-
   read_csv(in_file,
            show_col_types = FALSE)</code></pre>
@@ -1679,6 +1679,71 @@ play_clean_1 &lt;- play %&gt;%
   warning(&#39;Directory not found: `&#39;, csv_save_dir, &#39;`&#39;)
   warning(&#39;File not saved.&#39;)
 }</code></pre>
+</div>
+<div id="import-data-dictionary-file" class="section level2">
+<h2>Import data dictionary file</h2>
+<pre class="r"><code>dd &lt;- read_csv(&quot;data_dict/release_1.0_non_mbcdi_data_dictionary.csv&quot;, show_col_types = FALSE)</code></pre>
+<div id="flag-comparable-rows-that-were-removed-for-data-file" class="section level3">
+<h3>Flag comparable rows that were removed for data file</h3>
+<pre class="r"><code>personally_identifying &lt;- str_detect(dd$long_name, &#39;name&#39;) |
+  str_detect(dd$long_name, &#39;address&#39;) |
+  str_detect(dd$long_name, &#39;city&#39;) |
+  str_detect(dd$long_name, &#39;phone&#39;) |
+  str_detect(dd$long_name, &#39;email&#39;) |
+  str_detect(dd$long_name, &#39;birthdate&#39;) |
+  str_detect(dd$long_name, &#39;first[12]?&#39;) |
+  str_detect(dd$long_name, &#39;last[12]?&#39;) |
+  str_detect(dd$long_name, &#39;city&#39;) |
+  str_detect(dd$long_name, &#39;year[12]?&#39;) |
+  str_detect(dd$long_name, &#39;month[12]?&#39;) |
+  str_detect(dd$long_name, &#39;day[12]?&#39;) |
+  str_detect(dd$long_name, &#39;session|url|participant.ID|vol_id&#39;) |
+  str_detect(dd$long_name, &#39;site|subject_number&#39;)
+
+admin_related &lt;- str_detect(dd$long_name, &#39;note|instructions|calc&#39;) |
+  str_detect(dd$long_name, &#39;start|end&#39;) |
+  str_detect(dd$long_name, &#39;date&#39;) |
+  str_detect(dd$long_name, &#39;acknowledge&#39;) |
+  str_detect(dd$long_name, &#39;version&#39;)
+
+dd$omitted_admin_related &lt;- admin_related
+dd$omitted_identifying &lt;- personally_identifying
+dd$shared &lt;- !dd$omitted_admin_related &amp; !dd$omitted_identifying</code></pre>
+</div>
+</div>
+<div id="generate-question-group-labels" class="section level2">
+<h2>Generate question group labels</h2>
+<pre class="r"><code>div_labor &lt;- str_detect(dd$long_name, &#39;division_labor&#39;)
+pets &lt;- str_detect(dd$long_name, &#39;pets&#39;)
+media_use &lt;- str_detect(dd$long_name, &#39;mediause&#39;)
+locomotor_milestones &lt;-
+  str_detect(dd$long_name, &#39;locomotor_milestone&#39;)
+rothbart &lt;- str_detect(dd$long_name, &#39;rothbart&#39;)
+health &lt;- str_detect(dd$long_name, &#39;group_health&#39;)
+typical_day &lt;- str_detect(dd$long_name, &#39;typical_day&#39;)
+
+dd_tagged &lt;- dd %&gt;%
+  dplyr::mutate(., question_group = ifelse(div_labor, &#39;div_labor&#39;,
+                                           ifelse(
+                                             pets, &#39;pets&#39;,
+                                             ifelse(
+                                               media_use,
+                                               &#39;media_use&#39;,
+                                               ifelse(
+                                                 locomotor_milestones,
+                                                 &#39;loco_milestones&#39;,
+                                                 ifelse(rothbart,
+                                                        &#39;rothbart&#39;,
+                                                        ifelse(
+                                                          health, &#39;health&#39;, ifelse(typical_day, &#39;typical_day&#39;, &#39;other&#39;)
+                                                        ))
+                                               )
+                                             )
+                                           )))
+dd_clean &lt;- dd_tagged %&gt;%
+  dplyr::select(., question, question_group, short_name, long_name, shared, omitted_admin_related, omitted_identifying)
+
+write_csv(dd_clean, &#39;data_dict/release_1.0_non_mbcdi_data_dictionary_clean.csv&#39;)</code></pre>
 </div>
 </div>
 

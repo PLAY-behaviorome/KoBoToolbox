@@ -1590,7 +1590,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Save raw CSVs</h1>
-<h3 class="subtitle">Version 2022-03-17 12:01:25</h3>
+<h3 class="subtitle">Version 2022-04-06 07:12:57</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1609,12 +1609,15 @@ KoBoToolbox and converts them to CSVs for further processing.</p>
 </div>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
+<p>We source the helper functions in <code>R/kobo_export.R</code>.</p>
 <pre class="r"><code>source(&quot;R/kobo_export.R&quot;)</code></pre>
 </div>
 <div id="open-files-and-process" class="section level1">
 <h1>Open file(s) and process</h1>
 <p>Because we have parameterized the form year, age groups, and language
-groups, we can use the <code>mapply()</code> function here.</p>
+groups, we can use the <code>mapply()</code> function here – as long as
+we make sure that the parameter vectors have the right length and
+composition.</p>
 <pre class="r"><code>mapply(import_xlsx_save_raw, 
        form_year = rep(params$form_years, 9), 
        age_grp = rep(params$age_grps, 3),

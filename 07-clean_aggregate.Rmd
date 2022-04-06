@@ -55,7 +55,7 @@ if (!file.exists(in_file)) {
 
 # File processing
 
-## Import
+## Import data file
 
 ```{r import}
 play <-
@@ -114,3 +114,75 @@ if (dir.exists(csv_save_dir)) {
   warning('File not saved.')
 }
 ```
+
+## Import data dictionary file
+
+```{r}
+dd <- read_csv("data_dict/release_1.0_non_mbcdi_data_dictionary.csv", show_col_types = FALSE)
+```
+
+### Flag comparable rows that were removed for data file
+
+```{r}
+personally_identifying <- str_detect(dd$long_name, 'name') |
+  str_detect(dd$long_name, 'address') |
+  str_detect(dd$long_name, 'city') |
+  str_detect(dd$long_name, 'phone') |
+  str_detect(dd$long_name, 'email') |
+  str_detect(dd$long_name, 'birthdate') |
+  str_detect(dd$long_name, 'first[12]?') |
+  str_detect(dd$long_name, 'last[12]?') |
+  str_detect(dd$long_name, 'city') |
+  str_detect(dd$long_name, 'year[12]?') |
+  str_detect(dd$long_name, 'month[12]?') |
+  str_detect(dd$long_name, 'day[12]?') |
+  str_detect(dd$long_name, 'session|url|participant.ID|vol_id') |
+  str_detect(dd$long_name, 'site|subject_number')
+
+admin_related <- str_detect(dd$long_name, 'note|instructions|calc') |
+  str_detect(dd$long_name, 'start|end') |
+  str_detect(dd$long_name, 'date') |
+  str_detect(dd$long_name, 'acknowledge') |
+  str_detect(dd$long_name, 'version')
+
+dd$omitted_admin_related <- admin_related
+dd$omitted_identifying <- personally_identifying
+dd$shared <- !dd$omitted_admin_related & !dd$omitted_identifying
+```
+
+## Generate question group labels
+
+```{r}
+div_labor <- str_detect(dd$long_name, 'division_labor')
+pets <- str_detect(dd$long_name, 'pets')
+media_use <- str_detect(dd$long_name, 'mediause')
+locomotor_milestones <-
+  str_detect(dd$long_name, 'locomotor_milestone')
+rothbart <- str_detect(dd$long_name, 'rothbart')
+health <- str_detect(dd$long_name, 'group_health')
+typical_day <- str_detect(dd$long_name, 'typical_day')
+
+dd_tagged <- dd %>%
+  dplyr::mutate(., question_group = ifelse(div_labor, 'div_labor',
+                                           ifelse(
+                                             pets, 'pets',
+                                             ifelse(
+                                               media_use,
+                                               'media_use',
+                                               ifelse(
+                                                 locomotor_milestones,
+                                                 'loco_milestones',
+                                                 ifelse(rothbart,
+                                                        'rothbart',
+                                                        ifelse(
+                                                          health, 'health', ifelse(typical_day, 'typical_day', 'other')
+                                                        ))
+                                               )
+                                             )
+                                           )))
+dd_clean <- dd_tagged %>%
+  dplyr::select(., question, question_group, short_name, long_name, shared, omitted_admin_related, omitted_identifying)
+
+write_csv(dd_clean, 'data_dict/release_1.0_non_mbcdi_data_dictionary_clean.csv')
+```
+
