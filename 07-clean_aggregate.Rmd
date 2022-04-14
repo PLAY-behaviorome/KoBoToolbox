@@ -22,8 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Purpose
 
 This document imports a file that contains the merged and aggregated PLAY data, does additional cleaning on the file,  saves the aggregated file to a new `../aggregate` directory. 
-
-To render, run `rmarkdown::render("07-clean_aggregate.Rmd".
+To render, run `rmarkdown::render("07-clean_aggregate.Rmd")
 
 # Setup
 
@@ -93,15 +92,15 @@ play_clean_1 <- play %>%
 
 ```{r}
 play_clean_2 <- play_clean_1 %>%
-  dplyr::rename(., child_race = participant.race,
-                child_ethnicity = participant.ethnicity,
-                child_disability = participant.disability,
-                child_language = participant.language,
-                exclusion_reason = exclusion.reason,
-                qa_group = group.name,
-                setting = context.setting,
-                country = context.country,
-                context_language = context.language)
+  dplyr::rename(., child_race = participant_race,
+                child_ethnicity = participant_ethnicity,
+                child_disability = participant_disability,
+                child_language = participant_language,
+                exclusion_reason = exclusion_reason,
+                qa_group = group_name,
+                setting = context_setting,
+                country = context_country,
+                context_language = context_language)
 ```
 
 ## Export
@@ -135,7 +134,7 @@ personally_identifying <- str_detect(dd$long_name, 'name') |
   str_detect(dd$long_name, 'city') |
   str_detect(dd$long_name, 'year[12]?') |
   str_detect(dd$long_name, 'month[12]?') |
-  str_detect(dd$long_name, 'day[12]?') |
+  str_detect(dd$long_name, '/day[12]?$') |
   str_detect(dd$long_name, 'session|url|participant.ID|vol_id') |
   str_detect(dd$long_name, 'site|subject_number')
 

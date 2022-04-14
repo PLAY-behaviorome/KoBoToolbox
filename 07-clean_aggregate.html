@@ -1318,7 +1318,9 @@ window.initializeCodeFolding = function(show) {
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
         .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
         .attr('aria-expanded', showThis)
         .attr('aria-controls', id);
 
@@ -1402,6 +1404,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -1422,6 +1425,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -1580,7 +1586,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -1590,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Clean merged aggregate for sharing</h1>
-<h3 class="subtitle">Version 2022-04-06 07:16:32</h3>
+<h3 class="subtitle">Version 2022-04-12 12:19:19</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1600,13 +1606,21 @@ div.tocify {
 <h1>Purpose</h1>
 <p>This document imports a file that contains the merged and aggregated
 PLAY data, does additional cleaning on the file, saves the aggregated
-file to a new <code>../aggregate</code> directory.</p>
-<p>To render, run `rmarkdown::render(“07-clean_aggregate.Rmd”.</p>
+file to a new <code>../aggregate</code> directory. To render, run
+`rmarkdown::render(“07-clean_aggregate.Rmd”)</p>
 </div>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
 <p>We load required libraries.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 <div id="generate-and-check-file-paths" class="section level2">
 <h2>Generate and check file paths</h2>
 <pre class="r"><code>csv_input_dir &lt;- file.path(&#39;csv&#39;, params$release_version, &#39;aggregate&#39;)
@@ -1661,15 +1675,15 @@ play_clean_1 &lt;- play %&gt;%
 <div id="clean-up-databrary-field-names" class="section level2">
 <h2>Clean-up Databrary field names</h2>
 <pre class="r"><code>play_clean_2 &lt;- play_clean_1 %&gt;%
-  dplyr::rename(., child_race = participant.race,
-                child_ethnicity = participant.ethnicity,
-                child_disability = participant.disability,
-                child_language = participant.language,
-                exclusion_reason = exclusion.reason,
-                qa_group = group.name,
-                setting = context.setting,
-                country = context.country,
-                context_language = context.language)</code></pre>
+  dplyr::rename(., child_race = participant_race,
+                child_ethnicity = participant_ethnicity,
+                child_disability = participant_disability,
+                child_language = participant_language,
+                exclusion_reason = exclusion_reason,
+                qa_group = group_name,
+                setting = context_setting,
+                country = context_country,
+                context_language = context_language)</code></pre>
 </div>
 <div id="export" class="section level2">
 <h2>Export</h2>
@@ -1696,7 +1710,7 @@ play_clean_1 &lt;- play %&gt;%
   str_detect(dd$long_name, &#39;city&#39;) |
   str_detect(dd$long_name, &#39;year[12]?&#39;) |
   str_detect(dd$long_name, &#39;month[12]?&#39;) |
-  str_detect(dd$long_name, &#39;day[12]?&#39;) |
+  str_detect(dd$long_name, &#39;/day[12]?$&#39;) |
   str_detect(dd$long_name, &#39;session|url|participant.ID|vol_id&#39;) |
   str_detect(dd$long_name, &#39;site|subject_number&#39;)
 

@@ -557,7 +557,7 @@ remove_identifiers <- function(df) {
   contains_city <- stringr::str_detect(names(df), 'city')
   contains_year <- stringr::str_detect(names(df), 'year[12]?')
   contains_month <- stringr::str_detect(names(df), 'month[12]?')
-  contains_day <- stringr::str_detect(names(df), 'day[12]?')
+  contains_day <- stringr::str_detect(names(df), '/day[12]?$')
   
   identifiable_data <- contains_name | contains_address |
     contains_phone |

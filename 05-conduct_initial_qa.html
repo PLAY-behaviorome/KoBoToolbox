@@ -1318,7 +1318,9 @@ window.initializeCodeFolding = function(show) {
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
         .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
         .attr('aria-expanded', showThis)
         .attr('aria-controls', id);
 
@@ -1626,6 +1628,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -1646,6 +1649,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -1804,7 +1810,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -1814,7 +1820,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Conduct initial QA</h1>
-<h3 class="subtitle">Version 2022-04-06 07:15:16</h3>
+<h3 class="subtitle">Version 2022-04-12 09:10:38</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1829,7 +1835,17 @@ each of the forms. This is useful for quality assurance evaluations</p>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
 <p>We source the helper functions in <code>R/kobo_export.R</code>.</p>
-<pre class="r"><code>source(&quot;R/kobo_export.R&quot;)</code></pre>
+<pre class="r"><code>source(&quot;R/kobo_export.R&quot;)
+
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 </div>
 <div id="open-files-and-process" class="section level1">
 <h1>Open file(s) and process</h1>
@@ -1877,7 +1893,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1888,7 +1904,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1899,7 +1915,7 @@ n_vars
 10
 </td>
 <td style="text-align:right;">
-255
+281
 </td>
 </tr>
 <tr>
@@ -1910,7 +1926,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1921,7 +1937,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1932,7 +1948,7 @@ n_vars
 9
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1943,7 +1959,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1954,7 +1970,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1965,7 +1981,7 @@ n_vars
 8
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1976,7 +1992,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1987,7 +2003,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -1998,7 +2014,7 @@ n_vars
 8
 </td>
 <td style="text-align:right;">
-255
+281
 </td>
 </tr>
 <tr>
@@ -2009,7 +2025,7 @@ n_vars
 2
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2020,7 +2036,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2031,7 +2047,7 @@ n_vars
 14
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2042,7 +2058,7 @@ n_vars
 3
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2053,7 +2069,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2064,7 +2080,7 @@ n_vars
 10
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 </tbody>
@@ -2085,7 +2101,7 @@ eng_12_2021 &lt;- readr::read_csv(&#39;csv/release_1.0/identifiers_removed/2021_
 eng_12_2021_names &lt;- names(eng_12_2021)
 
 sum(eng_12_2020_names == eng_12_2021_names)</code></pre>
-<pre><code>## [1] 255</code></pre>
+<pre><code>## [1] 281</code></pre>
 <p>The 12 mo english forms have the same names.</p>
 <pre class="r"><code>eng_18_2020 &lt;- readr::read_csv(&#39;csv/release_1.0/identifiers_removed/2020_non_mbcdi_18_english.csv&#39;, show_col_types = FALSE)
 eng_18_2020_names &lt;- names(eng_18_2020)
@@ -2094,41 +2110,41 @@ eng_18_2021 &lt;- readr::read_csv(&#39;csv/release_1.0/identifiers_removed/2021_
 eng_18_2021_names &lt;- names(eng_18_2021)
 
 sum(eng_18_2020_names == eng_18_2021_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <p>The 18 mo English forms have the same names.</p>
 <pre class="r"><code>sum(eng_12_2020_names == eng_18_2020_names)</code></pre>
-<pre><code>## Warning in eng_12_2020_names == eng_18_2020_names: longer object length is not
-## a multiple of shorter object length</code></pre>
-<pre><code>## [1] 246</code></pre>
+<pre><code>## Warning in eng_12_2020_names == eng_18_2020_names: longer object length is not a
+## multiple of shorter object length</code></pre>
+<pre><code>## [1] 272</code></pre>
 <p>Most of the 12 and 18 mo old forms have the same names, but there is
 a mismatch somewhere.</p>
 <pre class="r"><code>cbind(tail(basename(eng_12_2020_names), 40), tail(basename(eng_18_2020_names), 40))</code></pre>
 <pre><code>##       [,1]                             [,2]                            
-##  [1,] &quot;cooking_partner&quot;                &quot;cooking_self&quot;                  
-##  [2,] &quot;cooking_otherperson&quot;            &quot;cooking_partner&quot;               
-##  [3,] &quot;labor_cooking_otherperson&quot;      &quot;cooking_otherperson&quot;           
-##  [4,] &quot;instructions_labor_feeding&quot;     &quot;labor_cooking_otherperson&quot;     
-##  [5,] &quot;feeding_self&quot;                   &quot;instructions_labor_feeding&quot;    
-##  [6,] &quot;feeding_partner&quot;                &quot;feeding_self&quot;                  
-##  [7,] &quot;feeding_otherperson&quot;            &quot;feeding_partner&quot;               
-##  [8,] &quot;labor_feeding_otherperson&quot;      &quot;feeding_otherperson&quot;           
-##  [9,] &quot;instructions_droppick&quot;          &quot;labor_feeding_otherperson&quot;     
-## [10,] &quot;droppick_self&quot;                  &quot;instructions_droppick&quot;         
-## [11,] &quot;droppick_partner&quot;               &quot;droppick_self&quot;                 
-## [12,] &quot;droppick_otherperson&quot;           &quot;droppick_partner&quot;              
-## [13,] &quot;labor_droppick_otherperson&quot;     &quot;droppick_otherperson&quot;          
-## [14,] &quot;instructions_bed&quot;               &quot;labor_droppick_otherperson&quot;    
-## [15,] &quot;bed_self&quot;                       &quot;instructions_bed&quot;              
-## [16,] &quot;bed_partner&quot;                    &quot;bed_self&quot;                      
-## [17,] &quot;bed_otherperson&quot;                &quot;bed_partner&quot;                   
-## [18,] &quot;labor_bed_otherperson&quot;          &quot;bed_otherperson&quot;               
-## [19,] &quot;instructions_disciplining&quot;      &quot;labor_bed_otherperson&quot;         
-## [20,] &quot;disciplining_self&quot;              &quot;instructions_disciplining&quot;     
-## [21,] &quot;disciplining_partner&quot;           &quot;disciplining_self&quot;             
-## [22,] &quot;disciplining_otherperson&quot;       &quot;disciplining_partner&quot;          
-## [23,] &quot;labor_disciplining_otherperson&quot; &quot;disciplining_otherperson&quot;      
-## [24,] &quot;comments_division_labor&quot;        &quot;labor_disciplining_otherperson&quot;
-## [25,] &quot;acknowledge_questionnaires&quot;     &quot;comments_division_labor&quot;       
+##  [1,] &quot;instructions_droppick&quot;          &quot;labor_feeding_otherperson&quot;     
+##  [2,] &quot;droppick_self&quot;                  &quot;instructions_droppick&quot;         
+##  [3,] &quot;droppick_partner&quot;               &quot;droppick_self&quot;                 
+##  [4,] &quot;droppick_otherperson&quot;           &quot;droppick_partner&quot;              
+##  [5,] &quot;labor_droppick_otherperson&quot;     &quot;droppick_otherperson&quot;          
+##  [6,] &quot;instructions_bed&quot;               &quot;labor_droppick_otherperson&quot;    
+##  [7,] &quot;bed_self&quot;                       &quot;instructions_bed&quot;              
+##  [8,] &quot;bed_partner&quot;                    &quot;bed_self&quot;                      
+##  [9,] &quot;bed_otherperson&quot;                &quot;bed_partner&quot;                   
+## [10,] &quot;labor_bed_otherperson&quot;          &quot;bed_otherperson&quot;               
+## [11,] &quot;instructions_disciplining&quot;      &quot;labor_bed_otherperson&quot;         
+## [12,] &quot;disciplining_self&quot;              &quot;instructions_disciplining&quot;     
+## [13,] &quot;disciplining_partner&quot;           &quot;disciplining_self&quot;             
+## [14,] &quot;disciplining_otherperson&quot;       &quot;disciplining_partner&quot;          
+## [15,] &quot;labor_disciplining_otherperson&quot; &quot;disciplining_otherperson&quot;      
+## [16,] &quot;comments_division_labor&quot;        &quot;labor_disciplining_otherperson&quot;
+## [17,] &quot;typical_behavior&quot;               &quot;comments_division_labor&quot;       
+## [18,] &quot;typical_behavior_specifics&quot;     &quot;typical_behavior&quot;              
+## [19,] &quot;typical_activities&quot;             &quot;typical_behavior_specifics&quot;    
+## [20,] &quot;typical_activities_specifics&quot;   &quot;typical_activities&quot;            
+## [21,] &quot;typical_nightmorning&quot;           &quot;typical_activities_specifics&quot;  
+## [22,] &quot;typical_nightmorning_specifics&quot; &quot;typical_nightmorning&quot;          
+## [23,] &quot;typical_otherthanme&quot;            &quot;typical_nightmorning_specifics&quot;
+## [24,] &quot;typical_otherthanme_specifics&quot;  &quot;typical_otherthanme&quot;           
+## [25,] &quot;acknowledge_questionnaires&quot;     &quot;typical_otherthanme_specifics&quot; 
 ## [26,] &quot;note_databraryspiel1&quot;           &quot;acknowledge_questionnaires&quot;    
 ## [27,] &quot;note_databraryspiel2&quot;           &quot;note_databraryspiel1&quot;          
 ## [28,] &quot;note_databraryspiel3&quot;           &quot;note_databraryspiel2&quot;          
@@ -2151,31 +2167,31 @@ that column will fix the problem.</p>
 eng_12_names_trim &lt;- eng_12_2020_names[-trim_this_one]
 cbind(tail(basename(eng_12_names_trim), 40), tail(basename(eng_18_2020_names), 40))</code></pre>
 <pre><code>##       [,1]                             [,2]                            
-##  [1,] &quot;cooking_self&quot;                   &quot;cooking_self&quot;                  
-##  [2,] &quot;cooking_partner&quot;                &quot;cooking_partner&quot;               
-##  [3,] &quot;cooking_otherperson&quot;            &quot;cooking_otherperson&quot;           
-##  [4,] &quot;labor_cooking_otherperson&quot;      &quot;labor_cooking_otherperson&quot;     
-##  [5,] &quot;instructions_labor_feeding&quot;     &quot;instructions_labor_feeding&quot;    
-##  [6,] &quot;feeding_self&quot;                   &quot;feeding_self&quot;                  
-##  [7,] &quot;feeding_partner&quot;                &quot;feeding_partner&quot;               
-##  [8,] &quot;feeding_otherperson&quot;            &quot;feeding_otherperson&quot;           
-##  [9,] &quot;labor_feeding_otherperson&quot;      &quot;labor_feeding_otherperson&quot;     
-## [10,] &quot;instructions_droppick&quot;          &quot;instructions_droppick&quot;         
-## [11,] &quot;droppick_self&quot;                  &quot;droppick_self&quot;                 
-## [12,] &quot;droppick_partner&quot;               &quot;droppick_partner&quot;              
-## [13,] &quot;droppick_otherperson&quot;           &quot;droppick_otherperson&quot;          
-## [14,] &quot;labor_droppick_otherperson&quot;     &quot;labor_droppick_otherperson&quot;    
-## [15,] &quot;instructions_bed&quot;               &quot;instructions_bed&quot;              
-## [16,] &quot;bed_self&quot;                       &quot;bed_self&quot;                      
-## [17,] &quot;bed_partner&quot;                    &quot;bed_partner&quot;                   
-## [18,] &quot;bed_otherperson&quot;                &quot;bed_otherperson&quot;               
-## [19,] &quot;labor_bed_otherperson&quot;          &quot;labor_bed_otherperson&quot;         
-## [20,] &quot;instructions_disciplining&quot;      &quot;instructions_disciplining&quot;     
-## [21,] &quot;disciplining_self&quot;              &quot;disciplining_self&quot;             
-## [22,] &quot;disciplining_partner&quot;           &quot;disciplining_partner&quot;          
-## [23,] &quot;disciplining_otherperson&quot;       &quot;disciplining_otherperson&quot;      
-## [24,] &quot;labor_disciplining_otherperson&quot; &quot;labor_disciplining_otherperson&quot;
-## [25,] &quot;comments_division_labor&quot;        &quot;comments_division_labor&quot;       
+##  [1,] &quot;labor_feeding_otherperson&quot;      &quot;labor_feeding_otherperson&quot;     
+##  [2,] &quot;instructions_droppick&quot;          &quot;instructions_droppick&quot;         
+##  [3,] &quot;droppick_self&quot;                  &quot;droppick_self&quot;                 
+##  [4,] &quot;droppick_partner&quot;               &quot;droppick_partner&quot;              
+##  [5,] &quot;droppick_otherperson&quot;           &quot;droppick_otherperson&quot;          
+##  [6,] &quot;labor_droppick_otherperson&quot;     &quot;labor_droppick_otherperson&quot;    
+##  [7,] &quot;instructions_bed&quot;               &quot;instructions_bed&quot;              
+##  [8,] &quot;bed_self&quot;                       &quot;bed_self&quot;                      
+##  [9,] &quot;bed_partner&quot;                    &quot;bed_partner&quot;                   
+## [10,] &quot;bed_otherperson&quot;                &quot;bed_otherperson&quot;               
+## [11,] &quot;labor_bed_otherperson&quot;          &quot;labor_bed_otherperson&quot;         
+## [12,] &quot;instructions_disciplining&quot;      &quot;instructions_disciplining&quot;     
+## [13,] &quot;disciplining_self&quot;              &quot;disciplining_self&quot;             
+## [14,] &quot;disciplining_partner&quot;           &quot;disciplining_partner&quot;          
+## [15,] &quot;disciplining_otherperson&quot;       &quot;disciplining_otherperson&quot;      
+## [16,] &quot;labor_disciplining_otherperson&quot; &quot;labor_disciplining_otherperson&quot;
+## [17,] &quot;comments_division_labor&quot;        &quot;comments_division_labor&quot;       
+## [18,] &quot;typical_behavior&quot;               &quot;typical_behavior&quot;              
+## [19,] &quot;typical_behavior_specifics&quot;     &quot;typical_behavior_specifics&quot;    
+## [20,] &quot;typical_activities&quot;             &quot;typical_activities&quot;            
+## [21,] &quot;typical_activities_specifics&quot;   &quot;typical_activities_specifics&quot;  
+## [22,] &quot;typical_nightmorning&quot;           &quot;typical_nightmorning&quot;          
+## [23,] &quot;typical_nightmorning_specifics&quot; &quot;typical_nightmorning_specifics&quot;
+## [24,] &quot;typical_otherthanme&quot;            &quot;typical_otherthanme&quot;           
+## [25,] &quot;typical_otherthanme_specifics&quot;  &quot;typical_otherthanme_specifics&quot; 
 ## [26,] &quot;acknowledge_questionnaires&quot;     &quot;acknowledge_questionnaires&quot;    
 ## [27,] &quot;note_databraryspiel1&quot;           &quot;note_databraryspiel1&quot;          
 ## [28,] &quot;note_databraryspiel2&quot;           &quot;note_databraryspiel2&quot;          
@@ -2192,37 +2208,37 @@ cbind(tail(basename(eng_12_names_trim), 40), tail(basename(eng_18_2020_names), 4
 ## [39,] &quot;_tags&quot;                          &quot;_tags&quot;                         
 ## [40,] &quot;_notes&quot;                         &quot;_notes&quot;</code></pre>
 <pre class="r"><code>sum(eng_12_names_trim == eng_18_2020_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <p>That seems to do the trick!</p>
 <p>We confirm that the same is true for the 2021 form before fixing.</p>
 <pre class="r"><code>eng_12_names_trim_2021 &lt;- eng_12_2021_names[-trim_this_one]
 cbind(tail(basename(eng_12_names_trim_2021), 40), tail(basename(eng_18_2020_names), 40))</code></pre>
 <pre><code>##       [,1]                             [,2]                            
-##  [1,] &quot;cooking_self&quot;                   &quot;cooking_self&quot;                  
-##  [2,] &quot;cooking_partner&quot;                &quot;cooking_partner&quot;               
-##  [3,] &quot;cooking_otherperson&quot;            &quot;cooking_otherperson&quot;           
-##  [4,] &quot;labor_cooking_otherperson&quot;      &quot;labor_cooking_otherperson&quot;     
-##  [5,] &quot;instructions_labor_feeding&quot;     &quot;instructions_labor_feeding&quot;    
-##  [6,] &quot;feeding_self&quot;                   &quot;feeding_self&quot;                  
-##  [7,] &quot;feeding_partner&quot;                &quot;feeding_partner&quot;               
-##  [8,] &quot;feeding_otherperson&quot;            &quot;feeding_otherperson&quot;           
-##  [9,] &quot;labor_feeding_otherperson&quot;      &quot;labor_feeding_otherperson&quot;     
-## [10,] &quot;instructions_droppick&quot;          &quot;instructions_droppick&quot;         
-## [11,] &quot;droppick_self&quot;                  &quot;droppick_self&quot;                 
-## [12,] &quot;droppick_partner&quot;               &quot;droppick_partner&quot;              
-## [13,] &quot;droppick_otherperson&quot;           &quot;droppick_otherperson&quot;          
-## [14,] &quot;labor_droppick_otherperson&quot;     &quot;labor_droppick_otherperson&quot;    
-## [15,] &quot;instructions_bed&quot;               &quot;instructions_bed&quot;              
-## [16,] &quot;bed_self&quot;                       &quot;bed_self&quot;                      
-## [17,] &quot;bed_partner&quot;                    &quot;bed_partner&quot;                   
-## [18,] &quot;bed_otherperson&quot;                &quot;bed_otherperson&quot;               
-## [19,] &quot;labor_bed_otherperson&quot;          &quot;labor_bed_otherperson&quot;         
-## [20,] &quot;instructions_disciplining&quot;      &quot;instructions_disciplining&quot;     
-## [21,] &quot;disciplining_self&quot;              &quot;disciplining_self&quot;             
-## [22,] &quot;disciplining_partner&quot;           &quot;disciplining_partner&quot;          
-## [23,] &quot;disciplining_otherperson&quot;       &quot;disciplining_otherperson&quot;      
-## [24,] &quot;labor_disciplining_otherperson&quot; &quot;labor_disciplining_otherperson&quot;
-## [25,] &quot;comments_division_labor&quot;        &quot;comments_division_labor&quot;       
+##  [1,] &quot;labor_feeding_otherperson&quot;      &quot;labor_feeding_otherperson&quot;     
+##  [2,] &quot;instructions_droppick&quot;          &quot;instructions_droppick&quot;         
+##  [3,] &quot;droppick_self&quot;                  &quot;droppick_self&quot;                 
+##  [4,] &quot;droppick_partner&quot;               &quot;droppick_partner&quot;              
+##  [5,] &quot;droppick_otherperson&quot;           &quot;droppick_otherperson&quot;          
+##  [6,] &quot;labor_droppick_otherperson&quot;     &quot;labor_droppick_otherperson&quot;    
+##  [7,] &quot;instructions_bed&quot;               &quot;instructions_bed&quot;              
+##  [8,] &quot;bed_self&quot;                       &quot;bed_self&quot;                      
+##  [9,] &quot;bed_partner&quot;                    &quot;bed_partner&quot;                   
+## [10,] &quot;bed_otherperson&quot;                &quot;bed_otherperson&quot;               
+## [11,] &quot;labor_bed_otherperson&quot;          &quot;labor_bed_otherperson&quot;         
+## [12,] &quot;instructions_disciplining&quot;      &quot;instructions_disciplining&quot;     
+## [13,] &quot;disciplining_self&quot;              &quot;disciplining_self&quot;             
+## [14,] &quot;disciplining_partner&quot;           &quot;disciplining_partner&quot;          
+## [15,] &quot;disciplining_otherperson&quot;       &quot;disciplining_otherperson&quot;      
+## [16,] &quot;labor_disciplining_otherperson&quot; &quot;labor_disciplining_otherperson&quot;
+## [17,] &quot;comments_division_labor&quot;        &quot;comments_division_labor&quot;       
+## [18,] &quot;typical_behavior&quot;               &quot;typical_behavior&quot;              
+## [19,] &quot;typical_behavior_specifics&quot;     &quot;typical_behavior_specifics&quot;    
+## [20,] &quot;typical_activities&quot;             &quot;typical_activities&quot;            
+## [21,] &quot;typical_activities_specifics&quot;   &quot;typical_activities_specifics&quot;  
+## [22,] &quot;typical_nightmorning&quot;           &quot;typical_nightmorning&quot;          
+## [23,] &quot;typical_nightmorning_specifics&quot; &quot;typical_nightmorning_specifics&quot;
+## [24,] &quot;typical_otherthanme&quot;            &quot;typical_otherthanme&quot;           
+## [25,] &quot;typical_otherthanme_specifics&quot;  &quot;typical_otherthanme_specifics&quot; 
 ## [26,] &quot;acknowledge_questionnaires&quot;     &quot;acknowledge_questionnaires&quot;    
 ## [27,] &quot;note_databraryspiel1&quot;           &quot;note_databraryspiel1&quot;          
 ## [28,] &quot;note_databraryspiel2&quot;           &quot;note_databraryspiel2&quot;          
@@ -2239,7 +2255,7 @@ cbind(tail(basename(eng_12_names_trim_2021), 40), tail(basename(eng_18_2020_name
 ## [39,] &quot;_tags&quot;                          &quot;_tags&quot;                         
 ## [40,] &quot;_notes&quot;                         &quot;_notes&quot;</code></pre>
 <pre class="r"><code>sum(eng_12_names_trim_2021 == eng_18_2020_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <div id="trim-and-re-export" class="section level3">
 <h3>Trim and re-export</h3>
 <pre class="r"><code>eng_12_2020_trim &lt;- eng_12_2020[-trim_this_one]
@@ -2277,7 +2293,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2288,7 +2304,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2299,7 +2315,7 @@ n_vars
 10
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2310,7 +2326,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2321,7 +2337,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2332,7 +2348,7 @@ n_vars
 9
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2343,7 +2359,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2354,7 +2370,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2365,7 +2381,7 @@ n_vars
 8
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2376,7 +2392,7 @@ n_vars
 1
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2387,7 +2403,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2398,7 +2414,7 @@ n_vars
 8
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2409,7 +2425,7 @@ n_vars
 2
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2420,7 +2436,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2431,7 +2447,7 @@ n_vars
 14
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2442,7 +2458,7 @@ n_vars
 3
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2453,7 +2469,7 @@ n_vars
 0
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 <tr>
@@ -2464,7 +2480,7 @@ n_vars
 10
 </td>
 <td style="text-align:right;">
-254
+280
 </td>
 </tr>
 </tbody>
@@ -2482,11 +2498,11 @@ eng_18_2021 &lt;- readr::read_csv(&#39;csv/release_1.0/identifiers_removed/2021_
 eng_18_2021_names &lt;- names(eng_18_2021)
 
 sum(eng_12_2021_names == eng_12_2021_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <pre class="r"><code>sum(eng_18_2020_names == eng_18_2021_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <pre class="r"><code>sum(eng_12_2020_names == eng_18_2020_names)</code></pre>
-<pre><code>## [1] 254</code></pre>
+<pre><code>## [1] 280</code></pre>
 <p><strong>TODO(ROG)</strong>: Make a function to check names more
 thoroughly and completely.</p>
 </div>

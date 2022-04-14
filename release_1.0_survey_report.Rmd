@@ -10,7 +10,7 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  kobo_csv_fn: 'csv/release_1.0/aggregate/PLAY_non_mbcdi_all_merge.csv'
+  kobo_csv_fn: 'csv/release_1.0/aggregate/PLAY_non_mbcdi_all_databrary.csv'
 ---
 
 ```{r setup, include=FALSE}
@@ -48,13 +48,13 @@ play_merge <- readr::read_csv(params$kobo_csv_fn, show_col_types = FALSE)
 ### QA status overall
 
 ```{r}
-xtabs(formula = ~ group.name, data = play_merge)
+xtabs(formula = ~ group_name, data = play_merge)
 ```
 
 ### Age group by QA status
 
 ```{r}
-xtabs(formula = ~ group.name + age_group, data = play_merge)
+xtabs(formula = ~ group_name + age_group, data = play_merge)
 ```
 
 ### Sex by age group
@@ -66,17 +66,17 @@ xtabs(formula = ~ child_sex + age_group, data = play_merge)
 ### QA status by site
 
 ```{r}
-xtabs(formula = ~ group.name + site_id, data = play_merge)
+xtabs(formula = ~ group_name + site_id, data = play_merge)
 ```
 
 ## Links to Databrary sessions
 
 ```{r}
 play_selected <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url)
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url)
 
 play_selected %>%
-  dplyr::arrange(., group.name, age_group) %>%
+  dplyr::arrange(., group_name, age_group) %>%
   knitr::kable(., caption = "Selected PLAY data") %>%
   kableExtra::kable_material(c("striped", "hover"))
 ```
@@ -87,7 +87,7 @@ play_selected %>%
 
 ```{r}
 play_loco <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 locomotor_milestones.who_walk.who_walk_onset_mo,
                 locomotor_milestones.k_walk.k_walk_onset_mo,
                 locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
@@ -132,8 +132,8 @@ ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea,
 
 ```{r}
 play_loco %>%
-  dplyr::arrange(., group.name, walk_mos_kea) %>%
-  dplyr::select(., group.name, child_sex, crawl_mos, walk_mos_kea, walk_mos_who, databrary_url) %>%
+  dplyr::arrange(., group_name, walk_mos_kea) %>%
+  dplyr::select(., group_name, child_sex, crawl_mos, walk_mos_kea, walk_mos_who, databrary_url) %>%
   knitr::kable(., caption = "Selected PLAY locomotor data") %>%
   kableExtra::kable_material(c("striped", "hover"))
 ```
@@ -195,7 +195,7 @@ plot(l_down)
 
 ```{r}
 feeding <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.feeding_nutrition.breastfeed,
                 health.feeding_nutrition.solidfood_age) %>%
   dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
@@ -217,7 +217,7 @@ feeding %>%
 
 ```{r}
 smoking_drinking <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.smoking.pregnant_smoking,
                 health.drinking.pregnant_drinking) %>%
   dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
@@ -230,7 +230,7 @@ xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
 
 ```{r}
 sleeping_pos <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.general_health.child_sleeping_position ) %>%
   dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) 
 
@@ -241,7 +241,7 @@ xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
 
 ```{r}
 child_health <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.general_health.child_health ) %>%
   dplyr::rename(., child_health_rating = health.general_health.child_health) %>%
   dplyr::mutate(., child_health_rating = factor(child_health_rating, levels = c('good', 'verygood', 'excellent'), ordered = TRUE))
@@ -254,7 +254,7 @@ plot(likert::likert(as.data.frame(child_health$child_health_rating)))
 
 ```{r}
 med_specialist <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.general_health.child_medical_specialist,
                 health.general_health.comments_child_medical_special) %>%
   dplyr::rename(., see_med_specialist = health.general_health.child_medical_specialist,
@@ -275,7 +275,7 @@ med_specialist %>%
 
 ```{r}
 vaccination <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.general_health.child_vaccination ) %>%  
   dplyr::rename(., child_vaccinated_last_4wks = health.general_health.child_vaccination )
 
@@ -286,7 +286,7 @@ xtabs(formula = ~ age_group + child_vaccinated_last_4wks, data = vaccination)
 
 ```{r}
 play_vis_aud <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 health.general_health.child_vision_tested,
                 health.general_health.child_hearing_tested) %>%
   dplyr::rename(., vision_tested = health.general_health.child_vision_tested,
@@ -308,7 +308,7 @@ media_use_cols <- stringr::str_detect(names(play_merge), 'mediause')
 media_use_col_index <- (1:length(names(play_merge)))[media_use_cols]
 
 media_use <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 all_of(media_use_col_index)) %>%
   dplyr::rename(., have_tv =  mediause.home_technology.tv,
                 have_dvd = mediause.home_technology.dvd,
@@ -364,7 +364,7 @@ xtabs(formula = ~ age_group + child_use_videogame, data = media_use)
 
 ```{r}
 pets <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group.name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
                 pets.pets_at_home,
                 pets.pets_types_number,
                 pets.pets_indoors_outdoors,

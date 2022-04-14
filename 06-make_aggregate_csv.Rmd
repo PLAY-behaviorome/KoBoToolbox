@@ -15,7 +15,8 @@ params:
   no_db_fn: 'PLAY_non_mbcdi_all.csv'
   with_db_fn: 'PLAY_non_mbcdi_all_databrary.csv'
   merge_db_info: true
-  databrary_login: email@yourdomain.com
+  databrary_login: rogilmore@psu.edu
+  last_col: 265
 ---
 
 ```{r setup, include=FALSE}
@@ -66,7 +67,7 @@ if (!file.exists('.databrary.RData')) {
 # NOTE the colClasses = 'character' forces read.csv() to read all data fields as strings. This solves some
 # problems with importing the data and the automated assumptions made about specific data types.
 
-read_PLAY_csv <- function(fn, last_col = 246) {
+read_PLAY_csv <- function(fn, last_col = params$last_col) {
   df <- read.csv(fn, colClasses = 'character')
   df <- df[,1:last_col]
 }
@@ -97,6 +98,11 @@ xfun::gsub_file(aggregate_fn,
 xfun::gsub_file(aggregate_fn,
                 'group_',
                 '')
+
+# Handle change in site_id for CSU Long Beach
+xfun::gsub_file(aggregate_fn,
+                'CSLON',
+                'CSULB')
 ```
 
 # Pre-Databrary merge summary

@@ -27,6 +27,8 @@ We source the helper functions in `R/kobo_export.R`.
 
 ```{r source_helpers}
 source("R/kobo_export.R")
+
+library(tidyverse)
 ```
 
 # Open file(s) and process
@@ -57,6 +59,7 @@ PLAY_forms %>%
   knitr::kable(., format = 'html') %>%
   kableExtra::kable_classic()
 ```
+
 # Examine anomalies and repair
 
 ## Additional columns in 12mo English forms
