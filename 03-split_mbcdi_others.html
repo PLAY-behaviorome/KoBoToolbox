@@ -1318,7 +1318,9 @@ window.initializeCodeFolding = function(show) {
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
+        .attr('data-bs-toggle', 'collapse') // BS5
         .attr('data-target', '#' + id)
+        .attr('data-bs-target', '#' + id)   // BS5
         .attr('aria-expanded', showThis)
         .attr('aria-controls', id);
 
@@ -1402,6 +1404,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -1422,6 +1425,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -1580,7 +1586,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -1590,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Separate MB-CDI from Other Questions</h1>
-<h3 class="subtitle">Version 2022-04-06 07:13:16</h3>
+<h3 class="subtitle">Version 2022-05-24 09:37:36</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1635,16 +1641,14 @@ composition.</p>
        these_questions = &#39;non_mbcdi&#39;,
        remove_identifying_data = params$remove_identifying_data)</code></pre>
 <pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
-## ✓ tidyr   1.1.4     ✓ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────── tidyverse_conflicts() ──
-## x tidyr::extract()   masks magrittr::extract()
-## x dplyr::filter()    masks stats::filter()
-## x purrr::flatten()   masks jsonlite::flatten()
-## x dplyr::lag()       masks stats::lag()
-## x purrr::set_names() masks magrittr::set_names()</code></pre>
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.1     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## Importing data for 2020_12_English</code></pre>
 <pre><code>## Saved csv/release_1.0/mbcdi_non/2020_non_mbcdi_12_english.csv</code></pre>
 <pre><code>## Importing data for 2021_18_English</code></pre>

@@ -17,7 +17,8 @@ play_vols <- tibble::tibble(
     'PLAYProject_UCSCR',
     'PLAYProject_UHOUS',
     'PLAYProject_VBLTU',
-    'PLAYProject_VCOMU'
+    'PLAYProject_VCOMU',
+    'PLAYProject_UIOWA'
   ),
   play_vol_id = c(
     954,
@@ -34,7 +35,8 @@ play_vols <- tibble::tibble(
     1066,
     1397,
     1391,
-    982
+    982,
+    1422
   )
 )
 
@@ -175,4 +177,5 @@ create_save_kobo_db_merge_csv <- function(in_fn = 'tmp/PLAY_non_mbcdi_all.csv',
   df <- add_databrary_info_to_kobo(in_fn)
   
   readr::write_csv(df, out_fn)
+  message("Saved file: ", out_fn)
 }

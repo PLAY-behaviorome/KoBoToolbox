@@ -2,7 +2,13 @@
 title: 'PLAY Release 1.0: Surveys'
 subtitle: "Version `r Sys.time()`"
 author: Rick Gilmore
-output: 
+output:
+  ioslides_presentation:
+    css: css/ioslides.css
+    logo: img/PLAY-leaf.png 
+    widescreen: true
+    incremental: false
+    transition: default
   html_document:
     code_folding: hide
     self_contained: yes
@@ -10,119 +16,133 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  csv_dir: 'csv'
+  db_login: 'rogilmore@psu.edu'
+  databrary_vol: 1280
+  non_MBCDI_session: 51539
+  non_MBCDI_fn: 'PLAY_release_1.0_non_MBCDI_data' 
   release: 'release_1.0'
-  kobo_csv_fn: 'csv/release_1.0/aggregate/PLAY_non_mbcdi_all_databrary.csv'
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-# Purpose
+## Purpose
 
 This document summarizes the workflow for the PLAY 1.0 data release related to the non-MBCDI survey data.
 
-# Setup
+## Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      fig.align = "center",
+                      warning = FALSE)
+```
 
 The user should authenticate to Databrary using `databraryapi::login_db()` prior to knitting this document.
 
-Import helper functions.
+```{r}
+databraryapi::login_db(params$db_login)
+```
+
+---
+
+Import helper functions and libraries
 
 ```{r}
 source("R/kobo_databrary_integration.R")
 library(tidyverse) # for %>% pipe
 ```
 
-# Import & merge data
+## Import 
 
-We import data from KoBoToolbox and from Databrary and merge the files.
+We read the CSV with the file name: "`r params$non_MBCDI_fn`" stored in volume `r params$databrary_vol` and session/folder `r params$non_MBCDI_session`.
 
-```{r import-kobo-merge-w-databrary}
-data_dir <- file.path(params$csv_dir, params$release)
-if (!dir.exists(data_dir)) stop("Cannot find data directory `, data_dir, '`")
-
-if (!file.exists(params$kobo_csv_fn)) stop('Cannot open file `', params$kobo_csv_fn, '`')
-play_merge <- readr::read_csv(params$kobo_csv_fn, show_col_types = FALSE)
+```{r import-from-databrary}
+these_assets <- databraryapi::list_assets_in_session(params$non_MBCDI_session)
+this_asset <- dplyr::filter(these_assets, name == params$non_MBCDI_fn )
+play_merge <- databraryapi::read_csv_data_as_df(session_id = params$non_MBCDI_session, asset_id = this_asset$asset_id[1])
 ```
 
-# Visualize
+There are $n=$ `r dim(play_merge)[1]` sessions in the data file.
 
-## Demographic data summaries
+# Demographic data summaries
 
-### QA status overall
+## QA status overall
+
+```{r qa-status}
+xtabs(formula = ~ qa_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Age group by QA status
+
+```{r qa-status-by-age-group}
+xtabs(formula = ~ qa_group + age_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Sex by age group
 
 ```{r}
-xtabs(formula = ~ group_name, data = play_merge)
+xtabs(formula = ~ child_sex + age_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
 
-### Age group by QA status
+## Race and ethnicity
 
 ```{r}
-xtabs(formula = ~ group_name + age_group, data = play_merge)
+xtabs(formula = ~ child_race + child_ethnicity, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
 
-### Sex by age group
+# Locomotor milestones
 
-```{r}
-xtabs(formula = ~ child_sex + age_group, data = play_merge)
-```
+## Background
 
-### QA status by site
-
-```{r}
-xtabs(formula = ~ group_name + site_id, data = play_merge)
-```
-
-## Links to Databrary sessions
-
-```{r}
-play_selected <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url)
-
-play_selected %>%
-  dplyr::arrange(., group_name, age_group) %>%
-  knitr::kable(., caption = "Selected PLAY data") %>%
-  kableExtra::kable_material(c("striped", "hover"))
-```
-
-## Locomotor milestones
-
-### Crawl onset
+We select the variables related to locomotor behavior.
 
 ```{r}
 play_loco <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 locomotor_milestones.who_walk.who_walk_onset_mo,
                 locomotor_milestones.k_walk.k_walk_onset_mo,
                 locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
   dplyr::rename(., walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
                 walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
                 crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo)
+```
 
+## Crawl onset
+
+```{r craw-onset-hist}
 play_loco %>%
   ggplot(.) +
   aes(crawl_mos, fill = child_sex) +
   geom_histogram(bins = 12)
 ```
 
-### Walk onset
+## Walk onset (KEA criteria)
 
-```{r}
+```{r walk-onset-kea-hist}
 play_loco %>%
   ggplot(.) +
   aes(walk_mos_kea, fill = child_sex) +
-  geom_histogram(bins = 10)
+  geom_histogram(bins = 12)
 ```
 
-```{r}
+## Walk onset (WHO criteria)
+
+```{r walk-onset-who-hist}
 play_loco %>%
   ggplot(.) +
   aes(walk_mos_who, fill = child_sex) +
-  geom_histogram(bins=12)
+  geom_histogram(bins = 12)
 ```
 
-```{r}
+## Walk (KEA) by walk (WHO) onset
+
+```{r walk-who-by-walk-kea-scatter}
 play_loco %>%
   ggplot(.) +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
@@ -135,17 +155,26 @@ ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea,
                     type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
 ```
 
-```{r}
+## Walk (KEA) by crawl onset
+
+```{r walk-by-crawl-onset-scatter}
 play_loco %>%
-  dplyr::arrange(., group_name, walk_mos_kea) %>%
-  dplyr::select(., group_name, child_sex, crawl_mos, walk_mos_kea, walk_mos_who, databrary_url) %>%
-  knitr::kable(., caption = "Selected PLAY locomotor data") %>%
-  kableExtra::kable_material(c("striped", "hover"))
+  ggplot(.) +
+  aes(crawl_mos, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  xlim(7, 15) +
+  ylim(8, 18) +
+  theme(legend.position="bottom") -> walk_p
+
+ggExtra::ggMarginal(walk_p, play_loco, crawl_mos, walk_mos_kea, 
+                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
 ```
 
-## PHQ4
+# PHQ-4
 
-The Patient Health Questionnaire (PHQ-4) data should be changed into an ordered factor.
+## Background
+
+The Patient Health Questionnaire (PHQ-4) data must be changed into an ordered factor.
 
 ```{r}
 phq4_levels <- c('notatall', 'severaldays', 'morethanhalf', 'nearly')
@@ -199,140 +228,148 @@ phq4 <- play_merge %>%
 
 > "*Over the last two weeks, how often have you been bothered by the following problems?*"
 
-### "Nervous"
-
-> "*...Feeling nervous, anxious, or on edge*"
+## "*...Feeling nervous, anxious, or on edge*"
 
 ```{r}
 l_nervous <- likert::likert(as.data.frame(phq4$nervous))
 plot(l_nervous)
 ```
 
-### "Worrying"
-
-> "...Not being able to stop or control worrying"
+## "*...Not being able to stop or control worrying*"
 
 ```{r}
 l_worrying <- likert::likert(as.data.frame(phq4$worrying))
 plot(l_worrying)
 ```
 
-### "Little interest"
-
-> "...Little interest or pleasure in doing things"
+## "*...Little interest or pleasure in doing things*"
 
 ```{r}
 l_little_interest <- likert::likert(as.data.frame(phq4$little_interest))
 plot(l_little_interest)
 ```
 
-### "Down"
-
-> "*...Feeling down, depressed, or hopeless*"
+## "*...Feeling down, depressed, or hopeless*"
 
 ```{r}
 l_down <- likert::likert(as.data.frame(phq4$down))
 plot(l_down)
 ```
 
-## Health
+# Health
 
-### Feeding
+## Feeding
+
+Select the feeding-related variables.
 
 ```{r}
 feeding <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.feeding_nutrition.breastfeed,
                 health.feeding_nutrition.solidfood_age) %>%
   dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
                 solid_food_mos = health.feeding_nutrition.solidfood_age)
 ```
 
+## Breastfeeding
+
 ```{r}
-xtabs(formula = ~ child_sex + breastfeed, data = feeding)
+xtabs(formula = ~ child_sex + breastfeed, data = feeding) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
+
+## Solid foods introduced
 
 ```{r}
 feeding %>%
   ggplot(.) +
   aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
-  geom_histogram()
+  geom_histogram(bins = 8)
 ```
 
-### Smoking/drinking
+## Smoking/drinking
 
 ```{r}
 smoking_drinking <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.smoking.pregnant_smoking,
                 health.drinking.pregnant_drinking) %>%
   dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
                 preg_drinking = health.drinking.pregnant_drinking)
 
-xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
 ```
 
-### Sleeping position
+```{r}
+xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Sleeping position
 
 ```{r}
 sleeping_pos <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_sleeping_position ) %>%
   dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) 
-
-xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
 ```
 
-### Child health rating
+```{r}
+xtabs(formula = ~ child_sleeping_position, data = sleeping_pos) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Child health rating
 
 ```{r}
 child_health <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_health ) %>%
   dplyr::rename(., child_health_rating = health.general_health.child_health) %>%
   dplyr::mutate(., child_health_rating = factor(child_health_rating, levels = c('good', 'verygood', 'excellent'), ordered = TRUE))
 
-
 plot(likert::likert(as.data.frame(child_health$child_health_rating)))
 ```
 
-### See medical specialist
+## See medical specialist
 
 ```{r}
 med_specialist <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_medical_specialist,
                 health.general_health.comments_child_medical_special) %>%
   dplyr::rename(., see_med_specialist = health.general_health.child_medical_specialist,
                 med_specialist_reason = health.general_health.comments_child_medical_special)
-
-xtabs(formula = ~ age_group + see_med_specialist, data = med_specialist)
 ```
-
-#### Med specialist reasons
 
 ```{r}
-med_specialist %>%
-  dplyr::filter(., (!is.na(med_specialist_reason))) %>%
-  dplyr::select(., med_specialist_reason)
+xtabs(formula = ~ age_group + see_med_specialist, data = med_specialist) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
 
-### Vaccination status
+## Recently vaccinated
 
 ```{r}
 vaccination <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_vaccination ) %>%  
   dplyr::rename(., child_vaccinated_last_4wks = health.general_health.child_vaccination )
-
-xtabs(formula = ~ age_group + child_vaccinated_last_4wks, data = vaccination)
 ```
 
-### Vision/Hearing screen
+```{r}
+xtabs(formula = ~ age_group + child_vaccinated_last_4wks, data = vaccination) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Vision screen
 
 ```{r}
 play_vis_aud <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_vision_tested,
                 health.general_health.child_hearing_tested) %>%
   dplyr::rename(., vision_tested = health.general_health.child_vision_tested,
@@ -340,21 +377,31 @@ play_vis_aud <- play_merge %>%
 ```
 
 ```{r}
-xtabs(formula = ~ age_group + vision_tested, data = play_vis_aud)
+xtabs(formula = ~ age_group + vision_tested, data = play_vis_aud) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
+
+## Hearing screen
 
 ```{r}
-xtabs(formula = ~ age_group + hearing_tested, data = play_vis_aud)
+xtabs(formula = ~ age_group + hearing_tested, data = play_vis_aud) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
 
-## Media use
+# Media use
+
+## Background
+
+We select the media related variables.
 
 ```{r}
 media_use_cols <- stringr::str_detect(names(play_merge), 'mediause')
 media_use_col_index <- (1:length(names(play_merge)))[media_use_cols]
 
 media_use <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 all_of(media_use_col_index)) %>%
   dplyr::rename(., have_tv =  mediause.home_technology.tv,
                 have_dvd = mediause.home_technology.dvd,
@@ -376,41 +423,53 @@ media_use <- play_merge %>%
                 child_use_videogame_how = mediause.videogame_how)
 ```
 
-### Media at home
+## Child use TV?
 
-```{r}
-xtabs(formula = ~ have_tv, data = media_use)
-xtabs(formula = ~ have_dvd, data = media_use)
-xtabs(formula = ~ have_computer, data = media_use)
-#xtabs(formula = ~ mediause.home_technology.smartphone, data = media_use)
-xtabs(formula = ~  have_tablet, data = media_use)
-xtabs(formula = ~  have_videogame, data = media_use)
-xtabs(formula = ~ have_educationalgame, data = media_use)
+```{r child-use-tv}
+xtabs(formula = ~ age_group + child_use_tv, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use TV") %>%
+  kableExtra::kable_material(.)
 ```
 
-**Note**: The KoBoToolbox export does not generate a column for `smartphone` even though that is one of the permitted values in `mediause.home_technology`. We can generate that *post hoc*, however.
+## Child use tablet?
 
-```{r}
-media_use$mediause.home_technology
+```{r child-use-tablet}
+xtabs(formula = ~ age_group + child_use_tablet, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use tablet") %>%
+  kableExtra::kable_material(.)
 ```
 
-### Used by child
+## Child use computer?
 
-```{r}
-xtabs(formula = ~ age_group + child_use_tv, data = media_use)  
-xtabs(formula = ~ age_group + child_use_dvd, data = media_use) 
-xtabs(formula = ~ age_group + child_use_computer, data = media_use) 
-xtabs(formula = ~ age_group + child_use_tablet, data = media_use) 
-xtabs(formula = ~ age_group + child_use_edugame, data = media_use) 
-xtabs(formula = ~ age_group + child_use_videogame, data = media_use)
+```{r child-use-computer}
+xtabs(formula = ~ age_group + child_use_computer, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use computer") %>%
+  kableExtra::kable_material(.)
 ```
 
+## Child use educational games?
 
-## Pets
+```{r child-use-edugame}
+xtabs(formula = ~ age_group + child_use_edugame, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use educational games") %>%
+  kableExtra::kable_material(.)
+```
+
+## Child use videogames?
+
+```{r child-use-videogames}
+xtabs(formula = ~ age_group + child_use_videogame, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use videogames") %>%
+  kableExtra::kable_material(.)
+```
+
+# Pets
+
+## Background
 
 ```{r}
 pets <- play_merge %>%
-  dplyr::select(., age_group, child_sex, language_child, group_name, databrary_url,
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 pets.pets_at_home,
                 pets.pets_types_number,
                 pets.pets_indoors_outdoors,
@@ -423,11 +482,15 @@ pets <- play_merge %>%
                 have_fish = stringr::str_detect(pets.pets_types_number, '[fF]ish'))
 ```
 
+## Pets at home/where live
+
 ```{r}
-xtabs(formula = ~ pets_at_home + pets_where_live, data = pets)
+xtabs(formula = ~ pets_at_home + pets_where_live, data = pets) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
 ```
 
-Focusing on families that *have* pets at home.
+## Types of pets
 
 ```{r}
 pets %>%
@@ -435,3 +498,10 @@ pets %>%
   dplyr::select(., pets_at_home, have_dog, have_cat, have_bird, have_fish)
 ```
 
+# Clean-up
+
+## Log-out of Databrary
+
+```{r}
+databraryapi::logout_db()
+```

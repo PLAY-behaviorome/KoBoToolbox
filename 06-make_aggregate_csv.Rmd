@@ -15,7 +15,7 @@ params:
   no_db_fn: 'PLAY_non_mbcdi_all.csv'
   with_db_fn: 'PLAY_non_mbcdi_all_databrary.csv'
   merge_db_info: true
-  databrary_login: rogilmore@psu.edu
+  databrary_login: 'youremail@yourdomain.com'
   last_col: 265
 ---
 
@@ -72,7 +72,7 @@ read_PLAY_csv <- function(fn, last_col = params$last_col) {
   df <- df[,1:last_col]
 }
 
-fl <- list.files(params$csv_input_dir, "\\.csv$", full.names = TRUE)
+fl <- list.files(params$csv_input_dir, "sh\\.csv$", full.names = TRUE)
 
 PLAY_non_mbcdi_all <- purrr::map_df(fl, read_PLAY_csv)
 ```
