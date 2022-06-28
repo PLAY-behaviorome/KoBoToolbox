@@ -16,11 +16,12 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  db_login: 'rogilmore@psu.edu'
+  databrary_login: 'rogilmore@psu.edu'
   databrary_vol: 1280
   non_MBCDI_session: 51539
   non_MBCDI_fn: 'PLAY_release_1.0_non_MBCDI_data' 
   release: 'release_1.0'
+  use_databrary: yes
 ---
 
 ## Purpose
@@ -37,15 +38,15 @@ knitr::opts_chunk$set(echo = FALSE,
 
 The user should authenticate to Databrary using `databraryapi::login_db()` prior to knitting this document.
 
-```{r}
-databraryapi::login_db(params$db_login)
+```{r login}
+databraryapi::login_db(params$databrary_login)
 ```
 
 ---
 
 Import helper functions and libraries
 
-```{r}
+```{r source-helpers}
 source("R/kobo_databrary_integration.R")
 library(tidyverse) # for %>% pipe
 ```
@@ -55,12 +56,38 @@ library(tidyverse) # for %>% pipe
 We read the CSV with the file name: "`r params$non_MBCDI_fn`" stored in volume `r params$databrary_vol` and session/folder `r params$non_MBCDI_session`.
 
 ```{r import-from-databrary}
-these_assets <- databraryapi::list_assets_in_session(params$non_MBCDI_session)
-this_asset <- dplyr::filter(these_assets, name == params$non_MBCDI_fn )
-play_merge <- databraryapi::read_csv_data_as_df(session_id = params$non_MBCDI_session, asset_id = this_asset$asset_id[1])
+if (params$use_databrary) {
+  these_assets <-
+    databraryapi::list_assets_in_session(params$non_MBCDI_session)
+  this_asset <-
+    dplyr::filter(these_assets, name == params$non_MBCDI_fn)
+  play_merge <-
+    databraryapi::read_csv_data_as_df(session_id = params$non_MBCDI_session,
+                                      asset_id = this_asset$asset_id[1])
+} else {
+  play_merge <-
+    readr::read_csv("csv/release_1.0/aggregate/PLAY_release_1.0_non_MBCDI_data.csv")
+}
 ```
 
 There are $n=$ `r dim(play_merge)[1]` sessions in the data file.
+
+# Site summaries
+
+## Enrollment by site
+
+```{r enrollment-by-site, include=FALSE}
+play_w_sites <- readr::read_csv("csv/release_1.0/aggregate/PLAY_non_mbcdi_all_databrary.csv")
+
+play_w_sites <- play_w_sites %>%
+  dplyr::rename(., qa_group = group_name)
+  
+xtabs(formula = ~ site_id + qa_group, data = play_w_sites) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+
+#rm(play_w_sites)
+```
 
 # Demographic data summaries
 
@@ -96,11 +123,18 @@ xtabs(formula = ~ child_race + child_ethnicity, data = play_merge) %>%
   kableExtra::kable_material(.)
 ```
 
+## Spanish spoken to child
+
+```{r}
+lang_to_child <- play_merge %>%
+  dplyr::rename(spanish_to_child = language_child.spanish)
+
+xtabs(formula = ~ age_group + spanish_to_child, data = lang_to_child) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
 # Locomotor milestones
-
-## Background
-
-We select the variables related to locomotor behavior.
 
 ```{r}
 play_loco <- play_merge %>%
@@ -115,7 +149,7 @@ play_loco <- play_merge %>%
 
 ## Crawl onset
 
-```{r craw-onset-hist}
+```{r crawl-onset-hist}
 play_loco %>%
   ggplot(.) +
   aes(crawl_mos, fill = child_sex) +
@@ -172,11 +206,9 @@ ggExtra::ggMarginal(walk_p, play_loco, crawl_mos, walk_mos_kea,
 
 # PHQ-4
 
-## Background
-
-The Patient Health Questionnaire (PHQ-4) data must be changed into an ordered factor.
-
 ```{r}
+# The Patient Health Questionnaire (PHQ-4) data must be changed into an ordered factor.
+
 phq4_levels <- c('notatall', 'severaldays', 'morethanhalf', 'nearly')
 phq4_labels <- c('not_at_all', 'several_days', 'more_than_half', 'nearly_every_day')
 
@@ -226,30 +258,32 @@ phq4 <- play_merge %>%
   )
 ```
 
-> "*Over the last two weeks, how often have you been bothered by the following problems?*"
+## Question...
 
-## "*...Feeling nervous, anxious, or on edge*"
+> "*Over the last two weeks, how often have you been bothered by the following problems...*"
+
+## "*...Feeling nervous, anxious, or on edge?*"
 
 ```{r}
 l_nervous <- likert::likert(as.data.frame(phq4$nervous))
 plot(l_nervous)
 ```
 
-## "*...Not being able to stop or control worrying*"
+## "*...Not being able to stop or control worrying?*"
 
 ```{r}
 l_worrying <- likert::likert(as.data.frame(phq4$worrying))
 plot(l_worrying)
 ```
 
-## "*...Little interest or pleasure in doing things*"
+## "*...Little interest or pleasure in doing things?*"
 
 ```{r}
 l_little_interest <- likert::likert(as.data.frame(phq4$little_interest))
 plot(l_little_interest)
 ```
 
-## "*...Feeling down, depressed, or hopeless*"
+## "*...Feeling down, depressed, or hopeless?*"
 
 ```{r}
 l_down <- likert::likert(as.data.frame(phq4$down))
@@ -257,10 +291,6 @@ plot(l_down)
 ```
 
 # Health
-
-## Feeding
-
-Select the feeding-related variables.
 
 ```{r}
 feeding <- play_merge %>%
@@ -285,7 +315,7 @@ xtabs(formula = ~ child_sex + breastfeed, data = feeding) %>%
 feeding %>%
   ggplot(.) +
   aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
-  geom_histogram(bins = 8)
+  geom_histogram(bins = 5)
 ```
 
 ## Smoking/drinking
@@ -312,7 +342,9 @@ xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking) %>%
 sleeping_pos <- play_merge %>%
   dplyr::select(., age_group, child_sex, language_child, qa_group, 
                 health.general_health.child_sleeping_position ) %>%
-  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) 
+  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position)
+
+sleeping_pos$child_sleeping_position <- dplyr::recode(sleeping_pos$child_sleeping_position, nospecialway = "no_special_way")
 ```
 
 ```{r}
@@ -374,6 +406,16 @@ play_vis_aud <- play_merge %>%
                 health.general_health.child_hearing_tested) %>%
   dplyr::rename(., vision_tested = health.general_health.child_vision_tested,
                 hearing_tested = health.general_health.child_hearing_tested)
+
+play_vis_aud$vision_tested <- dplyr::recode(play_vis_aud$vision_tested, afterhome = "after_home",
+                                            birthhospital = "birth_hospital",
+                                            `birthhospital afterhome` = "both_hospital_home",
+                                            donotknow = "do_not_know")
+
+play_vis_aud$hearing_tested <- dplyr::recode(play_vis_aud$hearing_tested, afterhome = "after_home",
+                                            birthhospital = "birth_hospital",
+                                            `birthhospital afterhome` = "both_hospital_home",
+                                            donotknow = "do_not_know")
 ```
 
 ```{r}
@@ -391,10 +433,6 @@ xtabs(formula = ~ age_group + hearing_tested, data = play_vis_aud) %>%
 ```
 
 # Media use
-
-## Background
-
-We select the media related variables.
 
 ```{r}
 media_use_cols <- stringr::str_detect(names(play_merge), 'mediause')
@@ -423,7 +461,7 @@ media_use <- play_merge %>%
                 child_use_videogame_how = mediause.videogame_how)
 ```
 
-## Child use TV?
+## TV
 
 ```{r child-use-tv}
 xtabs(formula = ~ age_group + child_use_tv, data = media_use) %>%
@@ -431,7 +469,7 @@ xtabs(formula = ~ age_group + child_use_tv, data = media_use) %>%
   kableExtra::kable_material(.)
 ```
 
-## Child use tablet?
+## Tablet
 
 ```{r child-use-tablet}
 xtabs(formula = ~ age_group + child_use_tablet, data = media_use) %>%
@@ -439,7 +477,7 @@ xtabs(formula = ~ age_group + child_use_tablet, data = media_use) %>%
   kableExtra::kable_material(.)
 ```
 
-## Child use computer?
+## Computer
 
 ```{r child-use-computer}
 xtabs(formula = ~ age_group + child_use_computer, data = media_use) %>%
@@ -447,7 +485,7 @@ xtabs(formula = ~ age_group + child_use_computer, data = media_use) %>%
   kableExtra::kable_material(.)
 ```
 
-## Child use educational games?
+## Educational games
 
 ```{r child-use-edugame}
 xtabs(formula = ~ age_group + child_use_edugame, data = media_use) %>%
@@ -455,7 +493,7 @@ xtabs(formula = ~ age_group + child_use_edugame, data = media_use) %>%
   kableExtra::kable_material(.)
 ```
 
-## Child use videogames?
+## Videogames
 
 ```{r child-use-videogames}
 xtabs(formula = ~ age_group + child_use_videogame, data = media_use) %>%
@@ -464,8 +502,6 @@ xtabs(formula = ~ age_group + child_use_videogame, data = media_use) %>%
 ```
 
 # Pets
-
-## Background
 
 ```{r}
 pets <- play_merge %>%
@@ -496,6 +532,335 @@ xtabs(formula = ~ pets_at_home + pets_where_live, data = pets) %>%
 pets %>%
   dplyr::filter(., pets_at_home == "yes") %>%
   dplyr::select(., pets_at_home, have_dog, have_cat, have_bird, have_fish)
+```
+
+# Typical Day
+
+```{r}
+typical_day <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                typical_day.typical_behavior,
+                typical_day.typical_activities,
+                typical_day.typical_nightmorning,
+                typical_day.typical_otherthanme) %>%
+  dplyr::rename(., typical_behavior = typical_day.typical_behavior,
+                typical_activities = typical_day.typical_activities,
+                typical_nightmorning = typical_day.typical_nightmorning,
+                typical_other_than_researcher = typical_day.typical_otherthanme)
+```
+
+## Typical behavior
+
+```{r}
+xtabs(formula = ~ typical_behavior + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_behavior + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical activities
+
+```{r}
+xtabs(formula = ~ typical_activities + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_activities + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical night/morning
+
+```{r}
+xtabs(formula = ~ typical_nightmorning + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_nightmorning + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical other than researcher presence
+
+```{r}
+xtabs(formula = ~ typical_other_than_researcher + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_other_than_researcher + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+# Rothbart (ECBQ)
+
+```{r clean-ecbq}
+ecbq <- play_merge %>%
+  dplyr::select(.,
+                age_group,
+                child_sex,
+                language_child,
+                qa_group | contains("rothbart"))
+
+rename_ecbq <- function(old_names) {
+  new_names <-
+    stringr::str_remove(old_names, "rothbart\\.rothbartquestions\\.rothbart_")
+}
+
+recode_ecbq <- function(this_var_index, df) {
+  new_var <- dplyr::recode_factor(df[,this_var_index], 
+                       never = "never",
+                       veryrarely = "very_rarely",
+                       lessthanhalf = "less_than_half",
+                       abouthalf = "about_half",
+                       almostalways = "almost_always",
+                       always = "always",
+                       .default = NA_character_)
+  df[, this_var_index] <- new_var
+  df
+}
+
+ecbq <- ecbq %>%
+  dplyr::rename_with(., rename_ecbq, contains("rothbart"))
+
+# Have to do better than this...
+ecbq <- recode_ecbq(5, ecbq)
+ecbq <- recode_ecbq(6, ecbq)
+ecbq <- recode_ecbq(7, ecbq)
+ecbq <- recode_ecbq(8, ecbq)
+ecbq <- recode_ecbq(9, ecbq)
+ecbq <- recode_ecbq(10, ecbq)
+ecbq <- recode_ecbq(11, ecbq)
+ecbq <- recode_ecbq(12, ecbq)
+ecbq <- recode_ecbq(13, ecbq)
+ecbq <- recode_ecbq(14, ecbq)
+ecbq <- recode_ecbq(15, ecbq)
+ecbq <- recode_ecbq(16, ecbq)
+ecbq <- recode_ecbq(17, ecbq)
+ecbq <- recode_ecbq(18, ecbq)
+ecbq <- recode_ecbq(19, ecbq)
+ecbq <- recode_ecbq(20, ecbq)
+ecbq <- recode_ecbq(21, ecbq)
+ecbq <- recode_ecbq(22, ecbq)
+ecbq <- recode_ecbq(23, ecbq)
+ecbq <- recode_ecbq(24, ecbq)
+ecbq <- recode_ecbq(25, ecbq)
+ecbq <- recode_ecbq(26, ecbq)
+ecbq <- recode_ecbq(27, ecbq)
+ecbq <- recode_ecbq(28, ecbq)
+ecbq <- recode_ecbq(29, ecbq)
+ecbq <- recode_ecbq(30, ecbq)
+ecbq <- recode_ecbq(31, ecbq)
+ecbq <- recode_ecbq(32, ecbq)
+ecbq <- recode_ecbq(33, ecbq)
+ecbq <- recode_ecbq(34, ecbq)
+ecbq <- recode_ecbq(35, ecbq)
+ecbq <- recode_ecbq(36, ecbq)
+ecbq <- recode_ecbq(37, ecbq)
+ecbq <- recode_ecbq(38, ecbq)
+ecbq <- recode_ecbq(39, ecbq)
+ecbq <- recode_ecbq(40, ecbq)
+```
+
+```{r ecbq-qs, echo=FALSE}
+qs <- readr::read_csv("data_dict/release_1.0_non_mbcdi_data_dictionary_clean.csv", show_col_types = FALSE)
+ecbq_qs <- qs %>%
+  dplyr::filter(., question_group == "rothbart")
+```
+
+## `r ecbq_qs$question[3]`
+
+## `r ecbq_qs$question[4]`
+
+```{r}
+plot(likert::likert(ecbq[ , 5, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[5]`
+
+```{r}
+plot(likert::likert(ecbq[, 6, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[6]`
+
+```{r}
+plot(likert::likert(ecbq[ , 7, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[7]`
+
+```{r}
+plot(likert::likert(ecbq[, 8, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[8]`
+
+```{r}
+plot(likert::likert(ecbq[ , 9, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[9]`
+
+```{r}
+plot(likert::likert(ecbq[, 10, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[10]`
+
+```{r}
+plot(likert::likert(ecbq[ , 11, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[11]`
+
+```{r}
+plot(likert::likert(ecbq[, 12, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[12]`
+
+```{r}
+plot(likert::likert(ecbq[ , 13, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[13]`
+
+```{r}
+plot(likert::likert(ecbq[, 14, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[14]`
+
+```{r}
+plot(likert::likert(ecbq[ , 15, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[15]`
+
+```{r}
+plot(likert::likert(ecbq[, 16, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[16]`
+
+```{r}
+plot(likert::likert(ecbq[ , 17, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[17]`
+
+```{r}
+plot(likert::likert(ecbq[, 18, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[18]`
+
+```{r}
+plot(likert::likert(ecbq[ , 19, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[19]`
+
+```{r}
+plot(likert::likert(ecbq[, 20, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[20]`
+
+```{r}
+plot(likert::likert(ecbq[, 21, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[21]`
+
+```{r}
+plot(likert::likert(ecbq[, 22, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[22]`
+
+```{r}
+plot(likert::likert(ecbq[, 23, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[23]`
+
+```{r}
+plot(likert::likert(ecbq[, 24, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[24]`
+
+```{r}
+plot(likert::likert(ecbq[, 25, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[25]`
+
+```{r}
+plot(likert::likert(ecbq[, 26, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[26]`
+
+```{r}
+plot(likert::likert(ecbq[, 27, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[27]`
+
+```{r}
+plot(likert::likert(ecbq[, 28, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[28]`
+
+```{r}
+plot(likert::likert(ecbq[, 29, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[29]`
+
+```{r}
+plot(likert::likert(ecbq[, 30, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[30]`
+
+```{r}
+plot(likert::likert(ecbq[, 31, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[31]`
+
+```{r}
+plot(likert::likert(ecbq[, 32, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[32]`
+
+```{r}
+plot(likert::likert(ecbq[, 33, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[33]`
+
+```{r}
+plot(likert::likert(ecbq[, 34, drop = FALSE]))
 ```
 
 # Clean-up

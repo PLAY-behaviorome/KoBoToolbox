@@ -1,5 +1,5 @@
 ---
-title: "Make aggregate CSVs"
+title: "Add Databrary info to CSVs"
 subtitle: "Version `r Sys.time()`"
 author: Rick Gilmore
 output: 
@@ -13,6 +13,9 @@ params:
   csv_input_dir: 'csv/release_1.0/identifiers_removed'
   csv_save_dir: 'csv/release_1.0/aggregate'
   no_db_fn: 'PLAY_non_mbcdi_all.csv'
+  with_db_fn: 'PLAY_non_mbcdi_all_databrary.csv'
+  merge_db_info: true
+  databrary_login: 'youremail@yourdomain.com'
   last_col: 265
 ---
 
@@ -39,68 +42,28 @@ source("R/kobo_export.R")
 source("R/kobo_databrary_integration.R")
 ```
 
-# File processing
+Authenticate to Databrary.
 
-## Import and merge
-
-```{r import-and-merge}
-# NOTE the colClasses = 'character' forces read.csv() to read all data fields as strings. This solves some
-# problems with importing the data and the automated assumptions made about specific data types.
-
-read_PLAY_csv <- function(fn, last_col = params$last_col) {
-  df <- read.csv(fn, colClasses = 'character')
-  df <- df[,1:last_col]
+```{r authenticate_to_databrary}
+if (!file.exists('.databrary.RData')) {
+  if (params$databrary_login == "email@yourdomain.com") {
+    stop('Cannot login to Databrary with login id: `', params$databrary_login, '`')
+  } else {
+    logged_in_db <- databraryapi::login_db(params$databrary_login)
+  }
+  if (!logged_in_db) {
+    stop('Automatic log in failed. Please log in manually.')
+  }
+} else {
+  logged_in_db = TRUE
 }
-
-fl <- list.files(params$csv_input_dir,
-             '^[0-9]{6}_non_mbcdi_[12|18|24]',
-             full.names = TRUE)
-
-PLAY_non_mbcdi_all <- purrr::map_df(fl, read_PLAY_csv)
 ```
 
-### Export aggregate
+# Merge Databrary info
 
-```{r export-aggregate}
-aggregate_fn <- file.path(params$csv_save_dir, params$no_db_fn)
-readr::write_csv(PLAY_non_mbcdi_all, aggregate_fn)
-```
-
-## Remove redundant variable name text headers
-
-Using `xfun::gsub_file()` we can trim some of the redundancies across the variable names. 
-
-```{r file-wide-cleaning}
-xfun::gsub_file(aggregate_fn,
-                  'group_combinedquestionnaires.',
-                  '')
-xfun::gsub_file(aggregate_fn,
-                  'group_homevisitquestionnaires.',
-                  '')
-xfun::gsub_file(aggregate_fn,
-                'group_',
-                '')
-
-# Handle change in site_id for CSU Long Beach
-xfun::gsub_file(aggregate_fn,
-                'CSLON',
-                'CSULB')
-```
-
-# Pre-Databrary merge summary
-
-```{r read-play}
-play <- read.csv(aggregate_fn, colClasses = 'character')
-```
-
-```{r}
-xtabs(formula = ~ age_group + child_sex, data = play)
-```
-
-## Check for duplicates
-
-```{r}
-length(unique(play$participant_id)) == length(play$participant_id)
+```{r add-Databrary-metadata}
+if (logged_in_db)
+create_save_kobo_db_merge_csv(file.path(params$csv_save_dir, params$no_db_fn), file.path(params$csv_save_dir, params$with_db_fn))
 ```
 
 # Clean-up

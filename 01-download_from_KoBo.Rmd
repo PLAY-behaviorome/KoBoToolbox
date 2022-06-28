@@ -12,8 +12,8 @@ output:
 params:
   xlsx_download_dir: 'xlsx/release_1.0'
   download_xlsx: true
-  update_2020: false
-  update_2021: true
+  update_old: false
+  update_active: true
 ---
 
 ```{r setup, include=FALSE}
@@ -24,12 +24,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document exports visit survey data from KoBoToolbox, does minimal cleaning, and saves the data as a CSV.
 
-To download and clean *all* of the data, execute `rmarkdown::render("release_1.0_export_clean.Rmd", params = list(update_2020 = TRUE, update_2021 = TRUE))` from the console. Otherwise, run with the default parameter values: `rmarkdown::render("release_1.0_export_clean.Rmd")` which downloads the 2021+ Excel data files each time the document is run.
-
 # Setup
 
 The PLAY Project uses KoBoToolbox to collect data from parents and researchers using a tablet application. 
-
 ## Authentication
 
 The data are stored in an account on <https://kf.kobotoolbox.org>. The login credentials for that account are shared among the PLAY Project staff. To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file. To test whether the local system has the API key installed, run the following command `Sys.getenv("KOBO_API_KEY")`. With the API key installed, several custom functions in `R/kobo_export.R` can be run.
@@ -76,28 +73,49 @@ if ((dim(kb_home) < 1) || (!is.data.frame(kb_home))) {
 }
 ```
 
-## Download 2020 data
+```{r select-active-forms}
+kb_home <- kb_home %>%
+  dplyr::filter(., id > 700000)
+```
 
-```{r download-2020}
+
+## Download old data
+
+```{r download-old-data, eval=FALSE}
 bulk_download_kobo_forms(
   kb_home,
   '2020',
-  update_form = params$update_2020,
+  update_form = params$update_old,
   download_xlsx = params$download_xlsx,
   download_dir = params$xlsx_download_dir
 )
 ```
 
-## Download 2021 data
+## Download active data
 
-As of 2022-03-09, the 2021 forms are the active ones. So, we have set `params$update_2021` == `r params$update_2021` by default.
+As of 2022-03-09, the 2021 forms are the active ones. So, we have set `params$update_active` == `r params$update_active` by default.
 
-```{r download-2021-plus}
+```{r download-active-forms}
 bulk_download_kobo_forms(
   kb_home,
-  '2021',
-  update_form = params$update_2021,
+  update_form = params$update_active,
   download_xlsx = params$download_xlsx,
   download_dir = params$xlsx_download_dir
 )
 ```
+
+## Normalize file names
+
+Some of the form names are inconsistent, so we normalize them to fit the following pattern:
+
+`<form_id>_PLAY_HomeQuestionnaires_<age_group>_<lang_group>.xlsx`
+
+```{r}
+fl <- list.files(params$xlsx_download_dir, full.names = TRUE)
+fl_home_old <- fl[stringr::str_detect(fl, 'Home')]
+fl_home_new <- purrr::map_chr(fl_home_old, make_standard_form_name)
+file.rename(fl_home_old, fl_home_new)
+```
+
+
+

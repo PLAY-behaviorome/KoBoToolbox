@@ -12,7 +12,6 @@ output:
 params:
   csv_input_dir: 'csv/release_1.0/mbcdi_non'
   csv_save_dir: 'csv/release_1.0/identifiers_removed'
-  form_years: ['2020', '2021']
   age_grps: ['12', '18', '24']
   lang_grps: ['English', 'Bilingual_English', 'Bilingual_Spanish']
 ---
@@ -41,7 +40,7 @@ Because we have parameterized the form year, age groups, and language groups, we
 
 ## Non-MB-CDI data
 
-```{r import_save_non_mbcdi_csv}
+```{r import_save_non_mbcdi_csv, eval=FALSE}
 mapply(import_non_mbcdi_remove_ids, 
        form_year = rep(params$form_years, 9), 
        age_grp = rep(params$age_grps, 3),
@@ -50,3 +49,18 @@ mapply(import_non_mbcdi_remove_ids,
        csv_save_dir = params$csv_save_dir,
        these_questions = 'non_mbcdi')
 ```
+
+```{r}
+csv_fns <-
+  list.files(params$csv_input_dir,
+             '^[0-9]{6}_non_mbcdi_[12|18|24]',
+             full.names = TRUE)
+
+purrr::map(
+  csv_fns,
+  open_deidentify_save,
+  csv_save_dir = params$csv_save_dir,
+  these_questions = 'non_mbcdi'
+)
+```
+

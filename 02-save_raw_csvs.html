@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Save raw CSVs</h1>
-<h3 class="subtitle">Version 2022-05-31 08:45:33</h3>
+<h3 class="subtitle">Version 2022-06-28 08:53:28</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1624,101 +1624,62 @@ KoBoToolbox and converts them to CSVs for further processing.</p>
 groups, we can use the <code>mapply()</code> function here – as long as
 we make sure that the parameter vectors have the right length and
 composition.</p>
-<pre class="r"><code>mapply(import_xlsx_save_raw, 
+<pre class="r"><code># Removing form_year as a parameter, so we deprecate this approach
+mapply(import_xlsx_save_raw, 
        form_year = rep(params$form_years, 9), 
        age_grp = rep(params$age_grps, 3),
        lang_grp = rep(params$lang_grps, each = 3),
        xlsx_dir = params$xlsx_download_dir,
        csv_dir = params$csv_save_dir)</code></pre>
-<pre><code>## Importing data for 2020_12_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_12_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_18_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_18_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_24_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_24_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_12_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_12_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_18_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_18_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_24_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_24_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_12_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_12_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## Importing data for 2021_18_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_18_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## Importing data for 2020_24_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_24_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## Importing data for 2021_12_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_12_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_18_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_18_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_24_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_24_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_12_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_12_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_18_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_18_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2020_24_Bilingual_English</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_24_Bilingual_English.csv`</code></pre>
-<pre><code>## Importing data for 2021_12_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_12_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## Importing data for 2020_18_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2020_raw_18_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## Importing data for 2021_24_Bilingual_Spanish</code></pre>
-<pre><code>## Wrote: `csv/release_1.0/raw/2021_raw_24_Bilingual_Spanish.csv`</code></pre>
-<pre><code>## $`2020`
-## NULL
+<pre class="r"><code>mapply(import_xlsx_save_raw_csv,
+       age_group = rep(params$age_grps, 3),
+       lang_group = rep(params$lang_grps, each = 3),
+       xlsx_dir = params$xlsx_download_dir,
+       csv_dir = params$csv_save_dir)</code></pre>
+<pre><code>## Importing data for 12_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 18_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 24_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 12_Bilingual_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 18_Bilingual_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 24_Bilingual_English</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 12_Bilingual_Spanish</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 18_Bilingual_Spanish</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## Importing data for 24_Bilingual_Spanish</code></pre>
+<pre><code>## There are 0 file(s) that match</code></pre>
+<pre><code>## $`12`
+## list()
 ## 
-## $`2021`
-## NULL
+## $`18`
+## list()
 ## 
-## $`2020`
-## NULL
+## $`24`
+## list()
 ## 
-## $`2021`
-## NULL
+## $`12`
+## list()
 ## 
-## $`2020`
-## NULL
+## $`18`
+## list()
 ## 
-## $`2021`
-## NULL
+## $`24`
+## list()
 ## 
-## $`2020`
-## NULL
+## $`12`
+## list()
 ## 
-## $`2021`
-## NULL
+## $`18`
+## list()
 ## 
-## $`2020`
-## NULL
-## 
-## $`2021`
-## NULL
-## 
-## $`2020`
-## NULL
-## 
-## $`2021`
-## NULL
-## 
-## $`2020`
-## NULL
-## 
-## $`2021`
-## NULL
-## 
-## $`2020`
-## NULL
-## 
-## $`2021`
-## NULL
-## 
-## $`2020`
-## NULL
-## 
-## $`2021`
-## NULL</code></pre>
+## $`24`
+## list()</code></pre>
 </div>
 
 

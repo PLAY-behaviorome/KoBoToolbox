@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Clean merged aggregate for sharing</h1>
-<h3 class="subtitle">Version 2022-05-31 08:46:18</h3>
+<h3 class="subtitle">Version 2022-06-21 08:03:55</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1666,7 +1666,18 @@ play_clean_1 &lt;- play %&gt;%
 </div>
 <div id="clean-up-databrary-field-names" class="section level2">
 <h2>Clean-up Databrary field names</h2>
-<pre class="r"><code>play_clean_2 &lt;- play_clean_1 %&gt;%
+<pre class="r"><code># play_clean_2 &lt;- play_clean_1 %&gt;%
+#   dplyr::rename(., child_race = participant_race,
+#                 child_ethnicity = participant_ethnicity,
+#                 child_disability = participant_disability,
+#                 child_language = participant_language,
+#                 exclusion_reason = exclusion_reason,
+#                 qa_group = group_name,
+#                 setting = context_setting,
+#                 country = context_country,
+#                 context_language = context_language)
+
+play_clean_2 &lt;- play_clean_1 %&gt;%
   dplyr::rename(., child_race = participant_race,
                 child_ethnicity = participant_ethnicity,
                 child_disability = participant_disability,
@@ -1674,8 +1685,7 @@ play_clean_1 &lt;- play %&gt;%
                 exclusion_reason = exclusion_reason,
                 qa_group = group_name,
                 setting = context_setting,
-                country = context_country,
-                context_language = context_language)</code></pre>
+                country = context_country)</code></pre>
 </div>
 <div id="export" class="section level2">
 <h2>Export</h2>

@@ -216,6 +216,48 @@ extract_kb_form_id <-
     }
   }
 
+extract_age_group_from_name <- function(form_name) {
+  age_grps <- stringr::str_match(form_name, "[ _\\(]+(12|18|24)[ _]+")
+  age_grps[,2]
+}
+
+form_is_bilingual <- function(form_name) {
+  stringr::str_detect(form_name, "[Bb]ilingual")
+}
+
+form_is_spanish <- function(form_name) {
+  stringr::str_detect(form_name, "[Ss]panish")
+}
+
+form_language <- function(form_name) {
+  is_bilingual <- form_is_bilingual(form_name)
+  is_spanish <- form_is_spanish(form_name)
+  form_lang <- rep("english", length(form_name))
+  form_lang[is_bilingual & is_spanish] <- "bilingual_spanish"
+  form_lang[is_bilingual & !is_spanish] <- "bilingual_english"
+  form_lang
+}
+
+extract_form_year <- function(form_name) {
+  form_year <- stringr::str_match(form_name, "202[01]{1}")
+  # form_year[is.na(form_year)] <- "2022"
+  form_year
+}
+
+extract_form_id <- function(kb_df) {
+  stringr::str_extract(kb_df)
+}
+
+make_standard_form_name <- function(fn) {
+  this_dir <- dirname(fn)
+  this_fn <- basename(fn)
+  form_id <- stringr::str_extract(this_fn, '[0-9]{6}')
+  fn <- paste0(form_id, "_PLAY_HomeQuestionnares", "_",
+               extract_age_group_from_name(this_fn), "_",
+               form_language(this_fn), '.xlsx')
+  file.path(this_dir, fn)
+}
+
 create_cleaned_augmented_form_name <-
   function(form_index = 13,
            kb_df = list_kobo_data()) {
@@ -277,6 +319,65 @@ import_xlsx_save_raw <- function(form_year = '2021',
                     paste0(form_year, '_raw_',
                            age_grp, '_',
                            lang_grp, '.csv'))
+    readr::write_csv(df, fp)
+    if (vb)
+      message('Wrote: `', fp, '`')
+  } else {
+    message('Error in importing data.')
+  }
+}
+
+import_xlsx_save_raw_csv <- function(age_group = '12',
+                                 lang_group = 'English',
+                                 xlsx_dir = 'tmp',
+                                 csv_dir = 'tmp',
+                                 vb = TRUE) {
+  if (vb)
+    message('Importing data for ',
+            paste0(age_group, '_', lang_group))
+  
+  search_pattern <-
+    paste0(age_group, '_', tolower(lang_group), '*\\.xlsx$')
+  
+  this_file <-
+   list.files(xlsx_dir, search_pattern, full.names = TRUE)
+  if (vb) message('There are ', length(this_file), ' file(s) that match')
+  
+  purrr::map(this_file, open_xlsx_save_csv, csv_dir, vb)
+  
+  # if (!is.null(this_file)) {
+  #   readxl::read_excel(this_file)
+  # } else {
+  #   message('File not found: ', file.path(this_file))
+  # }
+  # 
+  # if (!is.null(df)) {
+  #   fp <- file.path(csv_dir,
+  #                   paste0(form_year, '_raw_',
+  #                          age_grp, '_',
+  #                          lang_grp, '.csv'))
+  #   readr::write_csv(df, fp)
+  #   if (vb)
+  #     message('Wrote: `', fp, '`')
+  # } else {
+  #   message('Error in importing data.')
+  # }
+}
+
+open_xlsx_save_csv <- function(fn, out_dir, vb) {
+  if (!is.null(fn)) {
+    df <- readxl::read_excel(fn)
+  } else {
+    message('File not found: ', file.path(fn))
+  }
+  
+  if (!is.null(df)) {
+    form_id <- stringr::str_extract(fn, '[0-9]{6}')
+    
+    fp <- file.path(out_dir,
+                    paste0(form_id, '_raw_',
+                           extract_age_group_from_name(fn), '_',
+                           form_language(fn), '.csv'))
     readr::write_csv(df, fp)
     if (vb)
       message('Wrote: `', fp, '`')
@@ -429,8 +530,7 @@ extract_save_non_mbcdi <-
     message('Saved ', fn)
   }
 
-import_raw_extract_split_save <- function(form_year = '2021',
-                                          age_grp = '12',
+import_raw_extract_split_save <- function(age_grp = '12',
                                           lang_grp = 'English',
                                           csv_input_dir = 'tmp',
                                           csv_save_dir = 'tmp',
@@ -438,7 +538,6 @@ import_raw_extract_split_save <- function(form_year = '2021',
                                           rename_cols = FALSE,
                                           remove_identifying_data = FALSE,
                                           vb = TRUE) {
-  stopifnot(form_year %in% c('2020', '2021'))
   stopifnot(age_grp %in% c('12', '18', '24'))
   stopifnot(lang_grp %in% c('English', 'Bilingual_English', 'Bilingual_Spanish'))
   
@@ -446,7 +545,7 @@ import_raw_extract_split_save <- function(form_year = '2021',
   
   if (vb)
     message('Importing data for ',
-            paste0(form_year, '_', age_grp, '_', lang_grp))
+            paste0(age_grp, '_', lang_grp))
   
   fp <- file.path(csv_input_dir,
                   paste0(form_year, '_raw_',
@@ -477,7 +576,47 @@ import_raw_extract_split_save <- function(form_year = '2021',
     if (these_questions == 'non_mbcdi') {
       extract_save_non_mbcdi(df, out_fn, rename_cols, remove_identifying_data)
     } else {
-      extract_save_mcdi (df, out_fn, rename_cols)
+      extract_save_mcdi(df, out_fn, rename_cols)
+    }
+  } else {
+    message('Error in exporting data to `', out_fn, '`')
+  }
+}
+
+open_split_save <- function(fp, 
+                            csv_save_dir = 'tmp',
+                            these_questions = 'non_mbcdi',
+                            rename_cols = FALSE,
+                            remove_identifying_data = FALSE,
+                            vb = TRUE) {
+  
+  if (file.exists(fp)) {
+    df <- readr::read_csv(fp, show_col_types = FALSE)
+  } else {
+    stop(paste0('Cannot read file `', fp, '`'))
+  }
+  
+  out_fn <- file.path(
+    csv_save_dir,
+    paste0(
+      stringr::str_extract(fp, '[0-9]{6}'),
+      '_',
+      these_questions,
+      '_',
+      extract_age_group_from_name(fp),
+      '_',
+      tolower(form_language(fp)),
+      '.csv'
+    )
+  )
+  
+  if (vb) message("Output file directory: ", out_fn)
+  
+  if (!is.null(df)) {
+    if (these_questions == 'non_mbcdi') {
+      extract_save_non_mbcdi(df, out_fn, rename_cols, remove_identifying_data)
+    } else {
+      extract_save_mcdi(df, out_fn, rename_cols)
     }
   } else {
     message('Error in exporting data to `', out_fn, '`')
@@ -497,10 +636,6 @@ import_non_mbcdi_remove_ids <- function(form_year = '2021',
   stopifnot(lang_grp %in% c('English', 'Bilingual_English', 'Bilingual_Spanish'))
   
   require(tidyverse)
-  
-  if (vb)
-    message('Importing data for ',
-            paste0(form_year, '_', age_grp, '_', lang_grp))
   
   fp <- file.path(csv_input_dir,
                   paste0(
@@ -545,6 +680,59 @@ import_non_mbcdi_remove_ids <- function(form_year = '2021',
   }
 }
 
+open_deidentify_save <- function(fp,
+                                 csv_save_dir = 'tmp',
+                                 these_questions = 'non_mbcdi',
+                                 rename_cols = FALSE,
+                                 vb = FALSE) {
+  require(tidyverse)
+  
+  # fp <- file.path(
+  #   csv_input_dir,
+  #   paste0(
+  #     stringr::str_extract(fp, '[0-9]{6}'),
+  #     '_',
+  #     these_questions,
+  #     '_',
+  #     extract_age_group_from_name(fp),
+  #     '_',
+  #     tolower(form_language(fp)),
+  #     '.csv'
+  #   )
+  # )
+  
+  if (file.exists(fp)) {
+    df <- readr::read_csv(fp, show_col_types = FALSE)
+    if (is.data.frame(df)) {
+      df <- remove_identifiers(df)
+    } else {
+      stop(paste0('Error in reading data frame.'))
+    }
+  } else {
+    stop(paste0('Cannot read file `', fp, '`'))
+  }
+  
+  out_fn <- file.path(
+    csv_save_dir,
+    paste0(
+      stringr::str_extract(fp, '[0-9]{6}'),
+      '_',
+      these_questions,
+      '_',
+      extract_age_group_from_name(fp),
+      '_',
+      tolower(form_language(fp)),
+      '.csv'
+    )
+  )
+  
+  if (!is.null(df)) {
+    readr::write_csv(df, out_fn)
+    message('Saved `', out_fn, '`')
+  } else {
+    message('Error in exporting data to `', out_fn, '`')
+  }
+}
 
 remove_identifiers <- function(df) {
   contains_name <- stringr::str_detect(names(df), 'name')
@@ -574,7 +762,6 @@ remove_identifiers <- function(df) {
 }
 
 bulk_download_kobo_forms <- function(df,
-                                     year,
                                      update_form = TRUE,
                                      download_xlsx = TRUE,
                                      download_dir = 'tmp/xlsx') {
@@ -584,9 +771,7 @@ bulk_download_kobo_forms <- function(df,
   stopifnot(is.character(download_dir))
   
   if (update_form) {
-    kb_home <- df %>%
-      dplyr::filter(., stringr::str_detect(title, year))
-    
+
     if (!dir.exists(download_dir)) {
       message(paste0(download_dir, ' does not exist. Creating.'))
       dir.create(download_dir)
@@ -594,16 +779,14 @@ bulk_download_kobo_forms <- function(df,
     
     if (download_xlsx) {
       purrr::map(
-        1:dim(kb_home)[1],
+        1:dim(df)[1],
         retrieve_save_xls_export,
-        kb_df = kb_home,
+        kb_df = df,
         save_dir = download_dir
       )
       message(paste0(
-        dim(kb_home)[1],
-        ' forms from ',
-        year,
-        ' downloaded to `',
+        dim(df)[1],
+        ' forms downloaded to `',
         download_dir,
         '`'
       ))
@@ -615,6 +798,6 @@ bulk_download_kobo_forms <- function(df,
       ))
     }
   } else {
-    message(paste0('No data from ', year, ' downloaded'))
+    message(paste0('No data downloaded'))
   }
 }

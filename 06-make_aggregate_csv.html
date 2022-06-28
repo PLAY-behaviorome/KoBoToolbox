@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Make aggregate CSVs</h1>
-<h3 class="subtitle">Version 2022-05-31 08:45:49</h3>
+<h3 class="subtitle">Version 2022-06-28 09:18:49</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1619,10 +1619,9 @@ Databrary if <code>params$merge_db_info</code> is <code>TRUE</code>, the
 default. This merged file is also seved to the <code>../aggregate</code>
 directory with the filename contained in
 <code>params$with_db_fn</code>.</p>
-<p>To render, run <code>rmarkdown::render(&quot;06-make_aggregate_csv.Rmd&quot;,
-params=list(databrary_login =
-&quot;&lt;youremail@yourdomain.com&gt;&quot;))</code>, substituting your actual
-Databrary log ID (email) for
+<p>To render, run
+<code>rmarkdown::render(&quot;06-make_aggregate_csv.Rmd&quot;, params=list(databrary_login = &quot;&lt;youremail@yourdomain.com&gt;&quot;))</code>,
+substituting your actual Databrary log ID (email) for
 <code>&lt;youremail@yourdomain.com&gt;</code>.</p>
 </div>
 <div id="setup" class="section level1">
@@ -1631,20 +1630,6 @@ Databrary log ID (email) for
 <code>R/kobo_databrary_integration.R</code>.</p>
 <pre class="r"><code>source(&quot;R/kobo_export.R&quot;)
 source(&quot;R/kobo_databrary_integration.R&quot;)</code></pre>
-<p>Authenticate to Databrary.</p>
-<pre class="r"><code>if (!file.exists(&#39;.databrary.RData&#39;)) {
-  if (params$databrary_login == &quot;email@yourdomain.com&quot;) {
-    stop(&#39;Cannot login to Databrary with login id: `&#39;, params$databrary_login, &#39;`&#39;)
-  } else {
-    logged_in_db &lt;- databraryapi::login_db(params$databrary_login)
-  }
-  if (!logged_in_db) {
-    stop(&#39;Automatic log in failed. Please log in manually.&#39;)
-  }
-} else {
-  logged_in_db = TRUE
-}</code></pre>
-<pre><code>## Login successful.</code></pre>
 </div>
 <div id="file-processing" class="section level1">
 <h1>File processing</h1>
@@ -1658,7 +1643,9 @@ read_PLAY_csv &lt;- function(fn, last_col = params$last_col) {
   df &lt;- df[,1:last_col]
 }
 
-fl &lt;- list.files(params$csv_input_dir, &quot;sh\\.csv$&quot;, full.names = TRUE)
+fl &lt;- list.files(params$csv_input_dir,
+             &#39;^[0-9]{6}_non_mbcdi_[12|18|24]&#39;,
+             full.names = TRUE)
 
 PLAY_non_mbcdi_all &lt;- purrr::map_df(fl, read_PLAY_csv)</code></pre>
 <div id="export-aggregate" class="section level3">
@@ -1693,93 +1680,14 @@ xfun::gsub_file(aggregate_fn,
 <pre class="r"><code>xtabs(formula = ~ age_group + child_sex, data = play)</code></pre>
 <pre><code>##          child_sex
 ## age_group female male
-##      12mo     19   12
-##      18mo     14   13
-##      24mo      7   16</code></pre>
+##      12mo     21   14
+##      18mo     18   16
+##      24mo     12   21</code></pre>
+<div id="check-for-duplicates" class="section level2">
+<h2>Check for duplicates</h2>
+<pre class="r"><code>length(unique(play$participant_id)) == length(play$participant_id)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 </div>
-<div id="merge-databrary-info" class="section level1">
-<h1>Merge Databrary info</h1>
-<pre class="r"><code>if (logged_in_db)
-create_save_kobo_db_merge_csv(aggregate_fn, file.path(params$csv_save_dir, params$with_db_fn))</code></pre>
-<pre><code>## Importing KoBo survey data.</code></pre>
-<pre><code>## Getting session info from Databrary.</code></pre>
-<pre><code>## Warning: One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details
-## One or more parsing issues, see `problems()` for details</code></pre>
-<pre><code>## Modifying Databrary session info.</code></pre>
-<pre><code>## Joining, by = &quot;session_name&quot;
-## Saved file:
-## csv/release_1.0/aggregate/PLAY_non_mbcdi_all_databrary.csv</code></pre>
 </div>
 <div id="clean-up" class="section level1">
 <h1>Clean-up</h1>

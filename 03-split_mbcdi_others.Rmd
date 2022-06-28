@@ -12,7 +12,6 @@ output:
 params:
   csv_input_dir: 'csv/release_1.0/raw'
   csv_save_dir: 'csv/release_1.0/mbcdi_non'
-  form_years: ['2020', '2021']
   age_grps: ['12', '18', '24']
   lang_grps: ['English', 'Bilingual_English', 'Bilingual_Spanish']
   remove_identifying_data: false
@@ -36,6 +35,7 @@ We source the helper functions in `R/kobo_export.R`.
 
 ```{r source_helpers}
 source("R/kobo_export.R")
+library(tidyverse)
 ```
 
 # Open file(s) and process
@@ -44,7 +44,8 @@ Because we have parameterized the form year, age groups, and language groups, we
 
 ## Non-MB-CDI data
 
-```{r import_save_non_mbcdi_csv}
+```{r import_save_non_mbcdi_csv, eval=FALSE}
+# Deprecate this since we are not using form_year
 mapply(import_raw_extract_split_save,
        form_year = rep(params$form_years, 9),
        age_grp = rep(params$age_grps, 3),
@@ -55,18 +56,41 @@ mapply(import_raw_extract_split_save,
        remove_identifying_data = params$remove_identifying_data)
 ```
 
+```{r import-save-non-mbcdi-csv}
+csv_fns <-
+  list.files(params$csv_input_dir,
+             '^[0-9]{6}_raw_[12|18|24]',
+             full.names = TRUE)
+
+purrr::map(
+  csv_fns,
+  open_split_save,
+  csv_save_dir = params$csv_save_dir,
+  these_questions = 'non_mbcdi',
+  remove_identifying_data = params$remove_identifying_data
+)
+```
+
 ## MB-CDI data
 
 Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
 
 ```{r import_save_mbcdi_csv}
-mapply(import_raw_extract_split_save, 
-       form_year = rep(params$form_years, 9), 
-       age_grp = rep(params$age_grps, 3),
-       lang_grp = rep(params$lang_grps, each = 3),
-       csv_input_dir = params$csv_input_dir,
-       csv_save_dir = params$csv_save_dir,
-       these_questions = 'mbcdi',
-       remove_identifying_data = params$remove_identifying_data)
+# mapply(import_raw_extract_split_save, 
+#        form_year = rep(params$form_years, 9), 
+#        age_grp = rep(params$age_grps, 3),
+#        lang_grp = rep(params$lang_grps, each = 3),
+#        csv_input_dir = params$csv_input_dir,
+#        csv_save_dir = params$csv_save_dir,
+#        these_questions = 'mbcdi',
+#        remove_identifying_data = params$remove_identifying_data)
+
+purrr::map(
+  csv_fns,
+  open_split_save,
+  csv_save_dir = params$csv_save_dir,
+  these_questions = 'mbcdi',
+  remove_identifying_data = params$remove_identifying_data
+)
 ```
 

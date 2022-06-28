@@ -39,11 +39,20 @@ source("R/kobo_export.R")
 
 Because we have parameterized the form year, age groups, and language groups, we can use the `mapply()` function here -- as long as we make sure that the parameter vectors have the right length and composition.
 
-```{r import_save_csv}
+```{r import_save_csv, eval=FALSE}
+# Removing form_year as a parameter, so we deprecate this approach
 mapply(import_xlsx_save_raw, 
        form_year = rep(params$form_years, 9), 
        age_grp = rep(params$age_grps, 3),
        lang_grp = rep(params$lang_grps, each = 3),
+       xlsx_dir = params$xlsx_download_dir,
+       csv_dir = params$csv_save_dir)
+```
+
+```{r}
+mapply(import_xlsx_save_raw_csv,
+       age_group = rep(params$age_grps, 3),
+       lang_group = rep(params$lang_grps, each = 3),
        xlsx_dir = params$xlsx_download_dir,
        csv_dir = params$csv_save_dir)
 ```

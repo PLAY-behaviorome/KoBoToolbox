@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">KoBoToolbox Data Download</h1>
-<h3 class="subtitle">Version 2022-05-31 08:45:14</h3>
+<h3 class="subtitle">Version 2022-06-28 08:52:35</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1607,18 +1607,15 @@ div.tocify {
 <p>This document exports visit survey data from KoBoToolbox, does
 minimal cleaning, and saves the data as a CSV.</p>
 <p>To download and clean <em>all</em> of the data, execute
-<code>rmarkdown::render(&quot;release_1.0_export_clean.Rmd&quot;, params =
-list(update_2020 = TRUE, update_2021 = TRUE))</code> from the console.
-Otherwise, run with the default parameter values:
+<code>rmarkdown::render(&quot;release_1.0_export_clean.Rmd&quot;, params = list(update_old = TRUE, update_active = TRUE))</code>
+from the console. Otherwise, run with the default parameter values:
 <code>rmarkdown::render(&quot;release_1.0_export_clean.Rmd&quot;)</code> which
 downloads the 2021+ Excel data files each time the document is run.</p>
 </div>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
 <p>The PLAY Project uses KoBoToolbox to collect data from parents and
-researchers using a tablet application.</p>
-<div id="authentication" class="section level2">
-<h2>Authentication</h2>
+researchers using a tablet application. ## Authentication</p>
 <p>The data are stored in an account on <a href="https://kf.kobotoolbox.org" class="uri">https://kf.kobotoolbox.org</a>. The login credentials for
 that account are shared among the PLAY Project staff. To access the
 site’s API programmatically, an API key was downloaded and added to the
@@ -1635,7 +1632,6 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
   message(&quot;`KOBO_API_KEY` installed.&quot;)
 }</code></pre>
 <pre><code>## `KOBO_API_KEY` installed.</code></pre>
-</div>
 </div>
 <div id="loadsource-helper-functions" class="section level2">
 <h2>Load/source helper functions</h2>
@@ -1670,33 +1666,51 @@ kb_home &lt;- kb_df %&gt;%
 if ((dim(kb_home) &lt; 1) || (!is.data.frame(kb_home))) {
   stop(&quot;Error in selecting home surveys from KoBoToolbox.&quot;)
 }</code></pre>
-<div id="download-2020-data" class="section level2">
-<h2>Download 2020 data</h2>
+<pre class="r"><code>kb_home &lt;- kb_home %&gt;%
+  dplyr::filter(., id &gt; 700000)</code></pre>
+<div id="download-old-data" class="section level2">
+<h2>Download old data</h2>
 <pre class="r"><code>bulk_download_kobo_forms(
   kb_home,
   &#39;2020&#39;,
-  update_form = params$update_2020,
+  update_form = params$update_old,
   download_xlsx = params$download_xlsx,
   download_dir = params$xlsx_download_dir
 )</code></pre>
-<pre><code>## No data from 2020 downloaded</code></pre>
 </div>
-<div id="download-2021-data" class="section level2">
-<h2>Download 2021 data</h2>
+<div id="download-active-data" class="section level2">
+<h2>Download active data</h2>
 <p>As of 2022-03-09, the 2021 forms are the active ones. So, we have set
-<code>params$update_2021</code> == TRUE by default.</p>
+<code>params$update_active</code> == TRUE by default.</p>
 <pre class="r"><code>bulk_download_kobo_forms(
   kb_home,
-  &#39;2021&#39;,
-  update_form = params$update_2021,
+  update_form = params$update_active,
   download_xlsx = params$download_xlsx,
   download_dir = params$xlsx_download_dir
 )</code></pre>
 <pre><code>## Loading required package: stringr</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740625_PLAY_HomeQuestionaires_12_English.xlsx`</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740631_PLAY_HomeQuestionaires_24_Bilingual_English.xlsx`</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740623_PLAY_HomeQuestionaires_12_Bilingual_English.xlsx`</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740628_PLAY_HomeQuestionnaires_18_English.xlsx`</code></pre>
 <pre><code>## Saved `xlsx/release_1.0/740630_PLAY_HomeQuestionaires_24_Bilingual_Spanish-2021-07-30.xlsx`</code></pre>
 <pre><code>## Saved `xlsx/release_1.0/740624_PLAY_HomeQuestionaires_12_Bilingual_Spanish-2021-07-29.xlsx`</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740626_PLAY_HomeQuestionaires_18_Bilingual_English.xlsx`</code></pre>
+<pre><code>## Saved `xlsx/release_1.0/740629_PLAY_HomeQuestionnaires_24_English.xlsx`</code></pre>
 <pre><code>## Saved `xlsx/release_1.0/740627_PLAY_HomeQuestionaires_18_Bilingual_Spanish-2021-07-29.xlsx`</code></pre>
-<pre><code>## 3 forms from 2021 downloaded to `xlsx/release_1.0`</code></pre>
+<pre><code>## 9 forms downloaded to `xlsx/release_1.0`</code></pre>
+</div>
+<div id="normalize-file-names" class="section level2">
+<h2>Normalize file names</h2>
+<p>Some of the form names are inconsistent, so we normalize them to fit
+the following pattern:</p>
+<p><code>&lt;form_id&gt;_PLAY_HomeQuestionnaires_&lt;age_group&gt;_&lt;lang_group&gt;.xlsx</code></p>
+<pre class="r"><code>fl &lt;- list.files(params$xlsx_download_dir, full.names = TRUE)
+fl_home_old &lt;- fl[stringr::str_detect(fl, &#39;Home&#39;)]
+fl_home_new &lt;- purrr::map_chr(fl_home_old, make_standard_form_name)
+file.rename(fl_home_old, fl_home_new)</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
 </div>
 
