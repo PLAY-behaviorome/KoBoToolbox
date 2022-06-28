@@ -1,0 +1,71 @@
+---
+output: html_document
+---
+
+```{r}
+play_loco <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                locomotor_milestones.who_walk.who_walk_onset_mo,
+                locomotor_milestones.k_walk.k_walk_onset_mo,
+                locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
+  dplyr::rename(., walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+                walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+                crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo)
+```
+
+## Crawl onset
+
+```{r crawl-onset-hist}
+play_loco %>%
+  ggplot(.) +
+  aes(crawl_mos, fill = child_sex) +
+  geom_histogram(bins = 12)
+```
+
+## Walk onset (KEA criteria)
+
+```{r walk-onset-kea-hist}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_kea, fill = child_sex) +
+  geom_histogram(bins = 12)
+```
+
+## Walk onset (WHO criteria)
+
+```{r walk-onset-who-hist}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, fill = child_sex) +
+  geom_histogram(bins = 12)
+```
+
+## Walk (KEA) by walk (WHO) onset
+
+```{r walk-who-by-walk-kea-scatter}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  xlim(8, 18) +
+  ylim(8, 18) +
+  theme(legend.position="bottom") -> walk_p
+
+ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 
+                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+```
+
+## Walk (KEA) by crawl onset
+
+```{r walk-by-crawl-onset-scatter}
+play_loco %>%
+  ggplot(.) +
+  aes(crawl_mos, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  xlim(7, 15) +
+  ylim(8, 18) +
+  theme(legend.position="bottom") -> walk_p
+
+ggExtra::ggMarginal(walk_p, play_loco, crawl_mos, walk_mos_kea, 
+                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+```

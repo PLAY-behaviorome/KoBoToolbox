@@ -1,0 +1,259 @@
+---
+output: html_document
+---
+
+```{r clean-ecbq}
+ecbq <- play_merge %>%
+  dplyr::select(.,
+                age_group,
+                child_sex,
+                language_child,
+                qa_group | contains("rothbart"))
+
+rename_ecbq <- function(old_names) {
+  new_names <-
+    stringr::str_remove(old_names, "rothbart\\.rothbartquestions\\.rothbart_")
+}
+
+recode_ecbq <- function(this_var_index, df) {
+  new_var <- dplyr::recode_factor(df[,this_var_index], 
+                       never = "never",
+                       veryrarely = "very_rarely",
+                       lessthanhalf = "less_than_half",
+                       abouthalf = "about_half",
+                       almostalways = "almost_always",
+                       always = "always",
+                       .default = NA_character_)
+  df[, this_var_index] <- new_var
+  df
+}
+
+ecbq <- ecbq %>%
+  dplyr::rename_with(., rename_ecbq, contains("rothbart"))
+
+# Have to do better than this...
+ecbq <- recode_ecbq(5, ecbq)
+ecbq <- recode_ecbq(6, ecbq)
+ecbq <- recode_ecbq(7, ecbq)
+ecbq <- recode_ecbq(8, ecbq)
+ecbq <- recode_ecbq(9, ecbq)
+ecbq <- recode_ecbq(10, ecbq)
+ecbq <- recode_ecbq(11, ecbq)
+ecbq <- recode_ecbq(12, ecbq)
+ecbq <- recode_ecbq(13, ecbq)
+ecbq <- recode_ecbq(14, ecbq)
+ecbq <- recode_ecbq(15, ecbq)
+ecbq <- recode_ecbq(16, ecbq)
+ecbq <- recode_ecbq(17, ecbq)
+ecbq <- recode_ecbq(18, ecbq)
+ecbq <- recode_ecbq(19, ecbq)
+ecbq <- recode_ecbq(20, ecbq)
+ecbq <- recode_ecbq(21, ecbq)
+ecbq <- recode_ecbq(22, ecbq)
+ecbq <- recode_ecbq(23, ecbq)
+ecbq <- recode_ecbq(24, ecbq)
+ecbq <- recode_ecbq(25, ecbq)
+ecbq <- recode_ecbq(26, ecbq)
+ecbq <- recode_ecbq(27, ecbq)
+ecbq <- recode_ecbq(28, ecbq)
+ecbq <- recode_ecbq(29, ecbq)
+ecbq <- recode_ecbq(30, ecbq)
+ecbq <- recode_ecbq(31, ecbq)
+ecbq <- recode_ecbq(32, ecbq)
+ecbq <- recode_ecbq(33, ecbq)
+ecbq <- recode_ecbq(34, ecbq)
+ecbq <- recode_ecbq(35, ecbq)
+ecbq <- recode_ecbq(36, ecbq)
+ecbq <- recode_ecbq(37, ecbq)
+ecbq <- recode_ecbq(38, ecbq)
+ecbq <- recode_ecbq(39, ecbq)
+ecbq <- recode_ecbq(40, ecbq)
+```
+
+```{r ecbq-qs, echo=FALSE}
+qs <- readr::read_csv("data_dict/release_1.0_non_mbcdi_data_dictionary_clean.csv", show_col_types = FALSE)
+ecbq_qs <- qs %>%
+  dplyr::filter(., question_group == "rothbart")
+```
+
+## `r ecbq_qs$question[3]`
+
+## `r ecbq_qs$question[4]`
+
+```{r}
+plot(likert::likert(ecbq[ , 5, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[5]`
+
+```{r}
+plot(likert::likert(ecbq[, 6, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[6]`
+
+```{r}
+plot(likert::likert(ecbq[ , 7, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[7]`
+
+```{r}
+plot(likert::likert(ecbq[, 8, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[8]`
+
+```{r}
+plot(likert::likert(ecbq[ , 9, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[9]`
+
+```{r}
+plot(likert::likert(ecbq[, 10, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[10]`
+
+```{r}
+plot(likert::likert(ecbq[ , 11, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[11]`
+
+```{r}
+plot(likert::likert(ecbq[, 12, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[12]`
+
+```{r}
+plot(likert::likert(ecbq[ , 13, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[13]`
+
+```{r}
+plot(likert::likert(ecbq[, 14, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[14]`
+
+```{r}
+plot(likert::likert(ecbq[ , 15, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[15]`
+
+```{r}
+plot(likert::likert(ecbq[, 16, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[16]`
+
+```{r}
+plot(likert::likert(ecbq[ , 17, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[17]`
+
+```{r}
+plot(likert::likert(ecbq[, 18, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[18]`
+
+```{r}
+plot(likert::likert(ecbq[ , 19, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[19]`
+
+```{r}
+plot(likert::likert(ecbq[, 20, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[20]`
+
+```{r}
+plot(likert::likert(ecbq[, 21, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[21]`
+
+```{r}
+plot(likert::likert(ecbq[, 22, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[22]`
+
+```{r}
+plot(likert::likert(ecbq[, 23, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[23]`
+
+```{r}
+plot(likert::likert(ecbq[, 24, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[24]`
+
+```{r}
+plot(likert::likert(ecbq[, 25, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[25]`
+
+```{r}
+plot(likert::likert(ecbq[, 26, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[26]`
+
+```{r}
+plot(likert::likert(ecbq[, 27, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[27]`
+
+```{r}
+plot(likert::likert(ecbq[, 28, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[28]`
+
+```{r}
+plot(likert::likert(ecbq[, 29, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[29]`
+
+```{r}
+plot(likert::likert(ecbq[, 30, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[30]`
+
+```{r}
+plot(likert::likert(ecbq[, 31, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[31]`
+
+```{r}
+plot(likert::likert(ecbq[, 32, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[32]`
+
+```{r}
+plot(likert::likert(ecbq[, 33, drop = FALSE]))
+```
+
+## `r ecbq_qs$question[33]`
+
+```{r}
+plot(likert::likert(ecbq[, 34, drop = FALSE]))
+```

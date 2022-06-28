@@ -1,0 +1,46 @@
+---
+output: html_document
+---
+
+## QA status overall
+
+```{r qa-status}
+xtabs(formula = ~ qa_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Age group by QA status
+
+```{r qa-status-by-age-group}
+xtabs(formula = ~ qa_group + age_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Sex by age group
+
+```{r}
+xtabs(formula = ~ child_sex + age_group, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Race and ethnicity
+
+```{r}
+xtabs(formula = ~ child_race + child_ethnicity, data = play_merge) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Spanish spoken to child
+
+```{r}
+lang_to_child <- play_merge %>%
+  dplyr::rename(spanish_to_child = language_child.spanish)
+
+xtabs(formula = ~ age_group + spanish_to_child, data = lang_to_child) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```

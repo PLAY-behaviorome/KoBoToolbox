@@ -1,0 +1,75 @@
+---
+title: "typical-day"
+author: "Rick Gilmore"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+typical_day <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                typical_day.typical_behavior,
+                typical_day.typical_activities,
+                typical_day.typical_nightmorning,
+                typical_day.typical_otherthanme) %>%
+  dplyr::rename(., typical_behavior = typical_day.typical_behavior,
+                typical_activities = typical_day.typical_activities,
+                typical_nightmorning = typical_day.typical_nightmorning,
+                typical_other_than_researcher = typical_day.typical_otherthanme)
+```
+
+## Typical behavior
+
+```{r}
+xtabs(formula = ~ typical_behavior + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_behavior + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical activities
+
+```{r}
+xtabs(formula = ~ typical_activities + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_activities + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical night/morning
+
+```{r}
+xtabs(formula = ~ typical_nightmorning + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_nightmorning + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Typical other than researcher presence
+
+```{r}
+xtabs(formula = ~ typical_other_than_researcher + age_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+```{r}
+xtabs(formula = ~ typical_other_than_researcher + qa_group, data = typical_day) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```

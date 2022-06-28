@@ -1,0 +1,244 @@
+---
+title: "Conduct initial QA"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  project_root_dir: ".."
+  csv_input_dir: 'data/csv/release_1.0/identifiers_removed'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document imports non-MB-CDI questions, from which identifiers have been removed, and generates a data frame with summary data about each of the forms. This is useful for quality assurance evaluations
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source(file.path(params$project_root_dir, "R/kobo_export.R"))
+
+library(tidyverse)
+```
+
+# Open file(s) and process
+
+```{r define-helper}
+summarize_non_mbcdi_qs <- function(fn) {
+  stopifnot(is.character(fn))
+  
+  if (!file.exists(fn)) {
+    stop('File not found `', fn, '`')
+  } else {
+    df <- readr::read_csv(fn, show_col_types = FALSE)
+    if (!is.data.frame(df)) {
+      stop('Error reading data frame')
+    } else {
+      out_df <- tibble(file_name = basename(fn), n_rows = dim(df)[1], n_vars = dim(df)[2])
+      dplyr::arrange(out_df, file_name)
+    }
+  }
+}
+```
+
+```{r generate-report}
+fl <-
+  list.files(
+    file.path(params$project_root_dir, params$csv_input_dir),
+    '^[0-9]{6}_non_mbcdi_[12|18|24]',
+    full.names = TRUE
+  )
+
+PLAY_forms <- purrr::map_df(fl, summarize_non_mbcdi_qs)
+
+PLAY_forms %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+# Examine anomalies and repair
+
+## Additional columns in 12mo English form
+
+1. `363431_non_mbcdi_12_english.csv` has an additional column.
+
+```{r}
+eng_12_363431 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/363431_non_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_12_363431_names <- names(eng_12_363431)
+
+eng_12_740625 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/740625_non_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_12_740625_names <- names(eng_12_740625)
+```
+
+
+The 18 mo english forms have the same names.
+
+```{r}
+eng_18_363349 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/363349_non_mbcdi_18_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_18_363349_names <- names(eng_18_363349)
+
+eng_18_740628 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/740628_non_mbcdi_18_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_18_740628_names <- names(eng_18_740628)
+
+sum(eng_18_363349_names == eng_18_740628_names)
+```
+
+The active 12 mo and 18 mo English forms have the same names.
+
+```{r}
+sum(eng_12_740625_names == eng_18_740628_names)
+```
+
+Most of the older 12 and 18 mo old forms have the same names, but there is a mismatch somewhere. Let's look at the older 12 and 18 mo old forms.
+
+```{r}
+cbind(tail(basename(eng_12_363431_names), 40), tail(basename(eng_18_363349_names), 40))
+```
+
+It looks like the old 12 mo forms contain a column named '_version_' that is not in the 18 mo forms. I wonder if deleting that column will fix the problem.
+
+```{r}
+trim_this_one <-
+  (1:length(eng_12_363431_names))[eng_12_363431_names == '_version_']
+eng_12_names_trim <- eng_12_363431_names[-trim_this_one]
+cbind(tail(basename(eng_12_names_trim), 40), tail(basename(eng_18_363349_names), 40))
+sum(eng_12_names_trim == eng_18_740628_names)
+```
+
+That seems to do the trick!
+
+Let's confirm that the trimmed old 12 mo, and old 18 mo old are now reconciled. First, let's extract the old and active 24 mo names.
+
+```{r}
+eng_24_363381 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/363381_non_mbcdi_24_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_24_363381_names <- names(eng_24_363381)
+
+eng_24_740629 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/740629_non_mbcdi_24_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_24_740629_names <- names(eng_24_740629)
+
+sum(eng_24_363381_names == eng_24_740629_names)
+```
+
+```{r}
+cbind(tail(basename(eng_12_names_trim), 40), tail(basename(eng_18_363349_names), 40), tail(basename(eng_24_363381_names), 40))
+```
+
+So, trimming '_version_' from the 12 mo english seems to reconcile the old, inactive forms.
+
+### Trim and re-export
+
+```{r}
+eng_12_363431_trim <- eng_12_363431[-trim_this_one]
+
+readr::write_csv(
+  eng_12_363431_trim,
+  file.path(
+    params$project_root_dir,
+    params$csv_input_dir,
+    '363431_non_mbcdi_12_english.csv'
+  )
+)
+```
+
+Regenerate report...
+
+```{r}
+fl <-
+  list.files(
+    file.path(params$project_root_dir, params$csv_input_dir),
+    '^[0-9]{6}_non_mbcdi_[12|18|24]',
+    full.names = TRUE
+  )
+
+PLAY_forms <- purrr::map_df(fl, summarize_non_mbcdi_qs)
+
+PLAY_forms %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+```{r}
+eng_12_old <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/363431_non_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_12_old_names <- names(eng_12_old)
+
+eng_12_active <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      'data/csv/release_1.0/identifiers_removed/740625_non_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+eng_12_active_names <- names(eng_12_active)
+
+sum(eng_12_old_names == eng_12_active_names)
+sum(eng_18_363349_names == eng_18_740628_names)
+sum(eng_24_363381_names == eng_24_740629_names)
+
+# Now cross-age
+sum(eng_12_old_names == eng_18_740628_names)
+sum(eng_12_old_names == eng_24_740629_names)
+sum(eng_18_740628_names == eng_24_740629_names)
+```
+
+**TODO(ROG)**: Make a function to check names more thoroughly and completely.

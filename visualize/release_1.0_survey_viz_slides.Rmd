@@ -1,0 +1,132 @@
+---
+title: 'PLAY Release 1.0: Surveys'
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output:
+  ioslides_presentation:
+    css: css/ioslides.css
+    logo: img/PLAY-leaf.png 
+    widescreen: true
+    incremental: false
+    transition: default
+  html_document:
+    code_folding: hide
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  project_root_dir: '..'
+  databrary_login: 'rogilmore@psu.edu'
+  databrary_vol: 1280
+  non_MBCDI_session: 51539
+  non_MBCDI_fn: 'PLAY_release_1.0_non_MBCDI_data' 
+  release: 'release_1.0'
+  use_databrary: yes
+  select_gold_silver: yes
+---
+
+## Purpose
+
+This document summarizes the workflow for the PLAY 1.0 data release related to the non-MBCDI survey data.
+
+## Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      fig.align = "center",
+                      warning = FALSE)
+```
+
+The user should authenticate to Databrary using `databraryapi::login_db()` prior to knitting this document.
+
+```{r login}
+databraryapi::login_db(params$databrary_login)
+```
+
+---
+
+Import helper functions and libraries
+
+```{r source-helpers}
+source(file.path(params$project_root_dir, "R/kobo_databrary_integration.R"))
+library(tidyverse) # for %>% pipe
+```
+
+## Import 
+
+We read the CSV with the file name: "`r params$non_MBCDI_fn`" stored in volume `r params$databrary_vol` and session/folder `r params$non_MBCDI_session`.
+
+```{r import-from-databrary}
+if (params$use_databrary) {
+  these_assets <-
+    databraryapi::list_assets_in_session(params$non_MBCDI_session)
+  this_asset <-
+    dplyr::filter(these_assets, name == params$non_MBCDI_fn)
+  play_merge <-
+    databraryapi::read_csv_data_as_df(session_id = params$non_MBCDI_session,
+                                      asset_id = this_asset$asset_id[1])
+} else {
+  play_merge <-
+    readr::read_csv(file.path(params$project_root_dir, "data/csv/release_1.0/aggregate/PLAY_release_1.0_non_MBCDI_data.csv"))
+}
+```
+
+There are $n=$ `r dim(play_merge)[1]` sessions in the data file.
+
+## Select QA'd sessions
+
+```{r}
+play_merge <- play_merge %>%
+  dplyr::filter(., qa_group %in% c('PLAY_Gold', 'PLAY_Silver'))
+```
+
+There are $n=$ `r dim(play_merge)[1]` sessions that have passed quality assurance at the "Gold" or "Silver" level. We focus on these.
+
+# Demographic data summaries
+
+```{r child="demographic-summary.Rmd"}
+```
+
+# Locomotor milestones
+
+```{r child="locomotor-milestones.Rmd"}
+```
+
+# Patient Health Questionnaire (PHQ-4)
+
+```{r child="phq-4.Rmd"}
+```
+
+# Health
+
+```{r child="health.Rmd"}
+```
+
+# Media use
+
+```{r child="media-use.Rmd"}
+```
+
+# Pets
+
+```{r child="pets.Rmd"}
+```
+
+# Typical Day
+
+```{r child="typical-day.Rmd"}
+```
+
+# Rothbart (ECBQ)
+
+```{r child="rothbart-ecbq.Rmd", eval=FALSE}
+```
+
+# Clean-up
+
+## Log-out of Databrary
+
+```{r}
+databraryapi::logout_db()
+```

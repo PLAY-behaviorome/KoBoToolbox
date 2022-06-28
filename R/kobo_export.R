@@ -684,7 +684,7 @@ open_deidentify_save <- function(fp,
                                  csv_save_dir = 'tmp',
                                  these_questions = 'non_mbcdi',
                                  rename_cols = FALSE,
-                                 vb = FALSE) {
+                                 vb = TRUE) {
   require(tidyverse)
   
   # fp <- file.path(
