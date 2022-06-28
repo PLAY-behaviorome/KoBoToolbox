@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Make aggregate CSVs</h1>
-<h3 class="subtitle">Version 2022-06-28 11:48:09</h3>
+<h3 class="subtitle">Version 2022-06-28 15:12:35</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1651,23 +1651,7 @@ fl &lt;-
     full.names = TRUE
   )
 
-if (length(fl) &lt;= 0) warning(&quot;No files found in &quot;, file.path(params$project_root_dir, params$csv_input_dir))
-
-# read_PLAY_csv(fl[1])
-# read_PLAY_csv(fl[2])
-# read_PLAY_csv(fl[3])
-# read_PLAY_csv(fl[4])
-# read_PLAY_csv(fl[5])
-# read_PLAY_csv(fl[6])
-# read_PLAY_csv(fl[7])
-# read_PLAY_csv(fl[8])
-# read_PLAY_csv(fl[9])
-# read_PLAY_csv(fl[10])
-# read_PLAY_csv(fl[11])
-# read_PLAY_csv(fl[12])
-# read_PLAY_csv(fl[13])
-# read_PLAY_csv(fl[14])
-# read_PLAY_csv(fl[15])</code></pre>
+if (length(fl) &lt;= 0) warning(&quot;No files found in &quot;, file.path(params$project_root_dir, params$csv_input_dir))</code></pre>
 <pre class="r"><code>PLAY_non_mbcdi_all &lt;- purrr::map_df(fl, read_PLAY_csv)</code></pre>
 <div id="export-aggregate" class="section level3">
 <h3>Export aggregate</h3>
