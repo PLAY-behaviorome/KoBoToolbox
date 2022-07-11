@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">KoBoToolbox Data Download</h1>
-<h3 class="subtitle">Version 2022-06-28 15:12:09</h3>
+<h3 class="subtitle">Version 2022-07-11 13:16:36</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1640,6 +1640,14 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
 <p>The helper functions require several external packages. To confirm
 that these are installed, run the following chunk.</p>
 <pre class="r"><code>install_kobo_packages()</code></pre>
+<pre><code>## Loading required package: koboloadeR</code></pre>
+<pre><code>## Loading required package: getPass</code></pre>
+<pre><code>## Loading required package: httr</code></pre>
+<pre><code>## Loading required package: readr</code></pre>
+<pre><code>## Loading required package: jsonlite</code></pre>
+<pre><code>## Loading required package: knitr</code></pre>
+<pre><code>## Loading required package: magrittr</code></pre>
+<pre><code>## Loading required package: readxl</code></pre>
 </div>
 </div>
 <div id="download-data" class="section level1">
@@ -1679,6 +1687,7 @@ if ((dim(kb_home) &lt; 1) || (!is.data.frame(kb_home))) {
   download_xlsx = params$download_xlsx,
   download_dir = file.path(params$project_root_dir, params$xlsx_download_dir)
 )</code></pre>
+<pre><code>## Loading required package: stringr</code></pre>
 <pre><code>## Saved `../data/xlsx/release_1.0/740625_PLAY_HomeQuestionaires_12_English.xlsx`</code></pre>
 <pre><code>## Saved `../data/xlsx/release_1.0/740631_PLAY_HomeQuestionaires_24_Bilingual_English.xlsx`</code></pre>
 <pre><code>## Saved `../data/xlsx/release_1.0/740623_PLAY_HomeQuestionaires_12_Bilingual_English.xlsx`</code></pre>
@@ -1701,9 +1710,8 @@ the following pattern:</p>
 fl_home_old &lt;- fl[stringr::str_detect(fl, &#39;Home&#39;)]
 fl_home_new &lt;- purrr::map_chr(fl_home_old, make_standard_form_name)
 file.rename(fl_home_old, fl_home_new)</code></pre>
-<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [11] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [21] TRUE TRUE TRUE TRUE</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [13] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
 </div>
 

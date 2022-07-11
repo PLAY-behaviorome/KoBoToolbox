@@ -1,0 +1,391 @@
+---
+title: "Conduct initial QA on MB-CDI"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  project_root_dir: ".."
+  csv_input_dir: 'data/csv/release_1.0/mbcdi_non'
+  csv_output_dir: 'data/csv/release_1.0/identifiers_removed'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document imports MB-CDI questions, from which identifiers have been removed, and generates a data frame with summary data about each of the forms. This is useful for quality assurance evaluations
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source(file.path(params$project_root_dir, "R/kobo_export.R"))
+library(tidyverse)
+```
+
+```{r}
+col_is_unique <- function(col_index, df) {
+  n_cols <- dim(df)[2]
+  col_names <- names(df)
+  this_col_name <- col_names[col_index]
+  is_unique <- TRUE
+  for (i in 1:n_cols) {
+    if (i == col_index)
+      next
+    if (col_names[i] == this_col_name) {
+      is_unique <- FALSE
+    }
+  }
+  is_unique
+}
+```
+
+
+# Open file(s) and process
+
+```{r define-helper}
+summarize_mbcdi_qs <- function(fn) {
+  stopifnot(is.character(fn))
+  
+  if (!file.exists(fn)) {
+    stop('File not found `', fn, '`')
+  } else {
+    df <- readr::read_csv(fn, show_col_types = FALSE)
+    if (!is.data.frame(df)) {
+      stop('Error reading data frame')
+    } else {
+      out_df <-
+        tibble(
+          file_name = basename(fn),
+          n_rows = dim(df)[1],
+          n_vars = dim(df)[2]
+        )
+      dplyr::arrange(out_df, file_name)
+    }
+  }
+}
+```
+
+```{r generate-report}
+fl <-
+  list.files(
+    file.path(params$project_root_dir, params$csv_input_dir),
+    '^[0-9]{6}_mbcdi_[12|18|24]',
+    full.names = TRUE
+  )
+
+PLAY_forms <- purrr::map_df(fl, summarize_mbcdi_qs)
+
+PLAY_forms %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+# Examine anomalies and repair
+
+The [18|24]_bilingual_[english|spanish] look similar for the newer, active forms. So do the 12_bilingual_[english|spanish] in the older forms and separately in the newer forms, but not the aggregation of old and new. The [18|24]_english also look comparable.
+
+But to be safe, we need to take each age x language group one at a time.
+
+## 12 mo English
+
+```{r}
+eng_12_363431 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '363431_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  ) %>%
+  dplyr::rename_with(., basename)
+
+eng_12_363431_names <- names(eng_12_363431)
+
+eng_12_740625 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '740625_mbcdi_12_english.csv'
+    ),
+    show_col_types = FALSE
+  ) %>%
+  dplyr::rename_with(., basename)
+
+eng_12_740625_names <- names(eng_12_740625)
+
+length(eng_12_363431_names)
+length(eng_12_740625_names)
+```
+
+Let's see if the discrepancies are at the end of the files.
+
+```{r}
+cbind(tail(eng_12_363431_names, 40), tail(eng_12_740625_names, 40))
+```
+These look similar, but there is no simple shift. Let's sort the entire lists and try again.
+
+```{r}
+cbind(sort(eng_12_363431_names), sort(eng_12_740625_names))
+```
+
+It looks like there are some different words on the two versions. Maybe a full join can help clean it up.
+
+```{r}
+eng_12_merge <- dplyr::full_join(eng_12_363431, eng_12_740625)
+dim(eng_12_merge)
+```
+
+That looks better. There are still some possible duplications--`I` and `i`; `outside` and `outside_001`; and `bath` and `bath_001`. But I think these can be further cleaned and then exported.
+
+We drop columns with `instructions` and `note_mcdi_permission`.
+
+```{r}
+contains_instructions <- stringr::str_detect(names(eng_12_merge), 'instructions')
+contains_permission <- stringr::str_detect(names(eng_12_merge), 'permission')
+
+drop_cols <- contains_instructions |
+  contains_permission
+drop_col_index <- (1:length(names(eng_12_merge)))[drop_cols]
+
+eng_12_merge <- eng_12_merge %>%
+  dplyr::select(., -all_of(drop_col_index))
+```
+
+Use `dplyr::coalesce` to combine `I` and `i`.
+
+```{r}
+eng_12_merge <- eng_12_merge %>%
+  dplyr::mutate(., I = dplyr::coalesce(I, i)) %>%
+  dplyr::select(., -i)
+```
+
+The next coalesces `outside` and `outside_001` and `bath` and `bath_001`.
+
+```{r}
+eng_12_merge <- eng_12_merge %>%
+  dplyr::mutate(., outside = dplyr::coalesce(outside, outside_001),
+                bath = dplyr::coalesce(bath, bath_001)) %>%
+  dplyr::select(., -outside_001, -bath_001)
+```
+
+Next, we export the merged file.
+
+```{r}
+readr::write_csv(eng_12_merge, file.path(params$project_root_dir, params$csv_output_dir, 'mbcdi_12_english.csv'))
+```
+
+
+## 18 mo English
+
+```{r}
+eng_18_363349 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '363349_mbcdi_18_english.csv'
+    ),
+    show_col_types = FALSE
+  ) 
+```
+
+In trying to rename to the basename, we discovered that there are some duplicates in this file.
+
+```{r}
+# candy
+eng_18_363349[, 29] = eng_18_363349[,29] | eng_18_363349[,221]
+
+# leg
+eng_18_363349[,43] = eng_18_363349[,43] |  eng_18_363349[,255]
+
+# rain
+eng_18_363349[,57] = eng_18_363349[,57] | eng_18_363349[,168]
+
+# wet
+eng_18_363349[,93] = eng_18_363349[,93] | eng_18_363349[,315]
+
+eng_18_363349 <- dplyr::select(eng_18_363349, -c(221, 255, 168, 315))
+
+eng_18_363349 <- eng_18_363349 %>%
+  dplyr::rename_with(., basename)
+
+eng_18_363349_names <- names(eng_18_363349)
+```
+
+```{r}
+eng_18_740628 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '740628_mbcdi_18_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+
+# This also has duplicates...
+
+# rain
+eng_18_740628[,57] = eng_18_740628[,57] | eng_18_740628[,170]
+
+# wet
+eng_18_740628[,93] = eng_18_740628[,93] | eng_18_740628[,320]
+
+eng_18_740628 <- dplyr::select(eng_18_740628, -c(170, 320))
+
+eng_18_740628 <- eng_18_740628 %>%
+  dplyr::rename_with(., basename)
+
+eng_18_740628_names <- names(eng_18_740628)
+```
+
+```{r}
+length(eng_18_363349_names)
+length(eng_18_740628_names)
+```
+
+Unfortunately, that bit of cleaning duplicate column names did not reduce the discrepancies. But, let's press on to look at a sorted list of names.
+
+```{r}
+cbind(sort(eng_18_363349_names), sort(eng_18_740628_names))
+```
+
+It's hard to see any discrepancies this way. Let's use join again.
+
+```{r}
+eng_18_merge <- dplyr::full_join(eng_18_363349, eng_18_740628)
+dim(eng_18_merge)
+```
+
+This is wider than either of the inputs. Let's sort to see what's going on.
+
+```{r}
+sort(names(eng_18_merge))
+```
+ 
+That's not especially helpful either.
+ 
+Let's just clean up and export.
+ 
+```{r}
+contains_instructions <- stringr::str_detect(names(eng_18_merge), 'instructions')
+contains_permission <- stringr::str_detect(names(eng_18_merge), 'permission')
+
+drop_cols <- contains_instructions |
+  contains_permission
+drop_col_index <- (1:length(names(eng_18_merge)))[drop_cols]
+
+eng_18_merge <- eng_18_merge %>%
+  dplyr::select(., -all_of(drop_col_index))
+
+readr::write_csv(eng_18_merge, file.path(params$project_root_dir, params$csv_output_dir, 'mbcdi_18_english.csv'))
+```
+
+## 24 mo English
+
+Old form.
+
+```{r}
+eng_24_363381 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '363381_mbcdi_24_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+
+eng_24_363381_names <- basename(names(eng_24_363381))
+length(eng_24_363381_names)
+length(unique(eng_24_363381_names))
+
+names(eng_24_363381) <- basename(names(eng_24_363381))
+```
+
+There are four duplicate labels.
+
+```{r}
+# This also has duplicates...
+
+# rain
+eng_24_363381[,57] = eng_24_363381[,57] | eng_24_363381[,168]
+
+# wet
+eng_24_363381[,93] = eng_24_363381[,93] | eng_24_363381[,315]
+
+# candy
+eng_24_363381[,29] = eng_24_363381[,29] | eng_24_363381[,221]
+
+# leg
+eng_24_363381[,43] = eng_24_363381[,43] | eng_24_363381[,255]
+
+# Delete duplicate names
+
+eng_24_363381 <- dplyr::select(eng_24_363381, -c(168, 221, 255, 315))
+
+length(names(eng_24_363381))
+length(unique(eng_24_363381))
+```
+
+Active form.
+
+```{r}
+eng_24_740629 <-
+  readr::read_csv(
+    file.path(
+      params$project_root_dir,
+      params$csv_input_dir,
+      '740629_mbcdi_24_english.csv'
+    ),
+    show_col_types = FALSE
+  )
+
+eng_24_740629_names <- names(eng_24_740629)
+length(eng_24_740629_names)
+length(unique(eng_24_740629_names))
+names(eng_24_740629) <- basename(names(eng_24_740629))
+
+# This also has two entries for 'rain' and two for 'wet'
+# rain
+eng_24_740629[,57] = eng_24_740629[,57] | eng_24_740629[,170]
+
+# wet
+eng_24_740629[,93] = eng_24_740629[,93] | eng_24_740629[,320]
+
+eng_24_740629 <- dplyr::select(eng_24_740629, -c(170, 320))
+```
+
+Join the old and active.
+
+```{r}
+eng_24_merge <- dplyr::full_join(eng_24_363381, eng_24_740629)
+#names(eng_24_merge) <- basename(names(eng_24_merge))
+dim(eng_24_merge)
+```
+
+```{r}
+contains_instructions <- stringr::str_detect(names(eng_24_merge), 'instructions')
+contains_permission <- stringr::str_detect(names(eng_24_merge), 'permission')
+
+drop_cols <- contains_instructions |
+  contains_permission
+drop_col_index <- (1:length(names(eng_24_merge)))[drop_cols]
+
+eng_24_merge <- eng_24_merge %>%
+  dplyr::select(., -all_of(drop_col_index))
+
+readr::write_csv(eng_24_merge, file.path(params$project_root_dir, params$csv_output_dir, 'mbcdi_24_english.csv'))
+```
