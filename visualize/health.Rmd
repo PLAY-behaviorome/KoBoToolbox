@@ -1,0 +1,170 @@
+---
+output: html_document
+---
+
+```{r}
+feeding <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                health.feeding_nutrition.breastfeed,
+                health.feeding_nutrition.solidfood_age) %>%
+  dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
+                solid_food_mos = health.feeding_nutrition.solidfood_age)
+```
+
+## Breastfeeding
+
+```{r}
+xtabs(formula = ~ child_sex + breastfeed, data = feeding) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Solid foods introduced
+
+```{r}
+feeding %>%
+  ggplot(.) +
+  aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 5)
+```
+
+## Smoking/drinking
+
+```{r}
+smoking_drinking <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                health.smoking.pregnant_smoking,
+                health.drinking.pregnant_drinking) %>%
+  dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
+                preg_drinking = health.drinking.pregnant_drinking)
+
+```
+
+```{r}
+xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Sleeping position
+
+```{r}
+sleeping_pos <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                health.general_health.child_sleeping_position ) %>%
+  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position)
+
+sleeping_pos$child_sleeping_position <- dplyr::recode(sleeping_pos$child_sleeping_position, nospecialway = "no_special_way")
+```
+
+```{r}
+xtabs(formula = ~ child_sleeping_position, data = sleeping_pos) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Child health rating
+
+```{r}
+child_health <- play_merge %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    qa_group,
+    health.general_health.child_health
+  ) %>%
+  dplyr::rename(., child_health_rating = health.general_health.child_health) %>%
+  dplyr::mutate(.,
+                child_health_rating = factor(
+                  child_health_rating,
+                  levels = c('good', 'verygood', 'excellent'),
+                  ordered = TRUE
+                ))
+
+plot(likert::likert(as.data.frame(child_health$child_health_rating)))
+```
+
+## See medical specialist
+
+```{r}
+med_specialist <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                health.general_health.child_medical_specialist,
+                health.general_health.comments_child_medical_special) %>%
+  dplyr::rename(., see_med_specialist = health.general_health.child_medical_specialist,
+                med_specialist_reason = health.general_health.comments_child_medical_special)
+```
+
+```{r}
+xtabs(formula = ~ age_group + see_med_specialist, data = med_specialist) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Recently vaccinated
+
+```{r}
+vaccination <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                health.general_health.child_vaccination ) %>%  
+  dplyr::rename(., child_vaccinated_last_4wks = health.general_health.child_vaccination )
+```
+
+```{r}
+xtabs(formula = ~ age_group + child_vaccinated_last_4wks, data = vaccination) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Vision screen
+
+```{r}
+play_vis_aud <- play_merge %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    qa_group,
+    health.general_health.child_vision_tested,
+    health.general_health.child_hearing_tested
+  ) %>%
+  dplyr::rename(., vision_tested = health.general_health.child_vision_tested,
+                hearing_tested = health.general_health.child_hearing_tested)
+
+play_vis_aud$vision_tested <-
+  dplyr::recode(
+    play_vis_aud$vision_tested,
+    afterhome = "after_home",
+    birthhospital = "birth_hospital",
+    `birthhospital afterhome` = "both_hospital_home",
+    `birthhospital donotknow` = "birth_hospital",
+    donotknow = "do_not_know"
+  )
+
+play_vis_aud$hearing_tested <-
+  dplyr::recode(
+    play_vis_aud$hearing_tested,
+    afterhome = "after_home",
+    birthhospital = "birth_hospital",
+    `birthhospital afterhome` = "both_hospital_home",
+    `birthhospital donotknow` = "birth_hospital",
+    donotknow = "do_not_know")
+```
+
+```{r}
+xtabs(formula = ~ age_group + vision_tested, data = play_vis_aud) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Hearing screen
+
+```{r}
+xtabs(formula = ~ age_group + hearing_tested, data = play_vis_aud) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+

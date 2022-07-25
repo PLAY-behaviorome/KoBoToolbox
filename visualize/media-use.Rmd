@@ -1,0 +1,70 @@
+---
+output: html_document
+---
+
+```{r}
+media_use_cols <- stringr::str_detect(names(play_merge), 'mediause')
+media_use_col_index <- (1:length(names(play_merge)))[media_use_cols]
+
+media_use <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                all_of(media_use_col_index)) %>%
+  dplyr::rename(., have_tv =  mediause.home_technology.tv,
+                have_dvd = mediause.home_technology.dvd,
+                have_computer = mediause.home_technology.computer,
+                have_tablet = mediause.home_technology.ipad,
+                have_videogame = mediause.home_technology.videogame,
+                have_educationalgame = mediause.home_technology.educationalgame,
+                child_use_tv = mediause.technology_child_tv,
+                child_use_tv_how = mediause.tv_how,
+                child_use_dvd = mediause.technology_child_dvd,
+                child_use_dvd_how = mediause.dvd_how,
+                child_use_computer = mediause.technology_child_computer,
+                child_use_computer_how = mediause.computer_how,
+                child_use_tablet = mediause.technology_child_ipad,
+                child_use_tablet_how = mediause.ipad_how,
+                child_use_edugame = mediause.technology_child_educational,
+                child_use_edugame_how = mediause.educational_how,
+                child_use_videogame = mediause.technology_child_videogame,
+                child_use_videogame_how = mediause.videogame_how)
+```
+
+## Have TV
+
+```{r child-use-tv}
+xtabs(formula = ~ age_group + child_use_tv, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use TV") %>%
+  kableExtra::kable_material(.)
+```
+
+## Have Tablet
+
+```{r child-use-tablet}
+xtabs(formula = ~ age_group + child_use_tablet, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use tablet") %>%
+  kableExtra::kable_material(.)
+```
+
+## Have Computer
+
+```{r child-use-computer}
+xtabs(formula = ~ age_group + child_use_computer, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use computer") %>%
+  kableExtra::kable_material(.)
+```
+
+## Have Educational games
+
+```{r child-use-edugame}
+xtabs(formula = ~ age_group + child_use_edugame, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use educational games") %>%
+  kableExtra::kable_material(.)
+```
+
+## Have Videogames
+
+```{r child-use-videogames}
+xtabs(formula = ~ age_group + child_use_videogame, data = media_use) %>%
+  knitr::kable(., format = 'html', caption = "Child use videogames") %>%
+  kableExtra::kable_material(.)
+```

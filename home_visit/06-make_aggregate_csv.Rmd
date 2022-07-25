@@ -1,0 +1,122 @@
+---
+title: "Make aggregate CSVs"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  project_root_dir: '..'
+  csv_input_dir: 'data/csv/release_1.0/identifiers_removed'
+  csv_save_dir: 'data/csv/release_1.0/aggregate'
+  no_db_fn: 'PLAY_non_mbcdi_all.csv'
+  last_col: 265
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document imports non-MB-CDI questions, from which identifiers have been removed, given age group, and language group, aggregates them across age group, language group, and form, and saves the aggregated file to a new `../aggregate` directory. 
+
+By default, the document presumes that we want to convert **all** of the CSV files that meet the `params$form_years`, `params$age_grps`, and `params$lang_grps` constraints found in `params$csv_input_dir` to pairs of properly named CSVs and save them in `params$csv_save_dir`.
+
+The document automatically retrieves matching information from Databrary if `params$merge_db_info` is `TRUE`, the default. This merged file is also seved to the `../aggregate` directory with the filename contained in `params$with_db_fn`.
+
+To render, run `rmarkdown::render("06-make_aggregate_csv.Rmd", params=list(databrary_login = "<youremail@yourdomain.com>"))`, substituting your actual Databrary log ID (email) for `<youremail@yourdomain.com>`.
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R` and `R/kobo_databrary_integration.R`.
+
+```{r source_helpers}
+source(file.path(params$project_root_dir, "R/kobo_export.R"))
+source(file.path(params$project_root_dir, "R/kobo_databrary_integration.R"))
+```
+
+# File processing
+
+## Import and merge
+
+```{r import-and-merge}
+# NOTE the colClasses = 'character' forces read.csv() to read all data fields as strings. This solves some
+# problems with importing the data and the automated assumptions made about specific data types.
+
+read_PLAY_csv <- function(fn, last_col = params$last_col) {
+  df <- read.csv(fn, colClasses = 'character')
+  df <- df[, 1:last_col]
+  df
+}
+
+fl <-
+  list.files(
+    file.path(params$project_root_dir, params$csv_input_dir),
+    '^[0-9]{6}_non_mbcdi_[12|18|24]',
+    full.names = TRUE
+  )
+
+if (length(fl) <= 0) warning("No files found in ", file.path(params$project_root_dir, params$csv_input_dir))
+```
+
+```{r}
+PLAY_non_mbcdi_all <- purrr::map_df(fl, read_PLAY_csv)
+```
+
+## Remove duplicates
+
+```{r}
+PLAY_non_mbcdi_all <- PLAY_non_mbcdi_all %>%
+  dplyr::distinct(.)
+```
+
+## Export aggregate
+
+```{r export-aggregate}
+aggregate_fn <- file.path(params$project_root_dir, params$csv_save_dir, params$no_db_fn)
+readr::write_csv(PLAY_non_mbcdi_all, aggregate_fn)
+```
+
+## Remove redundant variable name text headers file-wide
+
+Using `xfun::gsub_file()` we can trim some of the redundancies across the variable names. 
+
+```{r file-wide-cleaning}
+xfun::gsub_file(aggregate_fn,
+                  'group_combinedquestionnaires.',
+                  '')
+xfun::gsub_file(aggregate_fn,
+                  'group_homevisitquestionnaires.',
+                  '')
+xfun::gsub_file(aggregate_fn,
+                'group_',
+                '')
+
+# Handle change in site_id for CSU Long Beach
+xfun::gsub_file(aggregate_fn,
+                'CSLON',
+                'CSULB')
+```
+
+# Pre-Databrary merge summary
+
+```{r read-play}
+play <- read.csv(aggregate_fn, colClasses = 'character')
+```
+
+```{r}
+xtabs(formula = ~ age_group + child_sex, data = play)
+```
+
+# Clean-up
+
+## Log-out of Databrary
+
+```{r}
+databraryapi::logout_db()
+```

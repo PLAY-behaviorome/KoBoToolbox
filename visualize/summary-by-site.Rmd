@@ -1,0 +1,16 @@
+---
+output: html_document
+---
+
+## Enrollment by site
+
+```{r enrollment-by-site}
+play_w_sites <- readr::read_csv(file.path(params$project_root_dir, "data/csv/release_1.0/aggregate/PLAY_non_mbcdi_all_databrary.csv"), show_col_types = FALSE)
+
+play_w_sites <- play_w_sites %>%
+  dplyr::rename(., qa_group = group_name)
+  
+xtabs(formula = ~ site_id + qa_group, data = play_w_sites) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```

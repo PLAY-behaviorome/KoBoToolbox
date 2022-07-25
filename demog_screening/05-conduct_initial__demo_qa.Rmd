@@ -1,0 +1,48 @@
+---
+title: "Conduct initial QA"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  csv_input_dir: 'data/csv/release_1.0/identifiers_removed'
+  path_to_root_dir: '..'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document imports the screening/demographic data files and does some initial quality assurance checks.
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source(file.path(params$path_to_root_dir, "R", "kobo_export.R"))
+
+library(tidyverse)
+```
+
+# Open file(s) and process
+
+```{r define-helper}
+demog_eng_pre_2020 <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_eng_pre_2020.csv'), show_col_types = FALSE)
+
+demog_eng_post_2020 <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_eng_post_2020.csv'), show_col_types = FALSE)
+
+demog_span <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_span.csv'), show_col_types = FALSE)
+```
+
+
+# Examine anomalies and repair
+
+**TODO(ROG)**

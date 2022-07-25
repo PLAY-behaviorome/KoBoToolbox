@@ -1,0 +1,99 @@
+---
+title: "Save raw demographic CSVs"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  xlsx_download_dir: 'data/xlsx/release_1.0'
+  demog_eng_pre_2020: '275882_PLAY_Demographic_Questionnaire.xlsx'
+  demog_eng_post_2020: '359546_PLAY_Demographic_Questionnaire.xlsx'
+  demog_span: '334134_PLAY_Demographic_Questionnaire_Spanish.xlsx'
+  csv_save_dir: 'data/csv/release_1.0/raw'
+  path_to_root_dir: '..'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+This document converts the downloaded 'raw' XLSX files from KoBoToolbox and converts them to CSVs for further processing.
+
+By default, the document presumes that we want to convert **all** of the XLSX files that meet the `params$form_years`, `params$age_grps`, and `params$lang_grps` constraints found in `params$xlsx_download_dir` to CSVs and save them in `params$csv_save_dir`.
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source(file.path(params$path_to_root_dir, "R", "kobo_export.R"))
+```
+
+# Open file(s) and process
+
+```{r eval=FALSE}
+demog_fns <- list.files(file.path(params$path_to_root_dir, params$xlsx_download_dir), pattern = "Demographic_Questionnaire", full.names = TRUE)
+
+form_ids <- stringr::str_extract(demog_fns, "[0-9]{6}")
+```
+
+```{r import-xlsx}
+demog_eng_pre_2020 <-
+  readxl::read_excel(
+    file.path(
+      params$path_to_root_dir,
+      params$xlsx_download_dir,
+      params$demog_eng_pre_2020
+    )
+  )
+demog_eng_post_2020 <-
+  readxl::read_excel(
+    file.path(
+      params$path_to_root_dir,
+      params$xlsx_download_dir,
+      params$demog_eng_post_2020
+    )
+  )
+demog_span <-
+  readxl::read_excel(file.path(
+    params$path_to_root_dir,
+    params$xlsx_download_dir,
+    params$demog_span
+  ))
+```
+
+# Save CSVs
+
+```{r}
+readr::write_csv(
+  demog_eng_pre_2020,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '275882_raw_demog_eng_pre_2020.csv'
+  )
+)
+readr::write_csv(
+  demog_eng_post_2020,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '359546_raw_demog_eng_post_2020.csv'
+  )
+)
+readr::write_csv(
+  demog_span,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '334134_raw_demog_span.csv'
+  )
+)
+```

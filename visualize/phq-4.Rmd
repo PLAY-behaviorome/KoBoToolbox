@@ -1,0 +1,87 @@
+---
+output: html_document
+---
+
+```{r}
+# The Patient Health Questionnaire (PHQ-4) data must be changed into an ordered factor.
+
+phq4_levels <- c('notatall', 'severaldays', 'morethanhalf', 'nearly')
+phq4_labels <- c('not_at_all', 'several_days', 'more_than_half', 'nearly_every_day')
+
+phq4 <- play_merge %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    health.phq4.phq4_nervous,
+    health.phq4.phq4_worrying,
+    health.phq4.phq4_littleinterest,
+    health.phq4.phq4_down
+  ) %>%
+  dplyr::rename(
+    .,
+    nervous = health.phq4.phq4_nervous,
+    worrying = health.phq4.phq4_worrying,
+    little_interest = health.phq4.phq4_littleinterest,
+    down = health.phq4.phq4_down
+  ) %>%
+  dplyr::mutate(
+    .,
+    nervous = factor(
+      nervous,
+      levels = phq4_levels,
+      labels = phq4_labels,
+      ordered = TRUE
+    ),
+    worrying = factor(
+      worrying,
+      levels = phq4_levels,
+      labels = phq4_labels,
+      ordered = TRUE
+    ),
+    little_interest = factor(
+      little_interest,
+      levels = phq4_levels,
+      labels = phq4_labels,
+      ordered = TRUE
+    ),
+    down = factor(
+      down,
+      levels = phq4_levels,
+      labels = phq4_labels,
+      ordered = TRUE
+    )
+  )
+```
+
+## Question...
+
+> "*Over the last two weeks, how often have you been bothered by the following problems...*"
+
+## "*...Feeling nervous, anxious, or on edge?*"
+
+```{r}
+l_nervous <- likert::likert(as.data.frame(phq4$nervous))
+plot(l_nervous)
+```
+
+## "*...Not being able to stop or control worrying?*"
+
+```{r}
+l_worrying <- likert::likert(as.data.frame(phq4$worrying))
+plot(l_worrying)
+```
+
+## "*...Little interest or pleasure in doing things?*"
+
+```{r}
+l_little_interest <- likert::likert(as.data.frame(phq4$little_interest))
+plot(l_little_interest)
+```
+
+## "*...Feeling down, depressed, or hopeless?*"
+
+```{r}
+l_down <- likert::likert(as.data.frame(phq4$down))
+plot(l_down)
+```

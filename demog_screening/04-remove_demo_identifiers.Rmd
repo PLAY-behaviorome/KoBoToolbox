@@ -1,0 +1,98 @@
+---
+title: "Remove demographic identifiers"
+subtitle: "Version `r Sys.time()`"
+author: Rick Gilmore
+output: 
+  html_document:
+    code_folding: show
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+params:
+  csv_input_dir: 'data/csv/release_1.0/raw'
+  csv_save_dir: 'data/csv/release_1.0/identifiers_removed'
+  path_to_root_dir: '..'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse) # for pipe %>%
+```
+
+# Purpose
+
+This document import the demographic questionnaires.
+
+# Setup
+
+We source the helper functions in `R/kobo_export.R`.
+
+```{r source_helpers}
+source(file.path(params$path_to_root_dir, "R", "kobo_export.R"))
+```
+
+# Open file(s) and process
+
+## Get demog file names
+
+```{r}
+demog_fns <-
+  list.files(file.path(params$path_to_root_dir, params$csv_input_dir),
+             'demog',
+             full.names = TRUE)
+```
+
+Remove "play_demo_questionnaire" to make de-identification with existing function a bit easier.
+
+```{r}
+xfun::gsub_file(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_eng_pre_2020.csv"), 'play_phone_questionnaire/', '')
+xfun::gsub_file(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_eng_post_2020.csv"), 'play_phone_questionnaire/', '')
+xfun::gsub_file(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_span.csv"), 'play_phone_questionnaire/', '')
+```
+
+Manually import files.
+
+```{r}
+pre_2020_df <- readr::read_csv(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_eng_pre_2020.csv"), show_col_types = FALSE)
+post_2020_df <- readr::read_csv(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_eng_post_2020.csv"), show_col_types = FALSE)
+span_df <- readr::read_csv(file.path(params$path_to_root_dir, "data/csv/release_1.0/raw/demog_span.csv"), show_col_types = FALSE)
+```
+
+## Manually clean
+
+```{r}
+pre_2020_df_deid <- remove_identifiers(pre_2020_df)
+post_2020_df_deid <- remove_identifiers(post_2020_df)
+span_df_deid <- remove_identifiers(span_df)
+```
+
+## Manually export
+
+```{r}
+readr::write_csv(
+  pre_2020_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '275882_demog_eng_pre_2020.csv'
+  )
+)
+readr::write_csv(
+  post_2020_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '359546_demog_eng_post_2020.csv'
+  )
+)
+readr::write_csv(
+  span_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '334134_demog_span.csv'
+  )
+)
+```
+

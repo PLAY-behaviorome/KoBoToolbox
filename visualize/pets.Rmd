@@ -1,0 +1,34 @@
+---
+output: html_document
+---
+
+```{r}
+pets <- play_merge %>%
+  dplyr::select(., age_group, child_sex, language_child, qa_group, 
+                pets.pets_at_home,
+                pets.pets_types_number,
+                pets.pets_indoors_outdoors,
+                pets.comments_pets) %>%
+  dplyr::rename(., pets_at_home = pets.pets_at_home,
+                pets_where_live = pets.pets_indoors_outdoors) %>%
+  dplyr::mutate(., have_dog = stringr::str_detect(pets.pets_types_number, '[dD]og'),
+                have_cat = stringr::str_detect(pets.pets_types_number, '[cC]at'),
+                have_bird = stringr::str_detect(pets.pets_types_number, '[bB]ird'),
+                have_fish = stringr::str_detect(pets.pets_types_number, '[fF]ish'))
+```
+
+## Pets at home/where live
+
+```{r}
+xtabs(formula = ~ pets_at_home + pets_where_live, data = pets) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material(.)
+```
+
+## Types of pets
+
+```{r}
+pets %>%
+  dplyr::filter(., pets_at_home == "yes") %>%
+  dplyr::select(., pets_at_home, have_dog, have_cat, have_bird, have_fish)
+```
