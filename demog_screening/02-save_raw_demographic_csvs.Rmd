@@ -10,11 +10,12 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  xlsx_download_dir: 'xlsx/release_1.0'
+  xlsx_download_dir: 'data/xlsx/release_1.0'
   demog_eng_pre_2020: '275882_PLAY_Demographic_Questionnaire.xlsx'
   demog_eng_post_2020: '359546_PLAY_Demographic_Questionnaire.xlsx'
   demog_span: '334134_PLAY_Demographic_Questionnaire_Spanish.xlsx'
-  csv_save_dir: 'csv/release_1.0/raw'
+  csv_save_dir: 'data/csv/release_1.0/raw'
+  path_to_root_dir: '..'
 ---
 
 ```{r setup, include=FALSE}
@@ -32,25 +33,67 @@ By default, the document presumes that we want to convert **all** of the XLSX fi
 We source the helper functions in `R/kobo_export.R`.
 
 ```{r source_helpers}
-source("R/kobo_export.R")
+source(file.path(params$path_to_root_dir, "R", "kobo_export.R"))
 ```
 
 # Open file(s) and process
 
 ```{r eval=FALSE}
-demog_fns <- list.files(params$xlsx_download_dir, pattern = "Demographic_Questionnaire", full.names = TRUE)
+demog_fns <- list.files(file.path(params$path_to_root_dir, params$xlsx_download_dir), pattern = "Demographic_Questionnaire", full.names = TRUE)
+
+form_ids <- stringr::str_extract(demog_fns, "[0-9]{6}")
 ```
 
 ```{r import-xlsx}
-demog_eng_pre_2020 <- readxl::read_excel(file.path(params$xlsx_download_dir, params$demog_eng_pre_2020))
-demog_eng_post_2020 <- readxl::read_excel(file.path(params$xlsx_download_dir, params$demog_eng_post_2020))
-demog_span <- readxl::read_excel(file.path(params$xlsx_download_dir, params$demog_span))
+demog_eng_pre_2020 <-
+  readxl::read_excel(
+    file.path(
+      params$path_to_root_dir,
+      params$xlsx_download_dir,
+      params$demog_eng_pre_2020
+    )
+  )
+demog_eng_post_2020 <-
+  readxl::read_excel(
+    file.path(
+      params$path_to_root_dir,
+      params$xlsx_download_dir,
+      params$demog_eng_post_2020
+    )
+  )
+demog_span <-
+  readxl::read_excel(file.path(
+    params$path_to_root_dir,
+    params$xlsx_download_dir,
+    params$demog_span
+  ))
 ```
 
 # Save CSVs
 
 ```{r}
-readr::write_csv(demog_eng_pre_2020, file.path(params$csv_save_dir, 'demog_eng_pre_2020.csv'))
-readr::write_csv(demog_eng_post_2020, file.path(params$csv_save_dir, 'demog_eng_post_2020.csv'))
-readr::write_csv(demog_span, file.path(params$csv_save_dir, 'demog_span.csv'))
+readr::write_csv(
+  demog_eng_pre_2020,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '275882_raw_demog_eng_pre_2020.csv'
+  )
+)
+readr::write_csv(
+  demog_eng_post_2020,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '359546_raw_demog_eng_post_2020.csv'
+  )
+)
+readr::write_csv(
+  demog_span,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    '334134_raw_demog_span.csv'
+  )
+)
 ```

@@ -1596,7 +1596,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Clean merged aggregate for sharing</h1>
-<h3 class="subtitle">Version 2022-07-11 13:17:41</h3>
+<h3 class="subtitle">Version 2022-07-25 08:57:16</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1686,6 +1686,11 @@ play_clean_2 &lt;- play_clean_1 %&gt;%
                 qa_group = group_name,
                 setting = context_setting,
                 country = context_country)</code></pre>
+</div>
+<div id="remove-duplicates" class="section level2">
+<h2>Remove duplicates</h2>
+<pre class="r"><code>play_clean_2 &lt;- play_clean_2 %&gt;%
+  dplyr::distinct(.)</code></pre>
 </div>
 <div id="export" class="section level2">
 <h2>Export</h2>

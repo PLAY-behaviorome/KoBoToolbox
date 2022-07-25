@@ -505,7 +505,7 @@ extract_non_mbcdi <-
       (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
     
     # Select non-mcdi cols
-    mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+    mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
     non_mcdi_qs <- !(mcdi_qs)
     non_mcdi_cols <- (1:length(names(df)))[non_mcdi_qs]
     

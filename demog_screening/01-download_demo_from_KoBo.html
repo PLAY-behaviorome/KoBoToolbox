@@ -12,7 +12,7 @@
 <meta name="author" content="Rick Gilmore" />
 
 
-<title>Make aggregate CSVs</title>
+<title>KoBoToolbox Demographics Data Download</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1595,8 +1595,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Make aggregate CSVs</h1>
-<h3 class="subtitle">Version 2022-07-25 08:56:32</h3>
+<h1 class="title toc-ignore">KoBoToolbox Demographics Data Download</h1>
+<h3 class="subtitle">Version 2022-07-13 14:08:27</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1604,103 +1604,89 @@ div.tocify {
 
 <div id="purpose" class="section level1">
 <h1>Purpose</h1>
-<p>This document imports non-MB-CDI questions, from which identifiers
-have been removed, given age group, and language group, aggregates them
-across age group, language group, and form, and saves the aggregated
-file to a new <code>../aggregate</code> directory.</p>
-<p>By default, the document presumes that we want to convert
-<strong>all</strong> of the CSV files that meet the
-<code>params$form_years</code>, <code>params$age_grps</code>, and
-<code>params$lang_grps</code> constraints found in
-<code>params$csv_input_dir</code> to pairs of properly named CSVs and
-save them in <code>params$csv_save_dir</code>.</p>
-<p>The document automatically retrieves matching information from
-Databrary if <code>params$merge_db_info</code> is <code>TRUE</code>, the
-default. This merged file is also seved to the <code>../aggregate</code>
-directory with the filename contained in
-<code>params$with_db_fn</code>.</p>
-<p>To render, run
-<code>rmarkdown::render(&quot;06-make_aggregate_csv.Rmd&quot;, params=list(databrary_login = &quot;&lt;youremail@yourdomain.com&gt;&quot;))</code>,
-substituting your actual Databrary log ID (email) for
-<code>&lt;youremail@yourdomain.com&gt;</code>.</p>
+<p>This document exports demographics/recruiting survey data from
+KoBoToolbox and saves it in “data/xlsx/release_1.0”.</p>
 </div>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
-<p>We source the helper functions in <code>R/kobo_export.R</code> and
-<code>R/kobo_databrary_integration.R</code>.</p>
-<pre class="r"><code>source(file.path(params$project_root_dir, &quot;R/kobo_export.R&quot;))
-source(file.path(params$project_root_dir, &quot;R/kobo_databrary_integration.R&quot;))</code></pre>
+<p>The PLAY Project uses KoBoToolbox to collect data from parents and
+researchers using a tablet application.</p>
+<div id="authentication" class="section level2">
+<h2>Authentication</h2>
+<p>The data are stored in an account on <a href="https://kf.kobotoolbox.org" class="uri">https://kf.kobotoolbox.org</a>. The login credentials for
+that account are shared among the PLAY Project staff. To access the
+site’s API programmatically, an API key was downloaded and added to the
+local <code>~/.Renviron</code> file. To test whether the local system
+has the API key installed, run the following command
+<code>Sys.getenv(&quot;KOBO_API_KEY&quot;)</code>. With the API key installed,
+several custom functions in <code>R/kobo_export.R</code> can be run.</p>
+<div id="check-kobo-api-key" class="section level3">
+<h3>Check KoBo API Key</h3>
+<pre class="r"><code>kb_api &lt;- Sys.getenv(&quot;KOBO_API_KEY&quot;)
+if ((length(kb_api) != 1) || (!is.character(kb_api))) {
+  stop(&quot;`KOBO_API_KEY` not installed in .Renviron&quot;)
+} else {
+  message(&quot;`KOBO_API_KEY` installed.&quot;)
+}</code></pre>
+<pre><code>## `KOBO_API_KEY` installed.</code></pre>
 </div>
-<div id="file-processing" class="section level1">
-<h1>File processing</h1>
-<div id="import-and-merge" class="section level2">
-<h2>Import and merge</h2>
-<pre class="r"><code># NOTE the colClasses = &#39;character&#39; forces read.csv() to read all data fields as strings. This solves some
-# problems with importing the data and the automated assumptions made about specific data types.
-
-read_PLAY_csv &lt;- function(fn, last_col = params$last_col) {
-  df &lt;- read.csv(fn, colClasses = &#39;character&#39;)
-  df &lt;- df[, 1:last_col]
-  df
+</div>
+<div id="loadsource-helper-functions" class="section level2">
+<h2>Load/source helper functions</h2>
+<pre class="r"><code>source(file.path(params$path_to_root_dir, &quot;R&quot;, &quot;kobo_export.R&quot;))</code></pre>
+</div>
+<div id="install-dependencies" class="section level2">
+<h2>Install dependencies</h2>
+<p>The helper functions require several external packages. To confirm
+that these are installed, run the following chunk.</p>
+<pre class="r"><code>install_kobo_packages()</code></pre>
+<pre><code>## Loading required package: koboloadeR</code></pre>
+<pre><code>## Loading required package: getPass</code></pre>
+<pre><code>## Loading required package: httr</code></pre>
+<pre><code>## Loading required package: jsonlite</code></pre>
+<pre><code>## 
+## Attaching package: &#39;jsonlite&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     flatten</code></pre>
+<pre><code>## Loading required package: knitr</code></pre>
+<pre><code>## Loading required package: magrittr</code></pre>
+<pre><code>## 
+## Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     set_names</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     extract</code></pre>
+<pre><code>## Loading required package: readxl</code></pre>
+</div>
+</div>
+<div id="download-data" class="section level1">
+<h1>Download data</h1>
+<pre class="r"><code>kb_df &lt;- list_kobo_data()
+if ((dim(kb_df) &lt; 1) || (!is.data.frame(kb_df))) {
+  stop(&quot;Error in selecting surveys from KoBoToolbox.&quot;)
 }
 
-fl &lt;-
-  list.files(
-    file.path(params$project_root_dir, params$csv_input_dir),
-    &#39;^[0-9]{6}_non_mbcdi_[12|18|24]&#39;,
-    full.names = TRUE
-  )
+# Restrict to surveys collected at home
+kb_demog &lt;- kb_df %&gt;%
+  dplyr::filter(., stringr::str_detect(title, &quot;Demographic&quot;))
 
-if (length(fl) &lt;= 0) warning(&quot;No files found in &quot;, file.path(params$project_root_dir, params$csv_input_dir))</code></pre>
-<pre class="r"><code>PLAY_non_mbcdi_all &lt;- purrr::map_df(fl, read_PLAY_csv)</code></pre>
-</div>
-<div id="remove-duplicates" class="section level2">
-<h2>Remove duplicates</h2>
-<pre class="r"><code>PLAY_non_mbcdi_all &lt;- PLAY_non_mbcdi_all %&gt;%
-  dplyr::distinct(.)</code></pre>
-</div>
-<div id="export-aggregate" class="section level2">
-<h2>Export aggregate</h2>
-<pre class="r"><code>aggregate_fn &lt;- file.path(params$project_root_dir, params$csv_save_dir, params$no_db_fn)
-readr::write_csv(PLAY_non_mbcdi_all, aggregate_fn)</code></pre>
-</div>
-<div id="remove-redundant-variable-name-text-headers-file-wide" class="section level2">
-<h2>Remove redundant variable name text headers file-wide</h2>
-<p>Using <code>xfun::gsub_file()</code> we can trim some of the
-redundancies across the variable names.</p>
-<pre class="r"><code>xfun::gsub_file(aggregate_fn,
-                  &#39;group_combinedquestionnaires.&#39;,
-                  &#39;&#39;)
-xfun::gsub_file(aggregate_fn,
-                  &#39;group_homevisitquestionnaires.&#39;,
-                  &#39;&#39;)
-xfun::gsub_file(aggregate_fn,
-                &#39;group_&#39;,
-                &#39;&#39;)
-
-# Handle change in site_id for CSU Long Beach
-xfun::gsub_file(aggregate_fn,
-                &#39;CSLON&#39;,
-                &#39;CSULB&#39;)</code></pre>
-</div>
-</div>
-<div id="pre-databrary-merge-summary" class="section level1">
-<h1>Pre-Databrary merge summary</h1>
-<pre class="r"><code>play &lt;- read.csv(aggregate_fn, colClasses = &#39;character&#39;)</code></pre>
-<pre class="r"><code>xtabs(formula = ~ age_group + child_sex, data = play)</code></pre>
-<pre><code>##          child_sex
-## age_group female male
-##      12mo     22   15
-##      18mo     34   30
-##      24mo     12   24</code></pre>
-</div>
-<div id="clean-up" class="section level1">
-<h1>Clean-up</h1>
-<div id="log-out-of-databrary" class="section level2">
-<h2>Log-out of Databrary</h2>
-<pre class="r"><code>databraryapi::logout_db()</code></pre>
-<pre><code>## Logout Successful.</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+if ((dim(kb_demog) &lt; 1) || (!is.data.frame(kb_demog))) {
+  stop(&quot;Error in selecting demographics surveys from KoBoToolbox.&quot;)
+}</code></pre>
+<div id="download-demog-data" class="section level2">
+<h2>Download demog data</h2>
+<pre class="r"><code>retrieve_save_xls_export(1, kb_demog, file.path(params$path_to_root_dir, params$xlsx_download_dir))</code></pre>
+<pre><code>## Saved `../data/xlsx/release_1.0/334134_PLAY_Demographic_Questionnaire_Spanish.xlsx`</code></pre>
+<pre><code>## [1] &quot;../data/xlsx/release_1.0/334134_PLAY_Demographic_Questionnaire_Spanish.xlsx&quot;</code></pre>
+<pre class="r"><code>retrieve_save_xls_export(2, kb_demog, file.path(params$path_to_root_dir, params$xlsx_download_dir))</code></pre>
+<pre><code>## Saved `../data/xlsx/release_1.0/359546_PLAY_Demographic_Questionnaire.xlsx`</code></pre>
+<pre><code>## [1] &quot;../data/xlsx/release_1.0/359546_PLAY_Demographic_Questionnaire.xlsx&quot;</code></pre>
+<pre class="r"><code>retrieve_save_xls_export(3, kb_demog, file.path(params$path_to_root_dir, params$xlsx_download_dir))</code></pre>
+<pre><code>## Saved `../data/xlsx/release_1.0/275882_PLAY_Demographic_Questionnaire.xlsx`</code></pre>
+<pre><code>## [1] &quot;../data/xlsx/release_1.0/275882_PLAY_Demographic_Questionnaire.xlsx&quot;</code></pre>
 </div>
 </div>
 

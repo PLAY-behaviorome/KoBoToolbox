@@ -70,9 +70,16 @@ if (params$use_databrary) {
   play_merge <-
     readr::read_csv(file.path(params$project_root_dir, "data/csv/release_1.0/aggregate/PLAY_release_1.0_non_MBCDI_data.csv"))
 }
+
+play_orig <- play_merge
+
+play_merge <- play_merge %>%
+  dplyr::distinct(.)
 ```
 
-There are $n=$ `r dim(play_merge)[1]` sessions in the data file.
+## Unique vs. duplicated sessions
+
+There are $n=$ `r dim(play_merge)[1]` unique sessions in the data file. There were $n=$ `r dim(play_orig)[1]-dim(play_merge)[1]` duplicate sessions.
 
 ## Select QA'd sessions
 

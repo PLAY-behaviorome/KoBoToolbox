@@ -10,7 +10,8 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  csv_input_dir: 'csv/release_1.0/identifiers_removed'
+  csv_input_dir: 'data/csv/release_1.0/identifiers_removed'
+  path_to_root_dir: '..'
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +27,7 @@ This document imports the screening/demographic data files and does some initial
 We source the helper functions in `R/kobo_export.R`.
 
 ```{r source_helpers}
-source("R/kobo_export.R")
+source(file.path(params$path_to_root_dir, "R", "kobo_export.R"))
 
 library(tidyverse)
 ```
@@ -34,110 +35,14 @@ library(tidyverse)
 # Open file(s) and process
 
 ```{r define-helper}
-demog_eng_pre_2020 <- readr::read_csv(file.path(params$csv_input_dir, 'demog_eng_pre_2020.csv'), show_col_types = FALSE)
+demog_eng_pre_2020 <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_eng_pre_2020.csv'), show_col_types = FALSE)
 
-demog_eng_post_2020 <- readr::read_csv(file.path(params$csv_input_dir, 'demog_eng_post_2020.csv'), show_col_types = FALSE)
+demog_eng_post_2020 <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_eng_post_2020.csv'), show_col_types = FALSE)
 
-demog_span <- readr::read_csv(file.path(params$csv_input_dir, 'demog_span.csv'), show_col_types = FALSE)
+demog_span <- readr::read_csv(file.path(params$path_to_root_dir, params$csv_input_dir, 'demog_span.csv'), show_col_types = FALSE)
 ```
 
 
 # Examine anomalies and repair
 
-## Additional columns in 12mo English forms
-
-1. The 2020 and 2021 non_mbcdi_12_english.csvs have an additional column.
-
-```{r}
-eng_12_2020 <- readr::read_csv('csv/release_1.0/identifiers_removed/2020_non_mbcdi_12_english.csv', show_col_types = FALSE)
-eng_12_2020_names <- names(eng_12_2020)
-
-eng_12_2021 <- readr::read_csv('csv/release_1.0/identifiers_removed/2021_non_mbcdi_12_english.csv', show_col_types = FALSE)
-eng_12_2021_names <- names(eng_12_2021)
-
-sum(eng_12_2020_names == eng_12_2021_names)
-```
-
-The 12 mo english forms have the same names.
-
-```{r}
-eng_18_2020 <- readr::read_csv('csv/release_1.0/identifiers_removed/2020_non_mbcdi_18_english.csv', show_col_types = FALSE)
-eng_18_2020_names <- names(eng_18_2020)
-
-eng_18_2021 <- readr::read_csv('csv/release_1.0/identifiers_removed/2021_non_mbcdi_18_english.csv', show_col_types = FALSE)
-eng_18_2021_names <- names(eng_18_2021)
-
-sum(eng_18_2020_names == eng_18_2021_names)
-```
-
-The 18 mo English forms have the same names.
-
-```{r}
-sum(eng_12_2020_names == eng_18_2020_names)
-```
-
-Most of the 12 and 18 mo old forms have the same names, but there is a mismatch somewhere.
-
-```{r}
-cbind(tail(basename(eng_12_2020_names), 40), tail(basename(eng_18_2020_names), 40))
-```
-
-It looks like the 12 mo forms contain a column named '_version_' that is not in the 18 mo forms. I wonder if deleting that column will fix the problem.
-
-```{r}
-trim_this_one <- (1:length(eng_12_2020_names))[eng_12_2020_names == '_version_']
-eng_12_names_trim <- eng_12_2020_names[-trim_this_one]
-cbind(tail(basename(eng_12_names_trim), 40), tail(basename(eng_18_2020_names), 40))
-sum(eng_12_names_trim == eng_18_2020_names)
-```
-
-That seems to do the trick!
-
-We confirm that the same is true for the 2021 form before fixing.
-
-```{r}
-eng_12_names_trim_2021 <- eng_12_2021_names[-trim_this_one]
-cbind(tail(basename(eng_12_names_trim_2021), 40), tail(basename(eng_18_2020_names), 40))
-sum(eng_12_names_trim_2021 == eng_18_2020_names)
-```
-
-### Trim and re-export
-
-```{r}
-eng_12_2020_trim <- eng_12_2020[-trim_this_one]
-eng_12_2021_trim <- eng_12_2021[-trim_this_one]
-
-readr::write_csv(eng_12_2020_trim, file.path(params$csv_input_dir, '2020_non_mbcdi_12_english.csv'))
-readr::write_csv(eng_12_2021_trim, file.path(params$csv_input_dir, '2021_non_mbcdi_12_english.csv'))
-```
-
-Regenerate report...
-
-```{r}
-fl <- list.files(params$csv_input_dir, "\\.csv$", full.names = TRUE)
-PLAY_forms <- purrr::map_df(fl, summarize_non_mbcdi_qs)
-
-PLAY_forms %>%
-  knitr::kable(., format = 'html') %>%
-  kableExtra::kable_classic()
-```
-
-```{r}
-eng_12_2020 <- readr::read_csv('csv/release_1.0/identifiers_removed/2020_non_mbcdi_12_english.csv', show_col_types = FALSE)
-eng_12_2020_names <- names(eng_12_2020)
-
-eng_12_2021 <- readr::read_csv('csv/release_1.0/identifiers_removed/2021_non_mbcdi_12_english.csv', show_col_types = FALSE)
-eng_12_2021_names <- names(eng_12_2021)
-
-eng_18_2020 <- readr::read_csv('csv/release_1.0/identifiers_removed/2020_non_mbcdi_18_english.csv', show_col_types = FALSE)
-eng_18_2020_names <- names(eng_18_2020)
-
-eng_18_2021 <- readr::read_csv('csv/release_1.0/identifiers_removed/2021_non_mbcdi_18_english.csv', show_col_types = FALSE)
-eng_18_2021_names <- names(eng_18_2021)
-
-sum(eng_12_2021_names == eng_12_2021_names)
-sum(eng_18_2020_names == eng_18_2021_names)
-sum(eng_12_2020_names == eng_18_2020_names)
-```
-
-**TODO(ROG)**: Make a function to check names more thoroughly and completely.
+**TODO(ROG)**

@@ -114,6 +114,13 @@ play_clean_2 <- play_clean_1 %>%
                 country = context_country)
 ```
 
+## Remove duplicates
+
+```{r}
+play_clean_2 <- play_clean_2 %>%
+  dplyr::distinct(.)
+```
+
 ## Export
 
 ```{r}

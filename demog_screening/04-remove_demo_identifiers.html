@@ -12,7 +12,7 @@
 <meta name="author" content="Rick Gilmore" />
 
 
-<title>Make aggregate CSVs</title>
+<title>Remove demographic identifiers</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1595,8 +1595,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Make aggregate CSVs</h1>
-<h3 class="subtitle">Version 2022-07-25 08:56:32</h3>
+<h1 class="title toc-ignore">Remove demographic identifiers</h1>
+<h3 class="subtitle">Version 2022-07-13 14:08:33</h3>
 <h4 class="author">Rick Gilmore</h4>
 
 </div>
@@ -1604,103 +1604,63 @@ div.tocify {
 
 <div id="purpose" class="section level1">
 <h1>Purpose</h1>
-<p>This document imports non-MB-CDI questions, from which identifiers
-have been removed, given age group, and language group, aggregates them
-across age group, language group, and form, and saves the aggregated
-file to a new <code>../aggregate</code> directory.</p>
-<p>By default, the document presumes that we want to convert
-<strong>all</strong> of the CSV files that meet the
-<code>params$form_years</code>, <code>params$age_grps</code>, and
-<code>params$lang_grps</code> constraints found in
-<code>params$csv_input_dir</code> to pairs of properly named CSVs and
-save them in <code>params$csv_save_dir</code>.</p>
-<p>The document automatically retrieves matching information from
-Databrary if <code>params$merge_db_info</code> is <code>TRUE</code>, the
-default. This merged file is also seved to the <code>../aggregate</code>
-directory with the filename contained in
-<code>params$with_db_fn</code>.</p>
-<p>To render, run
-<code>rmarkdown::render(&quot;06-make_aggregate_csv.Rmd&quot;, params=list(databrary_login = &quot;&lt;youremail@yourdomain.com&gt;&quot;))</code>,
-substituting your actual Databrary log ID (email) for
-<code>&lt;youremail@yourdomain.com&gt;</code>.</p>
+<p>This document import the demographic questionnaires.</p>
 </div>
 <div id="setup" class="section level1">
 <h1>Setup</h1>
-<p>We source the helper functions in <code>R/kobo_export.R</code> and
-<code>R/kobo_databrary_integration.R</code>.</p>
-<pre class="r"><code>source(file.path(params$project_root_dir, &quot;R/kobo_export.R&quot;))
-source(file.path(params$project_root_dir, &quot;R/kobo_databrary_integration.R&quot;))</code></pre>
+<p>We source the helper functions in <code>R/kobo_export.R</code>.</p>
+<pre class="r"><code>source(file.path(params$path_to_root_dir, &quot;R&quot;, &quot;kobo_export.R&quot;))</code></pre>
 </div>
-<div id="file-processing" class="section level1">
-<h1>File processing</h1>
-<div id="import-and-merge" class="section level2">
-<h2>Import and merge</h2>
-<pre class="r"><code># NOTE the colClasses = &#39;character&#39; forces read.csv() to read all data fields as strings. This solves some
-# problems with importing the data and the automated assumptions made about specific data types.
-
-read_PLAY_csv &lt;- function(fn, last_col = params$last_col) {
-  df &lt;- read.csv(fn, colClasses = &#39;character&#39;)
-  df &lt;- df[, 1:last_col]
-  df
-}
-
-fl &lt;-
-  list.files(
-    file.path(params$project_root_dir, params$csv_input_dir),
-    &#39;^[0-9]{6}_non_mbcdi_[12|18|24]&#39;,
-    full.names = TRUE
+<div id="open-files-and-process" class="section level1">
+<h1>Open file(s) and process</h1>
+<div id="get-demog-file-names" class="section level2">
+<h2>Get demog file names</h2>
+<pre class="r"><code>demog_fns &lt;-
+  list.files(file.path(params$path_to_root_dir, params$csv_input_dir),
+             &#39;demog&#39;,
+             full.names = TRUE)</code></pre>
+<p>Remove “play_demo_questionnaire” to make de-identification with
+existing function a bit easier.</p>
+<pre class="r"><code>xfun::gsub_file(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_eng_pre_2020.csv&quot;), &#39;play_phone_questionnaire/&#39;, &#39;&#39;)
+xfun::gsub_file(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_eng_post_2020.csv&quot;), &#39;play_phone_questionnaire/&#39;, &#39;&#39;)
+xfun::gsub_file(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_span.csv&quot;), &#39;play_phone_questionnaire/&#39;, &#39;&#39;)</code></pre>
+<p>Manually import files.</p>
+<pre class="r"><code>pre_2020_df &lt;- readr::read_csv(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_eng_pre_2020.csv&quot;), show_col_types = FALSE)
+post_2020_df &lt;- readr::read_csv(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_eng_post_2020.csv&quot;), show_col_types = FALSE)
+span_df &lt;- readr::read_csv(file.path(params$path_to_root_dir, &quot;data/csv/release_1.0/raw/demog_span.csv&quot;), show_col_types = FALSE)</code></pre>
+</div>
+<div id="manually-clean" class="section level2">
+<h2>Manually clean</h2>
+<pre class="r"><code>pre_2020_df_deid &lt;- remove_identifiers(pre_2020_df)
+post_2020_df_deid &lt;- remove_identifiers(post_2020_df)
+span_df_deid &lt;- remove_identifiers(span_df)</code></pre>
+</div>
+<div id="manually-export" class="section level2">
+<h2>Manually export</h2>
+<pre class="r"><code>readr::write_csv(
+  pre_2020_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    &#39;275882_demog_eng_pre_2020.csv&#39;
   )
-
-if (length(fl) &lt;= 0) warning(&quot;No files found in &quot;, file.path(params$project_root_dir, params$csv_input_dir))</code></pre>
-<pre class="r"><code>PLAY_non_mbcdi_all &lt;- purrr::map_df(fl, read_PLAY_csv)</code></pre>
-</div>
-<div id="remove-duplicates" class="section level2">
-<h2>Remove duplicates</h2>
-<pre class="r"><code>PLAY_non_mbcdi_all &lt;- PLAY_non_mbcdi_all %&gt;%
-  dplyr::distinct(.)</code></pre>
-</div>
-<div id="export-aggregate" class="section level2">
-<h2>Export aggregate</h2>
-<pre class="r"><code>aggregate_fn &lt;- file.path(params$project_root_dir, params$csv_save_dir, params$no_db_fn)
-readr::write_csv(PLAY_non_mbcdi_all, aggregate_fn)</code></pre>
-</div>
-<div id="remove-redundant-variable-name-text-headers-file-wide" class="section level2">
-<h2>Remove redundant variable name text headers file-wide</h2>
-<p>Using <code>xfun::gsub_file()</code> we can trim some of the
-redundancies across the variable names.</p>
-<pre class="r"><code>xfun::gsub_file(aggregate_fn,
-                  &#39;group_combinedquestionnaires.&#39;,
-                  &#39;&#39;)
-xfun::gsub_file(aggregate_fn,
-                  &#39;group_homevisitquestionnaires.&#39;,
-                  &#39;&#39;)
-xfun::gsub_file(aggregate_fn,
-                &#39;group_&#39;,
-                &#39;&#39;)
-
-# Handle change in site_id for CSU Long Beach
-xfun::gsub_file(aggregate_fn,
-                &#39;CSLON&#39;,
-                &#39;CSULB&#39;)</code></pre>
-</div>
-</div>
-<div id="pre-databrary-merge-summary" class="section level1">
-<h1>Pre-Databrary merge summary</h1>
-<pre class="r"><code>play &lt;- read.csv(aggregate_fn, colClasses = &#39;character&#39;)</code></pre>
-<pre class="r"><code>xtabs(formula = ~ age_group + child_sex, data = play)</code></pre>
-<pre><code>##          child_sex
-## age_group female male
-##      12mo     22   15
-##      18mo     34   30
-##      24mo     12   24</code></pre>
-</div>
-<div id="clean-up" class="section level1">
-<h1>Clean-up</h1>
-<div id="log-out-of-databrary" class="section level2">
-<h2>Log-out of Databrary</h2>
-<pre class="r"><code>databraryapi::logout_db()</code></pre>
-<pre><code>## Logout Successful.</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+)
+readr::write_csv(
+  post_2020_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    &#39;359546_demog_eng_post_2020.csv&#39;
+  )
+)
+readr::write_csv(
+  span_df_deid,
+  file.path(
+    params$path_to_root_dir,
+    params$csv_save_dir,
+    &#39;334134_demog_span.csv&#39;
+  )
+)</code></pre>
 </div>
 </div>
 

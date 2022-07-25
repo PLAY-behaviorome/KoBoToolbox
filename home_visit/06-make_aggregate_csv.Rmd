@@ -68,14 +68,21 @@ if (length(fl) <= 0) warning("No files found in ", file.path(params$project_root
 PLAY_non_mbcdi_all <- purrr::map_df(fl, read_PLAY_csv)
 ```
 
-### Export aggregate
+## Remove duplicates
+
+```{r}
+PLAY_non_mbcdi_all <- PLAY_non_mbcdi_all %>%
+  dplyr::distinct(.)
+```
+
+## Export aggregate
 
 ```{r export-aggregate}
 aggregate_fn <- file.path(params$project_root_dir, params$csv_save_dir, params$no_db_fn)
 readr::write_csv(PLAY_non_mbcdi_all, aggregate_fn)
 ```
 
-## Remove redundant variable name text headers
+## Remove redundant variable name text headers file-wide
 
 Using `xfun::gsub_file()` we can trim some of the redundancies across the variable names. 
 
@@ -104,12 +111,6 @@ play <- read.csv(aggregate_fn, colClasses = 'character')
 
 ```{r}
 xtabs(formula = ~ age_group + child_sex, data = play)
-```
-
-## Check for duplicates
-
-```{r}
-length(unique(play$participant_id)) == length(play$participant_id)
 ```
 
 # Clean-up
