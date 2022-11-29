@@ -480,7 +480,7 @@ extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
   play_id_col <-
     (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
   
-  mcdi_qs <- stringr::str_detect(names(df), 'mcdi')
+  mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
   mcdi_cols <- (1:length(names(df)))[mcdi_qs]
   
   mcdi <- df %>%
