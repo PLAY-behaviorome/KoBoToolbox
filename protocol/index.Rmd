@@ -1,0 +1,44 @@
+---
+title: "PLAY Project: Survey protocol"
+author: "Rick Gilmore"
+date: "`r Sys.Date()`"
+bibliography: ['include/bib/book.bib', 'include/bib/packages.bib']
+css: include/css/styles.css
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# About {-}
+
+## Purpose {-}
+
+PLAY project researchers use [KoBoToolbox](https://www.kobotoolbox.org/) to collect data from participant families.
+Data from all sessions at all PLAY data collection sites are pushed to a common set of files on the KoBoToolbox server.
+
+This document describes the process of i) downloading, ii) parsing, iii) cleaning, and iv) exporting these files into forms more suitable for data analysis.
+
+## Overview of data sets {-}
+
+There are two sets of data collected using KoBoToolbox.
+One set is collected during the recruiting and screening calls for the study.
+The second set is collected during the home visit.
+
+### Data access and processing {-}
+
+All data are downloaded and manipulated locally but are **not** synched to GitHub.
+This is accomplished by adding `data` to [`protocol/.gitignore`](.gitignore).
+
+There are separate processes for detecting and deleting personal identifiers from specific data files and exporting 'cleaned' versions that may be shared on Databrary.
+
+### Home visit data {-}
+
+There are three (3) age groups (12-, 18-, and 24-month-olds) and four (4) different language environment groups (English-only, Spanish-only, Bilingual-English-dominant, Bilingual-Spanish-dominant).
+Since the language of the questions and some of the specific questions vary by age group and by language environment group, there are $3*4=12$ different KoBoToolbox survey form files that must be processed.

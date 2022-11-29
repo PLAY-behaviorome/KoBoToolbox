@@ -1,0 +1,144 @@
+# Screening call {-}
+
+## Collection protocol {-}
+
+Details about the data collection [protocol for participant screening and recruiting](https://www.play-project.org/collection.html#Participant_Recruitment) can be found on the [PLAY Project website](https://play-project.org).
+
+## Retrieve files from KoBoToolbox {-}
+
+The relevant KoBoToolbox data files have 'Demographic Questionnaire' in the title.
+
+```{r list-kobo-forms}
+kb_df <- list_kobo_data()
+if ((dim(kb_df)[1] < 1) || (!is.data.frame(kb_df))) {
+  stop("Error in selecting surveys from KoBoToolbox.")
+}
+
+# Restrict to surveys collected at home
+kb_demog <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "Demographic"))
+
+if ((dim(kb_demog)[1] < 1) || (!is.data.frame(kb_demog))) {
+  stop("Error in selecting demographics surveys from KoBoToolbox.")
+}
+```
+
+### Save selected raw files to local directory {-}
+
+Prepare to retrieve all demographic data files.
+
+```{r}
+if (!dir.exists('data/xlsx/screening')) {
+  stop("Directory not found: 'data/xlsx/screening'")
+}
+n_files <- dim(kb_demog)[1]
+```
+
+```{r download-demog}
+purrr::map(1:n_files, retrieve_save_xls_export, kb_df = kb_demog, save_dir = "data/xlsx/screening")
+```
+
+## Convert to CSVs {-}
+
+By default, we presume that we want to convert **all** of the XLSX files in `data/xlxs/screening` to CSVs.
+
+### Open file(s) and process {-}
+
+While not strictly necessary, we filter the downloaded filename to ensure that it includes 'Demographic_Questionnaire'.
+The leading 6-digit integer is a unique 'form' identifier, so we extract it.
+
+```{r}
+demog_fns <- list.files(file.path("data/xlsx/screening"), pattern = "Demographic_Questionnaire", full.names = TRUE)
+
+demog_fns_trimmed <- basename(stringr::str_replace(demog_fns, pattern = "\\.xlsx", replacement = "\\.csv"))
+
+form_ids <- stringr::str_extract(demog_fns_trimmed, pattern = "[0-9]{6}")
+```
+
+Create a helper function to handle import, renaming, and exporting.
+
+```{r}
+load_xlsx_save_csv <- function(i, fl) {
+  xl <- readxl::read_xlsx(fl[i])
+  fn_csv <- stringr::str_replace(fl[i], pattern = "\\.xlsx", replacement = "\\.csv")
+  fn_csv <- stringr::str_replace(fn_csv, pattern = "/xlsx/", "/csv/")
+  if (dir.exists(dirname(fn_csv))) {
+    readr::write_csv(xl, fn_csv)    
+  } else {
+    warning("Directory not found: '", dirname(fn_csv), "'")
+  }
+}
+```
+
+Import xlsx and save csv version.
+
+```{r}
+purrr::map(1:length(demog_fns), load_xlsx_save_csv, demog_fns)
+```
+
+
+## Merge files {-}
+
+### Compare the files {-}
+
+Before merging, we have to examine how the fields compare.
+
+```{r}
+csv_fns <- list.files("data/csv/screening", pattern = "\\.csv", full.names = TRUE)
+```
+
+Open the first file: '`r basename(csv_fns[1])`'.
+
+```{r}
+demog_1 <- readr::read_csv(csv_fns[1], show_col_types = FALSE)
+```
+
+There are $n=$ `r dim(demog_1)[1]` data records and $n=$ `r dim(demog_1)[2]` fields.
+
+Open the second file: '`r basename(csv_fns[2])`'.
+
+```{r}
+demog_2 <- readr::read_csv(csv_fns[2], show_col_types = FALSE)
+```
+
+There are $n=$ `r dim(demog_2)[1]` data records and $n=$ `r dim(demog_2)[2]` fields.
+
+Open the third file: '`r basename(csv_fns[3])`'.
+
+```{r}
+demog_3 <- readr::read_csv(csv_fns[3], show_col_types = FALSE)
+```
+
+There are $n=$ `r dim(demog_3)[1]` data records and $n=$ `r dim(demog_3)[2]` fields.
+
+::: {.rmdnote}
+These files have different numbers of columns, so we will need to be careful in creating a merged data file.
+:::
+
+### Extract column names {-}
+
+```{r}
+demog_1_names <- names(demog_1)
+demog_2_names <- names(demog_2)
+demog_3_names <- names(demog_3)
+```
+
+Compare 1 to 2.
+
+```{r}
+sum(demog_1_names == demog_2_names)
+```
+
+Compare 1 to 3.
+
+```{r}
+sum(demog_1_names == demog_3_names)
+```
+
+Compare 2 to 3.
+
+```{r}
+sum(demog_2_names == demog_3_names)
+```
+
+The second and third data files have the most overlap.
