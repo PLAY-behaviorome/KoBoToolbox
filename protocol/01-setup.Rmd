@@ -46,5 +46,10 @@ if (file.exists("R/kobo_export.R")) {
 The helper functions require several external packages. To confirm that these are installed, run the following chunk.
 
 ```{r install-dependencies}
-install_kobo_packages()
+if (params$install_deps) {
+  install_kobo_packages()  
+} else {
+  message("params$install_deps is FALSE, so no dependencies are installed.")
+}
+
 ```

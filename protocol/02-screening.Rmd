@@ -76,7 +76,6 @@ Import xlsx and save csv version.
 purrr::map(1:length(demog_fns), load_xlsx_save_csv, demog_fns)
 ```
 
-
 ## Merge files {-}
 
 ### Compare the files {-}
@@ -112,7 +111,7 @@ demog_3 <- readr::read_csv(csv_fns[3], show_col_types = FALSE)
 There are $n=$ `r dim(demog_3)[1]` data records and $n=$ `r dim(demog_3)[2]` fields.
 
 ::: {.rmdnote}
-These files have different numbers of columns, so we will need to be careful in creating a merged data file.
+These files have different numbers of columns, so we need to be careful in creating a merged data file.
 :::
 
 ### Extract column names {-}
@@ -142,3 +141,103 @@ sum(demog_2_names == demog_3_names)
 ```
 
 The second and third data files have the most overlap.
+
+### Extract core variables {-}
+
+Since only some of these data come from enrolled participants, we have to be careful about what variables we extract for project management purposes.
+
+#### Focus on `demog_1` {-}
+
+If we want to look at the history of submissions to KoBoToolbox by site, we need only extract the following variables: `c_today` and the site_id with the long name of `r names(demog_1)[25]` 
+
+```{r}
+demog_1_submissions <- demog_1 %>%
+  dplyr::select(., submit_date = c_today, site_id = `play_phone_questionnaire/group_siteinfo/site_id`)
+```
+
+Examine unique values in `site_id` since the naming convention for this variable has changed over the project lifetime.
+
+```{r}
+unique(demog_1_submissions$site_id)
+```
+
+Clean the names that have clear alternative names.
+
+```{r}
+demog_1_submissions <- demog_1_submissions %>%
+  dplyr::mutate(site_id = dplyr::recode(site_id,
+                new_york_unive = "NYU",
+                georgetown_uni = "GTN")) %>%
+  dplyr::filter(., !stringr::str_detect(site_id, '_of__')) %>%
+  dplyr::arrange(., submit_date)
+```
+
+#### Examine `demog_2` and `demog_3` {-}
+
+`demog_2` has only one row.
+
+```{r}
+demog_2_submissions <- demog_2 %>%
+  dplyr::select(., submit_date = c_today, site_id = `play_demo_questionnaire/group_siteinfo/site_id`)
+```  
+
+On to `demog_3`.
+
+```{r}
+demog_3_submissions <- demog_3 %>%
+  dplyr::select(., submit_date = c_today, site_id = `play_demo_questionnaire/group_siteinfo/site_id`)
+```  
+ 
+Examine unique values in `site_id`.
+
+```{r}
+unique(demog_3_submissions$site_id)
+```
+
+These use the 5 character site IDs. So NYU is 'NYUNI'; GTN is 'GEORG'; and UCR is 'UCRIV'.
+
+Change `demog_1_submissions` to conform with this new standard so that we can merge the data sets.
+
+```{r}
+demog_1_submissions <- demog_1_submissions %>%
+  dplyr::mutate(site_id = dplyr::recode(site_id,
+                NYU = "NYUNI",
+                GTN = "GEORG",
+                UCR = "UCRIV"))
+```
+
+### Merge the files {-}
+
+```{r}
+demog_submissions <- rbind(demog_1_submissions, demog_2_submissions, demog_3_submissions)
+```
+
+Add cumulative `n_calls` variable.
+
+```{r}
+demog_submissions <- demog_submissions %>%
+  dplyr::arrange(., submit_date) %>%
+  dplyr::mutate(., n_calls = seq_along(submit_date))
+```
+
+## Plots {-}
+
+Plot the time series of recruiting/screening calls.
+
+```{r, fig.cap="Time series of recruiting/screening calls."}
+demog_submissions %>%
+  ggplot(.) +
+  aes(submit_date, n_calls, color = site_id) +
+  geom_point()
+```
+
+Plot the number of calls made by site.
+
+```{r, fig.cap="Recruiting calls by site"}
+demog_submissions %>%
+  ggplot(.) +
+  aes(site_id, fill = site_id) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text
+```
+
