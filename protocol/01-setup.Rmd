@@ -23,9 +23,9 @@ To test whether the local system has the API key installed, run the command `Sys
 ```{r check-api-key}
 kb_api <- Sys.getenv("KOBO_API_KEY")
 if ((length(kb_api) != 1) || (!is.character(kb_api))) {
-  stop("`KOBO_API_KEY` not installed in .Renviron")
+  stop("'KOBO_API_KEY' not installed in .Renviron")
 } else {
-  message("`KOBO_API_KEY` installed.")
+  message("'KOBO_API_KEY' installed.")
 }
 ```
 
@@ -49,7 +49,7 @@ The helper functions require several external packages. To confirm that these ar
 if (params$install_deps) {
   install_kobo_packages()  
 } else {
-  message("params$install_deps is FALSE, so no dependencies are installed.")
+  message("'params$install_deps' is FALSE, so no dependencies are installed.")
 }
 
 ```

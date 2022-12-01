@@ -308,8 +308,8 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <span>                UCR <span class="op">=</span> <span class="st">"UCRIV"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="merge-the-files" class="section level3 unnumbered">
-<h3>Merge the files<a class="anchor" aria-label="anchor" href="#merge-the-files"><i class="fas fa-link"></i></a>
+<div id="merge-files-1" class="section level3 unnumbered">
+<h3>Merge files<a class="anchor" aria-label="anchor" href="#merge-files-1"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">demog_1_submissions</span>, <span class="va">demog_2_submissions</span>, <span class="va">demog_3_submissions</span><span class="op">)</span></span></code></pre></div>
@@ -323,7 +323,7 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <div id="plots" class="section level2 unnumbered">
 <h2>Plots<a class="anchor" aria-label="anchor" href="#plots"><i class="fas fa-link"></i></a>
 </h2>
-<p>Plot the time series of recruiting calls.</p>
+<p>Plot the time series of recruiting/screening calls.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -341,7 +341,7 @@ Figure 1: Time series of recruiting/screening calls.
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">aes</span><span class="op">(</span><span class="va">site_id</span>, fill <span class="op">=</span> <span class="va">site_id</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># Rotate text</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-23"></span>
 <img src="_main_files/figure-html/unnamed-chunk-23-1.png" alt="Recruiting calls by site" width="672"><p class="caption">
@@ -370,7 +370,7 @@ Figure 2: Recruiting calls by site
 <li><a class="nav-link" href="#compare-the-files">Compare the files</a></li>
 <li><a class="nav-link" href="#extract-column-names">Extract column names</a></li>
 <li><a class="nav-link" href="#extract-core-variables">Extract core variables</a></li>
-<li><a class="nav-link" href="#merge-the-files">Merge the files</a></li>
+<li><a class="nav-link" href="#merge-files-1">Merge files</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#plots">Plots</a></li>
@@ -391,7 +391,7 @@ Figure 2: Recruiting calls by site
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Survey protocol</strong>" was written by Rick Gilmore. It was last built on 2022-11-30.</p>
+    <p>"<strong>PLAY Project: Survey protocol</strong>" was written by Rick Gilmore. It was last built on 2022-12-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

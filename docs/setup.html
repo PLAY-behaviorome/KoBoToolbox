@@ -81,11 +81,11 @@ To access the site’s API programmatically, an API key was downloaded and added
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kb_api</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"KOBO_API_KEY"</span><span class="op">)</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">kb_api</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">||</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">kb_api</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"`KOBO_API_KEY` not installed in .Renviron"</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"'KOBO_API_KEY' not installed in .Renviron"</span><span class="op">)</span></span>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"`KOBO_API_KEY` installed."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"'KOBO_API_KEY' installed."</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<pre><code>## `KOBO_API_KEY` installed.</code></pre>
+<pre><code>## 'KOBO_API_KEY' installed.</code></pre>
 </div>
 <div id="loadsource-helper-functions" class="section level3 unnumbered">
 <h3>Load/source helper functions<a class="anchor" aria-label="anchor" href="#loadsource-helper-functions"><i class="fas fa-link"></i></a>
@@ -106,9 +106,9 @@ To access the site’s API programmatically, an API key was downloaded and added
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">install_deps</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">install_kobo_packages</span><span class="op">(</span><span class="op">)</span>  </span>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"params$install_deps is FALSE, so no dependencies are installed."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"'params$install_deps' is FALSE, so no dependencies are installed."</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<pre><code>## params$install_deps is FALSE, so no dependencies are installed.</code></pre>
+<pre><code>## 'params$install_deps' is FALSE, so no dependencies are installed.</code></pre>
 
 </div>
 </div>
@@ -145,7 +145,7 @@ To access the site’s API programmatically, an API key was downloaded and added
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Survey protocol</strong>" was written by Rick Gilmore. It was last built on 2022-11-30.</p>
+    <p>"<strong>PLAY Project: Survey protocol</strong>" was written by Rick Gilmore. It was last built on 2022-12-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
