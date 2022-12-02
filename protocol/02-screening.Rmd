@@ -34,8 +34,12 @@ if (!dir.exists('data/xlsx/screening')) {
 n_files <- dim(kb_demog)[1]
 ```
 
-```{r download-demog}
-purrr::map(1:n_files, retrieve_save_xls_export, kb_df = kb_demog, save_dir = "data/xlsx/screening")
+```{r download-demog, results = FALSE}
+if (params$screening_download) {
+purrr::map(1:n_files, retrieve_save_xls_export, kb_df = kb_demog, save_dir = "data/xlsx/screening")  
+} else {
+  message("'params$screening_download' is FALSE. KBT files not downloaded.")
+}
 ```
 
 ## Convert to CSVs {-}
@@ -72,7 +76,7 @@ load_xlsx_save_csv <- function(i, fl) {
 
 Import xlsx and save csv version.
 
-```{r}
+```{r import-demog-xlsx-save-csv, results = FALSE, message = FALSE}
 purrr::map(1:length(demog_fns), load_xlsx_save_csv, demog_fns)
 ```
 

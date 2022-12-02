@@ -4,13 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Screening call | PLAY Project: Survey protocol</title>
+<title>Screening call | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
 <meta name="generator" content="bookdown 0.29 with bs4_book()">
-<meta property="og:title" content="Screening call | PLAY Project: Survey protocol">
+<meta property="og:title" content="Screening call | PLAY Project: Surveys">
 <meta property="og:type" content="book">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Screening call | PLAY Project: Survey protocol">
+<meta name="twitter:title" content="Screening call | PLAY Project: Surveys">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">PLAY Project: Survey protocol</a>
+        <a href="index.html" title="">PLAY Project: Surveys</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -91,18 +91,14 @@
 <span><span class="op">}</span></span>
 <span><span class="va">n_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">kb_demog</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n_files</span>, <span class="va">retrieve_save_xls_export</span>, kb_df <span class="op">=</span> <span class="va">kb_demog</span>, save_dir <span class="op">=</span> <span class="st">"data/xlsx/screening"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">screening_download</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n_files</span>, <span class="va">retrieve_save_xls_export</span>, kb_df <span class="op">=</span> <span class="va">kb_demog</span>, save_dir <span class="op">=</span> <span class="st">"data/xlsx/screening"</span><span class="op">)</span>  </span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"'params$screening_download' is FALSE. KBT files not downloaded."</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <pre><code>## Saved `data/xlsx/screening/334134_PLAY_Demographic_Questionnaire_Spanish.xlsx`</code></pre>
 <pre><code>## Saved `data/xlsx/screening/359546_PLAY_Demographic_Questionnaire.xlsx`</code></pre>
 <pre><code>## Saved `data/xlsx/screening/275882_PLAY_Demographic_Questionnaire.xlsx`</code></pre>
-<pre><code>## [[1]]
-## [1] "data/xlsx/screening/334134_PLAY_Demographic_Questionnaire_Spanish.xlsx"
-## 
-## [[2]]
-## [1] "data/xlsx/screening/359546_PLAY_Demographic_Questionnaire.xlsx"
-## 
-## [[3]]
-## [1] "data/xlsx/screening/275882_PLAY_Demographic_Questionnaire.xlsx"</code></pre>
 </div>
 </div>
 <div id="convert-to-csvs" class="section level2 unnumbered">
@@ -114,14 +110,14 @@
 </h3>
 <p>While not strictly necessary, we filter the downloaded filename to ensure that it includes ‘Demographic_Questionnaire’.
 The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"data/xlsx/screening"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"Demographic_Questionnaire"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">demog_fns_trimmed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">demog_fns</span>, pattern <span class="op">=</span> <span class="st">"\\.xlsx"</span>, replacement <span class="op">=</span> <span class="st">"\\.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">form_ids</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">demog_fns_trimmed</span>, pattern <span class="op">=</span> <span class="st">"[0-9]{6}"</span><span class="op">)</span></span></code></pre></div>
 <p>Create a helper function to handle import, renaming, and exporting.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">load_xlsx_save_csv</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">fl</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">xl</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx</a></span><span class="op">(</span><span class="va">fl</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="va">fn_csv</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">fl</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, pattern <span class="op">=</span> <span class="st">"\\.xlsx"</span>, replacement <span class="op">=</span> <span class="st">"\\.csv"</span><span class="op">)</span></span>
@@ -133,74 +129,8 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Import xlsx and save csv version.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">demog_fns</span><span class="op">)</span>, <span class="va">load_xlsx_save_csv</span>, <span class="va">demog_fns</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [[1]]
-## # A tibble: 20 × 168
-##    start        end   c_today play_…¹ play_…² play_…³ play_…⁴ play_…⁵ play_…⁶
-##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;  
-##  1 2019-10-08T… 2020… 2020-0… NA      NA      (917) … michel… NA      271 Le…
-##  2 2019-04-25T… 2019… &lt;NA&gt;    NA      NA      &lt;NA&gt;    &lt;NA&gt;    NA      &lt;NA&gt;   
-##  3 2019-06-05T… 2019… 2019-0… NA      NA      &lt;NA&gt;    &lt;NA&gt;    NA      &lt;NA&gt;   
-##  4 2019-06-10T… 2019… 2019-0… NA      NA      &lt;NA&gt;    &lt;NA&gt;    NA      &lt;NA&gt;   
-##  5 2019-06-29T… 2019… 2019-0… NA      NA      &lt;NA&gt;    &lt;NA&gt;    NA      &lt;NA&gt;   
-##  6 2019-09-05T… 2019… 2019-0… NA      NA      201-20… mavi75… NA      &lt;NA&gt;   
-##  7 2019-09-11T… 2019… 2019-0… NA      NA      Pilot   Pilot   NA      &lt;NA&gt;   
-##  8 2019-09-13T… 2019… 2019-0… NA      NA      808255… raethe… NA      &lt;NA&gt;   
-##  9 2019-09-16T… 2019… 2019-0… NA      NA      (929) … lisafa… NA      &lt;NA&gt;   
-## 10 2019-10-03T… 2019… 2019-1… NA      NA      202321… donyal… NA      &lt;NA&gt;   
-## 11 2019-10-03T… 2019… 2019-1… NA      NA      917-69… jessic… NA      &lt;NA&gt;   
-## 12 2019-10-04T… 2019… 2019-1… NA      NA      NA      NA      NA      &lt;NA&gt;   
-## 13 2019-10-10T… 2019… 2019-1… NA      NA      917-36… ceped6… NA      &lt;NA&gt;   
-## 14 2019-10-16T… 2020… 2020-0… NA      NA      (646) … akss.s… NA      6829 B…
-## 15 2019-11-05T… 2019… 2019-1… NA      NA      (703) … briane… NA      18459 …
-## 16 2019-11-08T… 2020… 2020-0… NA      NA      202966… alison… NA      3135 T…
-## 17 2019-11-12T… 2019… 2019-1… NA      NA      (415) … miraco… NA      469 Wa…
-## 18 2019-11-26T… 2019… 2019-1… NA      NA      202394… kateco… NA      4400 E…
-## 19 2019-12-02T… 2019… 2019-1… NA      NA      717521… saraha… NA      3900 t…
-## 20 2019-12-10T… 2019… 2019-1… NA      NA      (202) … julie.… NA      4740 C…
-## # … with 159 more variables:
-## #   `play_phone_questionnaire/group_contact_info/group_address/parent_address_2` &lt;chr&gt;,
-## #   `play_phone_questionnaire/group_contact_info/group_address/city` &lt;chr&gt;,
-## #   `play_phone_questionnaire/group_contact_info/group_address/state` &lt;chr&gt;,
-## #   `play_phone_questionnaire/group_contact_info/acknowledge_contact_info` &lt;chr&gt;,
-## #   `play_phone_questionnaire/instructions_guid` &lt;lgl&gt;,
-## #   `play_phone_questionnaire/child_first_name` &lt;chr&gt;, …
-## 
-## [[2]]
-## # A tibble: 1 × 236
-##   start end   c_today play_…¹ play_…² play_…³ play_…⁴ play_…⁵ play_…⁶ play_…⁷
-##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;  
-## 1 2022… 2022… 2022-1… NA      NA      UTAUS   001     Tamara… NA      512 77…
-## # … with 226 more variables:
-## #   `play_demo_questionnaire/group_contact_info/parent_email` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/note_parent_address` &lt;lgl&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/parent_address_1` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/parent_address_2` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/city` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/state` &lt;chr&gt;, …
-## 
-## [[3]]
-## # A tibble: 225 × 239
-##    start        end   c_today play_…¹ play_…² play_…³ play_…⁴ play_…⁵ play_…⁶
-##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;  
-##  1 2020-02-27T… 2020… 2020-0… NA      NA      NYUNI   230     &lt;NA&gt;    NA     
-##  2 2020-02-27T… 2020… 2020-0… NA      NA      NYUNI   229     &lt;NA&gt;    NA     
-##  3 2019-12-18T… 2020… 2020-0… NA      NA      VCOMU   002     &lt;NA&gt;    NA     
-##  4 2020-01-01T… 2020… 2020-0… NA      NA      GEORG   010     &lt;NA&gt;    NA     
-##  5 2020-01-15T… 2020… 2020-0… NA      NA      NYUNI   008     &lt;NA&gt;    NA     
-##  6 2020-01-15T… 2020… 2020-0… NA      NA      NYUNI   009     &lt;NA&gt;    NA     
-##  7 2020-01-24T… 2020… 2020-0… NA      NA      GEORG   011     &lt;NA&gt;    NA     
-##  8 2020-01-30T… 2020… 2020-0… NA      NA      NYUNI   010     &lt;NA&gt;    NA     
-##  9 2020-02-03T… 2020… 2020-0… NA      NA      NYUNI   011     &lt;NA&gt;    NA     
-## 10 2020-02-05T… 2020… 2020-0… NA      NA      VCOMU   003     &lt;NA&gt;    NA     
-## # … with 215 more rows, 230 more variables:
-## #   `play_demo_questionnaire/group_contact_info/parent_phone` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/parent_email` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/note_parent_address` &lt;lgl&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/parent_address_1` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/parent_address_2` &lt;chr&gt;,
-## #   `play_demo_questionnaire/group_contact_info/group_address/city` &lt;chr&gt;, …</code></pre>
 </div>
 </div>
 <div id="merge-files" class="section level2 unnumbered">
@@ -210,18 +140,18 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <h3>Compare the files<a class="anchor" aria-label="anchor" href="#compare-the-files"><i class="fas fa-link"></i></a>
 </h3>
 <p>Before merging, we have to examine how the fields compare.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">csv_fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"data/csv/screening"</span>, pattern <span class="op">=</span> <span class="st">"\\.csv"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Open the first file: ‘275882_PLAY_Demographic_Questionnaire.csv’.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_1</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 20 data records and <span class="math inline">\(n=\)</span> 168 fields.</p>
 <p>Open the second file: ‘334134_PLAY_Demographic_Questionnaire_Spanish.csv’.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_2</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 1 data records and <span class="math inline">\(n=\)</span> 236 fields.</p>
 <p>Open the third file: ‘359546_PLAY_Demographic_Questionnaire.csv’.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_3</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 225 data records and <span class="math inline">\(n=\)</span> 239 fields.</p>
 <div class="rmdnote">
@@ -231,24 +161,24 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <div id="extract-column-names" class="section level3 unnumbered">
 <h3>Extract column names<a class="anchor" aria-label="anchor" href="#extract-column-names"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_1_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_1</span><span class="op">)</span></span>
 <span><span class="va">demog_2_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_2</span><span class="op">)</span></span>
 <span><span class="va">demog_3_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_3</span><span class="op">)</span></span></code></pre></div>
 <p>Compare 1 to 2.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_2_names</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning in demog_1_names == demog_2_names: longer object length is not a
 ## multiple of shorter object length</code></pre>
 <pre><code>## [1] 3</code></pre>
 <p>Compare 1 to 3.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning in demog_1_names == demog_3_names: longer object length is not a
 ## multiple of shorter object length</code></pre>
 <pre><code>## [1] 3</code></pre>
 <p>Compare 2 to 3.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_2_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning in demog_2_names == demog_3_names: longer object length is not a
 ## multiple of shorter object length</code></pre>
@@ -263,17 +193,17 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <h4>Focus on <code>demog_1</code><a class="anchor" aria-label="anchor" href="#focus-on-demog_1"><i class="fas fa-link"></i></a>
 </h4>
 <p>If we want to look at the history of submissions to KoBoToolbox by site, we need only extract the following variables: <code>c_today</code> and the site_id with the long name of play_phone_questionnaire/group_siteinfo/site_id</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_1_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_1</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, submit_date <span class="op">=</span> <span class="va">c_today</span>, site_id <span class="op">=</span> <span class="va">`play_phone_questionnaire/group_siteinfo/site_id`</span><span class="op">)</span></span></code></pre></div>
 <p>Examine unique values in <code>site_id</code> since the naming convention for this variable has changed over the project lifetime.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">demog_1_submissions</span><span class="op">$</span><span class="va">site_id</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] "NYU"              NA                 "new_york_unive"  
 ## [4] "university_of__3" "georgetown_uni"   "GTN"             
 ## [7] "UCR"</code></pre>
 <p>Clean the names that have clear alternative names.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_1_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_1_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>site_id <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></span><span class="op">(</span><span class="va">site_id</span>,</span>
 <span>                new_york_unive <span class="op">=</span> <span class="st">"NYU"</span>,</span>
@@ -285,22 +215,22 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <h4>Examine <code>demog_2</code> and <code>demog_3</code><a class="anchor" aria-label="anchor" href="#examine-demog_2-and-demog_3"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>demog_2</code> has only one row.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_2_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_2</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, submit_date <span class="op">=</span> <span class="va">c_today</span>, site_id <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_siteinfo/site_id`</span><span class="op">)</span></span></code></pre></div>
 <p>On to <code>demog_3</code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_3_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_3</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, submit_date <span class="op">=</span> <span class="va">c_today</span>, site_id <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_siteinfo/site_id`</span><span class="op">)</span></span></code></pre></div>
 <p>Examine unique values in <code>site_id</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">demog_3_submissions</span><span class="op">$</span><span class="va">site_id</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "NYUNI" "VCOMU" "GEORG" "UCRIV" "UMIAM" "UCSCR" "OHIOS" "PURDU" "CSULB"
-## [10] "CSLON" NA      "STANF" "UHOUS" "CHOPH" "INDNA" "UIOWA" "VBLTU" "CSUFL"
-## [19] "BOSTU" "UTAUS" "UGEOR" "PRINU"</code></pre>
+<pre><code>##  [1] "NYUNI" "VCOMU" "GEORG" "UCRIV" "UMIAM" "UCSCR" "OHIOS" "PURDU"
+##  [9] "CSULB" "CSLON" NA      "STANF" "UHOUS" "CHOPH" "INDNA" "UIOWA"
+## [17] "VBLTU" "CSUFL" "BOSTU" "UTAUS" "UGEOR" "PRINU"</code></pre>
 <p>These use the 5 character site IDs. So NYU is ‘NYUNI’; GTN is ‘GEORG’; and UCR is ‘UCRIV’.</p>
 <p>Change <code>demog_1_submissions</code> to conform with this new standard so that we can merge the data sets.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_1_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_1_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>site_id <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></span><span class="op">(</span><span class="va">site_id</span>,</span>
 <span>                NYU <span class="op">=</span> <span class="st">"NYUNI"</span>,</span>
@@ -311,10 +241,10 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <div id="merge-files-1" class="section level3 unnumbered">
 <h3>Merge files<a class="anchor" aria-label="anchor" href="#merge-files-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">demog_1_submissions</span>, <span class="va">demog_2_submissions</span>, <span class="va">demog_3_submissions</span><span class="op">)</span></span></code></pre></div>
 <p>Add cumulative <code>n_calls</code> variable.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">submit_date</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, n_calls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -324,7 +254,7 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <h2>Plots<a class="anchor" aria-label="anchor" href="#plots"><i class="fas fa-link"></i></a>
 </h2>
 <p>Plot the time series of recruiting/screening calls.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">aes</span><span class="op">(</span><span class="va">submit_date</span>, <span class="va">n_calls</span>, color <span class="op">=</span> <span class="va">site_id</span><span class="op">)</span> <span class="op">+</span></span>
@@ -336,7 +266,7 @@ Figure 1: Time series of recruiting/screening calls.
 </p>
 </div>
 <p>Plot the number of calls made by site.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">aes</span><span class="op">(</span><span class="va">site_id</span>, fill <span class="op">=</span> <span class="va">site_id</span><span class="op">)</span> <span class="op">+</span></span>
@@ -391,7 +321,7 @@ Figure 2: Recruiting calls by site
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Survey protocol</strong>" was written by Rick Gilmore. It was last built on 2022-12-01.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

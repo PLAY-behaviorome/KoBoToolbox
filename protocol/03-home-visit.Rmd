@@ -1,1 +1,144 @@
 # Home visit {-}
+
+## Protocol {-}
+
+Details about the data collection protocol for the home visit can be found on the [PLAY Project website]((https://www.play-project.org/collection.html#Home_Visit).
+
+## Download data {-}
+
+Data files for each of the language by age-group conditions are stored on KoBoToolbox (KBT).
+
+List all of the data files on KBT.
+
+```{r home-visit-list-forms}
+kb_df <- list_kobo_data()
+if ((dim(kb_df)[1] < 1) || (!is.data.frame(kb_df))) {
+  stop("Error in selecting surveys from KoBoToolbox.")
+}
+```
+
+List data forms specific to the home visit.
+
+```{r home-visit}
+# Restrict to surveys collected at home
+kb_home <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "Home"))
+
+if ((dim(kb_home)[1] < 1) || (!is.data.frame(kb_home))) {
+  stop("Error in selecting home surveys from KoBoToolbox.")
+}
+```
+
+### Save selected raw files to local directory {-}
+
+Prepare to retrieve all home visit files.
+
+```{r}
+if (!dir.exists(params$home_visit_dir_xlsx)) {
+  stop("Directory not found: '", params$home_visit_dir_xlsx, "'")
+}
+n_files <- dim(kb_home)[1]
+```
+
+There are $n=$ `r n_files` home visit data files.
+We update/download them if `params$home_visit_download` is TRUE (default).
+
+::: {.rmdnote}
+Document-wide parameters are set in the header of `index.Rmd`.
+:::
+
+::: {.rmdnote}
+We often set `results = FALSE` and `message = FALSE` in the chunk headers in the code below so that the HTML summaries are just that. Suppressing results this way does *not* suppress useful output from the R console.
+:::
+
+```{r download-home-visit, results = FALSE}
+# We _want_ to see the message, but not the results
+if (params$home_visit_download) {
+  purrr::map(
+    1:n_files,
+    retrieve_save_xls_export,
+    kb_df = kb_home,
+    save_dir = params$home_visit_dir_xlsx
+  )
+} else {
+  message("'params$home_visit_download' is FALSE. KBT files not downloaded.")
+}
+```
+
+### Normalize file names {-}
+
+Some of the form names are inconsistent, so we normalize them to fit the following pattern:
+
+`<form_id>_PLAY_HomeQuestionnaires_<age_group>_<lang_group>.xlsx`
+
+```{r normalize-file-names, message=FALSE, results = FALSE}
+fl <- list.files(params$home_visit_dir_xlsx, full.names = TRUE)
+fl_home_old <- fl[stringr::str_detect(fl, 'Home')]
+fl_home_new <- purrr::map_chr(fl_home_old, make_standard_form_name)
+file.rename(fl_home_old, fl_home_new)
+```
+
+### Save xlsx as csv {-}
+
+```{r save-xlxs-as-csv, message=FALSE, results = FALSE}
+if (!dir.exists(params$home_visit_dir_csv)) {
+  stop("Directory not found: '", params$home_visit_dir_csv, "'")
+} else {
+  purrr::map(fl_home_new,
+             open_xlsx_save_csv,
+             params$home_visit_dir_csv,
+             vb = TRUE)
+}
+```
+
+### Split MB-CDI from other questions {-}
+
+Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.
+
+By default, the document presumes that we want to convert **all** of the CSV files that meet the `params$form_years`, `params$age_grps`, and `params$lang_grps` constraints found in `params$csv_input_dir` to pairs of properly named CSVs and save them in `params$csv_save_dir`.
+
+Extract the 'non-mbcdi' questions first and add 'non_mbcdi' to the filename.
+
+```{r import-save-non-mbcdi-csv, message=FALSE, results = FALSE}
+csv_fns <- list.files(params$home_visit_dir_csv, '^[0-9]+_raw_[12|18|24]', full.names = TRUE)
+
+purrr::map(
+  csv_fns,
+  open_split_save,
+  csv_save_dir = params$home_visit_dir_csv,
+  these_questions = 'non_mbcdi'
+)
+```
+
+Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
+
+```{r import-save-mbcdi-csv, message=FALSE, results = FALSE}
+purrr::map(
+  csv_fns,
+  open_split_save,
+  csv_save_dir = params$home_visit_dir_csv,
+  these_questions = 'mbcdi'
+)
+```
+
+## Clean data {-}
+
+### Remove identifiers {-}
+
+The function `remove_identifiers()` in `R/kobo_export` detects the presence of names, addresses, phone numbers, email, and dates in the field names for an input file and removes these fields.
+It also modifies the file name by appending `_deidentified`.
+
+The non-MBCDI file contains the identifiers, so that is the target of this removal process.
+
+::: {.rmdnote}
+Note that we have added `data` to `.gitignore` in `protocol/`, the root directory for the HTML protocol, so *none* of the data files should be made available via git or GitHub. This also means that there is **no version control** being done on raw data files themselves.
+:::
+
+```{r remove-identifiers, message=FALSE, results = FALSE}
+purrr::map(
+  csv_fns,
+  open_deidentify_save,
+  csv_save_dir = params$home_visit_dir_csv,
+  these_questions = 'non_mbcdi'
+)
+```
