@@ -149,11 +149,11 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <p>Open the second file: ‘334134_PLAY_Demographic_Questionnaire_Spanish.csv’.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_2</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 1 data records and <span class="math inline">\(n=\)</span> 236 fields.</p>
+<p>There are <span class="math inline">\(n=\)</span> 2 data records and <span class="math inline">\(n=\)</span> 236 fields.</p>
 <p>Open the third file: ‘359546_PLAY_Demographic_Questionnaire.csv’.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_3</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 225 data records and <span class="math inline">\(n=\)</span> 239 fields.</p>
+<p>There are <span class="math inline">\(n=\)</span> 231 data records and <span class="math inline">\(n=\)</span> 239 fields.</p>
 <div class="rmdnote">
 <p>These files have different numbers of columns, so we need to be careful in creating a merged data file.</p>
 </div>
@@ -168,20 +168,20 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <p>Compare 1 to 2.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_2_names</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in demog_1_names == demog_2_names: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in demog_1_names == demog_2_names: longer object
+## length is not a multiple of shorter object length</code></pre>
 <pre><code>## [1] 3</code></pre>
 <p>Compare 1 to 3.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in demog_1_names == demog_3_names: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in demog_1_names == demog_3_names: longer object
+## length is not a multiple of shorter object length</code></pre>
 <pre><code>## [1] 3</code></pre>
 <p>Compare 2 to 3.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_2_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in demog_2_names == demog_3_names: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in demog_2_names == demog_3_names: longer object
+## length is not a multiple of shorter object length</code></pre>
 <pre><code>## [1] 131</code></pre>
 <p>The second and third data files have the most overlap.</p>
 </div>
@@ -199,8 +199,9 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <p>Examine unique values in <code>site_id</code> since the naming convention for this variable has changed over the project lifetime.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">demog_1_submissions</span><span class="op">$</span><span class="va">site_id</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] "NYU"              NA                 "new_york_unive"  
-## [4] "university_of__3" "georgetown_uni"   "GTN"             
+<pre><code>## [1] "NYU"              NA                
+## [3] "new_york_unive"   "university_of__3"
+## [5] "georgetown_uni"   "GTN"             
 ## [7] "UCR"</code></pre>
 <p>Clean the names that have clear alternative names.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
@@ -225,9 +226,10 @@ The leading 6-digit integer is a unique ‘form’ identifier, so we extract it.
 <p>Examine unique values in <code>site_id</code>.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">demog_3_submissions</span><span class="op">$</span><span class="va">site_id</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "NYUNI" "VCOMU" "GEORG" "UCRIV" "UMIAM" "UCSCR" "OHIOS" "PURDU"
-##  [9] "CSULB" "CSLON" NA      "STANF" "UHOUS" "CHOPH" "INDNA" "UIOWA"
-## [17] "VBLTU" "CSUFL" "BOSTU" "UTAUS" "UGEOR" "PRINU"</code></pre>
+<pre><code>##  [1] "NYUNI" "VCOMU" "GEORG" "UCRIV" "UMIAM" "UCSCR"
+##  [7] "OHIOS" "PURDU" "CSULB" "CSLON" NA      "STANF"
+## [13] "UHOUS" "CHOPH" "INDNA" "UIOWA" "VBLTU" "CSUFL"
+## [19] "BOSTU" "UTAUS" "UGEOR" "PRINU"</code></pre>
 <p>These use the 5 character site IDs. So NYU is ‘NYUNI’; GTN is ‘GEORG’; and UCR is ‘UCRIV’.</p>
 <p>Change <code>demog_1_submissions</code> to conform with this new standard so that we can merge the data sets.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -321,7 +323,7 @@ Figure 2: Recruiting calls by site
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-02.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
