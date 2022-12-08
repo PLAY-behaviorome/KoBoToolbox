@@ -1,0 +1,55 @@
+# Setup {-}
+
+This section describes the setup procedure.
+
+## Authentication {-}
+
+The data are stored in an account on <https://kf.kobotoolbox.org>. 
+The login credentials for that account are shared among the PLAY Project staff. 
+To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file.
+
+<!-- https://bookdown.org/yihui/bookdown/html.html#callout-blocks -->
+::: {.rmdimportant}
+The KoBoToolBox API key is **not** synched to GitHub.
+:::
+
+
+## Set-up {-}
+
+To test whether the local system has the API key installed, run the command `Sys.getenv("KOBO_API_KEY")`. 
+
+### Check KoBo API Key{-}
+
+```{r check-api-key}
+kb_api <- Sys.getenv("KOBO_API_KEY")
+if ((length(kb_api) != 1) || (!is.character(kb_api))) {
+  stop("'KOBO_API_KEY' not installed in .Renviron")
+} else {
+  message("'KOBO_API_KEY' installed.")
+}
+```
+
+### Load/source helper functions {-}
+
+With the API key installed, several custom functions in `R/kobo_export.R` can be run.
+
+```{r source-helpers}
+if (file.exists("R/kobo_export.R")) {
+  source(file.path("R/kobo_export.R"))
+} else {
+  stop("File not found: 'R/kobo_export.R'")
+}
+```
+
+### Install dependencies {-}
+
+The helper functions require several external packages. To confirm that these are installed, run the following chunk.
+
+```{r install-dependencies}
+if (params$install_deps) {
+  install_kobo_packages()  
+} else {
+  message("'params$install_deps' is FALSE, so no dependencies are installed.")
+}
+
+```

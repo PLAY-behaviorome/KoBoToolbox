@@ -251,7 +251,7 @@ extract_form_id <- function(kb_df) {
 make_standard_form_name <- function(fn) {
   this_dir <- dirname(fn)
   this_fn <- basename(fn)
-  form_id <- stringr::str_extract(this_fn, '[0-9]{6}')
+  form_id <- stringr::str_extract(this_fn, '^[0-9]+')
   fn <- paste0(form_id, "_PLAY_HomeQuestionnares", "_",
                extract_age_group_from_name(this_fn), "_",
                form_language(this_fn), '.xlsx')
@@ -496,10 +496,7 @@ extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
 
 extract_non_mbcdi <-
   function(df,
-           rename_cols = FALSE,
-           remove_identifying_data = TRUE) {
-    if (remove_identifying_data)
-      df <- remove_identifiers(df)
+           rename_cols = FALSE) {
     
     play_id_col <-
       (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
@@ -522,10 +519,9 @@ extract_non_mbcdi <-
 extract_save_non_mbcdi <-
   function(df,
            fn,
-           rename_cols = FALSE,
-           remove_identifying_data = TRUE) {
+           rename_cols = FALSE) {
     non_mcdi <-
-      extract_non_mbcdi(df, rename_cols, remove_identifying_data)
+      extract_non_mbcdi(df, rename_cols)
     readr::write_csv(non_mcdi, fn)
     message('Saved ', fn)
   }
@@ -574,7 +570,7 @@ import_raw_extract_split_save <- function(age_grp = '12',
   
   if (!is.null(df)) {
     if (these_questions == 'non_mbcdi') {
-      extract_save_non_mbcdi(df, out_fn, rename_cols, remove_identifying_data)
+      extract_save_non_mbcdi(df, out_fn, rename_cols)
     } else {
       extract_save_mcdi(df, out_fn, rename_cols)
     }
@@ -587,7 +583,6 @@ open_split_save <- function(fp,
                             csv_save_dir = 'tmp',
                             these_questions = 'non_mbcdi',
                             rename_cols = FALSE,
-                            remove_identifying_data = FALSE,
                             vb = TRUE) {
   
   if (file.exists(fp)) {
@@ -614,7 +609,7 @@ open_split_save <- function(fp,
   
   if (!is.null(df)) {
     if (these_questions == 'non_mbcdi') {
-      extract_save_non_mbcdi(df, out_fn, rename_cols, remove_identifying_data)
+      extract_save_non_mbcdi(df, out_fn, rename_cols)
     } else {
       extract_save_mcdi(df, out_fn, rename_cols)
     }
@@ -687,20 +682,10 @@ open_deidentify_save <- function(fp,
                                  vb = TRUE) {
   require(tidyverse)
   
-  # fp <- file.path(
-  #   csv_input_dir,
-  #   paste0(
-  #     stringr::str_extract(fp, '[0-9]{6}'),
-  #     '_',
-  #     these_questions,
-  #     '_',
-  #     extract_age_group_from_name(fp),
-  #     '_',
-  #     tolower(form_language(fp)),
-  #     '.csv'
-  #   )
-  # )
-  
+  if (!dir.exists(csv_save_dir)) {
+    stop("Directory not found: '", csv_save_dir, "'")
+  }
+
   if (file.exists(fp)) {
     df <- readr::read_csv(fp, show_col_types = FALSE)
     if (is.data.frame(df)) {
@@ -722,6 +707,7 @@ open_deidentify_save <- function(fp,
       extract_age_group_from_name(fp),
       '_',
       tolower(form_language(fp)),
+      '_deidentified',
       '.csv'
     )
   )

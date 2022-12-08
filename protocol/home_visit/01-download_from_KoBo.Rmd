@@ -70,7 +70,7 @@ if ((dim(kb_df) < 1) || (!is.data.frame(kb_df))) {
 kb_home <- kb_df %>%
   dplyr::filter(., stringr::str_detect(title, "Home"))
 
-if ((dim(kb_home) < 1) || (!is.data.frame(kb_home))) {
+if ((dim(kb_home)[1] < 1) || (!is.data.frame(kb_home))) {
   stop("Error in selecting home surveys from KoBoToolbox.")
 }
 ```
