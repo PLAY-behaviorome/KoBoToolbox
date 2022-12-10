@@ -73,15 +73,35 @@ clean_merge_demog <- function(fns) {
 
 clean_demog_1 <- function(csv_fn_1) {
   df_1 <- readr::read_csv(csv_fn_1, show_col_types = FALSE)
+  #names(df_1) <- basename(names(df_1))
   df_1 %>%
-    dplyr::select(., submit_date = c_today,
-                  site_id = `play_phone_questionnaire/group_siteinfo/site_id`) %>%
+    #dplyr::mutate(., submit_date = c_today) %>%
+    dplyr::select(., submit_date = c_today, 
+                  site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
+                  sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
+                  child_age_mos = `play_phone_questionnaire/check_childage`,
+                  child_sex = `play_phone_questionnaire/child_sex`,
+                  language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
+                  child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
+                  child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
+                  child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
+                  major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
+                  child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
+                  child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
+                  child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
+                  child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
+                  mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
+                  mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
+                  mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
+                  ) %>%
     dplyr::mutate(
       .,
       site_id = dplyr::recode(
         site_id,
+        NYU = "NYUNI",
         new_york_unive = "NYUNI",
         georgetown_uni = "GEORG",
+        GTN = "GEORG",
         UCR = "UCRIV"
       )
     ) %>%
@@ -90,11 +110,46 @@ clean_demog_1 <- function(csv_fn_1) {
 
 clean_demog_2 <- function(csv_fn_2) {
   df_2 <- readr::read_csv(csv_fn_2, show_col_types = FALSE)
-    dplyr::select(df_2, submit_date = c_today, 
-                  site_id = `play_demo_questionnaire/group_siteinfo/site_id`)
+  df_2 %>%
+    dplyr::select(submit_date = c_today, 
+                  site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
+                  sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+                  child_age_mos = `play_demo_questionnaire/check_childage`,
+                  child_sex = `play_demo_questionnaire/child_sex`,
+                  language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
+                  child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
+                  child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
+                  child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+                  major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+                  child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
+                  child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
+                  child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
+                  child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
+                  mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
+                  mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
+                  mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
+    )
 }
 
 clean_demog_3 <- function(csv_fn_3) {
   df_3 <- readr::read_csv(csv_fn_3, show_col_types = FALSE)
-  dplyr::select(df_3, submit_date = c_today, site_id = `play_demo_questionnaire/group_siteinfo/site_id`)
+  df_3 %>%
+    dplyr::select(submit_date = c_today, 
+                  site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
+                  sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+                  child_age_mos = `play_demo_questionnaire/check_childage`,
+                  child_sex = `play_demo_questionnaire/child_sex`,
+                  language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
+                  child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
+                  child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
+                  child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+                  major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+                  child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
+                  child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
+                  child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
+                  child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
+                  mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
+                  mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
+                  mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
+    )
 }
