@@ -358,3 +358,44 @@ clean_demog_2 <- function(csv_fn) {
                   mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
     )
 }
+
+###################################################################
+#' Augments cleaned demographic/screening data frame with 'n_calls'
+#' variable starting at the beginning of the project.
+#' @param df Demographic/screening data frame.
+#' @return Augmented data frame.
+add_n_calls_to_demog <- function(df) {
+  require(dplyr)
+  df %>%
+    dplyr::arrange(., submit_date) %>%
+    dplyr::mutate(., n_calls = seq_along(submit_date))
+}
+
+###################################################################
+#' Creates a time series plot of the cumulative number of recruiting/screening
+#' calls.
+#' @param df Augmented data frame.
+#' @return Plot
+plot_call_timeseries <- function(df) {
+  require(dplyr)
+  require(ggplot2)
+  df %>%
+    filter(., !is.na(submit_date), !is.na(n_calls), !is.na(site_id)) %>%
+    ggplot(.) +
+    aes(submit_date, n_calls, color = site_id) +
+    geom_point()
+}
+
+###################################################################
+#' Create bar plot summarizing total calls by site.
+#' @param df Augmented data frame.
+#' @return Plot
+plot_calls_by_site <- function(df) {
+  require(dplyr)
+  df %>%
+    ggplot(.) +
+    aes(site_id, fill = site_id) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text
+}
+

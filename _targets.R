@@ -25,5 +25,8 @@ list(
   tar_target(screening_3_csv, file.path(screening_dir_csv, "359546_PLAY_Demographic_Questionnaire.csv"),
              format = "file"),
   tar_target(screening_xlsx_to_csv, load_screening_xlsx_save_csv(screening_dir_xlsx, screening_dir_csv)),
-  tar_target(demog_submissions, clean_merge_demog(screening_csv_fns))
+  tar_target(demog_submissions, clean_merge_demog(screening_csv_fns)),
+  tar_target(demog_submissions_w_n_calls, add_n_calls_to_demog(demog_submissions)),
+  tar_target(calls_plot, plot_call_timeseries(demog_submissions_w_n_calls)),
+  tar_target(bar_plot, plot_calls_by_site(demog_submissions_w_n_calls))
 )

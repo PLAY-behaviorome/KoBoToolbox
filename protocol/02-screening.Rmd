@@ -4,107 +4,93 @@
 
 Details about the data collection [protocol for participant screening and recruiting](https://www.play-project.org/collection.html#Participant_Recruitment) can be found on the [PLAY Project website](https://play-project.org).
 
-To make the workflow more robust and reproducible, much of the work is embedded in functions (`R/functions.R`) extensive use is made of the `targets` package. As a result, the code chunks below are _not_executed, but are shown to make the logic of the workflow transparent.
+To make the workflow more robust and reproducible, much of the work is embedded in functions (`R/functions.R`) and extensive use is made of the [`targets`](https://cran.r-project.org/web/packages/targets/) package. 
+This document describes the workflow, but none of the code chunks are executed.
+
+The `tar_target()` syntax should be read as follows: The "target" variable or file is on the left, and the function that generates it is on the right.
 
 ## Retrieve files from KoBoToolbox {-}
 
 The relevant KoBoToolbox data files have 'Demographic Questionnaire' in the title.
+We list these files and save them in a data frame called `kb_df`.
 
-```{r list-kobo-forms, eval=FALSE}
-kb_df <- list_kobo_data()
-
-# Restrict to surveys collected at home
-kb_demog <- kb_df %>%
-  dplyr::filter(., stringr::str_detect(title, "Demographic"))
-
-if ((dim(kb_demog)[1] < 1) || (!is.data.frame(kb_demog))) {
-  stop("Error in selecting demographics surveys from KoBoToolbox.")
-}
+```
+tar_target(kb_df, list_kobo_data())
 ```
 
 ### Save selected raw files to local directory {-}
 
 Prepare to retrieve all demographic data files.
+These files have "Demographic" in the file name.
+We create a data frame `kb_demog` that includes only these files.
 
-```{r}
-if (!dir.exists('data/xlsx/screening')) {
-  stop("Directory not found: 'data/xlsx/screening'")
-}
-n_files <- dim(kb_demog)[1]
+```
+tar_target(kb_demog, dplyr::filter(kb_df, stringr::str_detect(title, "Demographic")))
 ```
 
-```{r download-demog, results = FALSE}
-if (params$screening_download) {
-purrr::map(1:n_files, retrieve_save_xls_export, kb_df = kb_demog, save_dir = "data/xlsx/screening")  
-} else {
-  message("'params$screening_download' is FALSE. KBT files not downloaded.")
-}
+Next, we retrieve the relevant (XLSX-formatted) files and store them in a local directory.
+
+```
+tar_target(screening_dir_xlsx, "protocol/data/xlsx/screening"),
+  tar_target(screening_downloads, retrieve_screening_xlsx(kb_demog, screening_dir_xlsx)),
 ```
 
 ## Convert to CSVs {-}
 
-By default, we presume that we want to convert **all** of the XLSX files in `data/xlxs/screening` to CSVs.
+By default, we presume that we want to convert **all** of the XLSX files in `screening_dir_xlsx` to CSVs.
 
-While not strictly necessary, we filter the downloaded filename to ensure that it includes 'Demographic_Questionnaire'.
+While not strictly necessary, we filter the downloaded filename to ensure that it includes 'Demographic_Questionnaire' and the form ID, an integer.
 
-```{r, eval=FALSE}
-load_xlsx_save_csv <- function(fl, out_dir) {
-  require(tools)
-  xl <- readxl::read_xlsx(fl)
-  fn_csv <- file.path(out_dir, paste0(file_path_sans_ext(basename(fl)), ".csv"))
-  if (dir.exists(dirname(fn_csv))) {
-    readr::write_csv(xl, fn_csv)
-    message("File saved: '", fn_csv, "'")
-  } else {
-    warning("Directory not found: '", dirname(fn_csv), "'")
-  }
-}
-
-load_screening_xlsx_save_csv <- function(in_dir, out_dir) {
-  require(purrr)
-  demog_fns <- list.files(file.path(in_dir), 
-                          pattern = "Demographic_Questionnaire", full.names = TRUE)
-  purrr::map(demog_fns, load_xlsx_save_csv, out_dir)
-}
+```
+tar_target(screening_dir_csv, "protocol/data/csv/screening")
+tar_target(
+  screening_csv_fns,
+  list.files(screening_dir_csv, pattern = "[0-9]+.*\\.csv", full.names = TRUE)
 ```
 
-```{r, eval=FALSE}
-load_screening_xlsx_save_csv("data/xlsx/screening", "data/csv/screening")
+Then we import the XLSX files and save them as CSVs
+
+```
+tar_target(screening_xlsx_to_csv, load_screening_xlsx_save_csv(screening_dir_xlsx, screening_dir_csv))
 ```
 
 ## Merge files {-}
+
+Next, we merge the separate screening files.
+
+The following code documents the early exploration of these files.
+It shows that the field names are not equivalent.
+
+In a subsequent sub-section, we clean the field names so that the three files can be combined.
 
 ### Compare the files {-}
 
 Before merging, we have to examine how the fields compare.
 
-```{r}
+```{r, eval=FALSE}
 csv_fns <- list.files("data/csv/screening", pattern = "\\.csv", full.names = TRUE)
 ```
 
-Open the first file: '`r basename(csv_fns[1])`'.
+Open the first file.
 
-```{r}
+```{r, eval=FALSE}
 demog_1 <- readr::read_csv(csv_fns[1], show_col_types = FALSE)
+dim(demog_1)
 ```
 
-There are $n=$ `r dim(demog_1)[1]` data records and $n=$ `r dim(demog_1)[2]` fields.
+Open the second file.
 
-Open the second file: '`r basename(csv_fns[2])`'.
-
-```{r}
+```{r, eval=FALSE}
 demog_2 <- readr::read_csv(csv_fns[2], show_col_types = FALSE)
+dim(demog_2)
 ```
 
-There are $n=$ `r dim(demog_2)[1]` data records and $n=$ `r dim(demog_2)[2]` fields.
+Open the third file.
 
-Open the third file: '`r basename(csv_fns[3])`'.
-
-```{r}
+```{r eval=FALSE}
 demog_3 <- readr::read_csv(csv_fns[3], show_col_types = FALSE)
+dim(demog_3)
 ```
-
-There are $n=$ `r dim(demog_3)[1]` data records and $n=$ `r dim(demog_3)[2]` fields.
 
 ::: {.rmdnote}
 These files have different numbers of columns, so we need to be careful in creating a merged data file.
@@ -112,7 +98,7 @@ These files have different numbers of columns, so we need to be careful in creat
 
 ### Extract column names {-}
 
-```{r}
+```{r, eval=FALSE}
 demog_1_names <- names(demog_1)
 demog_2_names <- names(demog_2)
 demog_3_names <- names(demog_3)
@@ -120,19 +106,19 @@ demog_3_names <- names(demog_3)
 
 Compare 1 to 2.
 
-```{r}
+```{r, eval=FALSE}
 sum(demog_1_names == demog_2_names)
 ```
 
 Compare 1 to 3.
 
-```{r}
+```{r, eval=FALSE}
 sum(demog_1_names == demog_3_names)
 ```
 
 Compare 2 to 3.
 
-```{r}
+```{r, eval=FALSE}
 sum(demog_2_names == demog_3_names)
 ```
 
@@ -142,119 +128,54 @@ The second and third data files have the most overlap.
 
 Since only some of these data come from enrolled participants, we have to be careful about what variables we extract for project management purposes.
 
-As of `r Sys.Date()`, the variables indicated in the cleaning functions below are selected and exported.
+We use separate functions for the old (first) file versus the later two files.
+
+See `protocol/R/functions.R` and focus on `clean_demog_1()` and `clean_demog_2()`.
+
+```{r}
+source("R/functions.R")
+clean_demog_1
+```
+
+```{r}
+clean_demog_2
+```
 
 ::: {.rmdnote}
-This scheme is not elegant and is brittle. It should be improved.
+This scheme is inelegant and is brittle. It should be improved.
 :::
-
-```{r, eval=FALSE}
-clean_demog_1 <- function(csv_fn_1) {
-  df_1 <- readr::read_csv(csv_fn_1, show_col_types = FALSE)
-  df_1 %>%
-    dplyr::select(
-      .,
-      submit_date = c_today,
-      site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
-      sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
-      child_age_mos = `play_phone_questionnaire/check_childage`,
-      child_sex = `play_phone_questionnaire/child_sex`,
-      language_to_child = `play_phone_questionnaire/language_spoken_child`,
-      language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
-      child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
-      child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
-      child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
-      child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
-      major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
-      child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
-      child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
-      child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
-      child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
-      mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
-      mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
-      mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
-    ) %>%
-    dplyr::mutate(
-      .,
-      site_id = dplyr::recode(
-        site_id,
-        NYU = "NYUNI",
-        new_york_unive = "NYUNI",
-        georgetown_uni = "GEORG",
-        GTN = "GEORG",
-        UCR = "UCRIV"
-      )
-    ) %>%
-    dplyr::filter(., !stringr::str_detect(site_id, '_of__'))
-}
-```
-
-```{r, eval=FALSE}
-clean_demog_2 <- function(csv_fn_2) {
-  df_2 <- readr::read_csv(csv_fn_2, show_col_types = FALSE)
-  df_2 %>%
-    dplyr::select(
-      submit_date = c_today,
-      site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
-      sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
-      child_age_mos = `play_demo_questionnaire/check_childage`,
-      child_sex = `play_demo_questionnaire/child_sex`,
-      language_to_child = `play_demo_questionnaire/language_spoken_child`,
-      language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
-      child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
-      child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
-      child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
-      child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-      major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
-      child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
-      child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
-      child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
-      child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
-      mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
-      mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
-      mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
-    )
-}
-```
 
 ### Merge files {-}
 
-```{r, eval=FALSE}
-
-clean_merge_demog <- function(fns) {
-  rbind(clean_demog_1(fns[1]), 
-        clean_demog_2(fns[2]), 
-        clean_demog_2(fns[3])) %>%
-    dplyr::arrange(., submit_date)
-}
+```
+tar_target(demog_submissions, clean_merge_demog(screening_csv_fns))
 ```
 
-Add cumulative `n_calls` variable.
+<!-- ## Plots {-} -->
 
-```{r}
-demog_submissions <- demog_submissions %>%
-  dplyr::arrange(., submit_date) %>%
-  dplyr::mutate(., n_calls = seq_along(submit_date))
-```
+<!-- Add a cumulative `n_calls` variable. -->
 
-## Plots {-}
+<!-- ``` -->
+<!-- demog_submissions <- demog_submissions %>% -->
+<!--   dplyr::arrange(., submit_date) %>% -->
+<!--   dplyr::mutate(., n_calls = seq_along(submit_date)) -->
+<!-- ``` -->
 
-Plot the time series of recruiting/screening calls.
+<!-- Plot the time series of recruiting/screening calls. -->
 
-```{r, fig.cap="Time series of recruiting/screening calls."}
-demog_submissions %>%
-  ggplot(.) +
-  aes(submit_date, n_calls, color = site_id) +
-  geom_point()
-```
+<!-- ```{r, fig.cap="Time series of recruiting/screening calls.", eval=FALSE} -->
+<!-- demog_submissions %>% -->
+<!--   ggplot(.) + -->
+<!--   aes(submit_date, n_calls, color = site_id) + -->
+<!--   geom_point() -->
+<!-- ``` -->
 
-Plot the number of calls made by site.
+<!-- Plot the number of calls made by site. -->
 
-```{r, fig.cap="Recruiting calls by site"}
-demog_submissions %>%
-  ggplot(.) +
-  aes(site_id, fill = site_id) +
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text
-```
-
+<!-- ```{r, fig.cap="Recruiting calls by site", eval=FALSE} -->
+<!-- demog_submissions %>% -->
+<!--   ggplot(.) + -->
+<!--   aes(site_id, fill = site_id) + -->
+<!--   geom_bar() + -->
+<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text -->
+<!-- ``` -->
