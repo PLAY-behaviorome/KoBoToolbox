@@ -109,6 +109,14 @@ retrieve_save_xls_export <-
     }
   }
 
+###################################################################
+#' Normalizes the file/form names of files on KoBoToolbox
+#'
+#' @param form_index An integer value indicating which row (KoBoToolbox form)
+#' should be retrieved and saved. The default value for testing purposes is 13.
+#' @param kb_df A data frame with the available KoBoToolbox data, typically
+#' output of list_kobo_data(). The default is to call list_kobo_data().
+#' @return An array of strings
 create_cleaned_augmented_form_name <-
   function(form_index = 13,
            kb_df = list_kobo_data()) {
@@ -199,15 +207,35 @@ extract_kb_form_name <-
     }
   }
 
+###################################################################
+#' Retrieves demographic/screening forms from KoBoToolbox and
+#' saves them in a local directory.
+#' @param df A dataframe of the selected forms from the KoBoToolbox API
+#' @param save_dir A character string indicating the directory to save
+#' the downloaded files.
+#' @returns NULL
 retrieve_screening_xlsx <- function(df, save_dir) {
+  require(purrr)
+  
+  stopifnot("df must be a data frame" = is.data.frame(df))
+  stopifnot("save_dir not found" = dir.exists(save_dir))
+  
   n_files <- dim(df)[1]
   purrr::map(1:n_files, retrieve_save_xls_export, kb_df = df, save_dir = save_dir)
 }
 
-load_xlsx_save_csv <- function(fl, out_dir) {
+###################################################################
+#' Loads a single XLSX-formatted data file, converts it to CSV, and saves it.
+#' @param fn Filename for XLSX file
+#' @param out_dir Directory to save CSV file
+load_xlsx_save_csv <- function(fn, out_dir) {
   require(tools)
-  xl <- readxl::read_xlsx(fl)
-  fn_csv <- file.path(out_dir, paste0(file_path_sans_ext(basename(fl)), ".csv"))
+  
+  stopifnot("fn not found" = file.exists(fn))
+  stopifnot("out_dir not found" = dir.exists(out_dir))
+  
+  xl <- readxl::read_xlsx(fn)
+  fn_csv <- file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
   if (dir.exists(dirname(fn_csv))) {
     readr::write_csv(xl, fn_csv)
     message("File saved: '", fn_csv, "'")
@@ -216,13 +244,31 @@ load_xlsx_save_csv <- function(fl, out_dir) {
   }
 }
 
+###################################################################
+#' Loads all XLSX-formatted files in `in_dir` and saves CSV-formatted files
+#' to `out_dir`
+#' @param in_dir A string indicating the input directory
+#' @param out_dir A string indicating the output directory
 load_screening_xlsx_save_csv <- function(in_dir, out_dir) {
   require(purrr)
-  demog_fns <- list.files(file.path(in_dir), 
-                          pattern = "Demographic_Questionnaire", full.names = TRUE)
-  purrr::map(demog_fns, load_xlsx_save_csv, out_dir)
+  
+  stopifnot("in_dir not found" = dir.exists(in_dir))
+  stopifnot("out_dir not found" = dir.exists(out_dir))
+  
+  demog_fns <- list.files(in_dir, pattern = "Demographic_Questionnaire", full.names = TRUE)
+  if (length(demog_fns) < 1) {
+    warning("demog_fns is empty")
+    NULL
+  } else {
+    purrr::map(demog_fns, load_xlsx_save_csv, out_dir)    
+  }
 }
 
+###################################################################
+#' Cleans set of screening/demographic data files and aggregates them into
+#' a single data frame.
+#' @param fns A character vector of CSV filenames.
+#' @return A single dataframe with the aggregated demographic data files.
 clean_merge_demog <- function(fns) {
   rbind(clean_demog_1(fns[1]), 
         clean_demog_2(fns[2]), 
@@ -230,8 +276,18 @@ clean_merge_demog <- function(fns) {
     dplyr::arrange(., submit_date)
 }
 
-clean_demog_1 <- function(csv_fn_1) {
-  df_1 <- readr::read_csv(csv_fn_1, show_col_types = FALSE)
+###################################################################
+#' Cleans the old/original demographic/screening form by selecting
+#' a subset of variables
+#' @param csv_fn A filename for the CSV file associated with the original
+#' screening form
+#' @return A data frome
+clean_demog_1 <- function(csv_fn) {
+  require(readr)
+  
+  stopifnot("csv_fn not found" = file.exists(csv_fn))
+  
+  df_1 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   df_1 %>%
     dplyr::select(., submit_date = c_today, 
                   site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
@@ -267,8 +323,19 @@ clean_demog_1 <- function(csv_fn_1) {
     dplyr::filter(.,!stringr::str_detect(site_id, '_of__'))
 }
 
-clean_demog_2 <- function(csv_fn_2) {
-  df_2 <- readr::read_csv(csv_fn_2, show_col_types = FALSE)
+###################################################################
+#' Cleans new demographic/screening form by selecting
+#' a subset of variables
+#' @param csv_fn A filename for the CSV file associated with the original
+#' screening form
+#' @return A data frome
+clean_demog_2 <- function(csv_fn) {
+  require(readr)
+  require(dplyr)
+  
+  stopifnot("csv_fn not found" = file.exists(csv_fn))
+  
+  df_2 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   df_2 %>%
     dplyr::select(submit_date = c_today, 
                   site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
@@ -290,10 +357,4 @@ clean_demog_2 <- function(csv_fn_2) {
                   mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
                   mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
     )
-}
-
-select_demog <- function(df, string) {
-  require(dplyr)
-  df %>% 
-    select(contains(string))
 }
