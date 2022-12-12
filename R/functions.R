@@ -1,6 +1,13 @@
 # protocol/R/functions.R
 
 ###################################################################
+clean_data_dir <- function(update_data, data_dir) {
+  if (update_data) {
+    unlink(paste0(data_dir, "/*"))
+  }
+}
+
+###################################################################
 #' Lists the datasets available on KoBoToolbox using the PLAY credentials.
 #' #'
 #' @param URL A string that is the API call to extract the data. It defaults to 'https://kc.kobotoolbox.org/api/v1/data'
@@ -208,13 +215,13 @@ extract_kb_form_name <-
   }
 
 ###################################################################
-#' Retrieves demographic/screening forms from KoBoToolbox and
+#' Retrieves demographic/screening or home visit forms from KoBoToolbox and
 #' saves them in a local directory.
 #' @param df A dataframe of the selected forms from the KoBoToolbox API
 #' @param save_dir A character string indicating the directory to save
 #' the downloaded files.
 #' @returns NULL
-retrieve_screening_xlsx <- function(df, save_dir) {
+retrieve_kobo_xlsx <- function(df, save_dir) {
   require(purrr)
   
   stopifnot("df must be a data frame" = is.data.frame(df))
@@ -230,10 +237,12 @@ retrieve_screening_xlsx <- function(df, save_dir) {
 #' @param out_dir Directory to save CSV file
 load_xlsx_save_csv <- function(fn, out_dir) {
   require(tools)
-  
+  require(readxl)
+  require(readr)
+
   stopifnot("fn not found" = file.exists(fn))
   stopifnot("out_dir not found" = dir.exists(out_dir))
-  
+
   xl <- readxl::read_xlsx(fn)
   fn_csv <- file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
   if (dir.exists(dirname(fn_csv))) {
@@ -249,18 +258,18 @@ load_xlsx_save_csv <- function(fn, out_dir) {
 #' to `out_dir`
 #' @param in_dir A string indicating the input directory
 #' @param out_dir A string indicating the output directory
-load_screening_xlsx_save_csv <- function(in_dir, out_dir) {
+load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
   require(purrr)
   
-  stopifnot("in_dir not found" = dir.exists(in_dir))
-  stopifnot("out_dir not found" = dir.exists(out_dir))
+  # stopifnot("in_dir not found" = dir.exists(in_dir))
+  # stopifnot("out_dir not found" = dir.exists(out_dir))
   
-  demog_fns <- list.files(in_dir, pattern = "Demographic_Questionnaire", full.names = TRUE)
-  if (length(demog_fns) < 1) {
-    warning("demog_fns is empty")
+  fns <- list.files(in_dir, pattern = filter_str, full.names = TRUE)
+  if (length(fns) < 1) {
+    warning("fns is empty")
     NULL
   } else {
-    purrr::map(demog_fns, load_xlsx_save_csv, out_dir)    
+    purrr::map(fns, load_xlsx_save_csv, out_dir)    
   }
 }
 
@@ -399,3 +408,52 @@ plot_calls_by_site <- function(df) {
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text
 }
 
+###################################################################
+rename_home_xlsx <- function(in_dir) {
+  require(stringr)
+  require(purrr)
+  
+  #stopifnot("in_dir not found" = dir.exists(in_dir))
+  
+  fl <- list.files(in_dir, full.names = TRUE)
+  fl_home_old <- fl[stringr::str_detect(fl, 'Home')]
+  fl_home_new <- purrr::map_chr(fl_home_old, make_standard_form_name)
+  file.rename(fl_home_old, fl_home_new)
+}
+
+###################################################################
+make_standard_form_name <- function(fn) {
+  this_dir <- dirname(fn)
+  this_fn <- basename(fn)
+  form_id <- stringr::str_extract(this_fn, '^[0-9]+')
+  fn <- paste0(form_id, "_PLAY_HomeQuestionnares", "_",
+               extract_age_group_from_name(this_fn), "_",
+               form_language(this_fn), '.xlsx')
+  file.path(this_dir, fn)
+}
+
+###################################################################
+extract_age_group_from_name <- function(form_name) {
+  age_grps <- stringr::str_match(form_name, "[ _\\(]+(12|18|24)[ _]+")
+  age_grps[,2]
+}
+
+###################################################################
+form_is_bilingual <- function(form_name) {
+  stringr::str_detect(form_name, "[Bb]ilingual")
+}
+
+###################################################################
+form_is_spanish <- function(form_name) {
+  stringr::str_detect(form_name, "[Ss]panish")
+}
+
+###################################################################
+form_language <- function(form_name) {
+  is_bilingual <- form_is_bilingual(form_name)
+  is_spanish <- form_is_spanish(form_name)
+  form_lang <- rep("english", length(form_name))
+  form_lang[is_bilingual & is_spanish] <- "bilingual_spanish"
+  form_lang[is_bilingual & !is_spanish] <- "bilingual_english"
+  form_lang
+}

@@ -232,29 +232,30 @@ It shows that the field names are not equivalent.</p>
 <h3>Merge files<a class="anchor" aria-label="anchor" href="#merge-files-1"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>tar_target(demog_submissions, clean_merge_demog(screening_csv_fns))</code></pre>
-</div>
-</div>
-<div id="plots" class="section level2 unnumbered">
-<h2>Plots<a class="anchor" aria-label="anchor" href="#plots"><i class="fas fa-link"></i></a>
-</h2>
-<p>Add a cumulative <code>n_calls</code> variable.</p>
-<pre><code>demog_submissions &lt;- demog_submissions %&gt;%
-  dplyr::arrange(., submit_date) %&gt;%
-  dplyr::mutate(., n_calls = seq_along(submit_date))</code></pre>
-<p>Plot the time series of recruiting/screening calls.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">submit_date</span>, <span class="va">n_calls</span>, color <span class="op">=</span> <span class="va">site_id</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Plot the number of calls made by site.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">site_id</span>, fill <span class="op">=</span> <span class="va">site_id</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># Rotate text</span></span></code></pre></div>
+<!-- ## Plots {-} -->
+<!-- Add a cumulative `n_calls` variable. -->
+<!-- ``` -->
+<!-- demog_submissions <- demog_submissions %>% -->
+<!--   dplyr::arrange(., submit_date) %>% -->
+<!--   dplyr::mutate(., n_calls = seq_along(submit_date)) -->
+<!-- ``` -->
+<!-- Plot the time series of recruiting/screening calls. -->
+<!-- ```{r, fig.cap="Time series of recruiting/screening calls.", eval=FALSE} -->
+<!-- demog_submissions %>% -->
+<!--   ggplot(.) + -->
+<!--   aes(submit_date, n_calls, color = site_id) + -->
+<!--   geom_point() -->
+<!-- ``` -->
+<!-- Plot the number of calls made by site. -->
+<!-- ```{r, fig.cap="Recruiting calls by site", eval=FALSE} -->
+<!-- demog_submissions %>% -->
+<!--   ggplot(.) + -->
+<!--   aes(site_id, fill = site_id) + -->
+<!--   geom_bar() + -->
+<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text -->
+<!-- ``` -->
 
+</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -277,7 +278,6 @@ It shows that the field names are not equivalent.</p>
 <li><a class="nav-link" href="#merge-files-1">Merge files</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#plots">Plots</a></li>
 </ul>
 
       <div class="book-extra">
@@ -295,7 +295,7 @@ It shows that the field names are not equivalent.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-11.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

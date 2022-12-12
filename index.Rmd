@@ -12,9 +12,9 @@ output:
     toc_float: true
 params:
   install_deps: false
-  screening_download: true
+  screening_download: false
   screening_dir_xlsx: "data/xlsx/screening"
-  home_visit_download: true
+  home_visit_download: false
   home_visit_dir_xlsx: "data/xlsx/home_visit"
   home_visit_dir_csv: "data/csv/home_visit"
 ---
@@ -47,7 +47,7 @@ The second set is collected during the home visit.
 ### Data access and processing {-}
 
 All data are downloaded and manipulated locally but are **not** synched to GitHub.
-This is accomplished by adding `data` to [`protocol/.gitignore`](.gitignore).
+This is accomplished by adding `data` to [`.gitignore`](.gitignore).
 
 There are separate processes for detecting and deleting personal identifiers from specific data files and exporting 'cleaned' versions that may be shared on Databrary.
 
