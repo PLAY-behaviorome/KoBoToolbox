@@ -9,6 +9,7 @@ The login credentials for that account are shared among the PLAY Project staff.
 To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file.
 
 <!-- https://bookdown.org/yihui/bookdown/html.html#callout-blocks -->
+<!--Available blocks are: .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, and .rmdwarning -->
 ::: {.rmdimportant}
 The KoBoToolBox API key is **not** synched to GitHub.
 :::
@@ -31,9 +32,15 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
 
 ### Load/source helper functions {-}
 
+::: {.rmdnote}
+The following blocks are not evaluated because of the move to the `{targets}` package
+and the use of the `renv` package.
+The instructions should be updated.
+:::
+
 With the API key installed, several custom functions in `R/kobo_export.R` can be run.
 
-```{r source-helpers}
+```{r source-helpers, eval=FALSE}
 if (file.exists("R/kobo_export.R")) {
   source(file.path("R/kobo_export.R"))
 } else {
@@ -45,11 +52,10 @@ if (file.exists("R/kobo_export.R")) {
 
 The helper functions require several external packages. To confirm that these are installed, run the following chunk.
 
-```{r install-dependencies}
+```{r install-dependencies, eval=FALSE}
 if (params$install_deps) {
   install_kobo_packages()  
 } else {
   message("'params$install_deps' is FALSE, so no dependencies are installed.")
 }
-
 ```

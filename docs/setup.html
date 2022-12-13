@@ -67,6 +67,7 @@
 The login credentials for that account are shared among the PLAY Project staff.
 To access the site’s API programmatically, an API key was downloaded and added to the local <code>~/.Renviron</code> file.</p>
 <!-- https://bookdown.org/yihui/bookdown/html.html#callout-blocks -->
+<!--Available blocks are: .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, and .rmdwarning -->
 <div class="rmdimportant">
 <p>The KoBoToolBox API key is <strong>not</strong> synched to GitHub.</p>
 </div>
@@ -90,6 +91,11 @@ To access the site’s API programmatically, an API key was downloaded and added
 <div id="loadsource-helper-functions" class="section level3 unnumbered">
 <h3>Load/source helper functions<a class="anchor" aria-label="anchor" href="#loadsource-helper-functions"><i class="fas fa-link"></i></a>
 </h3>
+<div class="rmdnote">
+<p>The following blocks are not evaluated because of the move to the <a href="https://docs.ropensci.org/targets/">targets</a> package
+and the use of the <code>renv</code> package.
+The instructions should be updated.</p>
+</div>
 <p>With the API key installed, several custom functions in <code>R/kobo_export.R</code> can be run.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="st">"R/kobo_export.R"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -108,7 +114,6 @@ To access the site’s API programmatically, an API key was downloaded and added
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"'params$install_deps' is FALSE, so no dependencies are installed."</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<pre><code>## 'params$install_deps' is FALSE, so no dependencies are installed.</code></pre>
 
 </div>
 </div>
@@ -145,7 +150,7 @@ To access the site’s API programmatically, an API key was downloaded and added
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-12.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

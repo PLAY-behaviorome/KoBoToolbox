@@ -14,7 +14,6 @@ Store all of the data files on KBT in `kb_df`.
 tar_target(kb_df, list_kobo_data()),
 ```
 
-
 ```{r home-visit-list-forms}
 library(targets)
 tar_load(kb_df)
@@ -61,37 +60,37 @@ tar_target(home_visit_renamed, rename_home_xlsx(home_visit_dir_xlsx, home_visit_
 ### Save xlsx as csv {-}
 
 ```
-  tar_target(home_visit_xlsx_to_csv, load_xlsx_save_many_csvs(home_visit_dir_xlsx, home_visit_dir_csv, "Home"))
+tar_target(home_visit_xlsx_to_csv, load_xlsx_save_many_csvs(home_visit_dir_xlsx, home_visit_dir_csv, "Home"))
 ```
 
 ### Split MB-CDI from other questions {-}
 
 Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.
 
-By default, the document presumes that we want to convert **all** of the CSV files that meet the `params$form_years`, `params$age_grps`, and `params$lang_grps` constraints found in `params$csv_input_dir` to pairs of properly named CSVs and save them in `params$csv_save_dir`.
+By default, the document presumes that we want to convert **all** of the CSV files
 
 Extract the 'non-mbcdi' questions first and add 'non_mbcdi' to the filename.
 
-```{r import-save-non-mbcdi-csv, message=FALSE, results = FALSE}
-csv_fns <- list.files(params$home_visit_dir_csv, '^[0-9]+_raw_[12|18|24]', full.names = TRUE)
+```
+tar_target(home_visit_csvs, list.files(home_visit_dir_csv, '^[0-9]+_PLAY.*\\csv', full.names = TRUE))
 
-purrr::map(
-  csv_fns,
-  open_split_save,
-  csv_save_dir = params$home_visit_dir_csv,
-  these_questions = 'non_mbcdi'
-)
+tar_target(home_visit_non_mbcdi, purrr::map(
+    home_visit_csvs,
+    open_split_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'non_mbcdi'
+  ))
 ```
 
 Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
 
-```{r import-save-mbcdi-csv, message=FALSE, results = FALSE}
-purrr::map(
-  csv_fns,
-  open_split_save,
-  csv_save_dir = params$home_visit_dir_csv,
-  these_questions = 'mbcdi'
-)
+```
+tar_target(home_visit_mbcdi, purrr::map(
+    home_visit_csvs,
+    open_split_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'mbcdi'
+  ))
 ```
 
 ## Clean data {-}
@@ -101,17 +100,25 @@ purrr::map(
 The function `remove_identifiers()` in `R/kobo_export` detects the presence of names, addresses, phone numbers, email, and dates in the field names for an input file and removes these fields.
 It also modifies the file name by appending `_deidentified`.
 
-The non-MBCDI file contains the identifiers, so that is the target of this removal process.
+The `remove_identifiers()` function detects these fields:
+
+```{r}
+source("~/rrr/KoBoToolbox/R/functions.R", echo = FALSE, print.eval = FALSE)
+remove_identifiers
+```
+
+The **non-MBCDI file** contains the identifiers, so that is the target of this removal process.
 
 ::: {.rmdnote}
 Note that we have added `data` to `.gitignore` in `protocol/`, the root directory for the HTML protocol, so *none* of the data files should be made available via git or GitHub. This also means that there is **no version control** being done on raw data files themselves.
 :::
 
-```{r remove-identifiers, message=FALSE, results = FALSE}
-purrr::map(
-  csv_fns,
-  open_deidentify_save,
-  csv_save_dir = params$home_visit_dir_csv,
-  these_questions = 'non_mbcdi'
-)
+```
+tar_target(home_visit_non_mbcdi_csvs, list.files(home_visit_dir_csv, '^[0-9]+_non_mbcdi.*\\csv', full.names = TRUE)),
+tar_target(home_visit_remove_identifiers, purrr::map(
+    home_visit_non_mbcdi_csvs,
+    open_deidentify_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'non_mbcdi'
+  ))
 ```

@@ -66,6 +66,7 @@ list(
     plot_call_timeseries(demog_submissions_w_n_calls)
   ),
   tar_target(bar_plot, plot_calls_by_site(demog_submissions_w_n_calls)),
+  # Home visit
   tar_target(kb_home, dplyr::filter(
     kb_df, stringr::str_detect(title, "Home")
   )),
@@ -96,5 +97,27 @@ list(
   tar_target(
     home_visit_xlsx_to_csv,
     load_xlsx_save_many_csvs(home_visit_dir_xlsx, home_visit_dir_csv, "Home")
-  )
+  ),
+  tar_target(home_visit_csvs, list.files(home_visit_dir_csv, '^[0-9]+_PLAY.*\\csv', full.names = TRUE)),
+  # Non-MB-CDI CSVs
+  tar_target(home_visit_non_mbcdi, purrr::map(
+    home_visit_csvs,
+    open_split_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'non_mbcdi'
+  )),
+  # MB-CDI CSVs
+  tar_target(home_visit_mbcdi, purrr::map(
+    home_visit_csvs,
+    open_split_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'mbcdi'
+  )),
+  tar_target(home_visit_non_mbcdi_csvs, list.files(home_visit_dir_csv, '^[0-9]+_non_mbcdi.*\\csv', full.names = TRUE)),
+  tar_target(home_visit_remove_identifiers, purrr::map(
+    home_visit_non_mbcdi_csvs,
+    open_deidentify_save,
+    csv_save_dir = home_visit_dir_csv,
+    these_questions = 'non_mbcdi'
+  ))
 )

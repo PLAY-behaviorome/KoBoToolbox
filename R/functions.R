@@ -425,7 +425,7 @@ rename_home_xlsx <- function(in_dir) {
 make_standard_form_name <- function(fn) {
   this_dir <- dirname(fn)
   this_fn <- basename(fn)
-  form_id <- stringr::str_extract(this_fn, '^[0-9]+')
+  form_id <- stringr::str_extract(this_fn, '[0-9]+')
   fn <- paste0(form_id, "_PLAY_HomeQuestionnares", "_",
                extract_age_group_from_name(this_fn), "_",
                form_language(this_fn), '.xlsx')
@@ -456,4 +456,199 @@ form_language <- function(form_name) {
   form_lang[is_bilingual & is_spanish] <- "bilingual_spanish"
   form_lang[is_bilingual & !is_spanish] <- "bilingual_english"
   form_lang
+}
+
+###################################################################
+open_split_save <- function(fp, 
+                            csv_save_dir = 'tmp',
+                            these_questions = 'non_mbcdi',
+                            rename_cols = FALSE,
+                            vb = TRUE) {
+  
+  if (file.exists(fp)) {
+    df <- readr::read_csv(fp, show_col_types = FALSE)
+  } else {
+    stop(paste0('Cannot read file `', fp, '`'))
+  }
+  
+  out_fn <- file.path(
+    csv_save_dir,
+    paste0(
+      stringr::str_extract(fp, '[0-9]+'),
+      '_',
+      these_questions,
+      '_',
+      extract_age_group_from_name(fp),
+      '_',
+      tolower(form_language(fp)),
+      '.csv'
+    )
+  )
+  
+  if (vb) message("Output file directory: ", out_fn)
+  
+  if (!is.null(df)) {
+    if (these_questions == 'non_mbcdi') {
+      extract_save_non_mbcdi(df, out_fn, rename_cols)
+    } else {
+      extract_save_mcdi(df, out_fn, rename_cols)
+    }
+  } else {
+    message('Error in exporting data to `', out_fn, '`')
+  }
+}
+
+###################################################################
+extract_non_mbcdi <-
+  function(df,
+           rename_cols = FALSE) {
+    
+    require(dplyr)
+    
+    play_id_col <-
+      (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+    
+    # Select non-mcdi cols
+    mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
+    non_mcdi_qs <- !(mcdi_qs)
+    non_mcdi_cols <- (1:length(names(df)))[non_mcdi_qs]
+    
+    non_mcdi <- df %>%
+      dplyr::select(., all_of(play_id_col), all_of(non_mcdi_cols))
+    
+    if (rename_cols) {
+      non_mcdi <- dplyr::rename_with(non_mcdi, basename)
+    }
+    
+    non_mcdi
+  }
+
+###################################################################
+extract_save_non_mbcdi <-
+  function(df,
+           fn,
+           rename_cols = FALSE) {
+    require(dplyr)
+    non_mcdi <-
+      extract_non_mbcdi(df, rename_cols)
+    readr::write_csv(non_mcdi, fn)
+    message('Saved ', fn)
+  }
+
+###################################################################
+extract_mbcdi <-
+  function(df,
+           rename_cols = FALSE) {
+    require(dplyr)
+    play_id_col <-
+      (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+    
+    # Select non-mcdi cols
+    mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
+    # non_mcdi_qs <- !(mcdi_qs)
+    mcdi_cols <- (1:length(names(df)))[mcdi_qs]
+    
+    mcdi <- df %>%
+      dplyr::select(., all_of(play_id_col), all_of(mcdi_cols))
+    
+    if (rename_cols) {
+      mcdi <- dplyr::rename_with(mcdi, basename)
+    }
+    
+    mcdi
+  }
+
+###################################################################
+extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
+  require(readr)
+  require(dplyr)
+  
+  # play_id_col <-
+  #   (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
+  # 
+  # mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
+  # mcdi_cols <- (1:length(names(df)))[mcdi_qs]
+  
+  mcdi <- extract_mbcdi(df, rename_cols)
+  
+  if (rename_cols) {
+    mcdi <- dplyr::rename_with(mcdi, basename)
+  }
+  
+  readr::write_csv(mcdi, fn)
+  message('Saved ', fn)
+}
+
+###################################################################
+open_deidentify_save <- function(fp,
+                                 csv_save_dir = 'tmp',
+                                 these_questions = 'non_mbcdi',
+                                 rename_cols = FALSE,
+                                 vb = TRUE) {
+  require(tidyverse)
+  
+  if (!dir.exists(csv_save_dir)) {
+    stop("Directory not found: '", csv_save_dir, "'")
+  }
+  
+  if (file.exists(fp)) {
+    df <- readr::read_csv(fp, show_col_types = FALSE)
+    if (is.data.frame(df)) {
+      df <- remove_identifiers(df)
+    } else {
+      stop(paste0('Error in reading data frame.'))
+    }
+  } else {
+    stop(paste0('Cannot read file `', fp, '`'))
+  }
+  
+  out_fn <- file.path(
+    csv_save_dir,
+    paste0(
+      stringr::str_extract(fp, '[0-9]{6}'),
+      '_',
+      these_questions,
+      '_',
+      extract_age_group_from_name(fp),
+      '_',
+      tolower(form_language(fp)),
+      '_deidentified',
+      '.csv'
+    )
+  )
+  
+  if (!is.null(df)) {
+    readr::write_csv(df, out_fn)
+    message('Saved `', out_fn, '`')
+  } else {
+    message('Error in exporting data to `', out_fn, '`')
+  }
+}
+
+###################################################################
+remove_identifiers <- function(df) {
+  contains_name <- stringr::str_detect(names(df), 'name')
+  contains_address <- stringr::str_detect(names(df), 'address')
+  contains_phone <- stringr::str_detect(names(df), 'phone')
+  contains_email <- stringr::str_detect(names(df), 'email')
+  contains_birthdate <- stringr::str_detect(names(df), 'birthdate')
+  contains_first <- stringr::str_detect(names(df), 'first[12]?')
+  contains_last <- stringr::str_detect(names(df), 'last[12]?')
+  contains_city <- stringr::str_detect(names(df), 'city')
+  contains_year <- stringr::str_detect(names(df), 'year[12]?')
+  contains_month <- stringr::str_detect(names(df), 'month[12]?')
+  contains_day <- stringr::str_detect(names(df), '/day[12]?$')
+  
+  identifiable_data <- contains_name | contains_address |
+    contains_phone |
+    contains_email | contains_birthdate | contains_first |
+    contains_last |
+    contains_city | contains_year | contains_month | contains_day
+  
+  identifiable_cols <- (1:length(names(df)))[identifiable_data]
+  
+  df_deidentified <- df %>%
+    dplyr::select(., -all_of(identifiable_cols))
+  
+  df_deidentified
 }
