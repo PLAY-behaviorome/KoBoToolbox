@@ -48,7 +48,7 @@
 <li><a class="" href="screening-call.html">Screening call</a></li>
 <li><a class="active" href="home-visit.html">Home visit</a></li>
 <li><a class="" href="data-dictionary.html">Data dictionary</a></li>
-<li><a class="" href="visualization.html">Visualization</a></li>
+<li><a class="" href="visualizations.html">Visualizations</a></li>
 </ul>
 
         <div class="book-extra">
@@ -399,7 +399,7 @@ It also modifies the file name by appending <code>_deidentified</code>.</p>
 ##   identifiable_cols &lt;- (1:length(names(df)))[identifiable_data]
 ##   
 ##   df_deidentified &lt;- df %&gt;%
-##     dplyr::select(., -all_of(identifiable_cols))
+##     dplyr::select(.,-all_of(identifiable_cols))
 ##   
 ##   df_deidentified
 ## }</code></pre>

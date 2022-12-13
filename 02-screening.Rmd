@@ -4,7 +4,7 @@
 
 Details about the data collection [protocol for participant screening and recruiting](https://www.play-project.org/collection.html#Participant_Recruitment) can be found on the [PLAY Project website](https://play-project.org).
 
-To make the workflow more robust and reproducible, much of the work is embedded in functions (`R/functions.R`) and extensive use is made of the [`targets`](https://cran.r-project.org/web/packages/targets/) package. 
+To make the workflow more robust and reproducible, much of the work is embedded in functions (`R/functions.R`) and extensive use is made of the [`{targets}`](https://cran.r-project.org/web/packages/targets/) package. 
 This document describes the workflow, but none of the code chunks are executed.
 
 The `tar_target()` syntax should be read as follows: The "target" variable or file is on the left, and the function that generates it is on the right.
@@ -13,6 +13,12 @@ The `tar_target()` syntax should be read as follows: The "target" variable or fi
 
 The relevant KoBoToolbox data files have 'Demographic Questionnaire' in the title.
 We list these files and save them in a data frame called `kb_df`.
+
+::: {.rmdnote}
+We can control how often we query the KBT server to download and update the data files.
+There is a variable in the header of the `_targets.R` called `update_interval_days` we use to control this.
+Right now, it is set at 3 days.
+:::
 
 ```
 tar_target(kb_df, list_kobo_data())

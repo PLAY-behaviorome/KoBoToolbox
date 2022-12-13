@@ -1,1 +1,62 @@
-# Visualization {-}
+# Visualizations {-}
+
+## Recruiting calls data {-}
+
+Cumulative screening/recruiting calls by site.
+
+```{r}
+library(targets)
+tar_load(calls_plot)
+calls_plot
+```
+
+Number of screening calls by site.
+
+```{r}
+tar_load(bar_plot)
+bar_plot
+```
+
+## Demographics
+
+Child age in months (`child_age_mos`) by `child_sex`
+
+```{r}
+tar_load(demog_submissions)
+demog_submissions %>%
+  dplyr::filter(., !is.na(child_age_mos), !is.na(child_sex)) %>%
+  ggplot() +
+  aes(child_age_mos, fill = child_sex) +
+  geom_histogram(bins = 50)
+```
+
+Language(s) spoken to child by `child_sex`.
+
+```{r}
+demog_submissions <- demog_submissions %>%
+  dplyr::mutate(., language_to_child = stringr::str_replace_all(language_to_child, " ", "_"))
+xtabs(formula = ~ child_sex + language_to_child, data = demog_submissions)
+```
+
+Mother race and ethnicity.
+
+```{r}
+demog_submissions <- demog_submissions %>%
+  dplyr::mutate(
+    .,
+    mother_race = dplyr::recode(
+      mother_race,
+      morethanone = "more_than_one",
+      americanindian = "american_indian"
+    ),
+    mother_ethnicity = dplyr::recode(
+      mother_ethnicity,
+      hispanic_or_la = "hispanic",
+      not_hispanic_o = "not_hispanic",
+      nothispanic = "not_hispanic"
+    )
+  )
+xtabs(formula = ~ mother_race + mother_ethnicity,
+      data = demog_submissions)
+```
+

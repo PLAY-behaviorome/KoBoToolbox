@@ -48,7 +48,7 @@
 <li><a class="active" href="screening-call.html">Screening call</a></li>
 <li><a class="" href="home-visit.html">Home visit</a></li>
 <li><a class="" href="data-dictionary.html">Data dictionary</a></li>
-<li><a class="" href="visualization.html">Visualization</a></li>
+<li><a class="" href="visualizations.html">Visualizations</a></li>
 </ul>
 
         <div class="book-extra">
@@ -63,15 +63,20 @@
 <h2>Collection protocol<a class="anchor" aria-label="anchor" href="#collection-protocol"><i class="fas fa-link"></i></a>
 </h2>
 <p>Details about the data collection <a href="https://www.play-project.org/collection.html#Participant_Recruitment">protocol for participant screening and recruiting</a> can be found on the <a href="https://play-project.org">PLAY Project website</a>.</p>
-<p>To make the workflow more robust and reproducible, much of the work is embedded in functions (<code>R/functions.R</code>) and extensive use is made of the <a href="https://cran.r-project.org/web/packages/targets/"><code>targets</code></a> package.
+<p>To make the workflow more robust and reproducible, much of the work is embedded in functions (<code>R/functions.R</code>) and extensive use is made of the <a href="https://cran.r-project.org/web/packages/targets/"><code>{targets}</code></a> package.
 This document describes the workflow, but none of the code chunks are executed.</p>
-<p>The <code>tar_target()</code> syntax should be read as follows: The “target” variable or file is on the left, and the function that generates it is on the right.</p>
+<p>The <code><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target()</a></code> syntax should be read as follows: The “target” variable or file is on the left, and the function that generates it is on the right.</p>
 </div>
 <div id="retrieve-files-from-kobotoolbox" class="section level2 unnumbered">
 <h2>Retrieve files from KoBoToolbox<a class="anchor" aria-label="anchor" href="#retrieve-files-from-kobotoolbox"><i class="fas fa-link"></i></a>
 </h2>
 <p>The relevant KoBoToolbox data files have ‘Demographic Questionnaire’ in the title.
 We list these files and save them in a data frame called <code>kb_df</code>.</p>
+<div class="rmdnote">
+<p>We can control how often we query the KBT server to download and update the data files.
+There is a variable in the header of the <code>_targets.R</code> called <code>update_interval_days</code> we use to control this.
+Right now, it is set at 3 days.</p>
+</div>
 <pre><code>tar_target(kb_df, list_kobo_data())</code></pre>
 <div id="save-selected-raw-files-to-local-directory" class="section level3 unnumbered">
 <h3>Save selected raw files to local directory<a class="anchor" aria-label="anchor" href="#save-selected-raw-files-to-local-directory"><i class="fas fa-link"></i></a>
@@ -160,26 +165,28 @@ It shows that the field names are not equivalent.</p>
 ##   
 ##   df_1 &lt;- readr::read_csv(csv_fn, show_col_types = FALSE)
 ##   df_1 %&gt;%
-##     dplyr::select(., submit_date = c_today, 
-##                   site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
-##                   sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
-##                   child_age_mos = `play_phone_questionnaire/check_childage`,
-##                   child_sex = `play_phone_questionnaire/child_sex`,
-##                   language_to_child = `play_phone_questionnaire/language_spoken_child`,
-##                   language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
-##                   child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
-##                   child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
-##                   child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
-##                   child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
-##                   major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
-##                   child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
-##                   child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
-##                   child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
-##                   child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
-##                   mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
-##                   mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
-##                   mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
-##                   ) %&gt;%
+##     dplyr::select(
+##       .,
+##       submit_date = c_today,
+##       site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
+##       sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
+##       child_age_mos = `play_phone_questionnaire/check_childage`,
+##       child_sex = `play_phone_questionnaire/child_sex`,
+##       language_to_child = `play_phone_questionnaire/language_spoken_child`,
+##       language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
+##       child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
+##       child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
+##       child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
+##       child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
+##       major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
+##       child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
+##       child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
+##       child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
+##       child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
+##       mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
+##       mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
+##       mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
+##     ) %&gt;%
 ##     dplyr::mutate(
 ##       .,
 ##       site_id = dplyr::recode(
@@ -191,7 +198,7 @@ It shows that the field names are not equivalent.</p>
 ##         UCR = "UCRIV"
 ##       )
 ##     ) %&gt;%
-##     dplyr::filter(.,!stringr::str_detect(site_id, '_of__'))
+##     dplyr::filter(., !stringr::str_detect(site_id, '_of__'))
 ## }</code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clean_demog_2</span></span></code></pre></div>
@@ -203,25 +210,26 @@ It shows that the field names are not equivalent.</p>
 ##   
 ##   df_2 &lt;- readr::read_csv(csv_fn, show_col_types = FALSE)
 ##   df_2 %&gt;%
-##     dplyr::select(submit_date = c_today, 
-##                   site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
-##                   sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
-##                   child_age_mos = `play_demo_questionnaire/check_childage`,
-##                   child_sex = `play_demo_questionnaire/child_sex`,
-##                   language_to_child = `play_demo_questionnaire/language_spoken_child`,
-##                   language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
-##                   child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
-##                   child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
-##                   child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
-##                   child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-##                   major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
-##                   child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
-##                   child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
-##                   child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
-##                   child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
-##                   mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
-##                   mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
-##                   mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
+##     dplyr::select(
+##       submit_date = c_today,
+##       site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
+##       sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+##       child_age_mos = `play_demo_questionnaire/check_childage`,
+##       child_sex = `play_demo_questionnaire/child_sex`,
+##       language_to_child = `play_demo_questionnaire/language_spoken_child`,
+##       language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
+##       child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
+##       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
+##       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
+##       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+##       major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+##       child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
+##       child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
+##       child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
+##       child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
+##       mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
+##       mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
+##       mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
 ##     )
 ## }</code></pre>
 <div class="rmdnote">

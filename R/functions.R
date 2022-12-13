@@ -1,6 +1,9 @@
-# protocol/R/functions.R
+# R/functions.R
 
 ###################################################################
+#' Cleans/empties a target directory, usually one containing data
+#' @param update_data Logical value indicating whether to clean the directory.
+#' @param data_dir Directory to clean
 clean_data_dir <- function(update_data, data_dir) {
   if (update_data) {
     unlink(paste0(data_dir, "/*"))
@@ -9,11 +12,13 @@ clean_data_dir <- function(update_data, data_dir) {
 
 ###################################################################
 #' Lists the datasets available on KoBoToolbox using the PLAY credentials.
-#' #'
-#' @param URL A string that is the API call to extract the data. It defaults to 'https://kc.kobotoolbox.org/api/v1/data'
-#' @param return_df A logical value indicating whether to return a data frame (the default) or JSON.
 #'
-#' @return A data.frame with the 'description', 'title', 'url', and other information for the deployed forms on PLAY.
+#' @param URL A string that is the API call to extract the data. It defaults
+#' to 'https://kc.kobotoolbox.org/api/v1/data'
+#' @param return_df A logical value indicating whether to return a data frame
+#' (the default) or JSON.
+#' @return A data.frame with the 'description', 'title', 'url', and other
+#' information for the deployed forms on PLAY.
 list_kobo_data <-
   function(URL = "https://kc.kobotoolbox.org/api/v1/data",
            return_df = TRUE) {
@@ -217,6 +222,7 @@ extract_kb_form_name <-
 ###################################################################
 #' Retrieves demographic/screening or home visit forms from KoBoToolbox and
 #' saves them in a local directory.
+#'
 #' @param df A dataframe of the selected forms from the KoBoToolbox API
 #' @param save_dir A character string indicating the directory to save
 #' the downloaded files.
@@ -228,23 +234,28 @@ retrieve_kobo_xlsx <- function(df, save_dir) {
   stopifnot("save_dir not found" = dir.exists(save_dir))
   
   n_files <- dim(df)[1]
-  purrr::map(1:n_files, retrieve_save_xls_export, kb_df = df, save_dir = save_dir)
+  purrr::map(1:n_files,
+             retrieve_save_xls_export,
+             kb_df = df,
+             save_dir = save_dir)
 }
 
 ###################################################################
 #' Loads a single XLSX-formatted data file, converts it to CSV, and saves it.
+#'
 #' @param fn Filename for XLSX file
 #' @param out_dir Directory to save CSV file
 load_xlsx_save_csv <- function(fn, out_dir) {
   require(tools)
   require(readxl)
   require(readr)
-
+  
   stopifnot("fn not found" = file.exists(fn))
   stopifnot("out_dir not found" = dir.exists(out_dir))
-
+  
   xl <- readxl::read_xlsx(fn)
-  fn_csv <- file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
+  fn_csv <-
+    file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
   if (dir.exists(dirname(fn_csv))) {
     readr::write_csv(xl, fn_csv)
     message("File saved: '", fn_csv, "'")
@@ -256,6 +267,7 @@ load_xlsx_save_csv <- function(fn, out_dir) {
 ###################################################################
 #' Loads all XLSX-formatted files in `in_dir` and saves CSV-formatted files
 #' to `out_dir`
+#'
 #' @param in_dir A string indicating the input directory
 #' @param out_dir A string indicating the output directory
 load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
@@ -269,18 +281,19 @@ load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
     warning("fns is empty")
     NULL
   } else {
-    purrr::map(fns, load_xlsx_save_csv, out_dir)    
+    purrr::map(fns, load_xlsx_save_csv, out_dir)
   }
 }
 
 ###################################################################
 #' Cleans set of screening/demographic data files and aggregates them into
 #' a single data frame.
+#'
 #' @param fns A character vector of CSV filenames.
 #' @return A single dataframe with the aggregated demographic data files.
 clean_merge_demog <- function(fns) {
-  rbind(clean_demog_1(fns[1]), 
-        clean_demog_2(fns[2]), 
+  rbind(clean_demog_1(fns[1]),
+        clean_demog_2(fns[2]),
         clean_demog_2(fns[3])) %>%
     dplyr::arrange(., submit_date)
 }
@@ -288,6 +301,7 @@ clean_merge_demog <- function(fns) {
 ###################################################################
 #' Cleans the old/original demographic/screening form by selecting
 #' a subset of variables
+#'
 #' @param csv_fn A filename for the CSV file associated with the original
 #' screening form
 #' @return A data frome
@@ -298,26 +312,28 @@ clean_demog_1 <- function(csv_fn) {
   
   df_1 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   df_1 %>%
-    dplyr::select(., submit_date = c_today, 
-                  site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
-                  sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
-                  child_age_mos = `play_phone_questionnaire/check_childage`,
-                  child_sex = `play_phone_questionnaire/child_sex`,
-                  language_to_child = `play_phone_questionnaire/language_spoken_child`,
-                  language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
-                  child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
-                  child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
-                  child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
-                  child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
-                  major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
-                  child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
-                  child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
-                  child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
-                  child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
-                  mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
-                  mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
-                  mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
-                  ) %>%
+    dplyr::select(
+      .,
+      submit_date = c_today,
+      site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
+      sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
+      child_age_mos = `play_phone_questionnaire/check_childage`,
+      child_sex = `play_phone_questionnaire/child_sex`,
+      language_to_child = `play_phone_questionnaire/language_spoken_child`,
+      language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
+      child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
+      child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
+      child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
+      child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
+      major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
+      child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
+      child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
+      child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
+      child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
+      mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
+      mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
+      mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
+    ) %>%
     dplyr::mutate(
       .,
       site_id = dplyr::recode(
@@ -329,12 +345,13 @@ clean_demog_1 <- function(csv_fn) {
         UCR = "UCRIV"
       )
     ) %>%
-    dplyr::filter(.,!stringr::str_detect(site_id, '_of__'))
+    dplyr::filter(., !stringr::str_detect(site_id, '_of__'))
 }
 
 ###################################################################
 #' Cleans new demographic/screening form by selecting
-#' a subset of variables
+#' a subset of variables.
+#'
 #' @param csv_fn A filename for the CSV file associated with the original
 #' screening form
 #' @return A data frome
@@ -346,31 +363,33 @@ clean_demog_2 <- function(csv_fn) {
   
   df_2 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   df_2 %>%
-    dplyr::select(submit_date = c_today, 
-                  site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
-                  sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
-                  child_age_mos = `play_demo_questionnaire/check_childage`,
-                  child_sex = `play_demo_questionnaire/child_sex`,
-                  language_to_child = `play_demo_questionnaire/language_spoken_child`,
-                  language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
-                  child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
-                  child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
-                  child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
-                  child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-                  major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
-                  child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
-                  child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
-                  child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
-                  child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
-                  mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
-                  mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
-                  mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
+    dplyr::select(
+      submit_date = c_today,
+      site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
+      sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+      child_age_mos = `play_demo_questionnaire/check_childage`,
+      child_sex = `play_demo_questionnaire/child_sex`,
+      language_to_child = `play_demo_questionnaire/language_spoken_child`,
+      language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
+      child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
+      child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
+      child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
+      child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+      major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+      child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
+      child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
+      child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
+      child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
+      mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
+      mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
+      mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
     )
 }
 
 ###################################################################
 #' Augments cleaned demographic/screening data frame with 'n_calls'
 #' variable starting at the beginning of the project.
+#'
 #' @param df Demographic/screening data frame.
 #' @return Augmented data frame.
 add_n_calls_to_demog <- function(df) {
@@ -383,13 +402,14 @@ add_n_calls_to_demog <- function(df) {
 ###################################################################
 #' Creates a time series plot of the cumulative number of recruiting/screening
 #' calls.
+#'
 #' @param df Augmented data frame.
 #' @return Plot
 plot_call_timeseries <- function(df) {
   require(dplyr)
   require(ggplot2)
   df %>%
-    filter(., !is.na(submit_date), !is.na(n_calls), !is.na(site_id)) %>%
+    filter(.,!is.na(submit_date),!is.na(n_calls),!is.na(site_id)) %>%
     ggplot(.) +
     aes(submit_date, n_calls, color = site_id) +
     geom_point()
@@ -397,6 +417,7 @@ plot_call_timeseries <- function(df) {
 
 ###################################################################
 #' Create bar plot summarizing total calls by site.
+#'
 #' @param df Augmented data frame.
 #' @return Plot
 plot_calls_by_site <- function(df) {
@@ -405,10 +426,19 @@ plot_calls_by_site <- function(df) {
     ggplot(.) +
     aes(site_id, fill = site_id) +
     geom_bar() +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text
+    theme(axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )) # Rotate text
 }
 
 ###################################################################
+#' Standardizes the format of the home visit questionnaire XLSX
+#' data files.
+#'
+#' @param in_dir Directory where the XLSX files are stored
+#' @return Results of `file.rename()`
 rename_home_xlsx <- function(in_dir) {
   require(stringr)
   require(purrr)
@@ -417,38 +447,69 @@ rename_home_xlsx <- function(in_dir) {
   
   fl <- list.files(in_dir, full.names = TRUE)
   fl_home_old <- fl[stringr::str_detect(fl, 'Home')]
-  fl_home_new <- purrr::map_chr(fl_home_old, make_standard_form_name)
+  fl_home_new <-
+    purrr::map_chr(fl_home_old, make_standard_form_name)
   file.rename(fl_home_old, fl_home_new)
 }
 
 ###################################################################
+#' Helper function called by rename_home_xlsx() to create standard
+#' file name.
+#'
+#' @param fn Old file name
+#' @return New file name and path
 make_standard_form_name <- function(fn) {
   this_dir <- dirname(fn)
   this_fn <- basename(fn)
   form_id <- stringr::str_extract(this_fn, '[0-9]+')
-  fn <- paste0(form_id, "_PLAY_HomeQuestionnares", "_",
-               extract_age_group_from_name(this_fn), "_",
-               form_language(this_fn), '.xlsx')
+  fn <- paste0(
+    form_id,
+    "_PLAY_HomeQuestionnares",
+    "_",
+    extract_age_group_from_name(this_fn),
+    "_",
+    form_language(this_fn),
+    '.xlsx'
+  )
   file.path(this_dir, fn)
 }
 
 ###################################################################
+#' Helper function to extract the age group from a file name.
+#'
+#' @param form_name File (form) name.
+#' @return Age group as a string
 extract_age_group_from_name <- function(form_name) {
   age_grps <- stringr::str_match(form_name, "[ _\\(]+(12|18|24)[ _]+")
-  age_grps[,2]
+  age_grps[, 2]
 }
 
 ###################################################################
+#' Helper function to detect whether a file/form contains data from
+#' a bilingual participant family based on the file/form name.
+#'
+#' @param form_name
+#' @return Logical vector of names that contain the detected string.
 form_is_bilingual <- function(form_name) {
   stringr::str_detect(form_name, "[Bb]ilingual")
 }
 
 ###################################################################
+#' Helper function to detect whether a file/form contains data from
+#' a Spanish-speaking family.
+#'
+#' @param form_name
+#' @return Logical vector of names that contain the detected string.
 form_is_spanish <- function(form_name) {
   stringr::str_detect(form_name, "[Ss]panish")
 }
 
 ###################################################################
+#' Helper function to determine the language spoken by the participant
+#' family based on information in the file/form name.
+#'
+#' @param form_name
+#' @return String with appropriate language indicator.
 form_language <- function(form_name) {
   is_bilingual <- form_is_bilingual(form_name)
   is_spanish <- form_is_spanish(form_name)
@@ -459,12 +520,21 @@ form_language <- function(form_name) {
 }
 
 ###################################################################
-open_split_save <- function(fp, 
+#' Opens a home visit CSV file;  extracts non_mbcdi or mbcdi
+#' questions, and saves a new file with the selected questions.
+#'
+#' @param fp CSV filename
+#' @param csv_save_dir Directory for the saved files.
+#' @param these_questions String indicating non_mbcdi or mbcdi questions should
+#' be extracted and saved.
+#' @param rename_cols Logical value indicating whether to rename the columns
+#' using the basename() function.
+#' @param vb Logical value. Produce verbose output or not.
+open_split_save <- function(fp,
                             csv_save_dir = 'tmp',
                             these_questions = 'non_mbcdi',
                             rename_cols = FALSE,
                             vb = TRUE) {
-  
   if (file.exists(fp)) {
     df <- readr::read_csv(fp, show_col_types = FALSE)
   } else {
@@ -485,7 +555,8 @@ open_split_save <- function(fp,
     )
   )
   
-  if (vb) message("Output file directory: ", out_fn)
+  if (vb)
+    message("Output file directory: ", out_fn)
   
   if (!is.null(df)) {
     if (these_questions == 'non_mbcdi') {
@@ -499,10 +570,14 @@ open_split_save <- function(fp,
 }
 
 ###################################################################
+#' Extracts the non-MB-CDI questions from a home visit data frame.
+#'
+#' @param df Data frame
+#' @param rename_cols Rename cols using basename()
+#' @return Data frame with selected questions.
 extract_non_mbcdi <-
   function(df,
            rename_cols = FALSE) {
-    
     require(dplyr)
     
     play_id_col <-
@@ -524,11 +599,19 @@ extract_non_mbcdi <-
   }
 
 ###################################################################
+#' Wrapper function to combine question extraction and file-saving
+#' for the non-MB-CDI home visit questions.
+#'
+#' @param df Data frame
+#' @param fn Output file name
+#' @param rename_cols Rename cols using basename()
+#' @return Saves CSV data file.
 extract_save_non_mbcdi <-
   function(df,
            fn,
            rename_cols = FALSE) {
     require(dplyr)
+    
     non_mcdi <-
       extract_non_mbcdi(df, rename_cols)
     readr::write_csv(non_mcdi, fn)
@@ -536,6 +619,11 @@ extract_save_non_mbcdi <-
   }
 
 ###################################################################
+#' Extracts the MB-CDI questions from a home visit data frame.
+#' 
+#' @param df Data frame
+#' @param rename_cols Rename cols using basename()
+#' @return Data frame with selected questions.
 extract_mbcdi <-
   function(df,
            rename_cols = FALSE) {
@@ -559,15 +647,16 @@ extract_mbcdi <-
   }
 
 ###################################################################
+#' Wrapper function to combine question extraction and file-saving
+#' for the MB-CDI home visit questions.
+#' 
+#' @param df Data frame
+#' @param fn Output file name
+#' @param rename_cols Rename cols using basename()
+#' @return Saves CSV data file.
 extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
   require(readr)
   require(dplyr)
-  
-  # play_id_col <-
-  #   (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
-  # 
-  # mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
-  # mcdi_cols <- (1:length(names(df)))[mcdi_qs]
   
   mcdi <- extract_mbcdi(df, rename_cols)
   
@@ -580,6 +669,14 @@ extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
 }
 
 ###################################################################
+#' Opens a CSV, removes identifying columns, and saves new copy with
+#' the identifiers removed.
+#' 
+#' @param fp Filename
+#' @csv_save_dir Dirctory for saved file
+#' @these_questions Filter to select type of files
+#' @rename_cols Rename cols with basename()
+#' @vb Provide verbose output
 open_deidentify_save <- function(fp,
                                  csv_save_dir = 'tmp',
                                  these_questions = 'non_mbcdi',
@@ -626,6 +723,11 @@ open_deidentify_save <- function(fp,
 }
 
 ###################################################################
+#' Detects presence of identifying information from column names
+#' in a data frame then returns data frame without those columns.
+#' 
+#' @param df
+#' @return Data frame with identifiers removed.
 remove_identifiers <- function(df) {
   contains_name <- stringr::str_detect(names(df), 'name')
   contains_address <- stringr::str_detect(names(df), 'address')
@@ -648,7 +750,7 @@ remove_identifiers <- function(df) {
   identifiable_cols <- (1:length(names(df)))[identifiable_data]
   
   df_deidentified <- df %>%
-    dplyr::select(., -all_of(identifiable_cols))
+    dplyr::select(.,-all_of(identifiable_cols))
   
   df_deidentified
 }
