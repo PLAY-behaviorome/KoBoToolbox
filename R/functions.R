@@ -702,7 +702,7 @@ open_deidentify_save <- function(fp,
   out_fn <- file.path(
     csv_save_dir,
     paste0(
-      stringr::str_extract(fp, '[0-9]{6}'),
+      stringr::str_extract(fp, '[0-9]+'),
       '_',
       these_questions,
       '_',
@@ -753,4 +753,12 @@ remove_identifiers <- function(df) {
     dplyr::select(.,-all_of(identifiable_cols))
   
   df_deidentified
+}
+
+###################################################################
+#' Takes a list of CSV data files and merges them.
+#' NOTE: we use read.csv() to _avoid_ the problem of inferring
+#' column types differently across the datasets.
+make_aggregate_data_file <- function(fl) {
+  purrr::map_df(fl, read.csv, colClasses = 'character')
 }

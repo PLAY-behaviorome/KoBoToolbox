@@ -27,7 +27,10 @@ list(
   tar_target(
     screening_downloads,
     retrieve_kobo_xlsx(kb_demog, screening_dir_xlsx),
-    cue = tarchetypes::tar_cue_age(name = screening_downloads, age = as.difftime(update_interval_days, units = "days"))
+    cue = tarchetypes::tar_cue_age(
+      name = screening_downloads,
+      age = as.difftime(update_interval_days, units = "days")
+    )
   ),
   tar_target(
     screening_xlsx_fns,
@@ -81,34 +84,89 @@ list(
   tar_target(
     home_visit_downloads,
     retrieve_kobo_xlsx(kb_home, home_visit_dir_xlsx),
-    cue = tarchetypes::tar_cue_age(name = home_visit_downloads, age = as.difftime(update_interval_days, units = "days"))
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_downloads,
+      age = as.difftime(update_interval_days, units = "days")
+    )
   ),
   tar_target(home_visit_renamed, rename_home_xlsx(home_visit_dir_xlsx)),
   tar_target(
     home_visit_xlsx_to_csv,
     load_xlsx_save_many_csvs(home_visit_dir_xlsx, home_visit_dir_csv, "Home")
   ),
-  tar_target(home_visit_csvs, list.files(home_visit_dir_csv, '^[0-9]+_PLAY.*\\csv', full.names = TRUE)),
+  tar_target(
+    home_visit_csvs,
+    list.files(home_visit_dir_csv, '^[0-9]+_PLAY.*\\csv', full.names = TRUE)
+  ),
   # Non-MB-CDI CSVs
-  tar_target(home_visit_non_mbcdi, purrr::map(
-    home_visit_csvs,
-    open_split_save,
-    csv_save_dir = home_visit_dir_csv,
-    these_questions = 'non_mbcdi'
-  )),
+  tar_target(
+    home_visit_non_mbcdi,
+    purrr::map(
+      home_visit_csvs,
+      open_split_save,
+      csv_save_dir = home_visit_dir_csv,
+      these_questions = 'non_mbcdi'
+    )
+  ),
   # MB-CDI CSVs
-  tar_target(home_visit_mbcdi, purrr::map(
-    home_visit_csvs,
-    open_split_save,
-    csv_save_dir = home_visit_dir_csv,
-    these_questions = 'mbcdi'
-  )),
+  tar_target(
+    home_visit_mbcdi,
+    purrr::map(
+      home_visit_csvs,
+      open_split_save,
+      csv_save_dir = home_visit_dir_csv,
+      these_questions = 'mbcdi'
+    )
+  ),
   # De-identified CSVs
-  tar_target(home_visit_non_mbcdi_csvs, list.files(home_visit_dir_csv, '^[0-9]+_non_mbcdi.*\\csv', full.names = TRUE)),
-  tar_target(home_visit_remove_identifiers, purrr::map(
+  tar_target(
     home_visit_non_mbcdi_csvs,
-    open_deidentify_save,
-    csv_save_dir = home_visit_dir_csv,
-    these_questions = 'non_mbcdi'
-  ))
+    list.files(home_visit_dir_csv, '^[0-9]+_non_mbcdi.*\\csv', full.names = TRUE)
+  ),
+  tar_target(
+    home_visit_remove_identifiers,
+    purrr::map(
+      home_visit_non_mbcdi_csvs,
+      open_deidentify_save,
+      csv_save_dir = home_visit_dir_csv,
+      these_questions = 'non_mbcdi'
+    )
+  ),
+  # Merge non-MB-CDI datafiles
+  tar_target(
+    files_w_288_cols,
+    list.files(
+      home_visit_dir_csv,
+      "2[3458]_non_mbcdi.*_deidentified\\.csv",
+      full.names = TRUE
+    )
+  ),
+  tar_target(
+    df_merge_288_cols,
+    make_aggregate_data_file(files_w_288_cols)
+  ),
+  tar_target(
+    files_w_287_cols_1,
+    list.files(
+      home_visit_dir_csv,
+      "2[69]_non_mbcdi.*_deidentified\\.csv",
+      full.names = TRUE
+    )
+  ),
+  tar_target(
+    df_merge_287_cols_1,
+    make_aggregate_data_file(files_w_287_cols_1)
+  ),
+  tar_target(
+    files_w_287_cols_2,
+    list.files(
+      home_visit_dir_csv,
+      "(740627|740630|740631)_non.*_deidentified\\.csv",
+      full.names = TRUE
+    )
+  ),
+  tar_target(
+    df_merge_287_cols_2,
+    make_aggregate_data_file(files_w_287_cols_2)
+  )
 )
