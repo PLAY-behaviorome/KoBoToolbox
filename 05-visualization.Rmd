@@ -6,22 +6,25 @@ Cumulative screening/recruiting calls by site.
 
 ```{r}
 library(targets)
+```
+
+```{r, fig.cap="Cumulative screening calls by year and site"}
 tar_load(calls_plot)
 calls_plot
 ```
 
 Number of screening calls by site.
 
-```{r}
+```{r load-bar_plot, fig.cap="Cumulative screening calls by year and site"}
 tar_load(bar_plot)
 bar_plot
 ```
 
-## Demographics
+### Demographics {-}
 
 Child age in months (`child_age_mos`) by `child_sex`.
 
-```{r}
+```{r, fig.cap="Histogram of child age at time of recruiting call."}
 targets::tar_load(demog_submissions)
 demog_submissions %>%
   dplyr::filter(., !is.na(child_age_mos), !is.na(child_sex)) %>%
@@ -64,7 +67,7 @@ xtabs(formula = ~ mother_race + mother_ethnicity,
       data = demog_submissions)
 ```
 
-## Recruiting locations
+### Recruiting locations {-}
 
 ::: {.rmdimportant}
 For privacy reasons, we do not expose or share address information.
@@ -151,7 +154,7 @@ geos <- get_multiple_census_geos(add)
 
 Helper function to plot lat and long of recruiting sites on a U.S. map.
 
-```{r}
+```{r, message=FALSE}
 plot_screening_sites <- function(geo_df) {
   require(ggmap)
   require(dplyr)
@@ -169,7 +172,140 @@ plot_screening_sites <- function(geo_df) {
 
 Plot the map.
 
-```{r}
+```{r, fig.cap = "Families contacted by location"}
 plot_screening_sites(geos)
 ```
+ 
+## Home visit data {-}
 
+```{r}
+targets::tar_load(df_merged_recent)
+```
+
+### Demographics {-}
+
+Child age in months (`age_group`) by `child_sex`.
+
+Note: The child's exact age in months is part of the Databrary-related data. 
+That is on the work plan.
+
+```{r}
+df_merged_recent %>%
+  dplyr::filter(., !is.na(age_group), !is.na(child_sex)) %>%
+  ggplot() +
+  aes(age_group, fill = child_sex) +
+  geom_bar()
+```
+
+### Language exposure {-}
+
+```{r}
+df_merged_recent <- df_merged_recent %>%
+  dplyr::mutate(., language_child = stringr::str_replace_all(language_child, " ", "_"))
+xtabs(formula = ~ child_sex + language_child, data = df_merged_recent)
+```
+
+### Locomotor milestones {-}
+
+#### Crawl onset {-}
+
+```{r}
+play_loco <- df_merged_recent %>%
+  dplyr::select(., age_group, child_sex, language_child,
+                group_locomotor_milestones.group_who_walk.who_walk_onset_mo,
+                group_locomotor_milestones.group_k_walk.k_walk_onset_mo,
+                group_locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
+  dplyr::rename(., walk_mos_who = group_locomotor_milestones.group_who_walk.who_walk_onset_mo,
+                walk_mos_kea = group_locomotor_milestones.group_k_walk.k_walk_onset_mo,
+                crawl_mos = group_locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
+  dplyr::mutate(., walk_mos_who = as.numeric(walk_mos_who),
+                walk_mos_kea = as.numeric(walk_mos_kea),
+                crawl_mos = as.numeric(crawl_mos))
+
+```
+
+```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
+play_loco %>%
+  ggplot(.) +
+  aes(crawl_mos, fill = child_sex) +
+  geom_histogram(bins = 12)
+```
+
+### Walk onset {-}
+
+```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_kea, fill = child_sex) +
+  geom_histogram(bins = 10)
+```
+
+```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, fill = child_sex) +
+  geom_histogram(bins=12)
+```
+
+```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
+play_loco %>%
+  ggplot(.) +
+  aes(walk_mos_who, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  xlim(8, 18) +
+  ylim(8, 18) +
+  theme(legend.position="bottom") +
+  theme(aspect.ratio = 1) -> walk_p
+
+ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 
+                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+```
+
+### Health {-}
+
+#### Feeding {-}
+
+```{r}
+feeding <- df_merged_recent %>%
+  dplyr::select(., age_group, child_sex, language_child,
+                group_health.group_feeding_nutrition.breastfeed,
+                group_health.group_feeding_nutrition.solidfood_age) %>%
+  dplyr::rename(., breastfeed = group_health.group_feeding_nutrition.breastfeed,
+                solid_food_mos = group_health.group_feeding_nutrition.solidfood_age) %>%
+  dplyr::mutate(., solid_food_mos = as.numeric(solid_food_mos))
+```
+
+```{r}
+xtabs(formula = ~ child_sex + breastfeed, data = feeding)
+```
+
+```{r}
+feeding %>%
+  ggplot(.) +
+  aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 15)
+```
+
+#### Smoking/drinking {-}
+
+```{r}
+smoking_drinking <- df_merged_recent %>%
+  dplyr::select(., age_group, child_sex, language_child,
+                group_health.group_smoking.pregnant_smoking,
+                group_health.group_drinking.pregnant_drinking) %>%
+  dplyr::rename(., preg_smoking = group_health.group_smoking.pregnant_smoking,
+                preg_drinking = group_health.group_drinking.pregnant_drinking)
+
+xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
+```
+
+#### Sleeping position {-}
+
+```{r}
+sleeping_pos <- df_merged_recent %>%
+  dplyr::select(., age_group, child_sex, language_child,
+                group_health.group_general_health.child_sleeping_position) %>%
+  dplyr::rename(., child_sleeping_position = group_health.group_general_health.child_sleeping_position) 
+
+xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
+```

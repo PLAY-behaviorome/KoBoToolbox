@@ -794,26 +794,27 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <p>Where does the misalignment arise?</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740627</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [16]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [76]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [106] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [166] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [196] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [256] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [286]  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [99] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [113] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>The misalignment arises somewhere near column 92.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df740629</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/740629_non_mbcdi_24_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -828,26 +829,27 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740630</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [16]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [76]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [106] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [166] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [196] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [256] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [286]  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [99] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [113] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>These files also fall out of alignment near column 92.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df740631</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/740631_non_mbcdi_24_bilingual_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -856,26 +858,27 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740631</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [16]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [76]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [106] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [166] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [196] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [256] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [286]  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [99] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [113] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>And these files fall out of alignment near column 92.</p>
 <p>Let’s see if <code>df740627</code>, <code>df740630</code>, and <code>df740631</code> are aligned with one another.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
@@ -891,18 +894,16 @@ We do that first, then address the discrepancies between aggregates.</p>
 <div id="make-aggregate-files" class="section level2 unnumbered">
 <h2>Make aggregate files<a class="anchor" aria-label="anchor" href="#make-aggregate-files"><i class="fas fa-link"></i></a>
 </h2>
-<div id="non-mb-cdi-files-with-n288-columns" class="section level3" number="0.0.1">
-<h3>
-<span class="header-section-number">0.0.1</span> non-MB-CDI files with <span class="math inline">\(n=288\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n288-columns"><i class="fas fa-link"></i></a>
+<div id="non-mb-cdi-files-with-n288-columns" class="section level3 unnumbered">
+<h3>non-MB-CDI files with <span class="math inline">\(n=288\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n288-columns"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>tar_target(files_w_288_cols, list.files(home_visit_dir_csv, 
   "2[3458]_non_mbcdi.*_deidentified", full.names = TRUE)),
 
 tar_target(df_merge_288_cols, make_aggregate_data_file(files_with_288_cols))</code></pre>
 </div>
-<div id="non-mb-cdi-files-with-n287-columns" class="section level3" number="0.0.2">
-<h3>
-<span class="header-section-number">0.0.2</span> non-MB-CDI files with <span class="math inline">\(n=287\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n287-columns"><i class="fas fa-link"></i></a>
+<div id="non-mb-cdi-files-with-n287-columns" class="section level3 unnumbered">
+<h3>non-MB-CDI files with <span class="math inline">\(n=287\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n287-columns"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>tar_target(files_w_287_cols_1, 
   list.files(home_visit_dir_csv, "2[69]_non_mbcdi.*_deidentified", full.names = TRUE)),
@@ -912,75 +913,707 @@ tar_target(files_w_287_cols_2,
   list.files(home_visit_dir_csv, list.files(home_visit_dir_csv, "(740627|740630|740631)_non.*_deidentified", full.names = TRUE)),
 tar_target(df_merge_288_cols_2, make_aggregate_data_file(files_w_287_cols_2))</code></pre>
 </div>
-<div id="examine-groups-with-n287-cols" class="section level3" number="0.0.3">
-<h3>
-<span class="header-section-number">0.0.3</span> Examine groups with <span class="math inline">\(n=287\)</span> cols<a class="anchor" aria-label="anchor" href="#examine-groups-with-n287-cols"><i class="fas fa-link"></i></a>
+<div id="examine-groups-with-n287-cols" class="section level3 unnumbered">
+<h3>Examine groups with <span class="math inline">\(n=287\)</span> cols<a class="anchor" aria-label="anchor" href="#examine-groups-with-n287-cols"><i class="fas fa-link"></i></a>
 </h3>
 <p>We focus on the starting column where the column names diverge, column 92.</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span>
+<span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span><span class="op">[</span><span class="fl">92</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_feeding_nutrition.instructions_feeding"</code></pre>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span><span class="op">[</span><span class="fl">92</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] "group_combinedquestionnaires.group_homevisitquestionnaires.group_locomotor_milestones.group_health.group_feeding_nutrition.instructions_feeding"</code></pre>
 <p>There is an erroneous <code>group_locomotor_milestones.</code> in the <code>df_merge_287_cols_2</code> column name.</p>
-<p>A bit of sleuthing determines that this <code>group_locomotor_milestones.</code> label is characteristic of columns 92 to 182.</p>
+<p>A bit of sleuthing determines that this <code>group_locomotor_milestones.</code> label is characteristic of columns 92 to 273.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">287</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"group_locomotor_milestones"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [16]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [76]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [106]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [136]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [151]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [166]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [181]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [196] FALSE</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">273</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"group_locomotor_milestones"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [17] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [33] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [49] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [65] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [81] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [97] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [113] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [129] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [145] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [161] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [177] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p>The following should fix this.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">old_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
 <span><span class="va">new_names</span> <span class="op">&lt;-</span> <span class="va">old_names</span></span>
-<span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">113</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">113</span><span class="op">]</span>, <span class="st">"group_locomotor_milestones\\."</span><span class="op">)</span></span>
+<span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">273</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">273</span><span class="op">]</span>, <span class="st">"group_locomotor_milestones\\."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">new_names</span></span></code></pre></div>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [16]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [76]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [106]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [166] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [196] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [256] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [286]  TRUE  TRUE</code></pre>
-<p>We have a second problem with columns from 114 to 278.</p>
-<p>One of the problems has to do with column 114. There is a question ending <code>doctor_told_you</code> in <code>names(df_merge_287_cols_1)</code> but not in <code>names(df_merge_287_cols_2)</code>.</p>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [99]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [113]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [225]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [239]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [267]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<p>We have a second problem with columns from 114 to 210.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span><span class="op">[</span><span class="fl">113</span><span class="op">:</span><span class="fl">115</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span><span class="op">[</span><span class="fl">113</span><span class="op">:</span><span class="fl">115</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_vision_tested.donotknow"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_vision_tested.donotknow"
+##      [,2]                                                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.doctor_told_you"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"      
+##      [,3]                                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.ear_infection"</code></pre>
+<p>One of the problems has to do with column 114. There is a question ending <code>doctor_told_you</code> in <code>names(df_merge_287_cols_1)</code> but not in <code>names(df_merge_287_cols_2)</code>.</p>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"doctor_told_you"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"doctor_told_you"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Deleting this question would create additional misalignments and further problems.
 We cannot proceed without further discussion with our team.</p>
+<p>For now, let’s generate an array with all of the remaining differences in column names.</p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">names_differ</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">names_differ</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 103</code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span><span class="op">[</span><span class="va">names_differ</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span><span class="op">[</span><span class="va">names_differ</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.doctor_told_you"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"      
+##      [,2]                                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.ear_infection"
+##      [,3]                                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.ear_infection"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.asthma"       
+##      [,4]                                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.asthma"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.respiratory"
+##      [,5]                                                                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.respiratory"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.gastrointestinal"
+##      [,6]                                                                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.gastrointestinal"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comments_allergy_etc"                           
+##      [,7]                                                                                                               
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comments_allergy_etc"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_injury_times"  
+##      [,8]                                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_injury_times"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comment_injury"    
+##      [,9]                                                                                                                  
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comment_injury"         
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comments_general_health"
+##      [,10]                                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.comments_general_health"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.instructions_prenatal"        
+##      [,11]                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.instructions_prenatal"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.prenatal_care"        
+##      [,12]                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.prenatal_care"    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.comments_prenatal"
+##      [,13]                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_prenatal.comments_prenatal"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.pregnant_smoking"  
+##      [,14]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.pregnant_smoking"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_1"
+##      [,15]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_1"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_2"
+##      [,16]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_2"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_3"
+##      [,17]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_trimester_3"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.mom_smoking_now"    
+##      [,18]                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.mom_smoking_now"       
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.mom_smoking_now_amount"
+##      [,19]                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.mom_smoking_now_amount"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_house"         
+##      [,20]                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_house"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_car"  
+##      [,21]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.smoking_car"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.comments_smoking"
+##      [,22]                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_smoking.comments_smoking"  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.pregnant_drinking"
+##      [,23]                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.pregnant_drinking"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_1"
+##      [,24]                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_1"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_2"
+##      [,25]                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_2"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_3"
+##      [,26]                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.drinking_trimester_3"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.comments_drinking"   
+##      [,27]                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_drinking.comments_drinking"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.note_phq4"            
+##      [,28]                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.note_phq4"        
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.instructions_phq4"
+##      [,29]                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.instructions_phq4"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_nervous"     
+##      [,30]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_nervous" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_worrying"
+##      [,31]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_worrying"      
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_littleinterest"
+##      [,32]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_littleinterest"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_down"          
+##      [,33]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.phq4_down"    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.comments_phq4"
+##      [,34]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_phq4.comments_phq4"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.instructions_rothbart1"
+##      [,35]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.instructions_rothbart1"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.instructions_rothbart2"
+##      [,36]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.instructions_rothbart2"                        
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.instructions_rothbart3"
+##      [,37]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.instructions_rothbart3"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_unfamiliarperson"
+##      [,38]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_unfamiliarperson"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_troubletask"     
+##      [,39]                                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_troubletask"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_companyofchild"
+##      [,40]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_companyofchild"  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_choiceactivities"
+##      [,41]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_choiceactivities"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_quietlysung"     
+##      [,42]                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_quietlysung"    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_playingoutdoors"
+##      [,43]                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_playingoutdoors"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_morethan10"     
+##      [,44]                                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_morethan10"       
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_respondingremarks"
+##      [,45]                                                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_respondingremarks" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_excitedlovedadults"
+##      [,46]                                                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_excitedlovedadults"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_fiddlehair"        
+##      [,47]                                                                                                                  
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_fiddlehair"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_roughrowdy"
+##      [,48]                                                                                                                    
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_roughrowdy"  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_rockedhugged"
+##      [,49]                                                                                                                           
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_rockedhugged"       
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_involvednewactivity"
+##      [,50]                                                                                                                           
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_involvednewactivity"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tirequickly"        
+##      [,51]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tirequickly"  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_callattention"
+##      [,52]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_callattention"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tags"         
+##      [,53]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tags"            
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_noisyenvironment"
+##      [,54]                                                                                                                        
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_noisyenvironment"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_energy"          
+##      [,55]                                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_energy"  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_vehicles"
+##      [,56]                                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_vehicles"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_active"  
+##      [,57]                                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_active"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_forbidden"
+##      [,58]                                                                                                                    
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_forbidden"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_sadlytearful"
+##      [,59]                                                                                                                    
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_sadlytearful"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_downblue"    
+##      [,60]                                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_downblue"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_runhouse"
+##      [,61]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_runhouse"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_excitingevent"
+##      [,62]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_excitingevent"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tempertantrum"
+##      [,63]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_tempertantrum"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_waitpatiently"
+##      [,64]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_waitpatiently"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_rockedsmile"  
+##      [,65]                                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_rockedsmile"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_mold"       
+##      [,66]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_mold"         
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_interactadult"
+##      [,67]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_interactadult"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_careful"      
+##      [,68]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_careful"      
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_enternewplace"
+##      [,69]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_enternewplace"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_crymorethan3" 
+##      [,70]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_crymorethan3" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_easilysoothed"
+##      [,71]                                                                                                                     
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_easilysoothed"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_busyother"    
+##      [,72]                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_busyother"      
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_differentpeople"
+##      [,73]                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.group_rothbartquestions.rothbart_differentpeople"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.comments_rothbart"                               
+##      [,74]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_rothbart.comments_rothbart"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.mediause_instructions1"
+##      [,75]                                                                                             
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.mediause_instructions1"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology"       
+##      [,76]                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.tv"
+##      [,77]                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.tv" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.dvd"
+##      [,78]                                                                                               
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.dvd"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.computer"
+##      [,79]                                                                                               
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.computer"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.ipad"    
+##      [,80]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.ipad"           
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.educationalgame"
+##      [,81]                                                                                                      
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.educationalgame"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.videogame"      
+##      [,82]                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.home_technology.videogame"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_tv"      
+##      [,83]                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_tv"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.tv_how"             
+##      [,84]                                                                                           
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.tv_how"              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_dvd"
+##      [,85]                                                                                           
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_dvd"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.dvd_how"             
+##      [,86]                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.dvd_how"                  
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_computer"
+##      [,87]                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_computer"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.computer_how"             
+##      [,88]                                                                                            
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.computer_how"         
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_ipad"
+##      [,89]                                                                                            
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_ipad"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.ipad_how"             
+##      [,90]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.ipad_how"                    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_educational"
+##      [,91]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_educational"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.educational_how"             
+##      [,92]                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.educational_how"           
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_videogame"
+##      [,93]                                                                                                 
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.technology_child_videogame"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.videogame_how"             
+##      [,94]                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.videogame_how"   
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.tv_hours_per_day"
+##      [,95]                                                                                            
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.tv_hours_per_day"     
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.note_tv_hours_per_day"
+##      [,96]                                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.note_tv_hours_per_day"                    
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.instructions_technology_use"
+##      [,97]                                                                                                                
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.instructions_technology_use"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.technology_use_scale"       
+##      [,98]                                                                                                  
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_typical_day.instructions_typicalday" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_typical_day.instructions_typical_day"
+##      [,99]                                                                                            
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel1"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel1"
+##      [,100]                                                                                           
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel2"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel2"
+##      [,101]                                                                                           
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel3"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel3"
+##      [,102]                                                                                            
+## [1,] "group_combinedquestionnaires.group_databrary.acknowledge_databrary"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.acknowledge_databrary"
+##      [,103]                                                                                       
+## [1,] "group_combinedquestionnaires.group_databrary.note_saveasdraft"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_saveasdraft"</code></pre>
+<p>Visual inspection suggests that these are similar with the following deviations:</p>
+<ul>
+<li>As noted, <code>df_merge_287_cols_1</code> has a column ending <code>doctor_told_you</code> that is not present in <code>df_merge_287_cols_2</code>.</li>
+<li>
+<code>df_merge_287_cols_2</code> has a column ending <code>technology_use_scale</code> that is not present in the <code>df_merge_287_cols_1</code>
+</li>
+<li>There are a set of fields in <code>group_databrary</code> that do not align exactly. We will almost certainly delete these, so the misalignment is not a huge problem.</li>
+</ul>
+<p>As an exploration, let’s see if we can reconcile these by deleting the non-aligning columns.</p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">df_merge_287_cols_1</span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">df_merge_287_cols_2</span></span>
+<span></span>
+<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'doctor_told_you'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">df2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'technology_use_scale'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">old_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
+<span><span class="va">new_names</span> <span class="op">&lt;-</span> <span class="va">old_names</span></span>
+<span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">273</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">[</span><span class="fl">92</span><span class="op">:</span><span class="fl">273</span><span class="op">]</span>, <span class="st">"group_locomotor_milestones\\."</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">new_names</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [99]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [113]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [155]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [169]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [183]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [197]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [225]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [239]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+## [267]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<p>This looks promising.</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">[</span><span class="fl">263</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">[</span><span class="fl">263</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                                   
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_typical_day.instructions_typicalday" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_typical_day.instructions_typical_day"</code></pre>
+<p>This is easily fixed.</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">[</span><span class="fl">263</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">[</span><span class="fl">263</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">[</span><span class="fl">273</span><span class="op">:</span><span class="fl">275</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">[</span><span class="fl">273</span><span class="op">:</span><span class="fl">275</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                             
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel1"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel1"
+##      [,2]                                                                                             
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel2"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel2"
+##      [,3]                                                                                             
+## [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel3"                              
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_databrary.note_databraryspiel3"</code></pre>
+<p>The last misalignments relate to Databrary fields.</p>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'group_databrary'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">df2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'group_databrary'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [17] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [33] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [49] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [65] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [81] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [97] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [113] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [129] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [145] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [161] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [177] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [193] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [209] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [225] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [241] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [257] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [273] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p>Success!</p>
+</div>
+</div>
+<div id="combining-the-two-groups-of-datasets" class="section level2" number="0.1">
+<h2>
+<span class="header-section-number">0.1</span> Combining the two groups of datasets<a class="anchor" aria-label="anchor" href="#combining-the-two-groups-of-datasets"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now, let’s go back to the data frame with 288 cols and see if we can bring these into alignment.</p>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="va">df_merge_288_cols</span></span>
+<span></span>
+<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="va">df3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'group_databrary'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  48 281  12 281  92 283</code></pre>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is not a multiple of shorter
+## object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [99]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [113]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [281] FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">[</span><span class="fl">114</span><span class="op">:</span><span class="fl">115</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">[</span><span class="fl">114</span><span class="op">:</span><span class="fl">115</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                                                                         
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"      
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.doctor_told_you"
+##      [,2]                                                                                                                                       
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.ear_infection"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"</code></pre>
+<p>Once again, there appears to be a problem with the ‘doctor_told_you’ field. We’ll delete it to see if this fixes one of the problems.</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="va">df3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'doctor_told_you'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is not a multiple of shorter
+## object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [99]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [113]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [155]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [169]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [183]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [197]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [281] FALSE FALSE</code></pre>
+<p>We still have misalignments at column 210.</p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">[</span><span class="fl">210</span><span class="op">:</span><span class="fl">213</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">[</span><span class="fl">210</span><span class="op">:</span><span class="fl">213</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                                                                                                          
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.meals"               
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.technology_use_scale"
+##      [,2]                                                                                              
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.playtime"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.meals"   
+##      [,3]                                                                                              
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.bedtime" 
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.playtime"
+##      [,4]                                                                                                    
+## [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.transportation"
+## [2,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.bedtime"</code></pre>
+<p>The ’technology_use_scale` exists in one but not the other.</p>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="va">df3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'technology_use_scale'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   48  281
+## [2,]   92  281</code></pre>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [15]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [29]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [43]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [99]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [113]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [155]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [169]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [183]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [197]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [225]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [239]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+## [267]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [281]  TRUE</code></pre>
+<div class="rmdimportant">
+<p>Future versions of the workflow will need to handle this more elegantly.</p>
+<p>Option 1: Fix the underlying forms.</p>
+<p>Option 2: Add the ‘missing’ columns as NA in post-processing.</p>
+</div>
+<p>For now, I’m going to create functions that align these data frames.</p>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">remove_technology_use_scale</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'technology_use_scale'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">remove_doctor_told_you</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'doctor_told_you'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">remove_databrary_fields</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'group_databrary'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">reconcile_typicalday</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">'typicalday'</span>, <span class="st">'typical_day'</span><span class="op">)</span></span>
+<span>  <span class="va">df</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">remove_permissive_locomotor_milestones_label</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">old_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span>  <span class="va">new_names</span> <span class="op">&lt;-</span> <span class="va">old_names</span></span>
+<span>  <span class="va">contains_locomotor</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">new_names</span>, pattern <span class="op">=</span> <span class="st">"locomotor_milestones.*health|division|rothbart|mediause|pets|typical|acknowledge"</span><span class="op">)</span></span>
+<span>  <span class="va">new_names</span><span class="op">[</span><span class="va">contains_locomotor</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">[</span><span class="va">contains_locomotor</span><span class="op">]</span>, <span class="st">"group_locomotor_milestones\\."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">new_names</span></span>
+<span>  <span class="va">df</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">remove_X_meta_cols</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">df</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"X_"</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"meta.instanceID"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">remove_redundant_group_labels</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">'group_homevisitquestionnaires\\.'</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="st">'group_combinedquestionnaires\\.'</span><span class="op">)</span></span>
+<span>  <span class="va">df</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">clean_dfs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">reconcile_typicalday</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_technology_use_scale</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_doctor_told_you</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_permissive_locomotor_milestones_label</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_databrary_fields</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_X_meta_cols</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu">remove_redundant_group_labels</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Let’s test this workflow with the unmodified files.</p>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span>
+<span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
+<span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df1m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1m</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  48 272</code></pre>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df2m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df2m</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  12 272</code></pre>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df3m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3m</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  92 272</code></pre>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1m</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2m</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 272</code></pre>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1m</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3m</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 272</code></pre>
+<div id="merging-files-at-last" class="section level3" number="0.1.1">
+<h3>
+<span class="header-section-number">0.1.1</span> Merging files at last<a class="anchor" aria-label="anchor" href="#merging-files-at-last"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">df1m</span>, <span class="va">df2m</span>, <span class="va">df3m</span><span class="op">)</span></span></code></pre></div>
+<div class="rmdnote">
+<p>As of 2022-12-15, the above has now been incorporated into <code>R/functions.R</code> and into the <code>_targets.R</code> workflow.</p>
+</div>
 </div>
 </div>
 <div id="merge-with-databrary-info" class="section level2 unnumbered">
@@ -1020,10 +1653,13 @@ We cannot proceed without further discussion with our team.</p>
 </li>
 <li>
 <a class="nav-link" href="#make-aggregate-files">Make aggregate files</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#non-mb-cdi-files-with-n288-columns"><span class="header-section-number">0.0.1</span> non-MB-CDI files with \(n=288\) columns</a></li>
-<li><a class="nav-link" href="#non-mb-cdi-files-with-n287-columns"><span class="header-section-number">0.0.2</span> non-MB-CDI files with \(n=287\) columns</a></li>
-<li><a class="nav-link" href="#examine-groups-with-n287-cols"><span class="header-section-number">0.0.3</span> Examine groups with \(n=287\) cols</a></li>
+<li><a class="nav-link" href="#non-mb-cdi-files-with-n288-columns">non-MB-CDI files with \(n=288\) columns</a></li>
+<li><a class="nav-link" href="#non-mb-cdi-files-with-n287-columns">non-MB-CDI files with \(n=287\) columns</a></li>
+<li><a class="nav-link" href="#examine-groups-with-n287-cols">Examine groups with \(n=287\) cols</a></li>
 </ul>
+</li>
+<li>
+<a class="nav-link" href="#combining-the-two-groups-of-datasets"><span class="header-section-number">0.1</span> Combining the two groups of datasets</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#merging-files-at-last"><span class="header-section-number">0.1.1</span> Merging files at last</a></li></ul>
 </li>
 <li><a class="nav-link" href="#merge-with-databrary-info">Merge with Databrary info</a></li>
 <li><a class="nav-link" href="#clean-and-prepare-for-export">Clean and prepare for export</a></li>
@@ -1044,7 +1680,7 @@ We cannot proceed without further discussion with our team.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-14.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

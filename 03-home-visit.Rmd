@@ -252,7 +252,7 @@ We do that first, then address the discrepancies between aggregates.
 
 ## Make aggregate files {-}
 
-### non-MB-CDI files with $n=288$ columns
+### non-MB-CDI files with $n=288$ columns {-}
 
 ```
 tar_target(files_w_288_cols, list.files(home_visit_dir_csv, 
@@ -261,7 +261,7 @@ tar_target(files_w_288_cols, list.files(home_visit_dir_csv,
 tar_target(df_merge_288_cols, make_aggregate_data_file(files_with_288_cols))
 ```
 
-### non-MB-CDI files with $n=287$ columns
+### non-MB-CDI files with $n=287$ columns {-}
 
 ```
 tar_target(files_w_287_cols_1, 
@@ -273,23 +273,23 @@ tar_target(files_w_287_cols_2,
 tar_target(df_merge_288_cols_2, make_aggregate_data_file(files_w_287_cols_2))
 ```
 
-### Examine groups with $n=287$ cols
+### Examine groups with $n=287$ cols {-}
 
 We focus on the starting column where the column names diverge, column 92.
 
 ```{r}
-tar_load(df_merge_287_cols_1)
-tar_load(df_merge_287_cols_2)
+targets::tar_load(df_merge_287_cols_1)
+targets::tar_load(df_merge_287_cols_2)
 names(df_merge_287_cols_1)[92]
 names(df_merge_287_cols_2)[92]
 ```
 
 There is an erroneous `group_locomotor_milestones.` in the `df_merge_287_cols_2` column name.
 
-A bit of sleuthing determines that this `group_locomotor_milestones.` label is characteristic of columns 92 to 182.
+A bit of sleuthing determines that this `group_locomotor_milestones.` label is characteristic of columns 92 to 273.
 
 ```{r}
-names(df_merge_287_cols_2)[92:287] |> stringr::str_detect(pattern = "group_locomotor_milestones")
+names(df_merge_287_cols_2)[92:273] |> stringr::str_detect(pattern = "group_locomotor_milestones")
 ```
 
 The following should fix this.
@@ -297,7 +297,7 @@ The following should fix this.
 ```{r}
 old_names <- names(df_merge_287_cols_2)
 new_names <- old_names
-new_names[92:113] <- stringr::str_remove(new_names[92:113], "group_locomotor_milestones\\.")
+new_names[92:273] <- stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
 names(df_merge_287_cols_2) <- new_names
 ```
 
@@ -305,7 +305,11 @@ names(df_merge_287_cols_2) <- new_names
 names(df_merge_287_cols_2) == names(df_merge_287_cols_1)
 ```
 
-We have a second problem with columns from 114 to 278.
+We have a second problem with columns from 114 to 210.
+
+```{r}
+rbind(names(df_merge_287_cols_1)[113:115], names(df_merge_287_cols_2)[113:115])
+```
 
 One of the problems has to do with column 114. There is a question ending `doctor_told_you` in `names(df_merge_287_cols_1)` but not in `names(df_merge_287_cols_2)`.
 
@@ -316,6 +320,209 @@ names(df_merge_287_cols_2) |> stringr::str_detect(pattern = "doctor_told_you") |
 
 Deleting this question would create additional misalignments and further problems.
 We cannot proceed without further discussion with our team.
+
+For now, let's generate an array with all of the remaining differences in column names.
+
+```{r}
+names_differ <- (names(df_merge_287_cols_2) != names(df_merge_287_cols_1))
+sum(names_differ)
+```
+
+```{r}
+rbind(names(df_merge_287_cols_1)[names_differ], names(df_merge_287_cols_2)[names_differ])
+```
+
+Visual inspection suggests that these are similar with the following deviations:
+
+- As noted, `df_merge_287_cols_1` has a column ending `doctor_told_you` that is not present in `df_merge_287_cols_2`.
+- `df_merge_287_cols_2` has a column ending `technology_use_scale` that is not present in the `df_merge_287_cols_1`
+- There are a set of fields in `group_databrary` that do not align exactly. We will almost certainly delete these, so the misalignment is not a huge problem.
+
+As an exploration, let's see if we can reconcile these by deleting the non-aligning columns.
+
+```{r}
+df1 <- df_merge_287_cols_1
+df2 <- df_merge_287_cols_2
+
+df1 <- df1 %>%
+  dplyr::select(., -contains('doctor_told_you'))
+
+df2 <- df2 %>%
+  dplyr::select(., -contains('technology_use_scale'))
+
+old_names <- names(df2)
+new_names <- old_names
+new_names[92:273] <- stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
+names(df2) <- new_names
+
+names(df1) == names(df2)
+```
+
+This looks promising.
+
+```{r}
+rbind(names(df1)[263], names(df2)[263])
+```
+
+This is easily fixed.
+
+```{r}
+names(df1)[263] <- names(df2)[263]
+```
+
+```{r}
+rbind(names(df1)[273:275], names(df2)[273:275])
+```
+
+The last misalignments relate to Databrary fields.
+
+```{r}
+df1 <- df1 %>%
+  dplyr::select(., -contains('group_databrary'))
+
+df2 <- df2 %>%
+  dplyr::select(., -contains('group_databrary'))
+
+names(df1) == names(df2)
+```
+
+Success!
+
+## Combining the two groups of datasets
+
+Now, let's go back to the data frame with 288 cols and see if we can bring these into alignment.
+
+```{r}
+targets::tar_load(df_merge_288_cols)
+
+df3 <- df_merge_288_cols
+
+df3 <- df3 %>%
+  dplyr::select(., -contains('group_databrary'))
+
+c(dim(df1), dim(df2), dim(df3))
+
+names(df1) == names(df3)
+rbind(names(df1)[114:115], names(df3)[114:115])
+```
+
+Once again, there appears to be a problem with the 'doctor_told_you' field. We'll delete it to see if this fixes one of the problems.
+
+```{r}
+df3 <- df3 %>%
+  dplyr::select(., -contains('doctor_told_you'))
+
+names(df1) == names(df3)
+
+```
+
+We still have misalignments at column 210.
+
+```{r}
+rbind(names(df1)[210:213], names(df3)[210:213])
+```
+
+The 'technology_use_scale` exists in one but not the other.
+
+```{r}
+df3 <- df3 %>%
+  dplyr::select(., -contains('technology_use_scale'))
+
+rbind(dim(df1), dim(df3))
+
+names(df1) == names(df3)
+```
+
+:::{.rmdimportant}
+Future versions of the workflow will need to handle this more elegantly. 
+
+Option 1: Fix the underlying forms.
+
+Option 2: Add the 'missing' columns as NA in post-processing.
+:::
+
+For now, I'm going to create functions that align these data frames.
+
+```{r, eval=FALSE}
+remove_technology_use_scale <- function(df) {
+  dplyr::select(df, -contains('technology_use_scale'))
+}
+
+remove_doctor_told_you <- function(df) {
+  dplyr::select(df, -contains('doctor_told_you'))
+}
+
+remove_databrary_fields <- function(df) {
+  dplyr::select(df, -contains('group_databrary'))
+}
+
+reconcile_typicalday <- function(df) {
+  names(df) <- stringr::str_replace_all(names(df), 'typicalday', 'typical_day')
+  df
+}
+
+remove_permissive_locomotor_milestones_label <- function(df) {
+  old_names <- names(df)
+  new_names <- old_names
+  contains_locomotor <-
+    stringr::str_detect(new_names, pattern = "locomotor_milestones.*health|division|rothbart|mediause|pets|typical|acknowledge")
+  new_names[contains_locomotor] <-
+    stringr::str_remove(new_names[contains_locomotor], "group_locomotor_milestones\\.")
+  names(df) <- new_names
+  df
+}
+
+remove_X_meta_cols <- function(df) {
+  dplyr::select(df, -contains("X_"), -contains("meta.instanceID"))
+}
+
+remove_redundant_group_labels <- function(df) {
+  names(df) <- stringr::str_remove_all(names(df), 'group_homevisitquestionnaires\\.')
+  names(df) <- stringr::str_remove_all(names(df), 'group_combinedquestionnaires\\.')
+  df
+}
+
+clean_dfs <- function(df) {
+  df %>%
+    reconcile_typicalday() %>%
+    remove_technology_use_scale() %>%
+    remove_doctor_told_you() %>%
+    remove_permissive_locomotor_milestones_label() %>%
+    remove_databrary_fields() %>%
+    remove_X_meta_cols() %>%
+    remove_redundant_group_labels()
+}
+```
+
+Let's test this workflow with the unmodified files.
+
+```{r}
+targets::tar_load(df_merge_287_cols_1)
+targets::tar_load(df_merge_287_cols_2)
+targets::tar_load(df_merge_288_cols)
+
+df1m <- clean_dfs(df_merge_287_cols_1)
+dim(df1m)
+
+df2m <- clean_dfs(df_merge_287_cols_2)
+dim(df2m)
+
+df3m <- clean_dfs(df_merge_288_cols)
+dim(df3m)
+
+(names(df1m) == names(df2m)) |> sum()
+(names(df1m) == names(df3m)) |> sum()
+```
+
+### Merging files at last
+
+```{r, eval=FALSE}
+df <- rbind(df1m, df2m, df3m)
+```
+
+::: {.rmdnote}
+As of 2022-12-15, the above has now been incorporated into `R/functions.R` and into the `_targets.R` workflow.
+:::
 
 ## Merge with Databrary info {-}
 

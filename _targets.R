@@ -168,5 +168,6 @@ list(
   tar_target(
     df_merge_287_cols_2,
     make_aggregate_data_file(files_w_287_cols_2)
-  )
+  ),
+  tar_target(df_merged_recent, rbind(clean_dfs(df_merge_287_cols_2), clean_dfs(df_merge_287_cols_1), clean_dfs(df_merge_288_cols)))
 )
