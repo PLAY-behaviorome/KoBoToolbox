@@ -49,6 +49,7 @@
 <li><a class="" href="screening-call.html">Screening call</a></li>
 <li><a class="" href="home-visit.html">Home visit</a></li>
 <li><a class="" href="data-dictionary.html">Data dictionary</a></li>
+<li><a class="" href="post-visit-notes.html">Post-visit notes</a></li>
 <li><a class="active" href="visualizations.html">Visualizations</a></li>
 </ul>
 
@@ -80,8 +81,9 @@ Figure 1: Cumulative screening calls by year and site
 <code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">bar_plot</span><span class="op">)</span></span>
 <span><span class="va">bar_plot</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="_main_files/figure-html/load-bar_plot-1.png" alt="Cumulative screening calls by year and site" width="672"><p class="caption">
-(#fig:load-bar_plot)Cumulative screening calls by year and site
+<span style="display:block;" id="fig:unnamed-chunk-45"></span>
+<img src="_main_files/figure-html/unnamed-chunk-45-1.png" alt="Cumulative screening calls by year and site" width="672"><p class="caption">
+Figure 2: Cumulative screening calls by year and site
 </p>
 </div>
 <div id="demographics" class="section level3 unnumbered">
@@ -96,9 +98,9 @@ Figure 1: Cumulative screening calls by year and site
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">child_age_mos</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-45"></span>
-<img src="_main_files/figure-html/unnamed-chunk-45-1.png" alt="Histogram of child age at time of recruiting call." width="672"><p class="caption">
-Figure 2: Histogram of child age at time of recruiting call.
+<span style="display:block;" id="fig:unnamed-chunk-46"></span>
+<img src="_main_files/figure-html/unnamed-chunk-46-1.png" alt="Histogram of child age at time of recruiting call." width="672"><p class="caption">
+Figure 3: Histogram of child age at time of recruiting call.
 </p>
 </div>
 <div class="rmdnote">
@@ -110,9 +112,13 @@ Figure 2: Histogram of child age at time of recruiting call.
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_to_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_to_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_to_child</span>, data <span class="op">=</span> <span class="va">demog_submissions</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_to_child
-## child_sex english english_other english_spanish english_spanish_other spanish
-##    female     101             1              15                     1       2
-##    male        98             3              25                     1       2</code></pre>
+## child_sex english english_other english_spanish
+##    female     101             1              15
+##    male        98             3              25
+##          language_to_child
+## child_sex english_spanish_other spanish
+##    female                     1       2
+##    male                       1       2</code></pre>
 <p>Mother race and ethnicity.</p>
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demog_submissions</span> <span class="op">&lt;-</span> <span class="va">demog_submissions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -216,7 +222,7 @@ In the future, we may decide to link an individual respondent’s information to
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Passing 237 addresses to the US Census batch geocoder</code></pre>
-<pre><code>## Query completed in: 13.1 seconds</code></pre>
+<pre><code>## Query completed in: 8.2 seconds</code></pre>
 <p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -238,9 +244,9 @@ In the future, we may decide to link an individual respondent’s information to
 <pre><code>## ℹ &lt; ]8;;https://maps.googleapis.com/maps/api/staticmap?center=USA&amp;zoom=4&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxxhttps://maps.googleapis.com/maps/api/staticmap?center=USA&amp;zoom=4&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxx ]8;;&gt;</code></pre>
 <pre><code>## ℹ &lt; ]8;;https://maps.googleapis.com/maps/api/geocode/json?address=USA&amp;key=xxxhttps://maps.googleapis.com/maps/api/geocode/json?address=USA&amp;key=xxx ]8;;&gt;</code></pre>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-53"></span>
-<img src="_main_files/figure-html/unnamed-chunk-53-1.png" alt="Families contacted by location" width="672"><p class="caption">
-Figure 3: Families contacted by location
+<span style="display:block;" id="fig:unnamed-chunk-54"></span>
+<img src="_main_files/figure-html/unnamed-chunk-54-1.png" alt="Families contacted by location" width="672"><p class="caption">
+Figure 4: Families contacted by location
 </p>
 </div>
 </div>
@@ -262,7 +268,7 @@ That is on the work plan.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age_group</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="language-exposure" class="section level3 unnumbered">
 <h3>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
@@ -299,11 +305,12 @@ That is on the work plan.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">crawl_mos</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 3 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 3 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-crawl-onset-hist"></span>
 <img src="_main_files/figure-html/fig-crawl-onset-hist-1.png" alt="Age of crawling onset (mos) by sex" width="672"><p class="caption">
-Figure 4: Age of crawling onset (mos) by sex
+Figure 5: Age of crawling onset (mos) by sex
 </p>
 </div>
 </div>
@@ -316,11 +323,12 @@ Figure 4: Age of crawling onset (mos) by sex
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_kea</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 32 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 32 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea"></span>
 <img src="_main_files/figure-html/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672"><p class="caption">
-Figure 5: Age (mos) of walking onset (KEA criteria) by sex
+Figure 6: Age (mos) of walking onset (KEA criteria) by sex
 </p>
 </div>
 <div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
@@ -328,11 +336,12 @@ Figure 5: Age (mos) of walking onset (KEA criteria) by sex
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_who</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 26 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 26 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-who"></span>
 <img src="_main_files/figure-html/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672"><p class="caption">
-Figure 6: Age (mos) of walking onset (WHO criteria) by sex
+Figure 7: Age (mos) of walking onset (WHO criteria) by sex
 </p>
 </div>
 <div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
@@ -347,11 +356,12 @@ Figure 6: Age (mos) of walking onset (WHO criteria) by sex
 <span></span>
 <span><span class="fu">ggExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span><span class="va">walk_p</span>, <span class="va">play_loco</span>, <span class="va">walk_mos_who</span>, <span class="va">walk_mos_kea</span>, </span>
 <span>                    type <span class="op">=</span> <span class="st">"density"</span>, margins <span class="op">=</span> <span class="st">"both"</span>, groupColour <span class="op">=</span> <span class="cn">TRUE</span>, groupFill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 35 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 35 rows containing missing values
+## (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
 <img src="_main_files/figure-html/fig-walk-mos-kea-who-1.png" alt="Walking onset by WHO vs. KEA criteria" width="672"><p class="caption">
-Figure 7: Walking onset by WHO vs. KEA criteria
+Figure 8: Walking onset by WHO vs. KEA criteria
 </p>
 </div>
 </div>
@@ -380,8 +390,9 @@ Figure 7: Walking onset by WHO vs. KEA criteria
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solid_food_mos</span>, color <span class="op">=</span> <span class="va">child_sex</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="672" style="display: block; margin: auto;"></div>
+<pre><code>## Warning: Removed 5 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="smokingdrinking" class="section level4 unnumbered">
 <h4>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
@@ -418,7 +429,7 @@ Figure 7: Walking onset by WHO vs. KEA criteria
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="data-dictionary.html">Data dictionary</a></div>
+<div class="prev"><a href="post-visit-notes.html">Post-visit notes</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
@@ -443,8 +454,8 @@ Figure 7: Walking onset by WHO vs. KEA criteria
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/master/05-visualization.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/master/05-visualization.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/master/06-visualization.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/master/06-visualization.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
