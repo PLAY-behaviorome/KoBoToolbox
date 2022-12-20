@@ -272,23 +272,24 @@ make_post_visit_df <- function(kb_post_visit, xlsx_dir, csv_dir) {
 #'
 #' @param fn Filename for XLSX file
 #' @param out_dir Directory to save CSV file
-load_xlsx_save_csv <- function(fn, out_dir) {
+load_xlsx_save_csv <- function(fn, out_dir, vb = FALSE) {
   require(tools)
   require(readxl)
   require(readr)
   
-  stopifnot("fn not found" = file.exists(fn))
-  stopifnot("out_dir not found" = dir.exists(out_dir))
+  stopifnot(file.exists(fn))
+  stopifnot(dir.exists(out_dir))
   
   xl <- readxl::read_xlsx(fn)
   fn_csv <-
     file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
   if (dir.exists(dirname(fn_csv))) {
     readr::write_csv(xl, fn_csv)
-    message("File saved: '", fn_csv, "'")
+    if (vb) message("File saved: '", fn_csv, "'")
   } else {
     warning("Directory not found: '", dirname(fn_csv), "'")
   }
+  fn_csv
 }
 
 ###################################################################
@@ -308,7 +309,7 @@ load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
     warning("fns is empty")
     NULL
   } else {
-    purrr::map(fns, load_xlsx_save_csv, out_dir)
+    purrr::map_chr(fns, load_xlsx_save_csv, out_dir)
   }
 }
 
@@ -328,8 +329,7 @@ load_xlsx_save_many_csvs_2 <- function(fns, out_dir) {
     warning("fns is empty")
     NULL
   } else {
-    purrr::map(fns, load_xlsx_save_csv, out_dir)
-    fns
+    purrr::map_chr(fns, load_xlsx_save_csv, out_dir)
   }
 }
 
@@ -577,13 +577,13 @@ split_non_mbcdi_csvs <- function(fl, out_dir) {
   stopifnot(is.character(fl))
   stopifnot(dir.exists(out_dir))
   
-  purrr::map(
+  purrr::map_chr(
     fl,
     open_split_save,
     csv_save_dir = out_dir,
     these_questions = 'non_mbcdi'
   )
-  list.files(out_dir, full.names = TRUE)
+  #list.files(out_dir, full.names = TRUE)
 }
 
 ###################################################################
@@ -593,13 +593,25 @@ split_mbcdi_csvs <- function(fl, out_dir) {
   stopifnot(is.character(fl))
   stopifnot(dir.exists(out_dir))
   
-  purrr::map(
+  purrr::map_chr(
     fl,
     open_split_save,
     csv_save_dir = out_dir,
     these_questions = 'mbcdi'
   )
-  list.files(out_dir, full.names = TRUE)
+}
+
+remove_identifiers_non_mbcdi <- function(fl, out_dir) {
+  require(purrr)
+  
+  stopifnot(is.character(fl))
+  stopifnot(dir.exists(out_dir))
+  
+  purrr::map_chr(fl,
+    open_deidentify_save,
+    csv_save_dir = out_dir,
+    these_questions = 'non_mbcdi'
+  )
 }
 
 ###################################################################
@@ -617,7 +629,7 @@ open_split_save <- function(fp,
                             csv_save_dir = 'tmp',
                             these_questions = 'non_mbcdi',
                             rename_cols = FALSE,
-                            vb = TRUE) {
+                            vb = FALSE) {
   if (file.exists(fp)) {
     df <- readr::read_csv(fp, show_col_types = FALSE)
   } else {
@@ -650,6 +662,7 @@ open_split_save <- function(fp,
   } else {
     message('Error in exporting data to `', out_fn, '`')
   }
+  out_fn
 }
 
 ###################################################################
@@ -764,7 +777,7 @@ open_deidentify_save <- function(fp,
                                  csv_save_dir = 'tmp',
                                  these_questions = 'non_mbcdi',
                                  rename_cols = FALSE,
-                                 vb = TRUE) {
+                                 vb = FALSE) {
   require(tidyverse)
   
   if (!dir.exists(csv_save_dir)) {
@@ -803,6 +816,7 @@ open_deidentify_save <- function(fp,
   } else {
     message('Error in exporting data to `', out_fn, '`')
   }
+  out_fn
 }
 
 ###################################################################
