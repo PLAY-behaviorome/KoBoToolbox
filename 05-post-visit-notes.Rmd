@@ -1,2 +1,16 @@
 # Post-visit notes {-}
 
+## Select forms from KBT
+
+```{r}
+targets::tar_load(kb_df)
+post_visit <- kb_df %>%
+  dplyr::filter(., stringr::str_detect(title, "Post\\-Visit"))
+```
+
+## Download forms as XLSX
+
+```{r}
+
+```
+
