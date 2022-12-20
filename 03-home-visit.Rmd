@@ -48,12 +48,12 @@ There are $n=$ `r dim(kb_home)[1]` home visit data files.
 
 ```
 tar_target(
-    home_visit_downloads,
-    retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_downloads,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+  home_visit_downloads,
+  retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_downloads,
+    age = as.difftime(update_interval, units = update_interval_units)
+  )
 )
 ```
 
@@ -65,23 +65,23 @@ Some of the form names are inconsistent, so we normalize them to fit the followi
 
 ```
 tar_target(
-    home_visit_renamed,
-    rename_home_xlsx(home_visit_downloads,
+  home_visit_renamed,
+  rename_home_xlsx(home_visit_downloads,
                      "data/xlsx/home_visit/std_name"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_renamed,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_renamed,
+    age = as.difftime(update_interval, units = update_interval_units)
   )
+)
 ```
 
 ### Save xlsx as csv {-}
 
 ```
 tar_target(
-    home_visit_xlsx_to_csv,
-    load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
-  )
+  home_visit_xlsx_to_csv,
+  load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
+)
 ```
 
 ### Split MB-CDI from other questions {-}
@@ -93,22 +93,21 @@ By default, the document presumes that we want to convert **all** of the CSV fil
 Extract the 'non-mbcdi' questions first and add 'non_mbcdi' to the filename.
 
 ```
-  tar_target(
-    home_visit/non_mbcdi,
-    split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi")
-  ),
-
+tar_target(
+  home_visit_non_mbcdi,
+  split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
+                        "data/csv/home_visit/non_mbcdi")
+)
 ```
 
 Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
 
 ```
-  tar_target(
-    home_visit_mbcdi,
-    split_mbcdi_csvs(home_visit_xlsx_to_csv,
-                     "data/csv/home_visit/mbcdi")
-  )
+tar_target(
+  home_visit_mbcdi,
+  split_mbcdi_csvs(home_visit_xlsx_to_csv,
+                    "data/csv/home_visit/mbcdi")
+)
 ```
 
 ## Clean data {-}
@@ -134,14 +133,14 @@ Note that we have added `data` to `.gitignore` in `protocol/`, the root director
 
 ```
 tar_target(
-    home_visit_remove_identifiers,
-    purrr::map_chr(
-      home_visit/non_mbcdi,
-      open_deidentify_save,
-      csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
+  home_visit_remove_identifiers,
+  purrr::map_chr(
+    home_visit_non_mbcdi,
+    open_deidentify_save,
+    csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
       these_questions = 'non_mbcdi'
-    )),
-
+  )
+)
 ```
 
 ## Quality assurance (QA) reviews {-}
@@ -202,13 +201,21 @@ sum(names(df740623) == names(df740624))
 ```
 
 ```{r}
-df740625 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv", show_col_types = FALSE)
+df740625 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740623) == names(df740625))
 ```
 
 ```{r}
-df740628 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv", show_col_types = FALSE)
+df740628 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740623) == names(df740628))
 ```
@@ -218,9 +225,17 @@ So, four of the most recent data files with $n=288$ columns can be aggregated wi
 Let's turn to the more recent files with $n=287$ columns.
 
 ```{r}
-df740626 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv", show_col_types = FALSE)
+df740626 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
-df740627 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv", show_col_types = FALSE)
+df740627 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740626) == names(df740627))
 ```
@@ -234,7 +249,11 @@ names(df740626) == names(df740627)
 The misalignment arises somewhere near column 92.
 
 ```{r}
-df740629 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv", show_col_types = FALSE)
+df740629 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740626) == names(df740629))
 ```
@@ -242,7 +261,11 @@ sum(names(df740626) == names(df740629))
 So, `df740626` and `df740629` are aligned and can be merged.
 
 ```{r}
-df740630 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv", show_col_types = FALSE)
+df740630 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740626) == names(df740630))
 names(df740626) == names(df740630)
@@ -251,7 +274,11 @@ names(df740626) == names(df740630)
 These files also fall out of alignment near column 92.
 
 ```{r}
-df740631 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv", show_col_types = FALSE)
+df740631 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740626) == names(df740631))
 names(df740626) == names(df740631)
@@ -274,26 +301,29 @@ We do that first, then address the discrepancies between aggregates.
 ### non-MB-CDI files with $n=288$ columns {-}
 
 ```
-tar_target(files_288_cols, stringr::str_detect(home_visit_remove_identifiers, 
-                                                 "2[3458]_non_mbcdi.*_deidentified\\.csv"))
+tar_target(files_288_cols, 
+  stringr::str_detect(home_visit_remove_identifiers, 
+                      "2[3458]_non_mbcdi.*_deidentified\\.csv")
+)
 
 tar_target(df_merge_288_cols,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_288_cols]))
+    make_aggregate_data_file(
+        home_visit_remove_identifiers[files_288_cols])
+)
 ```
 
 ### non-MB-CDI files with $n=287$ columns {-}
 
 ```
-  tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
+tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
                                                    "2[69]_non_mbcdi.*_deidentified\\.csv")),
-  tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
+tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
                                                    "(740627|740630|740631)_non.*_deidentified\\.csv")),
 
-  tar_target(df_merge_287_cols_1,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_287_cols_1])),
-  tar_target(df_merge_287_cols_2,
+tar_target(df_merge_287_cols_1,
+          make_aggregate_data_file(
+              home_visit_remove_identifiers[files_287_cols_1])),
+tar_target(df_merge_287_cols_2,
              make_aggregate_data_file(
                home_visit_remove_identifiers[files_287_cols_2])),
 ```
@@ -418,7 +448,7 @@ Success!
 Now, let's go back to the data frame with 288 cols and see if we can bring these into alignment.
 
 ```{r}
-tar_load(df_merge_288_cols)
+targets::tar_load(df_merge_288_cols)
 
 df3 <- df_merge_288_cols
 

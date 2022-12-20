@@ -196,12 +196,12 @@ Most of the R chunks are <strong>not</strong>run, however, since we have moved t
 <code class="sourceCode R"><span><span class="va">n_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">kb_home</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 24 home visit data files.</p>
 <pre><code>tar_target(
-    home_visit_downloads,
-    retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_downloads,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+  home_visit_downloads,
+  retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_downloads,
+    age = as.difftime(update_interval, units = update_interval_units)
+  )
 )</code></pre>
 </div>
 <div id="normalize-file-names" class="section level3 unnumbered">
@@ -210,22 +210,22 @@ Most of the R chunks are <strong>not</strong>run, however, since we have moved t
 <p>Some of the form names are inconsistent, so we normalize them to fit the following pattern:</p>
 <p><code>&lt;form_id&gt;_PLAY_HomeQuestionnaires_&lt;age_group&gt;_&lt;lang_group&gt;.xlsx</code></p>
 <pre><code>tar_target(
-    home_visit_renamed,
-    rename_home_xlsx(home_visit_downloads,
+  home_visit_renamed,
+  rename_home_xlsx(home_visit_downloads,
                      "data/xlsx/home_visit/std_name"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_renamed,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  )</code></pre>
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_renamed,
+    age = as.difftime(update_interval, units = update_interval_units)
+  )
+)</code></pre>
 </div>
 <div id="save-xlsx-as-csv" class="section level3 unnumbered">
 <h3>Save xlsx as csv<a class="anchor" aria-label="anchor" href="#save-xlsx-as-csv"><i class="fas fa-link"></i></a>
 </h3>
 <pre><code>tar_target(
-    home_visit_xlsx_to_csv,
-    load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
-  )</code></pre>
+  home_visit_xlsx_to_csv,
+  load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
+)</code></pre>
 </div>
 <div id="split-mb-cdi-from-other-questions" class="section level3 unnumbered">
 <h3>Split MB-CDI from other questions<a class="anchor" aria-label="anchor" href="#split-mb-cdi-from-other-questions"><i class="fas fa-link"></i></a>
@@ -233,18 +233,17 @@ Most of the R chunks are <strong>not</strong>run, however, since we have moved t
 <p>Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.</p>
 <p>By default, the document presumes that we want to convert <strong>all</strong> of the CSV files</p>
 <p>Extract the ‘non-mbcdi’ questions first and add ‘non_mbcdi’ to the filename.</p>
-<pre><code>  tar_target(
-    home_visit/non_mbcdi,
-    split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi")
-  ),
-</code></pre>
+<pre><code>tar_target(
+  home_visit_non_mbcdi,
+  split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
+                        "data/csv/home_visit/non_mbcdi")
+)</code></pre>
 <p>Extracting the MB-CDI data has nearly the same function call, but the <code>these_questions</code> parameter is set to ‘mbcdi’.</p>
-<pre><code>  tar_target(
-    home_visit_mbcdi,
-    split_mbcdi_csvs(home_visit_xlsx_to_csv,
-                     "data/csv/home_visit/mbcdi")
-  )</code></pre>
+<pre><code>tar_target(
+  home_visit_mbcdi,
+  split_mbcdi_csvs(home_visit_xlsx_to_csv,
+                    "data/csv/home_visit/mbcdi")
+)</code></pre>
 </div>
 </div>
 <div id="clean-data" class="section level2 unnumbered">
@@ -291,14 +290,14 @@ For clarity, we print it here.</p>
 <p>Note that we have added <code>data</code> to <code>.gitignore</code> in <code>protocol/</code>, the root directory for the HTML protocol, so <em>none</em> of the data files should be made available via git or GitHub. This also means that there is <strong>no version control</strong> being done on raw data files themselves.</p>
 </div>
 <pre><code>tar_target(
-    home_visit_remove_identifiers,
-    purrr::map_chr(
-      home_visit/non_mbcdi,
-      open_deidentify_save,
-      csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
+  home_visit_remove_identifiers,
+  purrr::map_chr(
+    home_visit_non_mbcdi,
+    open_deidentify_save,
+    csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
       these_questions = 'non_mbcdi'
-    )),
-</code></pre>
+  )
+)</code></pre>
 </div>
 </div>
 <div id="quality-assurance-qa-reviews" class="section level2 unnumbered">
@@ -633,21 +632,37 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740623</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740624</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 288</code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740625</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740625</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740623</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740625</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 288</code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740628</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740628</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740623</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740628</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 288</code></pre>
 <p>So, four of the most recent data files with <span class="math inline">\(n=288\)</span> columns can be aggregated without modification.</p>
 <p>Let’s turn to the more recent files with <span class="math inline">\(n=287\)</span> columns.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740626</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740626</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">df740627</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">df740627</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740627</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
@@ -677,13 +692,21 @@ Accordingly, we focus our cleaning efforts here first.</p>
 ## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>The misalignment arises somewhere near column 92.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740629</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740629</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740629</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 287</code></pre>
 <p>So, <code>df740626</code> and <code>df740629</code> are aligned and can be merged.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740630</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740630</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740630</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
@@ -712,7 +735,11 @@ Accordingly, we focus our cleaning efforts here first.</p>
 ## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>These files also fall out of alignment near column 92.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df740631</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df740631</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv"</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740626</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df740631</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
@@ -757,25 +784,28 @@ We do that first, then address the discrepancies between aggregates.</p>
 <div id="non-mb-cdi-files-with-n288-columns" class="section level3 unnumbered">
 <h3>non-MB-CDI files with <span class="math inline">\(n=288\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n288-columns"><i class="fas fa-link"></i></a>
 </h3>
-<pre><code>tar_target(files_288_cols, stringr::str_detect(home_visit_remove_identifiers, 
-                                                 "2[3458]_non_mbcdi.*_deidentified\\.csv"))
+<pre><code>tar_target(files_288_cols, 
+  stringr::str_detect(home_visit_remove_identifiers, 
+                      "2[3458]_non_mbcdi.*_deidentified\\.csv")
+)
 
 tar_target(df_merge_288_cols,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_288_cols]))</code></pre>
+    make_aggregate_data_file(
+        home_visit_remove_identifiers[files_288_cols])
+)</code></pre>
 </div>
 <div id="non-mb-cdi-files-with-n287-columns" class="section level3 unnumbered">
 <h3>non-MB-CDI files with <span class="math inline">\(n=287\)</span> columns<a class="anchor" aria-label="anchor" href="#non-mb-cdi-files-with-n287-columns"><i class="fas fa-link"></i></a>
 </h3>
-<pre><code>  tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
+<pre><code>tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
                                                    "2[69]_non_mbcdi.*_deidentified\\.csv")),
-  tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
+tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
                                                    "(740627|740630|740631)_non.*_deidentified\\.csv")),
 
-  tar_target(df_merge_287_cols_1,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_287_cols_1])),
-  tar_target(df_merge_287_cols_2,
+tar_target(df_merge_287_cols_1,
+          make_aggregate_data_file(
+              home_visit_remove_identifiers[files_287_cols_1])),
+tar_target(df_merge_287_cols_2,
              make_aggregate_data_file(
                home_visit_remove_identifiers[files_287_cols_2])),</code></pre>
 </div>
@@ -1272,7 +1302,7 @@ We cannot proceed without further discussion with our team.</p>
 </h2>
 <p>Now, let’s go back to the data frame with 288 cols and see if we can bring these into alignment.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="va">df_merge_288_cols</span></span>
 <span></span>

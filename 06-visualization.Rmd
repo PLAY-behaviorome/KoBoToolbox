@@ -1,5 +1,7 @@
 # Visualizations {-}
 
+These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow.
+
 ## Recruiting calls data {-}
 
 Cumulative screening/recruiting calls by site.
@@ -11,7 +13,7 @@ library(forcats)
 ```
 
 ```{r load-screening-df}
-tar_load(screen_df)
+targets::tar_load(screen_df)
 df <- add_n_calls_to_demog(screen_df)
 ```
 
@@ -358,7 +360,7 @@ sleeping_pos <- home_visit_df %>%
 xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
 ```
 
-## Post-visit data
+## Post-visit data {-}
 
 We load the post-visit survey data.
 
