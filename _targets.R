@@ -88,15 +88,7 @@ list(
   tar_target(df_merge_287_cols_2,
              make_aggregate_data_file(
                home_visit_remove_identifiers[files_287_cols_2])),
-  # tar_target(df_merge_287_cols_2,
-  #            make_aggregate_data_file(
-  #              list.files(
-  #                "data/csv/home_visit/non_mbcdi/deid",
-  #                "(740627|740630|740631)_non.*_deidentified\\.csv",
-  #                full.names = TRUE
-  #              )
-  #            )),
-  tar_target(df_home_visit,
+  tar_target(home_visit_df,
              rbind(
                clean_dfs(df_merge_287_cols_2),
                clean_dfs(df_merge_287_cols_1),

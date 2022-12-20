@@ -16,8 +16,8 @@ We list these files and save them in a data frame called `kb_df`.
 
 ::: {.rmdnote}
 We can control how often we query the KBT server to download and update the data files.
-There is a variable in the header of the `_targets.R` called `update_interval_days` we use to control this.
-Right now, it is set at 3 days.
+There are variables in the header of the `_targets.R` called `update_interval` and `interval_units` we use to control this.
+Right now, it is set at 2 days.
 :::
 
 ```
@@ -26,162 +26,16 @@ tar_target(kb_df, list_kobo_data())
 
 ### Save selected raw files to local directory {-}
 
-Prepare to retrieve all demographic data files.
-These files have "Demographic" in the file name.
-We create a data frame `kb_demog` that includes only these files.
+A function `make_screening_df()` takes downloads the XLSX files, converts them to CSVs, copies the CSVs to a specified target directory, then opens the CSVs and combines them into a single data frame stored as `screen_df`.
 
 ```
-tar_target(kb_demog, dplyr::filter(kb_df, stringr::str_detect(title, "Demographic")))
-```
-
-Next, we retrieve the relevant (XLSX-formatted) files and store them in a local directory.
-
-```
-tar_target(screening_dir_xlsx, "protocol/data/xlsx/screening"),
-  tar_target(screening_downloads, retrieve_screening_xlsx(kb_demog, screening_dir_xlsx)),
-```
-
-## Convert to CSVs {-}
-
-By default, we presume that we want to convert **all** of the XLSX files in `screening_dir_xlsx` to CSVs.
-
-While not strictly necessary, we filter the downloaded filename to ensure that it includes 'Demographic_Questionnaire' and the form ID, an integer.
-
-```
-tar_target(screening_dir_csv, "protocol/data/csv/screening")
 tar_target(
-  screening_csv_fns,
-  list.files(screening_dir_csv, pattern = "[0-9]+.*\\.csv", full.names = TRUE)
+  screen_df,
+    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
+    cue = tarchetypes::tar_cue_age(
+      name = demog_submissions,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+)
 ```
 
-Then we import the XLSX files and save them as CSVs
-
-```
-tar_target(screening_xlsx_to_csv, load_screening_xlsx_save_csv(screening_dir_xlsx, screening_dir_csv))
-```
-
-## Merge files {-}
-
-Next, we merge the separate screening files.
-
-The following code documents the early exploration of these files.
-It shows that the field names are not equivalent.
-
-In a subsequent sub-section, we clean the field names so that the three files can be combined.
-
-### Compare the files {-}
-
-Before merging, we have to examine how the fields compare.
-
-```{r, eval=FALSE}
-csv_fns <- list.files("data/csv/screening", pattern = "\\.csv", full.names = TRUE)
-```
-
-Open the first file.
-
-```{r, eval=FALSE}
-demog_1 <- readr::read_csv(csv_fns[1], show_col_types = FALSE)
-dim(demog_1)
-```
-
-Open the second file.
-
-```{r, eval=FALSE}
-demog_2 <- readr::read_csv(csv_fns[2], show_col_types = FALSE)
-dim(demog_2)
-```
-
-Open the third file.
-
-```{r eval=FALSE}
-demog_3 <- readr::read_csv(csv_fns[3], show_col_types = FALSE)
-dim(demog_3)
-```
-
-::: {.rmdnote}
-These files have different numbers of columns, so we need to be careful in creating a merged data file.
-:::
-
-### Extract column names {-}
-
-```{r, eval=FALSE}
-demog_1_names <- names(demog_1)
-demog_2_names <- names(demog_2)
-demog_3_names <- names(demog_3)
-```
-
-Compare 1 to 2.
-
-```{r, eval=FALSE}
-sum(demog_1_names == demog_2_names)
-```
-
-Compare 1 to 3.
-
-```{r, eval=FALSE}
-sum(demog_1_names == demog_3_names)
-```
-
-Compare 2 to 3.
-
-```{r, eval=FALSE}
-sum(demog_2_names == demog_3_names)
-```
-
-The second and third data files have the most overlap.
-
-### Extract core variables {-}
-
-Since only some of these data come from enrolled participants, we have to be careful about what variables we extract for project management purposes.
-
-We use separate functions for the old (first) file versus the later two files.
-
-See `protocol/R/functions.R` and focus on `clean_demog_1()` and `clean_demog_2()`.
-
-```{r}
-source("R/functions.R")
-clean_demog_1
-```
-
-```{r}
-clean_demog_2
-```
-
-::: {.rmdnote}
-This scheme is inelegant and is brittle. It should be improved.
-:::
-
-### Merge files {-}
-
-```
-tar_target(demog_submissions, clean_merge_demog(screening_csv_fns))
-```
-
-<!-- ## Plots {-} -->
-
-<!-- Add a cumulative `n_calls` variable. -->
-
-<!-- ``` -->
-<!-- demog_submissions <- demog_submissions %>% -->
-<!--   dplyr::arrange(., submit_date) %>% -->
-<!--   dplyr::mutate(., n_calls = seq_along(submit_date)) -->
-<!-- ``` -->
-
-<!-- Plot the time series of recruiting/screening calls. -->
-
-<!-- ```{r, fig.cap="Time series of recruiting/screening calls.", eval=FALSE} -->
-<!-- demog_submissions %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(submit_date, n_calls, color = site_id) + -->
-<!--   geom_point() -->
-<!-- ``` -->
-
-<!-- Plot the number of calls made by site. -->
-
-<!-- ```{r, fig.cap="Recruiting calls by site", eval=FALSE} -->
-<!-- demog_submissions %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(site_id, fill = site_id) + -->
-<!--   geom_bar() + -->
-<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text -->
-<!-- ``` -->

@@ -13,7 +13,7 @@
 <meta name="twitter:title" content="Screening call | PLAY Project: Surveys">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -67,7 +67,7 @@
 <p>Details about the data collection <a href="https://www.play-project.org/collection.html#Participant_Recruitment">protocol for participant screening and recruiting</a> can be found on the <a href="https://play-project.org">PLAY Project website</a>.</p>
 <p>To make the workflow more robust and reproducible, much of the work is embedded in functions (<code>R/functions.R</code>) and extensive use is made of the <a href="https://cran.r-project.org/web/packages/targets/"><code>{targets}</code></a> package.
 This document describes the workflow, but none of the code chunks are executed.</p>
-<p>The <code><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target()</a></code> syntax should be read as follows: The “target” variable or file is on the left, and the function that generates it is on the right.</p>
+<p>The <code>tar_target()</code> syntax should be read as follows: The “target” variable or file is on the left, and the function that generates it is on the right.</p>
 </div>
 <div id="retrieve-files-from-kobotoolbox" class="section level2 unnumbered">
 <h2>Retrieve files from KoBoToolbox<a class="anchor" aria-label="anchor" href="#retrieve-files-from-kobotoolbox"><i class="fas fa-link"></i></a>
@@ -76,194 +76,22 @@ This document describes the workflow, but none of the code chunks are executed.<
 We list these files and save them in a data frame called <code>kb_df</code>.</p>
 <div class="rmdnote">
 <p>We can control how often we query the KBT server to download and update the data files.
-There is a variable in the header of the <code>_targets.R</code> called <code>update_interval_days</code> we use to control this.
-Right now, it is set at 3 days.</p>
+There are variables in the header of the <code>_targets.R</code> called <code>update_interval</code> and <code>interval_units</code> we use to control this.
+Right now, it is set at 2 days.</p>
 </div>
 <pre><code>tar_target(kb_df, list_kobo_data())</code></pre>
 <div id="save-selected-raw-files-to-local-directory" class="section level3 unnumbered">
 <h3>Save selected raw files to local directory<a class="anchor" aria-label="anchor" href="#save-selected-raw-files-to-local-directory"><i class="fas fa-link"></i></a>
 </h3>
-<p>Prepare to retrieve all demographic data files.
-These files have “Demographic” in the file name.
-We create a data frame <code>kb_demog</code> that includes only these files.</p>
-<pre><code>tar_target(kb_demog, dplyr::filter(kb_df, stringr::str_detect(title, "Demographic")))</code></pre>
-<p>Next, we retrieve the relevant (XLSX-formatted) files and store them in a local directory.</p>
-<pre><code>tar_target(screening_dir_xlsx, "protocol/data/xlsx/screening"),
-  tar_target(screening_downloads, retrieve_screening_xlsx(kb_demog, screening_dir_xlsx)),</code></pre>
-</div>
-</div>
-<div id="convert-to-csvs" class="section level2 unnumbered">
-<h2>Convert to CSVs<a class="anchor" aria-label="anchor" href="#convert-to-csvs"><i class="fas fa-link"></i></a>
-</h2>
-<p>By default, we presume that we want to convert <strong>all</strong> of the XLSX files in <code>screening_dir_xlsx</code> to CSVs.</p>
-<p>While not strictly necessary, we filter the downloaded filename to ensure that it includes ‘Demographic_Questionnaire’ and the form ID, an integer.</p>
-<pre><code>tar_target(screening_dir_csv, "protocol/data/csv/screening")
-tar_target(
-  screening_csv_fns,
-  list.files(screening_dir_csv, pattern = "[0-9]+.*\\.csv", full.names = TRUE)</code></pre>
-<p>Then we import the XLSX files and save them as CSVs</p>
-<pre><code>tar_target(screening_xlsx_to_csv, load_screening_xlsx_save_csv(screening_dir_xlsx, screening_dir_csv))</code></pre>
-</div>
-<div id="merge-files" class="section level2 unnumbered">
-<h2>Merge files<a class="anchor" aria-label="anchor" href="#merge-files"><i class="fas fa-link"></i></a>
-</h2>
-<p>Next, we merge the separate screening files.</p>
-<p>The following code documents the early exploration of these files.
-It shows that the field names are not equivalent.</p>
-<p>In a subsequent sub-section, we clean the field names so that the three files can be combined.</p>
-<div id="compare-the-files" class="section level3 unnumbered">
-<h3>Compare the files<a class="anchor" aria-label="anchor" href="#compare-the-files"><i class="fas fa-link"></i></a>
-</h3>
-<p>Before merging, we have to examine how the fields compare.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv_fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"data/csv/screening"</span>, pattern <span class="op">=</span> <span class="st">"\\.csv"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Open the first file.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_1</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">demog_1</span><span class="op">)</span></span></code></pre></div>
-<p>Open the second file.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_2</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">demog_2</span><span class="op">)</span></span></code></pre></div>
-<p>Open the third file.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_3</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv_fns</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">demog_3</span><span class="op">)</span></span></code></pre></div>
-<div class="rmdnote">
-<p>These files have different numbers of columns, so we need to be careful in creating a merged data file.</p>
-</div>
-</div>
-<div id="extract-column-names" class="section level3 unnumbered">
-<h3>Extract column names<a class="anchor" aria-label="anchor" href="#extract-column-names"><i class="fas fa-link"></i></a>
-</h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demog_1_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_1</span><span class="op">)</span></span>
-<span><span class="va">demog_2_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_2</span><span class="op">)</span></span>
-<span><span class="va">demog_3_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">demog_3</span><span class="op">)</span></span></code></pre></div>
-<p>Compare 1 to 2.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_2_names</span><span class="op">)</span></span></code></pre></div>
-<p>Compare 1 to 3.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_1_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
-<p>Compare 2 to 3.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">demog_2_names</span> <span class="op">==</span> <span class="va">demog_3_names</span><span class="op">)</span></span></code></pre></div>
-<p>The second and third data files have the most overlap.</p>
-</div>
-<div id="extract-core-variables" class="section level3 unnumbered">
-<h3>Extract core variables<a class="anchor" aria-label="anchor" href="#extract-core-variables"><i class="fas fa-link"></i></a>
-</h3>
-<p>Since only some of these data come from enrolled participants, we have to be careful about what variables we extract for project management purposes.</p>
-<p>We use separate functions for the old (first) file versus the later two files.</p>
-<p>See <code>protocol/R/functions.R</code> and focus on <code>clean_demog_1()</code> and <code>clean_demog_2()</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"R/functions.R"</span><span class="op">)</span></span>
-<span><span class="va">clean_demog_1</span></span></code></pre></div>
-<pre><code>## function(csv_fn) {
-##   require(readr)
-##   
-##   stopifnot("csv_fn not found" = file.exists(csv_fn))
-##   
-##   df_1 &lt;- readr::read_csv(csv_fn, show_col_types = FALSE)
-##   df_1 %&gt;%
-##     dplyr::select(
-##       .,
-##       submit_date = c_today,
-##       site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
-##       sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
-##       child_age_mos = `play_phone_questionnaire/check_childage`,
-##       child_sex = `play_phone_questionnaire/child_sex`,
-##       language_to_child = `play_phone_questionnaire/language_spoken_child`,
-##       language_spoken_home = `play_phone_questionnaire/language_spoken_home`,
-##       child_bornonduedate = `play_phone_questionnaire/child_information/child_onterm`,
-##       child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
-##       child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
-##       child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
-##       major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
-##       child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
-##       child_wake_time = `play_phone_questionnaire/child_information/child_wake_time`,
-##       child_nap_hours = `play_phone_questionnaire/child_information/child_nap_hours`,
-##       child_sleep_location = `play_phone_questionnaire/child_information/child_sleep_location`,
-##       mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
-##       mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
-##       mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
-##     ) %&gt;%
-##     dplyr::mutate(
-##       .,
-##       site_id = dplyr::recode(
-##         site_id,
-##         NYU = "NYUNI",
-##         new_york_unive = "NYUNI",
-##         georgetown_uni = "GEORG",
-##         GTN = "GEORG",
-##         UCR = "UCRIV"
-##       )
-##     ) %&gt;%
-##     dplyr::filter(., !stringr::str_detect(site_id, '_of__'))
-## }</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">clean_demog_2</span></span></code></pre></div>
-<pre><code>## function(csv_fn) {
-##   require(readr)
-##   require(dplyr)
-##   
-##   stopifnot("csv_fn not found" = file.exists(csv_fn))
-##   
-##   df_2 &lt;- readr::read_csv(csv_fn, show_col_types = FALSE)
-##   df_2 %&gt;%
-##     dplyr::select(
-##       submit_date = c_today,
-##       site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
-##       sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
-##       child_age_mos = `play_demo_questionnaire/check_childage`,
-##       child_sex = `play_demo_questionnaire/child_sex`,
-##       language_to_child = `play_demo_questionnaire/language_spoken_child`,
-##       language_spoken_home = `play_demo_questionnaire/language_spoken_house`,
-##       child_bornonduedate = `play_demo_questionnaire/child_information/child_onterm`,
-##       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
-##       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
-##       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-##       major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
-##       child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
-##       child_wake_time = `play_demo_questionnaire/child_information/child_wake_time`,
-##       child_nap_hours = `play_demo_questionnaire/child_information/child_nap_hours`,
-##       child_sleep_location = `play_demo_questionnaire/child_information/child_sleep_location`,
-##       mother_childbirth_age = `play_demo_questionnaire/group_mominfo/mom_childbirth_age`,
-##       mother_race = `play_demo_questionnaire/group_mominfo/mom_race`,
-##       mother_ethnicity = `play_demo_questionnaire/group_mominfo/mom_ethnicity`,
-##     )
-## }</code></pre>
-<div class="rmdnote">
-<p>This scheme is inelegant and is brittle. It should be improved.</p>
-</div>
-</div>
-<div id="merge-files-1" class="section level3 unnumbered">
-<h3>Merge files<a class="anchor" aria-label="anchor" href="#merge-files-1"><i class="fas fa-link"></i></a>
-</h3>
-<pre><code>tar_target(demog_submissions, clean_merge_demog(screening_csv_fns))</code></pre>
-<!-- ## Plots {-} -->
-<!-- Add a cumulative `n_calls` variable. -->
-<!-- ``` -->
-<!-- demog_submissions <- demog_submissions %>% -->
-<!--   dplyr::arrange(., submit_date) %>% -->
-<!--   dplyr::mutate(., n_calls = seq_along(submit_date)) -->
-<!-- ``` -->
-<!-- Plot the time series of recruiting/screening calls. -->
-<!-- ```{r, fig.cap="Time series of recruiting/screening calls.", eval=FALSE} -->
-<!-- demog_submissions %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(submit_date, n_calls, color = site_id) + -->
-<!--   geom_point() -->
-<!-- ``` -->
-<!-- Plot the number of calls made by site. -->
-<!-- ```{r, fig.cap="Recruiting calls by site", eval=FALSE} -->
-<!-- demog_submissions %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(site_id, fill = site_id) + -->
-<!--   geom_bar() + -->
-<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) # Rotate text -->
-<!-- ``` -->
+<p>A function <code>make_screening_df()</code> takes downloads the XLSX files, converts them to CSVs, copies the CSVs to a specified target directory, then opens the CSVs and combines them into a single data frame stored as <code>screen_df</code>.</p>
+<pre><code>tar_target(
+  screen_df,
+    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
+    cue = tarchetypes::tar_cue_age(
+      name = demog_submissions,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+)</code></pre>
 
 </div>
 </div>
@@ -278,15 +106,6 @@ It shows that the field names are not equivalent.</p>
 <li><a class="nav-link" href="#collection-protocol">Collection protocol</a></li>
 <li>
 <a class="nav-link" href="#retrieve-files-from-kobotoolbox">Retrieve files from KoBoToolbox</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#save-selected-raw-files-to-local-directory">Save selected raw files to local directory</a></li></ul>
-</li>
-<li><a class="nav-link" href="#convert-to-csvs">Convert to CSVs</a></li>
-<li>
-<a class="nav-link" href="#merge-files">Merge files</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#compare-the-files">Compare the files</a></li>
-<li><a class="nav-link" href="#extract-column-names">Extract column names</a></li>
-<li><a class="nav-link" href="#extract-core-variables">Extract core variables</a></li>
-<li><a class="nav-link" href="#merge-files-1">Merge files</a></li>
-</ul>
 </li>
 </ul>
 
@@ -305,7 +124,7 @@ It shows that the field names are not equivalent.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-16.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

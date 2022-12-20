@@ -17,7 +17,7 @@ The KoBoToolBox API key is **not** synched to GitHub.
 
 ## Set-up {-}
 
-To test whether the local system has the API key installed, run the command `Sys.getenv("KOBO_API_KEY")`. 
+To test whether the local system has the API key installed, we run the command `Sys.getenv("KOBO_API_KEY")`. 
 
 ### Check KoBo API Key{-}
 
@@ -30,32 +30,17 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
 }
 ```
 
-### Load/source helper functions {-}
-
-::: {.rmdnote}
-The following blocks are not evaluated because of the move to the [`{targets}`](https://cran.r-project.org/web/packages/targets/) package
-and the use of the [`renv`](https://cran.r-project.org/web/packages/renv/) package.
-The instructions should be updated.
-:::
-
-With the API key installed, several custom functions in `R/kobo_export.R` can be run.
-
-```{r source-helpers, eval=FALSE}
-if (file.exists("R/kobo_export.R")) {
-  source(file.path("R/kobo_export.R"))
-} else {
-  stop("File not found: 'R/kobo_export.R'")
-}
-```
-
 ### Install dependencies {-}
 
-The helper functions require several external packages. To confirm that these are installed, run the following chunk.
+We now use the [`renv`](https://cran.r-project.org/web/packages/renv/index.html) package to manage package dependencies.
 
-```{r install-dependencies, eval=FALSE}
-if (params$install_deps) {
-  install_kobo_packages()  
-} else {
-  message("'params$install_deps' is FALSE, so no dependencies are installed.")
-}
-```
+### Load/source helper functions {-}
+
+Most of the work is contained in `R/functions.R`.
+This is sourced when we run `tar_make()` from the `{targets}` package.
+
+::: {.rmdimportant}
+We run `targets::tar_make()` manually for the time being.
+
+None of the outputs are synced to GitHub.
+:::

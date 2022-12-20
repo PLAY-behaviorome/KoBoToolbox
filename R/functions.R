@@ -472,8 +472,8 @@ plot_calls_by_site <- function(df) {
   require(dplyr)
   df %>%
     ggplot(.) +
-    aes(site_id, fill = site_id) +
-    geom_bar() +
+    aes(n_calls, fill = site_id) +
+    geom_col() +
     theme(axis.text.x = element_text(
       angle = 90,
       vjust = 0.5,

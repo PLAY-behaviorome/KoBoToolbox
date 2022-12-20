@@ -2,15 +2,27 @@
 
 ## Select forms from KBT
 
-```{r}
-targets::tar_load(kb_df)
-post_visit <- kb_df %>%
-  dplyr::filter(., stringr::str_detect(title, "Post\\-Visit"))
+The post-visit notes are stored in a separate KBT form with "Post-Visit" in the title.
+
+```
+tar_target(kb_post_visit, dplyr::filter(
+    kb_df, stringr::str_detect(title, "Post\\-Visit")
+  ))
 ```
 
 ## Download forms as XLSX
 
-```{r}
+A special function `make_post_visit_df()` downloads the XLSX forms, converts them to CSVs, 
+saves the CSVs in a specific directory, and then selects one of them--the most recent form--to open as a data frame.
 
+There is a smaller, older post-visit data file with fewer fields that can be reconciled with the current active one at a later date.
+
+```
+tar_target(
+    post_visit_df,
+    make_post_visit_df(kb_post_visit,
+                       "data/xlsx/post_visit",
+                       "data/csv/post_visit")
+  ),
 ```
 
