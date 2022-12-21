@@ -30,6 +30,21 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
 }
 ```
 
+### Check Databrary credentials
+
+The `databraryapi` package handles authenticating to Databrary.
+For scripting access to Databrary that require authentication, it is useful to store the user's Databrary login (email) in `.Renviron` using the R command `Sys.setenv(DATABRARY_LOGIN = "<email@provider.com>")` where you substitute your Databrary login (email) for `<email@provider.com>`.
+When this has been accomplished the following code can be run to check the status of the saved variable.
+
+```{r}
+db_logon <- Sys.getenv("DATABRARY_LOGIN")
+if ((length(db_logon) != 1) || (!is.character(db_logon)) || (db_logon == "")) {
+  stop("'DATABRARY_LOGIN' not installed in .Renviron")
+} else {
+  message("'DATABRARY_LOGIN' installed.")
+}
+```
+
 ### Install dependencies {-}
 
 We now use the [`renv`](https://cran.r-project.org/web/packages/renv/index.html) package to manage package dependencies.

@@ -10,24 +10,47 @@ update_interval <- 2
 update_interval_units <- "days"
 
 list(
-  tar_target(kb_df, list_kobo_data()),
-  tar_target(kb_screen, dplyr::filter(
-    kb_df, stringr::str_detect(title, "Demographic")
-  )),
-  tar_target(kb_home, dplyr::filter(
-    kb_df, stringr::str_detect(title, "Home")
-  )),
-  tar_target(kb_post_visit, dplyr::filter(
-    kb_df, stringr::str_detect(title, "Post\\-Visit")
-  )),
+  tar_target(
+    kb_df,
+    list_kobo_data(),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    kb_screen,
+    dplyr::filter(
+      kb_df,
+      stringr::str_detect(title, "Demographic")),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    kb_home,
+    dplyr::filter(
+      kb_df,
+      stringr::str_detect(title, "Home")),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_home,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    kb_post_visit,
+    dplyr::filter(kb_df,
+                  stringr::str_detect(title, "Post\\-Visit")),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_post_visit,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
   # Make data frame from screening/demographic survey
   tar_target(
     screen_df,
-    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
-    cue = tarchetypes::tar_cue_age(
-      name = demog_submissions,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening")
   ),
   # Make data frame from post-visit surveys
   tar_target(
@@ -71,29 +94,52 @@ list(
       open_deidentify_save,
       csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
       these_questions = 'non_mbcdi'
-    )),
+    )
+  ),
   # Merge non-MB-CDI datafiles
-  tar_target(files_288_cols, stringr::str_detect(home_visit_remove_identifiers, 
-                                                 "2[3458]_non_mbcdi.*_deidentified\\.csv")),
-  tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
-                                                   "2[69]_non_mbcdi.*_deidentified\\.csv")),
-  tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
-                                                   "(740627|740630|740631)_non.*_deidentified\\.csv")),
-  tar_target(df_merge_288_cols,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_288_cols])),
-  tar_target(df_merge_287_cols_1,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_287_cols_1])),
-  tar_target(df_merge_287_cols_2,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_287_cols_2])),
+  tar_target(
+    files_288_cols,
+    stringr::str_detect(
+      home_visit_remove_identifiers,
+      "2[3458]_non_mbcdi.*_deidentified\\.csv"
+    )
+  ),
+  tar_target(
+    files_287_cols_1,
+    stringr::str_detect(
+      home_visit_remove_identifiers,
+      "2[69]_non_mbcdi.*_deidentified\\.csv"
+    )
+  ),
+  tar_target(
+    files_287_cols_2,
+    stringr::str_detect(
+      home_visit_remove_identifiers,
+      "(740627|740630|740631)_non.*_deidentified\\.csv"
+    )
+  ),
+  tar_target(
+    df_merge_288_cols,
+    make_aggregate_data_file(home_visit_remove_identifiers[files_288_cols])
+  ),
+  tar_target(
+    df_merge_287_cols_1,
+    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_1])
+  ),
+  tar_target(
+    df_merge_287_cols_2,
+    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_2])
+  ),
   tar_target(home_visit_df,
              rbind(
                clean_dfs(df_merge_287_cols_2),
                clean_dfs(df_merge_287_cols_1),
                clean_dfs(df_merge_288_cols)
              )),
+  tar_target(
+    home_visit_w_databrary_df,
+    add_databrary_info_to_home_visit_df(home_visit_df)
+  ),
   # MB-CDI CSVs
   tar_target(
     home_visit_mbcdi,

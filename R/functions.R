@@ -960,7 +960,8 @@ play_vols <- tibble::tibble(
     'PLAYProject_UIOWA',
     'PLAYProject_BOSTU',
     'PLAYProject_CSUFL',
-    'PLAYProject_UGEORG'
+    'PLAYProject_UGEOR',
+    'PLAYProject_UTAUS'
   ),
   play_vol_id = c(
     954,
@@ -981,7 +982,8 @@ play_vols <- tibble::tibble(
     1422,
     1008,
     1481,
-    1515
+    1515,
+    1517
   )
 )
 
@@ -1022,7 +1024,7 @@ lookup_databrary_session <-
   }
 
 get_databrary_session_data <-  function(this_site_id,
-                                        s_number) {
+                                        s_number, vb = FALSE) {
   
   if (!is.character(this_site_id)) {
     stop('`this_site_id` must be a character string.')
@@ -1041,6 +1043,7 @@ get_databrary_session_data <-  function(this_site_id,
     return(NULL)
   }
   
+  if (vb) message("Site: ", this_site_id, " | Session: ", subject_number)
   vol_sessions <-
     databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
   
@@ -1052,7 +1055,38 @@ get_databrary_session_data <-  function(this_site_id,
     #dplyr::select(df, -context.state)
     df
   } else {
-    message('Cannot access volume ', this_volume$play_vol_id)
+    message('Cannot access session data from volume ', this_volume$play_vol_id)
+    NULL
+  }
+}
+
+get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
+  
+  if (!file.exists('.databrary.RData')) {
+    stop('Not logged-in to Databrary.')
+  }
+  this_row <- df[row,]
+  
+  this_volume <-
+    dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_row$site_id))
+  # if (dim(this_volume)[1] <= 0) {
+  #   message('No volume found for site ', this_site_id)
+  #   return(NULL)
+  # }
+  
+  if (vb) message("Site: ", this_row$site_id, " | Session: ", this_row$subject_number)
+  vol_sessions <-
+    databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
+  
+  if (!is.null(vol_sessions)) {
+    s_number_zero_padded <- stringr::str_pad(this_row$subject_number, 3, 'left', 0)
+    df <- dplyr::filter(vol_sessions, stringr::str_detect(session_name, paste0(s_number_zero_padded, '$'))) 
+    #df <- dplyr::rename(df, session_name = name)
+    #df <- dplyr::mutate(df, release = recode(release, "1"="shared", "2"= "learning", "0"="private"))
+    #dplyr::select(df, -context.state)
+    df
+  } else {
+    message('Cannot access session data from volume ', this_volume$play_vol_id)
     NULL
   }
 }
@@ -1098,21 +1132,38 @@ add_play_session_name <- function(df) {
                                           stringr::str_pad(subject_number, 3, 'left', 0)))
 }
 
-add_databrary_info_to_kobo <- function(play_kobo) {
+add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
+  
+  # Check Databrary login
+  if (vb) "Authenticating to Databrary using stored credentials."
+  auth_status <- databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))
+  stopifnot("Not logged in to Databrary." = auth_status)
+  
   # Generate KoBo and add full Databrary-compatible PLAY session name
-  # message('Importing KoBo survey data.')
+  if (vb) message('Creating formatted session name.')
   # play_kobo <- readr::read_csv(fn, show_col_types = FALSE)
-  play_kobo <- add_play_session_name(play_kobo)
+  play_kobo <- add_play_session_name(df)
   
   # Gather session info from Databrary and add GUID and URL
-  message('Getting session info from Databrary.')
-  #play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, lookup_databrary_session)
-  play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, get_databrary_session_data)
+  if (vb) message('Getting session info from Databrary.')
   
-  message('Modifying Databrary session info.')
+  #play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, lookup_databrary_session)
+  #play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, get_databrary_session_data)
+  n_rows <- dim(play_kobo)[1]
+  play_db_sessions <- purrr::map_df(1:n_rows, get_databrary_session_data_2, play_kobo, vb = vb)
+  
+  if (vb) message('Modifying Databrary session info.')
+  
   play_db_sessions <- dplyr::mutate(play_db_sessions, databrary_guid = generate_databrary_guid(play_db_sessions),
                                     databrary_url = generate_databrary_url(play_db_sessions))
   
   # Join databases with common session_id's
   dplyr::inner_join(play_kobo, play_db_sessions)
+  
+  play_kobo
+}
+
+test_kb_db <- function(rg, df) {
+  require(purrr)
+  purrr::map_df(rg, get_databrary_session_data_2, df, vb = TRUE)
 }

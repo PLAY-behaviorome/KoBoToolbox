@@ -582,4 +582,16 @@ As of 2022-12-15, the above has now been incorporated into `R/functions.R` and i
 
 ## Merge with Databrary info {-}
 
+For each session (row) in the merged data frame, we pull data from the associated Databrary volume and session.
+These data are merged with that drawn from KBT.
+
+```
+tar_target(
+  home_visit_w_databrary_df,
+  add_databrary_info_to_home_visit_df(home_visit_df)
+)
+```
+
+The `add_databrary_info_to_home_visit()` function in `R/functions.R` does most of the work.
+
 ## Clean and prepare for export {-}
