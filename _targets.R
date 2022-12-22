@@ -135,6 +135,14 @@ list(
                clean_dfs(df_merge_288_cols)
              )),
   tar_target(
+    files_274_cols,
+    stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)")
+  ),
+  tar_target(
+    df_merge_274_cols,
+    make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols])
+  ),
+  tar_target(
     home_visit_w_databrary_df,
     add_databrary_info_to_home_visit_df(home_visit_df)
   ),
