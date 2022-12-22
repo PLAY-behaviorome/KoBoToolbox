@@ -1,13 +1,13 @@
 # State of PLAY {-}
 
-These files summarize the current state of the project.
+The following summarizes the current state of the project.
 
 ```{r}
 library(tidyverse)
 library(lubridate)
 library(ggplot2)
+library(forcats)
 ```
-
 
 ## Last month {-}
 
@@ -44,3 +44,52 @@ There have been `r n_home_visits` home visits since `r month_ago`.
 ```{r fig-last-mo-home-visit, fig.cap="Home visits in last month by site"}
 calls_by_site_plot(home_last_month_df)
 ```
+
+## Overall {-}
+
+```{r}
+targets::tar_load(home_visit_w_databrary_df)
+
+gold_silver <- home_visit_w_databrary_df %>%
+  dplyr::filter(!is.na(group_name))
+
+xtabs(~ group_name + age_group, gold_silver)
+```
+
+```{r}
+xtabs(~ group_name + child_sex, gold_silver)
+```
+
+```{r}
+df_race_eth <- gold_silver %>%
+  dplyr::filter(!is.na(group_name)) %>%
+  dplyr::mutate(., participant_race = recode(participant_race, 
+                                             `Black or African American` = "Black_or_African_American",
+                                             `More than one` = "More_than_one"),
+                participant_ethnicity = recode(participant_ethnicity, 
+                                               `Hispanic or Latino` = "Hispanic_or_Latino",
+                                               `Not Hispanic or Latino` = "Not_Hispanic_or_Latino"))
+
+xtabs(~ participant_race + participant_ethnicity, df_race_eth)
+```
+### By site, location, & QA status {-}
+
+```{r}
+xtabs(~ site_id + group_name, gold_silver)
+```
+
+```{r, fig.cap="QA level by State"}
+gold_silver %>%
+    ggplot(.) +
+    aes(forcats::fct_infreq(context_state), fill = context_state) +
+    geom_bar() +
+    facet_grid(. ~ group_name) +
+    theme(axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )) + # Rotate text
+    labs(x = "State", y = "N participants") +
+    theme(legend.position = "none")
+```
+

@@ -17,13 +17,13 @@ targets::tar_load(screen_df)
 df <- add_n_calls_to_demog(screen_df)
 ```
 
-```{r, fig.cap="Cumulative screening calls by year and site"}
+```{r fig-screening-calls-cum, fig.cap="Cumulative screening calls by year and site"}
 plot_call_timeseries(df)
 ```
 
 Number of screening calls by site.
 
-```{r, fig.cap="Cumulative screening calls by site"}
+```{r fig-screening-calls-by-site, fig.cap="Cumulative screening calls by site"}
 calls_by_site_plot <- function(df) {
   require(dplyr)
   df %>%
@@ -40,11 +40,6 @@ calls_by_site_plot <- function(df) {
     theme(legend.position = "none")
 }
 
-# df <- screen_df %>%
-#   group_by(site_id) %>%
-#   summarize(calls_per_site = n()) %>%
-#   arrange(desc(calls_per_site))
-
 calls_by_site_plot(screen_df)
 ```
 
@@ -52,7 +47,7 @@ calls_by_site_plot(screen_df)
 
 Child age in months (`child_age_mos`) by `child_sex`.
 
-```{r, fig.cap="Histogram of child age at time of recruiting call."}
+```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
 screen_df %>%
   dplyr::filter(., !is.na(child_age_mos), !is.na(child_sex)) %>%
   ggplot() +
@@ -199,7 +194,7 @@ plot_screening_sites <- function(geo_df) {
 
 Plot the map.
 
-```{r, fig.cap = "Families contacted by location"}
+```{r fig-screening-calls-map, fig.cap = "Families contacted by location"}
 plot_screening_sites(geos)
 ```
  
@@ -216,7 +211,7 @@ Child age in months (`age_group`) by `child_sex`.
 Note: The child's exact age in months is part of the Databrary-related data. 
 That is on the work plan.
 
-```{r}
+```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
 home_visit_df %>%
   dplyr::filter(., !is.na(age_group), !is.na(child_sex)) %>%
   ggplot() +
@@ -329,11 +324,12 @@ feeding <- home_visit_df %>%
 xtabs(formula = ~ child_sex + breastfeed, data = feeding)
 ```
 
-```{r}
+```{r, fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
 feeding %>%
   ggplot(.) +
   aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
-  geom_histogram(bins = 15)
+  geom_histogram(bins = 15) +
+  theme(legend.title = element_blank())
 ```
 
 #### Smoking/drinking {-}

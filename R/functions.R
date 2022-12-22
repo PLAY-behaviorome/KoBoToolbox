@@ -1287,8 +1287,6 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
   
   # Join databases with common session_id's
   dplyr::inner_join(play_kobo, play_db_sessions)
-  
-  play_kobo
 }
 
 ###################################################################
