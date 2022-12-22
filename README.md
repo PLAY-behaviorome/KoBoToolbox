@@ -15,23 +15,22 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 - `R/`: Sets of R functions that support workflow.
     - `_old/`: deprecated `*.R` files
     - `functions.R` active functions.
-- `_targets`: Files related to this project's use of the [`{targets}` package](https://books.ropensci.org/targets/).
+- `_targets/`: Files related to this project's use of the [`{targets}` package](https://books.ropensci.org/targets/).
+- `_OLDtargets.R`: deprecated `_targets.R` file used in old version of targets-based workflow.
+- `_targets.R`: active targets file.
 - `demog_screening/`: deprecated files related to processing of the demographic screening surveys.
 - `docs/`: Output files for bootstrap4-styled gitbook; the output of `bookdown::render()`. See <https://PLAY-behaviorome.github.io/KoBoToolbox/> for the rendered site.
 - `home_visit/`: deprecated files related to processing the home visit questionnaire data.
+- `visualize`: deprecated files related to visualizing cleaned survey data.
+- `renv/`: Files supporting the project's use of the `renv` package to support computational reproducibility.
+- `renv.lock`: file used by `renv` to maintain list of package dependencies.
+- `index.Rmd`, `01-setup.Rmd`, `02-screening.Rmd`, `03-home-visit.Rmd`, `04-data-dictionary.Rmd`, `05-post-visit-notes.Rmd`, and `06-visualization.Rmd`: Files that form the basis of the web book.
+- `bookdown.yml` and `output.yml`: parameter files used by `bookdown` to render web book.
+- `preamble.tex`: file used for rendering PDF version of web book.
 - `include/`: Assets to be included in rendered web book.
     - `bib/`: Reference files
     - `css/`: CSS files
     - `img/`: Image files.
-- `renv/`: Files supporting the project's use of the `renv` package to support computational reproducibility.
-- `visualize`: deprecated files related to visualizing cleaned survey data.
-- `index.Rmd`, `01-setup.Rmd`, `02-screening.Rmd`, `03-home-visit.Rmd`, `04-data-dictionary.Rmd`, `05-post-visit-notes.Rmd`, and `06-visualization.Rmd`: Files that form the basis of the web book.
-- `bookdown.yml` and `output.yml`: parameter files used by `bookdown` to render web book.
-- `preamble.tex`: file used for rendering PDF version of web book.
-- `_OLDtargets.R`: deprecated `_targets.R` file used in old version of targets-based workflow.
-- `_targets.R`: active targets file.
-- `renv.lock`: file used by `renv` to maintain list of package dependencies.
-
 
 ### Private, not synched to GitHub
 

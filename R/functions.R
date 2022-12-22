@@ -5,6 +5,9 @@
 #' @param update_data Logical value indicating whether to clean the directory.
 #' @param data_dir Directory to clean
 clean_data_dir <- function(update_data, data_dir) {
+  stopifnot(is.logical(update_data))
+  stopifnot(dir.exists(data_dir))
+  
   if (update_data) {
     unlink(paste0(data_dir, "/*"))
   }
@@ -22,10 +25,10 @@ clean_data_dir <- function(update_data, data_dir) {
 list_kobo_data <-
   function(URL = "https://kc.kobotoolbox.org/api/v1/data",
            return_df = TRUE) {
-    if (!is.character(URL)) {
-      stop("`URL` must be a character string.")
-    }
-    
+
+    stopifnot(is.character(URL))
+    stopifnot(is.logical(return_df))
+
     require(httr)
     
     kobo_api_key <- Sys.getenv("KOBO_API_KEY")
@@ -229,12 +232,11 @@ extract_kb_form_name <-
 #' @returns NULL
 retrieve_kobo_xlsx <- function(df, save_dir) {
   require(purrr)
-  
   stopifnot(is.data.frame(df))
   stopifnot(dir.exists(save_dir))
   
   n_files <- dim(df)[1]
-  purrr::map(1:n_files,
+  purrr::map_chr(1:n_files,
              retrieve_save_xls_export,
              kb_df = df,
              save_dir = save_dir)
@@ -255,11 +257,10 @@ make_screening_df <- function(kb_screen, xlsx_dir, csv_dir) {
 ###################################################################
 make_post_visit_df <- function(kb_post_visit, xlsx_dir, csv_dir) {
   require(readr)
-  
   stopifnot(is.data.frame(kb_post_visit))
   stopifnot(dir.exists(xlsx_dir))
   stopifnot(dir.exists(csv_dir))
-  
+
   retrieve_kobo_xlsx(kb_post_visit, xlsx_dir)
   load_xlsx_save_many_csvs(xlsx_dir, csv_dir, "Post\\-Visit")
   #clean_merge_post_visit()
@@ -276,7 +277,6 @@ load_xlsx_save_csv <- function(fn, out_dir, vb = FALSE) {
   require(tools)
   require(readxl)
   require(readr)
-  
   stopifnot(file.exists(fn))
   stopifnot(dir.exists(out_dir))
   
@@ -300,9 +300,9 @@ load_xlsx_save_csv <- function(fn, out_dir, vb = FALSE) {
 #' @param out_dir A string indicating the output directory
 load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
   require(purrr)
-  
-  # stopifnot("in_dir not found" = dir.exists(in_dir))
-  # stopifnot("out_dir not found" = dir.exists(out_dir))
+  stopifnot(dir.exists(in_dir))
+  stopifnot(dir.exists(out_dir))
+  stopifnot(is.character(filter_str))
   
   fns <- list.files(in_dir, pattern = filter_str, full.names = TRUE)
   if (length(fns) < 1) {
@@ -321,7 +321,7 @@ load_xlsx_save_many_csvs <- function(in_dir, out_dir, filter_str) {
 #' @param out_dir A string indicating the output directory
 load_xlsx_save_many_csvs_2 <- function(fns, out_dir) {
   require(purrr)
-  
+  stopifnot(is.character(fns))
   stopifnot(dir.exists(out_dir))
   
 #  fns <- list.files(in_dir, pattern = filter_str, full.names = TRUE)
@@ -340,6 +340,8 @@ load_xlsx_save_many_csvs_2 <- function(fns, out_dir) {
 #' @param fns A character vector of CSV filenames.
 #' @return A single dataframe with the aggregated demographic data files.
 clean_merge_demog <- function(fns) {
+  stopifnot(is.character(fns))
+  
   rbind(clean_demog_1(fns[1]),
         clean_demog_2(fns[2]),
         clean_demog_2(fns[3])) %>%
@@ -355,10 +357,14 @@ clean_merge_demog <- function(fns) {
 #' @return A data frome
 clean_demog_1 <- function(csv_fn) {
   require(readr)
-  
-  stopifnot("csv_fn not found" = file.exists(csv_fn))
+  stopifnot(file.exists(csv_fn))
   
   df_1 <- readr::read_csv(csv_fn, show_col_types = FALSE)
+  
+  if (!is.data.frame(df_1)) {
+    message("Failure to read file '", csv_fn, "'")
+    return(NULL)
+  }
   df_1 %>%
     dplyr::select(
       .,
@@ -406,10 +412,13 @@ clean_demog_1 <- function(csv_fn) {
 clean_demog_2 <- function(csv_fn) {
   require(readr)
   require(dplyr)
-  
   stopifnot("csv_fn not found" = file.exists(csv_fn))
   
   df_2 <- readr::read_csv(csv_fn, show_col_types = FALSE)
+  if (!is.data.frame(df_2)) {
+    message("Failure to read file '", csv_fn, "'")
+    return(NULL)
+  }
   df_2 %>%
     dplyr::select(
       submit_date = c_today,
@@ -442,6 +451,8 @@ clean_demog_2 <- function(csv_fn) {
 #' @return Augmented data frame.
 add_n_calls_to_demog <- function(df) {
   require(dplyr)
+  stopifnot(is.data.frame(df))
+  
   df %>%
     dplyr::arrange(., submit_date) %>%
     dplyr::mutate(., n_calls = seq_along(submit_date))
@@ -456,6 +467,8 @@ add_n_calls_to_demog <- function(df) {
 plot_call_timeseries <- function(df) {
   require(dplyr)
   require(ggplot2)
+  stopifnot(is.data.frame(df))
+  
   df %>%
     filter(.,!is.na(submit_date),!is.na(n_calls),!is.na(site_id)) %>%
     ggplot(.) +
@@ -470,6 +483,8 @@ plot_call_timeseries <- function(df) {
 #' @return Plot
 plot_calls_by_site <- function(df) {
   require(dplyr)
+  stopifnot(is.data.frame(df))
+
   df %>%
     ggplot(.) +
     aes(n_calls, fill = site_id) +
@@ -490,12 +505,12 @@ plot_calls_by_site <- function(df) {
 rename_home_xlsx <- function(fl, out_dir) {
   require(stringr)
   require(purrr)
-  
-  # stopifnot("in_dir not found" = dir.exists(in_dir))
-  # stopifnot("out_dir not found" = dir.exists(out_dir))
+#  stopifnot(is.character(fl))
+  stopifnot(dir.exists(out_dir))
   
   # fl <- list.files(in_dir, full.names = TRUE)
-  fl_home_old <- unlist(fl[stringr::str_detect(fl, 'Home')])
+  # fl_home_old <- unlist(fl[stringr::str_detect(fl, 'Home')])
+  fl_home_old <- fl[stringr::str_detect(fl, 'Home')]
   fl_home_new <-
     purrr::map_chr(fl_home_old, make_standard_form_name)
   fl_home_new <- file.path(out_dir, fl_home_new)
@@ -510,6 +525,8 @@ rename_home_xlsx <- function(fl, out_dir) {
 #' @param fn Old file name
 #' @return New file name and path
 make_standard_form_name <- function(fn) {
+  stopifnot(is.character(fn))
+  
   this_dir <- dirname(fn)
   this_fn <- basename(fn)
   form_id <- stringr::str_extract(this_fn, '[0-9]+')
@@ -523,6 +540,7 @@ make_standard_form_name <- function(fn) {
     '.xlsx'
   )
 #  file.path(this_dir, fn)
+  fn
 }
 
 ###################################################################
@@ -531,6 +549,8 @@ make_standard_form_name <- function(fn) {
 #' @param form_name File (form) name.
 #' @return Age group as a string
 extract_age_group_from_name <- function(form_name) {
+  stopifnot(is.character(form_name))
+  
   age_grps <- stringr::str_match(form_name, "[ _\\(]+(12|18|24)[ _]+")
   age_grps[, 2]
 }
@@ -542,7 +562,9 @@ extract_age_group_from_name <- function(form_name) {
 #' @param form_name
 #' @return Logical vector of names that contain the detected string.
 form_is_bilingual <- function(form_name) {
-  stringr::str_detect(form_name, "[Bb]ilingual")
+  stopifnot(is.character(form_name))
+
+    stringr::str_detect(form_name, "[Bb]ilingual")
 }
 
 ###################################################################
@@ -552,7 +574,9 @@ form_is_bilingual <- function(form_name) {
 #' @param form_name
 #' @return Logical vector of names that contain the detected string.
 form_is_spanish <- function(form_name) {
-  stringr::str_detect(form_name, "[Ss]panish")
+  stopifnot(is.character(form_name))
+
+    stringr::str_detect(form_name, "[Ss]panish")
 }
 
 ###################################################################
@@ -562,6 +586,8 @@ form_is_spanish <- function(form_name) {
 #' @param form_name
 #' @return String with appropriate language indicator.
 form_language <- function(form_name) {
+  stopifnot(is.character(form_name))
+
   is_bilingual <- form_is_bilingual(form_name)
   is_spanish <- form_is_spanish(form_name)
   form_lang <- rep("english", length(form_name))
@@ -573,7 +599,6 @@ form_language <- function(form_name) {
 ###################################################################
 split_non_mbcdi_csvs <- function(fl, out_dir) {
   require(purrr)
-  
   stopifnot(is.character(fl))
   stopifnot(dir.exists(out_dir))
   
@@ -589,7 +614,6 @@ split_non_mbcdi_csvs <- function(fl, out_dir) {
 ###################################################################
 split_mbcdi_csvs <- function(fl, out_dir) {
   require(purrr)
-  
   stopifnot(is.character(fl))
   stopifnot(dir.exists(out_dir))
   
@@ -601,9 +625,9 @@ split_mbcdi_csvs <- function(fl, out_dir) {
   )
 }
 
+###################################################################
 remove_identifiers_non_mbcdi <- function(fl, out_dir) {
   require(purrr)
-  
   stopifnot(is.character(fl))
   stopifnot(dir.exists(out_dir))
   
@@ -635,6 +659,10 @@ open_split_save <- function(fp,
   } else {
     stop(paste0('Cannot read file `', fp, '`'))
   }
+  stopifnot(is.character(csv_save_dir))
+  stopifnot(dir.exists(csv_save_dir))
+  stopifnot(is.logical(rename_cols))
+  stopifnot(is.logical(vb))
   
   out_fn <- file.path(
     csv_save_dir,
@@ -675,6 +703,8 @@ extract_non_mbcdi <-
   function(df,
            rename_cols = FALSE) {
     require(dplyr)
+    stopifnot(is.data.frame(df))
+    stopifnot(is.logical(rename_cols))
     
     play_id_col <-
       (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
@@ -707,6 +737,9 @@ extract_save_non_mbcdi <-
            fn,
            rename_cols = FALSE) {
     require(dplyr)
+    stopifnot(is.data.frame(df))
+    stopifnot(is.character(fn))
+    stopifnot(is.logical(rename_cols))
     
     non_mcdi <-
       extract_non_mbcdi(df, rename_cols)
@@ -724,6 +757,9 @@ extract_mbcdi <-
   function(df,
            rename_cols = FALSE) {
     require(dplyr)
+    stopifnot(is.data.frame(df))
+    stopifnot(is.logical(rename_cols))
+    
     play_id_col <-
       (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
     
@@ -753,6 +789,9 @@ extract_mbcdi <-
 extract_save_mcdi <- function(df, fn, rename_cols = FALSE) {
   require(readr)
   require(dplyr)
+  stopifnot(is.data.frame(df))
+  stopifnot(is.character(fn))
+  stopifnot(is.logical(rename_cols))
   
   mcdi <- extract_mbcdi(df, rename_cols)
   
@@ -779,6 +818,11 @@ open_deidentify_save <- function(fp,
                                  rename_cols = FALSE,
                                  vb = FALSE) {
   require(tidyverse)
+  stopifnot(is.character(fp))
+  stopifnot(dir.exists(csv_save_dir))
+  stopifnot(is.character(these_questions))
+  stopifnot(is.logical(rename_cols))
+  stopifnot(is.logical(vb))
   
   if (!dir.exists(csv_save_dir)) {
     stop("Directory not found: '", csv_save_dir, "'")
@@ -826,6 +870,9 @@ open_deidentify_save <- function(fp,
 #' @param df
 #' @return Data frame with identifiers removed.
 remove_identifiers <- function(df) {
+  require(stringr)
+  stopifnot(is.data.frame(df))
+  
   contains_name <- stringr::str_detect(names(df), 'name')
   contains_address <- stringr::str_detect(names(df), 'address')
   contains_phone <- stringr::str_detect(names(df), 'phone')
@@ -857,6 +904,9 @@ remove_identifiers <- function(df) {
 #' NOTE: we use read.csv() to _avoid_ the problem of inferring
 #' column types differently across the datasets.
 make_aggregate_data_file <- function(fl) {
+  require(purrr)
+  stopifnot(is.character(fl))
+  
   purrr::map_df(fl, read.csv, colClasses = 'character')
 }
 
@@ -864,23 +914,40 @@ make_aggregate_data_file <- function(fl) {
 # Helper functions for cleaning non-MBDI data frames
 
 remove_technology_use_scale <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
   dplyr::select(df, -contains('technology_use_scale'))
 }
 
 remove_doctor_told_you <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
+  stopifnot(is.data.frame(df))
   dplyr::select(df, -contains('doctor_told_you'))
 }
 
 remove_databrary_fields <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
+  stopifnot(is.data.frame(df))
   dplyr::select(df, -contains('group_databrary'))
 }
 
 reconcile_typicalday <- function(df) {
+  require(stringr)
+  stopifnot(is.data.frame(df))
+
   names(df) <- stringr::str_replace_all(names(df), 'typicalday', 'typical_day')
   df
 }
 
 remove_permissive_locomotor_milestones_label <- function(df) {
+  require(stringr)
+  stopifnot(is.data.frame(df))
+  
   old_names <- names(df)
   new_names <- old_names
   contains_locomotor <-
@@ -892,10 +959,16 @@ remove_permissive_locomotor_milestones_label <- function(df) {
 }
 
 remove_X_meta_cols <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
   dplyr::select(df, -contains("X_"), -contains("meta.instanceID"))
 }
 
 remove_redundant_group_labels <- function(df) {
+  require(stringr)
+  stopifnot(is.data.frame(df))
+  
   names(df) <- stringr::str_remove_all(names(df), 'group_homevisitquestionnaires\\.')
   names(df) <- stringr::str_remove_all(names(df), 'group_combinedquestionnaires\\.')
   names(df) <- stringr::str_remove_all(names(df), 'group_')
@@ -903,10 +976,15 @@ remove_redundant_group_labels <- function(df) {
 }
 
 change_CSLON_to_CSULB <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
   dplyr::mutate(df, site_id = recode(site_id, "CSLON" = "CSULB"))
 }
 
 clean_dfs <- function(df) {
+  stopifnot(is.data.frame(df))
+  
   df %>%
     reconcile_typicalday() %>%
     remove_technology_use_scale() %>%
@@ -922,6 +1000,9 @@ clean_dfs <- function(df) {
 #' Accessing Databrary
 #'
 check_databrary_login <- function(db_login_id) {
+  require(databraryapi)
+  stopifnot(is.character(db_login_id))
+  
   # _targets.R assigns Sys.getenv("DATABRARY_LOGIN") to `db_login_id`
   if (!file.exists('.databrary.RData')) {
     if (params$databrary_login == "email@yourdomain.com") {
@@ -940,6 +1021,7 @@ check_databrary_login <- function(db_login_id) {
   logged_in_db
 }
 
+###################################################################
 play_vols <- tibble::tibble(
   play_site_id = c(
     'PLAYProject_GEORG',
@@ -987,9 +1069,14 @@ play_vols <- tibble::tibble(
   )
 )
 
+###################################################################
 lookup_databrary_session <-
   function(this_site_id,
            s_number) {
+    
+    require(dplyr)
+    require(databraryapi)
+    require(stringr)
     
     if (!is.character(this_site_id)) {
       stop('`this_site_id` must be a character string.')
@@ -1023,9 +1110,12 @@ lookup_databrary_session <-
     }
   }
 
+###################################################################
 get_databrary_session_data <-  function(this_site_id,
                                         s_number, vb = FALSE) {
-  
+  require(dplyr)
+  require(stringr)
+  require(databraryapi)
   if (!is.character(this_site_id)) {
     stop('`this_site_id` must be a character string.')
   }
@@ -1035,6 +1125,7 @@ get_databrary_session_data <-  function(this_site_id,
   if (!file.exists('.databrary.RData')) {
     stop('Not logged-in to Databrary.')
   }
+  stopifnot(is.logical(vb))
   
   this_volume <-
     dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site_id))
@@ -1060,11 +1151,21 @@ get_databrary_session_data <-  function(this_site_id,
   }
 }
 
+###################################################################
 get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
+  
+  require(dplyr)
+  require(stringr)
+  require(databraryapi)
+  stopifnot(is.numeric(row))
+  stopifnot(row >= 1)
+  stopifnot(is.data.frame(df))
+  stopifnot(is.logical(vb))
   
   if (!file.exists('.databrary.RData')) {
     stop('Not logged-in to Databrary.')
   }
+  
   this_row <- df[row,]
   
   this_volume <-
@@ -1091,7 +1192,10 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   }
 }
 
+###################################################################
 make_databrary_url_from_session <- function(session_df) {
+  stopifnot(is.data.frame(session_df))
+  
   paste0(
     "https://nyu.databrary.org/volume/",
     session_df$vol_id,
@@ -1101,22 +1205,36 @@ make_databrary_url_from_session <- function(session_df) {
   )
 }
 
+###################################################################
 add_databrary_url_to_session_df <- function(session_df) {
+  require(dplyr)
+  stopifnot(is.data.frame(session_df))
+
   dplyr::mutate(session_df, 
                 session_url = purrr::map_chr(1:dim(session_df)[1], 
                                              make_databrary_url_from_session_list, df = session_df))
 }
 
+###################################################################
 make_databrary_url_from_session_list <- function(row_index = 1, df) {
+  stopifnot(is.numeric(row_index))
+  stopifnot(is.data.frame(df))
+  
   this_session <- df[row_index,]
   make_databrary_url_from_session(this_session)
 }
 
+###################################################################
 generate_databrary_guid <- function(session_df) {
+  require(stringr)
+  stopifnot(is.data.frame(session_df))
+  
   paste0(session_df$session_id, stringr::str_pad(session_df$vol_id, 5, 'left', 0))
 }
 
+###################################################################
 generate_databrary_url <- function(session_df) {
+  stopifnot(is.data.frame(session_df))
   paste0(
     "https://nyu.databrary.org/volume/",
     session_df$vol_id,
@@ -1126,13 +1244,23 @@ generate_databrary_url <- function(session_df) {
   )
 }
 
+###################################################################
 add_play_session_name <- function(df) {
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  
   # Input is data frame/tibble from PLAY_non_mbcdi.csv
   dplyr::mutate(df, session_name = paste0('PLAY_', site_id, '_', 
                                           stringr::str_pad(subject_number, 3, 'left', 0)))
 }
 
+###################################################################
 add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
+  require(databraryapi)
+  require(purrr)
+  require(dplyr)
+  stopifnot(is.data.frame(df))
+  stopifnot(is.logical(vb))
   
   # Check Databrary login
   if (vb) "Authenticating to Databrary using stored credentials."
@@ -1163,7 +1291,15 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
   play_kobo
 }
 
+###################################################################
 test_kb_db <- function(rg, df) {
   require(purrr)
+  stopifnot(is.numeric(rg))
+  stopifnot(is.data.frame(df))
+  
   purrr::map_df(rg, get_databrary_session_data_2, df, vb = TRUE)
+}
+
+check_db_creds <- function(vb = FALSE) {
+  
 }

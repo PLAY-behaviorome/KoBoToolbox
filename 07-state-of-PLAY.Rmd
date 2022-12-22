@@ -1,0 +1,46 @@
+# State of PLAY {-}
+
+These files summarize the current state of the project.
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+```
+
+
+## Last month {-}
+
+```{r}
+targets::tar_load(screen_df)
+```
+
+```{r}
+now <- ymd(Sys.Date())
+month_ago <- now - dmonths(1)
+screen_last_month_df <- screen_df %>%
+  dplyr::filter(submit_date > month_ago)
+n_screens <- dim(screen_last_month_df)[1] 
+```
+
+There have been `r n_screens` recruiting calls since `r month_ago`.
+
+```{r fig-last-mo-calls, fig.cap="Screening calls in last month by site"}
+calls_by_site_plot(screen_last_month_df)
+```
+
+
+```{r}
+targets::tar_load(home_visit_df)
+home_last_month_df <- home_visit_df %>%
+   dplyr::filter(date_today > month_ago)
+n_home_visits <- dim(home_last_month_df)[1] 
+```
+
+There have been `r n_home_visits` home visits since `r month_ago`.
+
+**Calls/visits ratio**: `r n_screens/n_home_visits`.
+
+```{r fig-last-mo-home-visit, fig.cap="Home visits in last month by site"}
+calls_by_site_plot(home_last_month_df)
+```

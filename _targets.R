@@ -6,7 +6,7 @@ source("R/functions.R")
 suppressPackageStartupMessages(library(tidyverse))
 tar_option_set(packages = c("readr", "dplyr", "ggplot2", "purrr", "tools",
                             "httr", "stringr"))
-update_interval <- 2
+update_interval <- 3
 update_interval_units <- "days"
 
 list(
@@ -14,15 +14,14 @@ list(
     kb_df,
     list_kobo_data(),
     cue = tarchetypes::tar_cue_age(
-      name = kb_screen,
+      name = kb_df,
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   tar_target(
     kb_screen,
-    dplyr::filter(
-      kb_df,
-      stringr::str_detect(title, "Demographic")),
+    dplyr::filter(kb_df,
+                  stringr::str_detect(title, "Demographic")),
     cue = tarchetypes::tar_cue_age(
       name = kb_screen,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -30,9 +29,8 @@ list(
   ),
   tar_target(
     kb_home,
-    dplyr::filter(
-      kb_df,
-      stringr::str_detect(title, "Home")),
+    dplyr::filter(kb_df,
+                  stringr::str_detect(title, "Home")),
     cue = tarchetypes::tar_cue_age(
       name = kb_home,
       age = as.difftime(update_interval, units = update_interval_units)
