@@ -47,6 +47,20 @@ calls_by_site_plot(home_last_month_df)
 
 ## Overall {-}
 
+### From Databrary {-}
+
+Because of some minor anomalies merging the older KBT surveys, we query the Databrary API for the most complete data about PLAY sessions.
+For debugging purposes, we set `vb = TRUE` so we get complete information about what's working and what is not.
+
+```{r}
+purrr::map_df(play_vols$play_site_id, make_site_session_summary, vb = TRUE) %>%
+  dplyr::arrange(., desc(PLAY_Gold)) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+### From KBT {-}
+
 ```{r}
 targets::tar_load(home_visit_w_databrary_df)
 

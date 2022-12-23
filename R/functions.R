@@ -1066,6 +1066,28 @@ play_vols <- tibble::tibble(
     1481,
     1515,
     1517
+  ),
+  site_name = c(
+    "Georgetown University",
+    "Children's Hospital of Philadelphia",
+    "Cal State Long Beach",
+    "CUNY Staten Is",
+    "New York University",
+    "Indiana University",
+    "Ohio State University",
+    "Princeton University",
+    "Purdue University",
+    "Stanford University",
+    "UC Riverside",
+    "UC Santa Cruz",
+    "University of Houston",
+    "Vanderbilt University",
+    "Virginia Commonwealth University",
+    "University of Iowa",
+    "Boston University",
+    "Cal State Fullerton",
+    "University of Georgia",
+    "University of Texas - Austin"
   )
 )
 
@@ -1193,6 +1215,92 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
 }
 
 ###################################################################
+get_db_session_data_from_site <- function(this_site, vb = FALSE) {
+  require(databraryapi)
+  stopifnot(is.character(this_site))
+  stopifnot(is.logical(vb))
+  
+  if (!file.exists('.databrary.RData')) {
+    stop('Not logged-in to Databrary.')
+  }
+  
+  this_volume <-
+    dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site))
+  if (is.null(this_volume)) {
+    if (vb) message("Problem retrieving PLAY site data from `play_vols`")
+    return(NULL)
+  }
+  
+  vol_sessions <-
+    databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
+  
+  if (!is.null(vol_sessions)) {
+    vol_sessions
+  } else {
+    if (vb) message('Cannot access session data from volume: ', this_volume$play_vol_id)
+    NULL
+  }
+}
+
+###################################################################
+summarize_sessions_by_site <- function(this_site, vb = FALSE) {
+  require(dplyr)
+  stopifnot(is.character(this_site))
+  stopifnot(is.logical(vb))
+  
+  sessions_df <- get_db_session_data_from_site(this_site, vb = vb)
+  if (is.null(sessions_df)) {
+    if (vb) message("No sessions data in data frame.")
+    return(NULL)
+  }
+  if (dim(sessions_df)[1] == 0) {
+    if (vb) message("No sessions data in data frame.")
+    return(NULL)
+  }
+  
+  if ('group_name' %in% names(sessions_df)) {
+    sessions_df %>%
+      group_by(group_name) %>% 
+      summarize(n_sessions = n())
+  } else {
+    if (vb) message("Problem retrieving session data from site: ", this_site)
+    return(NULL)
+  }
+}
+
+make_site_session_summary <- function(this_site, vb = FALSE) {
+  require(dplyr)
+  require(tidyr)
+  stopifnot(is.character(this_site))
+  stopifnot(is.logical(vb))
+
+  site_df <- summarize_sessions_by_site(this_site, vb = vb)
+  if (is.null(site_df)) {
+    if (vb) message("No data retrieved from site: ", this_site)
+    return(NULL)
+  }
+  
+  site_info <- get_site_info(this_site, vb = vb)
+  
+  df <- dplyr::mutate(site_df, site_id = site_info$play_site_id,
+                      site_vol_id = site_info$play_vol_id,
+                      site_name = site_info$site_name)
+  
+  df %>% 
+    tidyr::pivot_wider(names_from = group_name, values_from = n_sessions)
+}
+
+get_site_info <- function(this_site, vb = FALSE) {
+  require(dplyr)
+  require(tidyr)
+  stopifnot(is.character(this_site))
+  stopifnot(is.logical(vb))
+  
+  dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site))
+}
+
+
+###################################################################
 make_databrary_url_from_session <- function(session_df) {
   stopifnot(is.data.frame(session_df))
   
@@ -1296,8 +1404,4 @@ test_kb_db <- function(rg, df) {
   stopifnot(is.data.frame(df))
   
   purrr::map_df(rg, get_databrary_session_data_2, df, vb = TRUE)
-}
-
-check_db_creds <- function(vb = FALSE) {
-  
 }
