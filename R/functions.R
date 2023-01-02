@@ -119,7 +119,7 @@ retrieve_save_xls_export <-
                 ' failed with status `',
                 httr::status_code(r),
                 '`')
-        NULL
+        "NULL"
       }
     }
   }
@@ -999,13 +999,13 @@ clean_dfs <- function(df) {
 ###################################################################
 #' Accessing Databrary
 #'
-check_databrary_login <- function(db_login_id) {
+check_databrary_login <- function(db_login_id = Sys.getenv("DATABRARY_LOGIN")) {
   require(databraryapi)
   stopifnot(is.character(db_login_id))
   
   # _targets.R assigns Sys.getenv("DATABRARY_LOGIN") to `db_login_id`
   if (!file.exists('.databrary.RData')) {
-    if (params$databrary_login == "email@yourdomain.com") {
+    if (params$databrary_login == db_login_id) {
       stop('Cannot login to Databrary with login id: `',
            db_login_id,
            '`')
@@ -1220,7 +1220,7 @@ get_db_session_data_from_site <- function(this_site, vb = FALSE) {
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
-  if (!file.exists('.databrary.RData')) {
+  if (!check_databrary_login()) {
     stop('Not logged-in to Databrary.')
   }
   
@@ -1271,8 +1271,14 @@ summarize_sessions_by_site <- function(this_site, vb = FALSE) {
 make_site_session_summary <- function(this_site, vb = FALSE) {
   require(dplyr)
   require(tidyr)
+  require(databraryapi)
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
+  
+  # if (!databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+  #   message("Not authenticated to Databrary.")
+  #   return(NULL)
+  # }
 
   site_df <- summarize_sessions_by_site(this_site, vb = vb)
   if (is.null(site_df)) {
@@ -1290,6 +1296,42 @@ make_site_session_summary <- function(this_site, vb = FALSE) {
     tidyr::pivot_wider(names_from = group_name, values_from = n_sessions)
 }
 
+###################################################################
+get_save_databrary_session_csv <- function(this_site = "NYUNI", 
+                                           csv_dir = "data/csv/databrary_vols", 
+                                           vb = FALSE) {
+  require(databraryapi)
+  require(readr)
+  stopifnot(is.character(this_site))
+  stopifnot(is.character(csv_dir), dir.exists(csv_dir))
+  stopifnot(is.logical(vb))
+  
+  if (vb) message("Retrieving sessions from '", this_site, "'.")
+  df <- get_db_session_data_from_site(this_site, vb = vb)
+  
+  if ((!is.data.frame(df)) || is.null(df)) {
+    if (vb) message(" No data retrieved from site '", this_site, "'. No file saved.")
+    NULL
+  } else {
+    fn = file.path(csv_dir, paste0(this_site, ".csv"))
+    if (vb) message(" Saved data frame to '", fn, "'.")
+    readr::write_csv(df, fn)
+  }
+}
+
+###################################################################
+get_save_all_databrary_session_csvs <- function(vb = FALSE) {
+  require(databraryapi)
+  
+  if (databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+    purrr::map(play_vols$play_site_id, get_save_databrary_session_csv, vb = TRUE)
+    #get_save_databrary_session_csv()
+  }
+    if (vb) message("Not logged in to Databrary.")
+    NULL
+}
+
+###################################################################
 get_site_info <- function(this_site, vb = FALSE) {
   require(dplyr)
   require(tidyr)
@@ -1404,4 +1446,17 @@ test_kb_db <- function(rg, df) {
   stopifnot(is.data.frame(df))
   
   purrr::map_df(rg, get_databrary_session_data_2, df, vb = TRUE)
+}
+
+###################################################################
+select_kbt_for_site <- function(this_site = "NYUNI", 
+                                df = targets::tar_load(home_visit_df),
+                                vb = FALSE) {
+  require(dplyr)
+  stopifnot(is.character(this_site))
+  stopifnot(is.data.frame(df), !is.null(df))
+  stopifnot(is.logical(vb))
+  
+  df %>%
+    dplyr::filter(., stringr::str_detect(site_id, this_site))
 }

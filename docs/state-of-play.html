@@ -79,7 +79,7 @@
 <span><span class="va">screen_last_month_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span>
 <span><span class="va">n_screens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> </span></code></pre></div>
-<p>There have been 20 recruiting calls since 2022-11-22 13:30:00.</p>
+<p>There have been 16 recruiting calls since 2022-12-02 13:30:00.</p>
 <div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -93,8 +93,8 @@ Figure 12: Screening calls in last month by site
 <span><span class="va">home_last_month_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span>
 <span><span class="va">n_home_visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">home_last_month_df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> </span></code></pre></div>
-<p>There have been 22 home visits since 2022-11-22 13:30:00.</p>
-<p><strong>Calls/visits ratio</strong>: 0.9090909.</p>
+<p>There have been 22 home visits since 2022-12-02 13:30:00.</p>
+<p><strong>Calls/visits ratio</strong>: 0.7272727.</p>
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -113,60 +113,26 @@ Figure 13: Home visits in last month by site
 <p>Because of some minor anomalies merging the older KBT surveys, we query the Databrary API for the most complete data about PLAY sessions.
 For debugging purposes, we set <code>vb = TRUE</code> so we get complete information about what’s working and what is not.</p>
 <div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span><span class="op">(</span><span class="va">play_vols</span><span class="op">$</span><span class="va">play_site_id</span>, <span class="va">make_site_session_summary</span>, vb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="fu">databraryapi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/databraryapi/man/login_db.html">login_db</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"DATABRARY_LOGIN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">databrary_df</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span><span class="op">(</span><span class="va">play_vols</span><span class="op">$</span><span class="va">play_site_id</span>, <span class="va">make_site_session_summary</span>, vb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">databrary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_name</span>, <span class="va">site_id</span>, <span class="va">site_vol_id</span>, <span class="va">PLAY_Gold</span>, <span class="va">PLAY_Silver</span>, <span class="va">No_Visit</span>, <span class="va">`NA`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">PLAY_Gold</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">.</span>, format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)</code></pre>
-<pre><code>## Problem retrieving session data from site: PLAYProject_CUNYS</code></pre>
-<pre><code>## No data retrieved from site: PLAYProject_CUNYS</code></pre>
-<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)
-## One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)</code></pre>
-<pre><code>## Problem retrieving session data from site: PLAYProject_PRINU</code></pre>
-<pre><code>## No data retrieved from site: PLAYProject_PRINU</code></pre>
-<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)
-## One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)
-## One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)
-## One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)</code></pre>
-<pre><code>## GET returns error code 404</code></pre>
-<pre><code>## Cannot access session data from volume: 1008</code></pre>
-<pre><code>## No sessions data in data frame.</code></pre>
-<pre><code>## No data retrieved from site: PLAYProject_BOSTU</code></pre>
-<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)</code></pre>
-<pre><code>## Problem retrieving session data from site: PLAYProject_UGEOR</code></pre>
-<pre><code>## No data retrieved from site: PLAYProject_UGEOR</code></pre>
-<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
-##   dat &lt;- vroom(...)
-##   problems(dat)</code></pre>
 <div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
 <thead><tr>
+<th style="text-align:left;">
+site_name
+</th>
 <th style="text-align:left;">
 site_id
 </th>
 <th style="text-align:right;">
 site_vol_id
-</th>
-<th style="text-align:left;">
-site_name
-</th>
-<th style="text-align:right;">
-No_Visit
 </th>
 <th style="text-align:right;">
 PLAY_Gold
@@ -175,45 +141,45 @@ PLAY_Gold
 PLAY_Silver
 </th>
 <th style="text-align:right;">
+No_Visit
+</th>
+<th style="text-align:right;">
 NA
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
+Ohio State University
+</td>
+<td style="text-align:left;">
 PLAYProject_OHIOS
 </td>
 <td style="text-align:right;">
 1103
 </td>
-<td style="text-align:left;">
-Ohio State University
+<td style="text-align:right;">
+31
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-29
-</td>
-<td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-6
+4
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+New York University
+</td>
 <td style="text-align:left;">
 PLAYProject_NYUNI
 </td>
 <td style="text-align:right;">
 899
-</td>
-<td style="text-align:left;">
-New York University
-</td>
-<td style="text-align:right;">
-14
 </td>
 <td style="text-align:right;">
 24
@@ -222,21 +188,21 @@ New York University
 8
 </td>
 <td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
 13
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+Georgetown University
+</td>
+<td style="text-align:left;">
 PLAYProject_GEORG
 </td>
 <td style="text-align:right;">
 954
-</td>
-<td style="text-align:left;">
-Georgetown University
-</td>
-<td style="text-align:right;">
-10
 </td>
 <td style="text-align:right;">
 18
@@ -245,21 +211,21 @@ Georgetown University
 4
 </td>
 <td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
 6
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+UC Santa Cruz
+</td>
+<td style="text-align:left;">
 PLAYProject_UCSCR
 </td>
 <td style="text-align:right;">
 1066
-</td>
-<td style="text-align:left;">
-UC Santa Cruz
-</td>
-<td style="text-align:right;">
-6
 </td>
 <td style="text-align:right;">
 17
@@ -268,21 +234,21 @@ UC Santa Cruz
 1
 </td>
 <td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
 4
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+University of Houston
+</td>
+<td style="text-align:left;">
 PLAYProject_UHOUS
 </td>
 <td style="text-align:right;">
 1397
-</td>
-<td style="text-align:left;">
-University of Houston
-</td>
-<td style="text-align:right;">
-NA
 </td>
 <td style="text-align:right;">
 11
@@ -291,21 +257,21 @@ NA
 2
 </td>
 <td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
 1
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+Cal State Long Beach
+</td>
+<td style="text-align:left;">
 PLAYProject_CSULB
 </td>
 <td style="text-align:right;">
 1376
-</td>
-<td style="text-align:left;">
-Cal State Long Beach
-</td>
-<td style="text-align:right;">
-2
 </td>
 <td style="text-align:right;">
 9
@@ -314,22 +280,22 @@ Cal State Long Beach
 1
 </td>
 <td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
 1
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Children’s Hospital of Philadelphia
+</td>
 <td style="text-align:left;">
 PLAYProject_CHOPH
 </td>
 <td style="text-align:right;">
 1370
 </td>
-<td style="text-align:left;">
-Children’s Hospital of Philadelphia
-</td>
-<td style="text-align:right;">
-NA
-</td>
 <td style="text-align:right;">
 5
 </td>
@@ -337,22 +303,22 @@ NA
 1
 </td>
 <td style="text-align:right;">
-1
+NA
+</td>
+<td style="text-align:right;">
+2
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+University of Iowa
+</td>
 <td style="text-align:left;">
 PLAYProject_UIOWA
 </td>
 <td style="text-align:right;">
 1422
 </td>
-<td style="text-align:left;">
-University of Iowa
-</td>
-<td style="text-align:right;">
-NA
-</td>
 <td style="text-align:right;">
 5
 </td>
@@ -362,19 +328,19 @@ NA
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Vanderbilt University
+</td>
 <td style="text-align:left;">
 PLAYProject_VBLTU
 </td>
 <td style="text-align:right;">
 1391
-</td>
-<td style="text-align:left;">
-Vanderbilt University
-</td>
-<td style="text-align:right;">
-1
 </td>
 <td style="text-align:right;">
 4
@@ -385,20 +351,20 @@ Vanderbilt University
 <td style="text-align:right;">
 1
 </td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Indiana University
+</td>
 <td style="text-align:left;">
 PLAYProject_INDNA
 </td>
 <td style="text-align:right;">
 1400
 </td>
-<td style="text-align:left;">
-Indiana University
-</td>
-<td style="text-align:right;">
-NA
-</td>
 <td style="text-align:right;">
 3
 </td>
@@ -406,19 +372,22 @@ NA
 2
 </td>
 <td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
 1
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Purdue University
+</td>
 <td style="text-align:left;">
 PLAYProject_PURDU
 </td>
 <td style="text-align:right;">
 1363
 </td>
-<td style="text-align:left;">
-Purdue University
-</td>
 <td style="text-align:right;">
 3
 </td>
@@ -433,18 +402,15 @@ Purdue University
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Cal State Fullerton
+</td>
 <td style="text-align:left;">
 PLAYProject_CSUFL
 </td>
 <td style="text-align:right;">
 1481
 </td>
-<td style="text-align:left;">
-Cal State Fullerton
-</td>
-<td style="text-align:right;">
-NA
-</td>
 <td style="text-align:right;">
 2
 </td>
@@ -454,17 +420,20 @@ NA
 <td style="text-align:right;">
 NA
 </td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Stanford University
+</td>
 <td style="text-align:left;">
 PLAYProject_STANF
 </td>
 <td style="text-align:right;">
 1362
 </td>
-<td style="text-align:left;">
-Stanford University
-</td>
 <td style="text-align:right;">
 1
 </td>
@@ -479,23 +448,23 @@ NA
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+Virginia Commonwealth University
+</td>
 <td style="text-align:left;">
 PLAYProject_VCOMU
 </td>
 <td style="text-align:right;">
 982
 </td>
-<td style="text-align:left;">
-Virginia Commonwealth University
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
 </td>
 <td style="text-align:right;">
 NA
@@ -503,22 +472,22 @@ NA
 </tr>
 <tr>
 <td style="text-align:left;">
+University of Texas - Austin
+</td>
+<td style="text-align:left;">
 PLAYProject_UTAUS
 </td>
 <td style="text-align:right;">
 1517
 </td>
-<td style="text-align:left;">
-University of Texas - Austin
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 NA
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
 </td>
 <td style="text-align:right;">
 6
@@ -526,22 +495,22 @@ NA
 </tr>
 <tr>
 <td style="text-align:left;">
+UC Riverside
+</td>
+<td style="text-align:left;">
 PLAYProject_UCRIV
 </td>
 <td style="text-align:right;">
 966
-</td>
-<td style="text-align:left;">
-UC Riverside
-</td>
-<td style="text-align:right;">
-NA
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+NA
 </td>
 <td style="text-align:right;">
 1
@@ -553,7 +522,7 @@ NA
 <div id="from-kbt" class="section level3 unnumbered">
 <h3>From KBT<a class="anchor" aria-label="anchor" href="#from-kbt"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_w_databrary_df</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gold_silver</span> <span class="op">&lt;-</span> <span class="va">home_visit_w_databrary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -562,15 +531,15 @@ NA
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">age_group</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
-##   PLAY_Gold     40   33   39
-##   PLAY_Silver    2   15    6</code></pre>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+##   PLAY_Gold     41   35   39
+##   PLAY_Silver    2   15    7</code></pre>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">child_sex</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
-##   PLAY_Gold       47   65
-##   PLAY_Silver     13   10</code></pre>
-<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+##   PLAY_Gold       47   68
+##   PLAY_Silver     14   10</code></pre>
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_race_eth</span> <span class="op">&lt;-</span> <span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">group_name</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, participant_race <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></span><span class="op">(</span><span class="va">participant_race</span>, </span>
@@ -585,14 +554,14 @@ NA
 ## participant_race            Hispanic_or_Latino Not_Hispanic_or_Latino
 ##   Asian                                      0                      2
 ##   Black_or_African_American                  1                      0
-##   More_than_one                              8                     15
-##   Other                                      5                      2
-##   White                                     14                     88</code></pre>
+##   More_than_one                              8                     16
+##   Other                                      6                      2
+##   White                                     14                     90</code></pre>
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3>By site, location, &amp; QA status<a class="anchor" aria-label="anchor" href="#by-site-location-qa-status"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">site_id</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group_name
 ## site_id PLAY_Gold PLAY_Silver
@@ -602,14 +571,15 @@ NA
 ##   GEORG        11           2
 ##   INDNA         3           2
 ##   NYUNI        12           6
-##   OHIOS        29           1
+##   OHIOS        31           1
 ##   PURDU         3           3
 ##   STANF         1           1
 ##   UCSCR        17           1
 ##   UHOUS        11           1
 ##   UIOWA         5           1
+##   UTAUS         1           1
 ##   VBLTU         4           2</code></pre>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">context_state</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">context_state</span><span class="op">)</span> <span class="op">+</span></span>
@@ -623,8 +593,8 @@ NA
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"State"</span>, y <span class="op">=</span> <span class="st">"N participants"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-77"></span>
-<img src="include/img/unnamed-chunk-77-1.png" alt="QA level by State" width="672"><p class="caption">
+<span style="display:block;" id="fig:unnamed-chunk-75"></span>
+<img src="include/img/unnamed-chunk-75-1.png" alt="QA level by State" width="672"><p class="caption">
 Figure 14: QA level by State
 </p>
 </div>
@@ -664,7 +634,7 @@ Figure 14: QA level by State
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2022-12-23.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-01-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

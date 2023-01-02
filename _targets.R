@@ -2,10 +2,15 @@
 
 library(targets)
 library(tarchetypes)
+
 source("R/functions.R")
+
 suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(databraryapi))
+
 tar_option_set(packages = c("readr", "dplyr", "ggplot2", "purrr", "tools",
-                            "httr", "stringr"))
+                            "httr", "stringr", "databraryapi"))
+
 update_interval <- 3
 update_interval_units <- "days"
 
@@ -151,5 +156,10 @@ list(
     home_visit_mbcdi,
     split_mbcdi_csvs(home_visit_xlsx_to_csv,
                      "data/csv/home_visit/mbcdi")
-  )
+  ),
+  # Databrary session info
+  tar_target(play_databrary_sess_df,
+             purrr::map_df(play_vols$play_site_id, make_site_session_summary)),
+  tar_target(databrary_session_csvs, 
+             get_save_all_databrary_session_csvs)
 )
