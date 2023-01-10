@@ -11,7 +11,9 @@ To access the site's API programmatically, an API key was downloaded and added t
 <!-- https://bookdown.org/yihui/bookdown/html.html#callout-blocks -->
 <!--Available blocks are: .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, and .rmdwarning -->
 ::: {.rmdimportant}
+
 The KoBoToolBox API key is **not** synched to GitHub.
+
 :::
 
 
@@ -19,7 +21,7 @@ The KoBoToolBox API key is **not** synched to GitHub.
 
 To test whether the local system has the API key installed, we run the command `Sys.getenv("KOBO_API_KEY")`. 
 
-### Check KoBo API Key{-}
+### Check KoBo API Key {-}
 
 ```{r check-api-key}
 kb_api <- Sys.getenv("KOBO_API_KEY")
@@ -30,7 +32,7 @@ if ((length(kb_api) != 1) || (!is.character(kb_api))) {
 }
 ```
 
-### Check Databrary credentials
+### Check Databrary credentials {-}
 
 The `databraryapi` package handles authenticating to Databrary.
 For scripting access to Databrary that require authentication, it is useful to store the user's Databrary login (email) in `.Renviron` using the R command `Sys.setenv(DATABRARY_LOGIN = "<email@provider.com>")` where you substitute your Databrary login (email) for `<email@provider.com>`.
