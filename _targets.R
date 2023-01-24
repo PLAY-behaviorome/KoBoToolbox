@@ -8,8 +8,18 @@ source("R/functions.R")
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(databraryapi))
 
-tar_option_set(packages = c("readr", "dplyr", "ggplot2", "purrr", "tools",
-                            "httr", "stringr", "databraryapi"))
+tar_option_set(
+  packages = c(
+    "readr",
+    "dplyr",
+    "ggplot2",
+    "purrr",
+    "tools",
+    "httr",
+    "stringr",
+    "databraryapi"
+  )
+)
 
 update_interval <- 3
 update_interval_units <- "days"
@@ -53,7 +63,11 @@ list(
   # Make data frame from screening/demographic survey
   tar_target(
     screen_df,
-    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening")
+    make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   # Make data frame from post-visit surveys
   tar_target(
@@ -158,8 +172,14 @@ list(
                      "data/csv/home_visit/mbcdi")
   ),
   # Databrary session info
-  tar_target(play_databrary_sess_df,
-             purrr::map_df(play_vols$play_site_id, make_site_session_summary)),
-  tar_target(databrary_session_csvs, 
+  tar_target(
+    play_databrary_sess_df,
+    purrr::map_df(play_vols$play_site_id, make_site_session_summary),
+    cue = tarchetypes::tar_cue_age(
+      name = play_databrary_sess_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(databrary_session_csvs,
              get_save_all_databrary_session_csvs)
 )

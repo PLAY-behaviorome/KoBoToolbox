@@ -1002,23 +1002,24 @@ clean_dfs <- function(df) {
 check_databrary_login <- function(db_login_id = Sys.getenv("DATABRARY_LOGIN")) {
   require(databraryapi)
   stopifnot(is.character(db_login_id))
+
+  databraryapi::login_db(db_login_id)
   
   # _targets.R assigns Sys.getenv("DATABRARY_LOGIN") to `db_login_id`
-  if (!file.exists('.databrary.RData')) {
-    if (params$databrary_login == db_login_id) {
-      stop('Cannot login to Databrary with login id: `',
-           db_login_id,
-           '`')
-    } else {
-      logged_in_db <- databraryapi::login_db(db_login_id)
-    }
-    if (!logged_in_db) {
-      stop('Automatic log in failed. Please log in manually.')
-    }
-  } else {
-    logged_in_db = TRUE
-  }
-  logged_in_db
+  # if (!file.exists('.databrary.RData')) {
+  #   if (params$databrary_login == db_login_id) {
+  #     stop('Cannot login to Databrary with login id: `',
+  #          db_login_id,
+  #          '`')
+  #   } else {
+  #     logged_in_db <- databraryapi::login_db(db_login_id)
+  #   }
+  #   if (!logged_in_db) {
+  #     stop('Automatic log in failed. Please log in manually.')
+  #   } else {
+  #   logged_in_db = TRUE
+  # }
+  # logged_in_db
 }
 
 ###################################################################
@@ -1220,9 +1221,9 @@ get_db_session_data_from_site <- function(this_site, vb = FALSE) {
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
-  if (!check_databrary_login()) {
-    stop('Not logged-in to Databrary.')
-  }
+  # if (!check_databrary_login()) {
+  #   stop('Not logged-in to Databrary.')
+  # }
   
   this_volume <-
     dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site))
