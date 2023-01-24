@@ -6,7 +6,7 @@ These visualizations are intended as a way to test the integrity and utility of 
 
 Cumulative screening/recruiting calls by site.
 
-```{r}
+```{r load-viz-pkgs}
 library(targets)
 library(tidyverse)
 library(forcats)
@@ -56,12 +56,14 @@ screen_df %>%
 ```
 
 ::: {.rmdnote}
+
 Some of the code to clean the `screen_df` variables could be incorporated into an earlier stage of the workflow.
+
 :::
 
 Language(s) spoken to child by `child_sex`.
 
-```{r}
+```{r xtabs-language-by-sex}
 df <- screen_df %>%
   dplyr::mutate(., language_to_child = stringr::str_replace_all(language_to_child, " ", "_"))
 xtabs(formula = ~ child_sex + language_to_child, data = df)
@@ -69,7 +71,7 @@ xtabs(formula = ~ child_sex + language_to_child, data = df)
 
 Mother race and ethnicity.
 
-```{r}
+```{r xtabs-race-ethnicity}
 df <- screen_df %>%
   dplyr::mutate(
     .,
@@ -92,14 +94,16 @@ xtabs(formula = ~ mother_race + mother_ethnicity,
 ### Recruiting locations {-}
 
 ::: {.rmdimportant}
+
 For privacy reasons, we do not expose or share address information.
 The following commands retrieve address information from the raw data files and then retrieve geographic information using the U.S. Census API.
 In the future, we may decide to link an individual respondent's information to their County.
+
 :::
 
 Create helper functions to make a tibble with a repondent's address.
 
-```{r}
+```{r make-address-func}
 make_address <- function(i, df, survey_type = 'new') {
   require(dplyr)
   require(tibble)
@@ -140,7 +144,7 @@ make_addresses <- function(df, survey_type) {
 
 Create aggregate data file with address information for the three screening data files.
 
-```{r}
+```{r make-screening-df}
 fns <- list.files("data/csv/screening",full.names = TRUE)
 
 df1 <- readr::read_csv(fns[1], show_col_types = FALSE)
@@ -156,7 +160,7 @@ add <- rbind(ad1, ad2, ad3)
 
 Helper function to gather Census geographic information in bulk.
 
-```{r}
+```{r census-geos-func}
 get_multiple_census_geos <- function(addrs) {
   require(tidygeocoder)
   addrs %>% tidygeocoder::geocode(
@@ -170,13 +174,13 @@ get_multiple_census_geos <- function(addrs) {
 
 Retrieve the Census geographic information.
 
-```{r}
+```{r get-census-geos}
 geos <- get_multiple_census_geos(add)
 ```
 
 Helper function to plot lat and long of recruiting sites on a U.S. map.
 
-```{r, message=FALSE}
+```{r make-screening-site-func, message=FALSE}
 plot_screening_sites <- function(geo_df) {
   require(ggmap)
   require(dplyr)
@@ -200,7 +204,7 @@ plot_screening_sites(geos)
  
 ## Home visit data {-}
 
-```{r}
+```{r load-home-visit-df}
 targets::tar_load(home_visit_df)
 ```
 
@@ -223,7 +227,7 @@ home_visit_df %>%
 
 ### Language exposure {-}
 
-```{r}
+```{r clean-lang-df}
 df <- home_visit_df %>%
   dplyr::mutate(., language_child = stringr::str_replace_all(language_child, " ", "_"))
 xtabs(formula = ~ child_sex + language_child, data = df)
@@ -233,7 +237,7 @@ xtabs(formula = ~ child_sex + language_child, data = df)
 
 #### Crawl onset {-}
 
-```{r}
+```{r make-loco-df}
 play_loco <- home_visit_df %>%
   dplyr::select(., age_group, child_sex, language_child,
                 locomotor_milestones.who_walk.who_walk_onset_mo,
@@ -310,7 +314,7 @@ ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea,
 
 #### Feeding {-}
 
-```{r}
+```{r make-feeding-df}
 feeding <- home_visit_df %>%
   dplyr::select(., age_group, child_sex, language_child,
                 health.feeding_nutrition.breastfeed,
@@ -324,7 +328,7 @@ feeding <- home_visit_df %>%
 xtabs(formula = ~ child_sex + breastfeed, data = feeding)
 ```
 
-```{r, fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
+```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
 feeding %>%
   ggplot(.) +
   aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
@@ -334,7 +338,7 @@ feeding %>%
 
 #### Smoking/drinking {-}
 
-```{r}
+```{r xtabs-smoking-drinking}
 smoking_drinking <- home_visit_df %>%
   dplyr::select(., age_group, child_sex, language_child,
                 health.smoking.pregnant_smoking,
@@ -347,7 +351,7 @@ xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
 
 #### Sleeping position {-}
 
-```{r}
+```{r xtabs-sleeping}
 sleeping_pos <- home_visit_df %>%
   dplyr::select(., age_group, child_sex, language_child,
                 health.general_health.child_sleeping_position) %>%
@@ -367,5 +371,7 @@ dim(post_visit_df)
 ```
 
 ::: {.rmdnote}
+
 Cleaning this data is set aside for future work.
+
 :::

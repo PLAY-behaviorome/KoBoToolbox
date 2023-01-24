@@ -15,7 +15,7 @@ library(forcats)
 targets::tar_load(screen_df)
 ```
 
-```{r}
+```{r get-time-intervals}
 now <- ymd(Sys.Date())
 month_ago <- now - dmonths(1)
 screen_last_month_df <- screen_df %>%
@@ -30,7 +30,7 @@ calls_by_site_plot(screen_last_month_df)
 ```
 
 
-```{r}
+```{r home-visit-stats}
 targets::tar_load(home_visit_df)
 home_last_month_df <- home_visit_df %>%
    dplyr::filter(date_today > month_ago)
@@ -92,11 +92,11 @@ xtabs(~ participant_race + participant_ethnicity, df_race_eth)
 ```
 ### By site, location, & QA status {-}
 
-```{r}
+```{r xtabs-site-qa-status}
 xtabs(~ site_id + group_name, gold_silver)
 ```
 
-```{r, fig.cap="QA level by State"}
+```{r fig-qa-level-by-state, fig.cap="QA level by State"}
 gold_silver %>%
     ggplot(.) +
     aes(forcats::fct_infreq(context_state), fill = context_state) +
@@ -113,7 +113,7 @@ gold_silver %>%
 
 ## Clean-up {-}
 
-```{r}
+```{r clean-up}
 unlink(".databrary.RData")
 databraryapi::logout_db()
 ```

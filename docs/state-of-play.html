@@ -380,7 +380,7 @@ PLAYProject_VBLTU
 </tr>
 <tr>
 <td style="text-align:left;">
-University of Texas - Austin
+University of Texas at Austin
 </td>
 <td style="text-align:left;">
 PLAYProject_UTAUS
@@ -531,14 +531,14 @@ NA
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">age_group</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
-##   PLAY_Gold     41   35   40
-##   PLAY_Silver    2   15    7</code></pre>
+##   PLAY_Gold     45   38   42
+##   PLAY_Silver    3   17    9</code></pre>
 <div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">child_sex</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
-##   PLAY_Gold       47   69
-##   PLAY_Silver     14   10</code></pre>
+##   PLAY_Gold       51   74
+##   PLAY_Silver     14   15</code></pre>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_race_eth</span> <span class="op">&lt;-</span> <span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">group_name</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -551,19 +551,12 @@ NA
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">participant_race</span> <span class="op">+</span> <span class="va">participant_ethnicity</span>, <span class="va">df_race_eth</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                            participant_ethnicity
-## participant_race            Hispanic_or_Latino
-##   Asian                                      0
-##   Black_or_African_American                  1
-##   More_than_one                              8
-##   Other                                      6
-##   White                                     14
-##                            participant_ethnicity
-## participant_race            Not_Hispanic_or_Latino
-##   Asian                                          2
-##   Black_or_African_American                      0
-##   More_than_one                                 16
-##   Other                                          3
-##   White                                         90</code></pre>
+## participant_race            Hispanic_or_Latino Not_Hispanic_or_Latino
+##   Asian                                      0                      2
+##   Black_or_African_American                  1                      1
+##   More_than_one                              9                     16
+##   Other                                      6                      4
+##   White                                     15                    100</code></pre>
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3>By site, location, &amp; QA status<a class="anchor" aria-label="anchor" href="#by-site-location-qa-status"><i class="fas fa-link"></i></a>
@@ -572,19 +565,19 @@ NA
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">site_id</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group_name
 ## site_id PLAY_Gold PLAY_Silver
-##   CHOPH         5           1
+##   CHOPH         6           5
 ##   CSUFL         2           1
 ##   CSULB         9           1
-##   GEORG        11           2
+##   GEORG        13           2
 ##   INDNA         4           2
-##   NYUNI        12           6
+##   NYUNI        12           7
 ##   OHIOS        31           1
 ##   PURDU         3           3
 ##   STANF         1           1
-##   UCSCR        17           1
-##   UHOUS        11           1
+##   UCSCR        19           1
+##   UHOUS        13           1
 ##   UIOWA         5           1
-##   UTAUS         1           1
+##   UTAUS         3           1
 ##   VBLTU         4           2</code></pre>
 <div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -600,8 +593,8 @@ NA
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"State"</span>, y <span class="op">=</span> <span class="st">"N participants"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-75"></span>
-<img src="include/img/unnamed-chunk-75-1.png" alt="QA level by State" width="672"><p class="caption">
+<span style="display:block;" id="fig:fig-qa-level-by-state"></span>
+<img src="include/img/fig-qa-level-by-state-1.png" alt="QA level by State" width="672"><p class="caption">
 Figure 14: QA level by State
 </p>
 </div>

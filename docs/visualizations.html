@@ -132,13 +132,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_to_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_to_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_to_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_to_child
-## child_sex english english_other english_spanish
-##    female     114             1              17
-##    male       106             3              29
+## child_sex english english_other english_spanish english_spanish_other
+##    female     114             1              17                     1
+##    male       106             3              29                     1
 ##          language_to_child
-## child_sex english_spanish_other spanish
-##    female                     1       4
-##    male                       1       4</code></pre>
+## child_sex spanish
+##    female       4
+##    male         4</code></pre>
 <p>Mother race and ethnicity.</p>
 <div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -242,7 +242,7 @@ In the future, we may decide to link an individual respondent’s information to
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Passing 267 addresses to the US Census batch geocoder</code></pre>
-<pre><code>## Query completed in: 7.3 seconds</code></pre>
+<pre><code>## Query completed in: 74.7 seconds</code></pre>
 <p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -388,11 +388,9 @@ Figure 8: Age (mos) of walking onset (WHO criteria) by sex
 <span><span class="fu">ggExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span><span class="va">walk_p</span>, <span class="va">play_loco</span>, <span class="va">walk_mos_who</span>, <span class="va">walk_mos_kea</span>, </span>
 <span>                    type <span class="op">=</span> <span class="st">"density"</span>, margins <span class="op">=</span> <span class="st">"both"</span>, groupColour <span class="op">=</span> <span class="cn">TRUE</span>, groupFill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values
-## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values
-## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## Warning: Removed 37 rows containing missing values (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
@@ -413,11 +411,9 @@ Figure 9: Walking onset by WHO vs. KEA criteria
 <span><span class="fu">ggExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span><span class="va">walk_p</span>, <span class="va">play_loco</span>, <span class="va">walk_mos_who</span>, <span class="va">walk_mos_kea</span>, </span>
 <span>                    type <span class="op">=</span> <span class="st">"density"</span>, margins <span class="op">=</span> <span class="st">"both"</span>, groupColour <span class="op">=</span> <span class="cn">TRUE</span>, groupFill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values
-## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values
-## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## Warning: Removed 37 rows containing missing values (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-crawl-mos"></span>
