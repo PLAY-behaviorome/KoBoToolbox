@@ -1278,6 +1278,15 @@ summarize_sessions_by_site <- function(this_site, vb = FALSE) {
   }
 }
 
+make_site_session_summary_multiple <- function(play_vols) {
+  if (!databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+    message("Not authenticated to Databrary.")
+    return(NULL)
+  }
+  
+  purrr::map_df(play_vols$play_site_id, make_site_session_summary)
+}
+
 make_site_session_summary <- function(this_site, vb = FALSE) {
   require(dplyr)
   require(tidyr)
@@ -1285,11 +1294,6 @@ make_site_session_summary <- function(this_site, vb = FALSE) {
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
-  # if (!databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
-  #   message("Not authenticated to Databrary.")
-  #   return(NULL)
-  # }
-
   site_df <- summarize_sessions_by_site(this_site, vb = vb)
   if (is.null(site_df)) {
     if (vb) message("No data retrieved from site: ", this_site)

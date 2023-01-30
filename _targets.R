@@ -21,7 +21,7 @@ tar_option_set(
   )
 )
 
-update_interval <- 3
+update_interval <- 2
 update_interval_units <- "days"
 
 list(
@@ -174,7 +174,7 @@ list(
   # Databrary session info
   tar_target(
     play_databrary_sess_df,
-    purrr::map_df(play_vols$play_site_id, make_site_session_summary),
+    make_site_session_summary_multiple(play_vols),
     cue = tarchetypes::tar_cue_age(
       name = play_databrary_sess_df,
       age = as.difftime(update_interval, units = update_interval_units)
