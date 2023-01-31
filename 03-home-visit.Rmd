@@ -2,12 +2,12 @@
 
 ## Protocol {-}
 
-Details about the data collection protocol for the home visit can be found on the [PLAY Project website]((https://www.play-project.org/collection.html#Home_Visit).
+Details about the data collection protocol for the home visit can be found on the [PLAY Project website](https://www.play-project.org/collection.html#Home_Visit).
 
-## Overview
+## Overview {-}
 
 The notes below summarize the steps needed to process the home visit survey data.
-Most of the R chunks are **not**run, however, since we have moved the work into a `{targets}`-based workflow.
+Most of the R chunks are **not** run, however, since we have moved the work into a [`\{targets\}`](https://docs.ropensci.org/targets/)-based workflow.
 
 ## Download data {-}
 
@@ -49,10 +49,12 @@ There are $n=$ `r dim(kb_home)[1]` home visit data files.
 ```
 tar_target(
   home_visit_downloads,
-  retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
+  retrieve_kobo_xlsx(kb_home, 
+    "data/xlsx/home_visit/raw"),
   cue = tarchetypes::tar_cue_age(
     name = home_visit_downloads,
-    age = as.difftime(update_interval, units = update_interval_units)
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
   )
 )
 ```
@@ -70,7 +72,8 @@ tar_target(
                      "data/xlsx/home_visit/std_name"),
   cue = tarchetypes::tar_cue_age(
     name = home_visit_renamed,
-    age = as.difftime(update_interval, units = update_interval_units)
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
   )
 )
 ```
@@ -80,7 +83,8 @@ tar_target(
 ```
 tar_target(
   home_visit_xlsx_to_csv,
-  load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
+  load_xlsx_save_many_csvs_2(home_visit_renamed, 
+    "data/csv/home_visit/raw")
 )
 ```
 
@@ -162,7 +166,12 @@ summarize_non_mbcdi_qs <- function(fn) {
     if (!is.data.frame(df)) {
       stop('Error reading data frame')
     } else {
-      out_df <- tibble(file_name = basename(fn), n_rows = dim(df)[1], n_vars = dim(df)[2])
+      out_df <-
+        tibble(
+          file_name = basename(fn),
+          n_rows = dim(df)[1],
+          n_vars = dim(df)[2]
+        )
       dplyr::arrange(out_df, file_name)
     }
   }
@@ -193,9 +202,17 @@ Accordingly, we focus our cleaning efforts here first.
 We start with the data files that have $n=288$ columns.
 
 ```{r}
-df740623 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv", show_col_types = FALSE)
+df740623 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv",
+    show_col_types = FALSE
+  )
 
-df740624 <- readr::read_csv("data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv", show_col_types = FALSE)
+df740624 <-
+  readr::read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv",
+    show_col_types = FALSE
+  )
 
 sum(names(df740623) == names(df740624))
 ```
@@ -302,16 +319,56 @@ The "older" forms have varied numbers of columns.
 We focus on thos with data (n_vars > 0)
 
 ```{r}
-df307736 <- read_csv("data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv", show_col_types = FALSE)
-df331453 <- read_csv("data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv", show_col_types = FALSE)
-df331848 <- read_csv("data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv", show_col_types = FALSE)
-df334099 <- read_csv("data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv", show_col_types = FALSE)
-df363349 <- read_csv("data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv", show_col_types = FALSE)
-df363381 <- read_csv("data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv", show_col_types = FALSE)
-df363431 <- read_csv("data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv", show_col_types = FALSE)
-df408149 <- read_csv("data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv", show_col_types = FALSE)
-df411456 <- read_csv("data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv", show_col_types = FALSE)
-df411469 <- read_csv("data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv", show_col_types = FALSE)
+df307736 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df331453 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df331848 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df334099 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df363349 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df363381 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df363431 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df408149 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv",
+    show_col_types = FALSE
+  )
+df411456 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv",
+    show_col_types = FALSE
+  )
+df411469 <-
+  read_csv(
+    "data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv",
+    show_col_types = FALSE
+  )
 ```
 
 Let's look at the two forms that have the same number of columns, $n=274$, 307736 and 331453.
@@ -379,6 +436,7 @@ That helps a bit, but we diverge around column 29.
 ```{r}
 cbind(n1[28:51], n2_2[28:51])
 ```
+
 These question labels looks very similar.
 There are just some minor changes in the variable names.
 `n2_2` has an extra variable in column 40.
@@ -394,15 +452,19 @@ n2_3 |> stringr::str_replace("yes__in_the_bi", "birthhospital") |> stringr::str_
 
 n1 == n2_4
 ```
+
 ```{r}
 cbind(n1[39:51], n2_4[39:51])
 ```
+
 `n1` has a `group_medicalprof` label from `allergies` through `gastrointestinal`; `n2_4` has `child_allergies_infections_ill` for the same questions.
 
 ```{r}
 n2_4 |> stringr::str_replace("child_allergies_infections_ill", "group_medicalprof") -> n2_5
 n1 == n2_5
 ```
+
+
 ```{r}
 cbind(n1[49:60], n2_5[49:60])
 ```
@@ -452,17 +514,18 @@ tar_target(df_merge_288_cols,
 ### non-MB-CDI files with $n=287$ columns {-}
 
 ```
-tar_target(files_287_cols_1, stringr::str_detect(home_visit_remove_identifiers, 
-                                                   "2[69]_non_mbcdi.*_deidentified\\.csv")),
-tar_target(files_287_cols_2, stringr::str_detect(home_visit_remove_identifiers, 
-                                                   "(740627|740630|740631)_non.*_deidentified\\.csv")),
-
+tar_target(files_287_cols_1, 
+  stringr::str_detect(home_visit_remove_identifiers, 
+          "2[69]_non_mbcdi.*_deidentified\\.csv")),
+tar_target(files_287_cols_2, 
+  stringr::str_detect(home_visit_remove_identifiers, 
+          "(740627|740630|740631)_non.*_deidentified\\.csv")),
 tar_target(df_merge_287_cols_1,
-          make_aggregate_data_file(
-              home_visit_remove_identifiers[files_287_cols_1])),
+  make_aggregate_data_file(
+          home_visit_remove_identifiers[files_287_cols_1])),
 tar_target(df_merge_287_cols_2,
-             make_aggregate_data_file(
-               home_visit_remove_identifiers[files_287_cols_2])),
+  make_aggregate_data_file(
+          home_visit_remove_identifiers[files_287_cols_2])),
 ```
 
 ### Examine groups with $n=287$ cols {-}
@@ -489,7 +552,8 @@ The following should fix this.
 ```{r}
 old_names <- names(df_merge_287_cols_2)
 new_names <- old_names
-new_names[92:273] <- stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
+new_names[92:273] <-
+  stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
 names(df_merge_287_cols_2) <- new_names
 ```
 

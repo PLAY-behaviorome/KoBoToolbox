@@ -49,7 +49,7 @@ Child age in months (`child_age_mos`) by `child_sex`.
 
 ```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
 screen_df %>%
-  dplyr::filter(., !is.na(child_age_mos), !is.na(child_sex)) %>%
+  dplyr::filter(.,!is.na(child_age_mos),!is.na(child_sex)) %>%
   ggplot() +
   aes(child_age_mos, fill = child_sex) +
   geom_histogram(bins = 50)
@@ -65,8 +65,10 @@ Language(s) spoken to child by `child_sex`.
 
 ```{r xtabs-language-by-sex}
 df <- screen_df %>%
-  dplyr::mutate(., language_to_child = stringr::str_replace_all(language_to_child, " ", "_"))
-xtabs(formula = ~ child_sex + language_to_child, data = df)
+  dplyr::mutate(.,
+                language_to_child = stringr::str_replace_all(language_to_child, " ", "_"))
+xtabs(formula = ~ child_sex + language_to_child,
+      data = df)
 ```
 
 Mother race and ethnicity.
@@ -107,28 +109,30 @@ Create helper functions to make a tibble with a repondent's address.
 make_address <- function(i, df, survey_type = 'new') {
   require(dplyr)
   require(tibble)
-  this_row <- df[i, ]
+  this_row <- df[i,]
   if (survey_type == 'new') {
-  out_df <- this_row %>%
-    dplyr::select(
-      .,
-      addr1 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_1`,
-      addr2 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_2`,
-      city = `play_demo_questionnaire/group_contact_info/group_address/city`,
-      state = `play_demo_questionnaire/group_contact_info/group_address/state`
-    )  
+    out_df <- this_row %>%
+      dplyr::select(
+        .,
+        addr1 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_1`,
+        addr2 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_2`,
+        city = `play_demo_questionnaire/group_contact_info/group_address/city`,
+        state = `play_demo_questionnaire/group_contact_info/group_address/state`
+      )
   } else {
-  out_df <- this_row %>%
-    dplyr::select(
-      .,
-      addr1 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_1`,
-      addr2 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_2`,
-      city = `play_phone_questionnaire/group_contact_info/group_address/city`,
-      state = `play_phone_questionnaire/group_contact_info/group_address/state`)
+    out_df <- this_row %>%
+      dplyr::select(
+        .,
+        addr1 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_1`,
+        addr2 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_2`,
+        city = `play_phone_questionnaire/group_contact_info/group_address/city`,
+        state = `play_phone_questionnaire/group_contact_info/group_address/state`
+      )
     
   }
-
-  if ((!is.na(out_df$addr1) && (!is.na(out_df$city) && (!is.na(out_df$state))))) {
+  
+  if ((!is.na(out_df$addr1) &&
+       (!is.na(out_df$city) && (!is.na(out_df$state))))) {
     addr <- with(out_df, paste0(addr1, ", ", city, ", ", state))
     tibble(singlelineaddr = addr)
   } else {
@@ -187,9 +191,9 @@ plot_screening_sites <- function(geo_df) {
   require(ggplot2)
   
   geo_df <- geo_df %>%
-    dplyr::filter(., !is.na(lat), !is.na(long))
+    dplyr::filter(.,!is.na(lat),!is.na(long))
   
-  usa <- ggmap::get_map("USA", zoom=4)
+  usa <- ggmap::get_map("USA", zoom = 4)
   usa %>%
     ggmap::ggmap() +
     ggplot2::geom_point(data = geo_df, aes(x = long, y = lat))
@@ -217,11 +221,11 @@ That is on the work plan.
 
 ```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
 home_visit_df %>%
-  dplyr::filter(., !is.na(age_group), !is.na(child_sex)) %>%
+  dplyr::filter(.,!is.na(age_group),!is.na(child_sex)) %>%
   ggplot() +
   aes(age_group, fill = child_sex) +
   geom_bar() +
-  theme(legend.position="bottom") +
+  theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
 ```
 
@@ -239,17 +243,27 @@ xtabs(formula = ~ child_sex + language_child, data = df)
 
 ```{r make-loco-df}
 play_loco <- home_visit_df %>%
-  dplyr::select(., age_group, child_sex, language_child,
-                locomotor_milestones.who_walk.who_walk_onset_mo,
-                locomotor_milestones.k_walk.k_walk_onset_mo,
-                locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
-  dplyr::rename(., walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
-                walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
-                crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo) %>%
-  dplyr::mutate(., walk_mos_who = as.numeric(walk_mos_who),
-                walk_mos_kea = as.numeric(walk_mos_kea),
-                crawl_mos = as.numeric(crawl_mos))
-
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    locomotor_milestones.who_walk.who_walk_onset_mo,
+    locomotor_milestones.k_walk.k_walk_onset_mo,
+    locomotor_milestones.crawl_onset.crawl_onset_mo
+  ) %>%
+  dplyr::rename(
+    .,
+    walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+    walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+    crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo
+  ) %>%
+  dplyr::mutate(
+    .,
+    walk_mos_who = as.numeric(walk_mos_who),
+    walk_mos_kea = as.numeric(walk_mos_kea),
+    crawl_mos = as.numeric(crawl_mos)
+  )
 ```
 
 ```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
@@ -257,7 +271,7 @@ play_loco %>%
   ggplot(.) +
   aes(crawl_mos, fill = child_sex) +
   geom_histogram(bins = 12) +
-  theme(legend.position="bottom") +
+  theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
 ```
 
@@ -288,12 +302,20 @@ play_loco %>%
   geom_smooth(method = "lm") +
   xlim(8, 18) +
   ylim(8, 18) +
-  theme(legend.position="bottom") +
+  theme(legend.position = "bottom") +
   theme(aspect.ratio = 1) +
   theme(legend.title = element_blank()) -> walk_p
 
-ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 
-                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+ggExtra::ggMarginal(
+  walk_p,
+  play_loco,
+  walk_mos_who,
+  walk_mos_kea,
+  type = "density",
+  margins = "both",
+  groupColour = TRUE,
+  groupFill = TRUE
+)
 ```
 
 ```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"}
@@ -302,12 +324,20 @@ play_loco %>%
   aes(crawl_mos, walk_mos_kea, color = child_sex) +
   geom_point() +
   geom_smooth(method = "lm") +
-  theme(legend.position="bottom") +
+  theme(legend.position = "bottom") +
   theme(aspect.ratio = 1) +
   theme(legend.title = element_blank()) -> walk_p
 
-ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea, 
-                    type = "density", margins = "both", groupColour = TRUE, groupFill = TRUE)
+ggExtra::ggMarginal(
+  walk_p,
+  play_loco,
+  walk_mos_who,
+  walk_mos_kea,
+  type = "density",
+  margins = "both",
+  groupColour = TRUE,
+  groupFill = TRUE
+)
 ```
 
 ### Health {-}
@@ -316,9 +346,14 @@ ggExtra::ggMarginal(walk_p, play_loco, walk_mos_who, walk_mos_kea,
 
 ```{r make-feeding-df}
 feeding <- home_visit_df %>%
-  dplyr::select(., age_group, child_sex, language_child,
-                health.feeding_nutrition.breastfeed,
-                health.feeding_nutrition.solidfood_age) %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    health.feeding_nutrition.breastfeed,
+    health.feeding_nutrition.solidfood_age
+  ) %>%
   dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
                 solid_food_mos = health.feeding_nutrition.solidfood_age) %>%
   dplyr::mutate(., solid_food_mos = as.numeric(solid_food_mos))
@@ -340,9 +375,14 @@ feeding %>%
 
 ```{r xtabs-smoking-drinking}
 smoking_drinking <- home_visit_df %>%
-  dplyr::select(., age_group, child_sex, language_child,
-                health.smoking.pregnant_smoking,
-                health.drinking.pregnant_drinking) %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    health.smoking.pregnant_smoking,
+    health.drinking.pregnant_drinking
+  ) %>%
   dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
                 preg_drinking = health.drinking.pregnant_drinking)
 
@@ -353,9 +393,14 @@ xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
 
 ```{r xtabs-sleeping}
 sleeping_pos <- home_visit_df %>%
-  dplyr::select(., age_group, child_sex, language_child,
-                health.general_health.child_sleeping_position) %>%
-  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) 
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    health.general_health.child_sleeping_position
+  ) %>%
+  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position)
 
 xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
 ```
