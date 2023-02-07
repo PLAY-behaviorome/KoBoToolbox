@@ -17,11 +17,13 @@ targets::tar_load(screen_df)
 df <- add_n_calls_to_demog(screen_df)
 ```
 
+### Calls across time {-}
+
 ```{r fig-screening-calls-cum, fig.cap="Cumulative screening calls by year and site"}
 plot_call_timeseries(df)
 ```
 
-Number of screening calls by site.
+### Calls by site {-}
 
 ```{r fig-screening-calls-by-site, fig.cap="Cumulative screening calls by site"}
 calls_by_site_plot <- function(df) {
@@ -45,6 +47,8 @@ calls_by_site_plot(screen_df)
 
 ### Demographics {-}
 
+#### Child age {-}
+
 Child age in months (`child_age_mos`) by `child_sex`.
 
 ```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
@@ -61,6 +65,8 @@ Some of the code to clean the `screen_df` variables could be incorporated into a
 
 :::
 
+#### Language to child {-}
+
 Language(s) spoken to child by `child_sex`.
 
 ```{r xtabs-language-by-sex}
@@ -70,6 +76,7 @@ df <- screen_df %>%
 xtabs(formula = ~ child_sex + language_to_child,
       data = df)
 ```
+#### Mother's race and ethnicity {-}
 
 Mother race and ethnicity.
 
@@ -214,6 +221,8 @@ targets::tar_load(home_visit_df)
 
 ### Demographics {-}
 
+#### Child age {-}
+
 Child age in months (`age_group`) by `child_sex`.
 
 Note: The child's exact age in months is part of the Databrary-related data. 
@@ -275,7 +284,7 @@ play_loco %>%
   theme(legend.title = element_blank())
 ```
 
-### Walk onset {-}
+#### Walk onset {-}
 
 ```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
 play_loco %>%
