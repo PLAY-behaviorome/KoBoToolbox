@@ -14,6 +14,24 @@ clean_data_dir <- function(update_data, data_dir) {
 }
 
 ###################################################################
+#' Creates data directories for workflow. These are hidden
+#' from git, so we have to regenerate them whenever we create a new
+#' branch.
+create_data_dirs <- function() {
+  dir.create("data/xlsx/home_visit/raw", recursive = TRUE)
+  dir.create("data/xlsx/home_visit/std_name", recursive = TRUE)
+  dir.create("data/xlsx/screening", recursive = TRUE)
+  dir.create("data/xlsx/post_visit", recursive = TRUE)
+  
+  dir.create("data/csv/post_visit", recursive = TRUE)
+  dir.create("data/csv/screening", recursive = TRUE)
+  dir.create("data/csv/home_visit/raw", recursive = TRUE)
+  dir.create("data/csv/home_visit/non_mbcdi", recursive = TRUE)
+  dir.create("data/csv/home_visit/mbcdi", recursive = TRUE)
+  dir.create("data/csv/home_visit/non_mbcdi/deid", recursive = TRUE)
+}
+
+###################################################################
 #' Lists the datasets available on KoBoToolbox using the PLAY credentials.
 #'
 #' @param URL A string that is the API call to extract the data. It defaults
