@@ -149,8 +149,8 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span>      data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_to_child
 ## child_sex english english_other english_spanish english_spanish_other spanish
-##    female     121             2              17                     2       4
-##    male       114             3              29                     1       5</code></pre>
+##    female     127             2              18                     2       4
+##    male       119             3              29                     1       5</code></pre>
 </div>
 <div id="mothers-race-and-ethnicity" class="section level4 unnumbered">
 <h4>Mother’s race and ethnicity<a class="anchor" aria-label="anchor" href="#mothers-race-and-ethnicity"><i class="fas fa-link"></i></a>
@@ -178,11 +178,11 @@ Figure 3: Histogram of child age at time of recruiting call.
 ## mother_race       hispanic not_hispanic refused
 ##   american_indian        3            0       0
 ##   asian                  0           13       0
-##   black                  0            6       0
+##   black                  0            7       0
 ##   more_than_one         12            5       0
 ##   other                 17            4       1
 ##   refused                0            0       2
-##   white                 27          198       0</code></pre>
+##   white                 28          208       0</code></pre>
 </div>
 </div>
 <div id="recruiting-locations" class="section level3 unnumbered">
@@ -261,8 +261,8 @@ In the future, we may decide to link an individual respondent’s information to
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Loading required package: tidygeocoder</code></pre>
-<pre><code>## Passing 285 addresses to the US Census batch geocoder</code></pre>
-<pre><code>## Query completed in: 10.1 seconds</code></pre>
+<pre><code>## Passing 298 addresses to the US Census batch geocoder</code></pre>
+<pre><code>## Query completed in: 8.2 seconds</code></pre>
 <p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
 <div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -338,8 +338,8 @@ Figure 5: Participants by age group and sex
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female      68               7
-##    male        71              23</code></pre>
+##    female      79              10
+##    male        80              26</code></pre>
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
@@ -394,7 +394,7 @@ Figure 6: Age of crawling onset (mos) by sex
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_kea</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 34 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 45 rows containing non-finite values (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea"></span>
 <img src="include/img/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672"><p class="caption">
@@ -408,7 +408,7 @@ Figure 7: Age (mos) of walking onset (KEA criteria) by sex
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins<span class="op">=</span><span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 28 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 38 rows containing non-finite values (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-who"></span>
 <img src="include/img/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672"><p class="caption">
@@ -438,10 +438,10 @@ Figure 8: Age (mos) of walking onset (WHO criteria) by sex
 <span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 49 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: Removed 37 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 49 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 49 rows containing missing values (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
 <img src="include/img/fig-walk-mos-kea-who-1.png" alt="Walking onset by WHO vs. KEA criteria" width="672"><p class="caption">
@@ -469,10 +469,10 @@ Figure 9: Walking onset by WHO vs. KEA criteria
 <span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 48 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 37 rows containing non-finite values (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: Removed 37 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 48 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 48 rows containing missing values (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-crawl-mos"></span>
 <img src="include/img/fig-walk-mos-kea-crawl-mos-1.png" alt="Walking onset vs. Crawling" width="672"><p class="caption">
@@ -504,8 +504,8 @@ Figure 10: Walking onset vs. Crawling
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow no yes
-##    female         1  1  72
-##    male           0  4  86</code></pre>
+##    female         1  2  85
+##    male           0  4  98</code></pre>
 <div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -538,9 +538,8 @@ Figure 11: Age at introduction of solid foods
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">preg_smoking</span> <span class="op">+</span> <span class="va">preg_drinking</span>, <span class="va">smoking_drinking</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##             preg_drinking
-## preg_smoking donotknow  no yes
-##    donotknow         1   0   0
-##    no                0 129  34</code></pre>
+## preg_smoking  no yes
+##           no 151  38</code></pre>
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
@@ -559,7 +558,7 @@ Figure 11: Age at introduction of solid foods
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## child_sleeping_position
 ##         back      changed    donotknow        other         side stomach_side 
-##          157            1            1            1            2            2</code></pre>
+##          182            1            1            1            2            3</code></pre>
 </div>
 </div>
 </div>
@@ -619,7 +618,7 @@ Figure 11: Age at introduction of solid foods
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-02-13.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-02-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
