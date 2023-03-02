@@ -86,7 +86,7 @@
 <span><span class="va">screen_last_month_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span>
 <span><span class="va">n_screens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> </span></code></pre></div>
-<p>There have been 37 recruiting calls since 2023-01-28 13:30:00.</p>
+<p>There have been 38 recruiting calls since 2023-01-30 13:30:00.</p>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -100,8 +100,8 @@ Figure 12: Screening calls in last month by site
 <span><span class="va">home_last_month_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span>
 <span><span class="va">n_home_visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">home_last_month_df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> </span></code></pre></div>
-<p>There have been 24 home visits since 2023-01-28 13:30:00.</p>
-<p><strong>Calls/visits ratio</strong>: 1.5416667.</p>
+<p>There have been 23 home visits since 2023-01-30 13:30:00.</p>
+<p><strong>Calls/visits ratio</strong>: 1.6521739.</p>
 <div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -221,7 +221,7 @@ PLAYProject_GEORG
 10
 </td>
 <td style="text-align:right;">
-7
+9
 </td>
 </tr>
 <tr>
@@ -313,7 +313,7 @@ PLAYProject_UTAUS
 NA
 </td>
 <td style="text-align:right;">
-6
+7
 </td>
 </tr>
 <tr>
@@ -581,21 +581,13 @@ NA
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">participant_race</span> <span class="op">+</span> <span class="va">participant_ethnicity</span>, <span class="va">df_race_eth</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                                    participant_ethnicity
-## participant_race                    Hispanic_or_Latino
-##   Asian                                              0
-##   Black_or_African_American                          1
-##   More_than_one                                     11
-##   Native American or Alaskan Native                  1
-##   Other                                              6
-##   White                                             22
-##                                    participant_ethnicity
-## participant_race                    Not_Hispanic_or_Latino
-##   Asian                                                  2
-##   Black_or_African_American                              1
-##   More_than_one                                         18
-##   Native American or Alaskan Native                      0
-##   Other                                                  5
-##   White                                                114</code></pre>
+## participant_race                    Hispanic_or_Latino Not_Hispanic_or_Latino
+##   Asian                                              0                      2
+##   Black_or_African_American                          1                      1
+##   More_than_one                                     11                     18
+##   Native American or Alaskan Native                  1                      0
+##   Other                                              6                      5
+##   White                                             22                    114</code></pre>
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3>By site, location, &amp; QA status<a class="anchor" aria-label="anchor" href="#by-site-location-qa-status"><i class="fas fa-link"></i></a>
@@ -684,7 +676,7 @@ Figure 14: QA level by State
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-02-28.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-03-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
