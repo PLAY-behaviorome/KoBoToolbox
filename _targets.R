@@ -96,13 +96,21 @@ list(
   ),
   tar_target(
     home_visit_xlsx_to_csv,
-    load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw")
+    load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw"),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_xlsx_to_csv,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   # Non-MB-CDIs
   tar_target(
     home_visit_non_mbcdi,
     split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi")
+                         "data/csv/home_visit/non_mbcdi"),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_non_mbcdi,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   tar_target(
     home_visit_remove_identifiers,
@@ -111,6 +119,10 @@ list(
       open_deidentify_save,
       csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
       these_questions = 'non_mbcdi'
+    ),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_remove_identifiers,
+      age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   # Merge non-MB-CDI datafiles
@@ -119,6 +131,10 @@ list(
     stringr::str_detect(
       home_visit_remove_identifiers,
       "2[3458]_non_mbcdi.*_deidentified\\.csv"
+    ),
+    cue = tarchetypes::tar_cue_age(
+      name = files_288_cols,
+      age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   tar_target(
@@ -126,6 +142,10 @@ list(
     stringr::str_detect(
       home_visit_remove_identifiers,
       "2[69]_non_mbcdi.*_deidentified\\.csv"
+    ),
+    cue = tarchetypes::tar_cue_age(
+      name = files_287_cols_1,
+      age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   tar_target(
@@ -133,37 +153,71 @@ list(
     stringr::str_detect(
       home_visit_remove_identifiers,
       "(740627|740630|740631)_non.*_deidentified\\.csv"
+    ),
+    cue = tarchetypes::tar_cue_age(
+      name = files_287_cols_2,
+      age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   tar_target(
     df_merge_288_cols,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_288_cols])
+    make_aggregate_data_file(home_visit_remove_identifiers[files_288_cols]),
+    cue = tarchetypes::tar_cue_age(
+      name = df_merge_288_cols,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   tar_target(
     df_merge_287_cols_1,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_1])
+    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_1]),
+    cue = tarchetypes::tar_cue_age(
+      name = df_merge_287_cols_1,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   tar_target(
     df_merge_287_cols_2,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_2])
+    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_2]),
+    cue = tarchetypes::tar_cue_age(
+      name = df_merge_287_cols_2,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
-  tar_target(home_visit_df,
-             rbind(
-               clean_dfs(df_merge_287_cols_2),
-               clean_dfs(df_merge_287_cols_1),
-               clean_dfs(df_merge_288_cols)
-             )),
+  tar_target(
+    home_visit_df,
+    rbind(
+      clean_dfs(df_merge_287_cols_2),
+      clean_dfs(df_merge_287_cols_1),
+      clean_dfs(df_merge_288_cols)
+    ),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
   tar_target(
     files_274_cols,
-    stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)")
+    stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)"),
+    cue = tarchetypes::tar_cue_age(
+      name = files_274_cols,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   tar_target(
     df_merge_274_cols,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols])
+    make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]),
+    cue = tarchetypes::tar_cue_age(
+      name = df_merge_274_cols,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   tar_target(
     home_visit_w_databrary_df,
-    add_databrary_info_to_home_visit_df(home_visit_df)
+    add_databrary_info_to_home_visit_df(home_visit_df),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_w_databrary_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   # MB-CDI CSVs
   tar_target(
@@ -181,5 +235,9 @@ list(
     )
   ),
   tar_target(databrary_session_csvs,
-             get_save_all_databrary_session_csvs)
+             get_save_all_databrary_session_csvs),
+  cue = tarchetypes::tar_cue_age(
+    name = databrary_session_csvs,
+    age = as.difftime(update_interval, units = update_interval_units)
+  )
 )
