@@ -11,7 +11,7 @@ library(forcats)
 
 ## Recent data {-}
 
-```{r}
+```{r load-df-targets}
 targets::tar_load(screen_df)
 targets::tar_load(home_visit_df)
 ```
@@ -24,13 +24,15 @@ now <- ymd(Sys.Date())
 
 #### Screening calls {-}
 
-There have been $n=$ `r dim(screen_last_month_df)[1]` recruiting calls since `r month_ago`.
-
-```{r fig-last-mo-calls, fig.cap="Screening calls in last month by site"}
+```{r fig-last-mo-calls}
 month_ago <- now - dmonths(1)
 screen_last_month_df <- screen_df %>%
   dplyr::filter(submit_date > month_ago)
+```
 
+There have been $n=$ `r dim(screen_last_month_df)[1]` recruiting calls since `r month_ago`.
+
+```{r, fig.cap="Screening calls in last month by site"}
 calls_by_site_plot(screen_last_month_df)
 ```
 
@@ -41,7 +43,7 @@ home_last_month_df <- home_visit_df %>%
    dplyr::filter(date_today > month_ago)
 ```
 
-There have been `r dim(home_last_month_df)[1]` home visits since `r month_ago`.
+There have been $n=$ `r dim(home_last_month_df)[1]` home visits since `r month_ago`.
 
 ```{r fig-last-mo-home-visit, fig.cap="Home visits in last month by site"}
 calls_by_site_plot(home_last_month_df)
@@ -51,13 +53,15 @@ calls_by_site_plot(home_last_month_df)
 
 #### Screening calls {-}
 
-There have been $n=$ `r dim(screen_last_3_df)[1]` screening calls since `r three_mos_ago`. 
-
-```{r fig-last-3mo-calls, fig.cap="Screening calls in last 3 months by site"}
+```{r}
 three_mos_ago <- now - dmonths(3)
 screen_last_3_df <- screen_df |>
    dplyr::filter(submit_date > three_mos_ago)
+```
 
+There have been $n=$ `r dim(screen_last_3_df)[1]` screening calls since `r three_mos_ago`. 
+
+```{r fig-last-3mo-calls, fig.cap="Screening calls in last 3 months by site"}
 calls_by_site_plot(screen_last_3_df)
 ```
 
@@ -68,7 +72,7 @@ home_last_3_month_df <- home_visit_df %>%
    dplyr::filter(date_today > three_mos_ago)
 ```
 
-There have been `r dim(home_last_3_month_df)[1]` home visits since `r three_mos_ago`.
+There have been $n=$ `r dim(home_last_3_month_df)[1]` home visits since `r three_mos_ago`.
 
 ```{r fig-last-3mo-home-visit, fig.cap="Home visits in last 3 months by site"}
 calls_by_site_plot(home_last_3_month_df)
@@ -78,13 +82,15 @@ calls_by_site_plot(home_last_3_month_df)
 
 #### Screening calls {-}
 
-There have been $n=$ `r dim(screen_last_6_df)[1]` screening calls since `r six_mos_ago`.
-
-```{r fig-last-6mo-calls, fig.cap="Screening calls in last 6 months by site"}
+```{r}
 six_mos_ago <- now - dmonths(6)
 screen_last_6_df <- screen_df |>
    dplyr::filter(submit_date > six_mos_ago)
+```
 
+There have been $n=$ `r dim(screen_last_6_df)[1]` screening calls since `r six_mos_ago`.
+
+```{r fig-last-6mo-calls, fig.cap="Screening calls in last 6 months by site"}
 calls_by_site_plot(screen_last_6_df)
 ```
 
@@ -95,7 +101,7 @@ home_last_6_month_df <- home_visit_df %>%
    dplyr::filter(date_today > six_mos_ago)
 ```
 
-There have been `r dim(home_last_6_month_df)[1]` home visits since `r six_mos_ago`.
+There have been $n=$ `r dim(home_last_6_month_df)[1]` home visits since `r six_mos_ago`.
 
 ```{r fig-last-6mo-home-visit, fig.cap="Home visits in last 6 months by site"}
 calls_by_site_plot(home_last_6_month_df)
