@@ -1,13 +1,12 @@
 # State of PLAY {-}
 
-The following summarizes the current state of the project.
-
-```{r}
-library(tidyverse)
-library(lubridate)
-library(ggplot2)
-library(forcats)
+```{r load-packages}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(lubridate))
+suppressPackageStartupMessages(library(forcats))
 ```
+
+The following summarizes the current state of the project as of `r (now <- ymd(Sys.Date()))`.
 
 ## Recent data {-}
 
@@ -16,8 +15,33 @@ targets::tar_load(screen_df)
 targets::tar_load(home_visit_df)
 ```
 
-```{r get-time-intervals}
-now <- ymd(Sys.Date())
+### Last two weeks {-}
+
+#### Screening calls {-}
+
+```{r fig-last-2-wk-calls}
+two_weeks_ago <- now - dweeks(2)
+screen_last_two_weeks_df <- screen_df %>%
+  dplyr::filter(submit_date > two_weeks_ago)
+```
+
+There have been $n=$ `r dim(screen_last_two_weeks_df)[1]` recruiting calls since `r two_weeks_ago`.
+
+```{r, fig.cap="Screening calls in last 2 weeks by site"}
+calls_by_site_plot(screen_last_two_weeks_df)
+```
+
+#### Home visits {-}
+
+```{r home-visit-stats-last-2-wks}
+home_last_two_weeks_df <- home_visit_df %>%
+   dplyr::filter(date_today > two_weeks_ago)
+```
+
+There have been $n=$ `r dim(home_last_two_weeks_df)[1]` home visits since `r two_weeks_ago`.
+
+```{r fig-last-2-wk-home-visit, fig.cap="Home visits in last 2 weeks by site"}
+calls_by_site_plot(home_last_two_weeks_df)
 ```
 
 ### Last month {-}
