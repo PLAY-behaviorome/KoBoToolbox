@@ -558,7 +558,7 @@ n_vars
 740625_non_mbcdi_12_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-62
+63
 </td>
 <td style="text-align:right;">
 288
@@ -569,7 +569,7 @@ n_vars
 740626_non_mbcdi_18_bilingual_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-13
+15
 </td>
 <td style="text-align:right;">
 287
@@ -591,7 +591,7 @@ n_vars
 740628_non_mbcdi_18_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-66
+70
 </td>
 <td style="text-align:right;">
 288
@@ -602,7 +602,7 @@ n_vars
 740629_non_mbcdi_24_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-52
+55
 </td>
 <td style="text-align:right;">
 287
@@ -1874,7 +1874,7 @@ We cannot proceed without further discussion with our team.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'group_databrary'</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1]  65 281  15 281 140 283</code></pre>
+<pre><code>## [1]  70 281  15 281 145 283</code></pre>
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning in names(df1) == names(df3): longer object length is not a
@@ -1975,8 +1975,8 @@ We cannot proceed without further discussion with our team.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##      [,1] [,2]
-## [1,]   65  281
-## [2,]  140  281</code></pre>
+## [1,]   70  281
+## [2,]  145  281</code></pre>
 <div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2072,7 +2072,7 @@ These are incorporated into <code>R/functions.R</code> so we do not source them 
 <span></span>
 <span><span class="va">df1m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_287_cols_1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df1m</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1]  65 272</code></pre>
+<pre><code>## [1]  70 272</code></pre>
 <div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df2m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_287_cols_2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df2m</span><span class="op">)</span></span></code></pre></div>
@@ -2080,7 +2080,7 @@ These are incorporated into <code>R/functions.R</code> so we do not source them 
 <div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df3m</span> <span class="op">&lt;-</span> <span class="fu">clean_dfs</span><span class="op">(</span><span class="va">df_merge_288_cols</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df3m</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 140 272</code></pre>
+<pre><code>## [1] 145 272</code></pre>
 <div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1m</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2m</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 272</code></pre>
@@ -2170,7 +2170,7 @@ These data are merged with that drawn from KBT.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-03-21.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-03-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

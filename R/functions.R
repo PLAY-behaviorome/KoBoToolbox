@@ -1,5 +1,22 @@
 # R/functions.R
 
+update_report_render <- function(src_dir = '.', open_rpt = TRUE,
+                                 rpt_URL = 'docs/index.html') {
+  stopifnot(is.character(src_dir))
+  stopifnot(dir.exists(src_dir))
+  stopifnot(is.logical(open_rpt))
+  stopifnot(is.character(rpt_URL))
+  stopifnot(file.exists(rpt_URL))
+  
+  library(targets)
+  tar_make()
+  
+  bookdown::render_book(src_dir)
+  
+  if (open_rpt)
+    browseURL(rpt_url)
+}
+
 ###################################################################
 #' Cleans/empties a target directory, usually one containing data
 #' @param update_data Logical value indicating whether to clean the directory.
