@@ -1,5 +1,12 @@
 # R/functions.R
 
+test_for_data_safety <- function() {
+  if (dir.exists('data')) {
+    message("Directory `data` exists.")
+    
+  }
+}
+
 ###################################################################
 #' Updates data and renders report
 update_report_render <- function(src_dir = 'src', open_rpt = TRUE,
