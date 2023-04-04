@@ -1,6 +1,15 @@
 # R/functions.R
 
-update_report_render <- function(src_dir = '.', open_rpt = TRUE,
+test_for_data_safety <- function() {
+  if (dir.exists('data')) {
+    message("Directory `data` exists.")
+    
+  }
+}
+
+###################################################################
+#' Updates data and renders report
+update_report_render <- function(src_dir = 'src', open_rpt = TRUE,
                                  rpt_URL = 'docs/index.html') {
   stopifnot(is.character(src_dir))
   stopifnot(dir.exists(src_dir))
