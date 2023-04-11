@@ -10,6 +10,18 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 
 ## File organization
 
+### Getting started
+
+1. Clone the repository to a new RStudio project.
+2. Install the `renv' package via `install.packages('renv')`.
+3. Install the package dependencies via `renv::activate()` and then `renv::restore()`.
+4. Create (blank) data directories via `source('R/functions.R')` and then `create_data_dirs()`.
+5. Add the KoBoToolbox API key to `~/.Renviron`.
+6. Restart the R environment.
+7. Download the data via `targets::make()`
+8. Generate the report via `bookdown::render_book('src')`.
+9. View the report in `docs/index.html`.
+
 ### Synched to GitHub
 
 - `R/`: Sets of R functions that support workflow.

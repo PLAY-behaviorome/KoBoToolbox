@@ -257,6 +257,8 @@ play_loco <- home_visit_df %>%
     age_group,
     child_sex,
     language_child,
+    site_id,
+    subject_number,
     locomotor_milestones.who_walk.who_walk_onset_mo,
     locomotor_milestones.k_walk.k_walk_onset_mo,
     locomotor_milestones.crawl_onset.crawl_onset_mo
@@ -275,6 +277,32 @@ play_loco <- home_visit_df %>%
   )
 ```
 
+Check for anomalous values.
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, crawl_mos) %>%
+  dplyr::filter(., crawl_mos < 4) %>%
+  knitr::kable(format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, walk_mos_kea) %>%
+  dplyr::filter(., walk_mos_kea < 6) %>%
+  knitr::kable(format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, walk_mos_who) %>%
+  dplyr::filter(., walk_mos_who < 6) %>%
+  knitr::kable(format = 'html') %>%
+  kableExtra::kable_classic()
+```
+
 ```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
 play_loco %>%
   ggplot(.) +
@@ -288,6 +316,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
 play_loco %>%
+  dplyr::filter(., walk_mos_kea > 6, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(walk_mos_kea, fill = child_sex) +
   theme(legend.position="bottom") +
@@ -296,6 +325,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"}
 play_loco %>%
+  dplyr::filter(., walk_mos_who > 6, !is.na(walk_mos_who)) %>%
   ggplot(.) +
   aes(walk_mos_who, fill = child_sex) +
   geom_histogram(bins=12) +
@@ -305,6 +335,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
 play_loco %>%
+  dplyr::filter(., walk_mos_who > 6, !is.na(walk_mos_who), walk_mos_kea > 6, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
   geom_point() +
