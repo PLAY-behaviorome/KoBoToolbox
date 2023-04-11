@@ -248,8 +248,6 @@ xtabs(formula = ~ child_sex + language_child, data = df)
 
 ### Locomotor milestones {-}
 
-#### Crawl onset {-}
-
 ```{r make-loco-df}
 play_loco <- home_visit_df %>%
   dplyr::select(
@@ -277,34 +275,49 @@ play_loco <- home_visit_df %>%
   )
 ```
 
-Check for anomalous values.
+#### Check for anomalous values {-}
+
+```{r}
+crawl_mos_min <- 4
+walk_mos_min <- 6
+```
+
+
+##### Anomalous crawling onset {-}
 
 ```{r}
 play_loco %>%
   dplyr::select(., site_id, subject_number, crawl_mos) %>%
-  dplyr::filter(., crawl_mos < 4) %>%
+  dplyr::filter(., crawl_mos < crawl_mos_min) %>%
   knitr::kable(format = 'html') %>%
   kableExtra::kable_classic()
 ```
+
+##### Anomalous walking onset (KEA criteria) {-}
 
 ```{r}
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_kea) %>%
-  dplyr::filter(., walk_mos_kea < 6) %>%
+  dplyr::filter(., walk_mos_kea < walk_mos_min) %>%
   knitr::kable(format = 'html') %>%
   kableExtra::kable_classic()
 ```
+
+##### Anomalous walking onset (WHO criteria) {-}
 
 ```{r}
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_who) %>%
-  dplyr::filter(., walk_mos_who < 6) %>%
+  dplyr::filter(., walk_mos_who < walk_mos_min) %>%
   knitr::kable(format = 'html') %>%
   kableExtra::kable_classic()
 ```
 
+#### Crawl onset {-}
+
 ```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
 play_loco %>%
+  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos)) %>%
   ggplot(.) +
   aes(crawl_mos, fill = child_sex) +
   geom_histogram(bins = 12) +
@@ -316,7 +329,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
 play_loco %>%
-  dplyr::filter(., walk_mos_kea > 6, !is.na(walk_mos_kea)) %>%
+  dplyr::filter(., walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(walk_mos_kea, fill = child_sex) +
   theme(legend.position="bottom") +
@@ -325,7 +338,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"}
 play_loco %>%
-  dplyr::filter(., walk_mos_who > 6, !is.na(walk_mos_who)) %>%
+  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who)) %>%
   ggplot(.) +
   aes(walk_mos_who, fill = child_sex) +
   geom_histogram(bins=12) +
@@ -335,7 +348,7 @@ play_loco %>%
 
 ```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
 play_loco %>%
-  dplyr::filter(., walk_mos_who > 6, !is.na(walk_mos_who), walk_mos_kea > 6, !is.na(walk_mos_kea)) %>%
+  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
   geom_point() +
@@ -360,6 +373,7 @@ ggExtra::ggMarginal(
 
 ```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"}
 play_loco %>%
+  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(crawl_mos, walk_mos_kea, color = child_sex) +
   geom_point() +
