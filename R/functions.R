@@ -23,7 +23,7 @@ update_report_render <- function(src_dir = 'src', open_rpt = TRUE,
   bookdown::render_book(src_dir)
   
   if (open_rpt)
-    browseURL(rpt_url)
+    browseURL(rpt_URL)
 }
 
 ###################################################################
