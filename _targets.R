@@ -213,7 +213,7 @@ list(
   ),
   tar_target(
     home_visit_w_databrary_df,
-    add_databrary_info_to_home_visit_df(home_visit_df),
+    add_databrary_info_to_home_visit_df(home_visit_df, vb = TRUE),
     cue = tarchetypes::tar_cue_age(
       name = home_visit_w_databrary_df,
       age = as.difftime(update_interval, units = update_interval_units)

@@ -148,9 +148,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_to_child</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_to_child
-## child_sex english english_other english_spanish english_spanish_other spanish
-##    female     165             2              24                     2       8
-##    male       157             4              36                     1       5</code></pre>
+## child_sex english english_other english_spanish
+##    female     177             2              25
+##    male       166             4              38
+##          language_to_child
+## child_sex english_spanish_other spanish
+##    female                     2       8
+##    male                       1       6</code></pre>
 </div>
 <div id="mothers-race-and-ethnicity" class="section level4 unnumbered">
 <h4>Mother’s race and ethnicity<a class="anchor" aria-label="anchor" href="#mothers-race-and-ethnicity"><i class="fas fa-link"></i></a>
@@ -177,12 +181,12 @@ Figure 3: Histogram of child age at time of recruiting call.
 <pre><code>##                  mother_ethnicity
 ## mother_race       hispanic not_hispanic refused
 ##   american_indian        3            0       0
-##   asian                  0           14       0
+##   asian                  0           15       0
 ##   black                  0           11       0
 ##   more_than_one         13            5       0
-##   other                 20            5       1
+##   other                 22            5       1
 ##   refused                0            1       2
-##   white                 40          278       0</code></pre>
+##   white                 43          297       0</code></pre>
 </div>
 </div>
 <div id="recruiting-locations" class="section level3 unnumbered">
@@ -261,8 +265,8 @@ In the future, we may decide to link an individual respondent’s information to
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Loading required package: tidygeocoder</code></pre>
-<pre><code>## Passing 389 addresses to the US Census batch geocoder</code></pre>
-<pre><code>## Query completed in: 10.4 seconds</code></pre>
+<pre><code>## Passing 414 addresses to the US Census batch geocoder</code></pre>
+<pre><code>## Query completed in: 12.1 seconds</code></pre>
 <p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
 <div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -338,8 +342,8 @@ Figure 5: Participants by age group and sex
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female     110              21
-##    male       108              32</code></pre>
+##    female     120              21
+##    male       116              37</code></pre>
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
@@ -530,9 +534,11 @@ Figure 8: Age (mos) of walking onset (WHO criteria) by sex
 <span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values
+## (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values
+## (`stat_smooth()`).</code></pre>
 <pre><code>## Warning: Removed 4 rows containing missing values (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
@@ -594,8 +600,8 @@ Figure 10: Walking onset vs. Crawling
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no yes
-##    female         1   3 126
-##    male           0   8 128</code></pre>
+##    female         1   3 136
+##    male           0   9 140</code></pre>
 <div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -629,7 +635,7 @@ Figure 11: Age at introduction of solid foods
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">preg_smoking</span> <span class="op">+</span> <span class="va">preg_drinking</span>, <span class="va">smoking_drinking</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##             preg_drinking
 ## preg_smoking  no yes
-##           no 212  53</code></pre>
+##           no 230  57</code></pre>
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
@@ -647,8 +653,10 @@ Figure 11: Age at introduction of solid foods
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## child_sleeping_position
-##         back      changed    donotknow        other         side stomach_side 
-##          252            4            1            2            2            5</code></pre>
+##         back      changed    donotknow        other         side 
+##          274            4            1            2            2 
+## stomach_side 
+##            6</code></pre>
 </div>
 </div>
 </div>
@@ -708,7 +716,7 @@ Figure 11: Age at introduction of solid foods
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-05-09.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-05-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

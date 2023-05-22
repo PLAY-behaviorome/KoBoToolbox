@@ -1091,7 +1091,8 @@ play_vols <- tibble::tibble(
     'PLAYProject_UTAUS',
     'PLAYProject_RUTGU',
     'PLAYProject_UMIAM',
-    'PLAYProject_UOREG'
+    'PLAYProject_UOREG',
+    'PLAYProject_CORNL'
   ),
   play_vol_id = c(
     954,
@@ -1116,7 +1117,8 @@ play_vols <- tibble::tibble(
     1517,
     1546,
     996,
-    1459
+    1459,
+    1576
   ),
   site_name = c(
     "Georgetown University",
@@ -1141,7 +1143,8 @@ play_vols <- tibble::tibble(
     "University of Texas at Austin",
     "Rutgers University",
     "University of Miami",
-    "University of Oregon"
+    "University of Oregon",
+    "Cornell University"
   )
 )
 
@@ -1251,7 +1254,7 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   #   return(NULL)
   # }
   
-  if (vb) message("Site: ", this_row$site_id, " | Session: ", this_row$subject_number)
+  if (vb) message("Row: ", row, " | Site: ", this_row$site_id, " | Session: ", this_row$subject_number)
   vol_sessions <-
     databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
   
@@ -1420,7 +1423,8 @@ add_databrary_url_to_session_df <- function(session_df) {
 
   dplyr::mutate(session_df, 
                 session_url = purrr::map_chr(1:dim(session_df)[1], 
-                                             make_databrary_url_from_session_list, df = session_df))
+                                             make_databrary_url_from_session_list, 
+                                             df = session_df, .progress = TRUE))
 }
 
 ###################################################################
@@ -1429,6 +1433,7 @@ make_databrary_url_from_session_list <- function(row_index = 1, df) {
   stopifnot(is.data.frame(df))
   
   this_session <- df[row_index,]
+  message("Making URL for session ", row_index)
   make_databrary_url_from_session(this_session)
 }
 
@@ -1486,7 +1491,8 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
   #play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, lookup_databrary_session)
   #play_db_sessions <- purrr::map2_df(play_kobo$site_id, play_kobo$subject_number, get_databrary_session_data)
   n_rows <- dim(play_kobo)[1]
-  play_db_sessions <- purrr::map_df(1:n_rows, get_databrary_session_data_2, play_kobo, vb = vb)
+  play_db_sessions <- purrr::map_df(1:n_rows, get_databrary_session_data_2, 
+                                    play_kobo, vb = vb)
   
   if (vb) message('Modifying Databrary session info.')
   
