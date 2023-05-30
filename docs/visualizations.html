@@ -149,12 +149,17 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span>      data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_to_child
 ## child_sex english english_other english_spanish
+<<<<<<< HEAD
 ##    female     180             2              26
 ##    male       173             4              41
+=======
+##    female     146             2              23
+##    male       144             4              31
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 ##          language_to_child
 ## child_sex english_spanish_other spanish
-##    female                     2       8
-##    male                       1       6</code></pre>
+##    female                     2       6
+##    male                       1       5</code></pre>
 </div>
 <div id="mothers-race-and-ethnicity" class="section level4 unnumbered">
 <h4>Mother’s race and ethnicity<a class="anchor" aria-label="anchor" href="#mothers-race-and-ethnicity"><i class="fas fa-link"></i></a>
@@ -181,12 +186,21 @@ Figure 3: Histogram of child age at time of recruiting call.
 <pre><code>##                  mother_ethnicity
 ## mother_race       hispanic not_hispanic refused
 ##   american_indian        3            0       0
+<<<<<<< HEAD
 ##   asian                  0           15       0
 ##   black                  0           11       0
 ##   more_than_one         14            6       0
 ##   other                 22            5       1
 ##   refused                1            1       2
 ##   white                 45          306       0</code></pre>
+=======
+##   asian                  0           13       0
+##   black                  0            9       0
+##   more_than_one         12            5       0
+##   other                 17            4       1
+##   refused                0            1       2
+##   white                 35          251       0</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 </div>
 </div>
 <div id="recruiting-locations" class="section level3 unnumbered">
@@ -264,8 +278,13 @@ In the future, we may decide to link an individual respondent’s information to
 <p>Retrieve the Census geographic information.</p>
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
+<<<<<<< HEAD
 <pre><code>## Passing 428 addresses to the US Census batch geocoder</code></pre>
 <pre><code>## Query completed in: 15.8 seconds</code></pre>
+=======
+<pre><code>## Passing 350 addresses to the US Census batch geocoder</code></pre>
+<pre><code>## Query completed in: 14.2 seconds</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 <p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
@@ -284,8 +303,13 @@ In the future, we may decide to link an individual respondent’s information to
 <p>Plot the map.</p>
 <div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_screening_sites</span><span class="op">(</span><span class="va">geos</span><span class="op">)</span></span></code></pre></div>
+<<<<<<< HEAD
 <pre><code>## ℹ &lt;https://maps.googleapis.com/maps/api/staticmap?center=USA&amp;zoom=4&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxx&gt;</code></pre>
 <pre><code>## ℹ &lt;https://maps.googleapis.com/maps/api/geocode/json?address=USA&amp;key=xxx&gt;</code></pre>
+=======
+<pre><code>## Source : https://maps.googleapis.com/maps/api/staticmap?center=USA&amp;zoom=4&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxx</code></pre>
+<pre><code>## Source : https://maps.googleapis.com/maps/api/geocode/json?address=USA&amp;key=xxx</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-screening-calls-map"></span>
 <img src="include/img/fig-screening-calls-map-1.png" alt="Families contacted by location" width="672"><p class="caption">
@@ -333,8 +357,13 @@ Figure 5: Participants by age group and sex
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
+<<<<<<< HEAD
 ##    female     123              22
 ##    male       120              38</code></pre>
+=======
+##    female      95              17
+##    male        96              27</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
@@ -391,7 +420,19 @@ subject_number
 crawl_mos
 </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
+<td style="text-align:left;">
+BOSTU
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:right;">
+-6.71
+</td>
+</tr>
+<tr>
 <td style="text-align:left;">
 CHOPH
 </td>
@@ -401,7 +442,8 @@ CHOPH
 <td style="text-align:right;">
 3.72
 </td>
-</tr></tbody>
+</tr>
+</tbody>
 </table></div>
 </div>
 <div id="anomalous-walking-onset-kea-criteria" class="section level5 unnumbered">
@@ -425,7 +467,17 @@ subject_number
 walk_mos_kea
 </th>
 </tr></thead>
-<tbody><tr></tr></tbody>
+<tbody><tr>
+<td style="text-align:left;">
+BOSTU
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:right;">
+-14.04
+</td>
+</tr></tbody>
 </table></div>
 </div>
 <div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
@@ -449,7 +501,17 @@ subject_number
 walk_mos_who
 </th>
 </tr></thead>
-<tbody><tr></tr></tbody>
+<tbody><tr>
+<td style="text-align:left;">
+BOSTU
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:right;">
+-14.04
+</td>
+</tr></tbody>
 </table></div>
 </div>
 </div>
@@ -592,8 +654,13 @@ Figure 10: Walking onset vs. Crawling
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no yes
+<<<<<<< HEAD
 ##    female         1   3 140
 ##    male           0  10 144</code></pre>
+=======
+##    female         1   3 107
+##    male           0   6 113</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 <div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -628,7 +695,11 @@ Figure 11: Age at introduction of solid foods
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">preg_smoking</span> <span class="op">+</span> <span class="va">preg_drinking</span>, <span class="va">smoking_drinking</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##             preg_drinking
 ## preg_smoking  no yes
+<<<<<<< HEAD
 ##           no 239  57</code></pre>
+=======
+##           no 186  43</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
@@ -646,10 +717,17 @@ Figure 11: Age at introduction of solid foods
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## child_sleeping_position
+<<<<<<< HEAD
 ##         back      changed    donotknow        other 
 ##          283            4            1            2 
 ##         side stomach_side 
 ##            2            6</code></pre>
+=======
+##         back      changed    donotknow        other         side 
+##          219            3            1            1            2 
+## stomach_side 
+##            4</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 </div>
 </div>
 </div>
@@ -661,7 +739,11 @@ Figure 11: Age at introduction of solid foods
 <code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">post_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">post_visit_df</span><span class="op">)</span></span></code></pre></div>
+<<<<<<< HEAD
 <pre><code>## [1] 338 180</code></pre>
+=======
+<pre><code>## [1] 247 180</code></pre>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
 <div class="rmdnote">
 <p>Cleaning this data is set aside for future work.</p>
 </div>
@@ -709,7 +791,11 @@ Figure 11: Age at introduction of solid foods
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
+<<<<<<< HEAD
     <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-05-30.</p>
+=======
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-05-24.</p>
+>>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
   </div>
 
   <div class="col-12 col-md-6 mt-3">
