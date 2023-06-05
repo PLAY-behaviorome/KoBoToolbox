@@ -1,8 +1,8 @@
 #' Generate a barplot of a single question from the
-#' Rothbart Early Childhood Questionnaire (EBQ)
+#' Rothbart Early Childhood Questionnaire (ECBQ)
 #' 
-#' @param df A dataframe with aggregate (across participants) EBQ data
-ebq_plot <- function(df) {
+#' @param df A dataframe with aggregate (across participants) ecbq data
+ecbq_plot <- function(df) {
   
   stopifnot(is.data.frame(df))
   require(ggplot2)

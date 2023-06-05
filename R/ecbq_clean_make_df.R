@@ -1,10 +1,10 @@
-#' Select Rothbart Early Childhood Behavior Questionnaire (EBQ) data, clean it,
+#' Select Rothbart Early Childhood Behavior Questionnaire (ECBQ) data, clean it,
 #' and export a data frame.
 #'
 #' @param in_fn The input CSV file. Default is '740625_non_mbcdi_12_english_deidentified.csv'.
 #' @param in_dir Directory where the input CSV can be found. Default is 'data/csv/home_visit/non_mbcdi/deid'.
 #' @param vb Do or do not print verbose output.
-ebq_clean_make_df <-
+ecbq_clean_make_df <-
   function(in_fn = "740625_non_mbcdi_12_english_deidentified.csv",
            in_dir = "data/csv/home_visit/non_mbcdi/deid",
            vb = TRUE) {
@@ -66,7 +66,7 @@ ebq_clean_make_df <-
       )
     
     # Clean column values
-    clean_ebq_values <- function(this_col) {
+    clean_ecbq_values <- function(this_col) {
       stringr::str_replace_all(this_col, "veryrarely", "very_rarely") |>
         stringr::str_replace_all("lessthanhalf", "less_than_half") |>
         stringr::str_replace_all("abouthalf", "about_half") |>
@@ -77,15 +77,15 @@ ebq_clean_make_df <-
     }
     
     # Create merged data frame
-    cleaned_ebq_vals <- df |>
+    cleaned_ecbq_vals <- df |>
       dplyr::select(contains('rothbart')) |>
-      purrr::map_df(clean_ebq_values)
+      purrr::map_df(clean_ecbq_values)
     
     out_df <- tibble::tibble(
       participant_id = df$participant_id,
       child_sex = df$child_sex,
       age_group = df$age_group,
-      cleaned_ebq_vals
+      cleaned_ecbq_vals
     )
     
     out_df

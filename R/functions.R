@@ -1069,7 +1069,6 @@ check_databrary_login <-
   }
 
 ###################################################################
-<<<<<<< HEAD
 play_vols <- tibble::tibble(
   play_site_id = c(
     'PLAYProject_GEORG',
@@ -1153,7 +1152,11 @@ play_vols <- tibble::tibble(
     "Michigan State University"
   )
 )
-=======
+
+save_play_site_vols_csv <- function() {
+  
+}
+
 load_play_site_vols_csv <- function(path2root = "..", fn =  "data/csv/play_site_vols.csv") {
   stopifnot(is.character(fn))
   full_fn <- file.path(path2root, fn)
@@ -1161,8 +1164,7 @@ load_play_site_vols_csv <- function(path2root = "..", fn =  "data/csv/play_site_
   readr::read_csv(full_fn, show_col_types = FALSE)
 }
 
-play_vols <- load_play_site_vols_csv()
->>>>>>> 78cfa3bb36860222482d85c86852e961b2596bac
+#play_vols <- load_play_site_vols_csv()
 
 ###################################################################
 lookup_databrary_session <-
