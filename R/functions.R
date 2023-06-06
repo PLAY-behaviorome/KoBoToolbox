@@ -147,8 +147,6 @@ retrieve_save_xls_export <-
         stop('No KoBoToolbox API key stored in ~/.Renviron.')
       }
       
-      require(httr)
-      
       config_params <-
         httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
       r <- httr::GET(form_URL, config = config_params)
