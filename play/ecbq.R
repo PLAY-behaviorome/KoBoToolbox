@@ -1,12 +1,20 @@
+#-------------------------------------------------------------------------------
+# ecbq.R
+#
+# Functions that are part of the play/ecbq module
+#
+# To load:    `box::use(play/ecbq)`.
+#
+# To unload:  `box::unload(ecbq)`
 
 ################################################################################
 #' Create aggregate (across PLAY forms) Early Childhood Behavior Questionnaire
-#' (ecbq) data and export a data frame. At the moment, this only works for ECBQ
+#' (ECBQ) data and export a data frame. At the moment, this only works for ECBQ
 #' data that were administered in English.
 #'
-#' @param in_dir Directory where the input CSV can be found. Default is 
+#' @param in_dir Directory where the input CSV can be found. Default is
 #' 'data/csv/home_visit/non_mbcdi/deid'.
-#' @param out_dir Directory where the output CSV should be written. 
+#' @param out_dir Directory where the output CSV should be written.
 #' Default is `in_dir`.
 #' @param vb Do or do not print verbose output.
 #' @returns A data frame with the ECBQ across participants and separate
@@ -22,7 +30,8 @@ clean_make_agg_df <-
     stopifnot(dir.exists(out_dir))
     stopifnot(is.logical(vb))
     
-    box::use(tidyverse)
+    box::use(purrr)
+    box::use(dplyr)
     
     fl <- list.files(in_dir, "english")
     
@@ -39,9 +48,9 @@ clean_make_agg_df <-
 #' Select Rothbart Early Childhood Behavior Questionnaire (ECBQ) data, clean it,
 #' and export a data frame.
 #'
-#' @param in_fn The input CSV file. Default is 
+#' @param in_fn The input CSV file. Default is
 #' '740625_non_mbcdi_12_english_deidentified.csv'.
-#' @param in_dir Directory where the input CSV can be found. 
+#' @param in_dir Directory where the input CSV can be found.
 #' Default is 'data/csv/home_visit/non_mbcdi/deid'.
 #' @param vb Do or do not print verbose output.
 #' @returns A data frame from a single KoBoToolbox form.
@@ -56,7 +65,9 @@ clean_make_df <-
     fn <- file.path(in_dir, in_fn)
     stopifnot(file.exists(fn))
     
-    box::use(tidyverse)
+    box::use(readr)
+    box::use(xfun)
+    box::use(dplyr)
     
     if (vb)
       message("Processing file: '", in_fn, "'.")
@@ -123,11 +134,11 @@ clean_make_df <-
 #' Select Rothbart Early Childhood Behavior Questionnaire (ECBQ) data, clean it,
 #' and export a CSV.
 #'
-#' @param in_fn The input CSV file. Default is 
+#' @param in_fn The input CSV file. Default is
 #' '740625_non_mbcdi_12_english_deidentified.csv'.
-#' @param in_dir Directory where the input CSV can be found. 
+#' @param in_dir Directory where the input CSV can be found.
 #' Default is 'data/csv/home_visit/non_mbcdi/deid'.
-#' @param out_dir Directory where the output CSV should be written. 
+#' @param out_dir Directory where the output CSV should be written.
 #' Default is `in_dir`.
 #' @param vb Do or do not print verbose output.
 #' @returns NULL
@@ -143,7 +154,7 @@ clean_make_csv <-
     fn <- file.path(in_dir, in_fn)
     stopifnot(file.exists(fn))
     
-    box::use(tidyverse)
+    box::use(readr)
     
     if (vb)
       message("Making data frame.")
@@ -168,6 +179,9 @@ make_longer <- function(ecbq_df) {
   stopifnot(!is.null(ecbq_df))
   stopifnot(is.data.frame(ecbq_df))
   
+  box::use(tidyr)
+  box::use(dplyr)
+  
   ecbq_df |>
     tidyr::pivot_longer(
       cols = contains('rothbart'),
@@ -191,7 +205,7 @@ make_resps_ordinal <-
     stopifnot(is.data.frame(df))
     stopifnot("question" %in% names(df))
     
-    box::use(tidyverse)
+    box::use(dplyr)
     
     df |>
       dplyr::mutate(rating = factor(
@@ -218,7 +232,7 @@ make_resps_ordinal <-
 plot_all <- function(df) {
   stopifnot(is.data.frame(df))
   
-  box::use(tidyverse)
+  box::use(ggplot2)
   
   if (!("question" %in% names(df))) {
     # Make longer so we can plot multiple questions
@@ -250,7 +264,8 @@ plot_all <- function(df) {
 plot <- function(df) {
   stopifnot(is.data.frame(df))
   
-  box::use(tidyverse)
+  box::use(dplyr)
+  box::use(ggplot2)
   
   df <- df |>
     dplyr::filter(!is.na(rothbart_unfamiliarperson)) |>
@@ -280,9 +295,9 @@ plot <- function(df) {
 #' Make an ECBQ data frame 'longer' for comparative plotting across questions
 #'
 #' @param df A 'long' ECBQ data frame, e.g., from ecbq_clean_make_agg_df()
-#' @param q_pattern A string to replace in the values for the 'question' field. 
+#' @param q_pattern A string to replace in the values for the 'question' field.
 #' Default is 'rothbart_'.
-#' @param q_replace String to replace for values in `q_pattern`. Default is "", 
+#' @param q_replace String to replace for values in `q_pattern`. Default is "",
 #' but "ecbq_" is a logical alternative.
 shorten_q_names <-
   function(df,
@@ -292,9 +307,8 @@ shorten_q_names <-
     stopifnot(is.data.frame(df))
     stopifnot("question" %in% names(df))
     
-    box::use(tidyverse)
+    box::use(dplyr)
     
     df |>
       dplyr::mutate(question = stringr::str_replace_all(question, q_pattern, q_replace))
   }
-

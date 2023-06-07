@@ -22,6 +22,19 @@ We need to i) download, ii) parse, iii) clean, and iv) export these files into f
 8. Generate the report via `bookdown::render_book('src')`.
 9. View the report in `docs/index.html`.
 
+### Using `box`
+
+As of 2023-06-07, I am moving various functions to take advantage of the `box` 
+package. This encapsulates functions into modules that is useful for the project.
+
+The modules are stored in `play/` as distinct R files that contain groups of
+related functions. For example, `play/ecbq.R` is used to access the functions
+associated with the Early Childhood Behavior Questionnaire (ECBQ) data.
+
+To access these modules, load them using, for example `box::use(play/ecbq)`.
+
+To unload a module, use `box::unload(ecbq)`.
+
 ### Synched to GitHub
 
 - `R/`: Sets of R functions that support workflow.
