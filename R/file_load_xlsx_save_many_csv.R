@@ -16,6 +16,6 @@ file_load_xlsx_save_many_csv <- function(in_dir, out_dir, filter_str) {
     warning("No files found in '", in_dir, "' with '", filter_str, "' in file name.")
     NULL
   } else {
-    purrr::map_chr(fns, load_xlsx_save_csv, out_dir)
+    purrr::map_chr(fns, file_load_xlsx_save_csv, out_dir)
   }
 }
