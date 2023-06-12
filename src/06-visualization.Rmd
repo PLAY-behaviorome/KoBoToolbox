@@ -532,6 +532,8 @@ feeding <- home_visit_df %>%
     .,
     age_group,
     child_sex,
+    site_id,
+    subject_number,
     language_child,
     health.feeding_nutrition.breastfeed,
     health.feeding_nutrition.solidfood_age
@@ -551,6 +553,16 @@ feeding %>%
   aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
   geom_histogram(bins = 15) +
   theme(legend.title = element_blank())
+```
+
+Clearly, there are some impossible values here.
+
+```{r anomalous-feeding}
+feeding |>
+  dplyr::select(site_id, subject_number, solid_food_mos) %>%
+  dplyr::filter(., solid_food_mos > 12) %>%
+  knitr::kable(format = 'html') %>%
+  kableExtra::kable_classic()
 ```
 
 #### Smoking/drinking {-}
