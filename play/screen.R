@@ -3,15 +3,15 @@
 #
 # A set of functions used to process PLAY project screening/demographic survey
 # data.
-# 
+#
 # These functions make use of the `box` package.
 #
-# To invoke the `screen` module functions, execute `box::use(./play/screen)` 
+# To invoke the `screen` module functions, execute `box::use(./play/screen)`
 # in the root directory.
 
 #-------------------------------------------------------------------------------
 #' Make data frame from screening/demographic survey.
-#' 
+#'
 #' @param kb_screen Data frame with file information about the screening/demog
 #' survey data. This comes from the larger data frame of all KBT forms, but
 #' filtered to include 'Demographic' in the file name.
@@ -29,8 +29,8 @@ make_df <-
     stopifnot(is.character(csv_dir))
     stopifnot(dir.exists(csv_dir))
     
-    box::use(./kobo[list_data_filtered, retrieve_save_many_xlsx])
-    box::use(./files[load_xlsx_save_many_csv])
+    box::use(. / kobo[list_data_filtered, retrieve_save_many_xlsx])
+    box::use(. / files[load_xlsx_save_many_csv])
     
     kb_screen <- list_data_filtered("[Dd]emographic")
     
@@ -56,11 +56,14 @@ clean_merge <- function(fns) {
   stopifnot(is.character(fns))
   
   box::use(dplyr[arrange])
+  box::use(stringr[str_replace])
   
   rbind(clean_1(fns[1]),
         clean_2(fns[2]),
         clean_3(fns[3])) |>
-    dplyr::arrange(submit_date)
+    dplyr::arrange(submit_date) |>
+    dplyr::mutate(household_members = stringr::str_replace_all(household_members,
+                                                               "__", "_"))
 }
 
 #-------------------------------------------------------------------------------
@@ -88,7 +91,7 @@ clean_lang_data <-
     english_spoken <- str_detect(lang_str, "[Ee]nglish")
     spanish_spoken <- str_detect(lang_str, "[Ss]panish")
     other_spoken <- str_detect(lang_str, "[Oo]nglish")
-
+    
     df <-
       tibble::tibble(lang_spoken = lang_str,
                      english_spoken,
@@ -100,7 +103,7 @@ clean_lang_data <-
 
 #-------------------------------------------------------------------------------
 #' Make data frame of home language environment data
-#' 
+#'
 #' @param df
 make_language_df <- function(df) {
   stopifnot(is.data.frame(df))
@@ -109,15 +112,18 @@ make_language_df <- function(df) {
   
   if ("play_phone_questionnaire/group_siteinfo/site_id" %in% names(df)) {
     site_id <- df$`play_phone_questionnaire/group_siteinfo/site_id`
-    sub_num <- df$`play_phone_questionnaire/group_siteinfo/subject_number`
+    sub_num <-
+      df$`play_phone_questionnaire/group_siteinfo/subject_number`
     child_age_mos <- df$`play_phone_questionnaire/check_childage`
     child_sex <- df$`play_phone_questionnaire/child_sex`
     mom_lang <- NA
     home_lang <- df$`play_phone_questionnaire/language_spoken_house`
-    child_lang <- df$`play_phone_questionnaire/language_spoken_child`
+    child_lang <-
+      df$`play_phone_questionnaire/language_spoken_child`
   } else {
     site_id <- df$`play_demo_questionnaire/group_siteinfo/site_id`
-    sub_num <- df$`play_demo_questionnaire/group_siteinfo/subject_number`
+    sub_num <-
+      df$`play_demo_questionnaire/group_siteinfo/subject_number`
     child_age_mos <- df$`play_demo_questionnaire/check_childage`
     child_sex <- df$`play_demo_questionnaire/child_sex`
     mom_lang <- df$`play_demo_questionnaire/language_spoken_mom`
@@ -129,22 +135,24 @@ make_language_df <- function(df) {
   lang_home <- clean_lang_data(home_lang, "house")
   lang_child <- clean_lang_data(child_lang, "child")
   
-  out_df <- tibble::tibble(site_id = site_id, 
-         sub_num = sub_num,
-         child_age_mos = child_age_mos,
-         child_sex = child_sex)
+  out_df <- tibble::tibble(
+    site_id = site_id,
+    sub_num = sub_num,
+    child_age_mos = child_age_mos,
+    child_sex = child_sex
+  )
   
   cbind(out_df, lang_mom, lang_home, lang_child)
 }
 
 #-------------------------------------------------------------------------------
 #' Clean subset of screening/demo variables
-#' 
+#'
 #' clean_3() cleans the "new" demographic screening forms.
 #'
 #' @param csv_fn A filename for the CSV file associated with the original
 #' screening form
-#' @returns A data frome with cleaned field names suitable for merging with 
+#' @returns A data frome with cleaned field names suitable for merging with
 #' other screening/demographic files.
 clean_3 <- function(csv_fn) {
   stopifnot(is.character(csv_fn))
@@ -192,18 +200,22 @@ clean_3 <- function(csv_fn) {
       # childcare
       childcare_types = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_hours`,
-      childcare_age = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_age`
+      childcare_age = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_age`,
+      # bio dad
+      father_bio_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      # family structure
+      household_members = `play_demo_questionnaire/group_family_structure/household_members`
     )
 }
 
 #-------------------------------------------------------------------------------
 #' Clean subset of screening/demo variables
-#' 
-#' clean_3() cleans the "new" demographic screening forms.
+#'
+#' clean_2() cleans the "new" demographic screening forms.
 #'
 #' @param csv_fn A filename for the CSV file associated with the original
 #' screening form
-#' @returns A data frome with cleaned field names suitable for merging with 
+#' @returns A data frome with cleaned field names suitable for merging with
 #' other screening/demographic files.
 clean_2 <- function(csv_fn) {
   stopifnot(is.character(csv_fn))
@@ -251,14 +263,18 @@ clean_2 <- function(csv_fn) {
       # childcare
       childcare_types = `play_demo_questionnaire/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_demo_questionnaire/group_child_care_arrangements/childcare_hours`,
-      childcare_age = `play_demo_questionnaire/group_child_care_arrangements/childcare_age`
+      childcare_age = `play_demo_questionnaire/group_child_care_arrangements/childcare_age`,
+      # bio dad
+      father_bio_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      # family structure
+      household_members = `play_demo_questionnaire/group_family_structure/household_members`
     )
 }
 
 
 #-------------------------------------------------------------------------------
 #' Clean subset of screening/demo variables.
-#' 
+#'
 #' clean_1() cleans the "old" demographic screening forms.
 #'
 #' @param csv_fn A filename for the CSV file associated with the original
@@ -304,7 +320,7 @@ clean_1 <- function(csv_fn) {
       # mother info
       mother_childbirth_age = `play_phone_questionnaire/parent_information/mother_information/mother_childbirth_age`,
       mother_biological = `play_phone_questionnaire/parent_information/mother_information/mother_biological`,
-      mother_relation = `play_phone_questionnaire/parent_information/mother_information/specify_adopted`, 
+      mother_relation = `play_phone_questionnaire/parent_information/mother_information/specify_adopted`,
       mother_race = `play_phone_questionnaire/parent_information/mother_information/mother_race`,
       mother_ethnicity = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
       mother_education = `play_phone_questionnaire/parent_information/mother_information/mother_ethnicity`,
@@ -313,7 +329,11 @@ clean_1 <- function(csv_fn) {
       # childcare
       childcare_types = `play_phone_questionnaire/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_phone_questionnaire/group_child_care_arrangements/childcare_hours`,
-      childcare_age = `play_phone_questionnaire/group_child_care_arrangements/childcare_age`
+      childcare_age = `play_phone_questionnaire/group_child_care_arrangements/childcare_age`,
+      # bio dad
+      father_bio_childbirth_age = `play_phone_questionnaire/parent_information/father_information/father_childbirth_age`,
+      # family structure
+      household_members = `play_phone_questionnaire/group_family_structure/household_members`
     ) |>
     dplyr::mutate(
       site_id = dplyr::recode(
