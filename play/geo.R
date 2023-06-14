@@ -3,7 +3,7 @@
 #
 # A set of functions used to process PLAY project data and gather geographic-
 # related information about the participants and families.
-# 
+#
 # These functions make use of the `box` package.
 #
 # To invoke the `geo` module, execute `box::use(./play/geo)` in the root
@@ -11,8 +11,8 @@
 
 #-------------------------------------------------------------------------------
 #' Make a data frame for the address extraction workflow
-#' 
-#' 
+#'
+#'
 make_addr_df <- function(csv_dir = "data/csv/screening") {
   stopifnot(is.character(csv_dir))
   stopifnot(dir.exists(csv_dir))
@@ -20,7 +20,8 @@ make_addr_df <- function(csv_dir = "data/csv/screening") {
   box::use(purrr[map, list_rbind])
   box::use(readr[read_csv])
   
-  fns <- list.files(csv_dir, full.names = TRUE)
+  fns <-
+    list.files(csv_dir, pattern = "Demographic_Questionnaire", full.names = TRUE)
   
   df1 <- readr::read_csv(fns[1], show_col_types = FALSE)
   df2 <- readr::read_csv(fns[2], show_col_types = FALSE)
@@ -51,7 +52,7 @@ make_address <- function(i, df, survey_type = 'new') {
   box::use(dplyr[select])
   box::use(tibble[tibble])
   
-  this_row <- df[i,]
+  this_row <- df[i, ]
   if (survey_type == 'new') {
     out_df <- this_row |>
       dplyr::select(
@@ -65,7 +66,7 @@ make_address <- function(i, df, survey_type = 'new') {
   } else {
     out_df <- this_row |>
       dplyr::select(
-        site_id = `play_phone_questionnaire/group_siteinfo/site_id`,                                           
+        site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
         sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
         addr1 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_1`,
         addr2 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_2`,
@@ -77,10 +78,12 @@ make_address <- function(i, df, survey_type = 'new') {
   if ((!is.na(out_df$addr1) &&
        (!is.na(out_df$city) && (!is.na(out_df$state))))) {
     addr <- with(out_df, paste0(addr1, ", ", city, ", ", state))
-    tibble(singlelineaddr = addr, 
-           site_id = out_df$site_id, 
-           sub_id = out_df$sub_num,
-           state = out_df$state)
+    tibble(
+      singlelineaddr = addr,
+      site_id = out_df$site_id,
+      sub_num = out_df$sub_num,
+      state = out_df$state
+    )
   } else {
     NULL
   }
@@ -97,7 +100,7 @@ make_addresses <- function(df, survey_type) {
   stopifnot(is.character(survey_type))
   
   box::use(purrr[map_df])
-
+  
   purrr::map_df(1:dim(df)[1], make_address, df, survey_type)
 }
 
@@ -106,21 +109,34 @@ make_addresses <- function(df, survey_type) {
 #'
 #'@param addrs A data frame with a single field with each address in a single
 #'string.
+#'@param show_qa_data Print feedback to console about success of address lookup.
+#'Default is TRUE.
+#'@param add_sub_site Add participant site_id and sub_num for merging with other
+#'survey data. Default is TRUE.
+#'@param return_fields Which Census geo codes to return. Possible values are
+#'lat, long, id, match_indicator, match_type, matched_address, tiger_line_id,
+#'tiger_side, state_fips, county_fips, census_tract, census_block, state.
+#'For privacy reasons, we typically only return state_fips and county_fips
 #'@returns A data frame of geographic info from the U.S. Census.
-get_multiple_census_geos <- function(addrs, show_qa_data = TRUE, 
-                                     add_sub_site = FALSE) {
+get_multiple_census_geos <- function(addrs,
+                                     show_qa_data = TRUE,
+                                     add_sub_site = TRUE,
+                                     return_fields = c("site_id", "sub_num", 
+                                                       "state_fips", 
+                                                       "county_fips")) {
   stopifnot(is.data.frame(addrs))
   
   box::use(tidygeocoder[geocode])
+  box::use(dplyr[select])
   
-  census_data <- addrs |> 
+  census_data <- addrs |>
     dplyr::select(singlelineaddr) |>
     tidygeocoder::geocode(
-    address = singlelineaddr,
-    method = "census",
-    full_results = TRUE,
-    api_options = list(census_return_type = 'geographies')
-  )
+      address = singlelineaddr,
+      method = "census",
+      full_results = TRUE,
+      api_options = list(census_return_type = 'geographies')
+    )
   
   if (show_qa_data) {
     n_addr <- dim(census_data)[1]
@@ -134,22 +150,21 @@ get_multiple_census_geos <- function(addrs, show_qa_data = TRUE,
   # Optionally add site and sub ids for linking to other PLAY data
   if (add_sub_site) {
     census_data$site_id = addrs$site_id
-    census_data$sub_id = addrs$sub_id
-    
+    census_data$sub_num = addrs$sub_num
   }
   
-  census_data
+  census_data |>
+    dplyr::select(return_fields)
 }
 
 #-------------------------------------------------------------------------------
 plot_screening_sites <- function(geo_df) {
-  
   box::use(ggmap[get_map])
   box::use(dplyr[filter])
   box::use(ggplot2[...])
-
+  
   geo_df <- geo_df |>
-    dplyr::filter(!is.na(lat), !is.na(long))
+    dplyr::filter(!is.na(lat),!is.na(long))
   
   ggmap::get_map("USA", zoom = 4) |>
     ggmap::ggmap() +
@@ -157,13 +172,15 @@ plot_screening_sites <- function(geo_df) {
 }
 
 #-------------------------------------------------------------------------------
-get_county_in_state <- function(state_fips = "42", county_fips = "027") {
-  
-  box::use(tidycensus)
-  box::use(dplyr[filter])
-  
-  tidycensus$fips_codes |>
-    dplyr::filter(state_code == state_fips,
-                  county_code == county_fips) |>
-    dplyr::select(county)
-}
+get_county_in_state <-
+  function(state_fips = "42",
+           county_fips = "027") {
+    box::use(tidycensus)
+    box::use(dplyr[filter])
+    
+    tidycensus$fips_codes |>
+      dplyr::filter(state_code == state_fips,
+                    county_code == county_fips) |>
+      dplyr::select(county)
+  }
+

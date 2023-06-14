@@ -66,6 +66,19 @@ clean_merge <- function(fns) {
                                                                "__", "_"))
 }
 
+
+
+#-------------------------------------------------------------------------------
+export_csv <- function(df, csv_dir = "data/csv/screening/agg", csv_fn="PLAY-demo-screen-clean.csv") {
+  stopifnot(is.data.frame(df))
+  stopifnot(is.character(csv_dir))
+  stopifnot(dir.exists(csv_dir))
+  stopifnot(is.character(csv_fn))
+  
+  box::use(readr[write_csv])
+  readr::write_csv(df, file.path(csv_dir, csv_fn))
+}
+
 #-------------------------------------------------------------------------------
 #' Takes an array of strings with language input responses and returns
 #' a data fram about what language(s) are in the array.
@@ -154,23 +167,37 @@ make_language_df <- function(df) {
 #' screening form
 #' @returns A data frome with cleaned field names suitable for merging with
 #' other screening/demographic files.
-clean_3 <- function(csv_fn) {
+clean_3 <- function(csv_fn, add_geo = TRUE) {
   stopifnot(is.character(csv_fn))
   stopifnot("`csv_fn` not found" = file.exists(csv_fn))
   
   box::use(readr[read_csv])
-  box::use(dplyr[select])
+  box::use(dplyr[select, mutate, left_join, join_by])
+  box::use(./geo)
   
   df_3 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   if (!is.data.frame(df_3)) {
     message("Failure to read file '", csv_fn, "'")
     return(NULL)
   }
+  # df_3 <- df_3 |>
+  #   dplyr::mutate(site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
+  #                 sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`)
+  
+  # if (add_geo) {
+  #   ad_3 <- geo$make_addresses(df_3, 'new') 
+  #   df_3 <- dplyr::left_join(df_3, ad_3, dplyr::join_by(`play_demo_questionnaire/group_siteinfo/site_id` == site_id, 
+  #                                                       `play_demo_questionnaire/group_siteinfo/subject_number` == sub_num), 
+  #                            relationship = "many-to-many")
+  # }
+
   df_3 |>
     dplyr::select(
       submit_date = c_today,
       site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
       sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+      # state_fips,
+      # county_fips,
       child_age_mos = `play_demo_questionnaire/check_childage`,
       child_sex = `play_demo_questionnaire/child_sex`,
       #language_mom <- `play_demo_questionnaire/language_spoken_mom`,
@@ -180,9 +207,13 @@ clean_3 <- function(csv_fn) {
       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`, 
       child_hearing_disabilities = `play_demo_questionnaire/child_information/hearing_disabilities`,
+      child_hearing_disabilities_specify = `play_demo_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_demo_questionnaire/child_information/vision_disabilities`,
+      child_vision_disabilities_specify = `play_demo_questionnaire/child_information/specify_vision`,
       major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+      major_illnesses_injuries_specify = `play_demo_questionnaire/child_information/specify_illnesses_injuries`,
       #child_race = `play_demo_questionnaire/child_information/child_race`,
       #child_ethnicity = `play_demo_questionnaire/child_information/child_ethnicity`,
       child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
@@ -201,8 +232,11 @@ clean_3 <- function(csv_fn) {
       childcare_types = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_hours`,
       childcare_age = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_age`,
+      childcare_language = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_language`,
       # bio dad
-      father_bio_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      biodad_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,                                                 
+      biodad_ethnicity = `play_demo_questionnaire/group_biodad/biodad_ethnicity`,
       # family structure
       household_members = `play_demo_questionnaire/group_family_structure/household_members`
     )
@@ -211,7 +245,8 @@ clean_3 <- function(csv_fn) {
 #-------------------------------------------------------------------------------
 #' Clean subset of screening/demo variables
 #'
-#' clean_2() cleans the "new" demographic screening forms.
+#' clean_2() cleans the "new" demographic screening form for Spanish-speaking
+#' parents.
 #'
 #' @param csv_fn A filename for the CSV file associated with the original
 #' screening form
@@ -243,9 +278,13 @@ clean_2 <- function(csv_fn) {
       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
+      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`, 
       child_hearing_disabilities = `play_demo_questionnaire/child_information/hearing_disabilities`,
+      child_hearing_disabilities_specify = `play_demo_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_demo_questionnaire/child_information/vision_disabilities`,
+      child_vision_disabilities_specify = `play_demo_questionnaire/child_information/specify_vision`,
       major_illnesses_injuries = `play_demo_questionnaire/child_information/major_illnesses_injuries`,
+      major_illnesses_injuries_specify = `play_demo_questionnaire/child_information/specify_illnesses_injuries`,
       #child_race = `play_demo_questionnaire/child_information/child_race`,
       #child_ethnicity = `play_demo_questionnaire/child_information/child_ethnicity`,
       child_sleep_time = `play_demo_questionnaire/child_information/child_sleep_time`,
@@ -264,8 +303,11 @@ clean_2 <- function(csv_fn) {
       childcare_types = `play_demo_questionnaire/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_demo_questionnaire/group_child_care_arrangements/childcare_hours`,
       childcare_age = `play_demo_questionnaire/group_child_care_arrangements/childcare_age`,
+      childcare_language = `play_demo_questionnaire/group_child_care_arrangements/childcare_language`,
       # bio dad
-      father_bio_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      biodad_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
+      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,                                                 
+      biodad_ethnicity = `play_demo_questionnaire/group_biodad/biodad_ethnicity`,
       # family structure
       household_members = `play_demo_questionnaire/group_family_structure/household_members`
     )
@@ -308,9 +350,13 @@ clean_1 <- function(csv_fn) {
       child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
+      child_birth_complications_specify = `play_phone_questionnaire/child_information/specify_birth_complications`, 
       child_hearing_disabilities = `play_phone_questionnaire/child_information/hearing_disabilities`,
+      child_hearing_disabilities_specify = `play_phone_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_phone_questionnaire/child_information/vision_disabilities`,
+      child_vision_disabilities_specify = `play_phone_questionnaire/child_information/specify_vision`,
       major_illnesses_injuries = `play_phone_questionnaire/child_information/major_illnesses_injuries`,
+      major_illnesses_injuries_specify = `play_phone_questionnaire/child_information/specify_illnesses_injuries`,
       # child_race = NA,
       # child_ethnicity = NA,
       child_sleep_time = `play_phone_questionnaire/child_information/child_sleep_time`,
@@ -330,8 +376,11 @@ clean_1 <- function(csv_fn) {
       childcare_types = `play_phone_questionnaire/group_child_care_arrangements/childcare_types`,
       childcare_hrs = `play_phone_questionnaire/group_child_care_arrangements/childcare_hours`,
       childcare_age = `play_phone_questionnaire/group_child_care_arrangements/childcare_age`,
+      childcare_language = `play_phone_questionnaire/group_child_care_arrangements/childcare_language`,
       # bio dad
-      father_bio_childbirth_age = `play_phone_questionnaire/parent_information/father_information/father_childbirth_age`,
+      biodad_childbirth_age = `play_phone_questionnaire/parent_information/father_information/father_childbirth_age`,
+      biodad_race = `play_phone_questionnaire/parent_information/father_information/father_race`,                                                 
+      biodad_ethnicity = `play_phone_questionnaire/parent_information/father_information/father_ethnicity`,
       # family structure
       household_members = `play_phone_questionnaire/group_family_structure/household_members`
     ) |>
