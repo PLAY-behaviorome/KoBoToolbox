@@ -69,15 +69,18 @@ clean_merge <- function(fns) {
 
 
 #-------------------------------------------------------------------------------
-export_csv <- function(df, csv_dir = "data/csv/screening/agg", csv_fn="PLAY-demo-screen-clean.csv") {
-  stopifnot(is.data.frame(df))
-  stopifnot(is.character(csv_dir))
-  stopifnot(dir.exists(csv_dir))
-  stopifnot(is.character(csv_fn))
-  
-  box::use(readr[write_csv])
-  readr::write_csv(df, file.path(csv_dir, csv_fn))
-}
+export_csv <-
+  function(df,
+           csv_dir = "data/csv/screening/agg",
+           csv_fn = "PLAY-demo-screen-clean.csv") {
+    stopifnot(is.data.frame(df))
+    stopifnot(is.character(csv_dir))
+    stopifnot(dir.exists(csv_dir))
+    stopifnot(is.character(csv_fn))
+    
+    box::use(readr[write_csv])
+    readr::write_csv(df, file.path(csv_dir, csv_fn))
+  }
 
 #-------------------------------------------------------------------------------
 #' Takes an array of strings with language input responses and returns
@@ -159,6 +162,113 @@ make_language_df <- function(df) {
 }
 
 #-------------------------------------------------------------------------------
+remove_identifiers <- function(df, vb = TRUE) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(stringr[str_detect])
+  box::use(dplyr[select])
+  
+  var_names <- basename(names(df))
+  
+  contains_name <- stringr::str_detect(var_names, 'name')
+  contains_address <- stringr::str_detect(var_names, 'address')
+  contains_phone <- stringr::str_detect(var_names, 'phone')
+  contains_email <- stringr::str_detect(var_names, 'email')
+  contains_birthdate <- stringr::str_detect(var_names, 'birthdate')
+  contains_first <- stringr::str_detect(var_names, 'first[12]?')
+  contains_last <- stringr::str_detect(var_names, 'last[12]?')
+  contains_city <- stringr::str_detect(var_names, 'city')
+  contains_year <- stringr::str_detect(var_names, 'year[12]?')
+  contains_month <- stringr::str_detect(var_names, 'month[12]?')
+  contains_day <- stringr::str_detect(var_names, '/day[12]?$')
+  
+  identifiable_data <- contains_name | contains_address |
+    contains_phone |
+    contains_email | contains_birthdate | contains_first |
+    contains_last |
+    contains_city | contains_year | contains_month | contains_day
+  
+  if (vb) {
+    message("Removed n = ",
+            sum(identifiable_data),
+            " of ",
+            length(var_names),
+            " columns.")
+  }
+  
+  identifiable_cols <- (1:length(names(df)))[identifiable_data]
+  
+  df |>
+    dplyr::select(-dplyr::all_of(identifiable_cols))
+  
+}
+
+#-------------------------------------------------------------------------------
+#' Removes variable header/group info from screening data
+#'
+#'@param df A data frame of demographic/screening data.
+#'@returns A data frame with renamed column names.
+remove_variable_headers <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(stringr[str_remove_all])
+  
+  old_names <- names(df)
+  
+  new_names <- old_names |>
+    # 'Newer' data
+    stringr::str_remove_all("play_demo_questionnaire/") |>
+    # 'Older' data
+    stringr::str_remove_all("play_phone_questionnaire/") |>
+    stringr::str_remove_all("group_ut0kj94/") |>
+    stringr::str_remove_all("group_lh0wi25/")
+  
+  names(df) <- new_names
+  df
+}
+
+#-------------------------------------------------------------------------------
+#' Remove unneeded fields from screening data frame.
+#' 
+#' @param df A data frame of screening data.
+#' @returns A data frame with some fields removed.
+remove_databrary_fields <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(dplyr[select, contains])
+  
+  dplyr::select(df, -contains('group_databrary'))
+}
+
+#-------------------------------------------------------------------------------
+#' Remove unneeded fields from screening data frame.
+#' 
+#' @param df A data frame of screening data.
+#' @returns A data frame with some fields removed.
+remove_metadata_fields <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(dplyr[select, contains])
+  
+  df |>
+    dplyr::select(
+    -dplyr::contains('note'),
+    -dplyr::contains('instructions'),
+    -dplyr::contains('acknowledge'),
+    -dplyr::contains('screener'),
+    -dplyr::contains('__'),
+    -dplyr::contains('meta/instanceID'),
+    -dplyr::contains('_uuid'),
+    -dplyr::contains('_submission_time'),
+    -dplyr::contains('_index'),
+    -dplyr::contains('_parent_index'),
+    -dplyr::contains('_tags'),
+    -`_id`,
+    # Spanish-language version
+    -dplyr::contains('NOTA'))
+}
+
+#-------------------------------------------------------------------------------
 #' Clean subset of screening/demo variables
 #'
 #' clean_3() cleans the "new" demographic screening forms.
@@ -173,7 +283,7 @@ clean_3 <- function(csv_fn, add_geo = TRUE) {
   
   box::use(readr[read_csv])
   box::use(dplyr[select, mutate, left_join, join_by])
-  box::use(./geo)
+  box::use(. / geo)
   
   df_3 <- readr::read_csv(csv_fn, show_col_types = FALSE)
   if (!is.data.frame(df_3)) {
@@ -185,12 +295,12 @@ clean_3 <- function(csv_fn, add_geo = TRUE) {
   #                 sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`)
   
   # if (add_geo) {
-  #   ad_3 <- geo$make_addresses(df_3, 'new') 
-  #   df_3 <- dplyr::left_join(df_3, ad_3, dplyr::join_by(`play_demo_questionnaire/group_siteinfo/site_id` == site_id, 
-  #                                                       `play_demo_questionnaire/group_siteinfo/subject_number` == sub_num), 
+  #   ad_3 <- geo$make_addresses(df_3, 'new')
+  #   df_3 <- dplyr::left_join(df_3, ad_3, dplyr::join_by(`play_demo_questionnaire/group_siteinfo/site_id` == site_id,
+  #                                                       `play_demo_questionnaire/group_siteinfo/subject_number` == sub_num),
   #                            relationship = "many-to-many")
   # }
-
+  
   df_3 |>
     dplyr::select(
       submit_date = c_today,
@@ -207,7 +317,7 @@ clean_3 <- function(csv_fn, add_geo = TRUE) {
       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`, 
+      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`,
       child_hearing_disabilities = `play_demo_questionnaire/child_information/hearing_disabilities`,
       child_hearing_disabilities_specify = `play_demo_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_demo_questionnaire/child_information/vision_disabilities`,
@@ -235,7 +345,7 @@ clean_3 <- function(csv_fn, add_geo = TRUE) {
       childcare_language = `play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/childcare_language`,
       # bio dad
       biodad_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
-      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,                                                 
+      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,
       biodad_ethnicity = `play_demo_questionnaire/group_biodad/biodad_ethnicity`,
       # family structure
       household_members = `play_demo_questionnaire/group_family_structure/household_members`
@@ -278,7 +388,7 @@ clean_2 <- function(csv_fn) {
       child_weight_pounds = `play_demo_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_demo_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_demo_questionnaire/child_information/child_birth_complications`,
-      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`, 
+      child_birth_complications_specify = `play_demo_questionnaire/child_information/specify_birth_complications`,
       child_hearing_disabilities = `play_demo_questionnaire/child_information/hearing_disabilities`,
       child_hearing_disabilities_specify = `play_demo_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_demo_questionnaire/child_information/vision_disabilities`,
@@ -306,7 +416,7 @@ clean_2 <- function(csv_fn) {
       childcare_language = `play_demo_questionnaire/group_child_care_arrangements/childcare_language`,
       # bio dad
       biodad_childbirth_age = `play_demo_questionnaire/group_biodad/biodad_childbirth_age`,
-      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,                                                 
+      biodad_race = `play_demo_questionnaire/group_biodad/biodad_race`,
       biodad_ethnicity = `play_demo_questionnaire/group_biodad/biodad_ethnicity`,
       # family structure
       household_members = `play_demo_questionnaire/group_family_structure/household_members`
@@ -350,7 +460,7 @@ clean_1 <- function(csv_fn) {
       child_weight_pounds = `play_phone_questionnaire/child_information/child_weight_pounds`,
       child_weight_ounces = `play_phone_questionnaire/child_information/child_weight_ounces`,
       child_birth_complications = `play_phone_questionnaire/child_information/child_birth_complications`,
-      child_birth_complications_specify = `play_phone_questionnaire/child_information/specify_birth_complications`, 
+      child_birth_complications_specify = `play_phone_questionnaire/child_information/specify_birth_complications`,
       child_hearing_disabilities = `play_phone_questionnaire/child_information/hearing_disabilities`,
       child_hearing_disabilities_specify = `play_phone_questionnaire/child_information/specify_hearing`,
       child_vision_disabilities = `play_phone_questionnaire/child_information/vision_disabilities`,
@@ -379,7 +489,7 @@ clean_1 <- function(csv_fn) {
       childcare_language = `play_phone_questionnaire/group_child_care_arrangements/childcare_language`,
       # bio dad
       biodad_childbirth_age = `play_phone_questionnaire/parent_information/father_information/father_childbirth_age`,
-      biodad_race = `play_phone_questionnaire/parent_information/father_information/father_race`,                                                 
+      biodad_race = `play_phone_questionnaire/parent_information/father_information/father_race`,
       biodad_ethnicity = `play_phone_questionnaire/parent_information/father_information/father_ethnicity`,
       # family structure
       household_members = `play_phone_questionnaire/group_family_structure/household_members`
