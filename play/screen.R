@@ -117,6 +117,14 @@ clean_lang_data <-
     df
   }
 
+add_fips <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(./geo)
+  
+  
+}
+
 #-------------------------------------------------------------------------------
 #' Make data frame of home language environment data
 #'
@@ -162,7 +170,7 @@ make_language_df <- function(df) {
 }
 
 #-------------------------------------------------------------------------------
-remove_identifiers <- function(df, vb = TRUE) {
+remove_variable_identifiers <- function(df, vb = TRUE) {
   stopifnot(is.data.frame(df))
   
   box::use(stringr[str_detect])
@@ -171,7 +179,7 @@ remove_identifiers <- function(df, vb = TRUE) {
   var_names <- basename(names(df))
   
   contains_name <- stringr::str_detect(var_names, 'name')
-  contains_address <- stringr::str_detect(var_names, 'address')
+  contains_address <- stringr::str_detect(var_names, 'addr')
   contains_phone <- stringr::str_detect(var_names, 'phone')
   contains_email <- stringr::str_detect(var_names, 'email')
   contains_birthdate <- stringr::str_detect(var_names, 'birthdate')
@@ -220,6 +228,9 @@ remove_variable_headers <- function(df) {
     stringr::str_remove_all("play_demo_questionnaire/") |>
     # 'Older' data
     stringr::str_remove_all("play_phone_questionnaire/") |>
+    stringr::str_remove_all("group_siteinfo/") |>
+    stringr::str_remove_all("group_contact_info/") |>
+    stringr::str_remove_all("group_address/") |>
     stringr::str_remove_all("group_ut0kj94/") |>
     stringr::str_remove_all("group_lh0wi25/")
   
@@ -228,7 +239,7 @@ remove_variable_headers <- function(df) {
 }
 
 #-------------------------------------------------------------------------------
-#' Remove unneeded fields from screening data frame.
+#' Remove unneeded Databrary-related fields from screening data frame.
 #' 
 #' @param df A data frame of screening data.
 #' @returns A data frame with some fields removed.
@@ -263,7 +274,16 @@ remove_metadata_fields <- function(df) {
     -dplyr::contains('_index'),
     -dplyr::contains('_parent_index'),
     -dplyr::contains('_tags'),
+    -dplyr::contains('_version_'),
+    # used to compute guid
+    -dplyr::contains('day'),
+    -dplyr::contains('concat1'),
+    -dplyr::contains('Participant_ID_concat2'),
+    # other meta
     -`_id`,
+    -start,
+    -end,
+    -update_date,
     # Spanish-language version
     -dplyr::contains('NOTA'))
 }
@@ -506,3 +526,36 @@ clean_1 <- function(csv_fn) {
     ) |>
     dplyr::filter(!stringr::str_detect(site_id, '_of__'))
 }
+
+test_clean <- function(fn) {
+  stopifnot(is.character(fn))
+  stopifnot(file.exists(fn))
+  
+  box::use(readr[read_csv, cols])
+  box::use(./geo)
+  
+  # Import all as character to avoid type guess conflicts
+  df <- readr::read_csv(fn, col_types = readr::cols(.default = 'c'), 
+                        show_col_types = FALSE)
+  df |> 
+    remove_variable_headers() |> 
+    geo$make_addresses("new") |>
+    geo$get_multiple_census_geos() |>
+    remove_variable_identifiers() |>
+    remove_metadata_fields() |>
+    remove_databrary_fields()
+}
+
+test_join <- function() {
+  box::use(dplyr[full_join])
+
+  fl <- list.files("data/csv/screening", full.names = TRUE)
+  
+  d1c <- test_clean(fl[1])
+  d2c <- test_clean(fl[2])
+  d3c <- test_clean(fl[3])
+  
+  m1 <- dplyr::full_join(d3c, d2c)
+  dplyr::full_join(m1, d1c)
+}
+

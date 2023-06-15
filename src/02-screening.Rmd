@@ -107,7 +107,11 @@ reporting data at increasingly fine levels of resolution.
 We do not have permission from participants to report, for example, their 
 Census block group.
 
+The `play/geo` module contains functions to support geographic data operations.
+
 #### Remove identifying information
+
+We need address information for the geographic data processing, but we must remove it early-on in the process.
 
 ```{r}
 detect_str_in_name <- function(name_str, detect_str) {
@@ -201,3 +205,50 @@ detect_str_in_name(s2n, "race")
 detect_str_in_name(s3n, "race")
 ```
 #### Create a data dictionary
+
+### Working notes
+
+Create a "clean" working data frame for the first (of 3) screening files.
+
+```{r}
+box::use(readr[read_csv])
+box::use(.. / play / geo)
+box::use(.. / play / screen)
+
+fl <- list.files("../data/csv/screening/", full.names = TRUE)
+
+# helper function
+test_clean_1 <- function(fn) {
+  df <- readr::read_csv(fn, show_col_types = FALSE)
+  df |>
+    screen$remove_variable_headers() |>
+    geo$make_addresses("new") |>
+    geo$get_multiple_census_geos() |>
+    screen$remove_variable_identifiers() |>
+    screen$remove_metadata_fields() |>
+    screen$remove_databrary_fields()
+}
+
+d1c <- test_clean_1(fl[1])
+```
+Create similar data frames for the 2nd and 3rd screening files.
+
+```{r}
+d2c <- test_clean_1(fl[2])
+d3c <- test_clean_1(fl[3])
+```
+
+Check the first 15 variables.
+
+```{r}
+head(names(d1c), 15)
+```
+
+```{r}
+head(names(d2c), 15)
+```
+
+```{r}
+head(names(d3c), 15)
+```
+

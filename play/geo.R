@@ -52,41 +52,14 @@ make_address <- function(i, df, survey_type = 'new') {
   box::use(dplyr[select])
   box::use(tibble[tibble])
   
-  this_row <- df[i, ]
-  if (survey_type == 'new') {
-    out_df <- this_row |>
-      dplyr::select(
-        site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
-        sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
-        addr1 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_1`,
-        addr2 = `play_demo_questionnaire/group_contact_info/group_address/parent_address_2`,
-        city = `play_demo_questionnaire/group_contact_info/group_address/city`,
-        state = `play_demo_questionnaire/group_contact_info/group_address/state`
-      )
-  } else {
-    out_df <- this_row |>
-      dplyr::select(
-        site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
-        sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
-        addr1 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_1`,
-        addr2 = `play_phone_questionnaire/group_contact_info/group_address/parent_address_2`,
-        city = `play_phone_questionnaire/group_contact_info/group_address/city`,
-        state = `play_phone_questionnaire/group_contact_info/group_address/state`
-      )
-  }
-  
-  if ((!is.na(out_df$addr1) &&
+  out_df <- df[i, ]
+  if ((!is.na(out_df$parent_address_1) &&
        (!is.na(out_df$city) && (!is.na(out_df$state))))) {
-    addr <- with(out_df, paste0(addr1, ", ", city, ", ", state))
-    tibble(
-      singlelineaddr = addr,
-      site_id = out_df$site_id,
-      sub_num = out_df$sub_num,
-      state = out_df$state
-    )
+    out_df$singlelineaddr <- with(out_df, paste0(parent_address_1, ", ", city, ", ", state))
   } else {
-    NULL
+    out_df$singlelineaddr <- NA
   }
+  out_df
 }
 
 #-------------------------------------------------------------------------------
@@ -118,18 +91,17 @@ make_addresses <- function(df, survey_type) {
 #'tiger_side, state_fips, county_fips, census_tract, census_block, state.
 #'For privacy reasons, we typically only return state_fips and county_fips
 #'@returns A data frame of geographic info from the U.S. Census.
-get_multiple_census_geos <- function(addrs,
+get_multiple_census_geos <- function(df,
                                      show_qa_data = TRUE,
-                                     add_sub_site = TRUE,
-                                     return_fields = c("site_id", "sub_num", 
-                                                       "state_fips", 
+                                     add_sub_site = FALSE,
+                                     return_fields = c("state_fips", 
                                                        "county_fips")) {
-  stopifnot(is.data.frame(addrs))
+  stopifnot(is.data.frame(df))
   
   box::use(tidygeocoder[geocode])
   box::use(dplyr[select])
   
-  census_data <- addrs |>
+  census_data <- df |>
     dplyr::select(singlelineaddr) |>
     tidygeocoder::geocode(
       address = singlelineaddr,
@@ -144,17 +116,18 @@ get_multiple_census_geos <- function(addrs,
     message("Matched ", n_match, " addresses out of ", n_addr, " provided")
   }
   
-  # Add state explicitly to look up states in county
-  census_data$state = addrs$state
+  # # Add state explicitly to look up states in county
+  # census_data$state = addrs$state
+  # 
+  # # Optionally add site and sub ids for linking to other PLAY data
+  # if (add_sub_site) {
+  #   census_data$site_id = addrs$site_id
+  #   census_data$sub_num = addrs$sub_num
+  # }
   
-  # Optionally add site and sub ids for linking to other PLAY data
-  if (add_sub_site) {
-    census_data$site_id = addrs$site_id
-    census_data$sub_num = addrs$sub_num
-  }
-  
-  census_data |>
+  census_df <- census_data |>
     dplyr::select(return_fields)
+  cbind(df, census_df)
 }
 
 #-------------------------------------------------------------------------------
