@@ -566,6 +566,8 @@ test_two_addr <- function() {
 clean_mom_info <- function(df) {
   stopifnot(is.data.frame(df))
   
+  box::use(tidyr[unite])
+  
   df |>
     tidyr::unite(col = "mom_childbirth_age", 
                  c("group_mominfo/mom_childbirth_age",
@@ -573,8 +575,50 @@ clean_mom_info <- function(df) {
                  na.rm = TRUE) |>
     tidyr::unite(col = "mom_race",
                  c("group_mominfo/mom_race", "parent_information/mother_information/mother_race"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_bio_adoptive", c("group_mominfo/mom_biological", "group_mominfo/mom_relation"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_birth_country", c("group_mominfo/mom_birth_country", 
+                                              "parent_information/mother_information/mother_birth_country"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_birth_country_specify", c("group_mominfo/specify_mom_birth_country",
+                                                      "parent_information/mother_information/specify_mother_birth_country"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_education", c("group_mominfo/mom_education", "parent_information/mother_information/mother_education"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_employment", c("group_mominfo/mom_employment",
+                                           "parent_information/mother_information/mother_employment"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_occupation", c("group_mominfo/mom_occupation", 
+                                           "parent_information/mother_information/mother_occupation"), na.rm = TRUE) |>
+    tidyr::unite(col = "mom_jobs_number", c("group_mominfo/mom_jobs_number",
+                                            "parent_information/mother_information/mother_jobs_number"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_training", c("group_mominfo/mom_training", "parent_information/mother_information/mother_training"),
                  na.rm = TRUE)
-                 
+}
+
+#-------------------------------------------------------------------------------
+clean_child_info <- function(df) {
+  stopifnot(is.data.frame(df))
+
+  box::use(tidyr[unite])
+  box::use(dplyr[rename_with])
+  
+  df |>
+    tidyr::unite(col = "child_ilnesses_injuries_specify", c("child_information/specify_illnesses_injuries",
+                   "child_information/indicate_injuries_illnesses"),
+                 na.rm = TRUE) |>
+    dplyr::rename_with(~ gsub("child_information/", "", .x, fixed = TRUE)) |>
+    dplyr::rename(child_birth_complications_specify = specify_birth_complications) |>
+    dplyr::rename(child_hearing_disabilities = hearing_disabilities) |>
+    dplyr::rename(child_hearing_disabilities_specify = specify_hearing) |>
+    dplyr::rename(child_vision_disabilities = vision_disabilities) |>
+    dplyr::rename(child_vision_disabilities_specify = specify_vision) |>
+    dplyr::rename(child_major_illnesses_injuries = major_illnesses_injuries) |>
+    dplyr::rename(child_developmentaldelays = other_developmentaldelays) |>
+    dplyr::rename(child_developmentaldelays_specify = specify_developmentaldelays) |>
+    dplyr::rename(child_sleep_location_specify = specify_child_sleep_location)
 }
 
 #-------------------------------------------------------------------------------
@@ -588,8 +632,8 @@ clean_lang_info <- function(df) {
     tidyr::unite(col = "language_spoken_home", 
                  c("language_spoken_house", "language_spoken_home"), 
                  na.rm = TRUE) |>
+    tidyr::unite(col = "language_spoken_home_comments", c(22, 127), na.rm = TRUE) |>
     dplyr::rename(language_spoken_child_comments = language_spoken_child_other) |>
-    dplyr::rename(language_spoken_home_comments = language_spoken_home_other) |>
     dplyr::rename(language_spoken_mom_comments = language_spoken_mom_other) |>
     dplyr::select(-contains(c("/english", "/spanish", "/other")))
 }
