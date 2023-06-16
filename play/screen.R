@@ -120,7 +120,7 @@ clean_lang_data <-
 add_fips <- function(df) {
   stopifnot(is.data.frame(df))
   
-  box::use(./geo)
+  box::use(. / geo)
   
   
 }
@@ -240,7 +240,7 @@ remove_variable_headers <- function(df) {
 
 #-------------------------------------------------------------------------------
 #' Remove unneeded Databrary-related fields from screening data frame.
-#' 
+#'
 #' @param df A data frame of screening data.
 #' @returns A data frame with some fields removed.
 remove_databrary_fields <- function(df) {
@@ -248,12 +248,12 @@ remove_databrary_fields <- function(df) {
   
   box::use(dplyr[select, contains])
   
-  dplyr::select(df, -contains('group_databrary'))
+  dplyr::select(df,-contains('group_databrary'))
 }
 
 #-------------------------------------------------------------------------------
 #' Remove unneeded fields from screening data frame.
-#' 
+#'
 #' @param df A data frame of screening data.
 #' @returns A data frame with some fields removed.
 remove_metadata_fields <- function(df) {
@@ -263,29 +263,11 @@ remove_metadata_fields <- function(df) {
   
   df |>
     dplyr::select(
-    -dplyr::contains('note'),
-    -dplyr::contains('instructions'),
-    -dplyr::contains('acknowledge'),
-    -dplyr::contains('screener'),
-    -dplyr::contains('__'),
-    -dplyr::contains('meta/instanceID'),
-    -dplyr::contains('_uuid'),
-    -dplyr::contains('_submission_time'),
-    -dplyr::contains('_index'),
-    -dplyr::contains('_parent_index'),
-    -dplyr::contains('_tags'),
-    -dplyr::contains('_version_'),
-    # used to compute guid
-    -dplyr::contains('day'),
-    -dplyr::contains('concat1'),
-    -dplyr::contains('Participant_ID_concat2'),
-    # other meta
-    -`_id`,
-    -start,
-    -end,
-    -update_date,
-    # Spanish-language version
-    -dplyr::contains('NOTA'))
+      -dplyr::contains('note'),-dplyr::contains('instructions'),-dplyr::contains('acknowledge'),-dplyr::contains('screener'),-dplyr::contains('__'),-dplyr::contains('meta/instanceID'),-dplyr::contains('_uuid'),-dplyr::contains('_submission_time'),-dplyr::contains('_index'),-dplyr::contains('_parent_index'),-dplyr::contains('_tags'),-dplyr::contains('_version_'),
+      # used to compute guid-dplyr::contains('day'),-dplyr::contains('concat1'),-dplyr::contains('Participant_ID_concat2'),
+      # other meta-`_id`,-start,-end,-update_date,
+      # Spanish-language version-dplyr::contains('NOTA')
+    )
 }
 
 #-------------------------------------------------------------------------------
@@ -527,18 +509,24 @@ clean_1 <- function(csv_fn) {
     dplyr::filter(!stringr::str_detect(site_id, '_of__'))
 }
 
+#-------------------------------------------------------------------------------
 test_clean <- function(fn) {
   stopifnot(is.character(fn))
   stopifnot(file.exists(fn))
   
   box::use(readr[read_csv, cols])
-  box::use(./geo)
+  box::use(. / geo)
   
   # Import all as character to avoid type guess conflicts
-  df <- readr::read_csv(fn, col_types = readr::cols(.default = 'c'), 
-                        show_col_types = FALSE)
-  df |> 
-    remove_variable_headers() |> 
+  df <-
+    readr::read_csv(fn,
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+  
+  message("Cleaning '", fn, "'.")
+  
+  df |>
+    remove_variable_headers() |>
     geo$make_addresses("new") |>
     geo$get_multiple_census_geos() |>
     remove_variable_identifiers() |>
@@ -546,9 +534,10 @@ test_clean <- function(fn) {
     remove_databrary_fields()
 }
 
+#-------------------------------------------------------------------------------
 test_join <- function() {
   box::use(dplyr[full_join])
-
+  
   fl <- list.files("data/csv/screening", full.names = TRUE)
   
   d1c <- test_clean(fl[1])
@@ -557,5 +546,86 @@ test_join <- function() {
   
   m1 <- dplyr::full_join(d3c, d2c)
   dplyr::full_join(m1, d1c)
+}
+
+#-------------------------------------------------------------------------------
+test_two_addr <- function() {
+  box::use(tidygeocoder[geocode])
+  my <-
+    data.frame(singlelineaddr = c("608 East Prospect Avenue, State College, PA 16801", 
+                                  "7472 West Layton Way, Littleton, CO 80123"))
+  tidygeocoder::geocode(my,
+    address = singlelineaddr,
+    method = "census",
+    full_results = TRUE,
+    api_options = list(census_return_type = 'geographies')
+  )
+}
+
+#-------------------------------------------------------------------------------
+clean_mom_info <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  df |>
+    tidyr::unite(col = "mom_childbirth_age", 
+                 c("group_mominfo/mom_childbirth_age",
+                   "parent_information/mother_information/mother_childbirth_age"),
+                 na.rm = TRUE) |>
+    tidyr::unite(col = "mom_race",
+                 c("group_mominfo/mom_race", "parent_information/mother_information/mother_race"),
+                 na.rm = TRUE)
+                 
+}
+
+#-------------------------------------------------------------------------------
+clean_lang_info <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(tidyr[unite])
+  box::use(dplyr[rename, select])
+  
+  df |>
+    tidyr::unite(col = "language_spoken_home", 
+                 c("language_spoken_house", "language_spoken_home"), 
+                 na.rm = TRUE) |>
+    dplyr::rename(language_spoken_child_comments = language_spoken_child_other) |>
+    dplyr::rename(language_spoken_home_comments = language_spoken_home_other) |>
+    dplyr::rename(language_spoken_mom_comments = language_spoken_mom_other) |>
+    dplyr::select(-contains(c("/english", "/spanish", "/other")))
+}
+
+#-------------------------------------------------------------------------------
+clean_play_id <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  box::use(tidyr[unite])
+  df |>
+    tidyr::unite(col = "play_id", c("play_id", "concat2"), na.rm = TRUE)
+    
+}
+
+#-------------------------------------------------------------------------------
+test_combine_fields <- function(df) {
+  # stopifnot(is.character(fn))
+  # stopifnot(file.exists(fn))
+  # 
+  # box::use(readr[read_csv, cols])
+  box::use(tidyr[unite])
+  box::use(dplyr[mutate])
+  
+  # df <-
+  #   readr::read_csv(fn,
+  #                   col_types = readr::cols(.default = 'c'),
+  #                   show_col_types = FALSE)
+  
+  df |> 
+    tidyr::unite(col = "play_id", c("play_id", "concat2"), na.rm = TRUE) |>
+    tidyr::unite(col = "language_spoken_home", 
+                 c("language_spoken_house", "language_spoken_home"), 
+                   na.rm = TRUE) |>
+    dplyr::select(-contains(c("/english", "/spanish", "/other"))) |> 
+    tidyr::unite(col = "mom_childbirth_age", c("group_mominfo/mom_childbirth_age",
+                                               "parent_information/mother_information/mother_childbirth_age")) |>
+    dplyr::rename(child_age_weeks = check_childage)
 }
 
