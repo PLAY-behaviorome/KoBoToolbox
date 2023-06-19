@@ -210,7 +210,7 @@ detect_str_in_name(s3n, "race")
 
 Create a "clean" working data frame for the first (of 3) screening files.
 
-```{r}
+```{r, eval=FALSE}
 box::use(readr[read_csv])
 box::use(.. / play / geo)
 box::use(.. / play / screen)
@@ -231,24 +231,25 @@ test_clean_1 <- function(fn) {
 
 d1c <- test_clean_1(fl[1])
 ```
+
 Create similar data frames for the 2nd and 3rd screening files.
 
-```{r}
+```{r, eval=FALSE}
 d2c <- test_clean_1(fl[2])
 d3c <- test_clean_1(fl[3])
 ```
 
 Check the first 15 variables.
 
-```{r}
+```{r, eval=FALSE}
 head(names(d1c), 15)
 ```
 
-```{r}
+```{r, eval=FALSE}
 head(names(d2c), 15)
 ```
 
-```{r}
+```{r, eval=FALSE}
 head(names(d3c), 15)
 ```
 

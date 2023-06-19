@@ -62,15 +62,15 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="state-of-play" class="section level1 unnumbered">
 <h1>State of PLAY<a class="anchor" aria-label="anchor" href="#state-of-play"><i class="fas fa-link"></i></a>
 </h1>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/">forcats</a></span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The following summarizes the current state of the project as of 2023-06-12.</p>
+<p>The following summarizes the current state of the project as of 2023-06-19.</p>
 <div id="recent-data" class="section level2 unnumbered">
 <h2>Recent data<a class="anchor" aria-label="anchor" href="#recent-data"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">screen_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span></code></pre></div>
 <div id="last-two-weeks" class="section level3 unnumbered">
@@ -79,16 +79,16 @@
 <div id="screening-calls" class="section level4 unnumbered">
 <h4>Screening calls<a class="anchor" aria-label="anchor" href="#screening-calls"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">two_weeks_ago</span> <span class="op">&lt;-</span> <span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html">dweeks</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">screen_last_two_weeks_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">two_weeks_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 18 recruiting calls since 2023-05-29.</p>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 15 recruiting calls since 2023-06-05.</p>
+<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_two_weeks_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-67"></span>
-<img src="include/img/unnamed-chunk-67-1.png" alt="Screening calls in last 2 weeks by site" width="672"><p class="caption">
+<span style="display:block;" id="fig:unnamed-chunk-93"></span>
+<img src="include/img/unnamed-chunk-93-1.png" alt="Screening calls in last 2 weeks by site" width="672"><p class="caption">
 Figure 12: Screening calls in last 2 weeks by site
 </p>
 </div>
@@ -96,11 +96,11 @@ Figure 12: Screening calls in last 2 weeks by site
 <div id="home-visits" class="section level4 unnumbered">
 <h4>Home visits<a class="anchor" aria-label="anchor" href="#home-visits"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_last_two_weeks_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">two_weeks_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 31 home visits since 2023-05-29.</p>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 28 home visits since 2023-06-05.</p>
+<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_two_weeks_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-2-wk-home-visit"></span>
@@ -116,16 +116,16 @@ Figure 13: Home visits in last 2 weeks by site
 <div id="screening-calls-1" class="section level4 unnumbered">
 <h4>Screening calls<a class="anchor" aria-label="anchor" href="#screening-calls-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">month_ago</span> <span class="op">&lt;-</span> <span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html">dmonths</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">screen_last_month_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 48 recruiting calls since 2023-05-12 13:30:00.</p>
-<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 42 recruiting calls since 2023-05-19 13:30:00.</p>
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-68"></span>
-<img src="include/img/unnamed-chunk-68-1.png" alt="Screening calls in last month by site" width="672"><p class="caption">
+<span style="display:block;" id="fig:unnamed-chunk-94"></span>
+<img src="include/img/unnamed-chunk-94-1.png" alt="Screening calls in last month by site" width="672"><p class="caption">
 Figure 14: Screening calls in last month by site
 </p>
 </div>
@@ -133,11 +133,11 @@ Figure 14: Screening calls in last month by site
 <div id="home-visits-1" class="section level4 unnumbered">
 <h4>Home visits<a class="anchor" aria-label="anchor" href="#home-visits-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_last_month_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">month_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 51 home visits since 2023-05-12 13:30:00.</p>
-<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 53 home visits since 2023-05-19 13:30:00.</p>
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-mo-home-visit"></span>
@@ -153,12 +153,12 @@ Figure 15: Home visits in last month by site
 <div id="screening-calls-2" class="section level4 unnumbered">
 <h4>Screening calls<a class="anchor" aria-label="anchor" href="#screening-calls-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">three_mos_ago</span> <span class="op">&lt;-</span> <span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html">dmonths</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">screen_last_3_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">three_mos_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 131 screening calls since 2023-03-12 16:30:00.</p>
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 126 screening calls since 2023-03-19 16:30:00.</p>
+<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_3_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-3mo-calls"></span>
@@ -170,11 +170,11 @@ Figure 16: Screening calls in last 3 months by site
 <div id="home-visits-2" class="section level4 unnumbered">
 <h4>Home visits<a class="anchor" aria-label="anchor" href="#home-visits-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_last_3_month_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">three_mos_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 114 home visits since 2023-03-12 16:30:00.</p>
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 114 home visits since 2023-03-19 16:30:00.</p>
+<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_3_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-3mo-home-visit"></span>
@@ -190,12 +190,12 @@ Figure 17: Home visits in last 3 months by site
 <div id="screening-calls-3" class="section level4 unnumbered">
 <h4>Screening calls<a class="anchor" aria-label="anchor" href="#screening-calls-3"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">six_mos_ago</span> <span class="op">&lt;-</span> <span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/duration.html">dmonths</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">screen_last_6_df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">submit_date</span> <span class="op">&gt;</span> <span class="va">six_mos_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 213 screening calls since 2022-12-11 09:00:00.</p>
-<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 215 screening calls since 2022-12-18 09:00:00.</p>
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_6_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-6mo-calls"></span>
@@ -207,11 +207,11 @@ Figure 18: Screening calls in last 6 months by site
 <div id="home-visits-3" class="section level4 unnumbered">
 <h4>Home visits<a class="anchor" aria-label="anchor" href="#home-visits-3"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_last_6_month_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date_today</span> <span class="op">&gt;</span> <span class="va">six_mos_ago</span><span class="op">)</span></span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 170 home visits since 2022-12-11 09:00:00.</p>
-<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<p>There have been <span class="math inline">\(n=\)</span> 175 home visits since 2022-12-18 09:00:00.</p>
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">home_last_6_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-last-6mo-home-visit"></span>
@@ -230,10 +230,10 @@ Figure 19: Home visits in last 6 months by site
 </h3>
 <p>Because of some minor anomalies merging the older KBT surveys, we query the Databrary API for the most complete data about PLAY sessions.
 For debugging purposes, we set <code>vb = TRUE</code> so we get complete information about what’s working and what is not.</p>
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">databraryapi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/databraryapi/man/login_db.html">login_db</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"DATABRARY_LOGIN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">databrary_df</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df</a></span><span class="op">(</span><span class="va">play_vols</span><span class="op">$</span><span class="va">play_site_id</span>, <span class="va">make_site_session_summary</span>, vb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">databrary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -378,7 +378,7 @@ PLAYProject_UHOUS
 NA
 </td>
 <td style="text-align:right;">
-NA
+1
 </td>
 </tr>
 <tr>
@@ -392,7 +392,7 @@ PLAYProject_UGEOR
 1515
 </td>
 <td style="text-align:right;">
-16
+19
 </td>
 <td style="text-align:right;">
 3
@@ -401,7 +401,7 @@ PLAYProject_UGEOR
 NA
 </td>
 <td style="text-align:right;">
-13
+10
 </td>
 </tr>
 <tr>
@@ -415,7 +415,7 @@ PLAYProject_UTAUS
 1517
 </td>
 <td style="text-align:right;">
-16
+18
 </td>
 <td style="text-align:right;">
 4
@@ -424,7 +424,7 @@ PLAYProject_UTAUS
 NA
 </td>
 <td style="text-align:right;">
-17
+15
 </td>
 </tr>
 <tr>
@@ -438,7 +438,7 @@ PLAYProject_CHOPH
 1370
 </td>
 <td style="text-align:right;">
-13
+15
 </td>
 <td style="text-align:right;">
 2
@@ -447,7 +447,7 @@ PLAYProject_CHOPH
 NA
 </td>
 <td style="text-align:right;">
-3
+1
 </td>
 </tr>
 <tr>
@@ -516,7 +516,7 @@ PLAYProject_UIOWA
 NA
 </td>
 <td style="text-align:right;">
-2
+4
 </td>
 </tr>
 <tr>
@@ -585,6 +585,29 @@ PLAYProject_VBLTU
 1
 </td>
 <td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cal State Fullerton
+</td>
+<td style="text-align:left;">
+PLAYProject_CSUFL
+</td>
+<td style="text-align:right;">
+1481
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
 2
 </td>
 </tr>
@@ -613,29 +636,6 @@ NA
 </tr>
 <tr>
 <td style="text-align:left;">
-Cal State Fullerton
-</td>
-<td style="text-align:left;">
-PLAYProject_CSUFL
-</td>
-<td style="text-align:right;">
-1481
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 University of Miami
 </td>
 <td style="text-align:left;">
@@ -654,7 +654,7 @@ PLAYProject_UMIAM
 NA
 </td>
 <td style="text-align:right;">
-6
+7
 </td>
 </tr>
 <tr>
@@ -732,7 +732,7 @@ NA
 <div id="from-kbt" class="section level3 unnumbered">
 <h3>From KBT<a class="anchor" aria-label="anchor" href="#from-kbt"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_w_databrary_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gold_silver</span> <span class="op">&lt;-</span> <span class="va">home_visit_w_databrary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -741,17 +741,15 @@ NA
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">age_group</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
-##   not grouped    1    0    0
-##   PLAY_Gold     88   81   59
+##   PLAY_Gold     89   84   63
 ##   PLAY_Silver    9   23   21</code></pre>
-<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">child_sex</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
-##   not grouped      0    1
-##   PLAY_Gold      102  126
+##   PLAY_Gold      105  131
 ##   PLAY_Silver     24   29</code></pre>
-<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_race_eth</span> <span class="op">&lt;-</span> <span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">group_name</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, participant_race <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></span><span class="op">(</span><span class="va">participant_race</span>, </span>
@@ -763,51 +761,42 @@ NA
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">participant_race</span> <span class="op">+</span> <span class="va">participant_ethnicity</span>, <span class="va">df_race_eth</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                                    participant_ethnicity
-## participant_race                    Hispanic_or_Latino
-##   Asian                                              0
-##   Black_or_African_American                          1
-##   More_than_one                                     16
-##   Native American or Alaskan Native                  1
-##   Other                                             11
-##   Refused                                            1
-##   White                                             40
-##                                    participant_ethnicity
-## participant_race                    Not_Hispanic_or_Latino
-##   Asian                                                  2
-##   Black_or_African_American                              3
-##   More_than_one                                         22
-##   Native American or Alaskan Native                      0
-##   Other                                                  5
-##   Refused                                                0
-##   White                                                180</code></pre>
+## participant_race                    Hispanic_or_Latino Not_Hispanic_or_Latino
+##   Asian                                              0                      3
+##   Black_or_African_American                          1                      3
+##   More_than_one                                     17                     23
+##   Native American or Alaskan Native                  1                      0
+##   Other                                             11                      6
+##   Refused                                            1                      0
+##   White                                             40                    183</code></pre>
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3>By site, location, &amp; QA status<a class="anchor" aria-label="anchor" href="#by-site-location-qa-status"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">site_id</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">gold_silver</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group_name
-## site_id not grouped PLAY_Gold PLAY_Silver
-##   BOSTU           0         6           5
-##   CHOPH           0        13           5
-##   CORNL           0         0           2
-##   CSUFL           1         3           1
-##   CSULB           0         9           1
-##   GEORG           0        23           2
-##   INDNA           0         4           2
-##   NYUNI           0        27           9
-##   OHIOS           0        46           2
-##   PURDU           0        10           4
-##   STANF           0         1           1
-##   UCRIV           0         2           1
-##   UCSCR           0        22           1
-##   UGEOR           0        16           6
-##   UHOUS           0        19           2
-##   UIOWA           0         6           2
-##   UMIAM           0         2           1
-##   UTAUS           0        15           4
-##   VBLTU           0         4           2</code></pre>
-<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+## site_id PLAY_Gold PLAY_Silver
+##   BOSTU         6           5
+##   CHOPH        15           5
+##   CORNL         0           2
+##   CSUFL         4           1
+##   CSULB         9           1
+##   GEORG        23           2
+##   INDNA         4           2
+##   NYUNI        27           9
+##   OHIOS        46           2
+##   PURDU        10           4
+##   STANF         1           1
+##   UCRIV         2           1
+##   UCSCR        22           1
+##   UGEOR        19           6
+##   UHOUS        19           2
+##   UIOWA         6           2
+##   UMIAM         2           1
+##   UTAUS        17           4
+##   VBLTU         4           2</code></pre>
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gold_silver</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">context_state</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">context_state</span><span class="op">)</span> <span class="op">+</span></span>
@@ -831,7 +820,7 @@ Figure 20: QA level by State
 <div id="clean-up" class="section level2 unnumbered">
 <h2>Clean-up<a class="anchor" aria-label="anchor" href="#clean-up"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span><span class="op">(</span><span class="st">"../.databrary.RData"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">databraryapi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/databraryapi/man/logout_db.html">logout_db</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Logout Successful.</code></pre>
@@ -879,7 +868,7 @@ Figure 20: QA level by State
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-12.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -622,6 +622,17 @@ clean_child_info <- function(df) {
 }
 
 #-------------------------------------------------------------------------------
+clean_childcare_info <- function(df) {
+  stopifnot(is.data.frame(df))
+
+  box::use(dplyr[rename_with, select])
+  
+  df |>
+    dplyr::rename_with(~ gsub("group_child_care_arrangements/", "", .x, fixed = TRUE)) |>
+    dplyr::select(-contains(c("/nanny", "/relative", "/childcare", "/none")))
+}
+
+#-------------------------------------------------------------------------------
 clean_lang_info <- function(df) {
   stopifnot(is.data.frame(df))
   
@@ -643,9 +654,21 @@ clean_play_id <- function(df) {
   stopifnot(is.data.frame(df))
   
   box::use(tidyr[unite])
+  
   df |>
     tidyr::unite(col = "play_id", c("play_id", "concat2"), na.rm = TRUE)
     
+}
+
+clean_biodad_father_info <- function(df) {
+  stopifnot(is.data.frame(df))
+
+  box::use(tidyr[unite])
+  
+  df |>
+    tidyr::unite(col = biodad_childbirth_age, 
+                 c("group_biodad/biodad_childbirth_age", 
+                   "parent_information/father_information/father_home"))
 }
 
 #-------------------------------------------------------------------------------

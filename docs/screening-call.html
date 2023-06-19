@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Screening call | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
-<meta name="description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website. To make the workflow more robust and reproducible,...">
+<meta name="description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  0.1 Approach To make the workflow more robust and...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Screening call | PLAY Project: Surveys">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website. To make the workflow more robust and reproducible,...">
+<meta property="og:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  0.1 Approach To make the workflow more robust and...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Screening call | PLAY Project: Surveys">
-<meta name="twitter:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website. To make the workflow more robust and reproducible,...">
+<meta name="twitter:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  0.1 Approach To make the workflow more robust and...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -66,25 +66,36 @@
 <h2>Collection protocol<a class="anchor" aria-label="anchor" href="#collection-protocol"><i class="fas fa-link"></i></a>
 </h2>
 <p>Details about the data collection <a href="https://www.play-project.org/collection.html#Participant_Recruitment">protocol for participant screening and recruiting</a> can be found on the <a href="https://play-project.org">PLAY Project website</a>.</p>
-<p>To make the workflow more robust and reproducible, much of the work is embedded in functions (<code>R/functions.R</code>) and extensive use is made of the <a href="https://cran.r-project.org/web/packages/targets/"><code>{targets}</code></a> package.
-This document describes the workflow, but none of the code chunks are executed.</p>
-<p>The <code><a href="https://docs.ropensci.org/targets/reference/tar_target.html">tar_target()</a></code> syntax should be read as follows: The “target” variable or file is on the left, and the function that generates it is on the right.</p>
 </div>
-<div id="retrieve-files-from-kobotoolbox" class="section level2 unnumbered">
-<h2>Retrieve files from KoBoToolbox<a class="anchor" aria-label="anchor" href="#retrieve-files-from-kobotoolbox"><i class="fas fa-link"></i></a>
+<div id="approach" class="section level2" number="0.1">
+<h2>
+<span class="header-section-number">0.1</span> Approach<a class="anchor" aria-label="anchor" href="#approach"><i class="fas fa-link"></i></a>
 </h2>
-<p>The relevant KoBoToolbox data files have ‘Demographic Questionnaire’ in the title.
-We list these files and save them in a data frame called <code>kb_df</code>.</p>
+<p>To make the workflow more robust and reproducible, much of the work is embedded in functions and extensive use is made of the <a href="https://cran.r-project.org/web/packages/targets/"><code>{targets}</code></a> package.
+This document describes the workflow, but none of these code chunks are executed.</p>
+<p>We leave execution to the <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html">targets::tar_make()</a></code> function which updates components as needed.</p>
+<div class="rmdnote">
+<p>I am currently working on implementing most of the functions using the <code>box</code> package. This allows better isolation of dependencies within different components of the workflow.</p>
+<p>The box-related functions are in a new <code>play/</code> directory, and the R source files are divided into categories.
+The functions related to processing the screening/demographic data are in <code>play/screen.R</code>.</p>
+<p>They will be loaded into the workspace via <code>box::use(play/screen)</code> or for modules within <code>play/</code> via <code>box::use(./screen)</code>.</p>
+</div>
+</div>
+<div id="retrieve-data-about-all-files-from-kobotoolbox-kbt" class="section level2 unnumbered">
+<h2>Retrieve data about all files from KoBoToolbox (KBT)<a class="anchor" aria-label="anchor" href="#retrieve-data-about-all-files-from-kobotoolbox-kbt"><i class="fas fa-link"></i></a>
+</h2>
+<p>We maintain a list of data files available on KBT in a data frame called <code>kb_df</code>.</p>
+<pre><code>tar_target(kb_df, list_kobo_data())</code></pre>
+<p>Note: The new ‘box’-ized function for this will be <code>kobo$list_data()</code>.</p>
 <div class="rmdnote">
 <p>We can control how often we query the KBT server to download and update the data files.
 There are variables in the header of the <code>_targets.R</code> called <code>update_interval</code> and <code>interval_units</code> we use to control this.
 Right now, it is set at 2 days.</p>
 </div>
-<pre><code>tar_target(kb_df, list_kobo_data())</code></pre>
 <div id="save-selected-raw-files-to-local-directory" class="section level3 unnumbered">
 <h3>Save selected raw files to local directory<a class="anchor" aria-label="anchor" href="#save-selected-raw-files-to-local-directory"><i class="fas fa-link"></i></a>
 </h3>
-<p>A function <code>make_screening_df()</code> takes downloads the XLSX files, converts them to CSVs, copies the CSVs to a specified target directory, then opens the CSVs and combines them into a single data frame stored as <code>screen_df</code>.</p>
+<p>A function <code>make_screening_df()</code>, downloads the XLSX files, converts them to CSVs, copies the CSVs to a specified target directory, then opens the CSVs and combines them into a single data frame stored as <code>screen_df</code>.</p>
 <pre><code>tar_target(
   screen_df,
     make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
@@ -93,6 +104,375 @@ Right now, it is set at 2 days.</p>
       age = as.difftime(update_interval, units = update_interval_units)
     )
 )</code></pre>
+<p>Note: The ‘box’-ized function for this will be <code>screen$make_df()</code>.</p>
+</div>
+</div>
+<div id="clean-files" class="section level2" number="0.2">
+<h2>
+<span class="header-section-number">0.2</span> Clean files<a class="anchor" aria-label="anchor" href="#clean-files"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are three screening/demographic data files. Each one represents a slightly different version of the questionnaire.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">'data/csv/screening'</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## character(0)</code></pre>
+<p>The file beginning with ‘275882’ is the oldest file. It contains the original questions asked of English-speaking parents.
+The file beginning with ‘334134’ contains questions asked of Spanish-speaking families.
+The file beginning with ‘359546’ contains questions asked of English-speaking families in the newer iteration of the questionnaire.
+The latter two files, ‘334134’ and ‘359546’ are more similar to one another, but the variable names are <em>not</em> identical.
+As a result, we need slightly different cleaning and renaming procedures for each file.</p>
+<div id="approach-1" class="section level3" number="0.2.1">
+<h3>
+<span class="header-section-number">0.2.1</span> Approach<a class="anchor" aria-label="anchor" href="#approach-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>For each file, we need to achieve the following:</p>
+<div id="rename-field-names" class="section level4" number="0.2.1.1">
+<h4>
+<span class="header-section-number">0.2.1.1</span> Rename field names<a class="anchor" aria-label="anchor" href="#rename-field-names"><i class="fas fa-link"></i></a>
+</h4>
+<p>Here are the field names for the older (‘275882’) file:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s1n</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/csv/screening/275882_PLAY_Demographic_Questionnaire.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">s1n</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "start"                                                               
+## [2] "end"                                                                 
+## [3] "c_today"                                                             
+## [4] "play_phone_questionnaire/update_date"                                
+## [5] "play_phone_questionnaire/group_contact_info/instructions_contactinfo"
+## [6] "play_phone_questionnaire/group_contact_info/parent_phone"</code></pre>
+<p>It shows that some of the questions contain metadata about the question group.</p>
+<p>Here are similar field name lists for the other two:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s2n</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/csv/screening/334134_PLAY_Demographic_Questionnaire_Spanish.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">s2n</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "start"                                                                                                                                                                                                                                    
+## [2] "end"                                                                                                                                                                                                                                      
+## [3] "c_today"                                                                                                                                                                                                                                  
+## [4] "play_demo_questionnaire/update_date"                                                                                                                                                                                                      
+## [5] "play_demo_questionnaire/NOTA_El_cuestionario_demogr_fico_debe_ser_completado_por_el_investigador_que_va_a_ir_a_la_visita_al_hogar_con_la_madre_por_tel_fono_La_madre_deber_a_ser_la_madre_que_va_a_participar_en_el_estudio_con_su_ni_o_a"
+## [6] "play_demo_questionnaire/group_siteinfo/site_id"</code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s3n</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"../data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">s3n</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "start"                                         
+## [2] "end"                                           
+## [3] "c_today"                                       
+## [4] "play_demo_questionnaire/update_date"           
+## [5] "play_demo_questionnaire/note_exp"              
+## [6] "play_demo_questionnaire/group_siteinfo/site_id"</code></pre>
+</div>
+<div id="use-address-information-to-map-to-a-participants-county-for-later-geographic-related-analyses." class="section level4" number="0.2.1.2">
+<h4>
+<span class="header-section-number">0.2.1.2</span> Use address information to map to a participants’ county for later geographic-related analyses.<a class="anchor" aria-label="anchor" href="#use-address-information-to-map-to-a-participants-county-for-later-geographic-related-analyses."><i class="fas fa-link"></i></a>
+</h4>
+<p>We make use of the <code>tidycensus</code> package to pull a participant’s State and County FIPS codes.
+The Census API can also give us tract, and block group information, but there are privacy concerns with
+reporting data at increasingly fine levels of resolution.
+We do not have permission from participants to report, for example, their
+Census block group.</p>
+<p>The <code>play/geo</code> module contains functions to support geographic data operations.</p>
+</div>
+<div id="remove-identifying-information" class="section level4" number="0.2.1.3">
+<h4>
+<span class="header-section-number">0.2.1.3</span> Remove identifying information<a class="anchor" aria-label="anchor" href="#remove-identifying-information"><i class="fas fa-link"></i></a>
+</h4>
+<p>We need address information for the geographic data processing, but we must remove it early-on in the process.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">detect_str_in_name</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name_str</span>, <span class="va">detect_str</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">name_str</span><span class="op">[</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">name_str</span>, <span class="va">detect_str</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="op">}</span> </span></code></pre></div>
+<p>The raw data files contain names:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"name"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/child_first_name" 
+## [2] "play_phone_questionnaire/child_middle_name"
+## [3] "play_phone_questionnaire/child_last_name"  
+## [4] "_parent_table_name"</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s2n</span>, <span class="st">"name"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/exp_name"         
+## [2] "play_demo_questionnaire/child_first_name" 
+## [3] "play_demo_questionnaire/child_middle_name"
+## [4] "play_demo_questionnaire/child_last_name"  
+## [5] "_parent_table_name"</code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s3n</span>, <span class="st">"name"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/group_siteinfo/exp_name"
+## [2] "play_demo_questionnaire/child_first_name"       
+## [3] "play_demo_questionnaire/child_middle_name"      
+## [4] "play_demo_questionnaire/child_last_name"        
+## [5] "_parent_table_name"</code></pre>
+<p>This includes the participant contact information needed for the prior step,
+but also participant phone, email information, and the names of the</p>
+<p>The files contain phone numbers:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"phone"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/update_date"                                         
+## [2] "play_phone_questionnaire/group_contact_info/instructions_contactinfo"         
+## [3] "play_phone_questionnaire/group_contact_info/parent_phone"                     
+## [4] "play_phone_questionnaire/group_contact_info/parent_email"                     
+## [5] "play_phone_questionnaire/group_contact_info/group_address/note_parent_address"
+## [6] "play_phone_questionnaire/group_contact_info/group_address/parent_address_1"</code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s2n</span>, <span class="st">"phone"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/group_contact_info/parent_phone"
+## [2] "play_demo_questionnaire/note_phonequestionnaire"        
+## [3] "play_demo_questionnaire/note_endphonecall1"             
+## [4] "play_demo_questionnaire/note_endphonecall2"</code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s3n</span>, <span class="st">"phone"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/group_contact_info/parent_phone"
+## [2] "play_demo_questionnaire/note_phonequestionnaire"        
+## [3] "play_demo_questionnaire/note_endphonecall1"             
+## [4] "play_demo_questionnaire/note_endphonecall2"</code></pre>
+<p>The files contain email addresses:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"email"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/group_contact_info/parent_email"</code></pre>
+<p>And as we know from the section about the Census-related data, the files contain address information:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"address"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/group_contact_info/group_address/note_parent_address"
+## [2] "play_phone_questionnaire/group_contact_info/group_address/parent_address_1"   
+## [3] "play_phone_questionnaire/group_contact_info/group_address/parent_address_2"   
+## [4] "play_phone_questionnaire/group_contact_info/group_address/city"               
+## [5] "play_phone_questionnaire/group_contact_info/group_address/state"</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"address"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/group_contact_info/group_address/note_parent_address"
+## [2] "play_phone_questionnaire/group_contact_info/group_address/parent_address_1"   
+## [3] "play_phone_questionnaire/group_contact_info/group_address/parent_address_2"   
+## [4] "play_phone_questionnaire/group_contact_info/group_address/city"               
+## [5] "play_phone_questionnaire/group_contact_info/group_address/state"</code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s2n</span>, <span class="st">"address"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/group_contact_info/group_address/note_parent_address"
+## [2] "play_demo_questionnaire/group_contact_info/group_address/parent_address_1"   
+## [3] "play_demo_questionnaire/group_contact_info/group_address/parent_address_2"   
+## [4] "play_demo_questionnaire/group_contact_info/group_address/city"               
+## [5] "play_demo_questionnaire/group_contact_info/group_address/state"</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s3n</span>, <span class="st">"address"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_demo_questionnaire/group_contact_info/group_address/note_parent_address"
+## [2] "play_demo_questionnaire/group_contact_info/group_address/parent_address_1"   
+## [3] "play_demo_questionnaire/group_contact_info/group_address/parent_address_2"   
+## [4] "play_demo_questionnaire/group_contact_info/group_address/city"               
+## [5] "play_demo_questionnaire/group_contact_info/group_address/state"</code></pre>
+<p>There are also a number of data fields that are largely for administrative purposes.
+These often have ‘note’, ‘acknowledge’, or ‘endscreener’ in the field name.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"note|acknowledge|endscreener"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "play_phone_questionnaire/group_contact_info/group_address/note_parent_address"       
+##  [2] "play_phone_questionnaire/group_contact_info/acknowledge_contact_info"                
+##  [3] "play_phone_questionnaire/group_siteinfo/note_participantid"                          
+##  [4] "play_phone_questionnaire/group_siteinfo/acknowledge_siteinfo"                        
+##  [5] "play_phone_questionnaire/note_phonequestionnaire"                                    
+##  [6] "play_phone_questionnaire/endscreener_language_spoken"                                
+##  [7] "play_phone_questionnaire/note_language_spoken"                                       
+##  [8] "play_phone_questionnaire/acknowledge_language"                                       
+##  [9] "play_phone_questionnaire/acknowledge_language2"                                      
+## [10] "play_phone_questionnaire/acknowledge_language3"                                      
+## [11] "play_phone_questionnaire/acknowledge_language4"                                      
+## [12] "play_phone_questionnaire/child_information/endscreener_preterm1"                     
+## [13] "play_phone_questionnaire/child_information/note_preterm1"                            
+## [14] "play_phone_questionnaire/child_information/endscreener_preterm3"                     
+## [15] "play_phone_questionnaire/child_information/note_preterm3"                            
+## [16] "play_phone_questionnaire/child_information/endscreener_preterm2"                     
+## [17] "play_phone_questionnaire/child_information/note_preterm2"                            
+## [18] "play_phone_questionnaire/child_information/endscreener_birthweight"                  
+## [19] "play_phone_questionnaire/child_information/note_birthweight"                         
+## [20] "play_phone_questionnaire/child_information/endscreener_birth_newborn_comp"           
+## [21] "play_phone_questionnaire/child_information/endscreener_hearing"                      
+## [22] "play_phone_questionnaire/child_information/endscreener_vision"                       
+## [23] "play_phone_questionnaire/child_information/endscreener_illnesses_injuries"           
+## [24] "play_phone_questionnaire/child_information/note_sleeping_instructions"               
+## [25] "play_phone_questionnaire/parent_information/note_parentinformation"                  
+## [26] "play_phone_questionnaire/parent_information/mother_information/endscreener_motherage"
+## [27] "play_phone_questionnaire/parent_information/father_information/endscreener_fatherage"
+## [28] "play_phone_questionnaire/group_child_care_arrangements/note_childcare_instructions"  
+## [29] "_notes"</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s2n</span>, <span class="st">"note|acknowledge|endscreener"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "play_demo_questionnaire/group_contact_info/group_address/note_parent_address"     
+##  [2] "play_demo_questionnaire/group_contact_info/acknowledge_contact_info"              
+##  [3] "play_demo_questionnaire/acknowledge_siteinfo"                                     
+##  [4] "play_demo_questionnaire/note_phonequestionnaire"                                  
+##  [5] "play_demo_questionnaire/endscreener_spoken_child"                                 
+##  [6] "play_demo_questionnaire/note_spoken_child"                                        
+##  [7] "play_demo_questionnaire/endscreener_spoken_house"                                 
+##  [8] "play_demo_questionnaire/note_spoken_house_"                                       
+##  [9] "play_demo_questionnaire/acknowledge_language"                                     
+## [10] "play_demo_questionnaire/acknowledge_language2"                                    
+## [11] "play_demo_questionnaire/acknowledge_language3"                                    
+## [12] "play_demo_questionnaire/acknowledge_language4"                                    
+## [13] "play_demo_questionnaire/child_information/endscreener_preterm1"                   
+## [14] "play_demo_questionnaire/child_information/note_preterm1"                          
+## [15] "play_demo_questionnaire/child_information/endscreener_preterm3"                   
+## [16] "play_demo_questionnaire/child_information/note_preterm3"                          
+## [17] "play_demo_questionnaire/child_information/endscreener_preterm2"                   
+## [18] "play_demo_questionnaire/child_information/note_preterm2"                          
+## [19] "play_demo_questionnaire/child_information/note_birthweight_conversion"            
+## [20] "play_demo_questionnaire/child_information/endscreener_birthweight"                
+## [21] "play_demo_questionnaire/child_information/note_birthweight"                       
+## [22] "play_demo_questionnaire/child_information/endscreener_birth_newborn_comp"         
+## [23] "play_demo_questionnaire/child_information/endscreener_hearing"                    
+## [24] "play_demo_questionnaire/child_information/endscreener_vision"                     
+## [25] "play_demo_questionnaire/child_information/endscreener_illnesses_injuries"         
+## [26] "play_demo_questionnaire/child_information/endscreener_developmentaldelays"        
+## [27] "play_demo_questionnaire/child_information/acknowledge_raceethnicity"              
+## [28] "play_demo_questionnaire/child_information/note_sleeping_instructions"             
+## [29] "play_demo_questionnaire/group_mominfo/note_mominfo"                               
+## [30] "play_demo_questionnaire/group_mominfo/endscreener_momage"                         
+## [31] "play_demo_questionnaire/group_biodad/note_biodad"                                 
+## [32] "play_demo_questionnaire/group_biodad/endscreener_biodad_age"                      
+## [33] "play_demo_questionnaire/group_biomom/note_biomom1"                                
+## [34] "play_demo_questionnaire/group_biomom/note_biomom2"                                
+## [35] "play_demo_questionnaire/group_biomom/endscreener_biomom_age"                      
+## [36] "play_demo_questionnaire/group_nonbiopartner/note_nonbiopartner1"                  
+## [37] "play_demo_questionnaire/group_genpartner_info/note_genpartner"                    
+## [38] "play_demo_questionnaire/group_child_care_arrangements/note_childcare_instructions"
+## [39] "play_demo_questionnaire/note_endphonecall1"                                       
+## [40] "play_demo_questionnaire/note_endphonecall2"                                       
+## [41] "play_demo_questionnaire/group_databrary/note_upload"                              
+## [42] "play_demo_questionnaire/note_submission"                                          
+## [43] "_notes"</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s3n</span>, <span class="st">"note|acknowledge|endscreener"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "play_demo_questionnaire/note_exp"                                                               
+##  [2] "play_demo_questionnaire/group_contact_info/group_address/note_parent_address"                   
+##  [3] "play_demo_questionnaire/group_contact_info/acknowledge_contact_info"                            
+##  [4] "play_demo_questionnaire/acknowledge_siteinfo"                                                   
+##  [5] "play_demo_questionnaire/note_phonequestionnaire"                                                
+##  [6] "play_demo_questionnaire/endscreener_spoken_child"                                               
+##  [7] "play_demo_questionnaire/note_spoken_child"                                                      
+##  [8] "play_demo_questionnaire/endscreener_spoken_house"                                               
+##  [9] "play_demo_questionnaire/note_spoken_house"                                                      
+## [10] "play_demo_questionnaire/acknowledge_language"                                                   
+## [11] "play_demo_questionnaire/acknowledge_language2"                                                  
+## [12] "play_demo_questionnaire/acknowledge_language3"                                                  
+## [13] "play_demo_questionnaire/acknowledge_language4"                                                  
+## [14] "play_demo_questionnaire/child_information/endscreener_preterm1"                                 
+## [15] "play_demo_questionnaire/child_information/note_preterm1"                                        
+## [16] "play_demo_questionnaire/child_information/endscreener_preterm3"                                 
+## [17] "play_demo_questionnaire/child_information/note_preterm3"                                        
+## [18] "play_demo_questionnaire/child_information/endscreener_preterm2"                                 
+## [19] "play_demo_questionnaire/child_information/note_preterm2"                                        
+## [20] "play_demo_questionnaire/child_information/note_birthweight_conversion"                          
+## [21] "play_demo_questionnaire/child_information/endscreener_birthweight"                              
+## [22] "play_demo_questionnaire/child_information/note_birthweight"                                     
+## [23] "play_demo_questionnaire/child_information/endscreener_birth_newborn_comp"                       
+## [24] "play_demo_questionnaire/child_information/endscreener_hearing"                                  
+## [25] "play_demo_questionnaire/child_information/endscreener_vision"                                   
+## [26] "play_demo_questionnaire/child_information/endscreener_illnesses_injuries"                       
+## [27] "play_demo_questionnaire/child_information/endscreener_developmentaldelays"                      
+## [28] "play_demo_questionnaire/child_information/acknowledge_raceethnicity"                            
+## [29] "play_demo_questionnaire/child_information/note_sleeping_instructions"                           
+## [30] "play_demo_questionnaire/group_mominfo/note_mominfo"                                             
+## [31] "play_demo_questionnaire/group_mominfo/endscreener_momage"                                       
+## [32] "play_demo_questionnaire/group_biodad/note_biodad"                                               
+## [33] "play_demo_questionnaire/group_biodad/endscreener_biodad_age"                                    
+## [34] "play_demo_questionnaire/group_biomom/note_biomom1"                                              
+## [35] "play_demo_questionnaire/group_biomom/note_biomom2"                                              
+## [36] "play_demo_questionnaire/group_biomom/endscreener_biomom_age"                                    
+## [37] "play_demo_questionnaire/group_nonbiopartner/note_nonbiopartner1"                                
+## [38] "play_demo_questionnaire/group_ut0kj94/group_genpartner_info/note_genpartner"                    
+## [39] "play_demo_questionnaire/group_lh0wi25/group_child_care_arrangements/note_childcare_instructions"
+## [40] "play_demo_questionnaire/note_endphonecall1"                                                     
+## [41] "play_demo_questionnaire/note_endphonecall2"                                                     
+## [42] "play_demo_questionnaire/group_databrary/note_upload"                                            
+## [43] "play_demo_questionnaire/note_submission"                                                        
+## [44] "_notes"</code></pre>
+</div>
+<div id="create-a-merged-data-frame" class="section level4" number="0.2.1.4">
+<h4>
+<span class="header-section-number">0.2.1.4</span> Create a merged data frame<a class="anchor" aria-label="anchor" href="#create-a-merged-data-frame"><i class="fas fa-link"></i></a>
+</h4>
+<p>Not all of the data files have the same fields.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s1n</span>, <span class="st">"race"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "play_phone_questionnaire/parent_information/mother_information/mother_race"
+## [2] "play_phone_questionnaire/parent_information/father_information/father_race"</code></pre>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s2n</span>, <span class="st">"race"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "play_demo_questionnaire/child_information/child_race"               
+##  [2] "play_demo_questionnaire/child_information/acknowledge_raceethnicity"
+##  [3] "play_demo_questionnaire/group_mominfo/mom_race"                     
+##  [4] "play_demo_questionnaire/group_biodad/biodad_race"                   
+##  [5] "play_demo_questionnaire/group_biomom/biomom_race"                   
+##  [6] "play_demo_questionnaire/group_nonbiopartner/nonbiopartner_race"     
+##  [7] "play_demo_questionnaire/group_databrary/db_race1"                   
+##  [8] "play_demo_questionnaire/group_databrary/db_race2"                   
+##  [9] "play_demo_questionnaire/group_databrary/db_race3"                   
+## [10] "play_demo_questionnaire/group_databrary/db_race4"                   
+## [11] "play_demo_questionnaire/group_databrary/db_race5"                   
+## [12] "play_demo_questionnaire/group_databrary/db_race6"                   
+## [13] "play_demo_questionnaire/group_databrary/db_race7"                   
+## [14] "play_demo_questionnaire/group_databrary/db_race8"</code></pre>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">detect_str_in_name</span><span class="op">(</span><span class="va">s3n</span>, <span class="st">"race"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "play_demo_questionnaire/child_information/child_race"               
+##  [2] "play_demo_questionnaire/child_information/acknowledge_raceethnicity"
+##  [3] "play_demo_questionnaire/group_mominfo/mom_race"                     
+##  [4] "play_demo_questionnaire/group_biodad/biodad_race"                   
+##  [5] "play_demo_questionnaire/group_biomom/biomom_race"                   
+##  [6] "play_demo_questionnaire/group_nonbiopartner/nonbiopartner_race"     
+##  [7] "play_demo_questionnaire/group_databrary/db_race1"                   
+##  [8] "play_demo_questionnaire/group_databrary/db_race2"                   
+##  [9] "play_demo_questionnaire/group_databrary/db_race3"                   
+## [10] "play_demo_questionnaire/group_databrary/db_race4"                   
+## [11] "play_demo_questionnaire/group_databrary/db_race5"                   
+## [12] "play_demo_questionnaire/group_databrary/db_race6"                   
+## [13] "play_demo_questionnaire/group_databrary/db_race7"                   
+## [14] "play_demo_questionnaire/group_databrary/db_race8"</code></pre>
+</div>
+<div id="create-a-data-dictionary" class="section level4" number="0.2.1.5">
+<h4>
+<span class="header-section-number">0.2.1.5</span> Create a data dictionary<a class="anchor" aria-label="anchor" href="#create-a-data-dictionary"><i class="fas fa-link"></i></a>
+</h4>
+</div>
+</div>
+<div id="working-notes" class="section level3" number="0.2.2">
+<h3>
+<span class="header-section-number">0.2.2</span> Working notes<a class="anchor" aria-label="anchor" href="#working-notes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Create a “clean” working data frame for the first (of 3) screening files.</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">box</span><span class="fu">::</span><span class="fu"><a href="http://klmr.me/box/reference/use.html">use</a></span><span class="op">(</span><span class="va">readr</span><span class="op">[</span><span class="va">read_csv</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu">box</span><span class="fu">::</span><span class="fu"><a href="http://klmr.me/box/reference/use.html">use</a></span><span class="op">(</span><span class="va">..</span> <span class="op">/</span> <span class="va">play</span> <span class="op">/</span> <span class="va">geo</span><span class="op">)</span></span>
+<span><span class="fu">box</span><span class="fu">::</span><span class="fu"><a href="http://klmr.me/box/reference/use.html">use</a></span><span class="op">(</span><span class="va">..</span> <span class="op">/</span> <span class="va">play</span> <span class="op">/</span> <span class="va">screen</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"../data/csv/screening/"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># helper function</span></span>
+<span><span class="va">test_clean_1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fn</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fn</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">screen</span><span class="op">$</span><span class="fu">remove_variable_headers</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">geo</span><span class="op">$</span><span class="fu">make_addresses</span><span class="op">(</span><span class="st">"new"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">geo</span><span class="op">$</span><span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">screen</span><span class="op">$</span><span class="fu">remove_variable_identifiers</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">screen</span><span class="op">$</span><span class="fu">remove_metadata_fields</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="va">screen</span><span class="op">$</span><span class="fu">remove_databrary_fields</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">d1c</span> <span class="op">&lt;-</span> <span class="fu">test_clean_1</span><span class="op">(</span><span class="va">fl</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>Create similar data frames for the 2nd and 3rd screening files.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d2c</span> <span class="op">&lt;-</span> <span class="fu">test_clean_1</span><span class="op">(</span><span class="va">fl</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">d3c</span> <span class="op">&lt;-</span> <span class="fu">test_clean_1</span><span class="op">(</span><span class="va">fl</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>Check the first 15 variables.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d1c</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d2c</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">d3c</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 
 </div>
 </div>
@@ -105,8 +485,15 @@ Right now, it is set at 2 days.</p>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#screening-call">Screening call</a></li>
 <li><a class="nav-link" href="#collection-protocol">Collection protocol</a></li>
+<li><a class="nav-link" href="#approach"><span class="header-section-number">0.1</span> Approach</a></li>
 <li>
-<a class="nav-link" href="#retrieve-files-from-kobotoolbox">Retrieve files from KoBoToolbox</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#save-selected-raw-files-to-local-directory">Save selected raw files to local directory</a></li></ul>
+<a class="nav-link" href="#retrieve-data-about-all-files-from-kobotoolbox-kbt">Retrieve data about all files from KoBoToolbox (KBT)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#save-selected-raw-files-to-local-directory">Save selected raw files to local directory</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#clean-files"><span class="header-section-number">0.2</span> Clean files</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#approach-1"><span class="header-section-number">0.2.1</span> Approach</a></li>
+<li><a class="nav-link" href="#working-notes"><span class="header-section-number">0.2.2</span> Working notes</a></li>
+</ul>
 </li>
 </ul>
 
@@ -125,7 +512,7 @@ Right now, it is set at 2 days.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-12.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
