@@ -1,4 +1,4 @@
-################################################################################
+#-------------------------------------------------------------------------------
 #' Retrieves an XLS formatted export file from KoBoToolbox and
 #' saves it to a local directory.
 #'
@@ -11,7 +11,7 @@
 #' @returns The name of the saved .xlsx file.
 kobo_retrieve_save_xlsx <-
   function(form_index = 13,
-           kb_df = list_kobo_data(),
+           kb_df = kobo_list_data(),
            save_dir = 'tmp') {
     if (!is.numeric(form_index)) {
       stop('`form_index` must be a number')
@@ -31,11 +31,11 @@ kobo_retrieve_save_xlsx <-
     } else {
       form_URL <- paste0(kb_df$url[form_index], '.xls')
       
-      suppressPackageStartupMessages(require(httr))
+      # suppressPackageStartupMessages(require(httr))
       
       # Append KoBo form id to cleaned file name to avoid duplicates
       form_name <-
-        create_cleaned_augmented_form_name(form_index, kb_df)
+        kobo_create_cleaned_augmented_form_name(form_index, kb_df)
       
       # Must export as .xlsx even though API queries for .xls
       file_name <- file.path(save_dir, paste0(form_name, '.xlsx'))
@@ -61,5 +61,34 @@ kobo_retrieve_save_xlsx <-
                 '`')
         "NULL"
       }
+    }
+  }
+
+#-------------------------------------------------------------------------------
+#' Normalizes the file/form names of files on KoBoToolbox
+#'
+#' @param form_index An integer value indicating which row (KoBoToolbox form)
+#' should be retrieved and saved. The default value for testing purposes is 13.
+#' @param kb_df A data frame with the available KoBoToolbox data, typically
+#' output of list_kobo_data(). The default is to call list_kobo_data().
+#' @return An array of strings
+kobo_create_cleaned_augmented_form_name <-
+  function(form_index = 13,
+           kb_df = list_kobo_data()) {
+    if (!is.numeric(form_index)) {
+      stop('`form_index` must be a number')
+    }
+    if (form_index <= 0) {
+      stop('`form_index` must be > 0')
+    }
+    if (is.null(kb_df)) {
+      message('Unable to return list of KoBoToolbox forms.')
+      NULL
+    } else {
+      paste0(
+        kobo_extract_form_id(form_index, kb_df),
+        "_",
+        kobo_clean_form_name(kobo_extract_form_name(form_index, kb_df))
+      )
     }
   }

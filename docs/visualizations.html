@@ -46,12 +46,14 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">About</a></li>
 <li><a class="" href="setup.html">Setup</a></li>
+<li><a class="" href="state-of-play.html">State of PLAY</a></li>
+<li class="book-part">Data Wrangling</li>
 <li><a class="" href="screening-call.html">Screening call</a></li>
 <li><a class="" href="home-visit.html">Home visit</a></li>
 <li><a class="" href="data-dictionary.html">Data dictionary</a></li>
 <li><a class="" href="post-visit-notes.html">Post-visit notes</a></li>
+<li class="book-part">Data Visualization</li>
 <li><a class="active" href="visualizations.html">Visualizations</a></li>
-<li><a class="" href="state-of-play.html">State of PLAY</a></li>
 </ul>
 
         <div class="book-extra">
@@ -67,29 +69,29 @@
 <h2>Recruiting calls data<a class="anchor" aria-label="anchor" href="#recruiting-calls-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Cumulative screening/recruiting calls by site.</p>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/targets/">targets</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/">forcats</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">screen_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">add_n_calls_to_demog</span><span class="op">(</span><span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <div id="calls-across-time" class="section level3 unnumbered">
 <h3>Calls across time<a class="anchor" aria-label="anchor" href="#calls-across-time"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_call_timeseries</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-screening-calls-cum"></span>
 <img src="include/img/fig-screening-calls-cum-1.png" alt="Cumulative screening calls by year and site" width="672"><p class="caption">
-Figure 1: Cumulative screening calls by year and site
+Figure 10: Cumulative screening calls by year and site
 </p>
 </div>
 </div>
 <div id="calls-by-site" class="section level3 unnumbered">
 <h3>Calls by site<a class="anchor" aria-label="anchor" href="#calls-by-site"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">calls_by_site_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -110,7 +112,7 @@ Figure 1: Cumulative screening calls by year and site
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-screening-calls-by-site"></span>
 <img src="include/img/fig-screening-calls-by-site-1.png" alt="Cumulative screening calls by site" width="672"><p class="caption">
-Figure 2: Cumulative screening calls by site
+Figure 11: Cumulative screening calls by site
 </p>
 </div>
 </div>
@@ -121,7 +123,7 @@ Figure 2: Cumulative screening calls by site
 <h4>Child age<a class="anchor" aria-label="anchor" href="#child-age"><i class="fas fa-link"></i></a>
 </h4>
 <p>Child age in months (<code>child_age_mos</code>) by <code>child_sex</code>.</p>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_age_mos</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -130,7 +132,7 @@ Figure 2: Cumulative screening calls by site
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-age-hist-screening"></span>
 <img src="include/img/fig-age-hist-screening-1.png" alt="Histogram of child age at time of recruiting call." width="672"><p class="caption">
-Figure 3: Histogram of child age at time of recruiting call.
+Figure 12: Histogram of child age at time of recruiting call.
 </p>
 </div>
 <div class="rmdnote">
@@ -141,7 +143,7 @@ Figure 3: Histogram of child age at time of recruiting call.
 <h4>Language to child<a class="anchor" aria-label="anchor" href="#language-to-child"><i class="fas fa-link"></i></a>
 </h4>
 <p>Language(s) spoken to child by <code>child_sex</code>.</p>
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>                language_to_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_to_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span>,</span>
@@ -156,7 +158,7 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div id="language-spoken-at-home" class="section level4 unnumbered">
 <h4>Language spoken at home<a class="anchor" aria-label="anchor" href="#language-spoken-at-home"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_home
 ## child_sex english english_other english_spanish english_spanish_other spanish
@@ -166,27 +168,20 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div id="to-child-vs.-at-home" class="section level4 unnumbered">
 <h4>To child vs. at home<a class="anchor" aria-label="anchor" href="#to-child-vs.-at-home"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">language_to_child</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        language_spoken_home
-## language_to_child       english english_other english_spanish
-##   english                   347             1              14
-##   english_other               1             3               0
-##   english_spanish            10             0              54
-##   english_spanish_other       3             0               0
-##   spanish                     0             0               5
-##                        language_spoken_home
-## language_to_child       english_spanish_other spanish
-##   english                                   2       4
-##   english_other                             0       0
-##   english_spanish                           0       5
-##   english_spanish_other                     0       0
-##   spanish                                   0      12</code></pre>
+## language_to_child       english english_other english_spanish english_spanish_other spanish
+##   english                   347             1              14                     2       4
+##   english_other               1             3               0                     0       0
+##   english_spanish            10             0              54                     0       5
+##   english_spanish_other       3             0               0                     0       0
+##   spanish                     0             0               5                     0      12</code></pre>
 </div>
 <div id="child-born-on-due-date" class="section level4 unnumbered">
 <h4>Child born on due date<a class="anchor" aria-label="anchor" href="#child-born-on-due-date"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_bornonduedate</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_bornonduedate
@@ -202,7 +197,7 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <h4>Child weight<a class="anchor" aria-label="anchor" href="#child-weight"><i class="fas fa-link"></i></a>
 </h4>
 <p>Must convert pounds and ounces to decimal pounds.</p>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>                birth_weight_lbs <span class="op">=</span> <span class="va">child_weight_pounds</span> <span class="op">+</span> <span class="va">child_weight_ounces</span><span class="op">/</span><span class="fl">16</span><span class="op">)</span></span>
@@ -215,12 +210,12 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.33</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="include/img/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="include/img/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="birth-complications" class="section level4 unnumbered">
 <h4>Birth complications<a class="anchor" aria-label="anchor" href="#birth-complications"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_birth_complications</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_birth_complications
@@ -231,7 +226,7 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <div id="major-illnesses-or-injuries" class="section level4 unnumbered">
 <h4>Major illnesses or injuries<a class="anchor" aria-label="anchor" href="#major-illnesses-or-injuries"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">major_illnesses_injuries</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          major_illnesses_injuries
@@ -265,14 +260,14 @@ visualization.</p>
 <p>Some recoding must be done here to handle strings that can’t easily be
 converted to numbers.</p>
 </div>
-<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>nap_hrs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">child_nap_hours</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning: There was 1 warning in `dplyr::mutate()`.
 ## ℹ In argument: `nap_hrs = as.numeric(child_nap_hours)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">nap_hrs</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -280,12 +275,12 @@ converted to numbers.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="include/img/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="include/img/unnamed-chunk-90-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="sleep-location" class="section level5 unnumbered">
 <h5>Sleep location<a class="anchor" aria-label="anchor" href="#sleep-location"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_sleep_location</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_sleep_location
@@ -300,7 +295,7 @@ converted to numbers.</p>
 <div id="age-at-childbirth" class="section level5 unnumbered">
 <h5>Age at childbirth<a class="anchor" aria-label="anchor" href="#age-at-childbirth"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mother_childbirth_age</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -308,9 +303,9 @@ converted to numbers.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="include/img/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="include/img/unnamed-chunk-92-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Clearly, there are some impossible (erroneous) maternal ages &gt; 100. Here are details:</p>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb262"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">old_moms</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">mother_childbirth_age</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span></span>
 <span></span>
@@ -396,7 +391,7 @@ NYUNI
 <div id="mothers-race-and-ethnicity" class="section level5 unnumbered">
 <h5>Mother’s race and ethnicity<a class="anchor" aria-label="anchor" href="#mothers-race-and-ethnicity"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -426,133 +421,11 @@ NYUNI
 </div>
 </div>
 </div>
-<div id="recruiting-locations" class="section level3 unnumbered">
-<h3>Recruiting locations<a class="anchor" aria-label="anchor" href="#recruiting-locations"><i class="fas fa-link"></i></a>
-</h3>
-<div class="rmdimportant">
-<p>For privacy reasons, we do not expose or share address information.
-The following commands retrieve address information from the raw data files and then retrieve geographic information using the U.S. Census API.
-In the future, we may decide to link an individual respondent’s information to their County.</p>
-</div>
-<p>Create helper functions to make a tibble with a repondent’s address.</p>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">make_address</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">df</span>, <span class="va">survey_type</span> <span class="op">=</span> <span class="st">'new'</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span>
-<span>  <span class="va">this_row</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">survey_type</span> <span class="op">==</span> <span class="st">'new'</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">out_df</span> <span class="op">&lt;-</span> <span class="va">this_row</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
-<span>        <span class="va">.</span>,</span>
-<span>        addr1 <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_contact_info/group_address/parent_address_1`</span>,</span>
-<span>        addr2 <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_contact_info/group_address/parent_address_2`</span>,</span>
-<span>        city <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_contact_info/group_address/city`</span>,</span>
-<span>        state <span class="op">=</span> <span class="va">`play_demo_questionnaire/group_contact_info/group_address/state`</span></span>
-<span>      <span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="va">out_df</span> <span class="op">&lt;-</span> <span class="va">this_row</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
-<span>        <span class="va">.</span>,</span>
-<span>        addr1 <span class="op">=</span> <span class="va">`play_phone_questionnaire/group_contact_info/group_address/parent_address_1`</span>,</span>
-<span>        addr2 <span class="op">=</span> <span class="va">`play_phone_questionnaire/group_contact_info/group_address/parent_address_2`</span>,</span>
-<span>        city <span class="op">=</span> <span class="va">`play_phone_questionnaire/group_contact_info/group_address/city`</span>,</span>
-<span>        state <span class="op">=</span> <span class="va">`play_phone_questionnaire/group_contact_info/group_address/state`</span></span>
-<span>      <span class="op">)</span></span>
-<span>    </span>
-<span>  <span class="op">}</span></span>
-<span>  </span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">out_df</span><span class="op">$</span><span class="va">addr1</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span>       <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">out_df</span><span class="op">$</span><span class="va">city</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">out_df</span><span class="op">$</span><span class="va">state</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">addr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">out_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">addr1</span>, <span class="st">", "</span>, <span class="va">city</span>, <span class="st">", "</span>, <span class="va">state</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>singlelineaddr <span class="op">=</span> <span class="va">addr</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="cn">NULL</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">make_addresses</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">survey_type</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">make_address</span>, <span class="va">df</span>, <span class="va">survey_type</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Create aggregate data file with address information for the three screening data files.</p>
-<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"../data/csv/screening"</span>,full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fns</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fns</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fns</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ad1</span> <span class="op">&lt;-</span> <span class="fu">make_addresses</span><span class="op">(</span><span class="va">df1</span>, <span class="st">'old'</span><span class="op">)</span></span>
-<span><span class="va">ad2</span> <span class="op">&lt;-</span> <span class="fu">make_addresses</span><span class="op">(</span><span class="va">df2</span>, <span class="st">'new'</span><span class="op">)</span></span>
-<span><span class="va">ad3</span> <span class="op">&lt;-</span> <span class="fu">make_addresses</span><span class="op">(</span><span class="va">df3</span>, <span class="st">'new'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">add</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">ad1</span>, <span class="va">ad2</span>, <span class="va">ad3</span><span class="op">)</span></span></code></pre></div>
-<p>Helper function to gather Census geographic information in bulk.</p>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">get_multiple_census_geos</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">addrs</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://jessecambon.github.io/tidygeocoder/">tidygeocoder</a></span><span class="op">)</span></span>
-<span>  <span class="va">addrs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">tidygeocoder</span><span class="fu">::</span><span class="fu"><a href="https://jessecambon.github.io/tidygeocoder/reference/geocode.html">geocode</a></span><span class="op">(</span></span>
-<span>    address <span class="op">=</span> <span class="va">singlelineaddr</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"census"</span>,</span>
-<span>    full_results <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    api_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>census_return_type <span class="op">=</span> <span class="st">'geographies'</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Retrieve the Census geographic information.</p>
-<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu">get_multiple_census_geos</span><span class="op">(</span><span class="va">add</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Loading required package: tidygeocoder</code></pre>
-<pre><code>## Passing 450 addresses to the US Census batch geocoder</code></pre>
-<pre><code>## Query completed in: 175.4 seconds</code></pre>
-<p>Helper function to plot lat and long of recruiting sites on a U.S. map.</p>
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plot_screening_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">geo_df</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">geo_df</span> <span class="op">&lt;-</span> <span class="va">geo_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">long</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">usa</span> <span class="op">&lt;-</span> <span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span><span class="op">(</span><span class="st">"USA"</span>, zoom <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span>  <span class="va">usa</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu">ggmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">geo_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Plot the map.</p>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plot_screening_sites</span><span class="op">(</span><span class="va">geos</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Loading required package: ggmap</code></pre>
-<pre><code>## The legacy packages maptools, rgdal, and rgeos, underpinning this package
-## will retire shortly. Please refer to R-spatial evolution reports on
-## https://r-spatial.org/r/2023/05/15/evolution4.html for details.
-## This package is now running under evolution status 0</code></pre>
-<pre><code>## ℹ Google's Terms of Service: &lt;https://mapsplatform.google.com&gt;
-## ℹ Please cite ggmap if you use it! Use `citation("ggmap")` for details.
-## 
-## Attaching package: 'ggmap'
-## 
-## 
-## The following object is masked from 'package:tidygeocoder':
-## 
-##     geocode
-## 
-## 
-## ℹ &lt;https://maps.googleapis.com/maps/api/staticmap?center=USA&amp;zoom=4&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxx&gt;
-## 
-## ℹ &lt;https://maps.googleapis.com/maps/api/geocode/json?address=USA&amp;key=xxx&gt;</code></pre>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:fig-screening-calls-map"></span>
-<img src="include/img/fig-screening-calls-map-1.png" alt="Families contacted by location" width="672"><p class="caption">
-Figure 4: Families contacted by location
-</p>
-</div>
-</div>
 </div>
 <div id="home-visit-data-1" class="section level2 unnumbered">
 <h2>Home visit data<a class="anchor" aria-label="anchor" href="#home-visit-data-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span></code></pre></div>
 <div id="demographics-1" class="section level3 unnumbered">
 <h3>Demographics<a class="anchor" aria-label="anchor" href="#demographics-1"><i class="fas fa-link"></i></a>
@@ -563,7 +436,7 @@ Figure 4: Families contacted by location
 <p>Child age in months (<code>age_group</code>) by <code>child_sex</code>.</p>
 <p>Note: The child’s exact age in months is part of the Databrary-related data.
 That is on the work plan.</p>
-<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -574,7 +447,7 @@ That is on the work plan.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-age-grp-by-sex"></span>
 <img src="include/img/fig-age-grp-by-sex-1.png" alt="Participants by age group and sex" width="672"><p class="caption">
-Figure 5: Participants by age group and sex
+Figure 13: Participants by age group and sex
 </p>
 </div>
 </div>
@@ -582,7 +455,7 @@ Figure 5: Participants by age group and sex
 <div id="language-exposure" class="section level3 unnumbered">
 <h3>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
@@ -594,7 +467,7 @@ Figure 5: Participants by age group and sex
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -622,13 +495,13 @@ Figure 5: Participants by age group and sex
 <div id="check-for-anomalous-values" class="section level4 unnumbered">
 <h4>Check for anomalous values<a class="anchor" aria-label="anchor" href="#check-for-anomalous-values"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crawl_mos_min</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
 <span><span class="va">walk_mos_min</span> <span class="op">&lt;-</span> <span class="fl">6</span></span></code></pre></div>
 <div id="anomalous-crawling-onset" class="section level5 unnumbered">
 <h5>Anomalous crawling onset<a class="anchor" aria-label="anchor" href="#anomalous-crawling-onset"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">crawl_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&lt;</span> <span class="va">crawl_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -662,7 +535,7 @@ CHOPH
 <div id="anomalous-walking-onset-kea-criteria" class="section level5 unnumbered">
 <h5>Anomalous walking onset (KEA criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-kea-criteria"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_kea</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -686,7 +559,7 @@ walk_mos_kea
 <div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
 <h5>Anomalous walking onset (WHO criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-who-criteria"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_who</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -711,7 +584,7 @@ walk_mos_who
 <div id="crawl-onset" class="section level4 unnumbered">
 <h4>Crawl onset<a class="anchor" aria-label="anchor" href="#crawl-onset"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -722,14 +595,14 @@ walk_mos_who
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-crawl-onset-hist"></span>
 <img src="include/img/fig-crawl-onset-hist-1.png" alt="Age of crawling onset (mos) by sex" width="672"><p class="caption">
-Figure 6: Age of crawling onset (mos) by sex
+Figure 14: Age of crawling onset (mos) by sex
 </p>
 </div>
 </div>
 <div id="walk-onset" class="section level4 unnumbered">
 <h4>Walk onset<a class="anchor" aria-label="anchor" href="#walk-onset"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -739,10 +612,10 @@ Figure 6: Age of crawling onset (mos) by sex
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea"></span>
 <img src="include/img/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672"><p class="caption">
-Figure 7: Age (mos) of walking onset (KEA criteria) by sex
+Figure 15: Age (mos) of walking onset (KEA criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -753,10 +626,10 @@ Figure 7: Age (mos) of walking onset (KEA criteria) by sex
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-who"></span>
 <img src="include/img/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672"><p class="caption">
-Figure 8: Age (mos) of walking onset (WHO criteria) by sex
+Figure 16: Age (mos) of walking onset (WHO criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -787,10 +660,10 @@ Figure 8: Age (mos) of walking onset (WHO criteria) by sex
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
 <img src="include/img/fig-walk-mos-kea-who-1.png" alt="Walking onset by WHO vs. KEA criteria" width="672"><p class="caption">
-Figure 9: Walking onset by WHO vs. KEA criteria
+Figure 17: Walking onset by WHO vs. KEA criteria
 </p>
 </div>
-<div class="sourceCode" id="cb262"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -816,7 +689,7 @@ Figure 9: Walking onset by WHO vs. KEA criteria
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-crawl-mos"></span>
 <img src="include/img/fig-walk-mos-kea-crawl-mos-1.png" alt="Walking onset vs. Crawling" width="672"><p class="caption">
-Figure 10: Walking onset vs. Crawling
+Figure 18: Walking onset vs. Crawling
 </p>
 </div>
 </div>
@@ -827,7 +700,7 @@ Figure 10: Walking onset vs. Crawling
 <div id="feeding" class="section level4 unnumbered">
 <h4>Feeding<a class="anchor" aria-label="anchor" href="#feeding"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -842,13 +715,13 @@ Figure 10: Walking onset vs. Crawling
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, breastfeed <span class="op">=</span> <span class="va">health.feeding_nutrition.breastfeed</span>,</span>
 <span>                solid_food_mos <span class="op">=</span> <span class="va">health.feeding_nutrition.solidfood_age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, solid_food_mos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">solid_food_mos</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no refused yes
 ##    female         1   3       0 150
 ##    male           0  10       1 156</code></pre>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solid_food_mos</span>, color <span class="op">=</span> <span class="va">child_sex</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
@@ -858,11 +731,11 @@ Figure 10: Walking onset vs. Crawling
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-solid-food-mos"></span>
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672"><p class="caption">
-Figure 11: Age at introduction of solid foods
+Figure 19: Age at introduction of solid foods
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">solid_food_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">solid_food_mos</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -896,7 +769,7 @@ NYUNI
 <div id="smokingdrinking" class="section level4 unnumbered">
 <h4>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -918,7 +791,7 @@ NYUNI
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sleeping_pos</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -931,10 +804,8 @@ NYUNI
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## child_sleeping_position
-##         back      changed    donotknow        other      refused         side 
-##          305            4            1            2            1            2 
-## stomach_side 
-##            6</code></pre>
+##         back      changed    donotknow        other      refused         side stomach_side 
+##          305            4            1            2            1            2            6</code></pre>
 </div>
 </div>
 </div>
@@ -942,7 +813,7 @@ NYUNI
 <h2>Post-visit data<a class="anchor" aria-label="anchor" href="#post-visit-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>We load the post-visit survey data.</p>
-<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">post_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">post_visit_df</span><span class="op">)</span></span></code></pre></div>
@@ -955,7 +826,7 @@ NYUNI
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="post-visit-notes.html">Post-visit notes</a></div>
-<div class="next"><a href="state-of-play.html">State of PLAY</a></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -965,7 +836,6 @@ NYUNI
 <li><a class="nav-link" href="#calls-across-time">Calls across time</a></li>
 <li><a class="nav-link" href="#calls-by-site">Calls by site</a></li>
 <li><a class="nav-link" href="#demographics">Demographics</a></li>
-<li><a class="nav-link" href="#recruiting-locations">Recruiting locations</a></li>
 </ul>
 </li>
 <li>
@@ -981,8 +851,8 @@ NYUNI
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/06-visualization.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/06-visualization.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/22-home-visit.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/22-home-visit.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -994,7 +864,7 @@ NYUNI
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-19.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

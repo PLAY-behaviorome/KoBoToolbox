@@ -23,7 +23,7 @@
 make_df <-
   function(xlsx_dir = "data/xlsx/screening",
            csv_dir = "data/csv/screening",
-           retrieve_from_kobo = FALSE) {
+           retrieve_from_kobo = TRUE) {
     stopifnot(is.character(xlsx_dir))
     stopifnot(dir.exists(xlsx_dir))
     stopifnot(is.character(csv_dir))
@@ -32,7 +32,7 @@ make_df <-
     box::use(. / kobo[list_data_filtered, retrieve_save_many_xlsx])
     box::use(. / files[load_xlsx_save_many_csv])
     
-    kb_screen <- list_data_filtered("[Dd]emographic")
+    kb_screen <- kobo$list_data_filtered("[Dd]emographic")
     
     if (retrieve_from_kobo) {
       message("Retrieving files from KoBoToolbox site.")
@@ -527,11 +527,51 @@ test_clean <- function(fn) {
   
   df |>
     remove_variable_headers() |>
-    geo$make_addresses("new") |>
-    geo$get_multiple_census_geos() |>
+    # geo$make_addresses("new") |>
+    # geo$get_multiple_census_geos() |>
     remove_variable_identifiers() |>
     remove_metadata_fields() |>
     remove_databrary_fields()
+}
+
+#-------------------------------------------------------------------------------
+clean_raw_csv <- function(fn) {
+  stopifnot(is.character(fn))
+  stopifnot(file.exists(fn))
+  
+  box::use(readr[read_csv, cols])
+  box::use(. / geo)
+  
+  # Import all as character to avoid type guess conflicts
+  df <-
+    readr::read_csv(fn,
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+  
+  message("Cleaning '", fn, "'.")
+  
+  df |>
+    remove_variable_headers() |>
+    # geo$make_addresses("new") |>
+    # geo$get_multiple_census_geos() |>
+    remove_variable_identifiers() |>
+    remove_metadata_fields() |>
+    remove_databrary_fields()
+  
+}
+
+#-------------------------------------------------------------------------------
+join_cleaned_df <- function() {
+  box::use(dplyr[full_join])
+  
+  fl <- list.files("data/csv/screening", full.names = TRUE)
+  
+  d1c <- clean_raw_csv(fl[1])
+  d2c <- clean_raw_csv(fl[2])
+  d3c <- clean_raw_csv(fl[3])
+  
+  m1 <- dplyr::full_join(d3c, d2c)
+  dplyr::full_join(m1, d1c)
 }
 
 #-------------------------------------------------------------------------------
@@ -618,7 +658,8 @@ clean_child_info <- function(df) {
     dplyr::rename(child_major_illnesses_injuries = major_illnesses_injuries) |>
     dplyr::rename(child_developmentaldelays = other_developmentaldelays) |>
     dplyr::rename(child_developmentaldelays_specify = specify_developmentaldelays) |>
-    dplyr::rename(child_sleep_location_specify = specify_child_sleep_location)
+    dplyr::rename(child_sleep_location_specify = specify_child_sleep_location) |>
+    dplyr::rename(child_age_wks = check_childage)
 }
 
 #-------------------------------------------------------------------------------
@@ -668,31 +709,91 @@ clean_biodad_father_info <- function(df) {
   df |>
     tidyr::unite(col = biodad_childbirth_age, 
                  c("group_biodad/biodad_childbirth_age", 
-                   "parent_information/father_information/father_home"))
+                   "parent_information/father_information/father_home")) |>
+    tidyr::unite(col = biodad_race,
+                 c("group_biodad/biodad_race", "parent_information/father_information/father_race")) |>
+    dplyr::select(-`group_biodad/biodad_childbirth_age_over21`)
 }
 
-#-------------------------------------------------------------------------------
-test_combine_fields <- function(df) {
-  # stopifnot(is.character(fn))
-  # stopifnot(file.exists(fn))
-  # 
-  # box::use(readr[read_csv, cols])
-  box::use(tidyr[unite])
-  box::use(dplyr[mutate])
+clean_family_structure <- function(df) {
+  stopifnot(is.data.frame(df))
   
-  # df <-
-  #   readr::read_csv(fn,
-  #                   col_types = readr::cols(.default = 'c'),
-  #                   show_col_types = FALSE)
-  
-  df |> 
-    tidyr::unite(col = "play_id", c("play_id", "concat2"), na.rm = TRUE) |>
-    tidyr::unite(col = "language_spoken_home", 
-                 c("language_spoken_house", "language_spoken_home"), 
-                   na.rm = TRUE) |>
-    dplyr::select(-contains(c("/english", "/spanish", "/other"))) |> 
-    tidyr::unite(col = "mom_childbirth_age", c("group_mominfo/mom_childbirth_age",
-                                               "parent_information/mother_information/mother_childbirth_age")) |>
-    dplyr::rename(child_age_weeks = check_childage)
+  df |>
+    dplyr::rename(child_onlychild = `group_family_structure/only_child`) |>
+    dplyr::rename(child_onlychild_specify = `group_family_structure/specify_onlychild`) |>
+    dplyr::rename(household_members = `group_family_structure/household_members`)
 }
 
+remove_selected_cols <- function(df) {
+  df |>
+    dplyr::select(-start,
+                  -end,
+                  -c_today,
+                  -update_date,
+                  -day,
+                  -day2,
+                  -day1,
+                  -contains("group_family_structure"),
+                  -contains("parent_information"),
+                  -concat1,
+                  -Participant_ID_concat2,
+                  -contains("NOTA_El_"),
+                  -state)
+}
+
+select_reorder_cols <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  df |>
+    dplyr::select(site_id,
+                  subject_number,
+                  play_id,
+                  child_age_wks,
+                  child_sex,
+                  child_bornonduedate,
+                  child_onterm,
+                  child_birthage,
+                  child_weight_pounds,
+                  child_weight_ounces,
+                  child_birth_complications,
+                  child_birth_complications_specify,
+                  child_hearing_disabilities,                
+                  child_hearing_disabilities_specify,        
+                  child_vision_disabilities,                 
+                  child_vision_disabilities_specify,
+                  child_major_illnesses_injuries,         
+                  child_ilnesses_injuries_specify,
+                  child_developmentaldelays,           
+                  child_developmentaldelays_specify,
+                  mom_bio_adoptive,
+                  mom_childbirth_age,
+                  mom_race,
+                  mom_birth_country,
+                  mom_birth_country_specify,
+                  mom_education,
+                  mom_employment,
+                  mom_occupation,
+                  mom_jobs_number,
+                  mom_training,
+                  biodad_childbirth_age,
+                  biodad_race,
+                  contains("language_spoken"),
+                  contains("childcare_"))
+}
+
+test_open_csv_merge_clean <- function() {
+  
+  d <- test_join()
+  
+  d |> 
+    clean_child_info() |>
+    clean_lang_info() |>
+    clean_mom_info() |>
+    clean_biodad_father_info() |>
+    clean_childcare_info() |>
+    clean_family_structure() |>
+    clean_play_id() |>
+    remove_selected_cols() |>
+    select_reorder_cols()
+
+}

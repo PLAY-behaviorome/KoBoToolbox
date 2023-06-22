@@ -1,15 +1,16 @@
-###################################################################
+#-------------------------------------------------------------------------------
 #' Loads all XLSX-formatted files in `in_dir` and saves CSV-formatted files
 #' to `out_dir`
 #'
 #' @param in_dir A string indicating the input directory
 #' @param out_dir A string indicating the output directory
+#' @export
 file_load_xlsx_save_many_csv <- function(in_dir, out_dir, filter_str) {
   stopifnot(dir.exists(in_dir))
   stopifnot(dir.exists(out_dir))
   stopifnot(is.character(filter_str))
   
-  suppressPackageStartupMessages(require(purrr))
+  # suppressPackageStartupMessages(require(purrr))
   
   fns <- list.files(in_dir, pattern = filter_str, full.names = TRUE)
   if (length(fns) < 1) {

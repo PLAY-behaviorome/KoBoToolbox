@@ -1,0 +1,232 @@
+# Screening visualizations {-}
+
+These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow.
+
+## Setup {-}
+
+```{r load-viz-pkgs}
+library(targets)
+library(tidyverse)
+library(forcats)
+```
+
+## Screening/recruiting calls data {-}
+
+Cumulative screening/recruiting calls by site.
+
+```{r load-screening-df}
+targets::tar_load(screen_df, store="../_targets")
+df <- add_n_calls_to_demog(screen_df)
+```
+
+### Calls across time {-}
+
+```{r fig-screening-calls-cum, fig.cap="Cumulative screening calls by year and site"}
+plot_call_timeseries(df)
+```
+
+### Calls by site {-}
+
+```{r fig-screening-calls-by-site, fig.cap="Cumulative screening calls by site"}
+calls_by_site_plot <- function(df) {
+  require(dplyr)
+  df %>%
+    filter(., !is.na(site_id)) %>%
+    ggplot(.) +
+    aes(fct_infreq(site_id), fill = site_id) +
+    geom_bar() +
+    theme(axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )) + # Rotate text
+    labs(x = "site") +
+    theme(legend.position = "none")
+}
+
+calls_by_site_plot(screen_df)
+```
+
+### Demographics {-}
+
+#### Child age {-}
+
+Child age in months (`child_age_mos`) by `child_sex`.
+
+```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
+screen_df %>%
+  dplyr::filter(.,!is.na(child_age_mos),!is.na(child_sex)) %>%
+  ggplot() +
+  aes(child_age_mos, fill = child_sex) +
+  geom_histogram(bins = 50)
+```
+
+::: {.rmdnote}
+
+Some of the code to clean the `screen_df` variables could be incorporated into an earlier stage of the workflow.
+
+:::
+
+#### Language to child {-}
+
+Language(s) spoken to child by `child_sex`.
+
+```{r xtabs-language-by-sex}
+df <- screen_df %>%
+  dplyr::mutate(.,
+                language_to_child = stringr::str_replace_all(language_to_child, " ", "_"),
+                language_spoken_home = stringr::str_replace_all(language_spoken_home, " ", "_"))
+xtabs(formula = ~ child_sex + language_to_child,
+      data = df)
+```
+#### Language spoken at home {-}
+
+```{r xtabs-language-at-home-by-sex}
+xtabs(formula = ~ child_sex + language_spoken_home, data = df)
+```
+
+#### To child vs. at home {-}
+
+```{r}
+xtabs(formula = ~ language_to_child + language_spoken_home, data = df)
+```
+
+#### Child born on due date {-}
+
+```{r}
+xtabs(formula = ~ child_sex + child_bornonduedate,
+      data = screen_df)
+```
+
+::: {.rmdnote}
+
+There are a large number of NAs. Cross-check with the earlier version 
+of the survey. It's possible that this question was not asked early-on.
+
+:::
+
+#### Child weight {-}
+
+Must convert pounds and ounces to decimal pounds.
+
+```{r}
+df <- screen_df %>%
+  dplyr::mutate(.,
+                birth_weight_lbs = child_weight_pounds + child_weight_ounces/16)
+
+df |>
+  dplyr::filter(!is.na(birth_weight_lbs), !is.na(child_sex)) |>
+  dplyr::filter(birth_weight_lbs > 0) |>
+  ggplot() +
+  aes(x = birth_weight_lbs, fill = child_sex) +
+  geom_histogram(binwidth = 0.33) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+#### Birth complications {-}
+
+```{r}
+xtabs(formula = ~ child_sex + child_birth_complications,
+      data = screen_df)
+```
+
+#### Major illnesses or injuries {-}
+
+```{r}
+xtabs(formula = ~ child_sex + major_illnesses_injuries,
+      data = screen_df)
+```
+
+##### Child sleep {-}
+
+##### Bed time {-}
+
+##### Wake time {-}
+
+##### Duration {-}
+
+::: {.rmdimportant}
+
+This is work yet-to-be-done. The time stamps need to be reformatted prior to
+visualization.
+
+:::
+
+##### Nap hours {-}
+
+::: {.rmdimportant}
+
+Some recoding must be done here to handle strings that can't easily be 
+converted to numbers.
+
+:::
+
+```{r}
+df <- screen_df |>
+  dplyr::mutate(nap_hrs = as.numeric(child_nap_hours))
+
+df |>
+  dplyr::filter(!is.na(nap_hrs), !is.na(child_sex)) |>
+  ggplot() +
+  aes(x = nap_hrs, fill = child_sex) +
+  geom_histogram(bins = 10) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+##### Sleep location {-}
+
+```{r}
+xtabs(formula = ~ child_sex + child_sleep_location,
+      data = screen_df)
+```
+
+#### Mother {-}
+
+##### Age at childbirth {-}
+
+```{r}
+screen_df |>
+  dplyr::filter(!is.na(mother_childbirth_age), !is.na(child_sex)) |>
+  ggplot() +
+  aes(x = mother_childbirth_age, fill = child_sex) +
+  geom_histogram(bins = 25) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+Clearly, there are some impossible (erroneous) maternal ages > 100. Here are details:
+
+```{r}
+old_moms <- screen_df |>
+  dplyr::filter(mother_childbirth_age > 100)
+
+old_moms |>
+  dplyr::select(submit_date, site_id, sub_num, mother_childbirth_age) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+##### Mother's race and ethnicity {-}
+
+```{r xtabs-race-ethnicity}
+df <- screen_df %>%
+  dplyr::mutate(
+    .,
+    mother_race = dplyr::recode(
+      mother_race,
+      morethanone = "more_than_one",
+      americanindian = "american_indian"
+    ),
+    mother_ethnicity = dplyr::recode(
+      mother_ethnicity,
+      hispanic_or_la = "hispanic",
+      not_hispanic_o = "not_hispanic",
+      nothispanic = "not_hispanic"
+    )
+  )
+xtabs(formula = ~ mother_race + mother_ethnicity,
+      data = df)
+```
+

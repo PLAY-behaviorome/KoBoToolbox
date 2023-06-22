@@ -11,7 +11,7 @@
 #' "data/csv/screening".
 #' @returns Data frame with the merged screening/demographic survey data.
 screening_make_df <-
-  function(kb_screen = kobo_list_data_screening(),
+  function(kb_screen = kobo_list_data_filtered("[Dd]emographic"),
            xlsx_dir = "data/xlsx/screening",
            csv_dir = "data/csv/screening") {
     stopifnot(is.data.frame(kb_screen))
@@ -25,7 +25,7 @@ screening_make_df <-
     
     file_load_xlsx_save_many_csv(xlsx_dir, csv_dir, "Demographic")
     
-    screen_csv_fns <-
-      list.files(csv_dir, pattern = "[0-9]+.*\\.csv", full.names = TRUE)
-    screening_clean_merge(screen_csv_fns)
+    # screen_csv_fns <-
+    #   list.files(csv_dir, pattern = "[0-9]+.*\\.csv", full.names = TRUE)
+    # screening_clean_merge(screen_csv_fns)
   }

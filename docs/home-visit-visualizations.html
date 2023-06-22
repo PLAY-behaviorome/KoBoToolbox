@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Home visit visualizations | PLAY Project: Surveys</title>
+<meta name="author" content="Rick Gilmore">
+<meta name="description" content='Load home visit data targets::tar_load(home_visit_df, store="../_targets") Demographics  Child age Child age in months (age_group) by child_sex. Note: The child’s exact age in months is part of...'>
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="Home visit visualizations | PLAY Project: Surveys">
+<meta property="og:type" content="book">
+<meta property="og:description" content='Load home visit data targets::tar_load(home_visit_df, store="../_targets") Demographics  Child age Child age in months (age_group) by child_sex. Note: The child’s exact age in months is part of...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home visit visualizations | PLAY Project: Surveys">
+<meta name="twitter:description" content='Load home visit data targets::tar_load(home_visit_df, store="../_targets") Demographics  Child age Child age in months (age_group) by child_sex. Note: The child’s exact age in months is part of...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/css/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">PLAY Project: Surveys</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li class="book-part">Tools and Processes</li>
+<li><a class="" href="setup.html">Setup</a></li>
+<li class="book-part">Data Wrangling</li>
+<li><a class="" href="screening-call.html">Screening call</a></li>
+<li><a class="" href="home-visit.html">Home visit</a></li>
+<li><a class="" href="data-dictionary.html">Data dictionary</a></li>
+<li><a class="" href="post-visit-notes.html">Post-visit notes</a></li>
+<li class="book-part">Data Visualization</li>
+<li><a class="" href="screening-visualizations.html">Screening visualizations</a></li>
+<li><a class="active" href="home-visit-visualizations.html">Home visit visualizations</a></li>
+<li class="book-part">Project Monitoring</li>
+<li><a class="" href="state-of-play.html">State of PLAY</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="home-visit-visualizations" class="section level1 unnumbered">
+<h1>Home visit visualizations<a class="anchor" aria-label="anchor" href="#home-visit-visualizations"><i class="fas fa-link"></i></a>
+</h1>
+<div id="load-home-visit-data" class="section level2 unnumbered">
+<h2>Load home visit data<a class="anchor" aria-label="anchor" href="#load-home-visit-data"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span></code></pre></div>
+<div id="demographics-1" class="section level3 unnumbered">
+<h3>Demographics<a class="anchor" aria-label="anchor" href="#demographics-1"><i class="fas fa-link"></i></a>
+</h3>
+<div id="child-age-1" class="section level4 unnumbered">
+<h4>Child age<a class="anchor" aria-label="anchor" href="#child-age-1"><i class="fas fa-link"></i></a>
+</h4>
+<p>Child age in months (<code>age_group</code>) by <code>child_sex</code>.</p>
+<p>Note: The child’s exact age in months is part of the Databrary-related data.
+That is on the work plan.</p>
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age_group</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-age-grp-by-sex"></span>
+<img src="include/img/fig-age-grp-by-sex-1.png" alt="Participants by age group and sex" width="672"><p class="caption">
+Figure 4: Participants by age group and sex
+</p>
+</div>
+</div>
+</div>
+<div id="language-exposure" class="section level3 unnumbered">
+<h3>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          language_child
+## child_sex english english_spanish
+##    female     131              24
+##    male       130              41</code></pre>
+</div>
+<div id="locomotor-milestones" class="section level3 unnumbered">
+<h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    <span class="va">age_group</span>,</span>
+<span>    <span class="va">child_sex</span>,</span>
+<span>    <span class="va">language_child</span>,</span>
+<span>    <span class="va">site_id</span>,</span>
+<span>    <span class="va">subject_number</span>,</span>
+<span>    <span class="va">locomotor_milestones.who_walk.who_walk_onset_mo</span>,</span>
+<span>    <span class="va">locomotor_milestones.k_walk.k_walk_onset_mo</span>,</span>
+<span>    <span class="va">locomotor_milestones.crawl_onset.crawl_onset_mo</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    walk_mos_who <span class="op">=</span> <span class="va">locomotor_milestones.who_walk.who_walk_onset_mo</span>,</span>
+<span>    walk_mos_kea <span class="op">=</span> <span class="va">locomotor_milestones.k_walk.k_walk_onset_mo</span>,</span>
+<span>    crawl_mos <span class="op">=</span> <span class="va">locomotor_milestones.crawl_onset.crawl_onset_mo</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    walk_mos_who <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span>,</span>
+<span>    walk_mos_kea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span>,</span>
+<span>    crawl_mos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div id="check-for-anomalous-values" class="section level4 unnumbered">
+<h4>Check for anomalous values<a class="anchor" aria-label="anchor" href="#check-for-anomalous-values"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crawl_mos_min</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="va">walk_mos_min</span> <span class="op">&lt;-</span> <span class="fl">6</span></span></code></pre></div>
+<div id="anomalous-crawling-onset" class="section level5 unnumbered">
+<h5>Anomalous crawling onset<a class="anchor" aria-label="anchor" href="#anomalous-crawling-onset"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">crawl_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&lt;</span> <span class="va">crawl_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:right;">
+crawl_mos
+</th>
+</tr></thead>
+<tbody><tr>
+<td style="text-align:left;">
+CHOPH
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:right;">
+3.72
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<div id="anomalous-walking-onset-kea-criteria" class="section level5 unnumbered">
+<h5>Anomalous walking onset (KEA criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-kea-criteria"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_kea</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:right;">
+walk_mos_kea
+</th>
+</tr></thead>
+<tbody><tr></tr></tbody>
+</table></div>
+</div>
+<div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
+<h5>Anomalous walking onset (WHO criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-who-criteria"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_who</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:right;">
+walk_mos_who
+</th>
+</tr></thead>
+<tbody><tr></tr></tbody>
+</table></div>
+</div>
+</div>
+<div id="crawl-onset" class="section level4 unnumbered">
+<h4>Crawl onset<a class="anchor" aria-label="anchor" href="#crawl-onset"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">crawl_mos</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-crawl-onset-hist"></span>
+<img src="include/img/fig-crawl-onset-hist-1.png" alt="Age of crawling onset (mos) by sex" width="672"><p class="caption">
+Figure 5: Age of crawling onset (mos) by sex
+</p>
+</div>
+</div>
+<div id="walk-onset" class="section level4 unnumbered">
+<h4>Walk onset<a class="anchor" aria-label="anchor" href="#walk-onset"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_kea</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-walk-mos-kea"></span>
+<img src="include/img/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672"><p class="caption">
+Figure 6: Age (mos) of walking onset (KEA criteria) by sex
+</p>
+</div>
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_who</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins<span class="op">=</span><span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-walk-mos-who"></span>
+<img src="include/img/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672"><p class="caption">
+Figure 7: Age (mos) of walking onset (WHO criteria) by sex
+</p>
+</div>
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">walk_mos_who</span>, <span class="va">walk_mos_kea</span>, color <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">walk_p</span></span>
+<span></span>
+<span><span class="fu">ggExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span></span>
+<span>  <span class="va">walk_p</span>,</span>
+<span>  <span class="va">play_loco</span>,</span>
+<span>  <span class="va">walk_mos_who</span>,</span>
+<span>  <span class="va">walk_mos_kea</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"density"</span>,</span>
+<span>  margins <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  groupColour <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
+<img src="include/img/fig-walk-mos-kea-who-1.png" alt="Walking onset by WHO vs. KEA criteria" width="672"><p class="caption">
+Figure 8: Walking onset by WHO vs. KEA criteria
+</p>
+</div>
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">crawl_mos</span>, <span class="va">walk_mos_kea</span>, color <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">walk_p</span></span>
+<span></span>
+<span><span class="fu">ggExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggExtra/man/ggMarginal.html">ggMarginal</a></span><span class="op">(</span></span>
+<span>  <span class="va">walk_p</span>,</span>
+<span>  <span class="va">play_loco</span>,</span>
+<span>  <span class="va">walk_mos_who</span>,</span>
+<span>  <span class="va">walk_mos_kea</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"density"</span>,</span>
+<span>  margins <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  groupColour <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = 'y ~ x'
+## `geom_smooth()` using formula = 'y ~ x'</code></pre>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-walk-mos-kea-crawl-mos"></span>
+<img src="include/img/fig-walk-mos-kea-crawl-mos-1.png" alt="Walking onset vs. Crawling" width="672"><p class="caption">
+Figure 9: Walking onset vs. Crawling
+</p>
+</div>
+</div>
+</div>
+<div id="health" class="section level3 unnumbered">
+<h3>Health<a class="anchor" aria-label="anchor" href="#health"><i class="fas fa-link"></i></a>
+</h3>
+<div id="feeding" class="section level4 unnumbered">
+<h4>Feeding<a class="anchor" aria-label="anchor" href="#feeding"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    <span class="va">age_group</span>,</span>
+<span>    <span class="va">child_sex</span>,</span>
+<span>    <span class="va">site_id</span>,</span>
+<span>    <span class="va">subject_number</span>,</span>
+<span>    <span class="va">language_child</span>,</span>
+<span>    <span class="va">health.feeding_nutrition.breastfeed</span>,</span>
+<span>    <span class="va">health.feeding_nutrition.solidfood_age</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, breastfeed <span class="op">=</span> <span class="va">health.feeding_nutrition.breastfeed</span>,</span>
+<span>                solid_food_mos <span class="op">=</span> <span class="va">health.feeding_nutrition.solidfood_age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, solid_food_mos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">solid_food_mos</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          breastfeed
+## child_sex donotknow  no refused yes
+##    female         1   3       0 150
+##    male           0  10       1 156</code></pre>
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solid_food_mos</span>, color <span class="op">=</span> <span class="va">child_sex</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-solid-food-mos"></span>
+<img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672"><p class="caption">
+Figure 10: Age at introduction of solid foods
+</p>
+</div>
+<p>Clearly, there are some impossible values here.</p>
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">solid_food_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">solid_food_mos</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:right;">
+solid_food_mos
+</th>
+</tr></thead>
+<tbody><tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+996
+</td>
+<td style="text-align:right;">
+999
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<div id="smokingdrinking" class="section level4 unnumbered">
+<h4>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    <span class="va">age_group</span>,</span>
+<span>    <span class="va">child_sex</span>,</span>
+<span>    <span class="va">language_child</span>,</span>
+<span>    <span class="va">health.smoking.pregnant_smoking</span>,</span>
+<span>    <span class="va">health.drinking.pregnant_drinking</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, preg_smoking <span class="op">=</span> <span class="va">health.smoking.pregnant_smoking</span>,</span>
+<span>                preg_drinking <span class="op">=</span> <span class="va">health.drinking.pregnant_drinking</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">preg_smoking</span> <span class="op">+</span> <span class="va">preg_drinking</span>, <span class="va">smoking_drinking</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##             preg_drinking
+## preg_smoking  no refused yes
+##      no      257       0  61
+##      refused   0       1   0</code></pre>
+</div>
+<div id="sleeping-position" class="section level4 unnumbered">
+<h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sleeping_pos</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">.</span>,</span>
+<span>    <span class="va">age_group</span>,</span>
+<span>    <span class="va">child_sex</span>,</span>
+<span>    <span class="va">language_child</span>,</span>
+<span>    <span class="va">health.general_health.child_sleeping_position</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, child_sleeping_position <span class="op">=</span> <span class="va">health.general_health.child_sleeping_position</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## child_sleeping_position
+##         back      changed    donotknow        other      refused         side 
+##          305            4            1            2            1            2 
+## stomach_side 
+##            6</code></pre>
+</div>
+</div>
+</div>
+<div id="post-visit-data" class="section level2 unnumbered">
+<h2>Post-visit data<a class="anchor" aria-label="anchor" href="#post-visit-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>We load the post-visit survey data.</p>
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">post_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">post_visit_df</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 353 180</code></pre>
+<div class="rmdnote">
+<p>Cleaning this data is set aside for future work.</p>
+</div>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="screening-visualizations.html">Screening visualizations</a></div>
+<div class="next"><a href="state-of-play.html">State of PLAY</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#home-visit-visualizations">Home visit visualizations</a></li>
+<li>
+<a class="nav-link" href="#load-home-visit-data">Load home visit data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#demographics-1">Demographics</a></li>
+<li><a class="nav-link" href="#language-exposure">Language exposure</a></li>
+<li><a class="nav-link" href="#locomotor-milestones">Locomotor milestones</a></li>
+<li><a class="nav-link" href="#health">Health</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#post-visit-data">Post-visit data</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/22-viz-home-visit.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/22-viz-home-visit.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

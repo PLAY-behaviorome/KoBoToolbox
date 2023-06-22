@@ -1,0 +1,165 @@
+# Screening call {-}
+
+## Collection protocol {-}
+
+Details about the data collection [protocol for participant screening and recruiting](https://www.play-project.org/collection.html#Participant_Recruitment) can be found on the [PLAY Project website](https://play-project.org).
+
+## Retrieve from KoBoToolbox (KBT) {-}
+
+### Setup {-}
+
+Load functions needed to download KBT screening/demographic questionnaire files.
+
+```{r}
+kb_fl <- list.files(file.path(here::here(), "R"), "^kobo_", full.names = TRUE)
+purrr::walk(kb_fl, source)
+
+file_fl <- list.files(file.path(here::here(), "R"), "^file_", full.names = TRUE)
+purrr::walk(file_fl, source)
+```
+
+### Download {-}
+
+First, we list the screening call data files available on KBT.
+
+```{r list-demographic-from-kbt}
+(kb_screen_df <- kobo_list_data_filtered("[Dd]emographic"))
+```
+
+Then we retrieve and save these files.
+
+```{r download-demographic-from-kbt}
+kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")
+```
+
+Next, we convert the XLSX files to CSVs via a function from the `play/files` module.
+
+```{r save-demographic-as-csv}
+file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")
+```
+
+## Clean and merge {-}
+
+### Setup {-}
+
+A set of cleaning functions have the `screen_` prefix.
+
+```{r}
+purrr::walk(list.files(file.path(here::here(), "R"), 
+                    "^screen_", full.names = TRUE), source)
+```
+
+There are three CSV files to clean:
+
+```{r}
+(fn <- list.files("../data/csv/screening", "[Dd]emographic", full.names = TRUE))
+```
+
+We clean them separately, as needed, then merge them.
+
+### Clean variable names {-}
+
+```{r read-screening-csvs}
+df1 <-
+  readr::read_csv(fn[1],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+df2 <-
+  readr::read_csv(fn[2],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+df3 <-
+  readr::read_csv(fn[3],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+```
+
+```{r}
+head(names(df1), 15)
+```
+
+```{r}
+head(names(df2), 15)
+```
+
+```{r}
+head(names(df3), 15)
+```
+
+There are a separate set of variable-by-variable cleaning functions in `R/screen_clean_utils.R`.
+
+We remove the unneeded 'play_demo_*' and 'play_phone_questionnaire_' variable headers using `screen_remove_variable_headers()`.
+
+We remove fields that contain administrative metadata with `screen_remove_metadata_fields()`.
+
+We remove fields used only by staff in uploading data to Databrary using `screen_remove_databrary_fields()`.
+
+We have name and address information in the screening data (e.g., '..parent_phone', '..parent_email', etc.) 
+
+::: {.rmdnote}
+
+In a future workflow, we will add Census FIPS IDs for the State and Country 
+**before** removing the address information.
+
+The Census queries stopped working around 2023-06-16.
+
+For now, we remove identifiers without querying the Census.
+
+:::
+
+We remove identifiable information using `screen_remove_identifiers()`.
+
+Then, we use `dplyr::full_join()` to combine the set of individually 
+cleaned data files.
+The `screen_clean_raw_csv()` function combines the previous `screen_remove*` functions.
+The `screen_clean_raw_join()` function cleans each CSV then joins them.
+
+```{r clean-screening-join}
+(scr_df <- screen_clean_raw_join())
+```
+
+### Clean individual fields {-}
+
+Now, we can proceed to clean-up the merged data frame.
+The sequence of functions called below cleans 'construct-specific' variables
+as indicated by the function names.
+
+```{r show-screening-field-cleaning, eval=FALSE}
+scr_df <- scr_df |> 
+    screen_clean_child_info() |>
+    screen_clean_lang_info() |>
+    screen_clean_mom_info() |>
+    screen_clean_biodad_father_info() |>
+    screen_clean_childcare_info() |>
+    screen_clean_family_structure() |>
+    screen_clean_play_id() |>
+    screen_remove_selected_cols() |>
+    screen_select_reorder_cols()
+```
+
+For convenience, we package this sequence in its own function, `screen_clean_fields()`.
+
+::: {.rmdnote}
+
+Note that all of the variables are considered character strings. The `tidyverse`
+suite does a great job of guessing what variables are what, but sometimes it
+guesses wrongly. So, in preliminary stages, it has proved easier to make everything
+a character string.
+
+:::
+
+```{r clean-merged-screen-fields}
+scr_df <- screen_clean_fields(scr_df)
+str(scr_df)
+```
+
+There is more work to do, but we have a version worth exporting.
+
+## Export cleaned file {-}
+
+We date-stamp the exported file so we can monitor progress as this workflow develops.
+
+```{r export-screen}
+sfn <- paste0("PLAY-screening-", Sys.Date(), ".csv")
+readr::write_csv(scr_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+```

@@ -317,15 +317,15 @@ make_post_visit_df <- function(kb_post_visit, xlsx_dir, csv_dir) {
 #' @param fn Filename for XLSX file
 #' @param out_dir Directory to save CSV file
 load_xlsx_save_csv <- function(fn, out_dir, vb = FALSE) {
-  require(tools)
-  require(readxl)
-  require(readr)
+  # require(tools)
+  # require(readxl)
+  # require(readr)
   stopifnot(file.exists(fn))
   stopifnot(dir.exists(out_dir))
   
   xl <- readxl::read_xlsx(fn)
   fn_csv <-
-    file.path(out_dir, paste0(file_path_sans_ext(basename(fn)), ".csv"))
+    file.path(out_dir, paste0(tools::file_path_sans_ext(basename(fn)), ".csv"))
   if (dir.exists(dirname(fn_csv))) {
     readr::write_csv(xl, fn_csv)
     if (vb)

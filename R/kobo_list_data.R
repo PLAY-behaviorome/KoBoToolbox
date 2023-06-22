@@ -1,4 +1,4 @@
-################################################################################
+#-------------------------------------------------------------------------------
 #' Lists the datasets available on KoBoToolbox using the PLAY credentials.
 #'
 #' @param URL A string that is the API call to extract the data. It defaults
@@ -13,7 +13,7 @@ kobo_list_data <-
     stopifnot(is.character(URL))
     stopifnot(is.logical(return_df))
     
-    require(httr)
+    box::use(httr)
     
     kobo_api_key <- Sys.getenv("KOBO_API_KEY")
     if (!is.character(kobo_api_key)) {
