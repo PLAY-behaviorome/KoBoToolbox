@@ -110,7 +110,7 @@ screen_clean_child_info <- function(df) {
   box::use(dplyr[rename_with])
   
   df |>
-    tidyr::unite(col = "child_ilnesses_injuries_specify", c("child_information/specify_illnesses_injuries",
+    tidyr::unite(col = "child_illnesses_injuries_specify", c("child_information/specify_illnesses_injuries",
                                                             "child_information/indicate_injuries_illnesses"),
                  na.rm = TRUE) |>
     dplyr::rename_with(~ gsub("child_information/", "", .x, fixed = TRUE)) |>
@@ -123,7 +123,7 @@ screen_clean_child_info <- function(df) {
     dplyr::rename(child_developmentaldelays = other_developmentaldelays) |>
     dplyr::rename(child_developmentaldelays_specify = specify_developmentaldelays) |>
     dplyr::rename(child_sleep_location_specify = specify_child_sleep_location) |>
-    dplyr::rename(child_age_wks = check_childage)
+    dplyr::rename(child_age_mos = check_childage)
 }
 
 #-------------------------------------------------------------------------------
@@ -194,7 +194,7 @@ screen_clean_mom_info <- function(df) {
     tidyr::unite(col = "mom_race",
                  c("group_mominfo/mom_race", "parent_information/mother_information/mother_race"),
                  na.rm = TRUE) |>
-    tidyr::unite(col = "mom_bio_adoptive", c("group_mominfo/mom_biological", "group_mominfo/mom_relation"),
+    tidyr::unite(col = "mom_bio", c("group_mominfo/mom_biological", "group_mominfo/mom_relation"),
                  na.rm = TRUE) |>
     tidyr::unite(col = "mom_birth_country", c("group_mominfo/mom_birth_country", 
                                               "parent_information/mother_information/mother_birth_country"),
@@ -224,6 +224,19 @@ screen_clean_family_structure <- function(df) {
     dplyr::rename(child_onlychild = `group_family_structure/only_child`) |>
     dplyr::rename(child_onlychild_specify = `group_family_structure/specify_onlychild`) |>
     dplyr::rename(household_members = `group_family_structure/household_members`)
+}
+
+#-------------------------------------------------------------------------------
+screen_recode_site_id <- function(df) {
+  stopifnot(is.data.frame(df))
+  
+  df |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "new_york_unive", "NYUNI")) |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "^NYU$", "NYUNI")) |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "georgetown_uni", "GEORG")) |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "^GTN$", "GEORG")) |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "^UCR$", "UCRIV")) |>
+    dplyr::mutate(site_id = stringr::str_replace_all(site_id, "^university_of__3", "?????"))
 }
 
 #-------------------------------------------------------------------------------
@@ -265,8 +278,7 @@ screen_clean_raw_join <- function() {
 #-------------------------------------------------------------------------------
 screen_remove_selected_cols <- function(df) {
   df |>
-    dplyr::select(-start,
-                  -end,
+    dplyr::select(-end,
                   -c_today,
                   -update_date,
                   -day,
@@ -285,10 +297,12 @@ screen_select_reorder_cols <- function(df) {
   stopifnot(is.data.frame(df))
   
   df |>
-    dplyr::select(site_id,
+    dplyr::rename(submit_date = start) |>
+    dplyr::select(submit_date,
+                  site_id,
                   subject_number,
                   play_id,
-                  child_age_wks,
+                  child_age_mos,
                   child_sex,
                   child_bornonduedate,
                   child_onterm,
@@ -302,10 +316,10 @@ screen_select_reorder_cols <- function(df) {
                   child_vision_disabilities,                 
                   child_vision_disabilities_specify,
                   child_major_illnesses_injuries,         
-                  child_ilnesses_injuries_specify,
+                  child_illnesses_injuries_specify,
                   child_developmentaldelays,           
                   child_developmentaldelays_specify,
-                  mom_bio_adoptive,
+                  mom_bio,
                   mom_childbirth_age,
                   mom_race,
                   mom_birth_country,
@@ -335,5 +349,6 @@ screen_clean_fields <- function(df) {
     screen_clean_family_structure() |>
     screen_clean_play_id() |>
     screen_remove_selected_cols() |>
-    screen_select_reorder_cols() 
+    screen_select_reorder_cols() |>
+    screen_recode_site_id()
 }

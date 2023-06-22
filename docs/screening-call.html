@@ -96,10 +96,14 @@
 ## 1 334134 agChfbnGHc6fiUdfYUaZ2z PLAY Demographic Questionnaire (Spanish)
 ## 2 359546 aGLEqT7eRBhuPgizCQBeqA           PLAY Demographic Questionnaire
 ## 3 275882 anqhvxKtQieo7gc9uPqJ3y           PLAY Demographic Questionnaire
-##                                description                                           url
-## 1 PLAY Demographic Questionnaire (Spanish) https://kc.kobotoolbox.org/api/v1/data/334134
-## 2            New Demographic Questionnaire https://kc.kobotoolbox.org/api/v1/data/359546
-## 3                 PLAY Phone Questionnaire https://kc.kobotoolbox.org/api/v1/data/275882</code></pre>
+##                                description
+## 1 PLAY Demographic Questionnaire (Spanish)
+## 2            New Demographic Questionnaire
+## 3                 PLAY Phone Questionnaire
+##                                             url
+## 1 https://kc.kobotoolbox.org/api/v1/data/334134
+## 2 https://kc.kobotoolbox.org/api/v1/data/359546
+## 3 https://kc.kobotoolbox.org/api/v1/data/275882</code></pre>
 <p>Then we retrieve and save these files.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">kobo_retrieve_save_many_xlsx</span><span class="op">(</span><span class="va">kb_screen_df</span>, save_dir <span class="op">=</span> <span class="st">"../data/xlsx/screening"</span><span class="op">)</span></span></code></pre></div>
@@ -110,8 +114,8 @@
 <p>Next, we convert the XLSX files to CSVs via a function from the <code>play/files</code> module.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">file_load_xlsx_save_many_csv</span><span class="op">(</span><span class="st">"../data/xlsx/screening"</span>, <span class="st">"../data/csv/screening"</span>, <span class="st">"Demographic"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in read_fun(path = path, sheet_i = sheet, limits = limits, shim = shim, : NA
-## inserted for an unsupported date prior to 1900</code></pre>
+<pre><code>## Warning in read_fun(path = path, sheet_i = sheet, limits = limits, shim = shim,
+## : NA inserted for an unsupported date prior to 1900</code></pre>
 <pre><code>## [1] "../data/csv/screening/275882_PLAY_Demographic_Questionnaire.csv"        
 ## [2] "../data/csv/screening/334134_PLAY_Demographic_Questionnaire_Spanish.csv"
 ## [3] "../data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv"</code></pre>
@@ -226,17 +230,19 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 236 columns.</code></pre>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id, subject_number,
-## state, check_childage, check_childage_weeks, child_sex, day, day2, day1, play_id,
-## language_spoken_mom, `language_spoken_mom/english`, `language_spoken_mom/spanish`,
-## `language_spoken_mom/other`, language_spoken_mom_other, language_spoken_child,
+<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id,
+## subject_number, state, check_childage, check_childage_weeks, child_sex, day,
+## day2, day1, play_id, language_spoken_mom, `language_spoken_mom/english`,
+## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
+## language_spoken_mom_other, language_spoken_child,
 ## `language_spoken_child/english`, `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other, language_spoken_house,
-## `language_spoken_house/english`, `language_spoken_house/spanish`,
-## `language_spoken_house/other`, language_spoken_house_other,
-## `child_information/child_bornonduedate`, `child_information/child_onterm`,
-## `child_information/child_duedate`, `child_information/child_birthage`,
-## `child_information/child_weight_pounds`, `child_information/child_weight_ounces`,
+## `language_spoken_child/other`, language_spoken_child_other,
+## language_spoken_house, `language_spoken_house/english`,
+## `language_spoken_house/spanish`, `language_spoken_house/other`,
+## language_spoken_house_other, `child_information/child_bornonduedate`,
+## `child_information/child_onterm`, `child_information/child_duedate`,
+## `child_information/child_birthage`, `child_information/child_weight_pounds`,
+## `child_information/child_weight_ounces`,
 ## `child_information/child_birth_complications`,
 ## `child_information/specify_birth_complications`,
 ## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
@@ -247,9 +253,10 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `child_information/specify_developmentaldelays`, `child_information/child_race`,
 ## `child_information/child_sleep_time`, `child_information/child_wake_time`,
 ## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
-## `child_information/specify_child_sleep_location`, `child_information/indicate_child`,
-## `child_information/indicate_child_2`, `group_family_structure/only_child`,
-## `group_family_structure/specify_onlychild`, `group_family_structure/household_members`,
+## `child_information/specify_child_sleep_location`,
+## `child_information/indicate_child`, `child_information/indicate_child_2`,
+## `group_family_structure/only_child`, `group_family_structure/specify_onlychild`,
+## `group_family_structure/household_members`,
 ## `group_family_structure/household_members/father_biological`,
 ## `group_family_structure/household_members/male_partner`,
 ## `group_family_structure/household_members/mother_biological`,
@@ -267,23 +274,28 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/household_members/relative`,
 ## `group_family_structure/household_members/non_relative`,
 ## `group_family_structure/household_members/none`,
-## `group_family_structure/other_relatives`, `group_family_structure/other_non_relatives`,
-## `group_family_structure/indicate_familystructure`, `group_mominfo/mom_biological`,
-## `group_mominfo/mom_relation`, `group_mominfo/mom_datecare`,
-## `group_mominfo/mom_childbirth_age`, `group_mominfo/check_mom_childbirth_age`,
-## `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
-## `group_mominfo/specify_mom_birth_country`, `group_mominfo/mom_education`,
-## `group_mominfo/mom_employment`, `group_mominfo/mom_occupation`,
-## `group_mominfo/mom_jobs_number`, `group_mominfo/mom_training`,
-## `group_mominfo/mom_condition`, `group_mominfo/specify_mom_condition`,
-## `group_mominfo/indicate_mom`, `group_biodad/biodad_childbirth_age`,
+## `group_family_structure/other_relatives`,
+## `group_family_structure/other_non_relatives`,
+## `group_family_structure/indicate_familystructure`,
+## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
+## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`,
+## `group_mominfo/mom_birth_country`, `group_mominfo/specify_mom_birth_country`,
+## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
+## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
+## `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
+## `group_biodad/biodad_childbirth_age`,
 ## `group_biodad/check_biodad_childbirth_age`, `group_biodad/biodad_race`,
 ## `group_biodad/indicate_biodad`, `group_biomom/biomom_childbirth_age`,
 ## `group_biomom/check_biomom_childbirth_age`, `group_biomom/biomom_race`,
 ## `group_biomom/indicate_biomom`, `group_nonbiopartner/nonbiopartner_race`,
-## `group_nonbiopartner/indicate_nonbiopartner`, `group_genpartner_info/partner_education`,
-## `group_genpartner_info/partner_employment`, `group_genpartner_info/partner_occupation`,
-## `group_genpartner_info/partner_jobs_number`, `group_genpartner_info/partner_program`,
+## `group_nonbiopartner/indicate_nonbiopartner`,
+## `group_genpartner_info/partner_education`,
+## `group_genpartner_info/partner_employment`,
+## `group_genpartner_info/partner_occupation`,
+## `group_genpartner_info/partner_jobs_number`,
+## `group_genpartner_info/partner_program`,
 ## `group_genpartner_info/indicate_genpartner`,
 ## `group_child_care_arrangements/childcare_types`,
 ## `group_child_care_arrangements/childcare_types/nanny_home`,
@@ -296,25 +308,28 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_number`,
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`,
-## `group_inclusioncheck/inclusionreason`, `group_inclusioncheck/indicate_inclusion`,
-## indicate_demoquestionnaire, indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today, update_date, site_id, subject_number,
-## state, check_childage, check_childage_weeks, child_sex, day, day2, day1,
-## language_spoken_child, `language_spoken_child/english`, `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other,
-## `child_information/child_bornonduedate`, `child_information/child_onterm`,
-## `child_information/child_duedate`, `child_information/child_birthage`,
-## `child_information/child_weight_pounds`, `child_information/child_weight_ounces`,
+## `group_inclusioncheck/inclusionreason`,
+## `group_inclusioncheck/indicate_inclusion`, indicate_demoquestionnaire,
+## indicate_databrary, `_id`)`
+## Joining with `by = join_by(start, end, c_today, update_date, site_id,
+## subject_number, state, check_childage, check_childage_weeks, child_sex, day,
+## day2, day1, language_spoken_child, `language_spoken_child/english`,
+## `language_spoken_child/spanish`, `language_spoken_child/other`,
+## language_spoken_child_other, `child_information/child_bornonduedate`,
+## `child_information/child_onterm`, `child_information/child_duedate`,
+## `child_information/child_birthage`, `child_information/child_weight_pounds`,
+## `child_information/child_weight_ounces`,
 ## `child_information/child_birth_complications`,
 ## `child_information/specify_birth_complications`,
 ## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
 ## `child_information/vision_disabilities`, `child_information/specify_vision`,
 ## `child_information/major_illnesses_injuries`,
-## `child_information/specify_illnesses_injuries`, `child_information/child_sleep_time`,
-## `child_information/child_wake_time`, `child_information/child_nap_hours`,
-## `child_information/child_sleep_location`,
-## `child_information/specify_child_sleep_location`, `child_information/indicate_child`,
-## `child_information/indicate_child_2`, `group_family_structure/household_members`,
+## `child_information/specify_illnesses_injuries`,
+## `child_information/child_sleep_time`, `child_information/child_wake_time`,
+## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
+## `child_information/specify_child_sleep_location`,
+## `child_information/indicate_child`, `child_information/indicate_child_2`,
+## `group_family_structure/household_members`,
 ## `group_family_structure/household_members/male_partner`,
 ## `group_family_structure/household_members/female_partner`,
 ## `group_family_structure/household_members/other_partner`,
@@ -327,7 +342,8 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/household_members/cousin`,
 ## `group_family_structure/household_members/relative`,
 ## `group_family_structure/household_members/non_relative`,
-## `group_family_structure/other_relatives`, `group_family_structure/other_non_relatives`,
+## `group_family_structure/other_relatives`,
+## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
 ## `group_child_care_arrangements/childcare_types`,
 ## `group_child_care_arrangements/childcare_types/relative`,
@@ -338,25 +354,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
 <pre><code>## # A tibble: 477 × 162
-##    start             end   c_today update_date site_id subject_number state check_childage
-##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         
-##  1 2020-02-27T08:24… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New … 32.6772408503…
-##  2 2020-02-27T08:43… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New … 32.3813828621…
-##  3 2019-12-18T16:37… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA    26.7258382642…
-##  4 2020-01-01T12:54… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg… 12.7547666009…
-##  5 2020-01-15T14:53… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New … 13.4122287968…
-##  6 2020-01-15T15:47… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New … 19.3636313828…
-##  7 2020-01-24T14:22… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg… 17.8514683322…
-##  8 2020-01-30T13:30… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY    17.8514683322…
-##  9 2020-02-03T17:40… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New … 23.8001314924…
-## 10 2020-02-05T09:39… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA    17.5884834538…
+##    start    end   c_today update_date site_id subject_number state check_childage
+##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         
+##  1 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New … 32.6772408503…
+##  2 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New … 32.3813828621…
+##  3 2019-12… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA    26.7258382642…
+##  4 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg… 12.7547666009…
+##  5 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New … 13.4122287968…
+##  6 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New … 19.3636313828…
+##  7 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg… 17.8514683322…
+##  8 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY    17.8514683322…
+##  9 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New … 23.8001314924…
+## 10 2020-02… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA    17.5884834538…
 ## # ℹ 467 more rows
 ## # ℹ 154 more variables: check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
 ## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
 ## #   `language_spoken_mom/english` &lt;chr&gt;, `language_spoken_mom/spanish` &lt;chr&gt;,
 ## #   `language_spoken_mom/other` &lt;chr&gt;, language_spoken_mom_other &lt;chr&gt;,
 ## #   language_spoken_child &lt;chr&gt;, `language_spoken_child/english` &lt;chr&gt;,
-## #   `language_spoken_child/spanish` &lt;chr&gt;, `language_spoken_child/other` &lt;chr&gt;, …</code></pre>
+## #   `language_spoken_child/spanish` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -385,11 +401,12 @@ a character string.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="fu">screen_clean_fields</span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## tibble [477 × 46] (S3: tbl_df/tbl/data.frame)
+<pre><code>## tibble [477 × 47] (S3: tbl_df/tbl/data.frame)
+##  $ submit_date                       : chr [1:477] "2020-02-27T08:24:10.551-05:00" "2020-02-27T08:43:34.275-05:00" "2019-12-18T16:37:17.554-05:00" "2020-01-01T12:54:04.550-05:00" ...
 ##  $ site_id                           : chr [1:477] "NYUNI" "NYUNI" "VCOMU" "GEORG" ...
 ##  $ subject_number                    : chr [1:477] "230" "229" "002" "010" ...
 ##  $ play_id                           : chr [1:477] "" "" "" "" ...
-##  $ child_age_wks                     : chr [1:477] "32.677240850317695" "32.38138286215201" "26.725838264299803" "12.754766600920446" ...
+##  $ child_age_mos                     : chr [1:477] "32.677240850317695" "32.38138286215201" "26.725838264299803" "12.754766600920446" ...
 ##  $ child_sex                         : chr [1:477] "male" "female" "female" "male" ...
 ##  $ child_bornonduedate               : chr [1:477] "yes" "yes" "yes" "yes" ...
 ##  $ child_onterm                      : chr [1:477] NA NA NA NA ...
@@ -403,10 +420,10 @@ a character string.</p>
 ##  $ child_vision_disabilities         : chr [1:477] "no" "no" "no" "no" ...
 ##  $ child_vision_disabilities_specify : chr [1:477] NA NA NA NA ...
 ##  $ child_major_illnesses_injuries    : chr [1:477] "yes" "no" "no" "no" ...
-##  $ child_ilnesses_injuries_specify   : chr [1:477] "Pneumonia at 5 months" "" "" "" ...
+##  $ child_illnesses_injuries_specify  : chr [1:477] "Pneumonia at 5 months" "" "" "" ...
 ##  $ child_developmentaldelays         : chr [1:477] NA NA NA NA ...
 ##  $ child_developmentaldelays_specify : chr [1:477] NA NA NA NA ...
-##  $ mom_bio_adoptive                  : chr [1:477] "yes" "yes" "yes" "yes" ...
+##  $ mom_bio                           : chr [1:477] "yes" "yes" "yes" "yes" ...
 ##  $ mom_childbirth_age                : chr [1:477] "33.41" "38.84" "32.2" "30.38" ...
 ##  $ mom_race                          : chr [1:477] "white" "white" "white" "white" ...
 ##  $ mom_birth_country                 : chr [1:477] "unitedstates" "unitedstates" "unitedstates" "unitedstates" ...
