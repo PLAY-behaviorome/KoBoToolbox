@@ -506,7 +506,7 @@ a character string.</p>
 </div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> <span class="fu">screen_clean_fields</span>(scr_df)</span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">str</span>(scr_df)</span></code></pre></div>
-<pre><code>## tibble [477 × 47] (S3: tbl_df/tbl/data.frame)
+<pre><code>## tibble [477 × 51] (S3: tbl_df/tbl/data.frame)
 ##  $ submit_date                       : chr [1:477] &quot;2020-02-27T08:24:10.551-05:00&quot; &quot;2020-02-27T08:43:34.275-05:00&quot; &quot;2019-12-18T16:37:17.554-05:00&quot; &quot;2020-01-01T12:54:04.550-05:00&quot; ...
 ##  $ site_id                           : chr [1:477] &quot;NYUNI&quot; &quot;NYUNI&quot; &quot;VCOMU&quot; &quot;GEORG&quot; ...
 ##  $ subject_number                    : chr [1:477] &quot;230&quot; &quot;229&quot; &quot;002&quot; &quot;010&quot; ...
@@ -528,6 +528,10 @@ a character string.</p>
 ##  $ child_illnesses_injuries_specify  : chr [1:477] &quot;Pneumonia at 5 months&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
 ##  $ child_developmentaldelays         : chr [1:477] NA NA NA NA ...
 ##  $ child_developmentaldelays_specify : chr [1:477] NA NA NA NA ...
+##  $ child_sleep_time                  : chr [1:477] &quot;20:15:00.000-05:00&quot; &quot;20:15:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; ...
+##  $ child_wake_time                   : chr [1:477] &quot;07:15:00.000-05:00&quot; &quot;06:45:00.000-05:00&quot; &quot;07:30:00.000-05:00&quot; &quot;06:15:00.000-05:00&quot; ...
+##  $ child_nap_hours                   : chr [1:477] &quot;2&quot; &quot;3&quot; &quot;1.5&quot; &quot;2&quot; ...
+##  $ child_sleep_location              : chr [1:477] &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; ...
 ##  $ mom_bio                           : chr [1:477] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
 ##  $ mom_childbirth_age                : chr [1:477] &quot;33.41&quot; &quot;38.84&quot; &quot;32.2&quot; &quot;30.38&quot; ...
 ##  $ mom_race                          : chr [1:477] &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; ...
@@ -2493,11 +2497,11 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <span id="cb187-3"><a href="#cb187-3" tabindex="-1"></a><span class="fu">library</span>(forcats)</span></code></pre></div>
 <p>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(screen_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-2023-06-22.csv&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 477 Columns: 47
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-2023-06-23.csv&quot;</span>))</span></code></pre></div>
+<pre><code>## Rows: 477 Columns: 51
 ## ── Column specification ─────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (38): site_id, subject_number, play_id, child_sex, child_bornonduedate, ...
+## chr  (42): site_id, subject_number, play_id, child_sex, child_bornonduedate, ...
 ## dbl   (8): child_age_mos, child_birthage, child_weight_pounds, child_weight_o...
 ## dttm  (1): submit_date
 ## 
@@ -2518,9 +2522,9 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <span id="cb192-4"><a href="#cb192-4" tabindex="-1"></a>    <span class="fu">aes</span>(submit_date, n_calls, <span class="at">color =</span> site_id) <span class="sc">+</span></span>
 <span id="cb192-5"><a href="#cb192-5" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="include/img/unnamed-chunk-61-1.png" alt="Cumulative screening calls by year and site" width="672" />
+<img src="include/img/unnamed-chunk-108-1.png" alt="Cumulative screening calls by year and site" width="672" />
 <p class="caption">
-(#fig:unnamed-chunk-61)Cumulative screening calls by year and site
+(#fig:unnamed-chunk-108)Cumulative screening calls by year and site
 </p>
 </div>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" tabindex="-1"></a><span class="fu">plot_call_timeseries</span>(df)</span></code></pre></div>
@@ -2644,7 +2648,7 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <span id="cb204-10"><a href="#cb204-10" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.33</span>) <span class="sc">+</span></span>
 <span id="cb204-11"><a href="#cb204-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
 <span id="cb204-12"><a href="#cb204-12" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="include/img/unnamed-chunk-64-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="include/img/unnamed-chunk-111-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="birth-complications" class="section level3 unnumbered">
 <h3 class="unnumbered">Birth complications</h3>
@@ -3782,34 +3786,1060 @@ visualization.</p>
 </div>
 <div id="bed-time" class="section level4 unnumbered">
 <h4 class="unnumbered">Bed time</h4>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" tabindex="-1"></a>extract_sleep_hr <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb220-2"><a href="#cb220-2" tabindex="-1"></a>  t <span class="sc">|&gt;</span></span>
+<span id="cb220-3"><a href="#cb220-3" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_extract</span>(<span class="st">&quot;^[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb220-4"><a href="#cb220-4" tabindex="-1"></a>    hms<span class="sc">::</span><span class="fu">as_hms</span>()</span>
+<span id="cb220-5"><a href="#cb220-5" tabindex="-1"></a>}</span>
+<span id="cb220-6"><a href="#cb220-6" tabindex="-1"></a></span>
+<span id="cb220-7"><a href="#cb220-7" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb220-8"><a href="#cb220-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_sleep_time =</span> <span class="fu">extract_sleep_hr</span>(child_sleep_time)) <span class="sc">|&gt;</span></span>
+<span id="cb220-9"><a href="#cb220-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time)) </span>
+<span id="cb220-10"><a href="#cb220-10" tabindex="-1"></a></span>
+<span id="cb220-11"><a href="#cb220-11" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb220-12"><a href="#cb220-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time),</span>
+<span id="cb220-13"><a href="#cb220-13" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb220-14"><a href="#cb220-14" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb220-15"><a href="#cb220-15" tabindex="-1"></a>  <span class="fu">aes</span>(child_sleep_time, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb220-16"><a href="#cb220-16" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb220-17"><a href="#cb220-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb220-18"><a href="#cb220-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="include/img/unnamed-chunk-122-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Some of the bed times are probably not in 24 hr time.</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb221-2"><a href="#cb221-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_sleep_time <span class="sc">&lt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(<span class="st">&quot;16:00:00&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb221-3"><a href="#cb221-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, child_sleep_time) <span class="sc">|&gt;</span></span>
+<span id="cb221-4"><a href="#cb221-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, subject_number) <span class="sc">|&gt;</span></span>
+<span id="cb221-5"><a href="#cb221-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb221-6"><a href="#cb221-6" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:left;">
+child_sleep_time
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+09:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+07:45:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+10:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+12:15:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+08:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+011
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UGEOR
+</td>
+<td style="text-align:left;">
+016
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+023
+</td>
+<td style="text-align:left;">
+08:00:00
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="wake-time" class="section level4 unnumbered">
 <h4 class="unnumbered">Wake time</h4>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" tabindex="-1"></a>extract_sleep_hr <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb222-2"><a href="#cb222-2" tabindex="-1"></a>  t <span class="sc">|&gt;</span></span>
+<span id="cb222-3"><a href="#cb222-3" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_extract</span>(<span class="st">&quot;^[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb222-4"><a href="#cb222-4" tabindex="-1"></a>    hms<span class="sc">::</span><span class="fu">as_hms</span>()</span>
+<span id="cb222-5"><a href="#cb222-5" tabindex="-1"></a>}</span>
+<span id="cb222-6"><a href="#cb222-6" tabindex="-1"></a></span>
+<span id="cb222-7"><a href="#cb222-7" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb222-8"><a href="#cb222-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_wake_time =</span> <span class="fu">extract_sleep_hr</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
+<span id="cb222-9"><a href="#cb222-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_wake_time)) </span>
+<span id="cb222-10"><a href="#cb222-10" tabindex="-1"></a></span>
+<span id="cb222-11"><a href="#cb222-11" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb222-12"><a href="#cb222-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_wake_time),</span>
+<span id="cb222-13"><a href="#cb222-13" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb222-14"><a href="#cb222-14" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb222-15"><a href="#cb222-15" tabindex="-1"></a>  <span class="fu">aes</span>(child_wake_time, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb222-16"><a href="#cb222-16" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb222-17"><a href="#cb222-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb222-18"><a href="#cb222-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="include/img/unnamed-chunk-124-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There are some unusual wake times, too.</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb223-2"><a href="#cb223-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_wake_time <span class="sc">&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(<span class="st">&quot;16:00:00&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb223-3"><a href="#cb223-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, child_wake_time) <span class="sc">|&gt;</span></span>
+<span id="cb223-4"><a href="#cb223-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, subject_number) <span class="sc">|&gt;</span></span>
+<span id="cb223-5"><a href="#cb223-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb223-6"><a href="#cb223-6" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:left;">
+child_wake_time
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+BOSTU
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+026
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+999
+</td>
+<td style="text-align:left;">
+17:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+012
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+013
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+18:45:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+019
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+021
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+029
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+031
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+035
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+015
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+19:45:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+21:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+035
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UGEOR
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+013
+</td>
+<td style="text-align:left;">
+18:00:00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="duration" class="section level4 unnumbered">
-<h4 class="unnumbered">Duration</h4>
+<div id="sleep-duration" class="section level4 unnumbered">
+<h4 class="unnumbered">Sleep duration</h4>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb224-2"><a href="#cb224-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_sleep_time =</span> <span class="fu">extract_sleep_hr</span>(child_sleep_time),</span>
+<span id="cb224-3"><a href="#cb224-3" tabindex="-1"></a>                  <span class="at">child_wake_time =</span> <span class="fu">extract_sleep_hr</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
+<span id="cb224-4"><a href="#cb224-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time),</span>
+<span id="cb224-5"><a href="#cb224-5" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
+<span id="cb224-6"><a href="#cb224-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_sleep_secs =</span> (child_sleep_time <span class="sc">-</span> child_wake_time))</span>
+<span id="cb224-7"><a href="#cb224-7" tabindex="-1"></a></span>
+<span id="cb224-8"><a href="#cb224-8" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb224-9"><a href="#cb224-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_secs)) <span class="sc">|&gt;</span></span>
+<span id="cb224-10"><a href="#cb224-10" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb224-11"><a href="#cb224-11" tabindex="-1"></a>  <span class="fu">aes</span>(child_sleep_secs, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb224-12"><a href="#cb224-12" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb224-13"><a href="#cb224-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb224-14"><a href="#cb224-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type &lt;difftime&gt;.
+## Defaulting to continuous.</code></pre>
+<p><img src="include/img/unnamed-chunk-126-1.png" width="672" style="display: block; margin: auto;" />
+Again, there are some unusual values.</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb226-2"><a href="#cb226-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_sleep_secs <span class="sc">&lt;</span> <span class="dv">12000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb226-3"><a href="#cb226-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, child_sleep_time, child_wake_time, child_sleep_secs) <span class="sc">|&gt;</span></span>
+<span id="cb226-4"><a href="#cb226-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, subject_number) <span class="sc">|&gt;</span></span>
+<span id="cb226-5"><a href="#cb226-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb226-6"><a href="#cb226-6" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:left;">
+child_sleep_time
+</th>
+<th style="text-align:left;">
+child_wake_time
+</th>
+<th style="text-align:left;">
+child_sleep_secs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+BOSTU
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+026
+</td>
+<td style="text-align:left;">
+19:45:00
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+2700 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+09:00:00
+</td>
+<td style="text-align:left;">
+08:00:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+07:45:00
+</td>
+<td style="text-align:left;">
+06:30:00
+</td>
+<td style="text-align:left;">
+4500 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+999
+</td>
+<td style="text-align:left;">
+17:00:00
+</td>
+<td style="text-align:left;">
+17:00:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+10:00:00
+</td>
+<td style="text-align:left;">
+08:00:00
+</td>
+<td style="text-align:left;">
+7200 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+5400 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+012
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+1800 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+013
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+5400 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+18:45:00
+</td>
+<td style="text-align:left;">
+4500 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+019
+</td>
+<td style="text-align:left;">
+20:30:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+021
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+1800 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+029
+</td>
+<td style="text-align:left;">
+20:45:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+4500 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+031
+</td>
+<td style="text-align:left;">
+20:30:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+035
+</td>
+<td style="text-align:left;">
+20:30:00
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+5400 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+015
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRINU
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+<td style="text-align:left;">
+19:45:00
+</td>
+<td style="text-align:left;">
+-44100 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+08:30:00
+</td>
+<td style="text-align:left;">
+21:30:00
+</td>
+<td style="text-align:left;">
+-46800 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+011
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+<td style="text-align:left;">
+06:30:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+035
+</td>
+<td style="text-align:left;">
+20:45:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+8100 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UGEOR
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+1800 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UGEOR
+</td>
+<td style="text-align:left;">
+016
+</td>
+<td style="text-align:left;">
+07:30:00
+</td>
+<td style="text-align:left;">
+08:00:00
+</td>
+<td style="text-align:left;">
+-1800 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+19:00:00
+</td>
+<td style="text-align:left;">
+0 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+013
+</td>
+<td style="text-align:left;">
+19:30:00
+</td>
+<td style="text-align:left;">
+18:00:00
+</td>
+<td style="text-align:left;">
+5400 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+20:00:00
+</td>
+<td style="text-align:left;">
+18:30:00
+</td>
+<td style="text-align:left;">
+5400 secs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+023
+</td>
+<td style="text-align:left;">
+08:00:00
+</td>
+<td style="text-align:left;">
+07:00:00
+</td>
+<td style="text-align:left;">
+3600 secs
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="nap-hours" class="section level4 unnumbered">
 <h4 class="unnumbered">Nap hours</h4>
-<div class="rmdimportant">
-<p>Some recoding must be done here to handle strings that can’t easily be
-converted to numbers.</p>
-</div>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb220-2"><a href="#cb220-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">nap_hrs =</span> <span class="fu">as.numeric</span>(child_nap_hours))</span>
-<span id="cb220-3"><a href="#cb220-3" tabindex="-1"></a></span>
-<span id="cb220-4"><a href="#cb220-4" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb220-5"><a href="#cb220-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nap_hrs), <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
-<span id="cb220-6"><a href="#cb220-6" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb220-7"><a href="#cb220-7" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> nap_hrs, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb220-8"><a href="#cb220-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb220-9"><a href="#cb220-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb220-10"><a href="#cb220-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb227-2"><a href="#cb227-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_nap_hours =</span> <span class="fu">as.numeric</span>(child_nap_hours)) <span class="sc">|&gt;</span></span>
+<span id="cb227-3"><a href="#cb227-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time)) </span></code></pre></div>
+<pre><code>## Warning: There was 1 warning in `dplyr::mutate()`.
+## ℹ In argument: `child_nap_hours = as.numeric(child_nap_hours)`.
+## Caused by warning:
+## ! NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb229-2"><a href="#cb229-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_nap_hours),</span>
+<span id="cb229-3"><a href="#cb229-3" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb229-4"><a href="#cb229-4" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb229-5"><a href="#cb229-5" tabindex="-1"></a>  <span class="fu">aes</span>(child_nap_hours, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb229-6"><a href="#cb229-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb229-7"><a href="#cb229-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb229-8"><a href="#cb229-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="include/img/unnamed-chunk-128-1.png" width="672" style="display: block; margin: auto;" />
+And there are some very long nappers or null values we need to capture.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb230-2"><a href="#cb230-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_nap_hours <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb230-3"><a href="#cb230-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, child_nap_hours) <span class="sc">|&gt;</span></span>
+<span id="cb230-4"><a href="#cb230-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, subject_number) <span class="sc">|&gt;</span></span>
+<span id="cb230-5"><a href="#cb230-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb230-6"><a href="#cb230-6" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+subject_number
+</th>
+<th style="text-align:right;">
+child_nap_hours
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+UMIAM
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UTAUS
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="sleep-location" class="section level4 unnumbered">
 <h4 class="unnumbered">Sleep location</h4>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_sleep_location,</span>
-<span id="cb221-2"><a href="#cb221-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_sleep_location,</span>
+<span id="cb231-2"><a href="#cb231-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -3817,8 +4847,8 @@ converted to numbers.</p>
 <h2 class="unnumbered">Mother</h2>
 <div id="biological-or-adoptive" class="section level3 unnumbered">
 <h3 class="unnumbered">Biological or adoptive</h3>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> mom_bio,</span>
-<span id="cb222-2"><a href="#cb222-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> mom_bio,</span>
+<span id="cb232-2"><a href="#cb232-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          mom_bio
 ## child_sex no_adoptive yes
 ##    female           0 213
@@ -3826,22 +4856,22 @@ converted to numbers.</p>
 </div>
 <div id="age-at-childbirth" class="section level3 unnumbered">
 <h3 class="unnumbered">Age at childbirth</h3>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
-<span id="cb224-2"><a href="#cb224-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_childbirth_age), <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
-<span id="cb224-3"><a href="#cb224-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb224-4"><a href="#cb224-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> mom_childbirth_age, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb224-5"><a href="#cb224-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
-<span id="cb224-6"><a href="#cb224-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb224-7"><a href="#cb224-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="include/img/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
+<span id="cb234-2"><a href="#cb234-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_childbirth_age), <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb234-3"><a href="#cb234-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb234-4"><a href="#cb234-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> mom_childbirth_age, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb234-5"><a href="#cb234-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb234-6"><a href="#cb234-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb234-7"><a href="#cb234-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="include/img/unnamed-chunk-132-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Clearly, there are some impossible (erroneous) maternal ages &gt; 100. Here are details:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" tabindex="-1"></a>old_moms <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb225-2"><a href="#cb225-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(mom_childbirth_age <span class="sc">&gt;</span> <span class="dv">55</span>)</span>
-<span id="cb225-3"><a href="#cb225-3" tabindex="-1"></a></span>
-<span id="cb225-4"><a href="#cb225-4" tabindex="-1"></a>old_moms <span class="sc">|&gt;</span></span>
-<span id="cb225-5"><a href="#cb225-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(submit_date, site_id, subject_number, mom_childbirth_age) <span class="sc">|&gt;</span></span>
-<span id="cb225-6"><a href="#cb225-6" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb225-7"><a href="#cb225-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1" tabindex="-1"></a>old_moms <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb235-2"><a href="#cb235-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(mom_childbirth_age <span class="sc">&gt;</span> <span class="dv">55</span>)</span>
+<span id="cb235-3"><a href="#cb235-3" tabindex="-1"></a></span>
+<span id="cb235-4"><a href="#cb235-4" tabindex="-1"></a>old_moms <span class="sc">|&gt;</span></span>
+<span id="cb235-5"><a href="#cb235-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(submit_date, site_id, subject_number, mom_childbirth_age) <span class="sc">|&gt;</span></span>
+<span id="cb235-6"><a href="#cb235-6" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb235-7"><a href="#cb235-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -3921,26 +4951,26 @@ NYUNI
 </div>
 <div id="birth-country" class="section level3 unnumbered">
 <h3 class="unnumbered">Birth country</h3>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb226-2"><a href="#cb226-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
-<span id="cb226-3"><a href="#cb226-3" tabindex="-1"></a>    mom_birth_country, </span>
-<span id="cb226-4"><a href="#cb226-4" tabindex="-1"></a>    <span class="at">unitedstates =</span> <span class="st">&quot;US&quot;</span>,</span>
-<span id="cb226-5"><a href="#cb226-5" tabindex="-1"></a>    <span class="at">united_states =</span> <span class="st">&quot;US&quot;</span>,</span>
-<span id="cb226-6"><a href="#cb226-6" tabindex="-1"></a>    <span class="at">othercountry =</span> <span class="st">&quot;Other&quot;</span>,</span>
-<span id="cb226-7"><a href="#cb226-7" tabindex="-1"></a>    <span class="at">other_country =</span> <span class="st">&quot;Other&quot;</span>,</span>
-<span id="cb226-8"><a href="#cb226-8" tabindex="-1"></a>    <span class="at">refused =</span> <span class="st">&quot;Refused&quot;</span></span>
-<span id="cb226-9"><a href="#cb226-9" tabindex="-1"></a>  ))</span>
-<span id="cb226-10"><a href="#cb226-10" tabindex="-1"></a></span>
-<span id="cb226-11"><a href="#cb226-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_birth_country, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb236-2"><a href="#cb236-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
+<span id="cb236-3"><a href="#cb236-3" tabindex="-1"></a>    mom_birth_country, </span>
+<span id="cb236-4"><a href="#cb236-4" tabindex="-1"></a>    <span class="at">unitedstates =</span> <span class="st">&quot;US&quot;</span>,</span>
+<span id="cb236-5"><a href="#cb236-5" tabindex="-1"></a>    <span class="at">united_states =</span> <span class="st">&quot;US&quot;</span>,</span>
+<span id="cb236-6"><a href="#cb236-6" tabindex="-1"></a>    <span class="at">othercountry =</span> <span class="st">&quot;Other&quot;</span>,</span>
+<span id="cb236-7"><a href="#cb236-7" tabindex="-1"></a>    <span class="at">other_country =</span> <span class="st">&quot;Other&quot;</span>,</span>
+<span id="cb236-8"><a href="#cb236-8" tabindex="-1"></a>    <span class="at">refused =</span> <span class="st">&quot;Refused&quot;</span></span>
+<span id="cb236-9"><a href="#cb236-9" tabindex="-1"></a>  ))</span>
+<span id="cb236-10"><a href="#cb236-10" tabindex="-1"></a></span>
+<span id="cb236-11"><a href="#cb236-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_birth_country, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_birth_country
 ##   Other Refused      US 
 ##      60       1     397</code></pre>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb228-2"><a href="#cb228-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country_specify =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
-<span id="cb228-3"><a href="#cb228-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
-<span id="cb228-4"><a href="#cb228-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_birth_country_specify)</span>
-<span id="cb228-5"><a href="#cb228-5" tabindex="-1"></a></span>
-<span id="cb228-6"><a href="#cb228-6" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>mom_birth_country_specify)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb238-2"><a href="#cb238-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country_specify =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
+<span id="cb238-3"><a href="#cb238-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
+<span id="cb238-4"><a href="#cb238-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_birth_country_specify)</span>
+<span id="cb238-5"><a href="#cb238-5" tabindex="-1"></a></span>
+<span id="cb238-6"><a href="#cb238-6" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>mom_birth_country_specify)</span></code></pre></div>
 <pre><code>##  [1] &quot;Montenegro&quot;         &quot;Chile&quot;              &quot;Uk&quot;                
 ##  [4] &quot;Refused&quot;            &quot;Australia&quot;          &quot;Venezuela&quot;         
 ##  [7] &quot;Canada&quot;             &quot;India&quot;              &quot;Kenya&quot;             
@@ -3955,11 +4985,11 @@ NYUNI
 </div>
 <div id="education" class="section level3" number="0.4.4">
 <h3><span class="header-section-number">0.4.4</span> Education</h3>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb230-2"><a href="#cb230-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_education)) <span class="sc">|&gt;</span></span>
-<span id="cb230-3"><a href="#cb230-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_education)</span>
-<span id="cb230-4"><a href="#cb230-4" tabindex="-1"></a></span>
-<span id="cb230-5"><a href="#cb230-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_education, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb240-2"><a href="#cb240-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_education)) <span class="sc">|&gt;</span></span>
+<span id="cb240-3"><a href="#cb240-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_education)</span>
+<span id="cb240-4"><a href="#cb240-4" tabindex="-1"></a></span>
+<span id="cb240-5"><a href="#cb240-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_education, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_education
 ##        associates    bachelor_s_deg         bachelors           diploma 
 ##                15                 6               147                17 
@@ -3977,10 +5007,10 @@ NYUNI
 </div>
 <div id="employment" class="section level3" number="0.4.5">
 <h3><span class="header-section-number">0.4.5</span> Employment</h3>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb232-2"><a href="#cb232-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
-<span id="cb232-3"><a href="#cb232-3" tabindex="-1"></a></span>
-<span id="cb232-4"><a href="#cb232-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb242-2"><a href="#cb242-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
+<span id="cb242-3"><a href="#cb242-3" tabindex="-1"></a></span>
+<span id="cb242-4"><a href="#cb242-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_employment
 ## full_time        no part_time   refused 
 ##       274       103        78         2</code></pre>
@@ -3991,18 +5021,18 @@ NYUNI
 </div>
 <div id="jobs-number" class="section level3" number="0.4.7">
 <h3><span class="header-section-number">0.4.7</span> Jobs number</h3>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb234-2"><a href="#cb234-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number))</span>
-<span id="cb234-3"><a href="#cb234-3" tabindex="-1"></a></span>
-<span id="cb234-4"><a href="#cb234-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb244-2"><a href="#cb244-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number))</span>
+<span id="cb244-3"><a href="#cb244-3" tabindex="-1"></a></span>
+<span id="cb244-4"><a href="#cb244-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_jobs_number
 ##   0   1   2   3   4 
 ##   2 311  34   3   1</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb236-2"><a href="#cb236-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number),</span>
-<span id="cb236-3"><a href="#cb236-3" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
-<span id="cb236-4"><a href="#cb236-4" tabindex="-1"></a></span>
-<span id="cb236-5"><a href="#cb236-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number <span class="sc">+</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb246-2"><a href="#cb246-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number),</span>
+<span id="cb246-3"><a href="#cb246-3" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
+<span id="cb246-4"><a href="#cb246-4" tabindex="-1"></a></span>
+<span id="cb246-5"><a href="#cb246-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number <span class="sc">+</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##                mom_employment
 ## mom_jobs_number full_time part_time
 ##               0         1         1
@@ -4013,33 +5043,33 @@ NYUNI
 </div>
 <div id="race-and-ethnicity" class="section level3 unnumbered">
 <h3 class="unnumbered">Race and ethnicity</h3>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" tabindex="-1"></a><span class="co"># df &lt;- screen_df %&gt;%</span></span>
-<span id="cb238-2"><a href="#cb238-2" tabindex="-1"></a><span class="co">#   dplyr::mutate(</span></span>
-<span id="cb238-3"><a href="#cb238-3" tabindex="-1"></a><span class="co">#     .,</span></span>
-<span id="cb238-4"><a href="#cb238-4" tabindex="-1"></a><span class="co">#     mom_race = dplyr::recode(</span></span>
-<span id="cb238-5"><a href="#cb238-5" tabindex="-1"></a><span class="co">#       mom_race,</span></span>
-<span id="cb238-6"><a href="#cb238-6" tabindex="-1"></a><span class="co">#       morethanone = &quot;more_than_one&quot;,</span></span>
-<span id="cb238-7"><a href="#cb238-7" tabindex="-1"></a><span class="co">#       americanindian = &quot;american_indian&quot;</span></span>
-<span id="cb238-8"><a href="#cb238-8" tabindex="-1"></a><span class="co">#     ),</span></span>
-<span id="cb238-9"><a href="#cb238-9" tabindex="-1"></a><span class="co">#     mother_ethnicity = dplyr::recode(</span></span>
-<span id="cb238-10"><a href="#cb238-10" tabindex="-1"></a><span class="co">#       mother_ethnicity,</span></span>
-<span id="cb238-11"><a href="#cb238-11" tabindex="-1"></a><span class="co">#       hispanic_or_la = &quot;hispanic&quot;,</span></span>
-<span id="cb238-12"><a href="#cb238-12" tabindex="-1"></a><span class="co">#       not_hispanic_o = &quot;not_hispanic&quot;,</span></span>
-<span id="cb238-13"><a href="#cb238-13" tabindex="-1"></a><span class="co">#       nothispanic = &quot;not_hispanic&quot;</span></span>
-<span id="cb238-14"><a href="#cb238-14" tabindex="-1"></a><span class="co">#     )</span></span>
-<span id="cb238-15"><a href="#cb238-15" tabindex="-1"></a><span class="co">#   )</span></span>
-<span id="cb238-16"><a href="#cb238-16" tabindex="-1"></a><span class="co"># xtabs(formula = ~ mother_race + mother_ethnicity,</span></span>
-<span id="cb238-17"><a href="#cb238-17" tabindex="-1"></a><span class="co">#       data = df)</span></span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1" tabindex="-1"></a><span class="co"># df &lt;- screen_df %&gt;%</span></span>
+<span id="cb248-2"><a href="#cb248-2" tabindex="-1"></a><span class="co">#   dplyr::mutate(</span></span>
+<span id="cb248-3"><a href="#cb248-3" tabindex="-1"></a><span class="co">#     .,</span></span>
+<span id="cb248-4"><a href="#cb248-4" tabindex="-1"></a><span class="co">#     mom_race = dplyr::recode(</span></span>
+<span id="cb248-5"><a href="#cb248-5" tabindex="-1"></a><span class="co">#       mom_race,</span></span>
+<span id="cb248-6"><a href="#cb248-6" tabindex="-1"></a><span class="co">#       morethanone = &quot;more_than_one&quot;,</span></span>
+<span id="cb248-7"><a href="#cb248-7" tabindex="-1"></a><span class="co">#       americanindian = &quot;american_indian&quot;</span></span>
+<span id="cb248-8"><a href="#cb248-8" tabindex="-1"></a><span class="co">#     ),</span></span>
+<span id="cb248-9"><a href="#cb248-9" tabindex="-1"></a><span class="co">#     mother_ethnicity = dplyr::recode(</span></span>
+<span id="cb248-10"><a href="#cb248-10" tabindex="-1"></a><span class="co">#       mother_ethnicity,</span></span>
+<span id="cb248-11"><a href="#cb248-11" tabindex="-1"></a><span class="co">#       hispanic_or_la = &quot;hispanic&quot;,</span></span>
+<span id="cb248-12"><a href="#cb248-12" tabindex="-1"></a><span class="co">#       not_hispanic_o = &quot;not_hispanic&quot;,</span></span>
+<span id="cb248-13"><a href="#cb248-13" tabindex="-1"></a><span class="co">#       nothispanic = &quot;not_hispanic&quot;</span></span>
+<span id="cb248-14"><a href="#cb248-14" tabindex="-1"></a><span class="co">#     )</span></span>
+<span id="cb248-15"><a href="#cb248-15" tabindex="-1"></a><span class="co">#   )</span></span>
+<span id="cb248-16"><a href="#cb248-16" tabindex="-1"></a><span class="co"># xtabs(formula = ~ mother_race + mother_ethnicity,</span></span>
+<span id="cb248-17"><a href="#cb248-17" tabindex="-1"></a><span class="co">#       data = df)</span></span></code></pre></div>
 </div>
 </div>
 <div id="childcare" class="section level2" number="0.5">
 <h2><span class="header-section-number">0.5</span> Childcare</h2>
 <div id="types" class="section level3" number="0.5.1">
 <h3><span class="header-section-number">0.5.1</span> Types</h3>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb239-2"><a href="#cb239-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_types))</span>
-<span id="cb239-3"><a href="#cb239-3" tabindex="-1"></a>                </span>
-<span id="cb239-4"><a href="#cb239-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> childcare_types, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb249-2"><a href="#cb249-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_types))</span>
+<span id="cb249-3"><a href="#cb249-3" tabindex="-1"></a>                </span>
+<span id="cb249-4"><a href="#cb249-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> childcare_types, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## childcare_types
 ##                childcare           childcare_cent                    nanny 
 ##                       78                        3                        4 
@@ -4057,11 +5087,11 @@ NYUNI
 </div>
 <div id="hours" class="section level3" number="0.5.2">
 <h3><span class="header-section-number">0.5.2</span> Hours</h3>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb241-2"><a href="#cb241-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_hours)) <span class="sc">|&gt;</span></span>
-<span id="cb241-3"><a href="#cb241-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(childcare_hours)</span>
-<span id="cb241-4"><a href="#cb241-4" tabindex="-1"></a></span>
-<span id="cb241-5"><a href="#cb241-5" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_hours)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb251-2"><a href="#cb251-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_hours)) <span class="sc">|&gt;</span></span>
+<span id="cb251-3"><a href="#cb251-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(childcare_hours)</span>
+<span id="cb251-4"><a href="#cb251-4" tabindex="-1"></a></span>
+<span id="cb251-5"><a href="#cb251-5" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_hours)</span></code></pre></div>
 <pre><code>##  [1] &quot;1&quot;        &quot;10&quot;       &quot;12&quot;       &quot;14.5&quot;     &quot;15&quot;       &quot;16&quot;       &quot;17.5&quot;    
 ##  [8] &quot;18&quot;       &quot;2&quot;        &quot;20&quot;       &quot;24&quot;       &quot;25&quot;       &quot;27&quot;       &quot;3&quot;       
 ## [15] &quot;3.5&quot;      &quot;30&quot;       &quot;30-35&quot;    &quot;30-40&quot;    &quot;32&quot;       &quot;33&quot;       &quot;34&quot;      
@@ -4074,10 +5104,10 @@ NYUNI
 </div>
 <div id="language-1" class="section level3" number="0.5.3">
 <h3><span class="header-section-number">0.5.3</span> Language</h3>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb243-2"><a href="#cb243-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_language))</span>
-<span id="cb243-3"><a href="#cb243-3" tabindex="-1"></a></span>
-<span id="cb243-4"><a href="#cb243-4" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_language)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb253-2"><a href="#cb253-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_language))</span>
+<span id="cb253-3"><a href="#cb253-3" tabindex="-1"></a></span>
+<span id="cb253-4"><a href="#cb253-4" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_language)</span></code></pre></div>
 <pre><code>##  [1] &quot;Spanish&quot;                                                              
 ##  [2] &quot;English&quot;                                                              
 ##  [3] &quot;English and Spanish (50/50)&quot;                                          
@@ -4105,7 +5135,7 @@ NYUNI
 <h1 class="unnumbered">Home visit visualizations</h1>
 <div id="load-home-visit-data" class="section level2 unnumbered">
 <h2 class="unnumbered">Load home visit data</h2>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
 <div id="demographics-1" class="section level3 unnumbered">
 <h3 class="unnumbered">Demographics</h3>
 <div id="child-age-1" class="section level4 unnumbered">
@@ -4113,13 +5143,13 @@ NYUNI
 <p>Child age in months (<code>age_group</code>) by <code>child_sex</code>.</p>
 <p>Note: The child’s exact age in months is part of the Databrary-related data.
 That is on the work plan.</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1" tabindex="-1"></a>home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb246-2"><a href="#cb246-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.,<span class="sc">!</span><span class="fu">is.na</span>(age_group),<span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb246-3"><a href="#cb246-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb246-4"><a href="#cb246-4" tabindex="-1"></a>  <span class="fu">aes</span>(age_group, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb246-5"><a href="#cb246-5" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb246-6"><a href="#cb246-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb246-7"><a href="#cb246-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1" tabindex="-1"></a>home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb256-2"><a href="#cb256-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.,<span class="sc">!</span><span class="fu">is.na</span>(age_group),<span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">%&gt;%</span></span>
+<span id="cb256-3"><a href="#cb256-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb256-4"><a href="#cb256-4" tabindex="-1"></a>  <span class="fu">aes</span>(age_group, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb256-5"><a href="#cb256-5" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb256-6"><a href="#cb256-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb256-7"><a href="#cb256-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-age-grp-by-sex-1.png" alt="Participants by age group and sex" width="672" />
 <p class="caption">
@@ -4130,9 +5160,9 @@ That is on the work plan.</p>
 </div>
 <div id="language-exposure" class="section level3 unnumbered">
 <h3 class="unnumbered">Language exposure</h3>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb247-2"><a href="#cb247-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">language_child =</span> stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(language_child, <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb247-3"><a href="#cb247-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb257-2"><a href="#cb257-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">language_child =</span> stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(language_child, <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb257-3"><a href="#cb257-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
 ##    female     131              24
@@ -4140,41 +5170,41 @@ That is on the work plan.</p>
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3 class="unnumbered">Locomotor milestones</h3>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb249-2"><a href="#cb249-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb249-3"><a href="#cb249-3" tabindex="-1"></a>    .,</span>
-<span id="cb249-4"><a href="#cb249-4" tabindex="-1"></a>    age_group,</span>
-<span id="cb249-5"><a href="#cb249-5" tabindex="-1"></a>    child_sex,</span>
-<span id="cb249-6"><a href="#cb249-6" tabindex="-1"></a>    language_child,</span>
-<span id="cb249-7"><a href="#cb249-7" tabindex="-1"></a>    site_id,</span>
-<span id="cb249-8"><a href="#cb249-8" tabindex="-1"></a>    subject_number,</span>
-<span id="cb249-9"><a href="#cb249-9" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb249-10"><a href="#cb249-10" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb249-11"><a href="#cb249-11" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb249-12"><a href="#cb249-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb249-13"><a href="#cb249-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb249-14"><a href="#cb249-14" tabindex="-1"></a>    .,</span>
-<span id="cb249-15"><a href="#cb249-15" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb249-16"><a href="#cb249-16" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb249-17"><a href="#cb249-17" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb249-18"><a href="#cb249-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb249-19"><a href="#cb249-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb249-20"><a href="#cb249-20" tabindex="-1"></a>    .,</span>
-<span id="cb249-21"><a href="#cb249-21" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
-<span id="cb249-22"><a href="#cb249-22" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
-<span id="cb249-23"><a href="#cb249-23" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
-<span id="cb249-24"><a href="#cb249-24" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb259-2"><a href="#cb259-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb259-3"><a href="#cb259-3" tabindex="-1"></a>    .,</span>
+<span id="cb259-4"><a href="#cb259-4" tabindex="-1"></a>    age_group,</span>
+<span id="cb259-5"><a href="#cb259-5" tabindex="-1"></a>    child_sex,</span>
+<span id="cb259-6"><a href="#cb259-6" tabindex="-1"></a>    language_child,</span>
+<span id="cb259-7"><a href="#cb259-7" tabindex="-1"></a>    site_id,</span>
+<span id="cb259-8"><a href="#cb259-8" tabindex="-1"></a>    subject_number,</span>
+<span id="cb259-9"><a href="#cb259-9" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb259-10"><a href="#cb259-10" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb259-11"><a href="#cb259-11" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb259-12"><a href="#cb259-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb259-13"><a href="#cb259-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb259-14"><a href="#cb259-14" tabindex="-1"></a>    .,</span>
+<span id="cb259-15"><a href="#cb259-15" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb259-16"><a href="#cb259-16" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb259-17"><a href="#cb259-17" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb259-18"><a href="#cb259-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb259-19"><a href="#cb259-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb259-20"><a href="#cb259-20" tabindex="-1"></a>    .,</span>
+<span id="cb259-21"><a href="#cb259-21" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
+<span id="cb259-22"><a href="#cb259-22" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
+<span id="cb259-23"><a href="#cb259-23" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
+<span id="cb259-24"><a href="#cb259-24" tabindex="-1"></a>  )</span></code></pre></div>
 <div id="check-for-anomalous-values" class="section level4 unnumbered">
 <h4 class="unnumbered">Check for anomalous values</h4>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb250-2"><a href="#cb250-2" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="#cb260-1" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb260-2"><a href="#cb260-2" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code></pre></div>
 <div id="anomalous-crawling-onset" class="section level5 unnumbered">
 <h5 class="unnumbered">Anomalous crawling onset</h5>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb251-2"><a href="#cb251-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, crawl_mos) <span class="sc">%&gt;%</span></span>
-<span id="cb251-3"><a href="#cb251-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb251-4"><a href="#cb251-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb251-5"><a href="#cb251-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="#cb261-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb261-2"><a href="#cb261-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, crawl_mos) <span class="sc">%&gt;%</span></span>
+<span id="cb261-3"><a href="#cb261-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb261-4"><a href="#cb261-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb261-5"><a href="#cb261-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4206,11 +5236,11 @@ CHOPH
 </div>
 <div id="anomalous-walking-onset-kea-criteria" class="section level5 unnumbered">
 <h5 class="unnumbered">Anomalous walking onset (KEA criteria)</h5>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb252-2"><a href="#cb252-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_kea) <span class="sc">%&gt;%</span></span>
-<span id="cb252-3"><a href="#cb252-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb252-4"><a href="#cb252-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb252-5"><a href="#cb252-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="#cb262-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb262-2"><a href="#cb262-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_kea) <span class="sc">%&gt;%</span></span>
+<span id="cb262-3"><a href="#cb262-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb262-4"><a href="#cb262-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb262-5"><a href="#cb262-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4233,11 +5263,11 @@ walk_mos_kea
 </div>
 <div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
 <h5 class="unnumbered">Anomalous walking onset (WHO criteria)</h5>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb253-2"><a href="#cb253-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_who) <span class="sc">%&gt;%</span></span>
-<span id="cb253-3"><a href="#cb253-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb253-4"><a href="#cb253-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb253-5"><a href="#cb253-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb263-2"><a href="#cb263-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_who) <span class="sc">%&gt;%</span></span>
+<span id="cb263-3"><a href="#cb263-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb263-4"><a href="#cb263-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb263-5"><a href="#cb263-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4261,13 +5291,13 @@ walk_mos_who
 </div>
 <div id="crawl-onset" class="section level4 unnumbered">
 <h4 class="unnumbered">Crawl onset</h4>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb254-2"><a href="#cb254-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">%&gt;%</span></span>
-<span id="cb254-3"><a href="#cb254-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb254-4"><a href="#cb254-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb254-5"><a href="#cb254-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb254-6"><a href="#cb254-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb254-7"><a href="#cb254-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb264-2"><a href="#cb264-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">%&gt;%</span></span>
+<span id="cb264-3"><a href="#cb264-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb264-4"><a href="#cb264-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb264-5"><a href="#cb264-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb264-6"><a href="#cb264-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb264-7"><a href="#cb264-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-crawl-onset-hist-1.png" alt="Age of crawling onset (mos) by sex" width="672" />
 <p class="caption">
@@ -4277,53 +5307,53 @@ walk_mos_who
 </div>
 <div id="walk-onset" class="section level4 unnumbered">
 <h4 class="unnumbered">Walk onset</h4>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb255-2"><a href="#cb255-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb255-3"><a href="#cb255-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb255-4"><a href="#cb255-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb255-5"><a href="#cb255-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb255-6"><a href="#cb255-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="#cb265-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb265-2"><a href="#cb265-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb265-3"><a href="#cb265-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb265-4"><a href="#cb265-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb265-5"><a href="#cb265-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb265-6"><a href="#cb265-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672" />
 <p class="caption">
 (#fig:fig-walk-mos-kea)Age (mos) of walking onset (KEA criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb256-2"><a href="#cb256-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">%&gt;%</span></span>
-<span id="cb256-3"><a href="#cb256-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb256-4"><a href="#cb256-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb256-5"><a href="#cb256-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb256-6"><a href="#cb256-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb256-7"><a href="#cb256-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="#cb266-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb266-2"><a href="#cb266-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">%&gt;%</span></span>
+<span id="cb266-3"><a href="#cb266-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb266-4"><a href="#cb266-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb266-5"><a href="#cb266-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb266-6"><a href="#cb266-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb266-7"><a href="#cb266-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672" />
 <p class="caption">
 (#fig:fig-walk-mos-who)Age (mos) of walking onset (WHO criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb257-2"><a href="#cb257-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb257-3"><a href="#cb257-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb257-4"><a href="#cb257-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb257-5"><a href="#cb257-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb257-6"><a href="#cb257-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb257-7"><a href="#cb257-7" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb257-8"><a href="#cb257-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb257-9"><a href="#cb257-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb257-10"><a href="#cb257-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb257-11"><a href="#cb257-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb257-12"><a href="#cb257-12" tabindex="-1"></a></span>
-<span id="cb257-13"><a href="#cb257-13" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb257-14"><a href="#cb257-14" tabindex="-1"></a>  walk_p,</span>
-<span id="cb257-15"><a href="#cb257-15" tabindex="-1"></a>  play_loco,</span>
-<span id="cb257-16"><a href="#cb257-16" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb257-17"><a href="#cb257-17" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb257-18"><a href="#cb257-18" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
-<span id="cb257-19"><a href="#cb257-19" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
-<span id="cb257-20"><a href="#cb257-20" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb257-21"><a href="#cb257-21" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb257-22"><a href="#cb257-22" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="#cb267-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb267-2"><a href="#cb267-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb267-3"><a href="#cb267-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb267-4"><a href="#cb267-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb267-5"><a href="#cb267-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb267-6"><a href="#cb267-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb267-7"><a href="#cb267-7" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb267-8"><a href="#cb267-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb267-9"><a href="#cb267-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb267-10"><a href="#cb267-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb267-11"><a href="#cb267-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb267-12"><a href="#cb267-12" tabindex="-1"></a></span>
+<span id="cb267-13"><a href="#cb267-13" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb267-14"><a href="#cb267-14" tabindex="-1"></a>  walk_p,</span>
+<span id="cb267-15"><a href="#cb267-15" tabindex="-1"></a>  play_loco,</span>
+<span id="cb267-16"><a href="#cb267-16" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb267-17"><a href="#cb267-17" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb267-18"><a href="#cb267-18" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb267-19"><a href="#cb267-19" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb267-20"><a href="#cb267-20" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb267-21"><a href="#cb267-21" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb267-22"><a href="#cb267-22" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
@@ -4335,26 +5365,26 @@ walk_mos_who
 (#fig:fig-walk-mos-kea-who)Walking onset by WHO vs. KEA criteria
 </p>
 </div>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb263-2"><a href="#cb263-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb263-3"><a href="#cb263-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb263-4"><a href="#cb263-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb263-5"><a href="#cb263-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb263-6"><a href="#cb263-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb263-7"><a href="#cb263-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb263-8"><a href="#cb263-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb263-9"><a href="#cb263-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb263-10"><a href="#cb263-10" tabindex="-1"></a></span>
-<span id="cb263-11"><a href="#cb263-11" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb263-12"><a href="#cb263-12" tabindex="-1"></a>  walk_p,</span>
-<span id="cb263-13"><a href="#cb263-13" tabindex="-1"></a>  play_loco,</span>
-<span id="cb263-14"><a href="#cb263-14" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb263-15"><a href="#cb263-15" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb263-16"><a href="#cb263-16" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
-<span id="cb263-17"><a href="#cb263-17" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
-<span id="cb263-18"><a href="#cb263-18" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb263-19"><a href="#cb263-19" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb263-20"><a href="#cb263-20" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb273-2"><a href="#cb273-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb273-3"><a href="#cb273-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb273-4"><a href="#cb273-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb273-5"><a href="#cb273-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb273-6"><a href="#cb273-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb273-7"><a href="#cb273-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb273-8"><a href="#cb273-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb273-9"><a href="#cb273-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb273-10"><a href="#cb273-10" tabindex="-1"></a></span>
+<span id="cb273-11"><a href="#cb273-11" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb273-12"><a href="#cb273-12" tabindex="-1"></a>  walk_p,</span>
+<span id="cb273-13"><a href="#cb273-13" tabindex="-1"></a>  play_loco,</span>
+<span id="cb273-14"><a href="#cb273-14" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb273-15"><a href="#cb273-15" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb273-16"><a href="#cb273-16" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb273-17"><a href="#cb273-17" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb273-18"><a href="#cb273-18" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb273-19"><a href="#cb273-19" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb273-20"><a href="#cb273-20" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <div class="figure" style="text-align: center">
@@ -4369,30 +5399,30 @@ walk_mos_who
 <h3 class="unnumbered">Health</h3>
 <div id="feeding" class="section level4 unnumbered">
 <h4 class="unnumbered">Feeding</h4>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="#cb265-1" tabindex="-1"></a>feeding <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb265-2"><a href="#cb265-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb265-3"><a href="#cb265-3" tabindex="-1"></a>    .,</span>
-<span id="cb265-4"><a href="#cb265-4" tabindex="-1"></a>    age_group,</span>
-<span id="cb265-5"><a href="#cb265-5" tabindex="-1"></a>    child_sex,</span>
-<span id="cb265-6"><a href="#cb265-6" tabindex="-1"></a>    site_id,</span>
-<span id="cb265-7"><a href="#cb265-7" tabindex="-1"></a>    subject_number,</span>
-<span id="cb265-8"><a href="#cb265-8" tabindex="-1"></a>    language_child,</span>
-<span id="cb265-9"><a href="#cb265-9" tabindex="-1"></a>    health.feeding_nutrition.breastfeed,</span>
-<span id="cb265-10"><a href="#cb265-10" tabindex="-1"></a>    health.feeding_nutrition.solidfood_age</span>
-<span id="cb265-11"><a href="#cb265-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb265-12"><a href="#cb265-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">breastfeed =</span> health.feeding_nutrition.breastfeed,</span>
-<span id="cb265-13"><a href="#cb265-13" tabindex="-1"></a>                <span class="at">solid_food_mos =</span> health.feeding_nutrition.solidfood_age) <span class="sc">%&gt;%</span></span>
-<span id="cb265-14"><a href="#cb265-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">solid_food_mos =</span> <span class="fu">as.numeric</span>(solid_food_mos))</span></code></pre></div>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="#cb266-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> breastfeed, <span class="at">data =</span> feeding)</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" tabindex="-1"></a>feeding <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb275-2"><a href="#cb275-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb275-3"><a href="#cb275-3" tabindex="-1"></a>    .,</span>
+<span id="cb275-4"><a href="#cb275-4" tabindex="-1"></a>    age_group,</span>
+<span id="cb275-5"><a href="#cb275-5" tabindex="-1"></a>    child_sex,</span>
+<span id="cb275-6"><a href="#cb275-6" tabindex="-1"></a>    site_id,</span>
+<span id="cb275-7"><a href="#cb275-7" tabindex="-1"></a>    subject_number,</span>
+<span id="cb275-8"><a href="#cb275-8" tabindex="-1"></a>    language_child,</span>
+<span id="cb275-9"><a href="#cb275-9" tabindex="-1"></a>    health.feeding_nutrition.breastfeed,</span>
+<span id="cb275-10"><a href="#cb275-10" tabindex="-1"></a>    health.feeding_nutrition.solidfood_age</span>
+<span id="cb275-11"><a href="#cb275-11" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb275-12"><a href="#cb275-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">breastfeed =</span> health.feeding_nutrition.breastfeed,</span>
+<span id="cb275-13"><a href="#cb275-13" tabindex="-1"></a>                <span class="at">solid_food_mos =</span> health.feeding_nutrition.solidfood_age) <span class="sc">%&gt;%</span></span>
+<span id="cb275-14"><a href="#cb275-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">solid_food_mos =</span> <span class="fu">as.numeric</span>(solid_food_mos))</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="#cb276-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> breastfeed, <span class="at">data =</span> feeding)</span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no refused yes
 ##    female         1   3       0 150
 ##    male           0  10       1 156</code></pre>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="#cb268-1" tabindex="-1"></a>feeding <span class="sc">%&gt;%</span></span>
-<span id="cb268-2"><a href="#cb268-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb268-3"><a href="#cb268-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> solid_food_mos, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb268-4"><a href="#cb268-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb268-5"><a href="#cb268-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" tabindex="-1"></a>feeding <span class="sc">%&gt;%</span></span>
+<span id="cb278-2"><a href="#cb278-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb278-3"><a href="#cb278-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> solid_food_mos, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb278-4"><a href="#cb278-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb278-5"><a href="#cb278-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672" />
@@ -4401,11 +5431,11 @@ walk_mos_who
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="#cb270-1" tabindex="-1"></a>feeding <span class="sc">|&gt;</span></span>
-<span id="cb270-2"><a href="#cb270-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, solid_food_mos) <span class="sc">%&gt;%</span></span>
-<span id="cb270-3"><a href="#cb270-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., solid_food_mos <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb270-4"><a href="#cb270-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb270-5"><a href="#cb270-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="#cb280-1" tabindex="-1"></a>feeding <span class="sc">|&gt;</span></span>
+<span id="cb280-2"><a href="#cb280-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, solid_food_mos) <span class="sc">%&gt;%</span></span>
+<span id="cb280-3"><a href="#cb280-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., solid_food_mos <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb280-4"><a href="#cb280-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb280-5"><a href="#cb280-5" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4437,19 +5467,19 @@ NYUNI
 </div>
 <div id="smokingdrinking" class="section level4 unnumbered">
 <h4 class="unnumbered">Smoking/drinking</h4>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="#cb271-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb271-2"><a href="#cb271-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb271-3"><a href="#cb271-3" tabindex="-1"></a>    .,</span>
-<span id="cb271-4"><a href="#cb271-4" tabindex="-1"></a>    age_group,</span>
-<span id="cb271-5"><a href="#cb271-5" tabindex="-1"></a>    child_sex,</span>
-<span id="cb271-6"><a href="#cb271-6" tabindex="-1"></a>    language_child,</span>
-<span id="cb271-7"><a href="#cb271-7" tabindex="-1"></a>    health.smoking.pregnant_smoking,</span>
-<span id="cb271-8"><a href="#cb271-8" tabindex="-1"></a>    health.drinking.pregnant_drinking</span>
-<span id="cb271-9"><a href="#cb271-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb271-10"><a href="#cb271-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">preg_smoking =</span> health.smoking.pregnant_smoking,</span>
-<span id="cb271-11"><a href="#cb271-11" tabindex="-1"></a>                <span class="at">preg_drinking =</span> health.drinking.pregnant_drinking)</span>
-<span id="cb271-12"><a href="#cb271-12" tabindex="-1"></a></span>
-<span id="cb271-13"><a href="#cb271-13" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> preg_smoking <span class="sc">+</span> preg_drinking, smoking_drinking)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb281-2"><a href="#cb281-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb281-3"><a href="#cb281-3" tabindex="-1"></a>    .,</span>
+<span id="cb281-4"><a href="#cb281-4" tabindex="-1"></a>    age_group,</span>
+<span id="cb281-5"><a href="#cb281-5" tabindex="-1"></a>    child_sex,</span>
+<span id="cb281-6"><a href="#cb281-6" tabindex="-1"></a>    language_child,</span>
+<span id="cb281-7"><a href="#cb281-7" tabindex="-1"></a>    health.smoking.pregnant_smoking,</span>
+<span id="cb281-8"><a href="#cb281-8" tabindex="-1"></a>    health.drinking.pregnant_drinking</span>
+<span id="cb281-9"><a href="#cb281-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb281-10"><a href="#cb281-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">preg_smoking =</span> health.smoking.pregnant_smoking,</span>
+<span id="cb281-11"><a href="#cb281-11" tabindex="-1"></a>                <span class="at">preg_drinking =</span> health.drinking.pregnant_drinking)</span>
+<span id="cb281-12"><a href="#cb281-12" tabindex="-1"></a></span>
+<span id="cb281-13"><a href="#cb281-13" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> preg_smoking <span class="sc">+</span> preg_drinking, smoking_drinking)</span></code></pre></div>
 <pre><code>##             preg_drinking
 ## preg_smoking  no refused yes
 ##      no      257       0  61
@@ -4457,17 +5487,17 @@ NYUNI
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4 class="unnumbered">Sleeping position</h4>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb273-2"><a href="#cb273-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb273-3"><a href="#cb273-3" tabindex="-1"></a>    .,</span>
-<span id="cb273-4"><a href="#cb273-4" tabindex="-1"></a>    age_group,</span>
-<span id="cb273-5"><a href="#cb273-5" tabindex="-1"></a>    child_sex,</span>
-<span id="cb273-6"><a href="#cb273-6" tabindex="-1"></a>    language_child,</span>
-<span id="cb273-7"><a href="#cb273-7" tabindex="-1"></a>    health.general_health.child_sleeping_position</span>
-<span id="cb273-8"><a href="#cb273-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb273-9"><a href="#cb273-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">child_sleeping_position =</span> health.general_health.child_sleeping_position)</span>
-<span id="cb273-10"><a href="#cb273-10" tabindex="-1"></a></span>
-<span id="cb273-11"><a href="#cb273-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb283-2"><a href="#cb283-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb283-3"><a href="#cb283-3" tabindex="-1"></a>    .,</span>
+<span id="cb283-4"><a href="#cb283-4" tabindex="-1"></a>    age_group,</span>
+<span id="cb283-5"><a href="#cb283-5" tabindex="-1"></a>    child_sex,</span>
+<span id="cb283-6"><a href="#cb283-6" tabindex="-1"></a>    language_child,</span>
+<span id="cb283-7"><a href="#cb283-7" tabindex="-1"></a>    health.general_health.child_sleeping_position</span>
+<span id="cb283-8"><a href="#cb283-8" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb283-9"><a href="#cb283-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="at">child_sleeping_position =</span> health.general_health.child_sleeping_position)</span>
+<span id="cb283-10"><a href="#cb283-10" tabindex="-1"></a></span>
+<span id="cb283-11"><a href="#cb283-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
 <pre><code>## child_sleeping_position
 ##         back      changed    donotknow        other      refused         side 
 ##          305            4            1            2            1            2 
@@ -4479,9 +5509,9 @@ NYUNI
 <div id="post-visit-data" class="section level2 unnumbered">
 <h2 class="unnumbered">Post-visit data</h2>
 <p>We load the post-visit survey data.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb275-2"><a href="#cb275-2" tabindex="-1"></a></span>
-<span id="cb275-3"><a href="#cb275-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb285-2"><a href="#cb285-2" tabindex="-1"></a></span>
+<span id="cb285-3"><a href="#cb285-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
 <pre><code>## [1] 353 180</code></pre>
 <div class="rmdnote">
 <p>Cleaning this data is set aside for future work.</p>
@@ -4495,36 +5525,36 @@ NYUNI
 </div>
 <div id="state-of-play" class="section level1 unnumbered">
 <h1 class="unnumbered">State of PLAY</h1>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
-<span id="cb277-2"><a href="#cb277-2" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lubridate))</span>
-<span id="cb277-3"><a href="#cb277-3" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(forcats))</span></code></pre></div>
-<p>The following summarizes the current state of the project as of 2023-06-22.</p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb287-2"><a href="#cb287-2" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lubridate))</span>
+<span id="cb287-3"><a href="#cb287-3" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(forcats))</span></code></pre></div>
+<p>The following summarizes the current state of the project as of 2023-06-23.</p>
 <div id="recent-data" class="section level2 unnumbered">
 <h2 class="unnumbered">Recent data</h2>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(screen_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb278-2"><a href="#cb278-2" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="#cb288-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(screen_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb288-2"><a href="#cb288-2" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
 <div id="last-two-weeks" class="section level3 unnumbered">
 <h3 class="unnumbered">Last two weeks</h3>
 <div id="screening-calls" class="section level4 unnumbered">
 <h4 class="unnumbered">Screening calls</h4>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1" tabindex="-1"></a>two_weeks_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dweeks</span>(<span class="dv">2</span>)</span>
-<span id="cb279-2"><a href="#cb279-2" tabindex="-1"></a>screen_last_two_weeks_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
-<span id="cb279-3"><a href="#cb279-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 11 recruiting calls since 2023-06-08.</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="#cb280-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_two_weeks_df)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" tabindex="-1"></a>two_weeks_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dweeks</span>(<span class="dv">2</span>)</span>
+<span id="cb289-2"><a href="#cb289-2" tabindex="-1"></a>screen_last_two_weeks_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
+<span id="cb289-3"><a href="#cb289-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 8 recruiting calls since 2023-06-09.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_two_weeks_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="include/img/unnamed-chunk-94-1.png" alt="Screening calls in last 2 weeks by site" width="672" />
+<img src="include/img/unnamed-chunk-148-1.png" alt="Screening calls in last 2 weeks by site" width="672" />
 <p class="caption">
-(#fig:unnamed-chunk-94)Screening calls in last 2 weeks by site
+(#fig:unnamed-chunk-148)Screening calls in last 2 weeks by site
 </p>
 </div>
 </div>
 <div id="home-visits" class="section level4 unnumbered">
 <h4 class="unnumbered">Home visits</h4>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" tabindex="-1"></a>home_last_two_weeks_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb281-2"><a href="#cb281-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 23 home visits since 2023-06-08.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="#cb282-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_two_weeks_df)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" tabindex="-1"></a>home_last_two_weeks_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb291-2"><a href="#cb291-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 16 home visits since 2023-06-09.</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="#cb292-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_two_weeks_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-2-wk-home-visit-1.png" alt="Home visits in last 2 weeks by site" width="672" />
 <p class="caption">
@@ -4537,24 +5567,24 @@ NYUNI
 <h3 class="unnumbered">Last month</h3>
 <div id="screening-calls-1" class="section level4 unnumbered">
 <h4 class="unnumbered">Screening calls</h4>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" tabindex="-1"></a>month_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">1</span>)</span>
-<span id="cb283-2"><a href="#cb283-2" tabindex="-1"></a>screen_last_month_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
-<span id="cb283-3"><a href="#cb283-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 39 recruiting calls since 2023-05-22 13:30:00.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="#cb284-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_month_df)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" tabindex="-1"></a>month_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">1</span>)</span>
+<span id="cb293-2"><a href="#cb293-2" tabindex="-1"></a>screen_last_month_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
+<span id="cb293-3"><a href="#cb293-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 28 recruiting calls since 2023-05-23 13:30:00.</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="include/img/unnamed-chunk-95-1.png" alt="Screening calls in last month by site" width="672" />
+<img src="include/img/unnamed-chunk-149-1.png" alt="Screening calls in last month by site" width="672" />
 <p class="caption">
-(#fig:unnamed-chunk-95)Screening calls in last month by site
+(#fig:unnamed-chunk-149)Screening calls in last month by site
 </p>
 </div>
 </div>
 <div id="home-visits-1" class="section level4 unnumbered">
 <h4 class="unnumbered">Home visits</h4>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" tabindex="-1"></a>home_last_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb285-2"><a href="#cb285-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 50 home visits since 2023-05-22 13:30:00.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="#cb286-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_month_df)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" tabindex="-1"></a>home_last_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb295-2"><a href="#cb295-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 47 home visits since 2023-05-23 13:30:00.</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="#cb296-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-mo-home-visit-1.png" alt="Home visits in last month by site" width="672" />
 <p class="caption">
@@ -4567,11 +5597,11 @@ NYUNI
 <h3 class="unnumbered">Last 3 mos</h3>
 <div id="screening-calls-2" class="section level4 unnumbered">
 <h4 class="unnumbered">Screening calls</h4>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" tabindex="-1"></a>three_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)</span>
-<span id="cb287-2"><a href="#cb287-2" tabindex="-1"></a>screen_last_3_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb287-3"><a href="#cb287-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 124 screening calls since 2023-03-22 16:30:00.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="#cb288-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_3_df)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" tabindex="-1"></a>three_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)</span>
+<span id="cb297-2"><a href="#cb297-2" tabindex="-1"></a>screen_last_3_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb297-3"><a href="#cb297-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 123 screening calls since 2023-03-23 16:30:00.</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="#cb298-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_3_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-calls-1.png" alt="Screening calls in last 3 months by site" width="672" />
 <p class="caption">
@@ -4581,10 +5611,10 @@ NYUNI
 </div>
 <div id="home-visits-2" class="section level4 unnumbered">
 <h4 class="unnumbered">Home visits</h4>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" tabindex="-1"></a>home_last_3_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb289-2"><a href="#cb289-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 111 home visits since 2023-03-22 16:30:00.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_3_month_df)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" tabindex="-1"></a>home_last_3_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb299-2"><a href="#cb299-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 110 home visits since 2023-03-23 16:30:00.</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="#cb300-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_3_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-home-visit-1.png" alt="Home visits in last 3 months by site" width="672" />
 <p class="caption">
@@ -4597,11 +5627,11 @@ NYUNI
 <h3 class="unnumbered">Last 6 mos</h3>
 <div id="screening-calls-3" class="section level4 unnumbered">
 <h4 class="unnumbered">Screening calls</h4>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" tabindex="-1"></a>six_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">6</span>)</span>
-<span id="cb291-2"><a href="#cb291-2" tabindex="-1"></a>screen_last_6_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
-<span id="cb291-3"><a href="#cb291-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 214 screening calls since 2022-12-21 09:00:00.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="#cb292-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_6_df)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="#cb301-1" tabindex="-1"></a>six_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">6</span>)</span>
+<span id="cb301-2"><a href="#cb301-2" tabindex="-1"></a>screen_last_6_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb301-3"><a href="#cb301-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 213 screening calls since 2022-12-22 09:00:00.</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_6_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-calls-1.png" alt="Screening calls in last 6 months by site" width="672" />
 <p class="caption">
@@ -4611,10 +5641,10 @@ NYUNI
 </div>
 <div id="home-visits-3" class="section level4 unnumbered">
 <h4 class="unnumbered">Home visits</h4>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" tabindex="-1"></a>home_last_6_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb293-2"><a href="#cb293-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 168 home visits since 2022-12-21 09:00:00.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_6_month_df)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="#cb303-1" tabindex="-1"></a>home_last_6_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb303-2"><a href="#cb303-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
+<p>There have been <span class="math inline">\(n=\)</span> 168 home visits since 2022-12-22 09:00:00.</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="#cb304-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_6_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-home-visit-1.png" alt="Home visits in last 6 months by site" width="672" />
 <p class="caption">
@@ -4630,15 +5660,15 @@ NYUNI
 <h3 class="unnumbered">From Databrary</h3>
 <p>Because of some minor anomalies merging the older KBT surveys, we query the Databrary API for the most complete data about PLAY sessions.
 For debugging purposes, we set <code>vb = TRUE</code> so we get complete information about what’s working and what is not.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" tabindex="-1"></a>databraryapi<span class="sc">::</span><span class="fu">login_db</span>(<span class="fu">Sys.getenv</span>(<span class="st">&quot;DATABRARY_LOGIN&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="#cb305-1" tabindex="-1"></a>databraryapi<span class="sc">::</span><span class="fu">login_db</span>(<span class="fu">Sys.getenv</span>(<span class="st">&quot;DATABRARY_LOGIN&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" tabindex="-1"></a>databrary_df <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(play_vols<span class="sc">$</span>play_site_id, make_site_session_summary, <span class="at">vb =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb297-2"><a href="#cb297-2" tabindex="-1"></a></span>
-<span id="cb297-3"><a href="#cb297-3" tabindex="-1"></a>databrary_df <span class="sc">%&gt;%</span></span>
-<span id="cb297-4"><a href="#cb297-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_name, site_id, site_vol_id, PLAY_Gold, PLAY_Silver, No_Visit, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb297-5"><a href="#cb297-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(., <span class="fu">desc</span>(PLAY_Gold)) <span class="sc">%&gt;%</span></span>
-<span id="cb297-6"><a href="#cb297-6" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(., <span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb297-7"><a href="#cb297-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="#cb307-1" tabindex="-1"></a>databrary_df <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(play_vols<span class="sc">$</span>play_site_id, make_site_session_summary, <span class="at">vb =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb307-2"><a href="#cb307-2" tabindex="-1"></a></span>
+<span id="cb307-3"><a href="#cb307-3" tabindex="-1"></a>databrary_df <span class="sc">%&gt;%</span></span>
+<span id="cb307-4"><a href="#cb307-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_name, site_id, site_vol_id, PLAY_Gold, PLAY_Silver, No_Visit, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb307-5"><a href="#cb307-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(., <span class="fu">desc</span>(PLAY_Gold)) <span class="sc">%&gt;%</span></span>
+<span id="cb307-6"><a href="#cb307-6" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(., <span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb307-7"><a href="#cb307-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4910,13 +5940,13 @@ PLAYProject_UIOWA
 6
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 </tr>
 <tr>
@@ -5131,31 +6161,31 @@ NA
 </div>
 <div id="from-kbt" class="section level3 unnumbered">
 <h3 class="unnumbered">From KBT</h3>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="#cb298-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_w_databrary_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb298-2"><a href="#cb298-2" tabindex="-1"></a></span>
-<span id="cb298-3"><a href="#cb298-3" tabindex="-1"></a>gold_silver <span class="ot">&lt;-</span> home_visit_w_databrary_df <span class="sc">%&gt;%</span></span>
-<span id="cb298-4"><a href="#cb298-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name))</span>
-<span id="cb298-5"><a href="#cb298-5" tabindex="-1"></a></span>
-<span id="cb298-6"><a href="#cb298-6" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> age_group, gold_silver)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="#cb308-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_w_databrary_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb308-2"><a href="#cb308-2" tabindex="-1"></a></span>
+<span id="cb308-3"><a href="#cb308-3" tabindex="-1"></a>gold_silver <span class="ot">&lt;-</span> home_visit_w_databrary_df <span class="sc">%&gt;%</span></span>
+<span id="cb308-4"><a href="#cb308-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name))</span>
+<span id="cb308-5"><a href="#cb308-5" tabindex="-1"></a></span>
+<span id="cb308-6"><a href="#cb308-6" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> age_group, gold_silver)</span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
 ##   PLAY_Gold     89   84   63
 ##   PLAY_Silver    9   23   21</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="#cb300-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> child_sex, gold_silver)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="#cb310-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> child_sex, gold_silver)</span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
 ##   PLAY_Gold      105  131
 ##   PLAY_Silver     24   29</code></pre>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" tabindex="-1"></a>df_race_eth <span class="ot">&lt;-</span> gold_silver <span class="sc">%&gt;%</span></span>
-<span id="cb302-2"><a href="#cb302-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name)) <span class="sc">%&gt;%</span></span>
-<span id="cb302-3"><a href="#cb302-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">participant_race =</span> <span class="fu">recode</span>(participant_race, </span>
-<span id="cb302-4"><a href="#cb302-4" tabindex="-1"></a>                                             <span class="st">`</span><span class="at">Black or African American</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Black_or_African_American&quot;</span>,</span>
-<span id="cb302-5"><a href="#cb302-5" tabindex="-1"></a>                                             <span class="st">`</span><span class="at">More than one</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;More_than_one&quot;</span>),</span>
-<span id="cb302-6"><a href="#cb302-6" tabindex="-1"></a>                <span class="at">participant_ethnicity =</span> <span class="fu">recode</span>(participant_ethnicity, </span>
-<span id="cb302-7"><a href="#cb302-7" tabindex="-1"></a>                                               <span class="st">`</span><span class="at">Hispanic or Latino</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Hispanic_or_Latino&quot;</span>,</span>
-<span id="cb302-8"><a href="#cb302-8" tabindex="-1"></a>                                               <span class="st">`</span><span class="at">Not Hispanic or Latino</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Not_Hispanic_or_Latino&quot;</span>))</span>
-<span id="cb302-9"><a href="#cb302-9" tabindex="-1"></a></span>
-<span id="cb302-10"><a href="#cb302-10" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> participant_race <span class="sc">+</span> participant_ethnicity, df_race_eth)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="#cb312-1" tabindex="-1"></a>df_race_eth <span class="ot">&lt;-</span> gold_silver <span class="sc">%&gt;%</span></span>
+<span id="cb312-2"><a href="#cb312-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name)) <span class="sc">%&gt;%</span></span>
+<span id="cb312-3"><a href="#cb312-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">participant_race =</span> <span class="fu">recode</span>(participant_race, </span>
+<span id="cb312-4"><a href="#cb312-4" tabindex="-1"></a>                                             <span class="st">`</span><span class="at">Black or African American</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Black_or_African_American&quot;</span>,</span>
+<span id="cb312-5"><a href="#cb312-5" tabindex="-1"></a>                                             <span class="st">`</span><span class="at">More than one</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;More_than_one&quot;</span>),</span>
+<span id="cb312-6"><a href="#cb312-6" tabindex="-1"></a>                <span class="at">participant_ethnicity =</span> <span class="fu">recode</span>(participant_ethnicity, </span>
+<span id="cb312-7"><a href="#cb312-7" tabindex="-1"></a>                                               <span class="st">`</span><span class="at">Hispanic or Latino</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Hispanic_or_Latino&quot;</span>,</span>
+<span id="cb312-8"><a href="#cb312-8" tabindex="-1"></a>                                               <span class="st">`</span><span class="at">Not Hispanic or Latino</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Not_Hispanic_or_Latino&quot;</span>))</span>
+<span id="cb312-9"><a href="#cb312-9" tabindex="-1"></a></span>
+<span id="cb312-10"><a href="#cb312-10" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> participant_race <span class="sc">+</span> participant_ethnicity, df_race_eth)</span></code></pre></div>
 <pre><code>##                                    participant_ethnicity
 ## participant_race                    Hispanic_or_Latino Not_Hispanic_or_Latino
 ##   Asian                                              0                      3
@@ -5168,7 +6198,7 @@ NA
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3 class="unnumbered">By site, location, &amp; QA status</h3>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="#cb304-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> site_id <span class="sc">+</span> group_name, gold_silver)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> site_id <span class="sc">+</span> group_name, gold_silver)</span></code></pre></div>
 <pre><code>##        group_name
 ## site_id PLAY_Gold PLAY_Silver
 ##   BOSTU         6           5
@@ -5190,18 +6220,18 @@ NA
 ##   UMIAM         2           1
 ##   UTAUS        17           4
 ##   VBLTU         4           2</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="#cb306-1" tabindex="-1"></a>gold_silver <span class="sc">%&gt;%</span></span>
-<span id="cb306-2"><a href="#cb306-2" tabindex="-1"></a>    <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb306-3"><a href="#cb306-3" tabindex="-1"></a>    <span class="fu">aes</span>(forcats<span class="sc">::</span><span class="fu">fct_infreq</span>(context_state), <span class="at">fill =</span> context_state) <span class="sc">+</span></span>
-<span id="cb306-4"><a href="#cb306-4" tabindex="-1"></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb306-5"><a href="#cb306-5" tabindex="-1"></a>    <span class="fu">facet_grid</span>(. <span class="sc">~</span> group_name) <span class="sc">+</span></span>
-<span id="cb306-6"><a href="#cb306-6" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
-<span id="cb306-7"><a href="#cb306-7" tabindex="-1"></a>      <span class="at">angle =</span> <span class="dv">90</span>,</span>
-<span id="cb306-8"><a href="#cb306-8" tabindex="-1"></a>      <span class="at">vjust =</span> <span class="fl">0.5</span>,</span>
-<span id="cb306-9"><a href="#cb306-9" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="dv">1</span></span>
-<span id="cb306-10"><a href="#cb306-10" tabindex="-1"></a>    )) <span class="sc">+</span> <span class="co"># Rotate text</span></span>
-<span id="cb306-11"><a href="#cb306-11" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;State&quot;</span>, <span class="at">y =</span> <span class="st">&quot;N participants&quot;</span>) <span class="sc">+</span></span>
-<span id="cb306-12"><a href="#cb306-12" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1" tabindex="-1"></a>gold_silver <span class="sc">%&gt;%</span></span>
+<span id="cb316-2"><a href="#cb316-2" tabindex="-1"></a>    <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb316-3"><a href="#cb316-3" tabindex="-1"></a>    <span class="fu">aes</span>(forcats<span class="sc">::</span><span class="fu">fct_infreq</span>(context_state), <span class="at">fill =</span> context_state) <span class="sc">+</span></span>
+<span id="cb316-4"><a href="#cb316-4" tabindex="-1"></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb316-5"><a href="#cb316-5" tabindex="-1"></a>    <span class="fu">facet_grid</span>(. <span class="sc">~</span> group_name) <span class="sc">+</span></span>
+<span id="cb316-6"><a href="#cb316-6" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb316-7"><a href="#cb316-7" tabindex="-1"></a>      <span class="at">angle =</span> <span class="dv">90</span>,</span>
+<span id="cb316-8"><a href="#cb316-8" tabindex="-1"></a>      <span class="at">vjust =</span> <span class="fl">0.5</span>,</span>
+<span id="cb316-9"><a href="#cb316-9" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="dv">1</span></span>
+<span id="cb316-10"><a href="#cb316-10" tabindex="-1"></a>    )) <span class="sc">+</span> <span class="co"># Rotate text</span></span>
+<span id="cb316-11"><a href="#cb316-11" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;State&quot;</span>, <span class="at">y =</span> <span class="st">&quot;N participants&quot;</span>) <span class="sc">+</span></span>
+<span id="cb316-12"><a href="#cb316-12" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-qa-level-by-state-1.png" alt="QA level by State" width="672" />
 <p class="caption">
@@ -5212,8 +6242,8 @@ NA
 </div>
 <div id="clean-up" class="section level2 unnumbered">
 <h2 class="unnumbered">Clean-up</h2>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="#cb307-1" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;../.databrary.RData&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb307-2"><a href="#cb307-2" tabindex="-1"></a>databraryapi<span class="sc">::</span><span class="fu">logout_db</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="#cb317-1" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;../.databrary.RData&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb317-2"><a href="#cb317-2" tabindex="-1"></a>databraryapi<span class="sc">::</span><span class="fu">logout_db</span>()</span></code></pre></div>
 <pre><code>## Logout Successful.</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <!--chapter:end:32-state-of-PLAY.Rmd-->
@@ -5243,7 +6273,7 @@ NA
   <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-22.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-06-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
