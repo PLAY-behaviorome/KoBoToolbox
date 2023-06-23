@@ -1084,7 +1084,7 @@ n_vars
 740628_non_mbcdi_18_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-88
+89
 </td>
 <td style="text-align:right;">
 288
@@ -1095,7 +1095,7 @@ n_vars
 740629_non_mbcdi_24_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-75
+76
 </td>
 <td style="text-align:right;">
 287
@@ -1117,7 +1117,7 @@ n_vars
 740631_non_mbcdi_24_bilingual_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-20
+21
 </td>
 <td style="text-align:right;">
 287
@@ -2247,7 +2247,7 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb156-6"><a href="#cb156-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;group_databrary&#39;</span>))</span>
 <span id="cb156-7"><a href="#cb156-7" tabindex="-1"></a></span>
 <span id="cb156-8"><a href="#cb156-8" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code></pre></div>
-<pre><code>## [1] 100 281  22 281 204 283</code></pre>
+<pre><code>## [1] 101 281  23 281 205 283</code></pre>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
 <pre><code>## Warning in names(df1) == names(df3): longer object length is not a multiple of
 ## shorter object length</code></pre>
@@ -2333,8 +2333,8 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb168-3"><a href="#cb168-3" tabindex="-1"></a></span>
 <span id="cb168-4"><a href="#cb168-4" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df3))</span></code></pre></div>
 <pre><code>##      [,1] [,2]
-## [1,]  100  281
-## [2,]  204  281</code></pre>
+## [1,]  101  281
+## [2,]  205  281</code></pre>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2422,13 +2422,13 @@ These are incorporated into <code>R/functions.R</code> so we do not source them 
 <span id="cb173-4"><a href="#cb173-4" tabindex="-1"></a></span>
 <span id="cb173-5"><a href="#cb173-5" tabindex="-1"></a>df1m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_1)</span>
 <span id="cb173-6"><a href="#cb173-6" tabindex="-1"></a><span class="fu">dim</span>(df1m)</span></code></pre></div>
-<pre><code>## [1] 100 272</code></pre>
+<pre><code>## [1] 101 272</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" tabindex="-1"></a>df2m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_2)</span>
 <span id="cb175-2"><a href="#cb175-2" tabindex="-1"></a><span class="fu">dim</span>(df2m)</span></code></pre></div>
-<pre><code>## [1]  22 272</code></pre>
+<pre><code>## [1]  23 272</code></pre>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" tabindex="-1"></a>df3m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_288_cols)</span>
 <span id="cb177-2"><a href="#cb177-2" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span></code></pre></div>
-<pre><code>## [1] 204 272</code></pre>
+<pre><code>## [1] 205 272</code></pre>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df2m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
 <pre><code>## [1] 272</code></pre>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df3m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
@@ -5149,8 +5149,8 @@ That is on the work plan.</p>
 <span id="cb257-3"><a href="#cb257-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female     131              24
-##    male       130              41</code></pre>
+##    female     132              25
+##    male       131              41</code></pre>
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3 class="unnumbered">Locomotor milestones</h3>
@@ -5397,8 +5397,8 @@ walk_mos_who
 <div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="#cb276-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> breastfeed, <span class="at">data =</span> feeding)</span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no refused yes
-##    female         1   3       0 150
-##    male           0  10       1 156</code></pre>
+##    female         1   3       0 152
+##    male           0  11       1 156</code></pre>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" tabindex="-1"></a>feeding <span class="sc">%&gt;%</span></span>
 <span id="cb278-2"><a href="#cb278-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
 <span id="cb278-3"><a href="#cb278-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> solid_food_mos, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
@@ -5462,7 +5462,7 @@ NYUNI
 <span id="cb281-13"><a href="#cb281-13" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> preg_smoking <span class="sc">+</span> preg_drinking, smoking_drinking)</span></code></pre></div>
 <pre><code>##             preg_drinking
 ## preg_smoking  no refused yes
-##      no      257       0  61
+##      no      259       0  62
 ##      refused   0       1   0</code></pre>
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
@@ -5480,7 +5480,7 @@ NYUNI
 <span id="cb283-11"><a href="#cb283-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
 <pre><code>## child_sleeping_position
 ##         back      changed    donotknow        other      refused         side 
-##          305            4            1            2            1            2 
+##          308            4            1            2            1            2 
 ## stomach_side 
 ##            6</code></pre>
 </div>
@@ -5492,7 +5492,7 @@ NYUNI
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
 <span id="cb285-2"><a href="#cb285-2" tabindex="-1"></a></span>
 <span id="cb285-3"><a href="#cb285-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
-<pre><code>## [1] 353 180</code></pre>
+<pre><code>## [1] 364 180</code></pre>
 <div class="rmdnote">
 <p>Cleaning this data is set aside for future work.</p>
 </div>
@@ -5520,7 +5520,7 @@ NYUNI
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" tabindex="-1"></a>two_weeks_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dweeks</span>(<span class="dv">2</span>)</span>
 <span id="cb289-2"><a href="#cb289-2" tabindex="-1"></a>screen_last_two_weeks_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
 <span id="cb289-3"><a href="#cb289-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 8 recruiting calls since 2023-06-09.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 10 recruiting calls since 2023-06-09.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_two_weeks_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/unnamed-chunk-68-1.png" alt="Screening calls in last 2 weeks by site" width="672" />
@@ -5533,7 +5533,7 @@ NYUNI
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" tabindex="-1"></a>home_last_two_weeks_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb291-2"><a href="#cb291-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> two_weeks_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 16 home visits since 2023-06-09.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 25 home visits since 2023-06-09.</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="#cb292-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_two_weeks_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-2-wk-home-visit-1.png" alt="Home visits in last 2 weeks by site" width="672" />
@@ -5550,7 +5550,7 @@ NYUNI
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" tabindex="-1"></a>month_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">1</span>)</span>
 <span id="cb293-2"><a href="#cb293-2" tabindex="-1"></a>screen_last_month_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
 <span id="cb293-3"><a href="#cb293-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 28 recruiting calls since 2023-05-23 13:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 30 recruiting calls since 2023-05-23 13:30:00.</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/unnamed-chunk-69-1.png" alt="Screening calls in last month by site" width="672" />
@@ -5563,7 +5563,7 @@ NYUNI
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" tabindex="-1"></a>home_last_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb295-2"><a href="#cb295-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 47 home visits since 2023-05-23 13:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 50 home visits since 2023-05-23 13:30:00.</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="#cb296-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-mo-home-visit-1.png" alt="Home visits in last month by site" width="672" />
@@ -5580,7 +5580,7 @@ NYUNI
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" tabindex="-1"></a>three_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)</span>
 <span id="cb297-2"><a href="#cb297-2" tabindex="-1"></a>screen_last_3_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb297-3"><a href="#cb297-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 123 screening calls since 2023-03-23 16:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 125 screening calls since 2023-03-23 16:30:00.</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="#cb298-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_3_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-calls-1.png" alt="Screening calls in last 3 months by site" width="672" />
@@ -5593,7 +5593,7 @@ NYUNI
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" tabindex="-1"></a>home_last_3_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb299-2"><a href="#cb299-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 110 home visits since 2023-03-23 16:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 113 home visits since 2023-03-23 16:30:00.</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="#cb300-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_3_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-home-visit-1.png" alt="Home visits in last 3 months by site" width="672" />
@@ -5610,7 +5610,7 @@ NYUNI
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="#cb301-1" tabindex="-1"></a>six_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">6</span>)</span>
 <span id="cb301-2"><a href="#cb301-2" tabindex="-1"></a>screen_last_6_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb301-3"><a href="#cb301-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 213 screening calls since 2022-12-22 09:00:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 215 screening calls since 2022-12-22 09:00:00.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_6_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-calls-1.png" alt="Screening calls in last 6 months by site" width="672" />
@@ -5623,7 +5623,7 @@ NYUNI
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="#cb303-1" tabindex="-1"></a>home_last_6_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb303-2"><a href="#cb303-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 168 home visits since 2022-12-22 09:00:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 171 home visits since 2022-12-22 09:00:00.</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="#cb304-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_6_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-home-visit-1.png" alt="Home visits in last 6 months by site" width="672" />
@@ -6148,13 +6148,13 @@ NA
 <span id="cb308-6"><a href="#cb308-6" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> age_group, gold_silver)</span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
-##   PLAY_Gold     89   84   63
-##   PLAY_Silver    9   23   21</code></pre>
+##   PLAY_Gold     92   84   65
+##   PLAY_Silver    9   23   22</code></pre>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="#cb310-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> child_sex, gold_silver)</span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
-##   PLAY_Gold      105  131
-##   PLAY_Silver     24   29</code></pre>
+##   PLAY_Gold      108  133
+##   PLAY_Silver     24   30</code></pre>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="#cb312-1" tabindex="-1"></a>df_race_eth <span class="ot">&lt;-</span> gold_silver <span class="sc">%&gt;%</span></span>
 <span id="cb312-2"><a href="#cb312-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name)) <span class="sc">%&gt;%</span></span>
 <span id="cb312-3"><a href="#cb312-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">participant_race =</span> <span class="fu">recode</span>(participant_race, </span>
@@ -6173,7 +6173,7 @@ NA
 ##   Native American or Alaskan Native                  1                      0
 ##   Other                                             11                      6
 ##   Refused                                            1                      0
-##   White                                             40                    183</code></pre>
+##   White                                             40                    189</code></pre>
 </div>
 <div id="by-site-location-qa-status" class="section level3 unnumbered">
 <h3 class="unnumbered">By site, location, &amp; QA status</h3>
@@ -6193,9 +6193,9 @@ NA
 ##   STANF         1           1
 ##   UCRIV         2           1
 ##   UCSCR        22           1
-##   UGEOR        19           6
+##   UGEOR        24           6
 ##   UHOUS        19           2
-##   UIOWA         6           2
+##   UIOWA         6           3
 ##   UMIAM         2           1
 ##   UTAUS        17           4
 ##   VBLTU         4           2</code></pre>
