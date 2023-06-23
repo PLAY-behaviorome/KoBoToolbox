@@ -1384,7 +1384,11 @@ visualization.
 
 #### Bed time {-}
 
+<<<<<<< HEAD
 ```{r fig-bed-time-hist}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 extract_sleep_hr <- function(t) {
   t |>
     stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
@@ -1405,19 +1409,40 @@ df |>
   theme(legend.title = element_blank())
 ```
 
+<<<<<<< HEAD
 Some of the bed times are probably not in correct 24 hr time.
 
 ```{r table-bed-time}
+=======
+Some of the bed times are probably not in 24 hr time.
+
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df |>
   dplyr::filter(child_sleep_time < hms::as_hms("16:00:00")) |>
   dplyr::select(site_id, subject_number, child_sleep_time) |>
   dplyr::arrange(site_id, subject_number) |>
+<<<<<<< HEAD
   knitr::kable('html')
+=======
+  knitr::kable('html') |>
+  kableExtra::kable_classic()
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 ```
 
 #### Wake time {-}
 
+<<<<<<< HEAD
 ```{r fig-wake-time-hist}
+=======
+```{r}
+extract_sleep_hr <- function(t) {
+  t |>
+    stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
+    hms::as_hms()
+}
+
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df <- screen_df |>
   dplyr::mutate(child_wake_time = extract_sleep_hr(child_wake_time)) |>
   dplyr::filter(!is.na(child_wake_time)) 
@@ -1434,17 +1459,30 @@ df |>
 
 There are some unusual wake times, too.
 
+<<<<<<< HEAD
 ```{r table-wake-time}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df |>
   dplyr::filter(child_wake_time > hms::as_hms("16:00:00")) |>
   dplyr::select(site_id, subject_number, child_wake_time) |>
   dplyr::arrange(site_id, subject_number) |>
+<<<<<<< HEAD
   knitr::kable('html')
+=======
+  knitr::kable('html') |>
+  kableExtra::kable_classic()
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 ```
 
 #### Sleep duration {-}
 
+<<<<<<< HEAD
 ```{r fig-sleep-dur-hist}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df <- screen_df |>
   dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time),
                   child_wake_time = extract_sleep_hr(child_wake_time)) |>
@@ -1462,18 +1500,31 @@ df |>
 ```
 Again, there are some unusual values.
 
+<<<<<<< HEAD
 ```{r table-sleep-dur}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df |>
   dplyr::filter(child_sleep_secs < 12000) |>
   dplyr::select(site_id, subject_number, child_sleep_time, child_wake_time, child_sleep_secs) |>
   dplyr::arrange(site_id, subject_number) |>
+<<<<<<< HEAD
   knitr::kable('html')
+=======
+  knitr::kable('html') |>
+  kableExtra::kable_classic()
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 ```
 
 
 #### Nap hours {-}
 
+<<<<<<< HEAD
 ```{r fig-nap-hrs-hist}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df <- screen_df |>
   dplyr::mutate(child_nap_hours = as.numeric(child_nap_hours)) |>
   dplyr::filter(!is.na(child_sleep_time)) 
@@ -1489,12 +1540,21 @@ df |>
 ```
 And there are some very long nappers or null values we need to capture.
 
+<<<<<<< HEAD
 ```{r table-nap-hrs}
+=======
+```{r}
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 df |>
   dplyr::filter(child_nap_hours > 5) |>
   dplyr::select(site_id, subject_number, child_nap_hours) |>
   dplyr::arrange(site_id, subject_number) |>
+<<<<<<< HEAD
   knitr::kable('html')
+=======
+  knitr::kable('html') |>
+  kableExtra::kable_classic()
+>>>>>>> 48eef016286da384688f3156cd838e0912562e7b
 ```
 
 
