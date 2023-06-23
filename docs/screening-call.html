@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Screening call | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
-<meta name="description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT)  Setup Load...">
+<meta name="description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT) We make use of...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Screening call | PLAY Project: Surveys">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT)  Setup Load...">
+<meta property="og:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT) We make use of...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Screening call | PLAY Project: Surveys">
-<meta name="twitter:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT)  Setup Load...">
+<meta name="twitter:description" content="Collection protocol Details about the data collection protocol for participant screening and recruiting can be found on the PLAY Project website.  Retrieve from KoBoToolbox (KBT) We make use of...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -75,21 +75,21 @@
 <div id="retrieve-from-kobotoolbox-kbt" class="section level2 unnumbered">
 <h2>Retrieve from KoBoToolbox (KBT)<a class="anchor" aria-label="anchor" href="#retrieve-from-kobotoolbox-kbt"><i class="fas fa-link"></i></a>
 </h2>
+<p>We make use of the <code>targets</code> package for downloading data files from KoBoToolbox
+and for saving local XLSX and CSV copies.
+This allows us to download and process those files on a regular basis.</p>
 <div id="setup-1" class="section level3 unnumbered">
 <h3>Setup<a class="anchor" aria-label="anchor" href="#setup-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Load functions needed to download KBT screening/demographic questionnaire files.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">kb_fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"R"</span><span class="op">)</span>, <span class="st">"^kobo_"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="va">kb_fl</span>, <span class="va">source</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">file_fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"R"</span><span class="op">)</span>, <span class="st">"^file_"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="va">file_fl</span>, <span class="va">source</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"R"</span><span class="op">)</span>, <span class="st">"^kobo_|^file_"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="va">fl</span>, <span class="va">source</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="download" class="section level3 unnumbered">
 <h3>Download<a class="anchor" aria-label="anchor" href="#download"><i class="fas fa-link"></i></a>
 </h3>
-<p>First, we list the screening call data files available on KBT.</p>
+<p>We list the screening call data files available on KBT.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">kb_screen_df</span> <span class="op">&lt;-</span> <span class="fu">kobo_list_data_filtered</span><span class="op">(</span><span class="st">"[Dd]emographic"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##       id              id_string                                    title
@@ -104,18 +104,32 @@
 ## 1 https://kc.kobotoolbox.org/api/v1/data/334134
 ## 2 https://kc.kobotoolbox.org/api/v1/data/359546
 ## 3 https://kc.kobotoolbox.org/api/v1/data/275882</code></pre>
-<p>Then we retrieve and save these files.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>The following target captures this step:</p>
+<pre><code># Not evaluated
+  tar_target(
+    kb_screen_df,
+    kobo_list_data_filtered("[Dd]emographic"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),</code></pre>
+<div class="rmdnote">
+<p>This next step could be incorporated into the <code>targets</code> workflow, but is not
+as of 2023-06-23.</p>
+</div>
+<p>We download and save the raw XLSX files.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">kobo_retrieve_save_many_xlsx</span><span class="op">(</span><span class="va">kb_screen_df</span>, save_dir <span class="op">=</span> <span class="st">"../data/xlsx/screening"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Retrieving 3 files from KoBoToolbox site.</code></pre>
 <pre><code>## [1] "../data/xlsx/screening/334134_PLAY_Demographic_Questionnaire_Spanish.xlsx"
 ## [2] "../data/xlsx/screening/359546_PLAY_Demographic_Questionnaire.xlsx"        
 ## [3] "../data/xlsx/screening/275882_PLAY_Demographic_Questionnaire.xlsx"</code></pre>
 <p>Next, we convert the XLSX files to CSVs via a function from the <code>play/files</code> module.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">file_load_xlsx_save_many_csv</span><span class="op">(</span><span class="st">"../data/xlsx/screening"</span>, <span class="st">"../data/csv/screening"</span>, <span class="st">"Demographic"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in read_fun(path = path, sheet_i = sheet, limits = limits, shim = shim,
-## : NA inserted for an unsupported date prior to 1900</code></pre>
+<pre><code>## Warning in read_fun(path = path, sheet_i = sheet, limits = limits, shim =
+## shim, : NA inserted for an unsupported date prior to 1900</code></pre>
 <pre><code>## [1] "../data/csv/screening/275882_PLAY_Demographic_Questionnaire.csv"        
 ## [2] "../data/csv/screening/334134_PLAY_Demographic_Questionnaire_Spanish.csv"
 ## [3] "../data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv"</code></pre>
@@ -128,11 +142,11 @@
 <h3>Setup<a class="anchor" aria-label="anchor" href="#setup-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>A set of cleaning functions have the <code>screen_</code> prefix.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"R"</span><span class="op">)</span>, </span>
 <span>                    <span class="st">"^screen_"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">source</span><span class="op">)</span></span></code></pre></div>
 <p>There are three CSV files to clean:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"../data/csv/screening"</span>, <span class="st">"[Dd]emographic"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] "../data/csv/screening/275882_PLAY_Demographic_Questionnaire.csv"        
 ## [2] "../data/csv/screening/334134_PLAY_Demographic_Questionnaire_Spanish.csv"
@@ -142,7 +156,7 @@
 <div id="clean-variable-names" class="section level3 unnumbered">
 <h3>Clean variable names<a class="anchor" aria-label="anchor" href="#clean-variable-names"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fn</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>                  col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
@@ -155,7 +169,7 @@
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">fn</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>                  col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>                  show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] "start"                                                                        
 ##  [2] "end"                                                                          
@@ -172,7 +186,7 @@
 ## [13] "play_phone_questionnaire/group_contact_info/acknowledge_contact_info"         
 ## [14] "play_phone_questionnaire/instructions_guid"                                   
 ## [15] "play_phone_questionnaire/child_first_name"</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] "start"                                                                                                                                                                                                                                    
 ##  [2] "end"                                                                                                                                                                                                                                      
@@ -189,7 +203,7 @@
 ## [13] "play_demo_questionnaire/group_contact_info/group_address/parent_address_1"                                                                                                                                                                
 ## [14] "play_demo_questionnaire/group_contact_info/group_address/parent_address_2"                                                                                                                                                                
 ## [15] "play_demo_questionnaire/group_contact_info/group_address/city"</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df3</span><span class="op">)</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] "start"                                                                       
 ##  [2] "end"                                                                         
@@ -222,7 +236,7 @@
 cleaned data files.
 The <code>screen_clean_raw_csv()</code> function combines the previous <code>screen_remove*</code> functions.
 The <code>screen_clean_raw_join()</code> function cleans each CSV then joins them.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="fu">screen_clean_raw_join</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/275882_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 31 of 168 columns.</code></pre>
@@ -231,31 +245,36 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
 <pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks, child_sex, day,
-## day2, day1, play_id, language_spoken_mom, `language_spoken_mom/english`,
-## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
-## language_spoken_mom_other, language_spoken_child,
-## `language_spoken_child/english`, `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other,
-## language_spoken_house, `language_spoken_house/english`,
-## `language_spoken_house/spanish`, `language_spoken_house/other`,
-## language_spoken_house_other, `child_information/child_bornonduedate`,
-## `child_information/child_onterm`, `child_information/child_duedate`,
-## `child_information/child_birthage`, `child_information/child_weight_pounds`,
+## subject_number, state, check_childage, check_childage_weeks, child_sex,
+## day, day2, day1, play_id, language_spoken_mom,
+## `language_spoken_mom/english`, `language_spoken_mom/spanish`,
+## `language_spoken_mom/other`, language_spoken_mom_other,
+## language_spoken_child, `language_spoken_child/english`,
+## `language_spoken_child/spanish`, `language_spoken_child/other`,
+## language_spoken_child_other, language_spoken_house,
+## `language_spoken_house/english`, `language_spoken_house/spanish`,
+## `language_spoken_house/other`, language_spoken_house_other,
+## `child_information/child_bornonduedate`, `child_information/child_onterm`,
+## `child_information/child_duedate`, `child_information/child_birthage`,
+## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
 ## `child_information/child_birth_complications`,
 ## `child_information/specify_birth_complications`,
-## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
-## `child_information/vision_disabilities`, `child_information/specify_vision`,
+## `child_information/hearing_disabilities`,
+## `child_information/specify_hearing`,
+## `child_information/vision_disabilities`,
+## `child_information/specify_vision`,
 ## `child_information/major_illnesses_injuries`,
 ## `child_information/specify_illnesses_injuries`,
 ## `child_information/other_developmentaldelays`,
-## `child_information/specify_developmentaldelays`, `child_information/child_race`,
-## `child_information/child_sleep_time`, `child_information/child_wake_time`,
-## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
+## `child_information/specify_developmentaldelays`,
+## `child_information/child_race`, `child_information/child_sleep_time`,
+## `child_information/child_wake_time`, `child_information/child_nap_hours`,
+## `child_information/child_sleep_location`,
 ## `child_information/specify_child_sleep_location`,
 ## `child_information/indicate_child`, `child_information/indicate_child_2`,
-## `group_family_structure/only_child`, `group_family_structure/specify_onlychild`,
+## `group_family_structure/only_child`,
+## `group_family_structure/specify_onlychild`,
 ## `group_family_structure/household_members`,
 ## `group_family_structure/household_members/father_biological`,
 ## `group_family_structure/household_members/male_partner`,
@@ -280,12 +299,12 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
 ## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
 ## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`,
-## `group_mominfo/mom_birth_country`, `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
-## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
-## `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
-## `group_biodad/biodad_childbirth_age`,
+## `group_mominfo/mom_birth_country`,
+## `group_mominfo/specify_mom_birth_country`, `group_mominfo/mom_education`,
+## `group_mominfo/mom_employment`, `group_mominfo/mom_occupation`,
+## `group_mominfo/mom_jobs_number`, `group_mominfo/mom_training`,
+## `group_mominfo/mom_condition`, `group_mominfo/specify_mom_condition`,
+## `group_mominfo/indicate_mom`, `group_biodad/biodad_childbirth_age`,
 ## `group_biodad/check_biodad_childbirth_age`, `group_biodad/biodad_race`,
 ## `group_biodad/indicate_biodad`, `group_biomom/biomom_childbirth_age`,
 ## `group_biomom/check_biomom_childbirth_age`, `group_biomom/biomom_race`,
@@ -312,21 +331,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_inclusioncheck/indicate_inclusion`, indicate_demoquestionnaire,
 ## indicate_databrary, `_id`)`
 ## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks, child_sex, day,
-## day2, day1, language_spoken_child, `language_spoken_child/english`,
+## subject_number, state, check_childage, check_childage_weeks, child_sex,
+## day, day2, day1, language_spoken_child, `language_spoken_child/english`,
 ## `language_spoken_child/spanish`, `language_spoken_child/other`,
 ## language_spoken_child_other, `child_information/child_bornonduedate`,
 ## `child_information/child_onterm`, `child_information/child_duedate`,
-## `child_information/child_birthage`, `child_information/child_weight_pounds`,
+## `child_information/child_birthage`,
+## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
 ## `child_information/child_birth_complications`,
 ## `child_information/specify_birth_complications`,
-## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
-## `child_information/vision_disabilities`, `child_information/specify_vision`,
+## `child_information/hearing_disabilities`,
+## `child_information/specify_hearing`,
+## `child_information/vision_disabilities`,
+## `child_information/specify_vision`,
 ## `child_information/major_illnesses_injuries`,
 ## `child_information/specify_illnesses_injuries`,
 ## `child_information/child_sleep_time`, `child_information/child_wake_time`,
-## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
+## `child_information/child_nap_hours`,
+## `child_information/child_sleep_location`,
 ## `child_information/specify_child_sleep_location`,
 ## `child_information/indicate_child`, `child_information/indicate_child_2`,
 ## `group_family_structure/household_members`,
@@ -354,25 +377,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
 <pre><code>## # A tibble: 477 × 162
-##    start    end   c_today update_date site_id subject_number state check_childage
-##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         
-##  1 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New … 32.6772408503…
-##  2 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New … 32.3813828621…
-##  3 2019-12… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA    26.7258382642…
-##  4 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg… 12.7547666009…
-##  5 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New … 13.4122287968…
-##  6 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New … 19.3636313828…
-##  7 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg… 17.8514683322…
-##  8 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY    17.8514683322…
-##  9 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New … 23.8001314924…
-## 10 2020-02… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA    17.5884834538…
+##    start             end   c_today update_date site_id subject_number state
+##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
+##  1 2020-02-27T08:24… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
+##  2 2020-02-27T08:43… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
+##  3 2019-12-18T16:37… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
+##  4 2020-01-01T12:54… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
+##  5 2020-01-15T14:53… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
+##  6 2020-01-15T15:47… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
+##  7 2020-01-24T14:22… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
+##  8 2020-01-30T13:30… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
+##  9 2020-02-03T17:40… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
+## 10 2020-02-05T09:39… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
 ## # ℹ 467 more rows
-## # ℹ 154 more variables: check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
-## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
-## #   `language_spoken_mom/english` &lt;chr&gt;, `language_spoken_mom/spanish` &lt;chr&gt;,
+## # ℹ 155 more variables: check_childage &lt;chr&gt;, check_childage_weeks &lt;chr&gt;,
+## #   child_sex &lt;chr&gt;, day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
+## #   language_spoken_mom &lt;chr&gt;, `language_spoken_mom/english` &lt;chr&gt;,
+## #   `language_spoken_mom/spanish` &lt;chr&gt;,
 ## #   `language_spoken_mom/other` &lt;chr&gt;, language_spoken_mom_other &lt;chr&gt;,
-## #   language_spoken_child &lt;chr&gt;, `language_spoken_child/english` &lt;chr&gt;,
-## #   `language_spoken_child/spanish` &lt;chr&gt;, …</code></pre>
+## #   language_spoken_child &lt;chr&gt;, `language_spoken_child/english` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -380,7 +403,7 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <p>Now, we can proceed to clean-up the merged data frame.
 The sequence of functions called below cleans ‘construct-specific’ variables
 as indicated by the function names.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="va">scr_df</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">screen_clean_child_info</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">screen_clean_lang_info</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -398,7 +421,7 @@ suite does a great job of guessing what variables are what, but sometimes it
 guesses wrongly. So, in preliminary stages, it has proved easier to make everything
 a character string.</p>
 </div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="fu">screen_clean_fields</span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## tibble [477 × 51] (S3: tbl_df/tbl/data.frame)
@@ -460,7 +483,7 @@ a character string.</p>
 <h2>Export cleaned file<a class="anchor" aria-label="anchor" href="#export-cleaned-file"><i class="fas fa-link"></i></a>
 </h2>
 <p>We date-stamp the exported file so we can monitor progress as this workflow develops.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"PLAY-screening-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">scr_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 

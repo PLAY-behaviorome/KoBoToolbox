@@ -6,27 +6,49 @@ Details about the data collection [protocol for participant screening and recrui
 
 ## Retrieve from KoBoToolbox (KBT) {-}
 
+We make use of the `targets` package for downloading data files from KoBoToolbox
+and for saving local XLSX and CSV copies.
+This allows us to download and process those files on a regular basis.
+
 ### Setup {-}
 
 Load functions needed to download KBT screening/demographic questionnaire files.
 
 ```{r}
-kb_fl <- list.files(file.path(here::here(), "R"), "^kobo_", full.names = TRUE)
-purrr::walk(kb_fl, source)
-
-file_fl <- list.files(file.path(here::here(), "R"), "^file_", full.names = TRUE)
-purrr::walk(file_fl, source)
+fl <- list.files(file.path(here::here(), "R"), "^kobo_|^file_", full.names = TRUE)
+purrr::walk(fl, source)
 ```
 
 ### Download {-}
 
-First, we list the screening call data files available on KBT.
+We list the screening call data files available on KBT.
 
 ```{r list-demographic-from-kbt}
 (kb_screen_df <- kobo_list_data_filtered("[Dd]emographic"))
 ```
 
-Then we retrieve and save these files.
+The following target captures this step:
+
+```
+# Not evaluated
+  tar_target(
+    kb_screen_df,
+    kobo_list_data_filtered("[Dd]emographic"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+```
+
+::: {.rmdnote}
+
+This next step could be incorporated into the `targets` workflow, but is not
+as of 2023-06-23.
+
+:::
+
+We download and save the raw XLSX files.
 
 ```{r download-demographic-from-kbt}
 kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")
