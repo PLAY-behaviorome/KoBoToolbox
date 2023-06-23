@@ -1262,14 +1262,14 @@ xtabs(formula = ~ child_sex + language_spoken_home, data = df)
 
 ### To child vs. at home {-}
 
-```{r}
+```{r xtabs-language-child-vs-home}
 xtabs(formula = ~ language_spoken_child + language_spoken_home, data = df)
 ```
 ## Child health
 
 ### Child born on due date {-}
 
-```{r}
+```{r xtabs-duedate}
 xtabs(formula = ~ child_sex + child_bornonduedate,
       data = screen_df)
 ```
@@ -1285,7 +1285,7 @@ of the survey. It's possible that this question was not asked early-on.
 
 Must convert pounds and ounces to decimal pounds.
 
-```{r}
+```{r fig-birthwt-hist}
 df <- screen_df %>%
   dplyr::mutate(.,
                 birth_weight_lbs = child_weight_pounds + child_weight_ounces/16)
@@ -1302,80 +1302,75 @@ df |>
 
 ### Birth complications {-}
 
-```{r}
+```{r xtabs-birth-compl}
 xtabs(formula = ~ child_sex + child_birth_complications,
       data = screen_df)
 ```
-```{r}
+```{r table-birth-compl}
 screen_df |>
   dplyr::filter(!is.na(child_birth_complications_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_birth_complications_specify) |>
   dplyr::arrange(child_age_mos) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Major illnesses or injuries {-}
 
-```{r}
+```{r xtabs-illness-injuries}
 xtabs(formula = ~ child_sex + child_major_illnesses_injuries,
       data = screen_df)
 ```
-```{r}
+```{r table-illness-injuries}
 screen_df |>
   dplyr::filter(!is.na(child_illnesses_injuries_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_illnesses_injuries_specify) |>
   dplyr::arrange(child_age_mos) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Child vision
 
-```{r}
+```{r xtabs-vision}
 xtabs(formula = ~ child_sex + child_vision_disabilities,
       data = screen_df)
 ```
 
-```{r}
+```{r table-vision}
 screen_df |>
   dplyr::filter(!is.na(child_vision_disabilities_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_vision_disabilities_specify) |>
   dplyr::arrange(child_age_mos) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Child hearing
 
-```{r}
+```{r xtabs-hearing}
 xtabs(formula = ~ child_sex + child_hearing_disabilities,
       data = screen_df)
 ```
 
-```{r}
+```{r table-hearing}
 screen_df |>
   dplyr::filter(!is.na(child_hearing_disabilities_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_hearing_disabilities_specify) |>
   dplyr::arrange(child_age_mos) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Child developmental delays
 
-```{r}
+```{r xtabs-dev-delays}
 xtabs(formula = ~ child_sex + child_developmentaldelays,
       data = screen_df)
 ```
 
-```{r}
+```{r table-dev-delays}
 screen_df |>
   dplyr::filter(!is.na(child_developmentaldelays_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_developmentaldelays_specify) |>
   dplyr::arrange(child_age_mos) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Child sleep {-}
@@ -1389,7 +1384,7 @@ visualization.
 
 #### Bed time {-}
 
-```{r}
+```{r fig-bed-time-hist}
 extract_sleep_hr <- function(t) {
   t |>
     stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
@@ -1410,26 +1405,19 @@ df |>
   theme(legend.title = element_blank())
 ```
 
-Some of the bed times are probably not in 24 hr time.
+Some of the bed times are probably not in correct 24 hr time.
 
-```{r}
+```{r table-bed-time}
 df |>
   dplyr::filter(child_sleep_time < hms::as_hms("16:00:00")) |>
   dplyr::select(site_id, subject_number, child_sleep_time) |>
   dplyr::arrange(site_id, subject_number) |>
-  knitr::kable('html') |>
-  kableExtra::kable_classic()
+  knitr::kable('html')
 ```
 
 #### Wake time {-}
 
-```{r}
-extract_sleep_hr <- function(t) {
-  t |>
-    stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
-    hms::as_hms()
-}
-
+```{r fig-wake-time-hist}
 df <- screen_df |>
   dplyr::mutate(child_wake_time = extract_sleep_hr(child_wake_time)) |>
   dplyr::filter(!is.na(child_wake_time)) 
@@ -1446,18 +1434,17 @@ df |>
 
 There are some unusual wake times, too.
 
-```{r}
+```{r table-wake-time}
 df |>
   dplyr::filter(child_wake_time > hms::as_hms("16:00:00")) |>
   dplyr::select(site_id, subject_number, child_wake_time) |>
   dplyr::arrange(site_id, subject_number) |>
-  knitr::kable('html') |>
-  kableExtra::kable_classic()
+  knitr::kable('html')
 ```
 
 #### Sleep duration {-}
 
-```{r}
+```{r fig-sleep-dur-hist}
 df <- screen_df |>
   dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time),
                   child_wake_time = extract_sleep_hr(child_wake_time)) |>
@@ -1475,19 +1462,18 @@ df |>
 ```
 Again, there are some unusual values.
 
-```{r}
+```{r table-sleep-dur}
 df |>
   dplyr::filter(child_sleep_secs < 12000) |>
   dplyr::select(site_id, subject_number, child_sleep_time, child_wake_time, child_sleep_secs) |>
   dplyr::arrange(site_id, subject_number) |>
-  knitr::kable('html') |>
-  kableExtra::kable_classic()
+  knitr::kable('html')
 ```
 
 
 #### Nap hours {-}
 
-```{r}
+```{r fig-nap-hrs-hist}
 df <- screen_df |>
   dplyr::mutate(child_nap_hours = as.numeric(child_nap_hours)) |>
   dplyr::filter(!is.na(child_sleep_time)) 
@@ -1503,13 +1489,12 @@ df |>
 ```
 And there are some very long nappers or null values we need to capture.
 
-```{r}
+```{r table-nap-hrs}
 df |>
   dplyr::filter(child_nap_hours > 5) |>
   dplyr::select(site_id, subject_number, child_nap_hours) |>
   dplyr::arrange(site_id, subject_number) |>
-  knitr::kable('html') |>
-  kableExtra::kable_classic()
+  knitr::kable('html')
 ```
 
 
@@ -1525,13 +1510,13 @@ xtabs(formula = ~ child_sex + child_sleep_location,
 
 ### Biological or adoptive {-}
 
-```{r}
+```{r xtabs-mom-bio}
 xtabs(formula = ~ child_sex + mom_bio,
       data = screen_df)
 ```
 ### Age at childbirth {-}
 
-```{r}
+```{r fig-mom-age-childbirth}
 screen_df |>
   dplyr::filter(!is.na(mom_childbirth_age), !is.na(child_sex)) |>
   ggplot() +
@@ -1543,19 +1528,18 @@ screen_df |>
 
 Clearly, there are some impossible (erroneous) maternal ages > 100. Here are details:
 
-```{r}
+```{r table-mom-childbirth}
 old_moms <- screen_df |>
   dplyr::filter(mom_childbirth_age > 55)
 
 old_moms |>
   dplyr::select(submit_date, site_id, subject_number, mom_childbirth_age) |>
-  knitr::kable(format = 'html') |>
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 ### Birth country {-}
 
-```{r}
+```{r xtabs-mom-birth-country}
 df <- screen_df |>
   dplyr::mutate(mom_birth_country = dplyr::recode(
     mom_birth_country, 
@@ -1569,7 +1553,7 @@ df <- screen_df |>
 xtabs(~ mom_birth_country, data = df)
 ```
 
-```{r}
+```{r table-mom-birth-country-non-us}
 df <- screen_df |>
   dplyr::mutate(mom_birth_country_specify = stringr::str_to_title(mom_birth_country_specify)) |>
   dplyr::filter(!is.na(mom_birth_country_specify)) |>
@@ -1580,7 +1564,7 @@ unique(df$mom_birth_country_specify)
 
 ### Education
 
-```{r}
+```{r xtabs-mom-educ}
 df <- screen_df |>
   dplyr::filter(!is.na(mom_education)) |>
   dplyr::select(child_sex, mom_education)
@@ -1595,7 +1579,7 @@ This requires some recoding work.
 
 ### Employment
 
-```{r}
+```{r xtabs-mom-employ}
 df <- screen_df |>
   dplyr::filter(!is.na(mom_employment))
 
@@ -1608,14 +1592,14 @@ This information is available, but would need to be substantially recoded to be 
 
 ### Jobs number
 
-```{r}
+```{r xtabs-mom-jobs-number}
 df <- screen_df |>
   dplyr::filter(!is.na(mom_jobs_number))
 
 xtabs(~ mom_jobs_number, data = df)
 ```
 
-```{r}
+```{r xtabs-mom-jobs-vs-employ}
 df <- screen_df |>
   dplyr::filter(!is.na(mom_jobs_number),
                 !is.na(mom_employment))
@@ -1648,7 +1632,7 @@ xtabs(~ mom_jobs_number + mom_employment, data = df)
 
 ### Types
 
-```{r}
+```{r xtabs-childcare-types}
 df <- screen_df |>
   dplyr::filter(!is.na(childcare_types))
                 
@@ -1662,7 +1646,7 @@ This requires some cleaning.
 
 ### Hours
 
-```{r}
+```{r childcare-hrs}
 df <- screen_df |>
   dplyr::filter(!is.na(childcare_hours)) |>
   dplyr::arrange(childcare_hours)
@@ -1677,7 +1661,7 @@ This requires some cleaning.
 
 ### Language
 
-```{r}
+```{r child-care-language}
 df <- screen_df |>
   dplyr::filter(!is.na(childcare_language))
 
@@ -1769,8 +1753,7 @@ walk_mos_min <- 6
 play_loco %>%
   dplyr::select(., site_id, subject_number, crawl_mos) %>%
   dplyr::filter(., crawl_mos < crawl_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 ##### Anomalous walking onset (KEA criteria) {-}
@@ -1779,8 +1762,7 @@ play_loco %>%
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_kea) %>%
   dplyr::filter(., walk_mos_kea < walk_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 ##### Anomalous walking onset (WHO criteria) {-}
@@ -1789,8 +1771,7 @@ play_loco %>%
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_who) %>%
   dplyr::filter(., walk_mos_who < walk_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 #### Crawl onset {-}
@@ -1913,8 +1894,7 @@ Clearly, there are some impossible values here.
 feeding |>
   dplyr::select(site_id, subject_number, solid_food_mos) %>%
   dplyr::filter(., solid_food_mos > 12) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 #### Smoking/drinking {-}
@@ -2120,8 +2100,7 @@ databrary_df <- purrr::map_df(play_vols$play_site_id, make_site_session_summary,
 databrary_df %>%
   dplyr::select(., site_name, site_id, site_vol_id, PLAY_Gold, PLAY_Silver, No_Visit, `NA`) %>%
   dplyr::arrange(., desc(PLAY_Gold)) %>%
-  knitr::kable(., format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(., format = 'html') 
 ```
 
 ### From KBT {-}

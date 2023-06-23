@@ -76,8 +76,7 @@ walk_mos_min <- 6
 play_loco %>%
   dplyr::select(., site_id, subject_number, crawl_mos) %>%
   dplyr::filter(., crawl_mos < crawl_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 ##### Anomalous walking onset (KEA criteria) {-}
@@ -86,8 +85,7 @@ play_loco %>%
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_kea) %>%
   dplyr::filter(., walk_mos_kea < walk_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 ##### Anomalous walking onset (WHO criteria) {-}
@@ -96,8 +94,7 @@ play_loco %>%
 play_loco %>%
   dplyr::select(., site_id, subject_number, walk_mos_who) %>%
   dplyr::filter(., walk_mos_who < walk_mos_min) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html') 
 ```
 
 #### Crawl onset {-}
@@ -220,8 +217,7 @@ Clearly, there are some impossible values here.
 feeding |>
   dplyr::select(site_id, subject_number, solid_food_mos) %>%
   dplyr::filter(., solid_food_mos > 12) %>%
-  knitr::kable(format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(format = 'html')
 ```
 
 #### Smoking/drinking {-}

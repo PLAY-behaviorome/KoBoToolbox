@@ -145,8 +145,7 @@ databrary_df <- purrr::map_df(play_vols$play_site_id, make_site_session_summary,
 databrary_df %>%
   dplyr::select(., site_name, site_id, site_vol_id, PLAY_Gold, PLAY_Silver, No_Visit, `NA`) %>%
   dplyr::arrange(., desc(PLAY_Gold)) %>%
-  knitr::kable(., format = 'html') %>%
-  kableExtra::kable_classic()
+  knitr::kable(., format = 'html') 
 ```
 
 ### From KBT {-}

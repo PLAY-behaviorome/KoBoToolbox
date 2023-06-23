@@ -92,8 +92,8 @@
 <div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_two_weeks_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-148"></span>
-<img src="include/img/unnamed-chunk-148-1.png" alt="Screening calls in last 2 weeks by site" width="672"><p class="caption">
+<span style="display:block;" id="fig:unnamed-chunk-68"></span>
+<img src="include/img/unnamed-chunk-68-1.png" alt="Screening calls in last 2 weeks by site" width="672"><p class="caption">
 Figure 11: Screening calls in last 2 weeks by site
 </p>
 </div>
@@ -129,8 +129,8 @@ Figure 12: Home visits in last 2 weeks by site
 <div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">calls_by_site_plot</span><span class="op">(</span><span class="va">screen_last_month_df</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-149"></span>
-<img src="include/img/unnamed-chunk-149-1.png" alt="Screening calls in last month by site" width="672"><p class="caption">
+<span style="display:block;" id="fig:unnamed-chunk-69"></span>
+<img src="include/img/unnamed-chunk-69-1.png" alt="Screening calls in last month by site" width="672"><p class="caption">
 Figure 13: Screening calls in last month by site
 </p>
 </div>
@@ -244,9 +244,8 @@ For debugging purposes, we set <code>vb = TRUE</code> so we get complete informa
 <span><span class="va">databrary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_name</span>, <span class="va">site_id</span>, <span class="va">site_vol_id</span>, <span class="va">PLAY_Gold</span>, <span class="va">PLAY_Silver</span>, <span class="va">No_Visit</span>, <span class="va">`NA`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">PLAY_Gold</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">.</span>, format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">.</span>, format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span> </span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
 <thead><tr>
 <th style="text-align:left;">
 site_name
