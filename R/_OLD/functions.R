@@ -1294,7 +1294,8 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
     s_number_zero_padded <-
       stringr::str_pad(this_row$subject_number, 3, 'left', 0)
     df <-
-      dplyr::filter(vol_sessions, stringr::str_detect(session_name, paste0(s_number_zero_padded, '$')))
+      dplyr::filter(vol_sessions, stringr::str_detect(session_name, paste0(s_number_zero_padded, '$'))) |>
+      dplyr::mutate(session_date = as.character(session_date))
     #df <- dplyr::rename(df, session_name = name)
     #df <- dplyr::mutate(df, release = recode(release, "1"="shared", "2"= "learning", "0"="private"))
     #dplyr::select(df, -context.state)
@@ -1568,7 +1569,7 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
     dplyr::mutate(
       play_db_sessions,
       databrary_guid = generate_databrary_guid(play_db_sessions),
-      databrary_url = generate_databrary_url(play_db_sessions)
+      databrary_url = generate_databrary_url(play_db_sessions),
     )
   
   # Join databases with common session_id's
