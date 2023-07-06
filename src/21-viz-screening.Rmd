@@ -85,7 +85,7 @@ Some of the code to clean the `screen_df` variables could be incorporated into a
 
 :::
 
-## Language
+## Language {-}
 
 ### To child {-}
 
@@ -110,7 +110,8 @@ xtabs(formula = ~ child_sex + language_spoken_home, data = df)
 ```{r xtabs-language-child-vs-home}
 xtabs(formula = ~ language_spoken_child + language_spoken_home, data = df)
 ```
-## Child health
+
+## Child health {-}
 
 ### Child born on due date {-}
 
@@ -173,7 +174,7 @@ screen_df |>
   knitr::kable(format = 'html')
 ```
 
-### Child vision
+### Child vision {-}
 
 ```{r xtabs-vision}
 xtabs(formula = ~ child_sex + child_vision_disabilities,
@@ -263,7 +264,6 @@ df |>
 
 #### Wake time {-}
 
-<<<<<<< HEAD
 ```{r fig-wake-time-hist}
 df <- screen_df |>
   dplyr::mutate(child_wake_time = extract_sleep_hr(child_wake_time)) |>
@@ -318,7 +318,6 @@ df |>
   knitr::kable('html')
 ```
 
-
 #### Nap hours {-}
 
 ```{r fig-nap-hrs-hist}
@@ -338,7 +337,6 @@ df |>
 
 And there are some very long nappers or null values we need to capture.
 
-<<<<<<< HEAD
 ```{r table-nap-hrs}
 df |>
   dplyr::filter(child_nap_hours > 5) |>
@@ -355,7 +353,6 @@ xtabs(formula = ~ child_sex + child_sleep_location,
       data = screen_df)
 ```
 
-
 ## Mother {-}
 
 ### Biological or adoptive {-}
@@ -364,6 +361,7 @@ xtabs(formula = ~ child_sex + child_sleep_location,
 xtabs(formula = ~ child_sex + mom_bio,
       data = screen_df)
 ```
+
 ### Age at childbirth {-}
 
 ```{r fig-mom-age-childbirth}
@@ -412,7 +410,7 @@ df <- screen_df |>
 unique(df$mom_birth_country_specify)
 ```
 
-### Education
+### Education {-}
 
 ```{r xtabs-mom-educ}
 df <- screen_df |>
@@ -428,7 +426,7 @@ This requires some recoding work.
 
 :::
 
-### Employment
+### Employment {-}
 
 ```{r xtabs-mom-employ}
 df <- screen_df |>
@@ -437,11 +435,11 @@ df <- screen_df |>
 xtabs(~ mom_employment, data = df)
 ```
 
-### Occupation
+### Occupation {-}
 
 This information is available, but would need to be substantially recoded to be useful in summary form.
 
-### Jobs number
+### Jobs number {-}
 
 ```{r xtabs-mom-jobs-number}
 df <- screen_df |>
@@ -480,9 +478,9 @@ xtabs(~ mom_jobs_number + mom_employment, data = df)
 #       data = df)
 ```
 
-## Childcare
+## Childcare {-}
 
-### Types
+### Types {-}
 
 ```{r xtabs-childcare-types}
 df <- screen_df |>
@@ -496,7 +494,7 @@ This requires some cleaning.
 
 :::
 
-### Hours
+### Hours {-}
 
 ```{r childcare-hrs}
 df <- screen_df |>
@@ -512,7 +510,7 @@ This requires some cleaning.
 
 :::
 
-### Language
+### Language {-}
 
 ```{r child-care-language}
 df <- screen_df |>

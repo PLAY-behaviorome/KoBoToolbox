@@ -99,7 +99,7 @@ To access the site’s API programmatically, an API key was downloaded and added
 <div id="check-databrary-credentials" class="section level3 unnumbered">
 <h3>Check Databrary credentials<a class="anchor" aria-label="anchor" href="#check-databrary-credentials"><i class="fas fa-link"></i></a>
 </h3>
-<p>The <code>databraryapi</code> package handles authenticating to Databrary.
+<p>The <code>databraryr</code> package handles authenticating to Databrary.
 For scripting access to Databrary that require authentication, it is useful to store the user’s Databrary login (email) in <code>.Renviron</code> using the R command <code>Sys.setenv(DATABRARY_LOGIN = "&lt;email@provider.com&gt;")</code> where you substitute your Databrary login (email) for <code>&lt;email@provider.com&gt;</code>.
 When this has been accomplished the following code can be run to check the status of the saved variable.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -120,7 +120,7 @@ When this has been accomplished the following code can be run to check the statu
 <h3>Load/source helper functions<a class="anchor" aria-label="anchor" href="#loadsource-helper-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Most of the work is contained in <code>R/functions.R</code>.
-This is sourced when we run <code>tar_make()</code> from the <a href="https://docs.ropensci.org/targets/">targets</a> package.</p>
+This is sourced when we run <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html">tar_make()</a></code> from the <a href="https://docs.ropensci.org/targets/">targets</a> package.</p>
 <div class="rmdimportant">
 <p>We run <code><a href="https://docs.ropensci.org/targets/reference/tar_make.html">targets::tar_make()</a></code> manually for the time being.</p>
 <p>None of the outputs are synced to GitHub.</p>
@@ -184,7 +184,7 @@ The functions related to processing the screening/demographic data are in <code>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-07-05.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-07-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

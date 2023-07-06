@@ -8,7 +8,7 @@ fl <- list.files("R", "^kobo_|^file_|^screen_", full.names = TRUE)
 purrr::walk(fl, source)
 
 suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(databraryapi))
+suppressPackageStartupMessages(library(databraryr))
 
 tar_option_set(
   packages = c(
@@ -19,7 +19,7 @@ tar_option_set(
     "tools",
     "httr",
     "stringr",
-    "databraryapi"
+    "databraryr"
   )
 )
 

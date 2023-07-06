@@ -139,7 +139,7 @@ Because of some minor anomalies merging the older KBT surveys, we query the Data
 For debugging purposes, we set `vb = TRUE` so we get complete information about what's working and what is not.
 
 ```{r get-session-status-from-databrary, message=FALSE, warning=FALSE}
-databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))
+databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))
 databrary_df <- purrr::map_df(play_vols$play_site_id, make_site_session_summary, vb = TRUE) 
 
 databrary_df %>%
@@ -200,5 +200,5 @@ gold_silver %>%
 
 ```{r clean-up}
 unlink("../.databrary.RData", recursive = TRUE)
-databraryapi::logout_db()
+databraryr::logout_db()
 ```

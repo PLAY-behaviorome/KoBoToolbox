@@ -1044,10 +1044,10 @@ clean_dfs <- function(df) {
 #'
 check_databrary_login <-
   function(db_login_id = Sys.getenv("DATABRARY_LOGIN")) {
-    require(databraryapi)
+    require(databraryr)
     stopifnot(is.character(db_login_id))
     
-    databraryapi::login_db(db_login_id)
+    databraryr::login_db(db_login_id)
     
     # _targets.R assigns Sys.getenv("DATABRARY_LOGIN") to `db_login_id`
     # if (!file.exists('.databrary.RData')) {
@@ -1056,7 +1056,7 @@ check_databrary_login <-
     #          db_login_id,
     #          '`')
     #   } else {
-    #     logged_in_db <- databraryapi::login_db(db_login_id)
+    #     logged_in_db <- databraryr::login_db(db_login_id)
     #   }
     #   if (!logged_in_db) {
     #     stop('Automatic log in failed. Please log in manually.')
@@ -1169,7 +1169,7 @@ lookup_databrary_session <-
   function(this_site_id,
            s_number) {
     require(dplyr)
-    require(databraryapi)
+    require(databraryr)
     require(stringr)
     
     if (!is.character(this_site_id)) {
@@ -1190,7 +1190,7 @@ lookup_databrary_session <-
     }
     
     vol_sessions <-
-      databraryapi::list_sessions(as.numeric(this_volume$play_vol_id, vb = TRUE))
+      databraryr::list_sessions(as.numeric(this_volume$play_vol_id, vb = TRUE))
     
     if (!is.null(vol_sessions)) {
       s_number_zero_padded <- stringr::str_pad(s_number, 3, 'left', 0)
@@ -1217,7 +1217,7 @@ get_databrary_session_data <-  function(this_site_id,
                                         s_number, vb = FALSE) {
   require(dplyr)
   require(stringr)
-  require(databraryapi)
+  require(databraryr)
   if (!is.character(this_site_id)) {
     stop('`this_site_id` must be a character string.')
   }
@@ -1239,7 +1239,7 @@ get_databrary_session_data <-  function(this_site_id,
   if (vb)
     message("Site: ", this_site_id, " | Session: ", subject_number)
   vol_sessions <-
-    databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     s_number_zero_padded <- stringr::str_pad(s_number, 3, 'left', 0)
@@ -1260,7 +1260,7 @@ get_databrary_session_data <-  function(this_site_id,
 get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   require(dplyr)
   require(stringr)
-  require(databraryapi)
+  require(databraryr)
   stopifnot(is.numeric(row))
   stopifnot(row >= 1)
   stopifnot(is.data.frame(df))
@@ -1288,7 +1288,7 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
             " | Session: ",
             this_row$subject_number)
   vol_sessions <-
-    databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     s_number_zero_padded <-
@@ -1309,7 +1309,7 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
 
 ###################################################################
 get_db_session_data_from_site <- function(this_site, vb = FALSE) {
-  require(databraryapi)
+  require(databraryr)
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
@@ -1326,7 +1326,7 @@ get_db_session_data_from_site <- function(this_site, vb = FALSE) {
   }
   
   vol_sessions <-
-    databraryapi::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     vol_sessions
@@ -1368,7 +1368,7 @@ summarize_sessions_by_site <- function(this_site, vb = FALSE) {
 }
 
 make_site_session_summary_multiple <- function(play_vols) {
-  if (!databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+  if (!databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
     message("Not authenticated to Databrary.")
     return(NULL)
   }
@@ -1379,7 +1379,7 @@ make_site_session_summary_multiple <- function(play_vols) {
 make_site_session_summary <- function(this_site, vb = FALSE) {
   require(dplyr)
   require(tidyr)
-  require(databraryapi)
+  require(databraryr)
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
@@ -1407,7 +1407,7 @@ make_site_session_summary <- function(this_site, vb = FALSE) {
 get_save_databrary_session_csv <- function(this_site = "NYUNI",
                                            csv_dir = "data/csv/databrary_vols",
                                            vb = FALSE) {
-  require(databraryapi)
+  require(databraryr)
   require(readr)
   stopifnot(is.character(this_site))
   stopifnot(is.character(csv_dir), dir.exists(csv_dir))
@@ -1431,9 +1431,9 @@ get_save_databrary_session_csv <- function(this_site = "NYUNI",
 
 ###################################################################
 get_save_all_databrary_session_csvs <- function(vb = FALSE) {
-  require(databraryapi)
+  require(databraryr)
   
-  if (databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+  if (databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
     purrr::map(play_vols$play_site_id,
                get_save_databrary_session_csv,
                vb = TRUE)
@@ -1532,7 +1532,7 @@ add_play_session_name <- function(df) {
 
 ###################################################################
 add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
-  require(databraryapi)
+  require(databraryr)
   require(purrr)
   require(dplyr)
   stopifnot(is.data.frame(df))
@@ -1542,7 +1542,7 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
   if (vb)
     "Authenticating to Databrary using stored credentials."
   auth_status <-
-    databraryapi::login_db(Sys.getenv("DATABRARY_LOGIN"))
+    databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))
   stopifnot("Not logged in to Databrary." = auth_status)
   
   # Generate KoBo and add full Databrary-compatible PLAY session name
