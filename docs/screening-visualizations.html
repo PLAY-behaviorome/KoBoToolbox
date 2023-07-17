@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow. Setup library(targets) library(tidyverse) library(forcats) To calculate...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -81,18 +81,17 @@
 <div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-2023-06-23.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 477 Columns: 51
-## ── Column specification ────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────
 ## Delimiter: ","
-## chr  (42): site_id, subject_number, play_id, child_sex, child_bornondued...
-## dbl   (8): child_age_mos, child_birthage, child_weight_pounds, child_wei...
+## chr  (42): site_id, subject_number, play_id, child_sex, child_bornondu...
+## dbl   (8): child_age_mos, child_birthage, child_weight_pounds, child_w...
 ## dttm  (1): submit_date
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="dates-times" class="section level2" number="0.2">
-<h2>
-<span class="header-section-number">0.2</span> Dates &amp; times<a class="anchor" aria-label="anchor" href="#dates-times"><i class="fas fa-link"></i></a>
+<div id="dates-times" class="section level2 unnumbered">
+<h2>Dates &amp; times<a class="anchor" aria-label="anchor" href="#dates-times"><i class="fas fa-link"></i></a>
 </h2>
 <p>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</p>
 <div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
@@ -758,7 +757,8 @@ Breech, born via C-section
 ##    male   222  11</code></pre>
 <div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_illnesses_injuries_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_illnesses_injuries_specify</span><span class="op">)</span>,</span>
+<span>                <span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">child_illnesses_injuries_specify</span>, <span class="st">"OK"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_illnesses_injuries_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">child_age_mos</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span></span></code></pre></div>
@@ -795,61 +795,6 @@ male
 </td>
 <td style="text-align:left;">
 Croup (upper airway infection)
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.80145
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.80145
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.93294
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.03156
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.22880
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
 </td>
 </tr>
 <tr>
@@ -909,28 +854,6 @@ Respiratory failure and sepsis after birth that was resolved
 </tr>
 <tr>
 <td style="text-align:right;">
-14.20118
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14.46554
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Had a fall but she is fine._OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 16.17494
 </td>
 <td style="text-align:left;">
@@ -942,28 +865,6 @@ Child had a fall but she was fine.
 </tr>
 <tr>
 <td style="text-align:right;">
-17.78435
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.78572
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 18.04597
 </td>
 <td style="text-align:left;">
@@ -971,17 +872,6 @@ female
 </td>
 <td style="text-align:left;">
 broke leg in April - all healed now. slide accident, she was 16 months. in a cast for three weeks, and then a week phantom limping.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.27608
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
 </td>
 </tr>
 <tr>
@@ -1030,39 +920,6 @@ Sick quite a bit after her first year, low immunity; three seizures associated w
 </tr>
 <tr>
 <td style="text-align:right;">
-23.66864
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.70151
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.83300
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 24.03024
 </td>
 <td style="text-align:left;">
@@ -1074,17 +931,6 @@ had COVID at 7 months
 </tr>
 <tr>
 <td style="text-align:right;">
-24.06449
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 24.91782
 </td>
 <td style="text-align:left;">
@@ -1092,17 +938,6 @@ female
 </td>
 <td style="text-align:left;">
 She had COVID, and when she was little had an cardiac issue (her heart was "working" too hard) but she was okay soon after (this was first 2-3 months after birth). March of 2021 she had fully recovered from this, and received treatment
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-25.80539
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OK
 </td>
 </tr>
 <tr>
@@ -1125,39 +960,6 @@ male
 </td>
 <td style="text-align:left;">
 Pneumonia at 5 months
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-anaphylactic reaction to peanuts_OK
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-OK
 </td>
 </tr>
 </tbody>
@@ -1217,9 +1019,9 @@ lazy eye but corrected
 </tbody>
 </table></div>
 </div>
-<div id="child-hearing" class="section level3" number="0.2.1">
+<div id="child-hearing" class="section level3" number="0.1.1">
 <h3>
-<span class="header-section-number">0.2.1</span> Child hearing<a class="anchor" aria-label="anchor" href="#child-hearing"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.1</span> Child hearing<a class="anchor" aria-label="anchor" href="#child-hearing"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_hearing_disabilities</span>,</span>
@@ -1272,9 +1074,9 @@ Temporary hearing loss so tubes in his ears, one still remaining
 </tbody>
 </table></div>
 </div>
-<div id="child-developmental-delays" class="section level3" number="0.2.2">
+<div id="child-developmental-delays" class="section level3" number="0.1.2">
 <h3>
-<span class="header-section-number">0.2.2</span> Child developmental delays<a class="anchor" aria-label="anchor" href="#child-developmental-delays"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.2</span> Child developmental delays<a class="anchor" aria-label="anchor" href="#child-developmental-delays"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_developmentaldelays</span>,</span>
@@ -2703,14 +2505,18 @@ NYUNI
 <span>                </span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">childcare_types</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## childcare_types
-##                childcare           childcare_cent                    nanny 
-##                       78                        3                        4 
-##           nanny_babysitt               nanny_home     nanny_home childcare 
-##                        3                       18                        6 
-## nanny_home nanny_nothome      nanny_home relative            nanny_nothome 
-##                        1                        2                        6 
-##       nanny_nothome none                     none                 relative 
-##                        1                       67                       33 
+##                childcare           childcare_cent 
+##                       78                        3 
+##                    nanny           nanny_babysitt 
+##                        4                        3 
+##               nanny_home     nanny_home childcare 
+##                       18                        6 
+## nanny_home nanny_nothome      nanny_home relative 
+##                        1                        2 
+##            nanny_nothome       nanny_nothome none 
+##                        6                        1 
+##                     none                 relative 
+##                       67                       33 
 ##       relative childcare 
 ##                        7</code></pre>
 <div class="rmdnote">
@@ -2777,7 +2583,7 @@ NYUNI
 <li><a class="nav-link" href="#screening-visualizations">Screening visualizations</a></li>
 <li><a class="nav-link" href="#setup-3">Setup</a></li>
 <li>
-<a class="nav-link" href="#dates-times"><span class="header-section-number">0.2</span> Dates &amp; times</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#dates-times">Dates &amp; times</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#calls-across-time">Calls across time</a></li>
 <li><a class="nav-link" href="#calls-by-site">Calls by site</a></li>
 </ul>
@@ -2799,8 +2605,8 @@ NYUNI
 <li><a class="nav-link" href="#birth-complications">Birth complications</a></li>
 <li><a class="nav-link" href="#major-illnesses-or-injuries">Major illnesses or injuries</a></li>
 <li><a class="nav-link" href="#child-vision">Child vision</a></li>
-<li><a class="nav-link" href="#child-hearing"><span class="header-section-number">0.2.1</span> Child hearing</a></li>
-<li><a class="nav-link" href="#child-developmental-delays"><span class="header-section-number">0.2.2</span> Child developmental delays</a></li>
+<li><a class="nav-link" href="#child-hearing"><span class="header-section-number">0.1.1</span> Child hearing</a></li>
+<li><a class="nav-link" href="#child-developmental-delays"><span class="header-section-number">0.1.2</span> Child developmental delays</a></li>
 <li><a class="nav-link" href="#child-sleep">Child sleep</a></li>
 </ul>
 </li>
@@ -2840,7 +2646,7 @@ NYUNI
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-07-11.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-07-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

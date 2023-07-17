@@ -20,7 +20,7 @@ targets::tar_load(screen_df, store="../_targets")
 screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-2023-06-23.csv"))
 ```
 
-## Dates & times
+## Dates & times {-}
 
 To calculate cumulative screening/recruiting calls by site, we have to add an index variable
 
@@ -168,7 +168,8 @@ xtabs(formula = ~ child_sex + child_major_illnesses_injuries,
 ```
 ```{r table-illness-injuries}
 screen_df |>
-  dplyr::filter(!is.na(child_illnesses_injuries_specify)) |>
+  dplyr::filter(!is.na(child_illnesses_injuries_specify),
+                !stringr::str_detect(child_illnesses_injuries_specify, "OK")) |>
   dplyr::select(child_age_mos, child_sex, child_illnesses_injuries_specify) |>
   dplyr::arrange(child_age_mos) |>
   knitr::kable(format = 'html')

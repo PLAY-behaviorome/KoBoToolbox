@@ -1239,7 +1239,7 @@ get_databrary_session_data <-  function(this_site_id,
   if (vb)
     message("Site: ", this_site_id, " | Session: ", subject_number)
   vol_sessions <-
-    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     s_number_zero_padded <- stringr::str_pad(s_number, 3, 'left', 0)
@@ -1288,7 +1288,7 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
             " | Session: ",
             this_row$subject_number)
   vol_sessions <-
-    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     s_number_zero_padded <-
@@ -1326,7 +1326,7 @@ get_db_session_data_from_site <- function(this_site, vb = FALSE) {
   }
   
   vol_sessions <-
-    databraryr::download_session_csv(as.numeric(this_volume$play_vol_id))
+    databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     vol_sessions
