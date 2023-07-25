@@ -185,3 +185,10 @@ We date-stamp the exported file so we can monitor progress as this workflow deve
 sfn <- paste0("PLAY-screening-", Sys.Date(), ".csv")
 readr::write_csv(scr_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
 ```
+
+We also save a copy with "latest".
+
+```{r export-latest}
+sfn <- "PLAY-screening-latest.csv"
+readr::write_csv(scr_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+```
