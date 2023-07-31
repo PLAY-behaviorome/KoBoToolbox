@@ -17,35 +17,6 @@ targets::tar_load(home_visit_df, store="../_targets")
 screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-latest.csv"))
 ```
 
-<!-- ### Last two weeks {-} -->
-
-<!-- #### Screening calls {-} -->
-
-<!-- ```{r fig-last-2-wk-calls} -->
-<!-- two_weeks_ago <- now - dweeks(2) -->
-<!-- screen_last_two_weeks_df <- screen_df %>% -->
-<!--   dplyr::filter(submit_date > two_weeks_ago) -->
-<!-- ``` -->
-
-<!-- There have been $n=$ `r dim(screen_last_two_weeks_df)[1]` recruiting calls since `r two_weeks_ago`. -->
-
-<!-- ```{r, fig.cap="Screening calls in last 2 weeks by site"} -->
-<!-- calls_by_site_plot(screen_last_two_weeks_df) -->
-<!-- ``` -->
-
-<!-- #### Home visits {-} -->
-
-<!-- ```{r home-visit-stats-last-2-wks} -->
-<!-- home_last_two_weeks_df <- home_visit_df %>% -->
-<!--    dplyr::filter(date_today > two_weeks_ago) -->
-<!-- ``` -->
-
-<!-- There have been $n=$ `r dim(home_last_two_weeks_df)[1]` home visits since `r two_weeks_ago`. -->
-
-<!-- ```{r fig-last-2-wk-home-visit, fig.cap="Home visits in last 2 weeks by site"} -->
-<!-- calls_by_site_plot(home_last_two_weeks_df) -->
-<!-- ``` -->
-
 ### Last month {-}
 
 #### Screening calls {-}
@@ -177,6 +148,7 @@ df_race_eth <- gold_silver %>%
 
 xtabs(~ participant_race + participant_ethnicity, df_race_eth)
 ```
+
 ### By site, location, & QA status {-}
 
 ```{r xtabs-site-qa-status}
