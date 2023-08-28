@@ -32,7 +32,7 @@ df <- screen_df |>
 
 ### Calls across time {-}
 
-```{r, fig.cap="Cumulative screening calls by year and site"}
+```{r fig-screening-calls-time-series, fig.cap="Cumulative screening calls by year and site"}
 df |>
     dplyr::filter(!is.na(submit_date), !is.na(n_calls), !is.na(site_id)) %>%
     ggplot() +
