@@ -70,7 +70,7 @@
 <div id="load-home-visit-data" class="section level2 unnumbered">
 <h2>Load home visit data<a class="anchor" aria-label="anchor" href="#load-home-visit-data"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span></code></pre></div>
 <div id="demographics-1" class="section level3 unnumbered">
 <h3>Demographics<a class="anchor" aria-label="anchor" href="#demographics-1"><i class="fas fa-link"></i></a>
@@ -81,7 +81,7 @@
 <p>Child age in months (<code>age_group</code>) by <code>child_sex</code>.</p>
 <p>Note: The child’s exact age in months is part of the Databrary-related data.
 That is on the work plan.</p>
-<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span>,<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -100,19 +100,19 @@ Figure 4: Participants by age group and sex
 <div id="language-exposure" class="section level3 unnumbered">
 <h3>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
 ##    female     154              32
-##    male       145              50</code></pre>
+##    male       146              50</code></pre>
 </div>
 <div id="locomotor-milestones" class="section level3 unnumbered">
 <h3>Locomotor milestones<a class="anchor" aria-label="anchor" href="#locomotor-milestones"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -140,13 +140,13 @@ Figure 4: Participants by age group and sex
 <div id="check-for-anomalous-values" class="section level4 unnumbered">
 <h4>Check for anomalous values<a class="anchor" aria-label="anchor" href="#check-for-anomalous-values"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb262"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crawl_mos_min</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
 <span><span class="va">walk_mos_min</span> <span class="op">&lt;-</span> <span class="fl">6</span></span></code></pre></div>
 <div id="anomalous-crawling-onset" class="section level5 unnumbered">
 <h5>Anomalous crawling onset<a class="anchor" aria-label="anchor" href="#anomalous-crawling-onset"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb262"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">crawl_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&lt;</span> <span class="va">crawl_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -203,7 +203,7 @@ PRINU
 <div id="anomalous-walking-onset-kea-criteria" class="section level5 unnumbered">
 <h5>Anomalous walking onset (KEA criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-kea-criteria"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_kea</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -249,7 +249,7 @@ PRINU
 <div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
 <h5>Anomalous walking onset (WHO criteria)<a class="anchor" aria-label="anchor" href="#anomalous-walking-onset-who-criteria"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">walk_mos_who</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&lt;</span> <span class="va">walk_mos_min</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -283,7 +283,7 @@ PRINU
 <div id="crawl-onset" class="section level4 unnumbered">
 <h4>Crawl onset<a class="anchor" aria-label="anchor" href="#crawl-onset"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -301,7 +301,7 @@ Figure 5: Age of crawling onset (mos) by sex
 <div id="walk-onset" class="section level4 unnumbered">
 <h4>Walk onset<a class="anchor" aria-label="anchor" href="#walk-onset"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -314,7 +314,7 @@ Figure 5: Age of crawling onset (mos) by sex
 Figure 6: Age (mos) of walking onset (KEA criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -328,7 +328,7 @@ Figure 6: Age (mos) of walking onset (KEA criteria) by sex
 Figure 7: Age (mos) of walking onset (WHO criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">walk_mos_who</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_who</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -352,17 +352,20 @@ Figure 7: Age (mos) of walking onset (WHO criteria) by sex
 <span>  groupFill <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite values
+## (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: Removed 5 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite values
+## (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing missing values
+## (`geom_point()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-walk-mos-kea-who"></span>
 <img src="include/img/fig-walk-mos-kea-who-1.png" alt="Walking onset by WHO vs. KEA criteria" width="672"><p class="caption">
 Figure 8: Walking onset by WHO vs. KEA criteria
 </p>
 </div>
-<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">play_loco</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">crawl_mos</span> <span class="op">&gt;</span> <span class="va">crawl_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">crawl_mos</span><span class="op">)</span>, <span class="va">walk_mos_kea</span> <span class="op">&gt;</span> <span class="va">walk_mos_min</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">walk_mos_kea</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
@@ -399,7 +402,7 @@ Figure 9: Walking onset vs. Crawling
 <div id="feeding" class="section level4 unnumbered">
 <h4>Feeding<a class="anchor" aria-label="anchor" href="#feeding"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -414,19 +417,20 @@ Figure 9: Walking onset vs. Crawling
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>, breastfeed <span class="op">=</span> <span class="va">health.feeding_nutrition.breastfeed</span>,</span>
 <span>                solid_food_mos <span class="op">=</span> <span class="va">health.feeding_nutrition.solidfood_age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, solid_food_mos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">solid_food_mos</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">breastfeed</span>, data <span class="op">=</span> <span class="va">feeding</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          breastfeed
 ## child_sex donotknow  no refused yes
 ##    female         1   3       0 181
-##    male           0  12       1 178</code></pre>
-<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
+##    male           0  12       1 179</code></pre>
+<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">solid_food_mos</span>, color <span class="op">=</span> <span class="va">child_sex</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-solid-food-mos"></span>
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672"><p class="caption">
@@ -434,7 +438,7 @@ Figure 10: Age at introduction of solid foods
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">feeding</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">subject_number</span>, <span class="va">solid_food_mos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">solid_food_mos</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -467,7 +471,7 @@ NYUNI
 <div id="smokingdrinking" class="section level4 unnumbered">
 <h4>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -484,14 +488,14 @@ NYUNI
 <pre><code>##             preg_drinking
 ## preg_smoking  no refused yes
 ##    donotknow   1       0   0
-##    no        302       0  69
+##    no        303       0  69
 ##    refused     0       1   0
 ##    yes         0       0   1</code></pre>
 </div>
 <div id="sleeping-position" class="section level4 unnumbered">
 <h4>Sleeping position<a class="anchor" aria-label="anchor" href="#sleeping-position"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sleeping_pos</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">.</span>,</span>
@@ -504,10 +508,10 @@ NYUNI
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## child_sleeping_position
-##         back      changed    donotknow        other      refused         side 
-##          357            4            1            2            1            3 
-## stomach_down stomach_side 
-##            1            7</code></pre>
+##         back      changed    donotknow        other 
+##          358            4            1            2 
+##      refused         side stomach_down stomach_side 
+##            1            3            1            7</code></pre>
 </div>
 </div>
 </div>
@@ -515,7 +519,7 @@ NYUNI
 <h2>Post-visit data<a class="anchor" aria-label="anchor" href="#post-visit-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>We load the post-visit survey data.</p>
-<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">post_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">post_visit_df</span><span class="op">)</span></span></code></pre></div>
@@ -566,7 +570,7 @@ NYUNI
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-09-05.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-09-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
