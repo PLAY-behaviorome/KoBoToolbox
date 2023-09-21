@@ -4,7 +4,8 @@ library(targets)
 library(tarchetypes)
 
 source("R/_OLD/functions.R")
-fl <- list.files("R", "^kobo_|^file_|^screen_|^ecbq_", full.names = TRUE)
+fl <-
+  list.files("R", "^kobo_|^file_|^screen_|^ecbq_|^health_", full.names = TRUE)
 purrr::walk(fl, source)
 
 suppressPackageStartupMessages(library(tidyverse))
@@ -68,7 +69,7 @@ list(
     cue = tarchetypes::tar_cue_age(
       name = screen_df,
       age = as.difftime(update_interval, units = update_interval_units)
-    )    
+    )
   ),
   # tar_target(
   #   screen_df,
@@ -235,12 +236,22 @@ list(
                      "data/csv/home_visit/mbcdi")
   ),
   # ECBQ data
-  tar_target(ecbq_wide_df,
-             ecbq_clean_make_agg_df(),
-             cue = tarchetypes::tar_cue_age(
-               name = ecbq_wide_df,
-               age = as.difftime(update_interval, units = update_interval_units)
-             )
+  tar_target(
+    ecbq_wide_df,
+    ecbq_clean_make_agg_df(),
+    cue = tarchetypes::tar_cue_age(
+      name = ecbq_wide_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  # Health data
+  tar_target(
+    health_df,
+    health_clean_make_agg_df(),
+    cue = tarchetypes::tar_cue_age(
+      name = health_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
   # Databrary session info
   tar_target(

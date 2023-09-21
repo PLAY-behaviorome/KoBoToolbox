@@ -68,7 +68,28 @@ health_clean_make_df <-
     names(df) <- gsub("group_phq4/",
                       replacement = "",
                       names(df))
+    names(df) <- gsub("group_phq4_001/",
+                      replacement = "",
+                      names(df))
     names(df) <- gsub("group_general_health/",
+                      replacement = "",
+                      names(df))
+    names(df) <- gsub("group_medicalprof/allergies",
+                      replacement = "illness_allergies",
+                      names(df))
+    names(df) <- gsub("group_medicalprof/ear_infection",
+                      replacement = "illness_ear_infection",
+                      names(df))
+    names(df) <- gsub("group_medicalprof/asthma",
+                      replacement = "illness_asthma",
+                      names(df))
+    names(df) <- gsub("group_medicalprof/respiratory",
+                      replacement = "illness_respiratory",
+                      names(df))
+    names(df) <- gsub("group_medicalprof/gastrointestinal",
+                      replacement = "illness_gastrointestinal",
+                      names(df))
+    names(df) <- gsub("group_locomotor_milestones/",
                       replacement = "",
                       names(df))
     

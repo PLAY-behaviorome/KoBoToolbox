@@ -1,39 +1,23 @@
-# Health {-}
+# Health visualizations {-}
 
 ```{r health-load-home-visit-df}
 # Load home_visit_df if not in environment
-if (!("home_visit_df" %in% ls())) {
- targets::tar_load(home_visit_df, store="../_targets") 
+if (!("health_df" %in% ls())) {
+ targets::tar_load(health_df, store="../_targets") 
 }
 ```
 
 ## Feeding {-}
 
-```{r make-feeding-df}
-feeding <- home_visit_df %>%
-  dplyr::select(
-    .,
-    age_group,
-    child_sex,
-    site_id,
-    subject_number,
-    language_child,
-    health.feeding_nutrition.breastfeed,
-    health.feeding_nutrition.solidfood_age
-  ) %>%
-  dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed,
-                solid_food_mos = health.feeding_nutrition.solidfood_age) %>%
-  dplyr::mutate(., solid_food_mos = as.numeric(solid_food_mos))
-```
-
 ```{r}
-xtabs(formula = ~ child_sex + breastfeed, data = feeding)
+xtabs(formula = ~ age_group + feeding_breastfeed, data = health_df)
 ```
 
 ```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
-feeding %>%
-  ggplot(.) +
-  aes(x = solid_food_mos, color = child_sex, fill = child_sex) +
+health_df %>%
+  dplyr::select(child_sex, feeding_solidfood_age) |>
+  ggplot() +
+  aes(x = feeding_solidfood_age, color = child_sex, fill = child_sex) +
   geom_histogram(bins = 15) +
   theme(legend.title = element_blank())
 ```
@@ -41,42 +25,159 @@ feeding %>%
 Clearly, there are some impossible values here.
 
 ```{r anomalous-feeding}
-feeding |>
-  dplyr::select(site_id, subject_number, solid_food_mos) %>%
-  dplyr::filter(., solid_food_mos > 12) %>%
+health_df |>
+  dplyr::select(participant_id, feeding_solidfood_age) |>
+  dplyr::filter(feeding_solidfood_age > 12) %>%
   knitr::kable(format = 'html')
+```
+
+A preliminary look at `feeding_comments_feeding` shows that there are some names mentioned.
+
+::: {.rmdnote}
+
+We should consider flagging these in the QA process.
+
+:::
+
+## Sleeping position {-}
+
+These data only focus on `child_sleeping_position`.
+Other sleeping data are in the screening questionnaire.
+
+```{r}
+sleeping_pos <- health_df |>
+  dplyr::select(child_sex, age_group, child_sleeping_position) |>
+  dplyr::filter(!is.na(child_sleeping_position))
+
+xtabs(formula = ~ child_sleeping_position + age_group, data = sleeping_pos)
 ```
 
 ## Smoking/drinking {-}
 
-```{r xtabs-smoking-drinking}
-smoking_drinking <- home_visit_df %>%
-  dplyr::select(
-    .,
-    age_group,
+```{r tab-smoking-drinking}
+smoking_drinking <- health_df |>
+  dplyr::select(age_group,
     child_sex,
-    language_child,
-    health.smoking.pregnant_smoking,
-    health.drinking.pregnant_drinking
-  ) %>%
-  dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking,
-                preg_drinking = health.drinking.pregnant_drinking)
+    contains("smoking"),
+    contains("drinking")
+  )
 
-xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking)
+xtabs(formula = ~ pregnant_smoking + pregnant_drinking, smoking_drinking)
 ```
 
-## Sleeping position {-}
+```{r tab-smoking-house-car}
+xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
+```
 
-```{r xtabs-sleeping}
-sleeping_pos <- home_visit_df %>%
-  dplyr::select(
-    .,
-    age_group,
-    child_sex,
-    language_child,
-    health.general_health.child_sleeping_position
-  ) %>%
-  dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position)
+```{r tab-comments-smoking}
+smoking_drinking |>
+  dplyr::select(comments_smoking) |>
+  dplyr::filter(!is.na(comments_smoking)) |>
+  knitr::kable(format = 'html')
+```
 
-xtabs(formula = ~ child_sleeping_position, data = sleeping_pos)
+```{r tab-comments-drinking}
+smoking_drinking |>
+  dplyr::select(comments_drinking) |>
+  dplyr::filter(!is.na(comments_drinking)) |>
+  knitr::kable(format = 'html')
+```
+
+## Patient Health Questionnaire (PHQ-4) {-}
+
+```{r fig-phq4, fig.cap="PHQ4 responses by age group and child sex"}
+phq4 <- health_df |>
+  dplyr::select(child_sex, age_group, contains("phq4_"))
+
+names(phq4) <- gsub(pattern = "phq4_", 
+                    replacement = "",
+                    names(phq4))
+
+phq4 |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'), names_to = "question", values_to = "response") |>
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(response = factor(response,
+                                  c("notatall",
+                                    "severaldays",
+                                    "morethanhalf",
+                                    "nearly")),
+                ordered = TRUE) |>
+  ggplot() +
+  aes(x = response, fill = child_sex) +
+  geom_bar() +
+  facet_grid(cols = vars(question), rows = vars(age_group)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  xlab("") +
+  theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+## Child health {-}
+
+### Overall rating  {-}
+
+```{r tab-child-health-rating}
+child_health_rating <- health_df |>
+  dplyr::select(child_sex, age_group, child_health) |>
+  dplyr::filter(!is.na(child_health)) |>
+  dplyr::mutate(child_health = factor(child_health,
+                                      c("poor",
+                                        "fair",
+                                        "good",
+                                        "verygood",
+                                        "excellent",
+                                        "donotknow",
+                                        "refused"),
+                                      ordered = TRUE))
+
+xtabs(formula = ~ child_health + age_group, data = child_health_rating)
+```
+### Recent vaccination {-}
+
+```{r}
+recent_vax <- health_df |>
+  dplyr::select(child_sex, age_group, child_vaccination) |>
+  dplyr::filter(!is.na(child_vaccination))
+
+xtabs(formula = ~ child_vaccination + age_group, data = recent_vax)
+```
+### Seen medical specialist {-}
+
+```{r}
+seen_specialist <- health_df |>
+  dplyr::select(child_sex, age_group, child_medical_specialist) |>
+  dplyr::filter(!is.na(child_medical_specialist))
+
+xtabs(formula = ~ child_medical_specialist + age_group, data = seen_specialist)
+```
+::: {.rmdnote}
+
+Manual inspection shows some possible identifying information (names) in the comments.
+
+:::
+
+### Illnesses and allergies {-}
+
+```{r fig-illness-allergies}
+illness_allergy <- health_df |>
+  dplyr::select(child_sex, age_group, contains("illness_"))
+
+
+names(illness_allergy) <- gsub(pattern = "illness_",
+                               replacement = "",
+                               names(illness_allergy))
+
+illness_allergy |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'),
+                      names_to = "type",
+                      values_to = "response") |>
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(response = factor(response,
+                                  c("no", "yes", "donotknow", "refused"))) |>
+  ggplot() +
+  aes(x = response, fill = child_sex) +
+  geom_bar() +
+  facet_grid(cols = vars(type), rows = vars(age_group)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  xlab("") +
+  theme(legend.position = "bottom", legend.title = element_blank())
 ```
