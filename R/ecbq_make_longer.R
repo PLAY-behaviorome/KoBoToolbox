@@ -1,6 +1,6 @@
 #' Make an ECBQ data frame 'longer' for comparative plotting across questions
 #' 
-#' param @ecbq_df A 'wide' ECBQ data frame, e.g., from ecbq_clean_make_agg_df()
+#' @param ecbq_df A 'wide' ECBQ data frame, e.g., from ecbq_clean_make_agg_df()
 ecbq_make_longer <- function(ecbq_df) {
   stopifnot(!is.null(ecbq_df))
   stopifnot(is.data.frame(ecbq_df))

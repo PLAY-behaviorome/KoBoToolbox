@@ -4,7 +4,7 @@ library(targets)
 library(tarchetypes)
 
 source("R/_OLD/functions.R")
-fl <- list.files("R", "^kobo_|^file_|^screen_", full.names = TRUE)
+fl <- list.files("R", "^kobo_|^file_|^screen_|^ecbq_", full.names = TRUE)
 purrr::walk(fl, source)
 
 suppressPackageStartupMessages(library(tidyverse))
@@ -233,6 +233,14 @@ list(
     home_visit_mbcdi,
     split_mbcdi_csvs(home_visit_xlsx_to_csv,
                      "data/csv/home_visit/mbcdi")
+  ),
+  # ECBQ data
+  tar_target(ecbq_wide_df,
+             ecbq_clean_make_agg_df(),
+             cue = tarchetypes::tar_cue_age(
+               name = ecbq_wide_df,
+               age = as.difftime(update_interval, units = update_interval_units)
+             )
   ),
   # Databrary session info
   tar_target(

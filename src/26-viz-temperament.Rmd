@@ -1,0 +1,64 @@
+# Temperament visualizations {-}
+
+This page provides visualizations of the Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.
+
+## Setup {-}
+
+As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for *English-speaking families only*.
+
+The functions are found in `R/` with the prefix `ecbq_`.
+
+We create a "wide" data frame `ecbq_wide_df` as one of the targets of `targets:tar_make()`.
+We attempt to load that here and ensure that all `R/ecbq_` functions are in the local environment.
+
+```{r}
+if (!('ecbq_wide_df' %in% ls())) {
+  targets::tar_load(ecbq_wide_df, store="../_targets")
+}
+
+if (!('ecbq_plot_all' %in% ls())) {
+  ecbq_fl <- list.files("../R", "^ecbq_", full.names = TRUE)
+  purrr::walk(ecbq_fl, source)
+}
+```
+
+## Summarize {-}
+
+```{r}
+ecbq_complete <- ecbq_wide_df |>
+  tidyr::complete()
+
+str(ecbq_complete)
+```
+
+```{r tab-ecbq-age-by-sex-cases}
+xtabs(formula = ~ age_group + child_sex, ecbq_complete)
+```
+
+## Visualize {-}
+
+For now, we just plot a few of the variables.
+
+```{r}
+ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+```
+
+```{r}
+ecbq_plot(ecbq_complete, ecbq_vars[1])
+```
+
+```{r}
+ecbq_plot(ecbq_complete, ecbq_vars[2])
+```
+
+```{r}
+ecbq_plot(ecbq_complete, ecbq_vars[3])
+```
+
+```{r}
+ecbq_plot(ecbq_complete, ecbq_vars[4])
+```
+
+```{r}
+ecbq_plot(ecbq_complete, ecbq_vars[5])
+```

@@ -1,0 +1,24 @@
+# Demographics visualizations {-}
+
+```{r}
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store="../_targets")
+}
+```
+
+## Child age {-}
+
+Child age in months (`age_group`) by `child_sex`.
+
+Note: The child's exact age in months is part of the Databrary-related data. 
+That is on the work plan.
+
+```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
+home_visit_df %>%
+  dplyr::filter(.,!is.na(age_group),!is.na(child_sex)) %>%
+  ggplot() +
+  aes(age_group, fill = child_sex) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```

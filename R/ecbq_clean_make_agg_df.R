@@ -18,13 +18,11 @@ ecbq_clean_make_agg_df <-
     
     require(tidyverse)
     
-    source("R/ecbq_clean_make_df.R")
-    
     fl <- list.files(in_dir, "english")
     
     if (vb)
       message("Making aggregate data frame from individual files...")
-    out_df <- purrr::map_dfr(fl, ecbq_clean_make_df, in_dir, vb) |>
+    out_df <- purrr::map_dfr(fl, ecbq_clean_make_df, in_dir, vb, .progress = TRUE) |>
       # Filter NAs in participant_id
       dplyr::filter(!is.na(participant_id)) 
     
