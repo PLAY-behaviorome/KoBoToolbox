@@ -37,28 +37,30 @@ xtabs(formula = ~ age_group + child_sex, ecbq_complete)
 
 ## Visualize {-}
 
-For now, we just plot a few of the variables.
-
 ```{r}
 ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+
+# Omit comments
+ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments")]
 ```
 
-```{r}
-ecbq_plot(ecbq_complete, ecbq_vars[1])
+We use `purrr::map()` to plot all of the responses to individual ECBQ items.
+
+```{r purrr-map-ecbq-figs}
+purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete)
 ```
 
-```{r}
-ecbq_plot(ecbq_complete, ecbq_vars[2])
+### Comments {-}
+
+Manual inspection shows that the comments field has some names.
+We omit printing the comments here until we can be assured that there is no identifiying information in the comments.
+
+```{r ecbq-comments, eval=FALSE}
+ecbq_complete |>
+  dplyr::select(participant_id, age_group, rothbart_comments) |>
+  dplyr::filter(!is.na(rothbart_comments)) |>
+  dplyr::arrange(age_group) |>
+  knitr::kable(format = 'html')
 ```
 
-```{r}
-ecbq_plot(ecbq_complete, ecbq_vars[3])
-```
 
-```{r}
-ecbq_plot(ecbq_complete, ecbq_vars[4])
-```
-
-```{r}
-ecbq_plot(ecbq_complete, ecbq_vars[5])
-```

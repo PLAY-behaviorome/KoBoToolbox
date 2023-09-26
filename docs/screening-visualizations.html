@@ -86,10 +86,10 @@
 <div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-latest.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 550 Columns: 51
-## ── Column specification ────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────
 ## Delimiter: ","
-## chr  (42): site_id, subject_number, play_id, child_sex, chil...
-## dbl   (8): child_age_mos, child_birthage, child_weight_pound...
+## chr  (42): site_id, subject_number, play_id, child_sex, child_born...
+## dbl   (8): child_age_mos, child_birthage, child_weight_pounds, chi...
 ## dttm  (1): submit_date
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -187,13 +187,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_child</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_child
-## child_sex english english_other english_spanish
-##    female     219             2              39
-##    male       203             4              48
+## child_sex english english_other english_spanish english_spanish_other
+##    female     219             2              39                     2
+##    male       203             4              48                     2
 ##          language_spoken_child
-## child_sex english_spanish_other spanish
-##    female                     2      10
-##    male                       2       8</code></pre>
+## child_sex spanish
+##    female      10
+##    male         8</code></pre>
 </div>
 <div id="at-home" class="section level3 unnumbered">
 <h3>At home<a class="anchor" aria-label="anchor" href="#at-home"><i class="fas fa-link"></i></a>
@@ -201,13 +201,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_home
-## child_sex english english_other english_spanish
-##    female     219             2              34
-##    male       197             2              51
+## child_sex english english_other english_spanish english_spanish_other
+##    female     219             2              34                     1
+##    male       197             2              51                     2
 ##          language_spoken_home
-## child_sex english_spanish_other other spanish
-##    female                     1     1      10
-##    male                       2     1      11</code></pre>
+## child_sex other spanish
+##    female     1      10
+##    male       1      11</code></pre>
 </div>
 <div id="to-child-vs.-at-home" class="section level3 unnumbered">
 <h3>To child vs. at home<a class="anchor" aria-label="anchor" href="#to-child-vs.-at-home"><i class="fas fa-link"></i></a>
@@ -2787,21 +2787,16 @@ VBLTU
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">mom_birth_country_specify</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">mom_birth_country_specify</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "Montenegro"         "Chile"             
-##  [3] "Uk"                 "Refused"           
-##  [5] "Australia"          "Venezuela"         
-##  [7] "Canada"             "India"             
-##  [9] "Kenya"              "China"             
-## [11] "South Korea"        "Costa Rica"        
-## [13] "England"            "Mexico"            
-## [15] "Italy"              "Colombia"          
-## [17] "Malaysia"           "Argentina"         
-## [19] "Panama"             "United Kingdom"    
-## [21] "Bolivia"            "Phillipines"       
-## [23] "Dominican Republic" "Spain"             
-## [25] "Zimbabwe"           "Colomobia"         
-## [27] "Guatemala"          "Ireland"           
-## [29] "Ecuador"            "Honduras"          
+<pre><code>##  [1] "Montenegro"         "Chile"              "Uk"                
+##  [4] "Refused"            "Australia"          "Venezuela"         
+##  [7] "Canada"             "India"              "Kenya"             
+## [10] "China"              "South Korea"        "Costa Rica"        
+## [13] "England"            "Mexico"             "Italy"             
+## [16] "Colombia"           "Malaysia"           "Argentina"         
+## [19] "Panama"             "United Kingdom"     "Bolivia"           
+## [22] "Phillipines"        "Dominican Republic" "Spain"             
+## [25] "Zimbabwe"           "Colomobia"          "Guatemala"         
+## [28] "Ireland"            "Ecuador"            "Honduras"          
 ## [31] "El Salvador"</code></pre>
 </div>
 <div id="education" class="section level3 unnumbered">
@@ -2934,15 +2929,13 @@ VBLTU
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">childcare_hours</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">childcare_hours</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "1"        "10"       "12"       "14.5"     "15"      
-##  [6] "15-20"    "16"       "16-20"    "17.5"     "18"      
-## [11] "2"        "20"       "24"       "25"       "27"      
-## [16] "3"        "3.5"      "30"       "30-35"    "30-40"   
-## [21] "32"       "33"       "34"       "35"       "35-40"   
-## [26] "36"       "37"       "4"        "40"       "40+"     
-## [31] "40-45"    "42"       "42.5"     "43"       "45"      
-## [36] "47"       "5"        "50"       "50 to 53" "6"       
-## [41] "8"        "9"</code></pre>
+<pre><code>##  [1] "1"        "10"       "12"       "14.5"     "15"       "15-20"   
+##  [7] "16"       "16-20"    "17.5"     "18"       "2"        "20"      
+## [13] "24"       "25"       "27"       "3"        "3.5"      "30"      
+## [19] "30-35"    "30-40"    "32"       "33"       "34"       "35"      
+## [25] "35-40"    "36"       "37"       "4"        "40"       "40+"     
+## [31] "40-45"    "42"       "42.5"     "43"       "45"       "47"      
+## [37] "5"        "50"       "50 to 53" "6"        "8"        "9"</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>

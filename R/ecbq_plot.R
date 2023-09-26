@@ -2,7 +2,7 @@
 #' Rothbart Early Childhood Questionnaire (ECBQ)
 #'
 #' @param df A data frame with aggregate (across participants) ecbq data
-ecbq_plot <- function(df, var_lbl = "rothbart_unfamiliarperson") {
+ecbq_plot <- function(var_lbl = "rothbart_unfamiliarperson", df) {
   stopifnot(is.data.frame(df))
   stopifnot(is.character(var_lbl))
   

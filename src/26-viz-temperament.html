@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>26-viz-temperament.knit</title>
+
+  
+   
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="26-viz-temperament.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="26-viz-temperament.knit" />
+  
+  
+  
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.2/transition.js"></script>
+    <script src="libs/bs3compat-0.4.2/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.2/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="include/css/style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<!--bookdown:title:start-->
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title=""></a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="temperament-visualizations" class="section level1 unnumbered">
+<h1 class="unnumbered">Temperament visualizations</h1>
+<p>This page provides visualizations of the Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.</p>
+<div id="setup" class="section level2 unnumbered">
+<h2 class="unnumbered">Setup</h2>
+<p>As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for <em>English-speaking families only</em>.</p>
+<p>The functions are found in <code>R/</code> with the prefix <code>ecbq_</code>.</p>
+<p>We create a “wide” data frame <code>ecbq_wide_df</code> as one of the targets of <code>targets:tar_make()</code>.
+We attempt to load that here and ensure that all <code>R/ecbq_</code> functions are in the local environment.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_wide_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_plot_all&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;../R&quot;</span>, <span class="st">&quot;^ecbq_&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="summarize" class="section level2 unnumbered">
+<h2 class="unnumbered">Summarize</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
+<pre><code>## tibble [413 × 40] (S3: tbl_df/tbl/data.frame)
+##  $ participant_id              : chr [1:413] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
+##  $ child_sex                   : chr [1:413] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
+##  $ age_group                   : chr [1:413] &quot;18mo&quot; &quot;18mo&quot; &quot;24mo&quot; &quot;12mo&quot; ...
+##  $ rothbart_unfamiliarperson   : chr [1:413] &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_troubletask        : chr [1:413] &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_companyofchild     : chr [1:413] &quot;more_than_half&quot; NA &quot;always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_choiceactivities   : chr [1:413] &quot;almost_always&quot; &quot;always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_quietlysung        : chr [1:413] NA &quot;almost_always&quot; &quot;less_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_playingoutdoors    : chr [1:413] &quot;about_half&quot; &quot;more_than_half&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_morethan10         : chr [1:413] &quot;less_than_half&quot; &quot;never&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_respondingremarks  : chr [1:413] &quot;almost_always&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_excitedlovedadults : chr [1:413] NA &quot;very_rarely&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_fiddlehair         : chr [1:413] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_roughrowdy         : chr [1:413] &quot;about_half&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_rockedhugged       : chr [1:413] &quot;never&quot; &quot;about_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_involvednewactivity: chr [1:413] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tirequickly        : chr [1:413] &quot;very_rarely&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_callattention      : chr [1:413] &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_tags               : chr [1:413] &quot;never&quot; &quot;never&quot; &quot;never&quot; &quot;never&quot; ...
+##  $ rothbart_noisyenvironment   : chr [1:413] &quot;very_rarely&quot; &quot;never&quot; NA &quot;never&quot; ...
+##  $ rothbart_energy             : chr [1:413] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_vehicles           : chr [1:413] &quot;very_rarely&quot; &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_active             : chr [1:413] &quot;almost_always&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_forbidden          : chr [1:413] &quot;more_than_half&quot; &quot;almost_always&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_sadlytearful       : chr [1:413] &quot;less_than_half&quot; &quot;very_rarely&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_downblue           : chr [1:413] &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; &quot;never&quot; ...
+##  $ rothbart_runhouse           : chr [1:413] &quot;less_than_half&quot; &quot;about_half&quot; &quot;always&quot; NA ...
+##  $ rothbart_excitingevent      : chr [1:413] &quot;less_than_half&quot; NA &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tempertantrum      : chr [1:413] &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_waitpatiently      : chr [1:413] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_rockedsmile        : chr [1:413] &quot;almost_always&quot; NA NA &quot;almost_always&quot; ...
+##  $ rothbart_mold               : chr [1:413] &quot;almost_always&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_interactadult      : chr [1:413] &quot;always&quot; &quot;always&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_careful            : chr [1:413] NA &quot;almost_always&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_enternewplace      : chr [1:413] &quot;never&quot; &quot;never&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_crymorethan3       : chr [1:413] &quot;never&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_easilysoothed      : chr [1:413] &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_busyother          : chr [1:413] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_differentpeople    : chr [1:413] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
+##  $ rothbart_comments           : chr [1:413] NA NA NA NA ...</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
+<pre><code>##          child_sex
+## age_group female male
+##      12mo     80   65
+##      18mo     64   80
+##      24mo     59   65</code></pre>
+</div>
+<div id="visualize" class="section level2 unnumbered">
+<h2 class="unnumbered">Visualize</h2>
+<p>For now, we just plot a few of the variables.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">&quot;rothbart_&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">ecbq_plot</span>(ecbq_vars[<span class="dv">1</span>], ecbq_complete)</span></code></pre></div>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<p><img src="26-viz-temperament_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">ecbq_plot</span>(ecbq_vars[<span class="dv">2</span>], ecbq_complete)</span></code></pre></div>
+<p><img src="26-viz-temperament_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">ecbq_plot</span>(ecbq_vars[<span class="dv">3</span>], ecbq_complete)</span></code></pre></div>
+<p><img src="26-viz-temperament_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ecbq_plot</span>(ecbq_vars[<span class="dv">4</span>], ecbq_complete)</span></code></pre></div>
+<p><img src="26-viz-temperament_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">ecbq_plot</span>(ecbq_vars[<span class="dv">5</span>], ecbq_complete)</span></code></pre></div>
+<p><img src="26-viz-temperament_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_vars[<span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>], ecbq_plot, <span class="at">df =</span> ecbq_complete)</span></code></pre></div>
+</div>
+</div>
+<!--bookdown:body:end-->
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong></strong>" was written by . </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+</body>
+
+</html>
