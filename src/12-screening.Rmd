@@ -21,13 +21,10 @@ purrr::walk(fl, source)
 
 ### Download {-}
 
-We list the screening call data files available on KBT.
+We have two targets specified in `_targets.R` that handle the regular downloading of screening data files.
 
-```{r list-demographic-from-kbt}
-(kb_screen_df <- kobo_list_data_filtered("[Dd]emographic"))
-```
-
-The following target captures this step:
+First, we generate a data frame of KoBoToolbox forms that contain the screening ("Demographic") data.
+Here is the target for that process:
 
 ```
 # Not evaluated
@@ -41,26 +38,26 @@ The following target captures this step:
   ),
 ```
 
-::: {.rmdnote}
+Then we download and save the raw XLSX files to `../data/xlsx/screening` using `kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")`.
+Finally, we convert the XLSX files to CSVs via `file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")`.
+The latter two steps are handled by the wrapper function `screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening")`.
+Here is the accompanying target:
 
-This next step could be incorporated into the `targets` workflow, but is not
-as of 2023-06-23.
-
-:::
-
-We download and save the raw XLSX files.
-
-```{r download-demographic-from-kbt}
-kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")
 ```
-
-Next, we convert the XLSX files to CSVs via a function from the `play/files` module.
-
-```{r save-demographic-as-csv}
-file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")
+# Download screening/demographic survey
+  tar_target(
+    screen_download,
+    screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
 ```
 
 ## Clean and merge {-}
+
+As of 2023-09-22, the cleaning and merging process for the screening/demographic data is handled here, in this document, not as a target.
 
 ### Setup {-}
 

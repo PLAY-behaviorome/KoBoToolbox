@@ -37,14 +37,6 @@ list(
     )
   ),
   tar_target(
-    kb_screen_df,
-    kobo_list_data_filtered("[Dd]emographic"),
-    cue = tarchetypes::tar_cue_age(
-      name = kb_screen,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
     kb_home,
     dplyr::filter(kb_df,
                   stringr::str_detect(title, "Home")),
@@ -64,6 +56,14 @@ list(
   ),
   # Download screening/demographic survey
   tar_target(
+    kb_screen_df,
+    kobo_list_data_filtered("[Dd]emographic"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
     screen_download,
     screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening"),
     cue = tarchetypes::tar_cue_age(
@@ -71,14 +71,6 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
-  # tar_target(
-  #   screen_df,
-  #   make_screening_df(kb_screen, "data/xlsx/screening", "data/csv/screening"),
-  #   cue = tarchetypes::tar_cue_age(
-  #     name = screen_df,
-  #     age = as.difftime(update_interval, units = update_interval_units)
-  #   )
-  # ),
   # Make data frame from post-visit surveys
   tar_target(
     post_visit_df,
