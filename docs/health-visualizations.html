@@ -84,9 +84,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">age_group</span> <span class="op">+</span> <span class="va">feeding_breastfeed</span>, data <span class="op">=</span> <span class="va">health_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0   5       0 140
-##      18mo         1   7       0 136
-##      24mo         0   4       1 114</code></pre>
+##      12mo         0   5       0 141
+##      18mo         1   8       0 136
+##      24mo         0   4       1 116</code></pre>
 <div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">health_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">feeding_solidfood_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -94,7 +94,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feeding_solidfood_age</span>, color <span class="op">=</span> <span class="va">child_sex</span>, fill <span class="op">=</span> <span class="va">child_sex</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 5 rows containing non-finite values
+## (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-solid-food-mos"></span>
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672"><p class="caption">
@@ -143,7 +144,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span> <span class="op">+</span> <span class="va">age_group</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          135  140  114
+##            back          136  141  116
 ##            changed         3    0    1
 ##            donotknow       0    1    0
 ##            other           2    0    0
@@ -167,7 +168,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
-##        no        321       0  82
+##        no        324       0  83
 ##        refused     0       1   0
 ##        yes         0       0   1</code></pre>
 <div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
@@ -175,7 +176,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
-##     no                3 394       0   0
+##     no                3 398       0   0
 ##     refused           0   2       1   0
 ##     yes               0   6       0   1</code></pre>
 <div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
@@ -451,6 +452,11 @@ Answered by mom who carried the child she did not participate in natural play
 </tr>
 <tr>
 <td style="text-align:left;">
+One or two before found out about pregnancy
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 First 5 weeks, unaware of pregnancy
 </td>
 </tr>
@@ -528,7 +534,7 @@ Figure 11: PHQ4 responses by age group and child sex
 ##    fair         1    1    0
 ##    good         8    9    9
 ##    verygood    42   32   27
-##    excellent   94  101   82
+##    excellent   95  102   84
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
@@ -544,8 +550,8 @@ Figure 11: PHQ4 responses by age group and child sex
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    2
-##         no          81  101   86
-##         yes         64   41   31</code></pre>
+##         no          81  101   88
+##         yes         65   42   31</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3>Seen medical specialist<a class="anchor" aria-label="anchor" href="#seen-medical-specialist"><i class="fas fa-link"></i></a>
@@ -559,9 +565,9 @@ Figure 11: PHQ4 responses by age group and child sex
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
-##                no          73   63   49
+##                no          73   64   51
 ##                refused      0    0    1
-##                yes         72   80   68</code></pre>
+##                yes         73   80   68</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
@@ -633,7 +639,7 @@ Figure 11: PHQ4 responses by age group and child sex
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-09-26.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
