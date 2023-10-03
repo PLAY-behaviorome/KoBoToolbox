@@ -86,10 +86,10 @@
 <div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-latest.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 558 Columns: 51
-## ── Column specification ───────────────────────────────────
+## ── Column specification ──────────────────────────────────────────
 ## Delimiter: ","
-## chr  (42): site_id, subject_number, play_id, child_sex,...
-## dbl   (8): child_age_mos, child_birthage, child_weight_...
+## chr  (42): site_id, subject_number, play_id, child_sex, child_...
+## dbl   (8): child_age_mos, child_birthage, child_weight_pounds,...
 ## dttm  (1): submit_date
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -215,33 +215,19 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">language_spoken_child</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        language_spoken_home
-## language_spoken_child   english english_other
-##   english                   409             2
-##   english_other               1             3
-##   english_spanish            11             0
-##   english_spanish_other       4             0
-##   spanish                     1             0
+## language_spoken_child   english english_other english_spanish
+##   english                   409             2              16
+##   english_other               1             3               0
+##   english_spanish            11             0              64
+##   english_spanish_other       4             0               0
+##   spanish                     1             0               5
 ##                        language_spoken_home
-## language_spoken_child   english_spanish
-##   english                            16
-##   english_other                       0
-##   english_spanish                    64
-##   english_spanish_other               0
-##   spanish                             5
-##                        language_spoken_home
-## language_spoken_child   english_spanish_other other
-##   english                                   2     0
-##   english_other                             0     0
-##   english_spanish                           1     2
-##   english_spanish_other                     0     0
-##   spanish                                   0     0
-##                        language_spoken_home
-## language_spoken_child   spanish
-##   english                     4
-##   english_other               0
-##   english_spanish             5
-##   english_spanish_other       0
-##   spanish                    12</code></pre>
+## language_spoken_child   english_spanish_other other spanish
+##   english                                   2     0       4
+##   english_other                             0     0       0
+##   english_spanish                           1     2       5
+##   english_spanish_other                     0     0       0
+##   spanish                                   0     0      12</code></pre>
 </div>
 </div>
 <div id="child-health" class="section level2 unnumbered">
@@ -291,566 +277,15 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 ## child_sex  no yes
 ##    female 246  23
 ##    male   237  26</code></pre>
+<div class="rmdnote">
+<p>There are some first names in the <code>child_birth_complications_specify</code> field, so it is not shown here.</p>
+</div>
 <div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_birth_complications_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_birth_complications_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">child_age_mos</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-child_age_mos
-</th>
-<th style="text-align:left;">
-child_sex
-</th>
-<th style="text-align:left;">
-child_birth_complications_specify
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-11.40697
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Respiratory distress, CPAP for a few hours.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.40697
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Charlotte was breech and had to be turned. No complications arose.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.57133
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Had elevated respiratory rate after birth and was on CPAP for 10 hours; 5 days spent in the NICU; no disability/delays/impairments resulted from this
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.63708
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Mom was induced because baby had oligohydrosis, also born face up, hypospadias
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.80145
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Breached
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11.83432
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-He had a right testicle hydrocele, but it resolved on its own. No current complications from this.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.03156
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Mother had a second degree tear, Rylie’s heart rate declined later during birth and mother had to do a purple birth, Rylie inhaled meconium and child was put on antibiotics. Mother and child stayed at hospital until day 5. There were temporary respiratory side effects but these went away with antibiotics.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.13018
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Mom explained that there was an issue with meconium during birth and NICU team visited, but everything was alright
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.35892
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-episiotomy, mom hemorrhage after birth, baby didn’t urinate first few days
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.45891
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Cord was wrapped around the child’s neck. Child had fluid in stomach and lungs when born. Child was transferred to the NICU for 4-5 days for oxygen and antibiotics. He improved as doctors expected.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.52465
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Umbilical cord was wrapped around the baby’s neck - resolved
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.68902
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Jaundice and apnea, hospital acquired infaction - all good now
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.75477
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Born with Erb’s palsy, hasn’t been to therapy since February and is currently using both arms and hands
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13.02186
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Respiratory failure sepsis. Baby was in NICU for 1 week. Resolved.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-15.91195
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Newborn Complication resulted in NICU for 5 days due to apnea and low blood glucose but did not result in any disabilities or long term health concerns.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.46806
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-He experienced jaundice and a heart murmur at birth but did not have any long term effects result from this.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.66804
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Breached
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.99403
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-jaundice
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.42275
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Needed Oxygen at birth, but never needed to see a specialist and did not have any adverse outcomes
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.71998
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Admitted to NICU for neumothroax
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.78572
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-He was on CPAP after birth due to mother’s preeclampsia
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.81860
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Mother had gestational diabetes, so they watched AVI for a bit longer in the NICU.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17.91448
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-his shoulders got stuck when giving birth, that is why mom had to be induced. mom and baby are perfectly fine
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.21307
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-No sabía respirar
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.27608
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Different blood type from mother, at risk of jaundice
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.41031
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-low blood sugar, jaundice, in NICU for 2 days
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.70617
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Preeclampsia, mother induced, child was a little jaundiced
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.73630
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-He was perfectly fine, he just didn’t come so they had to do a C-section, other than that there were no complications.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-19.03901
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-meconium in lungs, in the nicu 3-4 days
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-19.59374
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Jaundice and low blood sugar: NICU for 2 days
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-20.61007
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-She had a Nicu stay, where she was having seizures in the first 3 days and was put on medication until 4 months, but has been clear since then for anything neurological
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-22.71532
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-minor respiratory distress led to short NICU stay
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-22.84681
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-OMIT (breathing) - did not result in any vision, hearing or motor disability
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.01118
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-NICU for 4 days but everything was fine and the doctors were just keeping him as a precaution
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.17554
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Delayed heart rhythm during birth so emergency C-section was performed; doctors were worried about fluid build-up in the brain so he had a 2-day NICU stay, but everything ended up being fine
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.37278
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-when she was born she had some seizures, but she is okay now– was on medication until 4 months of age– all follow ups have been clear
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.66864
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-She was breach, they went in to try and turn her around, her heart rate was slow so they had to do an emergency c-section.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.66864
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Annie had some liquid in her lungs and they kept her in NICU for three days.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.66864
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-HIE, Oxygen Deprived during birth— nothing resulted in a long term disability
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.66864
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Breech, born via C-section
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.80013
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Different blood type from mother, at risk of jaundice
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-23.96450
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Excess Amniotic Fluid - Resolved
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.03024
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-heart surgery at birth
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.12886
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-rapid heartbeat; possible meconium aspiration
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.17269
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-breech
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.32610
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Swallowed some amniotic fluid, but no long-term complications
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-25.08218
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-mom had preeclampsia
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-25.14656
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Jaundice
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-26.66009
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Breech, born via C-section
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <div id="major-illnesses-or-injuries" class="section level3 unnumbered">
 <h3>Major illnesses or injuries<a class="anchor" aria-label="anchor" href="#major-illnesses-or-injuries"><i class="fas fa-link"></i></a>
@@ -1234,126 +669,15 @@ Temporary hearing loss so tubes in his ears, one still remaining
 ## child_sex  no yes
 ##    female 188   3
 ##    male   184   6</code></pre>
+<div class="rmdnote">
+<p>There may be first names in the <code>child_developmentaldelays_specify</code> field, so it is not shown here.</p>
+</div>
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_developmentaldelays_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_developmentaldelays_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">child_age_mos</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">'html'</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr>
-<th style="text-align:right;">
-child_age_mos
-</th>
-<th style="text-align:left;">
-child_sex
-</th>
-<th style="text-align:left;">
-child_developmentaldelays_specify
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-16.89541
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-He is seeing a hearing specialist for some worries about hearing delays. Doctor is visiting Jack in the home every 2 weeks.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.99403
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-motor delay
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18.77055
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Lead poisoning
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-20.67719
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Gross motor delay around 10 months; they enrolled in services and after PT, they recovered in 2 months
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.03024
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-speech therapist for lisp
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.52334
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Recently referred to see a speech therapist but hasn’t been diagnosed
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.55621
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Torticollis, treated with physical therapy and issue was resolved
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-24.91782
-</td>
-<td style="text-align:left;">
-female
-</td>
-<td style="text-align:left;">
-Was in early intervention because of the cardiac issue (she said any baby with this condition qualifies for it– gross motor skills at the time were behind) but she is caught up now.
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-28.99545
-</td>
-<td style="text-align:left;">
-male
-</td>
-<td style="text-align:left;">
-Speech Delay
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <div id="child-sleep" class="section level3 unnumbered">
 <h3>Child sleep<a class="anchor" aria-label="anchor" href="#child-sleep"><i class="fas fa-link"></i></a>
@@ -1939,8 +1263,8 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Don't know how to automatically pick scale for object of
-## type &lt;difftime&gt;. Defaulting to continuous.</code></pre>
+<pre><code>## Don't know how to automatically pick scale for object of type
+## &lt;difftime&gt;. Defaulting to continuous.</code></pre>
 <div class="inline-figure"><img src="include/img/fig-sleep-dur-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Again, there are some unusual values.</p>
 <div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
@@ -2625,8 +1949,7 @@ UTAUS
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_nap_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">child_nap_hours</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sleep_time</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <pre><code>## Warning: There was 1 warning in `dplyr::mutate()`.
-## ℹ In argument: `child_nap_hours =
-##   as.numeric(child_nap_hours)`.
+## ℹ In argument: `child_nap_hours = as.numeric(child_nap_hours)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
 <div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
@@ -3087,7 +2410,7 @@ VBLTU
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-02.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

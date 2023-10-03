@@ -231,20 +231,16 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 235 columns.</code></pre>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 238 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today,
-## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex, day,
-## day2, day1, play_id, language_spoken_mom,
-## `language_spoken_mom/english`,
-## `language_spoken_mom/spanish`,
-## `language_spoken_mom/other`, language_spoken_mom_other,
-## language_spoken_child, `language_spoken_child/english`,
-## `language_spoken_child/spanish`,
-## `language_spoken_child/other`,
-## language_spoken_child_other, language_spoken_house,
-## `language_spoken_house/english`,
-## `language_spoken_house/spanish`,
-## `language_spoken_house/other`,
+<pre><code>## Joining with `by = join_by(start, end, c_today, update_date,
+## site_id, subject_number, state, check_childage,
+## check_childage_weeks, child_sex, day, day2, day1, play_id,
+## language_spoken_mom, `language_spoken_mom/english`,
+## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
+## language_spoken_mom_other, language_spoken_child,
+## `language_spoken_child/english`, `language_spoken_child/spanish`,
+## `language_spoken_child/other`, language_spoken_child_other,
+## language_spoken_house, `language_spoken_house/english`,
+## `language_spoken_house/spanish`, `language_spoken_house/other`,
 ## language_spoken_house_other,
 ## `child_information/child_bornonduedate`,
 ## `child_information/child_onterm`,
@@ -293,30 +289,22 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/other_relatives`,
 ## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
-## `group_mominfo/mom_biological`,
-## `group_mominfo/mom_relation`,
-## `group_mominfo/mom_datecare`,
-## `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
+## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
 ## `group_mominfo/check_mom_childbirth_age`,
-## `group_mominfo/mom_race`,
-## `group_mominfo/mom_birth_country`,
+## `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
 ## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`,
-## `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`,
-## `group_mominfo/mom_jobs_number`,
-## `group_mominfo/mom_training`,
-## `group_mominfo/mom_condition`,
+## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
+## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
 ## `group_mominfo/specify_mom_condition`,
 ## `group_mominfo/indicate_mom`,
 ## `group_biodad/biodad_childbirth_age`,
 ## `group_biodad/check_biodad_childbirth_age`,
-## `group_biodad/biodad_race`,
-## `group_biodad/indicate_biodad`,
+## `group_biodad/biodad_race`, `group_biodad/indicate_biodad`,
 ## `group_biomom/biomom_childbirth_age`,
 ## `group_biomom/check_biomom_childbirth_age`,
-## `group_biomom/biomom_race`,
-## `group_biomom/indicate_biomom`,
+## `group_biomom/biomom_race`, `group_biomom/indicate_biomom`,
 ## `group_nonbiopartner/nonbiopartner_race`,
 ## `group_nonbiopartner/indicate_nonbiopartner`,
 ## `group_genpartner_info/partner_education`,
@@ -339,13 +327,11 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_inclusioncheck/inclusionreason`,
 ## `group_inclusioncheck/indicate_inclusion`,
 ## indicate_demoquestionnaire, indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today,
-## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex, day,
-## day2, day1, language_spoken_child,
-## `language_spoken_child/english`,
-## `language_spoken_child/spanish`,
-## `language_spoken_child/other`,
+## Joining with `by = join_by(start, end, c_today, update_date,
+## site_id, subject_number, state, check_childage,
+## check_childage_weeks, child_sex, day, day2, day1,
+## language_spoken_child, `language_spoken_child/english`,
+## `language_spoken_child/spanish`, `language_spoken_child/other`,
 ## language_spoken_child_other,
 ## `child_information/child_bornonduedate`,
 ## `child_information/child_onterm`,
@@ -391,25 +377,24 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_hours`,
 ## `group_child_care_arrangements/childcare_number`,
 ## `group_child_care_arrangements/childcare_age`,
-## `group_child_care_arrangements/childcare_language`,
-## `_id`)`</code></pre>
+## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
 <pre><code>## # A tibble: 558 × 162
-##    start   end   c_today update_date site_id subject_number
-##    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;         
-##  1 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   230           
-##  2 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   229           
-##  3 2019-1… 2020… 2020-0… &lt;NA&gt;        VCOMU   002           
-##  4 2020-0… 2020… 2020-0… &lt;NA&gt;        GEORG   010           
-##  5 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   008           
-##  6 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   009           
-##  7 2020-0… 2020… 2020-0… &lt;NA&gt;        GEORG   011           
-##  8 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   010           
-##  9 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   011           
-## 10 2020-0… 2020… 2020-0… &lt;NA&gt;        VCOMU   003           
+##    start    end   c_today update_date site_id subject_number state
+##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
+##  1 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
+##  2 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
+##  3 2019-12… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
+##  4 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
+##  5 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
+##  6 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
+##  7 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
+##  8 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
+##  9 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
+## 10 2020-02… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
 ## # ℹ 548 more rows
-## # ℹ 156 more variables: state &lt;chr&gt;, check_childage &lt;chr&gt;,
-## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;,
-## #   day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
+## # ℹ 155 more variables: check_childage &lt;chr&gt;,
+## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
+## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
 ## #   language_spoken_mom &lt;chr&gt;,
 ## #   `language_spoken_mom/english` &lt;chr&gt;,
 ## #   `language_spoken_mom/spanish` &lt;chr&gt;, …</code></pre>
@@ -549,7 +534,7 @@ a character string.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-02.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

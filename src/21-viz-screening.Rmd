@@ -152,7 +152,14 @@ df |>
 xtabs(formula = ~ child_sex + child_birth_complications,
       data = screen_df)
 ```
-```{r table-birth-compl}
+
+::: {.rmdnote}
+
+There are some first names in the `child_birth_complications_specify` field, so it is not shown here.
+
+:::
+
+```{r table-birth-compl, eval=FALSE}
 screen_df |>
   dplyr::filter(!is.na(child_birth_complications_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_birth_complications_specify) |>
@@ -213,7 +220,13 @@ xtabs(formula = ~ child_sex + child_developmentaldelays,
       data = screen_df)
 ```
 
-```{r table-dev-delays}
+::: {.rmdnote}
+
+There may be first names in the `child_developmentaldelays_specify` field, so it is not shown here.
+
+:::
+
+```{r table-dev-delays, eval=FALSE}
 screen_df |>
   dplyr::filter(!is.na(child_developmentaldelays_specify)) |>
   dplyr::select(child_age_mos, child_sex, child_developmentaldelays_specify) |>
