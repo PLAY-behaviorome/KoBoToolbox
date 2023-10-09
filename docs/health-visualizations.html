@@ -84,9 +84,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">age_group</span> <span class="op">+</span> <span class="va">feeding_breastfeed</span>, data <span class="op">=</span> <span class="va">health_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0   5       0 141
-##      18mo         1   8       0 136
-##      24mo         0   4       1 116</code></pre>
+##      12mo         0   5       0 142
+##      18mo         1   8       0 137
+##      24mo         0   4       1 120</code></pre>
 <div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">health_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">feeding_solidfood_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -144,7 +144,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span> <span class="op">+</span> <span class="va">age_group</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          136  141  116
+##            back          137  142  120
 ##            changed         3    0    1
 ##            donotknow       0    1    0
 ##            other           2    0    0
@@ -168,7 +168,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
-##        no        324       0  83
+##        no        330       0  83
 ##        refused     0       1   0
 ##        yes         0       0   1</code></pre>
 <div class="sourceCode" id="cb284"><pre class="downlit sourceCode r">
@@ -176,7 +176,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
-##     no                3 398       0   0
+##     no                3 404       0   0
 ##     refused           0   2       1   0
 ##     yes               0   6       0   1</code></pre>
 <div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
@@ -532,9 +532,9 @@ Figure 11: PHQ4 responses by age group and child sex
 ## child_health 12mo 18mo 24mo
 ##    poor         0    0    0
 ##    fair         1    1    0
-##    good         8    9    9
-##    verygood    42   32   27
-##    excellent   95  102   84
+##    good         8    9   10
+##    verygood    42   32   28
+##    excellent   96  103   86
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
@@ -550,8 +550,8 @@ Figure 11: PHQ4 responses by age group and child sex
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    2
-##         no          81  101   88
-##         yes         65   42   31</code></pre>
+##         no          81  102   92
+##         yes         66   42   31</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3>Seen medical specialist<a class="anchor" aria-label="anchor" href="#seen-medical-specialist"><i class="fas fa-link"></i></a>
@@ -565,9 +565,9 @@ Figure 11: PHQ4 responses by age group and child sex
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
-##                no          73   64   51
+##                no          74   65   51
 ##                refused      0    0    1
-##                yes         73   80   68</code></pre>
+##                yes         73   80   72</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
@@ -639,7 +639,7 @@ Figure 11: PHQ4 responses by age group and child sex
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-03.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

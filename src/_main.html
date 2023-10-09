@@ -343,11 +343,12 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## language_spoken_mom, `language_spoken_mom/english`,
 ## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
 ## language_spoken_mom_other, language_spoken_child,
-## `language_spoken_child/english`, `language_spoken_child/spanish`,
+## `language_spoken_child/english`,
+## `language_spoken_child/spanish`,
 ## `language_spoken_child/other`, language_spoken_child_other,
 ## language_spoken_house, `language_spoken_house/english`,
-## `language_spoken_house/spanish`, `language_spoken_house/other`,
-## language_spoken_house_other,
+## `language_spoken_house/spanish`,
+## `language_spoken_house/other`, language_spoken_house_other,
 ## `child_information/child_bornonduedate`,
 ## `child_information/child_onterm`,
 ## `child_information/child_duedate`,
@@ -396,12 +397,15 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
 ## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
-## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/mom_datecare`,
+## `group_mominfo/mom_childbirth_age`,
 ## `group_mominfo/check_mom_childbirth_age`,
 ## `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
 ## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
+## `group_mominfo/mom_education`,
+## `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`,
+## `group_mominfo/mom_jobs_number`,
 ## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
 ## `group_mominfo/specify_mom_condition`,
 ## `group_mominfo/indicate_mom`,
@@ -437,8 +441,8 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## site_id, subject_number, state, check_childage,
 ## check_childage_weeks, child_sex, day, day2, day1,
 ## language_spoken_child, `language_spoken_child/english`,
-## `language_spoken_child/spanish`, `language_spoken_child/other`,
-## language_spoken_child_other,
+## `language_spoken_child/spanish`,
+## `language_spoken_child/other`, language_spoken_child_other,
 ## `child_information/child_bornonduedate`,
 ## `child_information/child_onterm`,
 ## `child_information/child_duedate`,
@@ -484,21 +488,21 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_number`,
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
-<pre><code>## # A tibble: 558 × 162
-##    start    end   c_today update_date site_id subject_number state
-##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
-##  1 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
-##  2 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
-##  3 2019-12… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
-##  4 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
-##  5 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
-##  6 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
-##  7 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
-##  8 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
-##  9 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
-## 10 2020-02… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
-## # ℹ 548 more rows
-## # ℹ 155 more variables: check_childage &lt;chr&gt;,
+<pre><code>## # A tibble: 562 × 162
+##    start      end   c_today update_date site_id subject_number
+##    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;         
+##  1 2020-02-2… 2020… 2020-0… &lt;NA&gt;        NYUNI   230           
+##  2 2020-02-2… 2020… 2020-0… &lt;NA&gt;        NYUNI   229           
+##  3 2019-12-1… 2020… 2020-0… &lt;NA&gt;        VCOMU   002           
+##  4 2020-01-0… 2020… 2020-0… &lt;NA&gt;        GEORG   010           
+##  5 2020-01-1… 2020… 2020-0… &lt;NA&gt;        NYUNI   008           
+##  6 2020-01-1… 2020… 2020-0… &lt;NA&gt;        NYUNI   009           
+##  7 2020-01-2… 2020… 2020-0… &lt;NA&gt;        GEORG   011           
+##  8 2020-01-3… 2020… 2020-0… &lt;NA&gt;        NYUNI   010           
+##  9 2020-02-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   011           
+## 10 2020-02-0… 2020… 2020-0… &lt;NA&gt;        VCOMU   003           
+## # ℹ 552 more rows
+## # ℹ 156 more variables: state &lt;chr&gt;, check_childage &lt;chr&gt;,
 ## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
 ## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
 ## #   language_spoken_mom &lt;chr&gt;,
@@ -529,58 +533,58 @@ a character string.</p>
 </div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> <span class="fu">screen_clean_fields</span>(scr_df)</span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">str</span>(scr_df)</span></code></pre></div>
-<pre><code>## tibble [558 × 51] (S3: tbl_df/tbl/data.frame)
-##  $ submit_date                       : chr [1:558] &quot;2020-02-27T08:24:10.551-05:00&quot; &quot;2020-02-27T08:43:34.275-05:00&quot; &quot;2019-12-18T16:37:17.554-05:00&quot; &quot;2020-01-01T12:54:04.550-05:00&quot; ...
-##  $ site_id                           : chr [1:558] &quot;NYUNI&quot; &quot;NYUNI&quot; &quot;VCOMU&quot; &quot;GEORG&quot; ...
-##  $ subject_number                    : chr [1:558] &quot;230&quot; &quot;229&quot; &quot;002&quot; &quot;010&quot; ...
-##  $ play_id                           : chr [1:558] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
-##  $ child_age_mos                     : chr [1:558] &quot;32.677240850317695&quot; &quot;32.38138286215201&quot; &quot;26.725838264299803&quot; &quot;12.754766600920446&quot; ...
-##  $ child_sex                         : chr [1:558] &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
-##  $ child_bornonduedate               : chr [1:558] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
-##  $ child_onterm                      : chr [1:558] NA NA NA NA ...
-##  $ child_birthage                    : chr [1:558] &quot;-7&quot; &quot;-10&quot; &quot;0&quot; &quot;1&quot; ...
-##  $ child_weight_pounds               : chr [1:558] &quot;8&quot; &quot;7&quot; &quot;6&quot; &quot;7&quot; ...
-##  $ child_weight_ounces               : chr [1:558] &quot;12&quot; &quot;10&quot; &quot;12&quot; &quot;15&quot; ...
-##  $ child_birth_complications         : chr [1:558] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_birth_complications_specify : chr [1:558] NA NA NA NA ...
-##  $ child_hearing_disabilities        : chr [1:558] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_hearing_disabilities_specify: chr [1:558] &quot;Temporary hearing loss so tubes in his ears, one still remaining&quot; NA NA NA ...
-##  $ child_vision_disabilities         : chr [1:558] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_vision_disabilities_specify : chr [1:558] NA NA NA NA ...
-##  $ child_major_illnesses_injuries    : chr [1:558] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_illnesses_injuries_specify  : chr [1:558] &quot;Pneumonia at 5 months&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
-##  $ child_developmentaldelays         : chr [1:558] NA NA NA NA ...
-##  $ child_developmentaldelays_specify : chr [1:558] NA NA NA NA ...
-##  $ child_sleep_time                  : chr [1:558] &quot;20:15:00.000-05:00&quot; &quot;20:15:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; ...
-##  $ child_wake_time                   : chr [1:558] &quot;07:15:00.000-05:00&quot; &quot;06:45:00.000-05:00&quot; &quot;07:30:00.000-05:00&quot; &quot;06:15:00.000-05:00&quot; ...
-##  $ child_nap_hours                   : chr [1:558] &quot;2&quot; &quot;3&quot; &quot;1.5&quot; &quot;2&quot; ...
-##  $ child_sleep_location              : chr [1:558] &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; ...
-##  $ mom_bio                           : chr [1:558] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
-##  $ mom_childbirth_age                : chr [1:558] &quot;33.41&quot; &quot;38.84&quot; &quot;32.2&quot; &quot;30.38&quot; ...
-##  $ mom_race                          : chr [1:558] &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; ...
-##  $ mom_birth_country                 : chr [1:558] &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; ...
-##  $ mom_birth_country_specify         : chr [1:558] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
-##  $ mom_education                     : chr [1:558] &quot;masters&quot; &quot;doctorate&quot; &quot;doctorate&quot; &quot;masters&quot; ...
-##  $ mom_employment                    : chr [1:558] &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; ...
-##  $ mom_occupation                    : chr [1:558] &quot;Architect&quot; &quot;Spanish teacher&quot; &quot;Nurse instructor&quot; &quot;School Psychologist&quot; ...
-##  $ mom_jobs_number                   : chr [1:558] &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; ...
-##  $ mom_training                      : chr [1:558] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ biodad_childbirth_age             : chr [1:558] &quot;33.85_NA&quot; &quot;30.42_NA&quot; &quot;37.32_NA&quot; &quot;30.53_NA&quot; ...
-##  $ biodad_race                       : chr [1:558] &quot;white_NA&quot; &quot;white_NA&quot; &quot;NA_NA&quot; &quot;NA_NA&quot; ...
-##  $ language_spoken_mom               : chr [1:558] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_mom_comments      : chr [1:558] NA NA NA NA ...
-##  $ language_spoken_child             : chr [1:558] &quot;english&quot; &quot;spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_home_comments     : chr [1:558] &quot;FALSE_47706996&quot; &quot;TRUE_47707423&quot; &quot;FALSE_43397823&quot; &quot;FALSE_44074192&quot; ...
-##  $ language_spoken_child_comments    : chr [1:558] NA NA NA NA ...
-##  $ language_spoken_home              : chr [1:558] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_house_other       : chr [1:558] NA NA NA NA ...
-##  $ language_spoken_home_other        : chr [1:558] NA NA NA NA ...
-##  $ childcare_types                   : chr [1:558] NA NA NA NA ...
-##  $ childcare_location                : chr [1:558] NA NA NA NA ...
-##  $ childcare_hours                   : chr [1:558] NA NA NA NA ...
-##  $ childcare_number                  : chr [1:558] NA NA NA NA ...
-##  $ childcare_age                     : chr [1:558] NA NA NA NA ...
-##  $ childcare_language                : chr [1:558] NA NA NA NA ...</code></pre>
+<pre><code>## tibble [562 × 51] (S3: tbl_df/tbl/data.frame)
+##  $ submit_date                       : chr [1:562] &quot;2020-02-27T08:24:10.551-05:00&quot; &quot;2020-02-27T08:43:34.275-05:00&quot; &quot;2019-12-18T16:37:17.554-05:00&quot; &quot;2020-01-01T12:54:04.550-05:00&quot; ...
+##  $ site_id                           : chr [1:562] &quot;NYUNI&quot; &quot;NYUNI&quot; &quot;VCOMU&quot; &quot;GEORG&quot; ...
+##  $ subject_number                    : chr [1:562] &quot;230&quot; &quot;229&quot; &quot;002&quot; &quot;010&quot; ...
+##  $ play_id                           : chr [1:562] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ child_age_mos                     : chr [1:562] &quot;32.677240850317695&quot; &quot;32.38138286215201&quot; &quot;26.725838264299803&quot; &quot;12.754766600920446&quot; ...
+##  $ child_sex                         : chr [1:562] &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
+##  $ child_bornonduedate               : chr [1:562] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
+##  $ child_onterm                      : chr [1:562] NA NA NA NA ...
+##  $ child_birthage                    : chr [1:562] &quot;-7&quot; &quot;-10&quot; &quot;0&quot; &quot;1&quot; ...
+##  $ child_weight_pounds               : chr [1:562] &quot;8&quot; &quot;7&quot; &quot;6&quot; &quot;7&quot; ...
+##  $ child_weight_ounces               : chr [1:562] &quot;12&quot; &quot;10&quot; &quot;12&quot; &quot;15&quot; ...
+##  $ child_birth_complications         : chr [1:562] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_birth_complications_specify : chr [1:562] NA NA NA NA ...
+##  $ child_hearing_disabilities        : chr [1:562] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_hearing_disabilities_specify: chr [1:562] &quot;Temporary hearing loss so tubes in his ears, one still remaining&quot; NA NA NA ...
+##  $ child_vision_disabilities         : chr [1:562] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_vision_disabilities_specify : chr [1:562] NA NA NA NA ...
+##  $ child_major_illnesses_injuries    : chr [1:562] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_illnesses_injuries_specify  : chr [1:562] &quot;Pneumonia at 5 months&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ child_developmentaldelays         : chr [1:562] NA NA NA NA ...
+##  $ child_developmentaldelays_specify : chr [1:562] NA NA NA NA ...
+##  $ child_sleep_time                  : chr [1:562] &quot;20:15:00.000-05:00&quot; &quot;20:15:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; ...
+##  $ child_wake_time                   : chr [1:562] &quot;07:15:00.000-05:00&quot; &quot;06:45:00.000-05:00&quot; &quot;07:30:00.000-05:00&quot; &quot;06:15:00.000-05:00&quot; ...
+##  $ child_nap_hours                   : chr [1:562] &quot;2&quot; &quot;3&quot; &quot;1.5&quot; &quot;2&quot; ...
+##  $ child_sleep_location              : chr [1:562] &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; ...
+##  $ mom_bio                           : chr [1:562] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
+##  $ mom_childbirth_age                : chr [1:562] &quot;33.41&quot; &quot;38.84&quot; &quot;32.2&quot; &quot;30.38&quot; ...
+##  $ mom_race                          : chr [1:562] &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; ...
+##  $ mom_birth_country                 : chr [1:562] &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; ...
+##  $ mom_birth_country_specify         : chr [1:562] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ mom_education                     : chr [1:562] &quot;masters&quot; &quot;doctorate&quot; &quot;doctorate&quot; &quot;masters&quot; ...
+##  $ mom_employment                    : chr [1:562] &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; ...
+##  $ mom_occupation                    : chr [1:562] &quot;Architect&quot; &quot;Spanish teacher&quot; &quot;Nurse instructor&quot; &quot;School Psychologist&quot; ...
+##  $ mom_jobs_number                   : chr [1:562] &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; ...
+##  $ mom_training                      : chr [1:562] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ biodad_childbirth_age             : chr [1:562] &quot;33.85_NA&quot; &quot;30.42_NA&quot; &quot;37.32_NA&quot; &quot;30.53_NA&quot; ...
+##  $ biodad_race                       : chr [1:562] &quot;white_NA&quot; &quot;white_NA&quot; &quot;NA_NA&quot; &quot;NA_NA&quot; ...
+##  $ language_spoken_mom               : chr [1:562] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_mom_comments      : chr [1:562] NA NA NA NA ...
+##  $ language_spoken_child             : chr [1:562] &quot;english&quot; &quot;spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_home_comments     : chr [1:562] &quot;FALSE_47706996&quot; &quot;TRUE_47707423&quot; &quot;FALSE_43397823&quot; &quot;FALSE_44074192&quot; ...
+##  $ language_spoken_child_comments    : chr [1:562] NA NA NA NA ...
+##  $ language_spoken_home              : chr [1:562] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_house_other       : chr [1:562] NA NA NA NA ...
+##  $ language_spoken_home_other        : chr [1:562] NA NA NA NA ...
+##  $ childcare_types                   : chr [1:562] NA NA NA NA ...
+##  $ childcare_location                : chr [1:562] NA NA NA NA ...
+##  $ childcare_hours                   : chr [1:562] NA NA NA NA ...
+##  $ childcare_number                  : chr [1:562] NA NA NA NA ...
+##  $ childcare_age                     : chr [1:562] NA NA NA NA ...
+##  $ childcare_language                : chr [1:562] NA NA NA NA ...</code></pre>
 <p>There is more work to do, but we have a version worth exporting.</p>
 </div>
 </div>
@@ -1077,7 +1081,7 @@ n_vars
 740625_non_mbcdi_12_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-113
+115
 </td>
 <td style="text-align:right;">
 288
@@ -1110,7 +1114,7 @@ n_vars
 740628_non_mbcdi_18_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-105
+107
 </td>
 <td style="text-align:right;">
 288
@@ -1214,35 +1218,38 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <pre><code>## [1] 100</code></pre>
 <p>Where does the misalignment arise?</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740627)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [280]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>The misalignment arises somewhere near column 92.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>df740629 <span class="ot">&lt;-</span></span>
 <span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
@@ -1262,35 +1269,38 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <span id="cb60-7"><a href="#cb60-7" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [280]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>These files also fall out of alignment near column 92.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>df740631 <span class="ot">&lt;-</span></span>
 <span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
@@ -1301,35 +1311,38 @@ Accordingly, we focus our cleaning efforts here first.</p>
 <span id="cb64-7"><a href="#cb64-7" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631))</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [280]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>And these files fall out of alignment near column 92.</p>
 <p>Let’s see if <code>df740627</code>, <code>df740630</code>, and <code>df740631</code> are aligned with one another.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740627) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span></code></pre></div>
@@ -1395,28 +1408,30 @@ We focus on thos with data (n_vars &gt; 0)</p>
 <span id="cb72-50"><a href="#cb72-50" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Let’s look at the two forms that have the same number of columns, <span class="math inline">\(n=274\)</span>, 307736 and 331453.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" tabindex="-1"></a><span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)</span></code></pre></div>
-<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [13] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [25] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [37] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [49] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [73] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [85] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [97] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [109] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [121] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [145] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [157] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [169] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [181] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [193] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [205] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [217] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [229] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [241] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [253] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [12] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [23] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [34] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [45] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [56] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [67] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [78] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [89] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [100] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [111] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [122] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [144] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [155] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [166] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [177] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [188] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [199] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [210] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [221] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [232] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [243] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [254] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 ## [265] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df307736))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -1426,33 +1441,36 @@ We focus on thos with data (n_vars &gt; 0)</p>
 tar_target(df_merge_274_cols, make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]))</code></pre>
 <p>How about the files with <span class="math inline">\(n=267\)</span> columns, 331848 and 334099?</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)</span></code></pre></div>
-<pre><code>##   [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [11] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [21] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [31] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [41] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [51] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [261]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [10] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [19] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [28] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [46] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [55] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [64] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+## [262]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df331848))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
@@ -1475,44 +1493,53 @@ tar_target(df_merge_274_cols, make_aggregate_data_file(home_visit_remove_identif
 <span id="cb86-2"><a href="#cb86-2" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">names</span>(df334099)</span>
 <span id="cb86-3"><a href="#cb86-3" tabindex="-1"></a></span>
 <span id="cb86-4"><a href="#cb86-4" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_combinedquestionnaires/&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;participant_id&quot;              &quot;start&quot;                      
-## [3] &quot;end&quot;                         &quot;note_fillthisoutbeforestudy&quot;
-## [5] &quot;site_id&quot;                     &quot;subject_number&quot;</code></pre>
+<pre><code>## [1] &quot;participant_id&quot;             
+## [2] &quot;start&quot;                      
+## [3] &quot;end&quot;                        
+## [4] &quot;note_fillthisoutbeforestudy&quot;
+## [5] &quot;site_id&quot;                    
+## [6] &quot;subject_number&quot;</code></pre>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_jo84c13/&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;participant_id&quot;              &quot;start&quot;                      
-## [3] &quot;end&quot;                         &quot;note_fillthisoutbeforestudy&quot;
-## [5] &quot;site_id&quot;                     &quot;subject_number&quot;</code></pre>
+<pre><code>## [1] &quot;participant_id&quot;             
+## [2] &quot;start&quot;                      
+## [3] &quot;end&quot;                        
+## [4] &quot;note_fillthisoutbeforestudy&quot;
+## [5] &quot;site_id&quot;                    
+## [6] &quot;subject_number&quot;</code></pre>
 <p>That looks promising.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_combinedquestionnaires/&quot;</span>) <span class="ot">-&gt;</span> n1</span>
 <span id="cb90-2"><a href="#cb90-2" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_jo84c13/&quot;</span>) <span class="ot">-&gt;</span> n2</span>
 <span id="cb90-3"><a href="#cb90-3" tabindex="-1"></a>n1 <span class="sc">==</span> n2</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
-##  [11] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [21] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [31] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [41] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [51] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [221]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [261]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+##  [10] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [19] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [28] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [46] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [55] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [64] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+## [262]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>], n2[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>])</span></code></pre></div>
 <pre><code>##      [,1]                     [,2]                    
 ## [1,] &quot;test_date&quot;              &quot;test_date&quot;             
@@ -1531,35 +1558,38 @@ Let’s explore that anyway.</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" tabindex="-1"></a>n2_2 <span class="ot">&lt;-</span> n2[<span class="sc">-</span><span class="dv">9</span>]</span>
 <span id="cb96-2"><a href="#cb96-2" tabindex="-1"></a></span>
 <span id="cb96-3"><a href="#cb96-3" tabindex="-1"></a>n1 <span class="sc">==</span> n2_2</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_2: longer object length is not a multiple of
-## shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
-##  [31]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
-##  [41] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## Warning in n1 == n2_2: longer object length is not a multiple
+## of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+##  [37]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [46] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [226]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>That helps a bit, but we diverge around column 29.</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>], n2_2[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>])</span></code></pre></div>
 <pre><code>##       [,1]                                                                                                
@@ -1620,35 +1650,38 @@ There are just some minor changes in the variable names.
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" tabindex="-1"></a>n2_3 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;yes__in_the_bi&quot;</span>, <span class="st">&quot;birthhospital&quot;</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;yes__after_goi&quot;</span>, <span class="st">&quot;afterhome&quot;</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;don_t_know&quot;</span>, <span class="st">&quot;donotknow&quot;</span>) <span class="ot">-&gt;</span> n2_4</span>
 <span id="cb102-2"><a href="#cb102-2" tabindex="-1"></a></span>
 <span id="cb102-3"><a href="#cb102-3" tabindex="-1"></a>n1 <span class="sc">==</span> n2_4</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_4: longer object length is not a multiple of
-## shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-##  [41] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-##  [51] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
-## [231]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## Warning in n1 == n2_4: longer object length is not a multiple
+## of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+##  [55] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [64] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>], n2_4[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>])</span></code></pre></div>
 <pre><code>##       [,1]                                                                                                
 ##  [1,] &quot;group_homevisitquestionnaires/group_health/group_general_health/child_vision_tested/donotknow&quot;     
@@ -1681,35 +1714,38 @@ There are just some minor changes in the variable names.
 <p><code>n1</code> has a <code>group_medicalprof</code> label from <code>allergies</code> through <code>gastrointestinal</code>; <code>n2_4</code> has <code>child_allergies_infections_ill</code> for the same questions.</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" tabindex="-1"></a>n2_4 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;child_allergies_infections_ill&quot;</span>, <span class="st">&quot;group_medicalprof&quot;</span>) <span class="ot">-&gt;</span> n2_5</span>
 <span id="cb107-2"><a href="#cb107-2" tabindex="-1"></a>n1 <span class="sc">==</span> n2_5</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_5: longer object length is not a multiple of
-## shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-##  [51] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
-## [231]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## Warning in n1 == n2_5: longer object length is not a multiple
+## of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+##  [55] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [64] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>], n2_5[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>])</span></code></pre></div>
 <pre><code>##       [,1]                                                                             
 ##  [1,] &quot;group_homevisitquestionnaires/group_health/group_prenatal/instructions_prenatal&quot;
@@ -1740,35 +1776,38 @@ There are just some minor changes in the variable names.
 <p>It looks like these could be reconciled by deleting <code>prenatal_care</code> from <code>n1</code>.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" tabindex="-1"></a>n1_2 <span class="ot">&lt;-</span> n1[<span class="sc">-</span><span class="dv">50</span>]</span>
 <span id="cb112-2"><a href="#cb112-2" tabindex="-1"></a>n1_2 <span class="sc">==</span> n2_5</span></code></pre></div>
-<pre><code>## Warning in n1_2 == n2_5: longer object length is not a multiple
-## of shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [81] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [101] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre><code>## Warning in n1_2 == n2_5: longer object length is not a
+## multiple of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [82] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [91] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+## [226]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" tabindex="-1"></a><span class="fu">cbind</span>(n1_2[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>], n2_5[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>])</span></code></pre></div>
 <pre><code>##       [,1]                                                                                                          
 ##  [1,] &quot;group_homevisitquestionnaires/group_health/group_drinking/comments_drinking&quot;                                 
@@ -1847,22 +1886,23 @@ tar_target(df_merge_287_cols_2,
 <p>There is an erroneous <code>group_locomotor_milestones.</code> in the <code>df_merge_287_cols_2</code> column name.</p>
 <p>A bit of sleuthing determines that this <code>group_locomotor_milestones.</code> label is characteristic of columns 92 to 273.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;group_locomotor_milestones&quot;</span>)</span></code></pre></div>
-<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [13] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [25] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [37] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [49] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [73] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [85] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [97] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [109] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [121] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [145] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [157] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [169] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [181] TRUE TRUE</code></pre>
+<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [12] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [23] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [34] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [45] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [56] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [67] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [78] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [89] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [100] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [111] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [122] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [144] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [155] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [166] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [177] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p>The following should fix this.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" tabindex="-1"></a>old_names <span class="ot">&lt;-</span> <span class="fu">names</span>(df_merge_287_cols_2)</span>
 <span id="cb129-2"><a href="#cb129-2" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> old_names</span>
@@ -1870,35 +1910,38 @@ tar_target(df_merge_287_cols_2,
 <span id="cb129-4"><a href="#cb129-4" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>], <span class="st">&quot;group_locomotor_milestones</span><span class="sc">\\</span><span class="st">.&quot;</span>)</span>
 <span id="cb129-5"><a href="#cb129-5" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="ot">&lt;-</span> new_names</span></code></pre></div>
 <div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">==</span> <span class="fu">names</span>(df_merge_287_cols_1)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [101]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [111]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [221]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [231]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [241]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [251]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [261]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [271]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [100]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [217]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [226]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [235]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [244]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [262]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [271]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [280]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>We have a second problem with columns from 114 to 210.</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df_merge_287_cols_1)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>])</span></code></pre></div>
 <pre><code>##      [,1]                                                                                                                        
@@ -2253,35 +2296,38 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb142-13"><a href="#cb142-13" tabindex="-1"></a><span class="fu">names</span>(df2) <span class="ot">&lt;-</span> new_names</span>
 <span id="cb142-14"><a href="#cb142-14" tabindex="-1"></a></span>
 <span id="cb142-15"><a href="#cb142-15" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [101]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [111]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [131]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [151]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [161]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [171]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [191]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [201]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [221]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [231]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [241]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [251]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [261]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [271]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
-## [281]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [100]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [118]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [136]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [145]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [154]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [163]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [172]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [190]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [199]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [208]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [217]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [226]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [235]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [244]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [262]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [271]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [280]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>This looks promising.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">263</span>], <span class="fu">names</span>(df2)[<span class="dv">263</span>])</span></code></pre></div>
 <pre><code>##      [,1]                                                                                                   
@@ -2307,30 +2353,32 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb149-5"><a href="#cb149-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;group_databrary&#39;</span>))</span>
 <span id="cb149-6"><a href="#cb149-6" tabindex="-1"></a></span>
 <span id="cb149-7"><a href="#cb149-7" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span></code></pre></div>
-<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [13] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [25] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [37] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [49] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [73] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [85] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-##  [97] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [109] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [121] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [145] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [157] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [169] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [181] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [193] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [205] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [217] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [229] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [241] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [253] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [265] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [277] TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre><code>##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [12] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [23] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [34] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [45] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [56] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [67] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [78] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [89] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [100] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [111] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [122] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [133] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [144] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [155] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [166] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [177] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [188] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [199] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [210] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [221] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [232] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [243] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [254] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [265] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [276] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
 <p>Success!</p>
 </div>
 </div>
@@ -2345,39 +2393,42 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb151-6"><a href="#cb151-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;group_databrary&#39;</span>))</span>
 <span id="cb151-7"><a href="#cb151-7" tabindex="-1"></a></span>
 <span id="cb151-8"><a href="#cb151-8" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code></pre></div>
-<pre><code>## [1] 125 281  29 281 241 283</code></pre>
+<pre><code>## [1] 125 281  29 281 245 283</code></pre>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
-<pre><code>## Warning in names(df1) == names(df3): longer object length is not
-## a multiple of shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [101]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [111]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [161] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [281] FALSE FALSE FALSE</code></pre>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is
+## not a multiple of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [100]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [118] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [136] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [154] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [172] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [190] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [208] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [280] FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df3)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>])</span></code></pre></div>
 <pre><code>##      [,1]                                                                                                                                         
 ## [1,] &quot;group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies&quot;      
@@ -2390,37 +2441,40 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb158-2"><a href="#cb158-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;doctor_told_you&#39;</span>))</span>
 <span id="cb158-3"><a href="#cb158-3" tabindex="-1"></a></span>
 <span id="cb158-4"><a href="#cb158-4" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
-<pre><code>## Warning in names(df1) == names(df3): longer object length is not
-## a multiple of shorter object length</code></pre>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [101]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [111]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [131]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [151]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [161]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [171]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [191]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [201]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-## [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [221] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [231] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [251] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [261] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [281] FALSE FALSE</code></pre>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is
+## not a multiple of shorter object length</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [100]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [118]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [136]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [145]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [154]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [163]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [172]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [190]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [199]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [208]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [226] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [244] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [262] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [280] FALSE FALSE FALSE</code></pre>
 <p>We still have misalignments at column 210.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>], <span class="fu">names</span>(df3)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>])</span></code></pre></div>
 <pre><code>##      [,1]                                                                                                          
@@ -2442,37 +2496,40 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb163-4"><a href="#cb163-4" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df3))</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]  125  281
-## [2,]  241  281</code></pre>
+## [2,]  245  281</code></pre>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
-<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [11]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [21]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [31]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [41]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [51]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [71]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [81]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [101]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [111]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [131]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [141]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [151]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [161]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [171]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [191]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [201]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [211]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [221]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [231]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [241]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [251]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [261]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [271]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [281]  TRUE</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [28]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [46]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [82]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [91]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [100]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [118]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [127]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [136]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [145]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [154]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [163]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [172]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [190]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [199]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [208]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [217]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [226]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [235]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [244]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [262]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [271]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [280]  TRUE  TRUE</code></pre>
 <div class="rmdimportant">
 <p>Future versions of the workflow will need to handle this more elegantly.</p>
 <p>Option 1: Fix the underlying forms.</p>
@@ -2541,7 +2598,7 @@ These are incorporated into <code>R/functions.R</code> so we do not source them 
 <pre><code>## [1]  29 272</code></pre>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" tabindex="-1"></a>df3m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_288_cols)</span>
 <span id="cb172-2"><a href="#cb172-2" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span></code></pre></div>
-<pre><code>## [1] 241 272</code></pre>
+<pre><code>## [1] 245 272</code></pre>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df2m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
 <pre><code>## [1] 272</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df3m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
@@ -2611,11 +2668,11 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <p>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</p>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(screen_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-latest.csv&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 558 Columns: 51
-## ── Column specification ──────────────────────────────────────────
+<pre><code>## Rows: 562 Columns: 51
+## ── Column specification ──────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (42): site_id, subject_number, play_id, child_sex, child_...
-## dbl   (8): child_age_mos, child_birthage, child_weight_pounds,...
+## chr  (42): site_id, subject_number, play_id, child_sex, ch...
+## dbl   (8): child_age_mos, child_birthage, child_weight_pou...
 ## dttm  (1): submit_date
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -2701,8 +2758,8 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <span id="cb191-5"><a href="#cb191-5" tabindex="-1"></a>      <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_spoken_child
 ## child_sex english english_other english_spanish
-##    female     224             2              39
-##    male       205             4              48
+##    female     226             2              39
+##    male       206             4              49
 ##          language_spoken_child
 ## child_sex english_spanish_other spanish
 ##    female                     2      10
@@ -2713,8 +2770,8 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_spoken_home
 ## child_sex english english_other english_spanish
-##    female     223             3              34
-##    male       199             2              51
+##    female     225             3              34
+##    male       201             2              51
 ##          language_spoken_home
 ## child_sex english_spanish_other other spanish
 ##    female                     1     1      10
@@ -2725,9 +2782,9 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> language_spoken_child <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##                        language_spoken_home
 ## language_spoken_child   english english_other english_spanish
-##   english                   409             2              16
+##   english                   412             2              16
 ##   english_other               1             3               0
-##   english_spanish            11             0              64
+##   english_spanish            12             0              64
 ##   english_spanish_other       4             0               0
 ##   spanish                     1             0               5
 ##                        language_spoken_home
@@ -2747,8 +2804,8 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <span id="cb197-2"><a href="#cb197-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_bornonduedate
 ## child_sex  no yes
-##    female   7 264
-##    male     6 260</code></pre>
+##    female   7 266
+##    male     6 262</code></pre>
 <div class="rmdnote">
 <p>There are a large number of NAs. Cross-check with the earlier version
 of the survey. It’s possible that this question was not asked early-on.</p>
@@ -2777,8 +2834,8 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <span id="cb200-2"><a href="#cb200-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_birth_complications
 ## child_sex  no yes
-##    female 246  23
-##    male   237  26</code></pre>
+##    female 248  23
+##    male   239  26</code></pre>
 <div class="rmdnote">
 <p>There are some first names in the <code>child_birth_complications_specify</code> field, so it is not shown here.</p>
 </div>
@@ -2794,8 +2851,8 @@ of the survey. It’s possible that this question was not asked early-on.</p>
 <span id="cb203-2"><a href="#cb203-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_major_illnesses_injuries
 ## child_sex  no yes
-##    female 259   9
-##    male   251  12</code></pre>
+##    female 261   9
+##    male   253  12</code></pre>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb205-2"><a href="#cb205-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_illnesses_injuries_specify),</span>
 <span id="cb205-3"><a href="#cb205-3" tabindex="-1"></a>                <span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(child_illnesses_injuries_specify, <span class="st">&quot;OK&quot;</span>)) <span class="sc">|&gt;</span></span>
@@ -3046,8 +3103,8 @@ Pneumonia at 5 months
 <span id="cb206-2"><a href="#cb206-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_vision_disabilities
 ## child_sex  no yes
-##    female 268   1
-##    male   261   2</code></pre>
+##    female 270   1
+##    male   263   2</code></pre>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb208-2"><a href="#cb208-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vision_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb208-3"><a href="#cb208-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_vision_disabilities_specify) <span class="sc">|&gt;</span></span>
@@ -3110,8 +3167,8 @@ lazy eye but corrected
 <span id="cb209-2"><a href="#cb209-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_hearing_disabilities
 ## child_sex  no yes
-##    female 269   0
-##    male   261   2</code></pre>
+##    female 271   0
+##    male   263   2</code></pre>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb211-2"><a href="#cb211-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_hearing_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb211-3"><a href="#cb211-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_hearing_disabilities_specify) <span class="sc">|&gt;</span></span>
@@ -3163,8 +3220,8 @@ Temporary hearing loss so tubes in his ears, one still remaining
 <span id="cb212-2"><a href="#cb212-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_developmentaldelays
 ## child_sex  no yes
-##    female 188   3
-##    male   184   6</code></pre>
+##    female 190   3
+##    male   186   6</code></pre>
 <div class="rmdnote">
 <p>There may be first names in the <code>child_developmentaldelays_specify</code> field, so it is not shown here.</p>
 </div>
@@ -4438,7 +4495,8 @@ UTAUS
 <span id="cb222-2"><a href="#cb222-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_nap_hours =</span> <span class="fu">as.numeric</span>(child_nap_hours)) <span class="sc">|&gt;</span></span>
 <span id="cb222-3"><a href="#cb222-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time)) </span></code></pre></div>
 <pre><code>## Warning: There was 1 warning in `dplyr::mutate()`.
-## ℹ In argument: `child_nap_hours = as.numeric(child_nap_hours)`.
+## ℹ In argument: `child_nap_hours =
+##   as.numeric(child_nap_hours)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -4511,8 +4569,8 @@ UTAUS
 <span id="cb227-2"><a href="#cb227-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          mom_bio
 ## child_sex no_adoptive no_partnerchild yes
-##    female           0               1 253
-##    male             1               0 255</code></pre>
+##    female           0               1 255
+##    male             1               0 257</code></pre>
 </div>
 <div id="age-at-childbirth" class="section level3 unnumbered">
 <h3 class="unnumbered">Age at childbirth</h3>
@@ -4609,7 +4667,7 @@ VBLTU
 <span id="cb231-11"><a href="#cb231-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_birth_country, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_birth_country
 ##      Other puertorico    Refused         US 
-##         65          1          1        462</code></pre>
+##         65          1          1        466</code></pre>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb233-2"><a href="#cb233-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country_specify =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb233-3"><a href="#cb233-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
@@ -4642,13 +4700,13 @@ VBLTU
 <span id="cb235-5"><a href="#cb235-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_education, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_education
 ##        associates    bachelor_s_deg         bachelors 
-##                18                 6               172 
+##                19                 6               173 
 ##           diploma         doctorate          eleventh 
-##                17                73                 1 
+##                18                73                 1 
 ##               ged graduate_nodegree    graduate_or_pr 
 ##                 4                13                 1 
 ##    master_s_degre           masters noformalschooling 
-##                 3               161                 1 
+##                 3               162                 1 
 ##      professional    professional_d           refused 
 ##                27                 2                 2 
 ##       somecollege       voc_diplima     voc_nodiplima 
@@ -4665,7 +4723,7 @@ VBLTU
 <span id="cb237-4"><a href="#cb237-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_employment
 ## full_time        no part_time   refused 
-##       317       118        91         2</code></pre>
+##       320       119        91         2</code></pre>
 </div>
 <div id="occupation" class="section level3 unnumbered">
 <h3 class="unnumbered">Occupation</h3>
@@ -4679,7 +4737,7 @@ VBLTU
 <span id="cb239-4"><a href="#cb239-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_jobs_number
 ##   0   1   2   3   4 
-##   2 358  43   3   1</code></pre>
+##   2 361  43   3   1</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb241-2"><a href="#cb241-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number),</span>
 <span id="cb241-3"><a href="#cb241-3" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
@@ -4688,7 +4746,7 @@ VBLTU
 <pre><code>##                mom_employment
 ## mom_jobs_number full_time part_time
 ##               0         1         1
-##               1       286        72
+##               1       289        72
 ##               2        25        18
 ##               3         3         0
 ##               4         1         0</code></pre>
@@ -4731,12 +4789,12 @@ VBLTU
 ##                       23                        7 
 ## nanny_home nanny_nothome      nanny_home relative 
 ##                        2                        2 
-##            nanny_nothome       nanny_nothome none 
+##            nanny_nothome  nanny_nothome childcare 
 ##                        8                        1 
-##                     none                 relative 
-##                       83                       47 
-##       relative childcare 
-##                        9</code></pre>
+##       nanny_nothome none                     none 
+##                        1                       84 
+##                 relative       relative childcare 
+##                       49                        9</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -4853,7 +4911,7 @@ That is on the work plan.</p>
 <span id="cb253-3"><a href="#cb253-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female     163              32
+##    female     167              32
 ##    male       150              50</code></pre>
 <!-- ### Locomotor milestones {-} -->
 <!-- ```{r make-loco-df} -->
@@ -5080,7 +5138,7 @@ That is on the work plan.</p>
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> age_group, <span class="at">data =</span> play_loco)</span></code></pre></div>
 <pre><code>##          age_group
 ## child_sex 12mo 18mo 24mo
-##    female   73   61   61
+##    female   75   63   61
 ##    male     63   77   60</code></pre>
 <div id="check-for-anomalous-values" class="section level3 unnumbered">
 <h3 class="unnumbered">Check for anomalous values</h3>
@@ -5127,6 +5185,17 @@ PRINU
 </td>
 <td style="text-align:right;">
 -5.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSUFL
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:right;">
+-3.22
 </td>
 </tr>
 </tbody>
@@ -5336,9 +5405,9 @@ PRINU
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> feeding_breastfeed, <span class="at">data =</span> health_df)</span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0   5       0 141
-##      18mo         1   8       0 136
-##      24mo         0   4       1 116</code></pre>
+##      12mo         0   5       0 142
+##      18mo         1   8       0 137
+##      24mo         0   4       1 120</code></pre>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" tabindex="-1"></a>health_df <span class="sc">%&gt;%</span></span>
 <span id="cb277-2"><a href="#cb277-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
 <span id="cb277-3"><a href="#cb277-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -5396,7 +5465,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <span id="cb280-5"><a href="#cb280-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          136  141  116
+##            back          137  142  120
 ##            changed         3    0    1
 ##            donotknow       0    1    0
 ##            other           2    0    0
@@ -5418,14 +5487,14 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
-##        no        324       0  83
+##        no        330       0  83
 ##        refused     0       1   0
 ##        yes         0       0   1</code></pre>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="#cb284-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code></pre></div>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
-##     no                3 398       0   0
+##     no                3 404       0   0
 ##     refused           0   2       1   0
 ##     yes               0   6       0   1</code></pre>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="#cb286-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
@@ -5778,9 +5847,9 @@ Just during the last weeks of her maybe one glass of wine
 ## child_health 12mo 18mo 24mo
 ##    poor         0    0    0
 ##    fair         1    1    0
-##    good         8    9    9
-##    verygood    42   32   27
-##    excellent   95  102   84
+##    good         8    9   10
+##    verygood    42   32   28
+##    excellent   96  103   86
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
@@ -5794,8 +5863,8 @@ Just during the last weeks of her maybe one glass of wine
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    2
-##         no          81  101   88
-##         yes         65   42   31</code></pre>
+##         no          81  102   92
+##         yes         66   42   31</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3 class="unnumbered">Seen medical specialist</h3>
@@ -5807,9 +5876,9 @@ Just during the last weeks of her maybe one glass of wine
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
-##                no          73   64   51
+##                no          74   65   51
 ##                refused      0    0    1
-##                yes         73   80   68</code></pre>
+##                yes         73   80   72</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
@@ -5867,53 +5936,53 @@ We attempt to load that here and ensure that all <code>R/ecbq_</code> functions 
 <span id="cb297-2"><a href="#cb297-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
 <span id="cb297-3"><a href="#cb297-3" tabindex="-1"></a></span>
 <span id="cb297-4"><a href="#cb297-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
-<pre><code>## tibble [417 × 40] (S3: tbl_df/tbl/data.frame)
-##  $ participant_id              : chr [1:417] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
-##  $ child_sex                   : chr [1:417] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
-##  $ age_group                   : chr [1:417] &quot;18mo&quot; &quot;18mo&quot; &quot;24mo&quot; &quot;12mo&quot; ...
-##  $ rothbart_unfamiliarperson   : chr [1:417] &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_troubletask        : chr [1:417] &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_companyofchild     : chr [1:417] &quot;more_than_half&quot; NA &quot;always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_choiceactivities   : chr [1:417] &quot;almost_always&quot; &quot;always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_quietlysung        : chr [1:417] NA &quot;almost_always&quot; &quot;less_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_playingoutdoors    : chr [1:417] &quot;about_half&quot; &quot;more_than_half&quot; &quot;always&quot; &quot;always&quot; ...
-##  $ rothbart_morethan10         : chr [1:417] &quot;less_than_half&quot; &quot;never&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_respondingremarks  : chr [1:417] &quot;almost_always&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;about_half&quot; ...
-##  $ rothbart_excitedlovedadults : chr [1:417] NA &quot;very_rarely&quot; &quot;almost_always&quot; NA ...
-##  $ rothbart_fiddlehair         : chr [1:417] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_roughrowdy         : chr [1:417] &quot;about_half&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; ...
-##  $ rothbart_rockedhugged       : chr [1:417] &quot;never&quot; &quot;about_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; ...
-##  $ rothbart_involvednewactivity: chr [1:417] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_tirequickly        : chr [1:417] &quot;very_rarely&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;less_than_half&quot; ...
-##  $ rothbart_callattention      : chr [1:417] &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_tags               : chr [1:417] &quot;never&quot; &quot;never&quot; &quot;never&quot; &quot;never&quot; ...
-##  $ rothbart_noisyenvironment   : chr [1:417] &quot;very_rarely&quot; &quot;never&quot; NA &quot;never&quot; ...
-##  $ rothbart_energy             : chr [1:417] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_vehicles           : chr [1:417] &quot;very_rarely&quot; &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_active             : chr [1:417] &quot;almost_always&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_forbidden          : chr [1:417] &quot;more_than_half&quot; &quot;almost_always&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
-##  $ rothbart_sadlytearful       : chr [1:417] &quot;less_than_half&quot; &quot;very_rarely&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_downblue           : chr [1:417] &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; &quot;never&quot; ...
-##  $ rothbart_runhouse           : chr [1:417] &quot;less_than_half&quot; &quot;about_half&quot; &quot;always&quot; NA ...
-##  $ rothbart_excitingevent      : chr [1:417] &quot;less_than_half&quot; NA &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_tempertantrum      : chr [1:417] &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_waitpatiently      : chr [1:417] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
-##  $ rothbart_rockedsmile        : chr [1:417] &quot;almost_always&quot; NA NA &quot;almost_always&quot; ...
-##  $ rothbart_mold               : chr [1:417] &quot;almost_always&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_interactadult      : chr [1:417] &quot;always&quot; &quot;always&quot; &quot;always&quot; &quot;always&quot; ...
-##  $ rothbart_careful            : chr [1:417] NA &quot;almost_always&quot; &quot;almost_always&quot; NA ...
-##  $ rothbart_enternewplace      : chr [1:417] &quot;never&quot; &quot;never&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_crymorethan3       : chr [1:417] &quot;never&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_easilysoothed      : chr [1:417] &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_busyother          : chr [1:417] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_differentpeople    : chr [1:417] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
-##  $ rothbart_comments           : chr [1:417] NA NA NA NA ...</code></pre>
+<pre><code>## tibble [423 × 40] (S3: tbl_df/tbl/data.frame)
+##  $ participant_id              : chr [1:423] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
+##  $ child_sex                   : chr [1:423] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
+##  $ age_group                   : chr [1:423] &quot;18mo&quot; &quot;18mo&quot; &quot;24mo&quot; &quot;12mo&quot; ...
+##  $ rothbart_unfamiliarperson   : chr [1:423] &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_troubletask        : chr [1:423] &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_companyofchild     : chr [1:423] &quot;more_than_half&quot; NA &quot;always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_choiceactivities   : chr [1:423] &quot;almost_always&quot; &quot;always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_quietlysung        : chr [1:423] NA &quot;almost_always&quot; &quot;less_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_playingoutdoors    : chr [1:423] &quot;about_half&quot; &quot;more_than_half&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_morethan10         : chr [1:423] &quot;less_than_half&quot; &quot;never&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_respondingremarks  : chr [1:423] &quot;almost_always&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_excitedlovedadults : chr [1:423] NA &quot;very_rarely&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_fiddlehair         : chr [1:423] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_roughrowdy         : chr [1:423] &quot;about_half&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_rockedhugged       : chr [1:423] &quot;never&quot; &quot;about_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_involvednewactivity: chr [1:423] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tirequickly        : chr [1:423] &quot;very_rarely&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_callattention      : chr [1:423] &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_tags               : chr [1:423] &quot;never&quot; &quot;never&quot; &quot;never&quot; &quot;never&quot; ...
+##  $ rothbart_noisyenvironment   : chr [1:423] &quot;very_rarely&quot; &quot;never&quot; NA &quot;never&quot; ...
+##  $ rothbart_energy             : chr [1:423] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_vehicles           : chr [1:423] &quot;very_rarely&quot; &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_active             : chr [1:423] &quot;almost_always&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_forbidden          : chr [1:423] &quot;more_than_half&quot; &quot;almost_always&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_sadlytearful       : chr [1:423] &quot;less_than_half&quot; &quot;very_rarely&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_downblue           : chr [1:423] &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; &quot;never&quot; ...
+##  $ rothbart_runhouse           : chr [1:423] &quot;less_than_half&quot; &quot;about_half&quot; &quot;always&quot; NA ...
+##  $ rothbart_excitingevent      : chr [1:423] &quot;less_than_half&quot; NA &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tempertantrum      : chr [1:423] &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_waitpatiently      : chr [1:423] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_rockedsmile        : chr [1:423] &quot;almost_always&quot; NA NA &quot;almost_always&quot; ...
+##  $ rothbart_mold               : chr [1:423] &quot;almost_always&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_interactadult      : chr [1:423] &quot;always&quot; &quot;always&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_careful            : chr [1:423] NA &quot;almost_always&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_enternewplace      : chr [1:423] &quot;never&quot; &quot;never&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_crymorethan3       : chr [1:423] &quot;never&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_easilysoothed      : chr [1:423] &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_busyother          : chr [1:423] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_differentpeople    : chr [1:423] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
+##  $ rothbart_comments           : chr [1:423] NA NA NA NA ...</code></pre>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
 <pre><code>##          child_sex
 ## age_group female male
-##      12mo     80   66
-##      18mo     65   80
-##      24mo     60   66</code></pre>
+##      12mo     81   66
+##      18mo     65   81
+##      24mo     63   67</code></pre>
 </div>
 <div id="visualize" class="section level2 unnumbered">
 <h2 class="unnumbered">Visualize</h2>
@@ -6064,18 +6133,18 @@ We omit printing the comments here until we can be assured that there is no iden
 <div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="#cb342-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
 <span id="cb342-2"><a href="#cb342-2" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lubridate))</span>
 <span id="cb342-3"><a href="#cb342-3" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(forcats))</span></code></pre></div>
-<p>The following summarizes the current state of the project as of 2023-10-03.</p>
+<p>The following summarizes the current state of the project as of 2023-10-09.</p>
 <div id="recent-data" class="section level2 unnumbered">
 <h2 class="unnumbered">Recent data</h2>
 <div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="#cb343-1" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(screen_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
 <span id="cb343-2"><a href="#cb343-2" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
 <span id="cb343-3"><a href="#cb343-3" tabindex="-1"></a></span>
 <span id="cb343-4"><a href="#cb343-4" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-latest.csv&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 558 Columns: 51
-## ── Column specification ──────────────────────────────────────────
+<pre><code>## Rows: 562 Columns: 51
+## ── Column specification ──────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (42): site_id, subject_number, play_id, child_sex, child_...
-## dbl   (8): child_age_mos, child_birthage, child_weight_pounds,...
+## chr  (42): site_id, subject_number, play_id, child_sex, ch...
+## dbl   (8): child_age_mos, child_birthage, child_weight_pou...
 ## dttm  (1): submit_date
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -6087,7 +6156,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="#cb345-1" tabindex="-1"></a>month_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">1</span>)</span>
 <span id="cb345-2"><a href="#cb345-2" tabindex="-1"></a>screen_last_month_df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
 <span id="cb345-3"><a href="#cb345-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 22 recruiting calls since 2023-09-02 13:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 20 recruiting calls since 2023-09-08 13:30:00.</p>
 <div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="#cb346-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/unnamed-chunk-78-1.png" alt="Screening calls in last month by site" width="672" />
@@ -6100,7 +6169,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="#cb347-1" tabindex="-1"></a>home_last_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb347-2"><a href="#cb347-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> month_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 19 home visits since 2023-09-02 13:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 20 home visits since 2023-09-08 13:30:00.</p>
 <div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="#cb348-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-mo-home-visit-1.png" alt="Home visits in last month by site" width="672" />
@@ -6117,7 +6186,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="#cb349-1" tabindex="-1"></a>three_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">3</span>)</span>
 <span id="cb349-2"><a href="#cb349-2" tabindex="-1"></a>screen_last_3_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb349-3"><a href="#cb349-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 66 screening calls since 2023-07-03 16:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 63 screening calls since 2023-07-09 16:30:00.</p>
 <div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="#cb350-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_3_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-calls-1.png" alt="Screening calls in last 3 months by site" width="672" />
@@ -6130,7 +6199,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="#cb351-1" tabindex="-1"></a>home_last_3_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb351-2"><a href="#cb351-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> three_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 60 home visits since 2023-07-03 16:30:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 63 home visits since 2023-07-09 16:30:00.</p>
 <div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="#cb352-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_3_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-3mo-home-visit-1.png" alt="Home visits in last 3 months by site" width="672" />
@@ -6147,7 +6216,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="#cb353-1" tabindex="-1"></a>six_mos_ago <span class="ot">&lt;-</span> now <span class="sc">-</span> <span class="fu">dmonths</span>(<span class="dv">6</span>)</span>
 <span id="cb353-2"><a href="#cb353-2" tabindex="-1"></a>screen_last_6_df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb353-3"><a href="#cb353-3" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(submit_date <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 164 screening calls since 2023-04-03 09:00:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 158 screening calls since 2023-04-09 09:00:00.</p>
 <div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="#cb354-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(screen_last_6_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-calls-1.png" alt="Screening calls in last 6 months by site" width="672" />
@@ -6160,7 +6229,7 @@ We omit printing the comments here until we can be assured that there is no iden
 <h4 class="unnumbered">Home visits</h4>
 <div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="#cb355-1" tabindex="-1"></a>home_last_6_month_df <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
 <span id="cb355-2"><a href="#cb355-2" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">filter</span>(date_today <span class="sc">&gt;</span> six_mos_ago)</span></code></pre></div>
-<p>There have been <span class="math inline">\(n=\)</span> 167 home visits since 2023-04-03 09:00:00.</p>
+<p>There have been <span class="math inline">\(n=\)</span> 166 home visits since 2023-04-09 09:00:00.</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="#cb356-1" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(home_last_6_month_df)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-last-6mo-home-visit-1.png" alt="Home visits in last 6 months by site" width="672" />
@@ -6232,7 +6301,7 @@ PLAYProject_OHIOS
 10
 </td>
 <td style="text-align:right;">
-5
+8
 </td>
 </tr>
 <tr>
@@ -6301,7 +6370,30 @@ PLAYProject_GEORG
 10
 </td>
 <td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+University of Texas at Austin
+</td>
+<td style="text-align:left;">
+PLAYProject_UTAUS
+</td>
+<td style="text-align:right;">
+1517
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
 5
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+10
 </td>
 </tr>
 <tr>
@@ -6325,29 +6417,6 @@ PLAYProject_UCSCR
 </td>
 <td style="text-align:right;">
 NA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-University of Texas at Austin
-</td>
-<td style="text-align:left;">
-PLAYProject_UTAUS
-</td>
-<td style="text-align:right;">
-1517
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-11
 </td>
 </tr>
 <tr>
@@ -6554,7 +6623,7 @@ PLAYProject_CSUFL
 NA
 </td>
 <td style="text-align:right;">
-1
+2
 </td>
 </tr>
 <tr>
@@ -6708,13 +6777,13 @@ NA
 <span id="cb360-6"><a href="#cb360-6" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> age_group, gold_silver)</span></code></pre></div>
 <pre><code>##              age_group
 ## group_name    12mo 18mo 24mo
-##   PLAY_Gold    109  103   84
-##   PLAY_Silver   13   30   24</code></pre>
+##   PLAY_Gold    109  103   85
+##   PLAY_Silver   13   30   25</code></pre>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="#cb362-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> child_sex, gold_silver)</span></code></pre></div>
 <pre><code>##              child_sex
 ## group_name    female male
-##   PLAY_Gold      143  153
-##   PLAY_Silver     30   37</code></pre>
+##   PLAY_Gold      143  154
+##   PLAY_Silver     31   37</code></pre>
 <div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="#cb364-1" tabindex="-1"></a>df_race_eth <span class="ot">&lt;-</span> gold_silver <span class="sc">%&gt;%</span></span>
 <span id="cb364-2"><a href="#cb364-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(group_name)) <span class="sc">%&gt;%</span></span>
 <span id="cb364-3"><a href="#cb364-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(., <span class="at">participant_race =</span> <span class="fu">recode</span>(participant_race, </span>
@@ -6729,7 +6798,7 @@ NA
 ## participant_race                    Hispanic_or_Latino
 ##   Asian                                              0
 ##   Black_or_African_American                          1
-##   More_than_one                                     19
+##   More_than_one                                     21
 ##   Native American or Alaskan Native                  1
 ##   Other                                             23
 ##   Refused                                            1
@@ -6767,7 +6836,7 @@ NA
 ##   UHOUS        22           3
 ##   UIOWA         8           4
 ##   UMIAM         6           2
-##   UTAUS        25           4
+##   UTAUS        26           5
 ##   VBLTU        10           2</code></pre>
 <div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="#cb368-1" tabindex="-1"></a>gold_silver <span class="sc">%&gt;%</span></span>
 <span id="cb368-2"><a href="#cb368-2" tabindex="-1"></a>    <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
@@ -6822,7 +6891,7 @@ NA
   <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-03.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
