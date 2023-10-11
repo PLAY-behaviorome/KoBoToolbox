@@ -12,18 +12,21 @@ screening_clean_1 <- function(csv_fn) {
   
   suppressPackageStartupMessages(require(readr))
   
-  df_1 <- readr::read_csv(csv_fn, show_col_types = FALSE)
+  df_1 <- readr::read_csv(csv_fn, col_types = readr::cols(.default = 'c'),
+                          show_col_types = FALSE)
   
   if (!is.data.frame(df_1)) {
     message("Failure to read file '", csv_fn, "'")
     return(NULL)
   }
+  
   df_1 %>%
     dplyr::select(
       .,
       submit_date = c_today,
       site_id = `play_phone_questionnaire/group_siteinfo/site_id`,
       sub_num = `play_phone_questionnaire/group_siteinfo/subject_number`,
+      play_id = `play_phone_questionnaire/group_siteinfo/concat2`,
       child_age_mos = `play_phone_questionnaire/check_childage`,
       child_sex = `play_phone_questionnaire/child_sex`,
       language_to_child = `play_phone_questionnaire/language_spoken_child`,
@@ -52,5 +55,6 @@ screening_clean_1 <- function(csv_fn) {
         UCR = "UCRIV"
       )
     ) %>%
-    dplyr::filter(.,!stringr::str_detect(site_id, '_of__'))
+    dplyr::filter(.,!stringr::str_detect(site_id, '_of__')) %>%
+    dplyr::mutate(sub_num = stringr::str_pad(sub_num, 3, "left", "0"))
 }

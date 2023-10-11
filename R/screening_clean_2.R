@@ -13,16 +13,21 @@ screening_clean_2 <- function(csv_fn) {
   suppressPackageStartupMessages(require(readr))
   suppressPackageStartupMessages(require(dplyr))
   
-  df_2 <- readr::read_csv(csv_fn, show_col_types = FALSE)
+  df_2 <- readr::read_csv(csv_fn, 
+                          col_types = readr::cols(.default = 'c'),
+                          show_col_types = FALSE)
+  
   if (!is.data.frame(df_2)) {
     message("Failure to read file '", csv_fn, "'")
     return(NULL)
   }
+  
   df_2 %>%
     dplyr::select(
       submit_date = c_today,
       site_id = `play_demo_questionnaire/group_siteinfo/site_id`,
       sub_num = `play_demo_questionnaire/group_siteinfo/subject_number`,
+      play_id = `play_demo_questionnaire/play_id`,
       child_age_mos = `play_demo_questionnaire/check_childage`,
       child_sex = `play_demo_questionnaire/child_sex`,
       language_to_child = `play_demo_questionnaire/language_spoken_child`,

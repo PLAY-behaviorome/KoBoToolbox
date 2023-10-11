@@ -174,18 +174,108 @@ str(scr_df)
 
 There is more work to do, but we have a version worth exporting.
 
+Let's add the Databrary volume ID info.
+
+```{r add-db-vol-id}
+scr_df <- scr_df |>
+  screen_add_db_vol_id()
+```
+
+Then filter out rows that do not have valid volume IDs.
+
+```{r filter-invalid-db-vol-ids}
+valid_db_vol <- !is.na(scr_df$vol_id)
+
+scr_df <- scr_df[valid_db_vol,]
+```
+
+There are $n=$ `r sum(valid_db_vol)` valid Databrary volume IDs out of a total of $n=$ `r length(valid_db_vol)` screening records.
+
+Next, we add a `play_status` field based on the `group-name` field from Databrary.
+We use `group-name` for indicating "Gold", "Silver", or "Not run."
+
+Two targets in `_targets.R` are relevant for this operation:
+
+```
+  tar_target(
+    play_vols_df,
+    readr::read_csv("data/csv/_meta/play_site_vols.csv",
+                    show_col_types = FALSE)
+  ),
+  tar_target(
+    databrary_session_csvs,
+    purrr::map(play_vols_df$site_id, databrary_get_save_session_csv),
+    cue = tarchetypes::tar_cue_age(
+      name = databrary_session_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  )
+
+```
+
+These targets generate site-specific CSVs in `data/csv/site_sessions` based on the database of PLAY sites contained in `data/csv/_meta/play_site_vols.csv`.
+We load these CSVs into a data frame.
+
+```{r add-db-status}
+session_fns <-
+  list.files("../data/csv/site_sessions", "\\.csv$", full.names = TRUE)
+
+df_sessions <-
+  purrr::map(
+    session_fns,
+    readr::read_csv,
+    col_types = readr::cols(.default = 'c'),
+    show_col_types = FALSE
+  ) |>
+  purrr::list_rbind()
+```
+
+The `group_name` variable contains status information about the sessions.
+
+```{r}
+xtabs(~ group_name, data=df_sessions)
+```
+
+We note that there are three different versions of no visit: "No visit", "No_visit", and "No_Visit". 
+In addition, there are $n=$ `sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
+These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
+Here, we want to select only those sessions that occurred and which have passed QA--those sessions for which `group_name` is either 'PLAY_Gold' or 'PLAY_Silver'.
+
+```{r}
+df_sessions <- df_sessions |>
+  dplyr::filter(stringr::str_detect(group_name, "PLAY_"))
+```
+
+Here is information about the sharing status.
+
+```{r}
+xtabs(~ group_name + session_release, df_sessions)
+```
+There was one session marked `PRIVATE`.
+
+```{r}
+df_sessions |>
+  dplyr::filter(session_release == "PRIVATE") |>
+  dplyr::select(vol_id, session_id, session_name, group_name)
+```
+Now, we join the screening data with the Databrary session data.
+
+```{r}
+screen_datab_df <- dplyr::left_join(df_sessions, scr_df, by = c('vol_id', 'participant_ID'))
+```
+
 ## Export cleaned file {-}
 
 We date-stamp the exported file so we can monitor progress as this workflow develops.
 
 ```{r export-screen}
-sfn <- paste0("PLAY-screening-", Sys.Date(), ".csv")
-readr::write_csv(scr_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+sfn <- paste0("PLAY-screening-datab-", Sys.Date(), ".csv")
+readr::write_csv(screen_datab_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
 ```
 
 We also save a copy with "latest".
 
 ```{r export-latest}
-sfn <- "PLAY-screening-latest.csv"
-readr::write_csv(scr_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+sfn <- "PLAY-screening-datab-latest.csv"
+readr::write_csv(screen_datab_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
 ```

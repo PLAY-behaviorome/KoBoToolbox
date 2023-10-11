@@ -61,7 +61,6 @@
 <li><a class="" href="temperament-visualizations.html">Temperament visualizations</a></li>
 <li><a class="" href="post-visit-data.html">Post-visit data</a></li>
 <li class="book-part">Project Monitoring</li>
-<li><a class="" href="state-of-play.html">State of PLAY</a></li>
 </ul>
 
         <div class="book-extra">
@@ -231,21 +230,18 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 235 columns.</code></pre>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 238 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today, update_date,
-## site_id, subject_number, state, check_childage,
-## check_childage_weeks, child_sex, day, day2, day1, play_id,
-## language_spoken_mom, `language_spoken_mom/english`,
-## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
-## language_spoken_mom_other, language_spoken_child,
-## `language_spoken_child/english`,
-## `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other,
-## language_spoken_house, `language_spoken_house/english`,
-## `language_spoken_house/spanish`,
+<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id,
+## subject_number, state, check_childage, check_childage_weeks,
+## child_sex, day, day2, day1, play_id, language_spoken_mom,
+## `language_spoken_mom/english`, `language_spoken_mom/spanish`,
+## `language_spoken_mom/other`, language_spoken_mom_other,
+## language_spoken_child, `language_spoken_child/english`,
+## `language_spoken_child/spanish`, `language_spoken_child/other`,
+## language_spoken_child_other, language_spoken_house,
+## `language_spoken_house/english`, `language_spoken_house/spanish`,
 ## `language_spoken_house/other`, language_spoken_house_other,
 ## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`,
-## `child_information/child_duedate`,
+## `child_information/child_onterm`, `child_information/child_duedate`,
 ## `child_information/child_birthage`,
 ## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
@@ -259,8 +255,7 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `child_information/specify_illnesses_injuries`,
 ## `child_information/other_developmentaldelays`,
 ## `child_information/specify_developmentaldelays`,
-## `child_information/child_race`,
-## `child_information/child_sleep_time`,
+## `child_information/child_race`, `child_information/child_sleep_time`,
 ## `child_information/child_wake_time`,
 ## `child_information/child_nap_hours`,
 ## `child_information/child_sleep_location`,
@@ -291,18 +286,14 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
 ## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
-## `group_mominfo/mom_datecare`,
-## `group_mominfo/mom_childbirth_age`,
-## `group_mominfo/check_mom_childbirth_age`,
-## `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
+## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`,
+## `group_mominfo/mom_birth_country`,
 ## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`,
-## `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`,
-## `group_mominfo/mom_jobs_number`,
+## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
 ## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
-## `group_mominfo/specify_mom_condition`,
-## `group_mominfo/indicate_mom`,
+## `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
 ## `group_biodad/biodad_childbirth_age`,
 ## `group_biodad/check_biodad_childbirth_age`,
 ## `group_biodad/biodad_race`, `group_biodad/indicate_biodad`,
@@ -329,17 +320,15 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`,
 ## `group_inclusioncheck/inclusionreason`,
-## `group_inclusioncheck/indicate_inclusion`,
-## indicate_demoquestionnaire, indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today, update_date,
-## site_id, subject_number, state, check_childage,
-## check_childage_weeks, child_sex, day, day2, day1,
-## language_spoken_child, `language_spoken_child/english`,
-## `language_spoken_child/spanish`,
+## `group_inclusioncheck/indicate_inclusion`, indicate_demoquestionnaire,
+## indicate_databrary, `_id`)`
+## Joining with `by = join_by(start, end, c_today, update_date, site_id,
+## subject_number, state, check_childage, check_childage_weeks,
+## child_sex, day, day2, day1, language_spoken_child,
+## `language_spoken_child/english`, `language_spoken_child/spanish`,
 ## `language_spoken_child/other`, language_spoken_child_other,
 ## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`,
-## `child_information/child_duedate`,
+## `child_information/child_onterm`, `child_information/child_duedate`,
 ## `child_information/child_birthage`,
 ## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
@@ -383,25 +372,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
 <pre><code>## # A tibble: 562 × 162
-##    start      end   c_today update_date site_id subject_number
-##    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;         
-##  1 2020-02-2… 2020… 2020-0… &lt;NA&gt;        NYUNI   230           
-##  2 2020-02-2… 2020… 2020-0… &lt;NA&gt;        NYUNI   229           
-##  3 2019-12-1… 2020… 2020-0… &lt;NA&gt;        VCOMU   002           
-##  4 2020-01-0… 2020… 2020-0… &lt;NA&gt;        GEORG   010           
-##  5 2020-01-1… 2020… 2020-0… &lt;NA&gt;        NYUNI   008           
-##  6 2020-01-1… 2020… 2020-0… &lt;NA&gt;        NYUNI   009           
-##  7 2020-01-2… 2020… 2020-0… &lt;NA&gt;        GEORG   011           
-##  8 2020-01-3… 2020… 2020-0… &lt;NA&gt;        NYUNI   010           
-##  9 2020-02-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   011           
-## 10 2020-02-0… 2020… 2020-0… &lt;NA&gt;        VCOMU   003           
+##    start         end   c_today update_date site_id subject_number state
+##    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
+##  1 2020-02-27T0… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
+##  2 2020-02-27T0… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
+##  3 2019-12-18T1… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
+##  4 2020-01-01T1… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
+##  5 2020-01-15T1… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
+##  6 2020-01-15T1… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
+##  7 2020-01-24T1… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
+##  8 2020-01-30T1… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
+##  9 2020-02-03T1… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
+## 10 2020-02-05T0… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
 ## # ℹ 552 more rows
-## # ℹ 156 more variables: state &lt;chr&gt;, check_childage &lt;chr&gt;,
+## # ℹ 155 more variables: check_childage &lt;chr&gt;,
 ## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
-## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
-## #   language_spoken_mom &lt;chr&gt;,
+## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
 ## #   `language_spoken_mom/english` &lt;chr&gt;,
-## #   `language_spoken_mom/spanish` &lt;chr&gt;, …</code></pre>
+## #   `language_spoken_mom/spanish` &lt;chr&gt;,
+## #   `language_spoken_mom/other` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -433,8 +422,8 @@ a character string.</p>
 <pre><code>## tibble [562 × 51] (S3: tbl_df/tbl/data.frame)
 ##  $ submit_date                       : chr [1:562] "2020-02-27T08:24:10.551-05:00" "2020-02-27T08:43:34.275-05:00" "2019-12-18T16:37:17.554-05:00" "2020-01-01T12:54:04.550-05:00" ...
 ##  $ site_id                           : chr [1:562] "NYUNI" "NYUNI" "VCOMU" "GEORG" ...
-##  $ subject_number                    : chr [1:562] "230" "229" "002" "010" ...
-##  $ play_id                           : chr [1:562] "" "" "" "" ...
+##  $ participant_ID                    : chr [1:562] "230" "229" "002" "010" ...
+##  $ play_id                           : chr [1:562] NA NA NA NA ...
 ##  $ child_age_mos                     : chr [1:562] "32.677240850317695" "32.38138286215201" "26.725838264299803" "12.754766600920446" ...
 ##  $ child_sex                         : chr [1:562] "male" "female" "female" "male" ...
 ##  $ child_bornonduedate               : chr [1:562] "yes" "yes" "yes" "yes" ...
@@ -483,19 +472,92 @@ a character string.</p>
 ##  $ childcare_age                     : chr [1:562] NA NA NA NA ...
 ##  $ childcare_language                : chr [1:562] NA NA NA NA ...</code></pre>
 <p>There is more work to do, but we have a version worth exporting.</p>
+<p>Let’s add the Databrary volume ID info.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="va">scr_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">screen_add_db_vol_id</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Then filter out rows that do not have valid volume IDs.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">valid_db_vol</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">scr_df</span><span class="op">$</span><span class="va">vol_id</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="va">scr_df</span><span class="op">[</span><span class="va">valid_db_vol</span>,<span class="op">]</span></span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 552 valid Databrary volume IDs out of a total of <span class="math inline">\(n=\)</span> 562 screening records.</p>
+<p>Next, we add a <code>play_status</code> field based on the <code>group-name</code> field from Databrary.
+We use <code>group-name</code> for indicating “Gold”, “Silver”, or “Not run.”</p>
+<p>Two targets in <code>_targets.R</code> are relevant for this operation:</p>
+<pre><code>  tar_target(
+    play_vols_df,
+    readr::read_csv("data/csv/_meta/play_site_vols.csv",
+                    show_col_types = FALSE)
+  ),
+  tar_target(
+    databrary_session_csvs,
+    purrr::map(play_vols_df$site_id, databrary_get_save_session_csv),
+    cue = tarchetypes::tar_cue_age(
+      name = databrary_session_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  )
+</code></pre>
+<p>These targets generate site-specific CSVs in <code>data/csv/site_sessions</code> based on the database of PLAY sites contained in <code>data/csv/_meta/play_site_vols.csv</code>.
+We load these CSVs into a data frame.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">session_fns</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"../data/csv/site_sessions"</span>, <span class="st">"\\.csv$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_sessions</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span></span>
+<span>    <span class="va">session_fns</span>,</span>
+<span>    <span class="fu">readr</span><span class="fu">::</span><span class="va"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>,</span>
+<span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>group_name</code> variable contains status information about the sessions.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span>, data<span class="op">=</span><span class="va">df_sessions</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## group_name
+##    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
+##           1          12          61         329          76</code></pre>
+<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”.
+In addition, there are <span class="math inline">\(n=\)</span> <code>sum(is.na(df_sessions$group_name))</code> sessions with NA in the <code>group_name</code>.
+These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
+Here, we want to select only those sessions that occurred and which have passed QA–those sessions for which <code>group_name</code> is either ‘PLAY_Gold’ or ‘PLAY_Silver’.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_sessions</span> <span class="op">&lt;-</span> <span class="va">df_sessions</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">group_name</span>, <span class="st">"PLAY_"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Here is information about the sharing status.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">session_release</span>, <span class="va">df_sessions</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##              session_release
+## group_name    EXCERPTS PRIVATE SHARED
+##   PLAY_Gold        254       0     75
+##   PLAY_Silver       60       1     15</code></pre>
+<p>There was one session marked <code>PRIVATE</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_sessions</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">session_release</span> <span class="op">==</span> <span class="st">"PRIVATE"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">session_id</span>, <span class="va">session_name</span>, <span class="va">group_name</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 4
+##   vol_id session_id session_name   group_name 
+##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;      
+## 1 979    66932      PLAY_PRINU_024 PLAY_Silver</code></pre>
+<p>Now, we join the screening data with the Databrary session data.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_datab_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_sessions</span>, <span class="va">scr_df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'vol_id'</span>, <span class="st">'participant_ID'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="export-cleaned-file" class="section level2 unnumbered">
 <h2>Export cleaned file<a class="anchor" aria-label="anchor" href="#export-cleaned-file"><i class="fas fa-link"></i></a>
 </h2>
 <p>We date-stamp the exported file so we can monitor progress as this workflow develops.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"PLAY-screening-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">scr_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"PLAY-screening-datab-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span></span>
+<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">screen_datab_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We also save a copy with “latest”.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="st">"PLAY-screening-latest.csv"</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">scr_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="st">"PLAY-screening-datab-latest.csv"</span></span>
+<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">screen_datab_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
 </div>
 </div>
@@ -538,7 +600,7 @@ a character string.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-09.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -5,7 +5,9 @@ library(tarchetypes)
 
 source("R/_OLD/functions.R")
 fl <-
-  list.files("R", "^kobo_|^file_|^screen_|^ecbq_|^health_", full.names = TRUE)
+  list.files("R",
+             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary",
+             full.names = TRUE)
 purrr::walk(fl, source)
 
 suppressPackageStartupMessages(library(tidyverse))
@@ -254,10 +256,17 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
-  tar_target(databrary_session_csvs,
-             get_save_all_databrary_session_csvs),
-  cue = tarchetypes::tar_cue_age(
-    name = databrary_session_csvs,
-    age = as.difftime(update_interval, units = update_interval_units)
+  tar_target(
+    play_vols_df,
+    readr::read_csv("data/csv/_meta/play_site_vols.csv",
+                    show_col_types = FALSE)
+  ),
+  tar_target(
+    databrary_session_csvs,
+    purrr::map(play_vols_df$site_id, databrary_get_save_session_csv),
+    cue = tarchetypes::tar_cue_age(
+      name = databrary_session_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   )
 )

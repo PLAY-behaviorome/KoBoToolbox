@@ -123,7 +123,8 @@ screen_clean_child_info <- function(df) {
     dplyr::rename(child_developmentaldelays = other_developmentaldelays) |>
     dplyr::rename(child_developmentaldelays_specify = specify_developmentaldelays) |>
     dplyr::rename(child_sleep_location_specify = specify_child_sleep_location) |>
-    dplyr::rename(child_age_mos = check_childage)
+    dplyr::rename(child_age_mos = check_childage) |>
+    dplyr::mutate(subject_number = stringr::str_pad(subject_number, 3, "left", "0"))
 }
 
 #-------------------------------------------------------------------------------
@@ -158,11 +159,8 @@ screen_clean_lang_info <- function(df) {
 screen_clean_play_id <- function(df) {
   stopifnot(is.data.frame(df))
   
-  box::use(tidyr[unite])
-  
   df |>
     tidyr::unite(col = "play_id", c("play_id", "concat2"), na.rm = TRUE)
-  
 }
 
 #-------------------------------------------------------------------------------
@@ -259,7 +257,6 @@ screen_clean_raw_csv <- function(fn) {
     screen_remove_identifiers() |>
     screen_remove_metadata_fields() |>
     screen_remove_databrary_fields()
-  
 }
 
 #-------------------------------------------------------------------------------
@@ -341,18 +338,57 @@ screen_select_reorder_cols <- function(df) {
 
 
 #-------------------------------------------------------------------------------
-screen_clean_fields <- function(df) {
-  stopifnot(is.data.frame(df))
+# screen_clean_fields <- function(df) {
+#   stopifnot(is.data.frame(df))
+#   
+#   df |> 
+#     screen_clean_child_info() |>
+#     screen_clean_lang_info() |>
+#     screen_clean_mom_info() |>
+#     screen_clean_biodad_father_info() |>
+#     screen_clean_childcare_info() |>
+#     screen_clean_family_structure() |>
+# #    screen_clean_play_id() |>
+#     screen_remove_selected_cols() |>
+#     screen_select_reorder_cols() |>
+#     screen_recode_site_id() |>
+#     dplyr::rename("participant_ID" = "subject_number")
+# }
+
+# #-------------------------------------------------------------------------------
+# screen_add_db_vol_id <- function(df) {
+#   PLAY_VOLS <-
+#     readr::read_csv(
+#       "../data/csv/play_site_vols.csv",
+#       col_types = readr::cols(.default = 'c'),
+#       show_col_types = FALSE
+#     )
+# 
+#   dplyr::left_join(df, PLAY_VOLS, by = 'site_id') |>
+#     dplyr::select(-c('play_site_id', 'site_name'))
+# }
+
+retrieve_db_session_status <- function(i = 1, df, vb = FALSE) {
+  this_row <- df[i, ]
+  this_vol_id <- this_row$play_vol_id
+  this_sub_num <- this_row$subject_number
   
-  df |> 
-    screen_clean_child_info() |>
-    screen_clean_lang_info() |>
-    screen_clean_mom_info() |>
-    screen_clean_biodad_father_info() |>
-    screen_clean_childcare_info() |>
-    screen_clean_family_structure() |>
-    screen_clean_play_id() |>
-    screen_remove_selected_cols() |>
-    screen_select_reorder_cols() |>
-    screen_recode_site_id()
+  if (vb) message("Retrieving session info from Databrary volume '", this_vol_id, "'")
+  vol_sessions <- databraryr::download_session_csv(as.numeric(this_vol_id), as_df = TRUE)
+  
+  assertthat::not_empty(vol_sessions)
+  
+  if (vb) message("Selecting participant ", this_sub_num)
+  if (this_sub_num %in% vol_sessions$`participant-ID`) {
+    this_session <- vol_sessions |>
+      dplyr::filter(`participant-ID` == this_sub_num)
+    if ('group-name' %in% names(this_session)) {
+      return(this_session$`group-name`)     
+    } else {
+      return(NA)
+    }
+  } else {
+    if (vb) message("Participant-ID '", this_sub_num, "' not found in volume '", this_vol_id, "'")
+    return(NA)
+  }
 }

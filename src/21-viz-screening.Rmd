@@ -10,14 +10,12 @@ library(tidyverse)
 library(forcats)
 ```
 
-To calculate cumulative screening/recruiting calls by site, we have to add an index variable
-
 ```{r load-screening-df, eval=FALSE}
 targets::tar_load(screen_df, store="../_targets")
 ```
 
 ```{r}
-screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-latest.csv"))
+screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-datab-latest.csv"))
 ```
 
 ## Dates & times {-}
@@ -272,8 +270,8 @@ Some of the bed times are probably not in correct 24 hr time.
 ```{r}
 df |>
   dplyr::filter(child_sleep_time < hms::as_hms("16:00:00")) |>
-  dplyr::select(site_id, subject_number, child_sleep_time) |>
-  dplyr::arrange(site_id, subject_number) |>
+  dplyr::select(site_id, participant_ID, child_sleep_time) |>
+  dplyr::arrange(site_id, participant_ID) |>
   knitr::kable('html')
 ```
 
@@ -299,8 +297,8 @@ There are some unusual wake times, too.
 ```{r table-wake-time}
 df |>
   dplyr::filter(child_wake_time > hms::as_hms("16:00:00")) |>
-  dplyr::select(site_id, subject_number, child_wake_time) |>
-  dplyr::arrange(site_id, subject_number) |>
+  dplyr::select(site_id, participant_ID, child_wake_time) |>
+  dplyr::arrange(site_id, participant_ID) |>
   knitr::kable('html')
 ```
 
@@ -328,8 +326,8 @@ Again, there are some unusual values.
 ```{r table-sleep-dur}
 df |>
   dplyr::filter(child_sleep_secs < 12000) |>
-  dplyr::select(site_id, subject_number, child_sleep_time, child_wake_time, child_sleep_secs) |>
-  dplyr::arrange(site_id, subject_number) |>
+  dplyr::select(site_id, participant_ID, child_sleep_time, child_wake_time, child_sleep_secs) |>
+  dplyr::arrange(site_id, participant_ID) |>
   knitr::kable('html')
 ```
 
@@ -355,8 +353,8 @@ And there are some very long nappers or null values we need to capture.
 ```{r table-nap-hrs}
 df |>
   dplyr::filter(child_nap_hours > 5) |>
-  dplyr::select(site_id, subject_number, child_nap_hours) |>
-  dplyr::arrange(site_id, subject_number) |>
+  dplyr::select(site_id, participant_ID, child_nap_hours) |>
+  dplyr::arrange(site_id, participant_ID) |>
   knitr::kable('html')
 ```
 
@@ -396,7 +394,7 @@ old_moms <- screen_df |>
   dplyr::filter(mom_childbirth_age > 55)
 
 old_moms |>
-  dplyr::select(submit_date, site_id, subject_number, mom_childbirth_age) |>
+  dplyr::select(submit_date, site_id, participant_ID, mom_childbirth_age) |>
   knitr::kable(format = 'html')
 ```
 
