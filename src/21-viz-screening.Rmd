@@ -10,13 +10,16 @@ library(tidyverse)
 library(forcats)
 ```
 
-```{r load-screening-df, eval=FALSE}
-targets::tar_load(screen_df, store="../_targets")
-```
-
 ```{r}
 screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-datab-latest.csv"))
 ```
+## Sharing permission
+
+```{r}
+xtabs(~ session_release + group_name, screen_df)
+```
+
+Most families (>75%) have agreed to "Learning Audiences" or "EXCERPTS" sharing permission.
 
 ## Dates & times {-}
 
@@ -36,10 +39,6 @@ df |>
     ggplot() +
     aes(submit_date, n_calls, color = site_id) +
     geom_point()
-```
-
-```{r fig-screening-calls-cum, fig.cap="Cumulative screening calls by year and site", eval=FALSE}
-plot_call_timeseries(df)
 ```
 
 ### Calls by site {-}
@@ -71,7 +70,7 @@ Child age in months (`child_age_mos`) by `child_sex`.
 
 ```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
 screen_df |>
-  dplyr::filter(!is.na(child_age_mos),!is.na(child_sex)) |>
+  dplyr::filter(!is.na(child_age_mos), !is.na(child_sex)) |>
   ggplot() +
   aes(child_age_mos, fill = child_sex) +
   geom_histogram(bins = 50)
@@ -91,8 +90,11 @@ Language(s) spoken to child by `child_sex`.
 
 ```{r xtabs-language-by-sex}
 df <- screen_df |>
-  dplyr::mutate(language_spoken_child = stringr::str_replace_all(language_spoken_child, " ", "_"),
-                language_spoken_home = stringr::str_replace_all(language_spoken_home, " ", "_"))
+  dplyr::mutate(
+    language_spoken_child = stringr::str_replace_all(language_spoken_child, " ", "_"),
+    language_spoken_home = stringr::str_replace_all(language_spoken_home, " ", "_")
+  )
+
 xtabs(formula = ~ child_sex + language_spoken_child,
       data = df)
 ```
@@ -120,10 +122,23 @@ xtabs(formula = ~ child_sex + child_bornonduedate,
 
 ::: {.rmdnote}
 
-There are a large number of NAs. Cross-check with the earlier version 
-of the survey. It's possible that this question was not asked early-on.
+There are $n=$ `r sum(is.na(screen_df$child_bornonduedate))` NAs.
 
 :::
+
+```{r}
+screen_df |>
+  dplyr::filter(is.na(child_bornonduedate)) |>
+  dplyr::select(vol_id, participant_ID) |>
+  knitr::kable(format = 'html')
+```
+
+### Child term
+
+```{r xtabs-duedate}
+xtabs(formula = ~ child_bornonduedate + child_onterm,
+      data = screen_df)
+```
 
 ### Child weight {-}
 
@@ -243,7 +258,6 @@ visualization.
 
 #### Bed time {-}
 
-
 ```{r fig-bed-time-hist}
 extract_sleep_hr <- function(t) {
   t |>
@@ -358,7 +372,6 @@ df |>
   knitr::kable('html')
 ```
 
-
 #### Sleep location {-}
 
 ```{r, eval=FALSE}
@@ -394,7 +407,7 @@ old_moms <- screen_df |>
   dplyr::filter(mom_childbirth_age > 55)
 
 old_moms |>
-  dplyr::select(submit_date, site_id, participant_ID, mom_childbirth_age) |>
+  dplyr::select(submit_date, vol_id, participant_ID, mom_childbirth_age) |>
   knitr::kable(format = 'html')
 ```
 
@@ -469,26 +482,13 @@ df <- screen_df |>
 xtabs(~ mom_jobs_number + mom_employment, data = df)
 ```
 
-### Race and ethnicity {-}
+### Job training {-}
 
-```{r xtabs-race-ethnicity}
-# df <- screen_df %>%
-#   dplyr::mutate(
-#     .,
-#     mom_race = dplyr::recode(
-#       mom_race,
-#       morethanone = "more_than_one",
-#       americanindian = "american_indian"
-#     ),
-#     mother_ethnicity = dplyr::recode(
-#       mother_ethnicity,
-#       hispanic_or_la = "hispanic",
-#       not_hispanic_o = "not_hispanic",
-#       nothispanic = "not_hispanic"
-#     )
-#   )
-# xtabs(formula = ~ mother_race + mother_ethnicity,
-#       data = df)
+```{r}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_training))
+
+xtabs(~ mom_training, data = df)
 ```
 
 ## Childcare {-}
@@ -501,6 +501,7 @@ df <- screen_df |>
                 
 xtabs(~ childcare_types, data = df)
 ```
+
 ::: {.rmdnote}
 
 This requires some cleaning.
