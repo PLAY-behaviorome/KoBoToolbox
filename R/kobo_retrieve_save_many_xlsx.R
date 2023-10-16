@@ -14,9 +14,7 @@ kobo_retrieve_save_many_xlsx <-
     stopifnot(dim(df)[1] > 0)
     stopifnot(is.character(save_dir))
     stopifnot(dir.exists(save_dir))
-    
-    # suppressPackageStartupMessages(require(purrr))
-    
+  
     n_files <- dim(df)[1]
     message("Retrieving ", n_files, " files from KoBoToolbox site.")
     purrr::map_chr(

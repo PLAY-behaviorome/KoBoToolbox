@@ -10,6 +10,9 @@ fl <-
              full.names = TRUE)
 purrr::walk(fl, source)
 
+# Login to Databrary
+databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"), store = TRUE)
+
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(databraryr))
 
@@ -47,15 +50,6 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
-  tar_target(
-    kb_post_visit,
-    dplyr::filter(kb_df,
-                  stringr::str_detect(title, "Post\\-Visit")),
-    cue = tarchetypes::tar_cue_age(
-      name = kb_post_visit,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
   # Download screening/demographic survey
   tar_target(
     kb_screen_df,
@@ -73,14 +67,32 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
-  # Make data frame from post-visit surveys
+  # Post-visit surveys
   tar_target(
-    post_visit_df,
-    make_post_visit_df(kb_post_visit,
-                       "data/xlsx/post_visit",
-                       "data/csv/post_visit")
+    kb_post_visit_df,
+    kobo_list_data_filtered("Post\\-Visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_post_visit,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
   ),
-  ###### Home visit data
+  tar_target(
+    post_visit_download,
+    kobo_retrieve_save_many_xlsx(kb_post_visit_df, "data/xlsx/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_csvs,
+    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
+    cue = tarchetypes::tar_cue_age(
+      name = post_visit_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  # Home visit data
   tar_target(
     home_visit_downloads,
     retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
@@ -248,14 +260,14 @@ list(
     )
   ),
   # Databrary session info
-  tar_target(
-    play_databrary_sess_df,
-    make_site_session_summary_multiple(play_vols),
-    cue = tarchetypes::tar_cue_age(
-      name = play_databrary_sess_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   play_databrary_sess_df,
+  #   make_site_session_summary_multiple(play_vols),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = play_databrary_sess_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   tar_target(
     play_vols_df,
     readr::read_csv("data/csv/_meta/play_site_vols.csv",

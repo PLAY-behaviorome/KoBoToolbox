@@ -297,19 +297,19 @@ make_screening_df <- function(kb_screen, xlsx_dir, csv_dir) {
   clean_merge_demog(screen_csv_fns)
 }
 
-###################################################################
-make_post_visit_df <- function(kb_post_visit, xlsx_dir, csv_dir) {
-  require(readr)
-  stopifnot(is.data.frame(kb_post_visit))
-  stopifnot(dir.exists(xlsx_dir))
-  stopifnot(dir.exists(csv_dir))
-  
-  retrieve_kobo_xlsx(kb_post_visit, xlsx_dir)
-  load_xlsx_save_many_csvs(xlsx_dir, csv_dir, "Post\\-Visit")
-  #clean_merge_post_visit()
-  readr::read_csv(file.path(csv_dir, "361981_PLAY_Post-Visit_Notes.csv"),
-                  show_col_types = FALSE)
-}
+# ###################################################################
+# make_post_visit_df <- function(kb_post_visit, xlsx_dir, csv_dir) {
+#   require(readr)
+#   stopifnot(is.data.frame(kb_post_visit))
+#   stopifnot(dir.exists(xlsx_dir))
+#   stopifnot(dir.exists(csv_dir))
+#   
+#   retrieve_kobo_xlsx(kb_post_visit, xlsx_dir)
+#   load_xlsx_save_many_csvs(xlsx_dir, csv_dir, "Post\\-Visit")
+#   #clean_merge_post_visit()
+#   readr::read_csv(file.path(csv_dir, "361981_PLAY_Post-Visit_Notes.csv"),
+#                   show_col_types = FALSE)
+# }
 
 ###################################################################
 #' Loads a single XLSX-formatted data file, converts it to CSV, and saves it.
@@ -1176,9 +1176,9 @@ lookup_databrary_session <-
     if (!is.numeric(as.numeric(s_number))) {
       stop('`s_number` must be a number.')
     }
-    if (!file.exists('.databrary.RData')) {
-      stop('Not logged-in to Databrary.')
-    }
+    # if (!file.exists('.databrary.RData')) {
+    #   stop('Not logged-in to Databrary.')
+    # }
     
     this_volume <-
       dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site_id))
@@ -1222,9 +1222,9 @@ get_databrary_session_data <-  function(this_site_id,
   if (!is.numeric(as.numeric(s_number))) {
     stop('`s_number` must be a number.')
   }
-  if (!file.exists('.databrary.RData')) {
-    stop('Not logged-in to Databrary.')
-  }
+  # if (!file.exists('.databrary.RData')) {
+  #   stop('Not logged-in to Databrary.')
+  # }
   stopifnot(is.logical(vb))
   
   this_volume <-
@@ -1264,9 +1264,9 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   stopifnot(is.data.frame(df))
   stopifnot(is.logical(vb))
   
-  if (!file.exists('.databrary.RData')) {
-    stop('Not logged-in to Databrary.')
-  }
+  # if (!file.exists('.databrary.RData')) {
+  #   stop('Not logged-in to Databrary.')
+  # }
   
   this_row <- df[row, ]
   
@@ -1366,11 +1366,10 @@ summarize_sessions_by_site <- function(this_site, vb = FALSE) {
 }
 
 make_site_session_summary_multiple <- function(play_vols) {
-  if (!databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
-    message("Not authenticated to Databrary.")
-    return(NULL)
-  }
-  
+  # if (!databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
+  #   message("Not authenticated to Databrary.")
+  #   return(NULL)
+  # }
   purrr::map_df(play_vols$play_site_id, make_site_session_summary)
 }
 
@@ -1437,8 +1436,8 @@ get_save_all_databrary_session_csvs <- function(vb = FALSE) {
                vb = TRUE)
     #get_save_databrary_session_csv()
   }
-  if (vb)
-    message("Not logged in to Databrary.")
+  # if (vb)
+  #   message("Not logged in to Databrary.")
   NULL
 }
 
@@ -1537,11 +1536,11 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
   stopifnot(is.logical(vb))
   
   # Check Databrary login
-  if (vb)
-    "Authenticating to Databrary using stored credentials."
-  auth_status <-
-    databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))
-  stopifnot("Not logged in to Databrary." = auth_status)
+  # if (vb)
+  #   "Authenticating to Databrary using stored credentials."
+  # auth_status <-
+  #   databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"), store = TRUE)
+  # stopifnot("Not logged in to Databrary." = auth_status)
   
   # Generate KoBo and add full Databrary-compatible PLAY session name
   if (vb)
