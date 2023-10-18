@@ -94,18 +94,17 @@
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div id="sharing-permission" class="section level2" number="0.2">
-<h2>
-<span class="header-section-number">0.2</span> Sharing permission<a class="anchor" aria-label="anchor" href="#sharing-permission"><i class="fas fa-link"></i></a>
+<div id="sharing-permission" class="section level2 unnumbered">
+<h2>Sharing permission<a class="anchor" aria-label="anchor" href="#sharing-permission"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">session_release</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">session_release</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">screen_df</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                group_name
 ## session_release PLAY_Gold PLAY_Silver
 ##        EXCERPTS       268          67
 ##        PRIVATE          0           1
 ##        SHARED          90          18</code></pre>
-<p>Most families (&gt;75%) have agreed to “Learning Audiences” or “EXCERPTS” sharing permission.</p>
+<p>Of the <span class="math inline">\(n=\)</span> 444 sessions so far, 75.4504505% have agreed to EXCERPTS or “Learning Audiences” sharing.</p>
 </div>
 <div id="dates-times" class="section level2 unnumbered">
 <h2>Dates &amp; times<a class="anchor" aria-label="anchor" href="#dates-times"><i class="fas fa-link"></i></a>
@@ -333,9 +332,9 @@ participant_ID
 </tbody>
 </table></div>
 </div>
-<div id="child-term" class="section level3" number="0.2.1">
+<div id="child-term" class="section level3" number="0.1.3">
 <h3>
-<span class="header-section-number">0.2.1</span> Child term<a class="anchor" aria-label="anchor" href="#child-term"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.3</span> Child term<a class="anchor" aria-label="anchor" href="#child-term"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_bornonduedate</span> <span class="op">+</span> <span class="va">child_onterm</span>,</span>
@@ -2180,7 +2179,7 @@ mom_childbirth_age
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#screening-visualizations">Screening visualizations</a></li>
 <li><a class="nav-link" href="#setup-3">Setup</a></li>
-<li><a class="nav-link" href="#sharing-permission"><span class="header-section-number">0.2</span> Sharing permission</a></li>
+<li><a class="nav-link" href="#sharing-permission">Sharing permission</a></li>
 <li>
 <a class="nav-link" href="#dates-times">Dates &amp; times</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#calls-across-time">Calls across time</a></li>
@@ -2200,7 +2199,7 @@ mom_childbirth_age
 <li>
 <a class="nav-link" href="#child-health">Child health</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#child-born-on-due-date">Child born on due date</a></li>
-<li><a class="nav-link" href="#child-term"><span class="header-section-number">0.2.1</span> Child term</a></li>
+<li><a class="nav-link" href="#child-term"><span class="header-section-number">0.1.3</span> Child term</a></li>
 <li><a class="nav-link" href="#child-weight">Child weight</a></li>
 <li><a class="nav-link" href="#birth-complications">Birth complications</a></li>
 <li><a class="nav-link" href="#major-illnesses-or-injuries">Major illnesses or injuries</a></li>

@@ -13,13 +13,13 @@ library(forcats)
 ```{r}
 screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-datab-latest.csv"))
 ```
-## Sharing permission
+## Sharing permission {-}
 
 ```{r}
-xtabs(~ session_release + group_name, screen_df)
+(s <- xtabs(~ session_release + group_name, screen_df))
 ```
 
-Most families (>75%) have agreed to "Learning Audiences" or "EXCERPTS" sharing permission.
+Of the $n=$ `r sum(s)` sessions so far, `r 100*(s[1,1]+s[1,2])/sum(s)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
 
 ## Dates & times {-}
 
