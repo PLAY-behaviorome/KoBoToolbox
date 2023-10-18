@@ -27,18 +27,25 @@ The following rows have incomplete or missing `site_id` values:
 ```{r}
 screen_df |>
   dplyr::filter(is.na(site_id) | is.null(site_id)) |>
-  dplyr::select(site_id, vol_id, participant_ID, play_id, group_name) |>
+  dplyr::select(site_id, vol_id, participant_ID, session_id, play_id, group_name) |>
   dplyr::arrange(vol_id, site_id, participant_ID) |>
   knitr::kable() |>
   kableExtra::kable_classic()
 ```
+
+::: {.rmdnote}
+
+Volume 1103 is OHIOS. Volume 1482 is CSUFL. Volume 954 is GEORG.
+The missing values for `vol_id` indicate that there is a bug in the [cleaning code](screening-call.html).
+
+:::
 
 The following rows have incomplete or missing `participant_ID` values:
 
 ```{r}
 screen_df |>
   dplyr::filter(is.na(participant_ID) | is.null(participant_ID)) |>
-  dplyr::select(site_id, vol_id, participant_ID, play_id, group_name) |>
+  dplyr::select(site_id, vol_id, participant_ID, session_id, play_id, group_name) |>
   dplyr::arrange(vol_id, site_id, participant_ID) |>
   knitr::kable() |>
   kableExtra::kable_classic()
@@ -49,11 +56,33 @@ The following rows have incomplete or missing `play_id` values:
 ```{r}
 screen_df |>
   dplyr::filter(is.na(play_id) | is.null(play_id)) |>
-  dplyr::select(site_id, vol_id, participant_ID, play_id, group_name) |>
+  dplyr::select(site_id, vol_id, participant_ID, session_id, play_id, group_name) |>
   dplyr::arrange(vol_id, site_id, participant_ID) |>
   knitr::kable() |>
   kableExtra::kable_classic()
 ```
+
+::: {.rmdnote}
+
+There are duplicate entries for OHIOS 1103 56674 002.
+
+We should add duplicate checking to the cleaning code.
+
+:::
+
+::: {.rmdnote}
+
+There are `r stringr::str_detect(names(screen_df), "exclusion") |> sum()` variables with information about exclusion status:
+
+```{r}
+ex_dups <- stringr::str_detect(names(screen_df), "exclusion")
+names(screen_df)[ex_dups]
+```
+
+These probably result from some bug in the `*_join` operation in the [cleaning process](screening-call.html#merge).
+They should be merged.
+
+:::
 
 ## Home visit data {-}
 

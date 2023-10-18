@@ -55,7 +55,7 @@ Here is the accompanying target:
   ),
 ```
 
-## Clean and merge {-}
+## Clean {-}
 
 As of 2023-09-22, the cleaning and merging process for the screening/demographic data is handled here, in this document, not as a target.
 
@@ -174,6 +174,8 @@ str(scr_df)
 
 There is more work to do, but we have a version worth exporting.
 
+## Merge {-}
+
 Let's add the Databrary volume ID info.
 
 ```{r add-db-vol-id}
@@ -214,7 +216,7 @@ Two targets in `_targets.R` are relevant for this operation:
 ```
 
 These targets generate site-specific CSVs in `data/csv/site_sessions` based on the database of PLAY sites contained in `data/csv/_meta/play_site_vols.csv`.
-We load these CSVs into a data frame.
+We load these CSVs into a single data frame.
 
 ```{r add-db-status}
 session_fns <-
@@ -237,7 +239,7 @@ xtabs(~ group_name, data=df_sessions)
 ```
 
 We note that there are three different versions of no visit: "No visit", "No_visit", and "No_Visit". 
-In addition, there are $n=$ `sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
+In addition, there are $n=$ `r sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
 These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
 Here, we want to select only those sessions that occurred and which have passed QA--those sessions for which `group_name` is either 'PLAY_Gold' or 'PLAY_Silver'.
 

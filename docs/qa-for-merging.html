@@ -98,7 +98,7 @@
 <div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -112,6 +112,9 @@ vol_id
 </th>
 <th style="text-align:left;">
 participant_ID
+</th>
+<th style="text-align:left;">
+session_id
 </th>
 <th style="text-align:left;">
 play_id
@@ -130,6 +133,9 @@ NA
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+44638
 </td>
 <td style="text-align:left;">
 NA
@@ -149,6 +155,9 @@ NA
 006
 </td>
 <td style="text-align:left;">
+64916
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -166,6 +175,9 @@ NA
 001
 </td>
 <td style="text-align:left;">
+39302
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -174,11 +186,15 @@ PLAY_Silver
 </tr>
 </tbody>
 </table></div>
+<div class="rmdnote">
+<p>Volume 1103 is OHIOS. Volume 1482 is CSUFL. Volume 954 is GEORG.
+The missing values for <code>vol_id</code> indicate that there is a bug in the <a href="screening-call.html">cleaning code</a>.</p>
+</div>
 <p>The following rows have incomplete or missing <code>participant_ID</code> values:</p>
 <div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -192,6 +208,9 @@ vol_id
 </th>
 <th style="text-align:left;">
 participant_ID
+</th>
+<th style="text-align:left;">
+session_id
 </th>
 <th style="text-align:left;">
 play_id
@@ -206,7 +225,7 @@ group_name
 <div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -220,6 +239,9 @@ vol_id
 </th>
 <th style="text-align:left;">
 participant_ID
+</th>
+<th style="text-align:left;">
+session_id
 </th>
 <th style="text-align:left;">
 play_id
@@ -240,6 +262,9 @@ UCSCR
 001
 </td>
 <td style="text-align:left;">
+56051
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -255,6 +280,9 @@ UCSCR
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+56073
 </td>
 <td style="text-align:left;">
 NA
@@ -274,6 +302,9 @@ UCSCR
 003
 </td>
 <td style="text-align:left;">
+56321
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -289,6 +320,9 @@ UCSCR
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+57998
 </td>
 <td style="text-align:left;">
 NA
@@ -308,6 +342,9 @@ UCSCR
 009
 </td>
 <td style="text-align:left;">
+58358
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -323,6 +360,9 @@ UCSCR
 </td>
 <td style="text-align:left;">
 010
+</td>
+<td style="text-align:left;">
+58466
 </td>
 <td style="text-align:left;">
 NA
@@ -342,6 +382,9 @@ UCSCR
 011
 </td>
 <td style="text-align:left;">
+58472
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -359,6 +402,9 @@ UCSCR
 012
 </td>
 <td style="text-align:left;">
+58477
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -374,6 +420,9 @@ UCSCR
 </td>
 <td style="text-align:left;">
 014
+</td>
+<td style="text-align:left;">
+58805
 </td>
 <td style="text-align:left;">
 NA
@@ -393,6 +442,9 @@ UCSCR
 015
 </td>
 <td style="text-align:left;">
+59804
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -410,21 +462,7 @@ UCSCR
 016
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Gold
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-OHIOS
-</td>
-<td style="text-align:left;">
-1103
-</td>
-<td style="text-align:left;">
-002
+59805
 </td>
 <td style="text-align:left;">
 NA
@@ -442,6 +480,29 @@ OHIOS
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+56674
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+56674
 </td>
 <td style="text-align:left;">
 NA
@@ -461,6 +522,9 @@ OHIOS
 005
 </td>
 <td style="text-align:left;">
+57182
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -476,6 +540,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 006
+</td>
+<td style="text-align:left;">
+58204
 </td>
 <td style="text-align:left;">
 NA
@@ -495,6 +562,9 @@ OHIOS
 008
 </td>
 <td style="text-align:left;">
+58230
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -510,6 +580,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 009
+</td>
+<td style="text-align:left;">
+57371
 </td>
 <td style="text-align:left;">
 NA
@@ -529,6 +602,9 @@ OHIOS
 010
 </td>
 <td style="text-align:left;">
+57212
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -544,6 +620,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 011
+</td>
+<td style="text-align:left;">
+57324
 </td>
 <td style="text-align:left;">
 NA
@@ -563,6 +642,9 @@ OHIOS
 012
 </td>
 <td style="text-align:left;">
+58231
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -578,6 +660,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 014
+</td>
+<td style="text-align:left;">
+58232
 </td>
 <td style="text-align:left;">
 NA
@@ -597,6 +682,9 @@ OHIOS
 015
 </td>
 <td style="text-align:left;">
+58641
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -612,6 +700,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 016
+</td>
+<td style="text-align:left;">
+58315
 </td>
 <td style="text-align:left;">
 NA
@@ -631,6 +722,9 @@ OHIOS
 017
 </td>
 <td style="text-align:left;">
+58642
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -646,6 +740,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 018
+</td>
+<td style="text-align:left;">
+58724
 </td>
 <td style="text-align:left;">
 NA
@@ -665,6 +762,9 @@ OHIOS
 019
 </td>
 <td style="text-align:left;">
+58725
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -680,6 +780,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 021
+</td>
+<td style="text-align:left;">
+58747
 </td>
 <td style="text-align:left;">
 NA
@@ -699,6 +802,9 @@ OHIOS
 023
 </td>
 <td style="text-align:left;">
+59001
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -714,6 +820,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 024
+</td>
+<td style="text-align:left;">
+59029
 </td>
 <td style="text-align:left;">
 NA
@@ -733,6 +842,9 @@ OHIOS
 025
 </td>
 <td style="text-align:left;">
+59109
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -748,6 +860,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 026
+</td>
+<td style="text-align:left;">
+59802
 </td>
 <td style="text-align:left;">
 NA
@@ -767,6 +882,9 @@ OHIOS
 027
 </td>
 <td style="text-align:left;">
+59806
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -784,6 +902,9 @@ OHIOS
 028
 </td>
 <td style="text-align:left;">
+59820
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -799,6 +920,9 @@ OHIOS
 </td>
 <td style="text-align:left;">
 029
+</td>
+<td style="text-align:left;">
+59858
 </td>
 <td style="text-align:left;">
 NA
@@ -818,6 +942,9 @@ OHIOS
 030
 </td>
 <td style="text-align:left;">
+59966
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -835,6 +962,9 @@ NA
 001
 </td>
 <td style="text-align:left;">
+44638
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -850,6 +980,9 @@ STANF
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+57209
 </td>
 <td style="text-align:left;">
 NA
@@ -869,6 +1002,9 @@ STANF
 002
 </td>
 <td style="text-align:left;">
+58017
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -884,6 +1020,9 @@ PURDU
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+56367
 </td>
 <td style="text-align:left;">
 NA
@@ -903,6 +1042,9 @@ PURDU
 003
 </td>
 <td style="text-align:left;">
+58740
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -918,6 +1060,9 @@ PURDU
 </td>
 <td style="text-align:left;">
 004
+</td>
+<td style="text-align:left;">
+58918
 </td>
 <td style="text-align:left;">
 NA
@@ -937,21 +1082,7 @@ PURDU
 005
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Silver
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-PURDU
-</td>
-<td style="text-align:left;">
-1363
-</td>
-<td style="text-align:left;">
-006
+59150
 </td>
 <td style="text-align:left;">
 NA
@@ -971,6 +1102,29 @@ PURDU
 006
 </td>
 <td style="text-align:left;">
+60049
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+60049
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -986,6 +1140,9 @@ CHOPH
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+57863
 </td>
 <td style="text-align:left;">
 NA
@@ -1005,6 +1162,9 @@ CHOPH
 002
 </td>
 <td style="text-align:left;">
+60897
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1022,6 +1182,9 @@ CSULB
 001
 </td>
 <td style="text-align:left;">
+56400
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1037,6 +1200,9 @@ CSULB
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+56399
 </td>
 <td style="text-align:left;">
 NA
@@ -1056,6 +1222,9 @@ CSULB
 003
 </td>
 <td style="text-align:left;">
+57852
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1073,6 +1242,9 @@ CSULB
 004
 </td>
 <td style="text-align:left;">
+58612
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1088,6 +1260,9 @@ CSULB
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+59735
 </td>
 <td style="text-align:left;">
 NA
@@ -1105,6 +1280,9 @@ CSULB
 </td>
 <td style="text-align:left;">
 007
+</td>
+<td style="text-align:left;">
+57857
 </td>
 <td style="text-align:left;">
 NA
@@ -1124,6 +1302,9 @@ CSULB
 010
 </td>
 <td style="text-align:left;">
+60080
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1139,6 +1320,9 @@ VBLTU
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+59779
 </td>
 <td style="text-align:left;">
 NA
@@ -1158,6 +1342,9 @@ VBLTU
 003
 </td>
 <td style="text-align:left;">
+60236
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1175,6 +1362,9 @@ VBLTU
 004
 </td>
 <td style="text-align:left;">
+60243
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1190,6 +1380,9 @@ VBLTU
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+60311
 </td>
 <td style="text-align:left;">
 NA
@@ -1209,6 +1402,9 @@ UHOUS
 001
 </td>
 <td style="text-align:left;">
+57374
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1224,6 +1420,9 @@ UHOUS
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+57916
 </td>
 <td style="text-align:left;">
 NA
@@ -1243,6 +1442,9 @@ UHOUS
 004
 </td>
 <td style="text-align:left;">
+58465
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1258,6 +1460,9 @@ UHOUS
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+59144
 </td>
 <td style="text-align:left;">
 NA
@@ -1277,6 +1482,9 @@ UHOUS
 006
 </td>
 <td style="text-align:left;">
+60333
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1292,6 +1500,9 @@ UHOUS
 </td>
 <td style="text-align:left;">
 007
+</td>
+<td style="text-align:left;">
+61697
 </td>
 <td style="text-align:left;">
 NA
@@ -1311,6 +1522,9 @@ UHOUS
 008
 </td>
 <td style="text-align:left;">
+61748
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1326,6 +1540,9 @@ INDNA
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+58458
 </td>
 <td style="text-align:left;">
 NA
@@ -1345,6 +1562,9 @@ INDNA
 002
 </td>
 <td style="text-align:left;">
+62176
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1360,6 +1580,9 @@ UIOWA
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+57544
 </td>
 <td style="text-align:left;">
 NA
@@ -1379,6 +1602,9 @@ UIOWA
 002
 </td>
 <td style="text-align:left;">
+58798
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1394,6 +1620,9 @@ UIOWA
 </td>
 <td style="text-align:left;">
 003
+</td>
+<td style="text-align:left;">
+59206
 </td>
 <td style="text-align:left;">
 NA
@@ -1413,6 +1642,9 @@ UIOWA
 004
 </td>
 <td style="text-align:left;">
+59892
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1428,6 +1660,9 @@ UIOWA
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+60749
 </td>
 <td style="text-align:left;">
 NA
@@ -1447,6 +1682,9 @@ CSUFL
 001
 </td>
 <td style="text-align:left;">
+60393
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1464,6 +1702,9 @@ NA
 006
 </td>
 <td style="text-align:left;">
+64916
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1479,6 +1720,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+41534
 </td>
 <td style="text-align:left;">
 NA
@@ -1498,6 +1742,9 @@ NYUNI
 001
 </td>
 <td style="text-align:left;">
+41534
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1515,6 +1762,9 @@ NYUNI
 002
 </td>
 <td style="text-align:left;">
+41800
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1532,21 +1782,7 @@ NYUNI
 002
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Silver
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NYUNI
-</td>
-<td style="text-align:left;">
-899
-</td>
-<td style="text-align:left;">
-003
+41800
 </td>
 <td style="text-align:left;">
 NA
@@ -1566,6 +1802,9 @@ NYUNI
 003
 </td>
 <td style="text-align:left;">
+41455
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1581,6 +1820,29 @@ NYUNI
 </td>
 <td style="text-align:left;">
 003
+</td>
+<td style="text-align:left;">
+41455
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41455
 </td>
 <td style="text-align:left;">
 NA
@@ -1600,21 +1862,7 @@ NYUNI
 004
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Gold
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NYUNI
-</td>
-<td style="text-align:left;">
-899
-</td>
-<td style="text-align:left;">
-005
+41535
 </td>
 <td style="text-align:left;">
 NA
@@ -1634,6 +1882,29 @@ NYUNI
 005
 </td>
 <td style="text-align:left;">
+41608
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41608
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1651,6 +1922,9 @@ NYUNI
 006
 </td>
 <td style="text-align:left;">
+41808
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1666,6 +1940,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 006
+</td>
+<td style="text-align:left;">
+41808
 </td>
 <td style="text-align:left;">
 NA
@@ -1685,6 +1962,9 @@ NYUNI
 007
 </td>
 <td style="text-align:left;">
+41894
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1700,6 +1980,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 007
+</td>
+<td style="text-align:left;">
+41894
 </td>
 <td style="text-align:left;">
 NA
@@ -1719,6 +2002,9 @@ NYUNI
 013
 </td>
 <td style="text-align:left;">
+43207
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1734,6 +2020,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 014
+</td>
+<td style="text-align:left;">
+43530
 </td>
 <td style="text-align:left;">
 NA
@@ -1753,6 +2042,9 @@ NYUNI
 017
 </td>
 <td style="text-align:left;">
+55842
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1768,6 +2060,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 018
+</td>
+<td style="text-align:left;">
+55863
 </td>
 <td style="text-align:left;">
 NA
@@ -1787,6 +2082,9 @@ NYUNI
 020
 </td>
 <td style="text-align:left;">
+56064
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1802,6 +2100,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 021
+</td>
+<td style="text-align:left;">
+56065
 </td>
 <td style="text-align:left;">
 NA
@@ -1821,6 +2122,9 @@ NYUNI
 022
 </td>
 <td style="text-align:left;">
+56103
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1836,6 +2140,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 023
+</td>
+<td style="text-align:left;">
+56104
 </td>
 <td style="text-align:left;">
 NA
@@ -1855,6 +2162,9 @@ NYUNI
 024
 </td>
 <td style="text-align:left;">
+56311
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1870,6 +2180,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 026
+</td>
+<td style="text-align:left;">
+56417
 </td>
 <td style="text-align:left;">
 NA
@@ -1889,6 +2202,9 @@ NYUNI
 028
 </td>
 <td style="text-align:left;">
+56526
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1904,6 +2220,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 029
+</td>
+<td style="text-align:left;">
+56571
 </td>
 <td style="text-align:left;">
 NA
@@ -1923,6 +2242,9 @@ NYUNI
 031
 </td>
 <td style="text-align:left;">
+57373
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1938,6 +2260,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 032
+</td>
+<td style="text-align:left;">
+57410
 </td>
 <td style="text-align:left;">
 NA
@@ -1957,6 +2282,9 @@ NYUNI
 035
 </td>
 <td style="text-align:left;">
+57894
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -1972,6 +2300,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 037
+</td>
+<td style="text-align:left;">
+59428
 </td>
 <td style="text-align:left;">
 NA
@@ -1991,6 +2322,9 @@ NYUNI
 227
 </td>
 <td style="text-align:left;">
+38196
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2006,6 +2340,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 228
+</td>
+<td style="text-align:left;">
+38197
 </td>
 <td style="text-align:left;">
 NA
@@ -2025,6 +2362,9 @@ NYUNI
 229
 </td>
 <td style="text-align:left;">
+38215
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2040,6 +2380,9 @@ NYUNI
 </td>
 <td style="text-align:left;">
 230
+</td>
+<td style="text-align:left;">
+38236
 </td>
 <td style="text-align:left;">
 NA
@@ -2059,6 +2402,9 @@ NYUNI
 231
 </td>
 <td style="text-align:left;">
+38485
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2074,6 +2420,9 @@ GEORG
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+40510
 </td>
 <td style="text-align:left;">
 NA
@@ -2093,6 +2442,9 @@ GEORG
 002
 </td>
 <td style="text-align:left;">
+40510
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2110,6 +2462,9 @@ GEORG
 003
 </td>
 <td style="text-align:left;">
+41417
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2125,6 +2480,9 @@ GEORG
 </td>
 <td style="text-align:left;">
 003
+</td>
+<td style="text-align:left;">
+41417
 </td>
 <td style="text-align:left;">
 NA
@@ -2144,21 +2502,7 @@ GEORG
 004
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Gold
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-GEORG
-</td>
-<td style="text-align:left;">
-954
-</td>
-<td style="text-align:left;">
-005
+41428
 </td>
 <td style="text-align:left;">
 NA
@@ -2178,6 +2522,9 @@ GEORG
 005
 </td>
 <td style="text-align:left;">
+41873
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2193,6 +2540,29 @@ GEORG
 </td>
 <td style="text-align:left;">
 005
+</td>
+<td style="text-align:left;">
+41873
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41873
 </td>
 <td style="text-align:left;">
 NA
@@ -2212,6 +2582,9 @@ GEORG
 008
 </td>
 <td style="text-align:left;">
+42127
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2229,21 +2602,7 @@ GEORG
 008
 </td>
 <td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-PLAY_Gold
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-GEORG
-</td>
-<td style="text-align:left;">
-954
-</td>
-<td style="text-align:left;">
-009
+42127
 </td>
 <td style="text-align:left;">
 NA
@@ -2261,6 +2620,29 @@ GEORG
 </td>
 <td style="text-align:left;">
 009
+</td>
+<td style="text-align:left;">
+42354
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+42354
 </td>
 <td style="text-align:left;">
 NA
@@ -2280,6 +2662,9 @@ GEORG
 010
 </td>
 <td style="text-align:left;">
+42353
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2295,6 +2680,9 @@ GEORG
 </td>
 <td style="text-align:left;">
 011
+</td>
+<td style="text-align:left;">
+42694
 </td>
 <td style="text-align:left;">
 NA
@@ -2314,6 +2702,9 @@ GEORG
 012
 </td>
 <td style="text-align:left;">
+57864
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2329,6 +2720,9 @@ GEORG
 </td>
 <td style="text-align:left;">
 015
+</td>
+<td style="text-align:left;">
+58803
 </td>
 <td style="text-align:left;">
 NA
@@ -2348,6 +2742,9 @@ GEORG
 016
 </td>
 <td style="text-align:left;">
+59778
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2365,6 +2762,9 @@ GEORG
 021
 </td>
 <td style="text-align:left;">
+60059
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2380,6 +2780,9 @@ NA
 </td>
 <td style="text-align:left;">
 001
+</td>
+<td style="text-align:left;">
+39302
 </td>
 <td style="text-align:left;">
 NA
@@ -2399,6 +2802,9 @@ UCRIV
 001
 </td>
 <td style="text-align:left;">
+43624
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2414,6 +2820,9 @@ VCOMU
 </td>
 <td style="text-align:left;">
 002
+</td>
+<td style="text-align:left;">
+42292
 </td>
 <td style="text-align:left;">
 NA
@@ -2433,6 +2842,9 @@ VCOMU
 003
 </td>
 <td style="text-align:left;">
+42940
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2450,6 +2862,9 @@ UMIAM
 003
 </td>
 <td style="text-align:left;">
+65077
+</td>
+<td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
@@ -2458,21 +2873,34 @@ PLAY_Gold
 </tr>
 </tbody>
 </table></div>
+<div class="rmdnote">
+<p>There are duplicate entries for OHIOS 1103 56674 002.</p>
+<p>We should add duplicate checking to the cleaning code.</p>
+</div>
+<div class="rmdnote">
+<p>There are 3 variables with information about exclusion status:</p>
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ex_dups</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">screen_df</span><span class="op">)</span>, <span class="st">"exclusion"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">screen_df</span><span class="op">)</span><span class="op">[</span><span class="va">ex_dups</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## [1] "exclusion_reason"  "exclusion1_reason" "exclusion2_reason"</code></pre>
+<p>These probably result from some bug in the <code>*_join</code> operation in the <a href="screening-call.html#merge">cleaning process</a>.
+They should be merged.</p>
+</div>
 </div>
 <div id="home-visit-data-1" class="section level2 unnumbered">
 <h2>Home visit data<a class="anchor" aria-label="anchor" href="#home-visit-data-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_targets"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>home_visit_df</code> data have some field names that are inconsistent with the screening/demographic data files.
 We reconcile these differences first.</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"participant_id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"participant_ID"</span> <span class="op">=</span> <span class="st">"subject_number"</span><span class="op">)</span></span></code></pre></div>
 <p>Since the <code>home_visit_df</code> data have not yet been merged with Databrary information, the <code>vol_id</code> and <code>group_name</code> variables are not available.</p>
 <p>The following rows have incomplete or missing <code>site_id</code> values:</p>
-<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -2494,7 +2922,7 @@ play_id
 <tbody><tr></tr></tbody>
 </table></div>
 <p>The following rows have incomplete or missing <code>participant_ID</code> values:</p>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -2516,7 +2944,7 @@ play_id
 <tbody><tr></tr></tbody>
 </table></div>
 <p>The following rows have incomplete or missing <code>play_id</code> values:</p>
-<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -2566,7 +2994,7 @@ play_id
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-16.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
