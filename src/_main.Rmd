@@ -1384,12 +1384,12 @@ home_df |>
 
 # MB-CDI {-}
 
-## Purpose
+## Purpose {-}
 
 This page documents the cleaning and merging procedures related to the MB-CDI data.
 The home visit workflow strips these files into their own set of CSVs under `data/csv/home_visit/mbcdi`.
 
-## Preparation
+## Preparation {-}
 
 ```{r}
 source(file.path(here::here(), "R", "_OLD", "functions.R"))
@@ -1435,21 +1435,24 @@ mbcdi_file_dat |>
   kableExtra::kable_classic()
 ```
 
-## 12-mo-old English speakers
+## 12-mo-old English speakers {-}
 
 For simplicity, we'll start with the youngest age group, and with the English speakers.
 There are $n=3$ forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.
-Just for fun, let's try to bind them.
 
 ```{r}
 eng_12_files <- mbcdi_file_dat |>
   dplyr::filter(age_group == '12', lang_cond == 'english', n_subs > 0)
+```
 
+We'll examine the first one.
+
+```{r}
 eng_12_331 <- readr::read_csv(eng_12_files$fn[1],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
 
-names(eng_12_331)
+names(eng_12_331) |> head()
 ```
 
 Let's try trimming the metadata labels.
@@ -1457,7 +1460,8 @@ Let's try trimming the metadata labels.
 ```{r}
 eng_12_331_trim_names <- 
   names(eng_12_331) |> basename()
-eng_12_331_trim_names
+
+eng_12_331_trim_names |> head()
 ```
 
 That looks better.
@@ -1468,7 +1472,7 @@ eng_12_363 <- readr::read_csv(eng_12_files$fn[2],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
 
-names(eng_12_363) |> basename()
+names(eng_12_363) |> basename() |> head()
 ```
 
 And the third one.
@@ -1478,7 +1482,7 @@ eng_12_740625 <- readr::read_csv(eng_12_files$fn[3],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
 
-names(eng_12_740625) |> basename()
+names(eng_12_740625) |> basename() |> head()
 ```
 
 Now, we'll create a function to clean the variable names.
@@ -1498,7 +1502,7 @@ select_basename <- function(csv_fn) {
 ```
 
 ```{r}
-select_basename(eng_12_files$fn[3])
+select_basename(eng_12_files$fn[3]) |> head()
 ```
 
 Let's trim unneeded fields.
@@ -1558,8 +1562,7 @@ eng_12 <- purrr::map(eng_12_files$fn, clean_cdi) |>
 xtabs(~ word + understands_or_says, eng_12)
 ```
 
-
-## 18-mo-old English speakers
+## 18-mo-old English speakers {-}
 
 Let's move on to the 18-mo-old English speakers.
 
@@ -1578,7 +1581,7 @@ clean_cdi(eng_18_files$fn[3])
 
 There are some duplicate entries for some words.
 
-::: {callout-note}
+::: {.rmdnote}
 
 ~~We need a strategy for reconciling these duplicates: `candy`, `leg`, `rain`, `wet`.~~
 
@@ -1586,8 +1589,7 @@ It's not elegant, but I have one for modifying the duplicate names. See below.
 
 :::
 
-
-## 24-mo-old English speakers
+## 24-mo-old English speakers {-}
 
 Let's move on to the 24-mo-old English speakers.
 
@@ -1606,7 +1608,7 @@ clean_cdi(eng_24_files$fn[1])
 
 Once again, we have duplicates for several items: 'candy', 'leg', 'rain', 'wet'.
 
-It's very hacky, but I think we might want to drop these item names until we figure out a better way to handle the duplicates.
+It's very hacky, but I think we might want to modify these item names until we figure out a better way to handle the duplicates.
 
 ```{r}
 modify_mcdi_dupes <- function(df, dupe = 'leg') {

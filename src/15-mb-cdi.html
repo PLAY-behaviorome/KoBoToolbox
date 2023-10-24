@@ -1,0 +1,1860 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>15-mb-cdi.knit</title>
+
+  
+   
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="15-mb-cdi.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="15-mb-cdi.knit" />
+  
+  
+  
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.2/transition.js"></script>
+    <script src="libs/bs3compat-0.4.2/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.2/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="include/css/style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<!--bookdown:title:start-->
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title=""></a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="mb-cdi" class="section level1 unnumbered">
+<h1 class="unnumbered">MB-CDI</h1>
+<div id="purpose" class="section level2 unnumbered">
+<h2 class="unnumbered">Purpose</h2>
+<p>This page documents the cleaning and merging procedures related to the MB-CDI data.
+The home visit workflow strips these files into their own set of CSVs under <code>data/csv/home_visit/mbcdi</code>.</p>
+</div>
+<div id="preparation" class="section level2 unnumbered">
+<h2 class="unnumbered">Preparation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;R&quot;</span>, <span class="st">&quot;_OLD&quot;</span>, <span class="st">&quot;functions.R&quot;</span>))</span></code></pre></div>
+<p>Let’s investigate the number of files, records, and variables per file.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>mbcdi_fns <span class="ot">&lt;-</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data&quot;</span>, <span class="st">&quot;csv&quot;</span>, <span class="st">&quot;home_visit&quot;</span>, <span class="st">&quot;mbcdi&quot;</span>), <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.csv$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">length</span>(mbcdi_fns)</span></code></pre></div>
+<pre><code>## [1] 25</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>make_datafile_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(csv) {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.string</span>(csv)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.readable</span>(csv)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>(csv,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  </span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">fn =</span> csv,</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>             <span class="at">age_group =</span> <span class="fu">extract_age_group_from_name</span>(csv),</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>             <span class="at">lang_cond =</span> <span class="fu">form_language</span>(csv),</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>             <span class="at">n_subs =</span> <span class="fu">dim</span>(df)[<span class="dv">1</span>],</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>             <span class="at">n_vars =</span> <span class="fu">dim</span>(df)[<span class="dv">2</span>])</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>mbcdi_file_dat <span class="ot">&lt;-</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(mbcdi_fns, make_datafile_summary) <span class="sc">|&gt;</span> purrr<span class="sc">::</span><span class="fu">list_rbind</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>mbcdi_file_dat <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group, lang_cond, n_subs) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code></pre></div>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+fn
+</th>
+<th style="text-align:left;">
+age_group
+</th>
+<th style="text-align:left;">
+lang_cond
+</th>
+<th style="text-align:right;">
+n_subs
+</th>
+<th style="text-align:right;">
+n_vars
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/334099_mbcdi_12_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+728
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/411456_mbcdi_12_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740623_mbcdi_12_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+710
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740624_mbcdi_12_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+710
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/411469_mbcdi_12_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/331848_mbcdi_12_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+254
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/363431_mbcdi_12_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+253
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740625_mbcdi_12_english.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:right;">
+257
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/363466_mbcdi_18_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740626_mbcdi_18_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/411388_mbcdi_18_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740627_mbcdi_18_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/1136694_mbcdi_18_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/1151489_mbcdi_18_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/307736_mbcdi_18_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+350
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/363349_mbcdi_18_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+350
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740628_mbcdi_18_english.csv
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/363465_mbcdi_24_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740631_mbcdi_24_bilingual_english.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+bilingual_english
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740630_mbcdi_24_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/408149_mbcdi_24_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740631_mbcdi_24_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/331453_mbcdi_24_english.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+350
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/363381_mbcdi_24_english.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+350
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740629_mbcdi_24_english.csv
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+english
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+357
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mo-old-english-speakers" class="section level2 unnumbered">
+<h2 class="unnumbered">12-mo-old English speakers</h2>
+<p>For simplicity, we’ll start with the youngest age group, and with the English speakers.
+There are <span class="math inline">\(n=3\)</span> forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>eng_12_files <span class="ot">&lt;-</span> mbcdi_file_dat <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(age_group <span class="sc">==</span> <span class="st">&#39;12&#39;</span>, lang_cond <span class="sc">==</span> <span class="st">&#39;english&#39;</span>, n_subs <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>We’ll examine the first one.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>eng_12_331 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(eng_12_files<span class="sc">$</span>fn[<span class="dv">1</span>],</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="fu">names</span>(eng_12_331) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;group_combinedquestionnaires/participant_id&quot;                                                                                   
+## [2] &quot;group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/note_mcdi_permission&quot;                                    
+## [3] &quot;group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions1&quot;
+## [4] &quot;group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions2&quot;
+## [5] &quot;group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions3&quot;
+## [6] &quot;group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions4&quot;</code></pre>
+<p>Let’s try trimming the metadata labels.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>eng_12_331_trim_names <span class="ot">&lt;-</span> </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">names</span>(eng_12_331) <span class="sc">|&gt;</span> <span class="fu">basename</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>eng_12_331_trim_names <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;participant_id&quot;       &quot;note_mcdi_permission&quot; &quot;mcdi_instructions1&quot;  
+## [4] &quot;mcdi_instructions2&quot;   &quot;mcdi_instructions3&quot;   &quot;mcdi_instructions4&quot;</code></pre>
+<p>That looks better.
+Let’s look at the second file.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>eng_12_363 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(eng_12_files<span class="sc">$</span>fn[<span class="dv">2</span>],</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">names</span>(eng_12_363) <span class="sc">|&gt;</span> <span class="fu">basename</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;participant_id&quot;       &quot;note_mcdi_permission&quot; &quot;mcdi_instructions1&quot;  
+## [4] &quot;mcdi_instructions2&quot;   &quot;mcdi_instructions3&quot;   &quot;mcdi_instructions4&quot;</code></pre>
+<p>And the third one.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>eng_12_740625 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(eng_12_files<span class="sc">$</span>fn[<span class="dv">3</span>],</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="fu">names</span>(eng_12_740625) <span class="sc">|&gt;</span> <span class="fu">basename</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;participant_id&quot;             &quot;note_vocab_mbcdipermission&quot;
+## [3] &quot;vocab_instructions1&quot;        &quot;vocab_instructions2&quot;       
+## [5] &quot;vocab_instructions3&quot;        &quot;vocab_instructions4&quot;</code></pre>
+<p>Now, we’ll create a function to clean the variable names.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>select_basename <span class="ot">&lt;-</span> <span class="cf">function</span>(csv_fn) {</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.string</span>(csv_fn)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.readable</span>(csv_fn)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  </span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(csv_fn,</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  </span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  <span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">basename</span>(<span class="fu">names</span>(df))</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  df</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">select_basename</span>(eng_12_files<span class="sc">$</span>fn[<span class="dv">3</span>]) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 257
+##   participant_id note_vocab_mbcdipermi…¹ vocab_instructions1 vocab_instructions2
+##   &lt;chr&gt;          &lt;chr&gt;                   &lt;chr&gt;               &lt;chr&gt;              
+## 1 e0N0S0S1A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## 2 e0N6T0S1A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## 3 a9L2M0A2A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## 4 o2C0C1C2A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## 5 o2C0A1C2A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## 6 a3W4N1F0A      &lt;NA&gt;                    &lt;NA&gt;                &lt;NA&gt;               
+## # ℹ abbreviated name: ¹​note_vocab_mbcdipermission
+## # ℹ 253 more variables: vocab_instructions3 &lt;chr&gt;, vocab_instructions4 &lt;chr&gt;,
+## #   vocab_instructions5 &lt;chr&gt;, vocab_instructions6 &lt;chr&gt;,
+## #   vocab_instructions7 &lt;chr&gt;, vocab_instructions8 &lt;chr&gt;, choo_choo &lt;chr&gt;,
+## #   meow &lt;chr&gt;, ouch &lt;chr&gt;, uh_oh &lt;chr&gt;, bird &lt;chr&gt;, dog &lt;chr&gt;, duck &lt;chr&gt;,
+## #   kitty &lt;chr&gt;, lion &lt;chr&gt;, mouse &lt;chr&gt;, car &lt;chr&gt;, stroller &lt;chr&gt;,
+## #   ball &lt;chr&gt;, book &lt;chr&gt;, doll &lt;chr&gt;, bread &lt;chr&gt;, candy &lt;chr&gt;, …</code></pre>
+<p>Let’s trim unneeded fields.
+We’ll write several helper functions to do this.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>trim_cdi_fields <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;note&quot;</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;instructions&quot;</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;comments&quot;</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;continue&quot;</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;vocab&quot;</span>),</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;mcdi&quot;</span>))</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>}</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>add_particip_index <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">play_i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(df)[<span class="dv">1</span>])</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>}</span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>make_cdi_longer <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>  n_vars <span class="ot">&lt;-</span> <span class="fu">dim</span>(df)[<span class="dv">2</span>]</span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span>n_vars,</span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;understands_or_says&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(understands_or_says)) <span class="sc">|&gt;</span></span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">understands_or_says =</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(understands_or_says, <span class="st">&quot;understands___&quot;</span>, <span class="st">&quot;says&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a>      <span class="at">understands_or_says =</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(understands_or_says, <span class="st">&quot;understands_says&quot;</span>, <span class="st">&quot;says&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">word =</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(word, <span class="st">&quot;mommy_001&quot;</span>, <span class="st">&quot;mommy&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">word =</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(word, <span class="st">&quot;bath_001&quot;</span>, <span class="st">&quot;bath&quot;</span>))</span>
+<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a>}</span></code></pre></div>
+<p>Then we combine them into an omnibus function.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>clean_cdi <span class="ot">&lt;-</span> <span class="cf">function</span>(csv_fn) {</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">select_basename</span>(csv_fn) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="fu">trim_cdi_fields</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;play_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;participant_id&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="fu">make_cdi_longer</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="fu">add_particip_index</span>()</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, we can run <code>clean_cdi()</code> across all three files.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>eng_12 <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(eng_12_files<span class="sc">$</span>fn, clean_cdi) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">list_rbind</span>()</span></code></pre></div>
+<pre><code>## Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+## ℹ Please use `all_of()` or `any_of()` instead.
+##   # Was:
+##   data %&gt;% select(n_vars)
+## 
+##   # Now:
+##   data %&gt;% select(all_of(n_vars))
+## 
+## See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> word <span class="sc">+</span> understands_or_says, eng_12)</span></code></pre></div>
+<pre><code>##                 understands_or_says
+## word             says understands
+##   a                 0           3
+##   airplane          0          16
+##   allgone           5          55
+##   also              0           2
+##   animal            0          10
+##   apple             0           2
+##   arms              0          20
+##   away              0           5
+##   baabaa           14           8
+##   baby              4          53
+##   babysitter        0           2
+##   ball             12          59
+##   balloon           6          18
+##   banana            0           2
+##   bath              2          68
+##   bathroom          0          19
+##   bathtub           0          43
+##   bear              1          16
+##   bed               0          41
+##   bellybutton       0           2
+##   bib               0          39
+##   bicycle           0          11
+##   big               1          15
+##   bird              0          20
+##   bite              0          27
+##   blanket           0          22
+##   blow              0          18
+##   book             10          60
+##   boots             0           4
+##   bottle           21          52
+##   box               1          17
+##   boy               0          11
+##   bread             0          10
+##   break             0           1
+##   broken            0           2
+##   broom             0           8
+##   brother           3          16
+##   brush             1          23
+##   bunny             0          22
+##   button            1           8
+##   bye              31          60
+##   cake              0           7
+##   candy             0           1
+##   car               3          35
+##   cat              12          28
+##   cereal            1           9
+##   chair             0          18
+##   cheese            0           1
+##   chicken           1          13
+##   choo_choo         2           3
+##   choochoo          0           1
+##   church            0           7
+##   clockwatch        0          10
+##   close             0          28
+##   cockadoodledoo    2           3
+##   comb              0           8
+##   cookie            0          10
+##   couch             0          19
+##   cow               4          15
+##   crib              0           3
+##   cry               0          26
+##   cup               2          38
+##   daddy            64          26
+##   dance             0          48
+##   dark              0           6
+##   diaper            2          53
+##   dirty             0          18
+##   dish              0           1
+##   dog              23          38
+##   doll              0          17
+##   dont              1          39
+##   door              2          31
+##   draw              0           6
+##   drawer            0           2
+##   dress             0          12
+##   drum              0          22
+##   duck              2          18
+##   eat               2          70
+##   egg               1          29
+##   elephant          0          17
+##   eye               2          25
+##   face              0           1
+##   fall              0          11
+##   family            0          11
+##   fast              0          11
+##   feed              0          14
+##   finger            0          24
+##   finish            4          15
+##   firetruck         0           8
+##   flower            0          16
+##   foot              0          37
+##   for               0           1
+##   frog              0          12
+##   girl              0           6
+##   give              0           1
+##   glass             0           2
+##   glasses           1          25
+##   go                5          28
+##   goodmorning       0          41
+##   grandma           8          44
+##   grandpa          10          35
+##   hair              0          36
+##   hammer            0           3
+##   hand              0          37
+##   hat               3          21
+##   have              0          10
+##   head              0          25
+##   help              0          23
+##   here              0          20
+##   hi               35          54
+##   hisher            0           5
+##   hit               0          18
+##   home              0          25
+##   horse             0          12
+##   hot               2          32
+##   hurry             0           1
+##   hurt              0          15
+##   i                 1           6
+##   I                 0           1
+##   icecream          0          11
+##   in                1          35
+##   juice             0           2
+##   jump              0          18
+##   keys              0          21
+##   kick              0          13
+##   kiss              1          57
+##   kitchen           0          18
+##   kitty             7          31
+##   lady              0           3
+##   lamp              0           2
+##   leg               0          13
+##   light             3          25
+##   lion              1           9
+##   look              1          49
+##   man               1           2
+##   many              0           4
+##   me                0           8
+##   meat              0           6
+##   medicine          0          14
+##   meow              6          26
+##   milk              8          51
+##   mine              0          14
+##   mommy            62          33
+##   money             0           3
+##   monkey            0          17
+##   moo               0           1
+##   moon              1           6
+##   more             11          43
+##   mouse             0           3
+##   mouth             2          34
+##   nap               0           3
+##   necklace          0           5
+##   new               0           1
+##   night             2          24
+##   nightnight        5          44
+##   none              0           8
+##   nose              1          33
+##   now               0           9
+##   on                2          25
+##   onetwothree       0          26
+##   open              0          44
+##   other             0           3
+##   ouch              2          30
+##   out               0          21
+##   outside           0          49
+##   pajamas           0          27
+##   pants             1          18
+##   paper             0          10
+##   party             0           6
+##   pattycake         0          25
+##   pen               0           9
+##   penguin           0           9
+##   picture           0          18
+##   pillow            0          20
+##   plant             0           9
+##   play              1          41
+##   please            1          20
+##   pretty            0           6
+##   purse             0           5
+##   push              0          23
+##   put               0          39
+##   quackquack        7          11
+##   rain              0           4
+##   refrigerator      0          15
+##   rock              1           6
+##   say               0          14
+##   scissors          0           1
+##   see               0          29
+##   shh               5          50
+##   shirt             0           3
+##   shoe              1          37
+##   sing              0          19
+##   sink              0           6
+##   sister            1          15
+##   sit               0          37
+##   sky               0          14
+##   sleep             0          47
+##   smile             1          29
+##   soap              0          11
+##   sock              1          31
+##   soft              0          22
+##   some              0           3
+##   spoon             0          35
+##   squirrel          0          12
+##   stairs            0          34
+##   stop              0           4
+##   store             0           6
+##   street            0           6
+##   stroller          0          30
+##   sun               1          14
+##   swing             0           1
+##   table             0          17
+##   take              0          20
+##   teddybear         0          21
+##   telelphone        0          28
+##   telephone         0           1
+##   television        0          10
+##   thankyou          4          39
+##   them              0           1
+##   there             1          15
+##   this              2          13
+##   throw             0          32
+##   tickle            2          28
+##   tiger             2           9
+##   tired             0          38
+##   toast             0           5
+##   today             0           2
+##   tomorrow          0           2
+##   tongue            0          22
+##   tooth             1          13
+##   touch             0          29
+##   towel             0          17
+##   toy               0          52
+##   train             1           7
+##   trash             0          15
+##   tree              2          20
+##   truck             2          27
+##   turtle            1          12
+##   uh_oh            18          44
+##   uhoh              2           7
+##   vroom            16          11
+##   wait              0          32
+##   walk              0          39
+##   want              0          19
+##   wash              0          19
+##   water             7          58
+##   where             0          33
+##   who               0          13
+##   window            0          21
+##   woofwoof         16          31
+##   write             0           2
+##   yes               7          53
+##   yumyum           11          37</code></pre>
+</div>
+<div id="mo-old-english-speakers-1" class="section level2 unnumbered">
+<h2 class="unnumbered">18-mo-old English speakers</h2>
+<p>Let’s move on to the 18-mo-old English speakers.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>eng_18_files <span class="ot">&lt;-</span> mbcdi_file_dat <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(age_group <span class="sc">==</span> <span class="st">&#39;18&#39;</span>, lang_cond <span class="sc">==</span> <span class="st">&#39;english&#39;</span>, n_subs <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 3 files with participant data.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">clean_cdi</span>(eng_18_files<span class="sc">$</span>fn[<span class="dv">1</span>])</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">clean_cdi</span>(eng_18_files<span class="sc">$</span>fn[<span class="dv">2</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="fu">clean_cdi</span>(eng_18_files<span class="sc">$</span>fn[<span class="dv">3</span>])</span></code></pre></div>
+<p>There are some duplicate entries for some words.</p>
+<div class="{callout-note}">
+<p><del>We need a strategy for reconciling these duplicates: <code>candy</code>, <code>leg</code>, <code>rain</code>, <code>wet</code>.</del></p>
+<p>It’s not elegant, but I have one for modifying the duplicate names. See below.</p>
+</div>
+</div>
+<div id="mo-old-english-speakers-2" class="section level2 unnumbered">
+<h2 class="unnumbered">24-mo-old English speakers</h2>
+<p>Let’s move on to the 24-mo-old English speakers.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>eng_24_files <span class="ot">&lt;-</span> mbcdi_file_dat <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(age_group <span class="sc">==</span> <span class="st">&#39;24&#39;</span>, lang_cond <span class="sc">==</span> <span class="st">&#39;english&#39;</span>, n_subs <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 3 files with participant data.</p>
+<p>Let’s see how the <code>clean_cdi()</code> works on one of these.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">clean_cdi</span>(eng_24_files<span class="sc">$</span>fn[<span class="dv">1</span>])</span></code></pre></div>
+<p>Once again, we have duplicates for several items: ‘candy’, ‘leg’, ‘rain’, ‘wet’.</p>
+<p>It’s very hacky, but I think we might want to drop these item names until we figure out a better way to handle the duplicates.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>modify_mcdi_dupes <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">dupe =</span> <span class="st">&#39;leg&#39;</span>) {</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  dup_index <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(df)[<span class="fu">names</span>(df) <span class="sc">==</span> dupe]</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(dup_index)) {</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    this_dup <span class="ot">&lt;-</span> dup_index[i]</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    <span class="fu">names</span>(df)[this_dup] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dupe, <span class="st">&quot;_&quot;</span>, i)</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>  }</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>  df</span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>}</span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>open_csv <span class="ot">&lt;-</span> <span class="cf">function</span>(csv_fn) {</span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.string</span>(csv_fn)</span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>  assertthat<span class="sc">::</span><span class="fu">is.readable</span>(csv_fn)</span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a>  </span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>  df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(csv_fn,</span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a>                    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a>                    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a>}</span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a>trim_cdi_18_24_fields <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;note&quot;</span>),</span>
+<span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;instructions&quot;</span>),</span>
+<span id="cb28-23"><a href="#cb28-23" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;comments&quot;</span>),</span>
+<span id="cb28-24"><a href="#cb28-24" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;continue&quot;</span>),</span>
+<span id="cb28-25"><a href="#cb28-25" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;vocab&quot;</span>),</span>
+<span id="cb28-26"><a href="#cb28-26" tabindex="-1"></a>                  <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;mcdi&quot;</span>))</span>
+<span id="cb28-27"><a href="#cb28-27" tabindex="-1"></a>}</span>
+<span id="cb28-28"><a href="#cb28-28" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" tabindex="-1"></a>make_cdi_18_24_longer <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb28-30"><a href="#cb28-30" tabindex="-1"></a>  n_vars <span class="ot">&lt;-</span> <span class="fu">dim</span>(df)[<span class="dv">2</span>]</span>
+<span id="cb28-31"><a href="#cb28-31" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb28-32"><a href="#cb28-32" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span>n_vars,</span>
+<span id="cb28-33"><a href="#cb28-33" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
+<span id="cb28-34"><a href="#cb28-34" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;knows&quot;</span>)</span>
+<span id="cb28-35"><a href="#cb28-35" tabindex="-1"></a> }</span>
+<span id="cb28-36"><a href="#cb28-36" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" tabindex="-1"></a>clean_cdi_18_24_dedupe <span class="ot">&lt;-</span> <span class="cf">function</span>(csv_fn) {</span>
+<span id="cb28-38"><a href="#cb28-38" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">open_csv</span>(csv_fn)</span>
+<span id="cb28-39"><a href="#cb28-39" tabindex="-1"></a>  <span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">basename</span>(<span class="fu">names</span>(df))</span>
+<span id="cb28-40"><a href="#cb28-40" tabindex="-1"></a>  </span>
+<span id="cb28-41"><a href="#cb28-41" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb28-42"><a href="#cb28-42" tabindex="-1"></a>    <span class="fu">modify_mcdi_dupes</span>(<span class="at">dupe =</span> <span class="st">&#39;leg&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-43"><a href="#cb28-43" tabindex="-1"></a>    <span class="fu">modify_mcdi_dupes</span>(<span class="at">dupe =</span> <span class="st">&#39;candy&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-44"><a href="#cb28-44" tabindex="-1"></a>    <span class="fu">modify_mcdi_dupes</span>(<span class="at">dupe =</span> <span class="st">&#39;rain&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-45"><a href="#cb28-45" tabindex="-1"></a>    <span class="fu">modify_mcdi_dupes</span>(<span class="at">dupe =</span> <span class="st">&#39;wet&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-46"><a href="#cb28-46" tabindex="-1"></a>    <span class="fu">trim_cdi_18_24_fields</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-47"><a href="#cb28-47" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;play_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;participant_id&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-48"><a href="#cb28-48" tabindex="-1"></a>    <span class="fu">make_cdi_18_24_longer</span>()</span>
+<span id="cb28-49"><a href="#cb28-49" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(eng_24_files<span class="sc">$</span>fn, clean_cdi_18_24_dedupe) <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">list_rbind</span>()</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> word <span class="sc">+</span> knows, eng_24)</span></code></pre></div>
+<pre><code>##                 knows
+## word             FALSE TRUE
+##   after             57   18
+##   airplane          19   56
+##   alexa             60   14
+##   all               31   42
+##   allgone            7   68
+##   animal            22   43
+##   ant               32   43
+##   apple             11   64
+##   applesauce        40   35
+##   arm               19   56
+##   baabaa            14   61
+##   baby               8   67
+##   bad               43   32
+##   ball               1   74
+##   balloon           15   60
+##   banana             7   68
+##   bathroom          33   42
+##   bathtub           22   53
+##   beach              7    3
+##   beans             41   34
+##   bear              20   55
+##   bed               17   58
+##   bedroom           48   27
+##   bee                5    3
+##   beepbeep           2    8
+##   beepbepp           2    0
+##   behind            56   18
+##   bell              47   28
+##   bellybutton       22   53
+##   bench             51   14
+##   beside            69    6
+##   bib               39   36
+##   bicycle            7    3
+##   bicylcle          26   39
+##   big               20   55
+##   bird              14   61
+##   blanket           18   57
+##   blow              36   39
+##   boat              23   52
+##   book               5   70
+##   bottle            28   47
+##   box               22   53
+##   boy               39   36
+##   bread              1    1
+##   break              5    3
+##   broken            27   48
+##   broom             42   33
+##   brother           36   29
+##   brush             19   56
+##   bubbles            2    8
+##   bug               24   51
+##   bunny              3    7
+##   butterfly         16   59
+##   buttocks          18   57
+##   button            33   42
+##   buy               52   23
+##   bye                2   73
+##   cake              27   48
+##   candy_1           53   22
+##   candy_2           10    0
+##   car                7   68
+##   carry             39   36
+##   cat                8   67
+##   cereal            37   38
+##   chair             18   57
+##   chase             49   26
+##   cheek             27   48
+##   cheese             3    7
+##   chicken            3    7
+##   chin              33   42
+##   chocolate          8    2
+##   choochoo          12   63
+##   church            59   16
+##   circle            27   47
+##   clockwatch        36   39
+##   close             31   44
+##   closet            41   24
+##   cloud             35   40
+##   clown             65   10
+##   coat               3    7
+##   cockadoodledoo    33   42
+##   coffee            35   40
+##   coke              73    2
+##   cold              19   56
+##   comb              47   28
+##   cookie            16   59
+##   corn              27   48
+##   couch             19   46
+##   could             70    5
+##   cow                9   66
+##   cracker           17   58
+##   crib               7    3
+##   cry               31   44
+##   cup               13   62
+##   daddy              3   72
+##   dance             22   53
+##   day               44   31
+##   diaper            16   59
+##   dirty             19   56
+##   do                29   46
+##   dog                5   70
+##   doll              36   39
+##   door              14   61
+##   down               7   68
+##   dress             43   32
+##   drink             28   47
+##   drum              33   42
+##   duck               8   67
+##   dump              46   29
+##   ear               11   64
+##   eat               13   62
+##   egg               17   58
+##   eye                6   59
+##   eyes               2    8
+##   face              26   49
+##   facetime          66    8
+##   fall              29   46
+##   fast              25   50
+##   few               67    7
+##   finger            22   53
+##   finish            41   34
+##   firetruck         28   37
+##   fit               55   20
+##   five              24   50
+##   flag              56   19
+##   flower            18   57
+##   foot              12   63
+##   four              22   52
+##   frenchfries       33   42
+##   friend            32   43
+##   frog              17   58
+##   game              56   19
+##   gentle            34   41
+##   girl              42   33
+##   glass             59   16
+##   glasses           22   43
+##   go                 6   69
+##   godmother         73    2
+##   gonnagetyou        1    1
+##   good              30   45
+##   google            68    6
+##   grapes            22   53
+##   grass             27   38
+##   hair              12   63
+##   hand              15   60
+##   happy             26   49
+##   hat                8   67
+##   have               2    8
+##   head              13   62
+##   hear              37   38
+##   helicopter        38   27
+##   help              11   64
+##   here              26   49
+##   hi                 2   73
+##   him               10    0
+##   his_hers          39   26
+##   hishers            9    1
+##   hit               34   41
+##   home               3    7
+##   horse             21   54
+##   hose              54   21
+##   hot                8   67
+##   house             14   51
+##   how               55   20
+##   hug               16   59
+##   hungry            34   41
+##   i                 34   41
+##   ice               33   42
+##   icecream          28   47
+##   if                70    5
+##   in                 1    1
+##   inside            20   52
+##   inthemorning      66    9
+##   into              68    6
+##   ipad              61   13
+##   juice             26   49
+##   jump              13   62
+##   key                6    4
+##   keys              14   51
+##   kick              35   40
+##   kiss              15   60
+##   kitchen           33   42
+##   knee              22   53
+##   know              55   20
+##   lady              66    9
+##   last              65   10
+##   leg_1             20   55
+##   leg_2              2    8
+##   letsgo            23   52
+##   light             12   63
+##   like              35   40
+##   lion              23   52
+##   listen            53   22
+##   little             7    3
+##   long               8    2
+##   look              26   49
+##   man               63   12
+##   many              59   15
+##   matches           75    0
+##   meat              55   20
+##   medicine          42   33
+##   meow               8   67
+##   milk              11   64
+##   mine              11   64
+##   mommy              2   73
+##   money             58   17
+##   monkey            15   60
+##   moo                2    8
+##   moon              20   55
+##   mop               60   15
+##   more               2   73
+##   motorcycle         4    6
+##   mouth             16   59
+##   much              60   15
+##   mustache          71    4
+##   necklace          42   33
+##   need              45   30
+##   new               46   29
+##   newspaper         64    1
+##   nightnight        10   65
+##   no                 3   72
+##   none              45   20
+##   nose               2    8
+##   off                8   66
+##   on                11   63
+##   one               11   63
+##   open              14   61
+##   orange            22   53
+##   ouch              18   57
+##   our               59   16
+##   out               10   65
+##   oven              54   21
+##   pants             15   60
+##   paper             25   50
+##   park              27   48
+##   party             48   27
+##   pattycake         44   21
+##   peas              38   37
+##   pencil             9    1
+##   penguin           29   36
+##   penis             47   18
+##   person            56   19
+##   picture           30   45
+##   pillow            28   47
+##   plant             34   31
+##   plate             21   54
+##   play              16   59
+##   please             7   68
+##   popcorn           54   21
+##   pot               47   28
+##   potato            36   39
+##   potty             18   57
+##   pretend           62   13
+##   pretty            37   38
+##   pumpkin           35   40
+##   purse             50   25
+##   quackquack         8   67
+##   rabbit            28   37
+##   rain_1            20   55
+##   rain_2             4    6
+##   raisin            56   19
+##   rectangle         56   18
+##   rice              31   34
+##   rip               65   10
+##   rock              14   51
+##   room              29   46
+##   run               22   53
+##   school            31   44
+##   scissors          39   26
+##   see               20   55
+##   shake             32   43
+##   shh               12   63
+##   shirt             14   61
+##   shoe               5   70
+##   shopping          53   22
+##   shower            31   34
+##   sing              38   37
+##   siri              73    1
+##   sister            44   21
+##   sit               11   64
+##   six               29   45
+##   skirt             57    8
+##   sky               29   46
+##   skype             74    0
+##   sleep             14   61
+##   snake             35   40
+##   soap              14   61
+##   sock               8   67
+##   sodapop           10    0
+##   soup               7    3
+##   spaghetti         50   25
+##   spoon             13   62
+##   square            37   37
+##   squirrel          32   33
+##   stairs            14   61
+##   star              19   56
+##   stick             32   43
+##   store             39   36
+##   stove             57   18
+##   strawberry        16   59
+##   street            47   28
+##   sun               16   59
+##   sweater           59   16
+##   swing             15   60
+##   table              2    8
+##   taste             50   25
+##   teddybear         41   34
+##   telephone         25   50
+##   thankyou          12   63
+##   that              30   45
+##   the               40   35
+##   them              60   15
+##   then              67    8
+##   there             27   47
+##   thereis           49   16
+##   think             53   22
+##   this              21   54
+##   three             17   57
+##   tickle            27   38
+##   tiger             34   41
+##   tiny              49   26
+##   tired             28   47
+##   to                36   39
+##   tobe              61    4
+##   today             56   19
+##   tongue            36   39
+##   tonight           65   10
+##   tooth             29   46
+##   toothbrush        15   50
+##   touch             30   35
+##   towel             21   54
+##   toy                3    7
+##   train             14   61
+##   trash             18   57
+##   tray              67    8
+##   tree              13   62
+##   triangle          42   32
+##   truck              8   67
+##   tummy             14   61
+##   turnoff            7    3
+##   turnon            23   42
+##   tv                 4    6
+##   TV                26   39
+##   two               10   64
+##   uhoh               3   72
+##   under             38   37
+##   up                 4   70
+##   us                62   13
+##   vagina            46   19
+##   vroom              8   67
+##   walk              14   61
+##   wash              25   50
+##   water              0   10
+##   wet_1             16   59
+##   wet_2             19   56
+##   what              34   41
+##   where             27   48
+##   who               46   29
+##   win               68    7
+##   window            35   40
+##   wish              73    2
+##   with              48   26
+##   wolf              47   18
+##   woofwoof          13   62
+##   would             71    4
+##   yes                5   70
+##   yogurt            21   54
+##   you               30   45
+##   youtube           70    4
+##   yucky             21   54
+##   yumyum            10   65
+##   zero              67    7
+##   zoom              63    1</code></pre>
+<p>Now, we can return to the 18-mo-old data to see if this works:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>eng_18 <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(eng_18_files<span class="sc">$</span>fn, clean_cdi_18_24_dedupe) <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">list_rbind</span>()</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> word <span class="sc">+</span> knows, eng_18)</span></code></pre></div>
+<pre><code>##                 knows
+## word             FALSE TRUE
+##   after             85    2
+##   airplane          63   24
+##   alexa             62    6
+##   all               70   14
+##   allgone           45   42
+##   animal            69    7
+##   ant               80    8
+##   apple             51   37
+##   applesauce        79    8
+##   arm               68   13
+##   baabaa            27   60
+##   baby              33   55
+##   bad               75    6
+##   ball              14   73
+##   balloon           50   38
+##   banana            12   69
+##   bathroom          73    8
+##   bathtub           66   22
+##   beach             12    0
+##   beans             81    7
+##   bear              61   26
+##   bed               60   27
+##   bedroom           85    2
+##   bee                6    3
+##   beepbeep           2   10
+##   beepbepp           2    1
+##   behind            66    2
+##   bell              76    5
+##   bellybutton       56   32
+##   bench             75    0
+##   beside            87    0
+##   bib               67   21
+##   bicycle           11    1
+##   bicylcle          58   18
+##   big               64   17
+##   bird              56   31
+##   blanket           74   14
+##   blow              78   10
+##   boat              65   22
+##   book              30   57
+##   bottle            49   32
+##   box               72   16
+##   boy               78    3
+##   bread              3    0
+##   break              8    1
+##   broken            76    5
+##   broom             82    5
+##   brother           67    9
+##   brush             67   21
+##   bubbles            7    5
+##   bug               73   15
+##   bunny              6    6
+##   butterfly         67   21
+##   buttocks          77   11
+##   button            71   17
+##   buy               74    7
+##   bye               10   77
+##   cake              77   11
+##   candy_1           84    3
+##   candy_2           12    0
+##   car               42   45
+##   carry             82    5
+##   cat               45   42
+##   cereal            78   10
+##   chair             66   22
+##   chase             87    0
+##   cheek             76   12
+##   cheese             2   10
+##   chicken           11    1
+##   chin              75   12
+##   chocolate         12    0
+##   choochoo          43   38
+##   church            80    1
+##   circle            56   12
+##   clockwatch        74   14
+##   close             72   16
+##   closet            75    1
+##   cloud             82    6
+##   clown             81    0
+##   coat              10    2
+##   cockadoodledoo    67   14
+##   coffee            72   16
+##   coke              86    1
+##   cold              67   20
+##   comb              77   10
+##   cookie            71   17
+##   corn              79    9
+##   couch             70    6
+##   could             86    1
+##   cow               49   32
+##   cracker           57   30
+##   crib              11    1
+##   cry               77   11
+##   cup               47   41
+##   daddy              3   85
+##   dance             76   12
+##   day               83    4
+##   diaper            65   23
+##   dirty             70   11
+##   do                73    8
+##   dog               37   50
+##   doll              80    8
+##   door              50   31
+##   down              48   39
+##   dress             84    4
+##   drink             71   17
+##   drum              74    7
+##   duck              42   45
+##   dump              83    4
+##   ear               48   39
+##   eat               51   37
+##   egg               50   31
+##   eye               35   41
+##   eyes               3    9
+##   face              76   12
+##   facetime          68    0
+##   fall              74    7
+##   fast              82    5
+##   few               68    0
+##   finger            77   11
+##   finish            80    7
+##   firetruck         62   14
+##   fit               87    0
+##   five              58   10
+##   flag              84    3
+##   flower            55   26
+##   foot              62   26
+##   four              57   11
+##   frenchfries       77   11
+##   friend            85    2
+##   frog              64   17
+##   game              86    1
+##   gentle            79    8
+##   girl              83    5
+##   glass             79    2
+##   glasses           67    9
+##   go                43   45
+##   godmother         81    0
+##   gonnagetyou        3    0
+##   good              74   14
+##   google            65    3
+##   grapes            74   14
+##   grass             69    7
+##   hair              58   30
+##   hand              67   20
+##   happy             69   18
+##   hat               41   46
+##   have              12    0
+##   head              64   24
+##   hear              77    4
+##   helicopter        70    6
+##   help              59   29
+##   here              70   11
+##   hi                17   70
+##   him               12    0
+##   his_hers          65    4
+##   hishers           12    0
+##   hit               84    4
+##   home               8    4
+##   horse             74   13
+##   hose              79    2
+##   hot               46   41
+##   house             64   12
+##   how               81    0
+##   hug               59   28
+##   hungry            74   14
+##   i                 78   10
+##   ice               76   12
+##   icecream          77   11
+##   if                86    1
+##   in                 2    1
+##   inside            44   21
+##   inthemorning      79    2
+##   into              66    2
+##   ipad              65    3
+##   juice             69   18
+##   jump              58   23
+##   key                9    3
+##   keys              54   22
+##   kick              80    8
+##   kiss              56   25
+##   kitchen           82    6
+##   knee              72   16
+##   know              75    6
+##   lady              88    0
+##   last              87    0
+##   leg_1             80    7
+##   leg_2             10    2
+##   letsgo            59   22
+##   light             59   22
+##   like              82    5
+##   lion              70   18
+##   listen            87    0
+##   little            12    0
+##   long              12    0
+##   look              67   14
+##   man               86    2
+##   many              67    1
+##   matches           81    0
+##   meat              84    3
+##   medicine          86    2
+##   meow              38   49
+##   milk              43   44
+##   mine              48   33
+##   mommy              7   80
+##   money             84    4
+##   monkey            70   18
+##   moo                0   12
+##   moon              67   21
+##   mop               84    3
+##   more              29   52
+##   motorcycle        11    1
+##   mouth             62   26
+##   much              84    3
+##   mustache          79    2
+##   necklace          84    3
+##   need              82    5
+##   new               79    2
+##   newspaper         69    0
+##   nightnight        40   41
+##   no                18   69
+##   none              67    2
+##   nose               3    9
+##   off               31   37
+##   on                34   34
+##   one               38   30
+##   open              52   36
+##   orange            71   17
+##   ouch              51   36
+##   our               86    1
+##   out               43   38
+##   oven              85    2
+##   pants             61   20
+##   paper             81    7
+##   park              76   12
+##   party             85    2
+##   pattycake         70    6
+##   peas              75   12
+##   pencil            12    0
+##   penguin           70    6
+##   penis             72    4
+##   person            86    1
+##   picture           81    7
+##   pillow            74   14
+##   plant             72    4
+##   plate             75   12
+##   play              60   21
+##   please            41   40
+##   popcorn           82    6
+##   pot               72    9
+##   potato            74    7
+##   potty             72   16
+##   pretend           87    0
+##   pretty            77    4
+##   pumpkin           69   12
+##   purse             87    1
+##   quackquack        35   53
+##   rabbit            64   12
+##   rain_1            76   11
+##   rain_2             9    3
+##   raisin            84    4
+##   rectangle         68    0
+##   rice              58   11
+##   rip               86    1
+##   rock              59   17
+##   room              83    5
+##   run               81    7
+##   school            79    8
+##   scissors          74    2
+##   see               78   10
+##   shake             75   12
+##   shh               36   52
+##   shirt             60   21
+##   shoe              32   55
+##   shopping          86    1
+##   shower            70    6
+##   sing              83    5
+##   siri              66    2
+##   sister            68    8
+##   sit               53   28
+##   six               56   12
+##   skirt             69    0
+##   sky               80    7
+##   skype             68    0
+##   sleep             68   13
+##   snake             72    9
+##   soap              67   14
+##   sock              49   38
+##   sodapop           10    2
+##   soup              10    2
+##   spaghetti         80    8
+##   spoon             56   32
+##   square            60    8
+##   squirrel          70    6
+##   stairs            76   11
+##   star              63   24
+##   stick             76   12
+##   store             85    3
+##   stove             86    2
+##   strawberry        71   17
+##   street            79    2
+##   sun               64   17
+##   sweater           87    1
+##   swing             69   18
+##   table             10    2
+##   taste             84    3
+##   teddybear         75   13
+##   telephone         73   15
+##   thankyou          54   33
+##   that              71   17
+##   the               75    6
+##   them              86    1
+##   then              79    2
+##   there             63    5
+##   thereis           66    3
+##   think             87    0
+##   this              66   21
+##   three             51   17
+##   tickle            65   11
+##   tiger             71   10
+##   tiny              86    1
+##   tired             71   10
+##   to                76    5
+##   tobe              68    1
+##   today             80    1
+##   tongue            77   11
+##   tonight           87    0
+##   tooth             68   20
+##   toothbrush        63   13
+##   touch             71    5
+##   towel             80    7
+##   toy               10    2
+##   train             66   22
+##   trash             66   21
+##   tray              85    2
+##   tree              62   26
+##   triangle          59    9
+##   truck             42   39
+##   tummy             64   24
+##   turnoff           10    2
+##   turnon            59   10
+##   tv                10    2
+##   TV                62    7
+##   two               39   29
+##   uhoh              13   74
+##   under             79    8
+##   up                10   58
+##   us                85    2
+##   vagina            73    3
+##   vroom             35   53
+##   walk              67   21
+##   wash              74   14
+##   water              4    8
+##   wet_1             72   15
+##   wet_2             74   14
+##   what              76   12
+##   where             79    8
+##   who               80    1
+##   win               78    3
+##   window            78   10
+##   wish              87    0
+##   with              67    1
+##   wolf              74    2
+##   woofwoof          26   61
+##   would             86    1
+##   yes               24   57
+##   yogurt            70   18
+##   you               77   11
+##   youtube           65    3
+##   yucky             70   18
+##   yumyum            36   52
+##   zero              68    0
+##   zoom              56    0</code></pre>
+<p>It does.</p>
+</div>
+</div>
+<!--bookdown:body:end-->
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong></strong>" was written by . </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+
+</html>

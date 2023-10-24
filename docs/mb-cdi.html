@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>MB-CDI | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
-<meta name="description" content="0.2 Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under...">
+<meta name="description" content="Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under data/csv/home_visit/mbcdi. ...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="MB-CDI | PLAY Project: Surveys">
 <meta property="og:type" content="book">
-<meta property="og:description" content="0.2 Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under...">
+<meta property="og:description" content="Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under data/csv/home_visit/mbcdi. ...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MB-CDI | PLAY Project: Surveys">
-<meta name="twitter:description" content="0.2 Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under...">
+<meta name="twitter:description" content="Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under data/csv/home_visit/mbcdi. ...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -73,16 +73,14 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="mb-cdi" class="section level1 unnumbered">
 <h1>MB-CDI<a class="anchor" aria-label="anchor" href="#mb-cdi"><i class="fas fa-link"></i></a>
 </h1>
-<div id="purpose-2" class="section level2" number="0.2">
-<h2>
-<span class="header-section-number">0.2</span> Purpose<a class="anchor" aria-label="anchor" href="#purpose-2"><i class="fas fa-link"></i></a>
+<div id="purpose-2" class="section level2 unnumbered">
+<h2>Purpose<a class="anchor" aria-label="anchor" href="#purpose-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>This page documents the cleaning and merging procedures related to the MB-CDI data.
 The home visit workflow strips these files into their own set of CSVs under <code>data/csv/home_visit/mbcdi</code>.</p>
 </div>
-<div id="preparation" class="section level2" number="0.3">
-<h2>
-<span class="header-section-number">0.3</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
+<div id="preparation" class="section level2 unnumbered">
+<h2>Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"R"</span>, <span class="st">"_OLD"</span>, <span class="st">"functions.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -566,809 +564,57 @@ english
 </tbody>
 </table></div>
 </div>
-<div id="mo-old-english-speakers" class="section level2" number="0.4">
-<h2>
-<span class="header-section-number">0.4</span> 12-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers"><i class="fas fa-link"></i></a>
+<div id="mo-old-english-speakers" class="section level2 unnumbered">
+<h2>12-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers"><i class="fas fa-link"></i></a>
 </h2>
 <p>For simplicity, we’ll start with the youngest age group, and with the English speakers.
-There are <span class="math inline">\(n=3\)</span> forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.
-Just for fun, let’s try to bind them.</p>
+There are <span class="math inline">\(n=3\)</span> forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.</p>
 <div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_files</span> <span class="op">&lt;-</span> <span class="va">mbcdi_file_dat</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_group</span> <span class="op">==</span> <span class="st">'12'</span>, <span class="va">lang_cond</span> <span class="op">==</span> <span class="st">'english'</span>, <span class="va">n_subs</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">eng_12_331</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_group</span> <span class="op">==</span> <span class="st">'12'</span>, <span class="va">lang_cond</span> <span class="op">==</span> <span class="st">'english'</span>, <span class="va">n_subs</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p>We’ll examine the first one.</p>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_12_331</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>                    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>                    show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_331</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1] "group_combinedquestionnaires/participant_id"                                                                                                       
-##   [2] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/note_mcdi_permission"                                                        
-##   [3] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions1"                    
-##   [4] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions2"                    
-##   [5] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions3"                    
-##   [6] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions4"                    
-##   [7] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions5"                    
-##   [8] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions6"                    
-##   [9] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/mcdi_instructions7"    
-##  [10] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/choochoo"              
-##  [11] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/meow"                  
-##  [12] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/ouch"                  
-##  [13] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/uhoh"                  
-##  [14] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/bird"                  
-##  [15] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/dog"                   
-##  [16] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/duck"                  
-##  [17] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/kitty"                 
-##  [18] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/lion"                  
-##  [19] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/mouse"                 
-##  [20] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/car"                   
-##  [21] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/stroller"              
-##  [22] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/ball"                  
-##  [23] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/book"                  
-##  [24] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/doll"                  
-##  [25] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/bread"                 
-##  [26] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/candy"                 
-##  [27] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/cereal"                
-##  [28] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/cookie"                
-##  [29] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/juice"                 
-##  [30] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/toast"                 
-##  [31] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/hat"                   
-##  [32] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/pants"                 
-##  [33] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/shoe"                  
-##  [34] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/sock"                  
-##  [35] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/eye"                   
-##  [36] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/head"                  
-##  [37] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/leg"                   
-##  [38] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/nose"                  
-##  [39] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/tooth"                 
-##  [40] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/chair"                 
-##  [41] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/couch"                 
-##  [42] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/kitchen"               
-##  [43] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/table"                 
-##  [44] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/television"            
-##  [45] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/blanket"               
-##  [46] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/bottle"                
-##  [47] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/cup"                   
-##  [48] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/dish"                  
-##  [49] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/lamp"                  
-##  [50] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/radio"                 
-##  [51] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/spoon"                 
-##  [52] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/who"                   
-##  [53] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/away"                  
-##  [54] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/outside"               
-##  [55] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/flower"                
-##  [56] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/home"                  
-##  [57] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/moon"                  
-##  [58] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/outside_001"           
-##  [59] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/plant"                 
-##  [60] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/rain"                  
-##  [61] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/rock"                  
-##  [62] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/water"                 
-##  [63] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/babysitter"            
-##  [64] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/girl"                  
-##  [65] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/grandma"               
-##  [66] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/mommy"                 
-##  [67] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/bath"                  
-##  [68] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/dont"                  
-##  [69] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/hi"                    
-##  [70] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/nightnight"            
-##  [71] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/pattycake"             
-##  [72] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/please"                
-##  [73] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/wait"                  
-##  [74] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/break"                 
-##  [75] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/feed"                  
-##  [76] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/finish"                
-##  [77] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/help"                  
-##  [78] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/jump"                  
-##  [79] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/kick"                  
-##  [80] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/kiss"                  
-##  [81] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/push"                  
-##  [82] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/sing"                  
-##  [83] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/smile"                 
-##  [84] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/night"                 
-##  [85] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/today"                 
-##  [86] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/allgone"               
-##  [87] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/big"                   
-##  [88] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/broken"                
-##  [89] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/dark"                  
-##  [90] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/fast"                  
-##  [91] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/hurt"                  
-##  [92] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/pretty"                
-##  [93] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/soft"                  
-##  [94] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/I"                     
-##  [95] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/me"                    
-##  [96] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/how"                   
-##  [97] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/other"                 
-##  [98] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/some"                  
-##  [99] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsf/comments_mcdi_sfm"     
-## [100] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/mcdi_instructions8"   
-## [101] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/mcdi_instructions9"   
-## [102] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/cockadoodledoo"       
-## [103] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/woofwoof"             
-## [104] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/yumyum"               
-## [105] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/cat"                  
-## [106] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/chicken"              
-## [107] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/cow"                  
-## [108] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/frog"                 
-## [109] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/monkey"               
-## [110] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/teddybear"            
-## [111] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/tiger"                
-## [112] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/train"                
-## [113] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/truck"                
-## [114] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/drum"                 
-## [115] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/egg"                  
-## [116] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/icecream"             
-## [117] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/necklace"             
-## [118] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/arms"                 
-## [119] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/hand"                 
-## [120] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/mouth"                
-## [121] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/bathroom"             
-## [122] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/bed"                  
-## [123] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/sink"                 
-## [124] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/broom"                
-## [125] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/glass"                
-## [126] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/keys"                 
-## [127] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/money"                
-## [128] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/soap"                 
-## [129] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/church"               
-## [130] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/party"                
-## [131] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/sky"                  
-## [132] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/street"               
-## [133] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/sun"                  
-## [134] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/baby"                 
-## [135] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/boy"                  
-## [136] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/family"               
-## [137] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/lady"                 
-## [138] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/bye"                  
-## [139] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/goodmorning"          
-## [140] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/onetwothree"          
-## [141] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/shh"                  
-## [142] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/yes"                  
-## [143] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/eat"                  
-## [144] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/fall"                 
-## [145] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/have"                 
-## [146] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/look"                 
-## [147] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/play"                 
-## [148] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/put"                  
-## [149] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/say"                  
-## [150] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/see"                  
-## [151] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/sit"                  
-## [152] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/sleep"                
-## [153] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/take"                 
-## [154] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/want"                 
-## [155] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/write"                
-## [156] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/now"                  
-## [157] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/tomorrow"             
-## [158] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/hot"                  
-## [159] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/new"                  
-## [160] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/tired"                
-## [161] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/hisher"               
-## [162] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/mine"                 
-## [163] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/them"                 
-## [164] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/this"                 
-## [165] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/a"                    
-## [166] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/where"                
-## [167] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/here"                 
-## [168] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/in"                   
-## [169] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/on"                   
-## [170] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/there"                
-## [171] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/also"                 
-## [172] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/many"                 
-## [173] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/more"                 
-## [174] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/none"                 
-## [175] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishsfm/comments_mcdi_sfm_001"
-## [176] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/continue_mcdi_englishlfm"                   
-## [177] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/mcdi_instructions10"  
-## [178] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/mcdi_instructions11"  
-## [179] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/baabaa"               
-## [180] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/moo"                  
-## [181] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/quackquack"           
-## [182] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/vroom"                
-## [183] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/beepbeep"             
-## [184] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bear"                 
-## [185] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bunny"                
-## [186] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/horse"                
-## [187] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/airplane"             
-## [188] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bicycle"              
-## [189] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/balloon"              
-## [190] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/pen"                  
-## [191] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/toy"                  
-## [192] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/apple"                
-## [193] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/banana"               
-## [194] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/cake"                 
-## [195] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/cheese"               
-## [196] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bib"                  
-## [197] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/button"               
-## [198] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/diaper"               
-## [199] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/dress"                
-## [200] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/pajamas"              
-## [201] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/shirt"                
-## [202] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bellybutton"          
-## [203] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/ears"                 
-## [204] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/face"                 
-## [205] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/foot"                 
-## [206] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/finger"               
-## [207] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/hair"                 
-## [208] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/tongue"               
-## [209] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bathtub"              
-## [210] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/crib"                 
-## [211] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/door"                 
-## [212] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/drawer"               
-## [213] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/refrigerator"         
-## [214] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/stairs"               
-## [215] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/window"               
-## [216] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/box"                  
-## [217] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/brush"                
-## [218] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/clockwatch"           
-## [219] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/comb"                 
-## [220] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/glasses"              
-## [221] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/light"                
-## [222] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/medicine"             
-## [223] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/paper"                
-## [224] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/picture"              
-## [225] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/pillow"               
-## [226] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/purse"                
-## [227] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/telephone"            
-## [228] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/towel"                
-## [229] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/trash"                
-## [230] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/store"                
-## [231] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/swing"                
-## [232] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/tree"                 
-## [233] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/daddy"                
-## [234] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/man"                  
-## [235] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/mommy_001"            
-## [236] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/nap"                  
-## [237] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/please_001"           
-## [238] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/thankyou"             
-## [239] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/bite"                 
-## [240] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/blow"                 
-## [241] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/close"                
-## [242] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/cry"                  
-## [243] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/dance"                
-## [244] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/give"                 
-## [245] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/go"                   
-## [246] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/hit"                  
-## [247] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/open"                 
-## [248] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/stop"                 
-## [249] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/throw"                
-## [250] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/touch"                
-## [251] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/walk"                 
-## [252] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/wash"                 
-## [253] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/dirty"                
-## [254] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_english/group_mcdi_englishlfm/comments_mcdi_lfm"</code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_331</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "group_combinedquestionnaires/participant_id"                                                                                   
+## [2] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/note_mcdi_permission"                                    
+## [3] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions1"
+## [4] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions2"
+## [5] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions3"
+## [6] "group_combinedquestionnaires/group_homevisitquestionnaires/group_mcdi/group_mcdi_12/group_mcdi_instructions/mcdi_instructions4"</code></pre>
 <p>Let’s try trimming the metadata labels.</p>
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_331_trim_names</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_331</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">eng_12_331_trim_names</span></span></code></pre></div>
-<pre><code>##   [1] "participant_id"           "note_mcdi_permission"    
-##   [3] "mcdi_instructions1"       "mcdi_instructions2"      
-##   [5] "mcdi_instructions3"       "mcdi_instructions4"      
-##   [7] "mcdi_instructions5"       "mcdi_instructions6"      
-##   [9] "mcdi_instructions7"       "choochoo"                
-##  [11] "meow"                     "ouch"                    
-##  [13] "uhoh"                     "bird"                    
-##  [15] "dog"                      "duck"                    
-##  [17] "kitty"                    "lion"                    
-##  [19] "mouse"                    "car"                     
-##  [21] "stroller"                 "ball"                    
-##  [23] "book"                     "doll"                    
-##  [25] "bread"                    "candy"                   
-##  [27] "cereal"                   "cookie"                  
-##  [29] "juice"                    "toast"                   
-##  [31] "hat"                      "pants"                   
-##  [33] "shoe"                     "sock"                    
-##  [35] "eye"                      "head"                    
-##  [37] "leg"                      "nose"                    
-##  [39] "tooth"                    "chair"                   
-##  [41] "couch"                    "kitchen"                 
-##  [43] "table"                    "television"              
-##  [45] "blanket"                  "bottle"                  
-##  [47] "cup"                      "dish"                    
-##  [49] "lamp"                     "radio"                   
-##  [51] "spoon"                    "who"                     
-##  [53] "away"                     "outside"                 
-##  [55] "flower"                   "home"                    
-##  [57] "moon"                     "outside_001"             
-##  [59] "plant"                    "rain"                    
-##  [61] "rock"                     "water"                   
-##  [63] "babysitter"               "girl"                    
-##  [65] "grandma"                  "mommy"                   
-##  [67] "bath"                     "dont"                    
-##  [69] "hi"                       "nightnight"              
-##  [71] "pattycake"                "please"                  
-##  [73] "wait"                     "break"                   
-##  [75] "feed"                     "finish"                  
-##  [77] "help"                     "jump"                    
-##  [79] "kick"                     "kiss"                    
-##  [81] "push"                     "sing"                    
-##  [83] "smile"                    "night"                   
-##  [85] "today"                    "allgone"                 
-##  [87] "big"                      "broken"                  
-##  [89] "dark"                     "fast"                    
-##  [91] "hurt"                     "pretty"                  
-##  [93] "soft"                     "I"                       
-##  [95] "me"                       "how"                     
-##  [97] "other"                    "some"                    
-##  [99] "comments_mcdi_sfm"        "mcdi_instructions8"      
-## [101] "mcdi_instructions9"       "cockadoodledoo"          
-## [103] "woofwoof"                 "yumyum"                  
-## [105] "cat"                      "chicken"                 
-## [107] "cow"                      "frog"                    
-## [109] "monkey"                   "teddybear"               
-## [111] "tiger"                    "train"                   
-## [113] "truck"                    "drum"                    
-## [115] "egg"                      "icecream"                
-## [117] "necklace"                 "arms"                    
-## [119] "hand"                     "mouth"                   
-## [121] "bathroom"                 "bed"                     
-## [123] "sink"                     "broom"                   
-## [125] "glass"                    "keys"                    
-## [127] "money"                    "soap"                    
-## [129] "church"                   "party"                   
-## [131] "sky"                      "street"                  
-## [133] "sun"                      "baby"                    
-## [135] "boy"                      "family"                  
-## [137] "lady"                     "bye"                     
-## [139] "goodmorning"              "onetwothree"             
-## [141] "shh"                      "yes"                     
-## [143] "eat"                      "fall"                    
-## [145] "have"                     "look"                    
-## [147] "play"                     "put"                     
-## [149] "say"                      "see"                     
-## [151] "sit"                      "sleep"                   
-## [153] "take"                     "want"                    
-## [155] "write"                    "now"                     
-## [157] "tomorrow"                 "hot"                     
-## [159] "new"                      "tired"                   
-## [161] "hisher"                   "mine"                    
-## [163] "them"                     "this"                    
-## [165] "a"                        "where"                   
-## [167] "here"                     "in"                      
-## [169] "on"                       "there"                   
-## [171] "also"                     "many"                    
-## [173] "more"                     "none"                    
-## [175] "comments_mcdi_sfm_001"    "continue_mcdi_englishlfm"
-## [177] "mcdi_instructions10"      "mcdi_instructions11"     
-## [179] "baabaa"                   "moo"                     
-## [181] "quackquack"               "vroom"                   
-## [183] "beepbeep"                 "bear"                    
-## [185] "bunny"                    "horse"                   
-## [187] "airplane"                 "bicycle"                 
-## [189] "balloon"                  "pen"                     
-## [191] "toy"                      "apple"                   
-## [193] "banana"                   "cake"                    
-## [195] "cheese"                   "bib"                     
-## [197] "button"                   "diaper"                  
-## [199] "dress"                    "pajamas"                 
-## [201] "shirt"                    "bellybutton"             
-## [203] "ears"                     "face"                    
-## [205] "foot"                     "finger"                  
-## [207] "hair"                     "tongue"                  
-## [209] "bathtub"                  "crib"                    
-## [211] "door"                     "drawer"                  
-## [213] "refrigerator"             "stairs"                  
-## [215] "window"                   "box"                     
-## [217] "brush"                    "clockwatch"              
-## [219] "comb"                     "glasses"                 
-## [221] "light"                    "medicine"                
-## [223] "paper"                    "picture"                 
-## [225] "pillow"                   "purse"                   
-## [227] "telephone"                "towel"                   
-## [229] "trash"                    "store"                   
-## [231] "swing"                    "tree"                    
-## [233] "daddy"                    "man"                     
-## [235] "mommy_001"                "nap"                     
-## [237] "please_001"               "thankyou"                
-## [239] "bite"                     "blow"                    
-## [241] "close"                    "cry"                     
-## [243] "dance"                    "give"                    
-## [245] "go"                       "hit"                     
-## [247] "open"                     "stop"                    
-## [249] "throw"                    "touch"                   
-## [251] "walk"                     "wash"                    
-## [253] "dirty"                    "comments_mcdi_lfm"</code></pre>
+<span></span>
+<span><span class="va">eng_12_331_trim_names</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "participant_id"       "note_mcdi_permission" "mcdi_instructions1"  
+## [4] "mcdi_instructions2"   "mcdi_instructions3"   "mcdi_instructions4"</code></pre>
 <p>That looks better.
 Let’s look at the second file.</p>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_363</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>                    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>                    show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_363</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1] "participant_id"       "note_mcdi_permission"
-##   [3] "mcdi_instructions1"   "mcdi_instructions2"  
-##   [5] "mcdi_instructions3"   "mcdi_instructions4"  
-##   [7] "mcdi_instructions5"   "mcdi_instructions6"  
-##   [9] "mcdi_instructions7"   "mcdi_instructions8"  
-##  [11] "choochoo"             "meow"                
-##  [13] "ouch"                 "uhoh"                
-##  [15] "bird"                 "dog"                 
-##  [17] "duck"                 "kitty"               
-##  [19] "lion"                 "mouse"               
-##  [21] "car"                  "stroller"            
-##  [23] "ball"                 "book"                
-##  [25] "doll"                 "bread"               
-##  [27] "candy"                "cereal"              
-##  [29] "cookie"               "juice"               
-##  [31] "toast"                "hat"                 
-##  [33] "pants"                "shoe"                
-##  [35] "sock"                 "eye"                 
-##  [37] "head"                 "leg"                 
-##  [39] "nose"                 "tooth"               
-##  [41] "chair"                "couch"               
-##  [43] "kitchen"              "table"               
-##  [45] "television"           "blanket"             
-##  [47] "bottle"               "cup"                 
-##  [49] "dish"                 "lamp"                
-##  [51] "radio"                "spoon"               
-##  [53] "who"                  "away"                
-##  [55] "outside"              "flower"              
-##  [57] "home"                 "moon"                
-##  [59] "outside_001"          "plant"               
-##  [61] "rain"                 "rock"                
-##  [63] "water"                "babysitter"          
-##  [65] "girl"                 "grandma"             
-##  [67] "mommy"                "bath"                
-##  [69] "dont"                 "hi"                  
-##  [71] "nightnight"           "pattycake"           
-##  [73] "please"               "wait"                
-##  [75] "break"                "feed"                
-##  [77] "finish"               "help"                
-##  [79] "jump"                 "kick"                
-##  [81] "kiss"                 "push"                
-##  [83] "sing"                 "smile"               
-##  [85] "night"                "today"               
-##  [87] "allgone"              "big"                 
-##  [89] "broken"               "dark"                
-##  [91] "fast"                 "hurt"                
-##  [93] "pretty"               "soft"                
-##  [95] "I"                    "me"                  
-##  [97] "how"                  "other"               
-##  [99] "some"                 "comments_mcdi_sf"    
-## [101] "mcdi_instructions9"   "mcdi_instructions10" 
-## [103] "cockadoodledoo"       "woofwoof"            
-## [105] "yumyum"               "cat"                 
-## [107] "chicken"              "cow"                 
-## [109] "frog"                 "monkey"              
-## [111] "teddybear"            "tiger"               
-## [113] "train"                "truck"               
-## [115] "drum"                 "egg"                 
-## [117] "icecream"             "necklace"            
-## [119] "arms"                 "hand"                
-## [121] "mouth"                "bathroom"            
-## [123] "bed"                  "sink"                
-## [125] "broom"                "glass"               
-## [127] "keys"                 "money"               
-## [129] "soap"                 "church"              
-## [131] "party"                "sky"                 
-## [133] "street"               "sun"                 
-## [135] "baby"                 "boy"                 
-## [137] "family"               "lady"                
-## [139] "bath_001"             "bye"                 
-## [141] "goodmorning"          "onetwothree"         
-## [143] "shh"                  "yes"                 
-## [145] "eat"                  "fall"                
-## [147] "have"                 "look"                
-## [149] "play"                 "put"                 
-## [151] "say"                  "see"                 
-## [153] "sit"                  "sleep"               
-## [155] "take"                 "want"                
-## [157] "write"                "now"                 
-## [159] "tomorrow"             "hot"                 
-## [161] "new"                  "tired"               
-## [163] "hisher"               "mine"                
-## [165] "them"                 "this"                
-## [167] "a"                    "where"               
-## [169] "here"                 "in"                  
-## [171] "on"                   "there"               
-## [173] "also"                 "many"                
-## [175] "more"                 "none"                
-## [177] "comments_mcdi_sfm"    "mcdi_instructions11" 
-## [179] "mcdi_instructions12"  "baabaa"              
-## [181] "moo"                  "quackquack"          
-## [183] "vroom"                "beepbeep"            
-## [185] "bear"                 "bunny"               
-## [187] "horse"                "airplane"            
-## [189] "bicycle"              "balloon"             
-## [191] "pen"                  "toy"                 
-## [193] "apple"                "banana"              
-## [195] "cake"                 "cheese"              
-## [197] "bib"                  "button"              
-## [199] "diaper"               "dress"               
-## [201] "pajamas"              "shirt"               
-## [203] "bellybutton"          "ears"                
-## [205] "face"                 "foot"                
-## [207] "finger"               "hair"                
-## [209] "tongue"               "bathtub"             
-## [211] "crib"                 "door"                
-## [213] "drawer"               "refrigerator"        
-## [215] "stairs"               "window"              
-## [217] "box"                  "brush"               
-## [219] "clockwatch"           "comb"                
-## [221] "glasses"              "light"               
-## [223] "medicine"             "paper"               
-## [225] "picture"              "pillow"              
-## [227] "purse"                "telephone"           
-## [229] "towel"                "trash"               
-## [231] "store"                "swing"               
-## [233] "tree"                 "daddy"               
-## [235] "man"                  "nap"                 
-## [237] "thankyou"             "bite"                
-## [239] "blow"                 "close"               
-## [241] "cry"                  "dance"               
-## [243] "give"                 "go"                  
-## [245] "hit"                  "open"                
-## [247] "stop"                 "throw"               
-## [249] "touch"                "walk"                
-## [251] "wash"                 "dirty"               
-## [253] "comments_mcdi_lfm"</code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_363</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "participant_id"       "note_mcdi_permission" "mcdi_instructions1"  
+## [4] "mcdi_instructions2"   "mcdi_instructions3"   "mcdi_instructions4"</code></pre>
 <p>And the third one.</p>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_740625</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>                    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>                    show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_740625</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##   [1] "participant_id"                      
-##   [2] "note_vocab_mbcdipermission"          
-##   [3] "vocab_instructions1"                 
-##   [4] "vocab_instructions2"                 
-##   [5] "vocab_instructions3"                 
-##   [6] "vocab_instructions4"                 
-##   [7] "vocab_instructions5"                 
-##   [8] "vocab_instructions6"                 
-##   [9] "vocab_instructions7"                 
-##  [10] "vocab_instructions8"                 
-##  [11] "choo_choo"                           
-##  [12] "meow"                                
-##  [13] "ouch"                                
-##  [14] "uh_oh"                               
-##  [15] "bird"                                
-##  [16] "dog"                                 
-##  [17] "duck"                                
-##  [18] "kitty"                               
-##  [19] "lion"                                
-##  [20] "mouse"                               
-##  [21] "car"                                 
-##  [22] "stroller"                            
-##  [23] "ball"                                
-##  [24] "book"                                
-##  [25] "doll"                                
-##  [26] "bread"                               
-##  [27] "candy"                               
-##  [28] "cereal"                              
-##  [29] "cookie"                              
-##  [30] "juice"                               
-##  [31] "toast"                               
-##  [32] "water"                               
-##  [33] "hat"                                 
-##  [34] "pants"                               
-##  [35] "shoe"                                
-##  [36] "sock"                                
-##  [37] "eye"                                 
-##  [38] "head"                                
-##  [39] "leg"                                 
-##  [40] "nose"                                
-##  [41] "tooth"                               
-##  [42] "chair"                               
-##  [43] "couch"                               
-##  [44] "kitchen"                             
-##  [45] "table"                               
-##  [46] "television"                          
-##  [47] "blanket"                             
-##  [48] "bottle"                              
-##  [49] "cup"                                 
-##  [50] "dish"                                
-##  [51] "lamp"                                
-##  [52] "plant"                               
-##  [53] "radio"                               
-##  [54] "spoon"                               
-##  [55] "flower"                              
-##  [56] "home"                                
-##  [57] "moon"                                
-##  [58] "outside"                             
-##  [59] "rain"                                
-##  [60] "rock"                                
-##  [61] "babysitter"                          
-##  [62] "girl"                                
-##  [63] "grandma"                             
-##  [64] "mommy"                               
-##  [65] "bath"                                
-##  [66] "dont"                                
-##  [67] "hi"                                  
-##  [68] "pattycake"                           
-##  [69] "nightnight"                          
-##  [70] "please"                              
-##  [71] "wait"                                
-##  [72] "break"                               
-##  [73] "feed"                                
-##  [74] "finish"                              
-##  [75] "help"                                
-##  [76] "jump"                                
-##  [77] "kick"                                
-##  [78] "kiss"                                
-##  [79] "push"                                
-##  [80] "sing"                                
-##  [81] "smile"                               
-##  [82] "night"                               
-##  [83] "today"                               
-##  [84] "allgone"                             
-##  [85] "big"                                 
-##  [86] "broken"                              
-##  [87] "dark"                                
-##  [88] "fast"                                
-##  [89] "hurt"                                
-##  [90] "pretty"                              
-##  [91] "soft"                                
-##  [92] "i"                                   
-##  [93] "me"                                  
-##  [94] "how"                                 
-##  [95] "who"                                 
-##  [96] "away"                                
-##  [97] "out"                                 
-##  [98] "other"                               
-##  [99] "some"                                
-## [100] "comments_vocab_english_mbcdi"        
-## [101] "vocab_instructions9"                 
-## [102] "vocab_instructions10"                
-## [103] "cockadoodledoo"                      
-## [104] "woofwoof"                            
-## [105] "yumyum"                              
-## [106] "cat"                                 
-## [107] "chicken"                             
-## [108] "cow"                                 
-## [109] "frog"                                
-## [110] "monkey"                              
-## [111] "teddybear"                           
-## [112] "tiger"                               
-## [113] "train"                               
-## [114] "truck"                               
-## [115] "drum"                                
-## [116] "egg"                                 
-## [117] "icecream"                            
-## [118] "meat"                                
-## [119] "milk"                                
-## [120] "necklace"                            
-## [121] "arms"                                
-## [122] "hand"                                
-## [123] "mouth"                               
-## [124] "bathroom"                            
-## [125] "bed"                                 
-## [126] "sink"                                
-## [127] "broom"                               
-## [128] "glass"                               
-## [129] "keys"                                
-## [130] "money"                               
-## [131] "soap"                                
-## [132] "church"                              
-## [133] "party"                               
-## [134] "sky"                                 
-## [135] "street"                              
-## [136] "sun"                                 
-## [137] "baby"                                
-## [138] "boy"                                 
-## [139] "family"                              
-## [140] "lady"                                
-## [141] "bye"                                 
-## [142] "goodmorning"                         
-## [143] "onetwothree"                         
-## [144] "shh"                                 
-## [145] "yes"                                 
-## [146] "eat"                                 
-## [147] "fall"                                
-## [148] "have"                                
-## [149] "look"                                
-## [150] "play"                                
-## [151] "put"                                 
-## [152] "see"                                 
-## [153] "sit"                                 
-## [154] "sleep"                               
-## [155] "take"                                
-## [156] "want"                                
-## [157] "write"                               
-## [158] "be"                                  
-## [159] "now"                                 
-## [160] "tomorrow"                            
-## [161] "dirty"                               
-## [162] "hot"                                 
-## [163] "new"                                 
-## [164] "tired"                               
-## [165] "hisher"                              
-## [166] "mine"                                
-## [167] "them"                                
-## [168] "this"                                
-## [169] "a"                                   
-## [170] "where"                               
-## [171] "for"                                 
-## [172] "here"                                
-## [173] "in"                                  
-## [174] "on"                                  
-## [175] "there"                               
-## [176] "also"                                
-## [177] "many"                                
-## [178] "more"                                
-## [179] "none"                                
-## [180] "comments_vocab_english_dllesshort"   
-## [181] "vocab_instructions11"                
-## [182] "vocab_instructions12"                
-## [183] "baabaa"                              
-## [184] "quackquack"                          
-## [185] "vroom"                               
-## [186] "vocab_instructions13"                
-## [187] "animal"                              
-## [188] "bear"                                
-## [189] "bunny"                               
-## [190] "elephant"                            
-## [191] "horse"                               
-## [192] "penguin"                             
-## [193] "squirrel"                            
-## [194] "turtle"                              
-## [195] "airplane"                            
-## [196] "bicycle"                             
-## [197] "balloon"                             
-## [198] "firetruck"                           
-## [199] "pen"                                 
-## [200] "toy"                                 
-## [201] "cake"                                
-## [202] "bib"                                 
-## [203] "button"                              
-## [204] "diaper"                              
-## [205] "dress"                               
-## [206] "pajamas"                             
-## [207] "foot"                                
-## [208] "finger"                              
-## [209] "hair"                                
-## [210] "tongue"                              
-## [211] "bathtub"                             
-## [212] "door"                                
-## [213] "refrigerator"                        
-## [214] "stairs"                              
-## [215] "window"                              
-## [216] "box"                                 
-## [217] "boots"                               
-## [218] "brush"                               
-## [219] "clockwatch"                          
-## [220] "comb"                                
-## [221] "glasses"                             
-## [222] "hammer"                              
-## [223] "light"                               
-## [224] "medicine"                            
-## [225] "paper"                               
-## [226] "picture"                             
-## [227] "pillow"                              
-## [228] "purse"                               
-## [229] "telelphone"                          
-## [230] "towel"                               
-## [231] "trash"                               
-## [232] "scissors"                            
-## [233] "store"                               
-## [234] "tree"                                
-## [235] "brother"                             
-## [236] "daddy"                               
-## [237] "grandpa"                             
-## [238] "man"                                 
-## [239] "sister"                              
-## [240] "thankyou"                            
-## [241] "tickle"                              
-## [242] "bite"                                
-## [243] "blow"                                
-## [244] "close"                               
-## [245] "cry"                                 
-## [246] "dance"                               
-## [247] "draw"                                
-## [248] "go"                                  
-## [249] "hit"                                 
-## [250] "hurry"                               
-## [251] "open"                                
-## [252] "say"                                 
-## [253] "throw"                               
-## [254] "touch"                               
-## [255] "walk"                                
-## [256] "wash"                                
-## [257] "comments_vocab_english_dllesextended"</code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">eng_12_740625</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "participant_id"             "note_vocab_mbcdipermission"
+## [3] "vocab_instructions1"        "vocab_instructions2"       
+## [5] "vocab_instructions3"        "vocab_instructions4"</code></pre>
 <p>Now, we’ll create a function to clean the variable names.</p>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">select_basename</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">csv_fn</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/scalar.html">is.string</a></span><span class="op">(</span><span class="va">csv_fn</span><span class="op">)</span></span>
 <span>  <span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assertions-file.html">is.readable</a></span><span class="op">(</span><span class="va">csv_fn</span><span class="op">)</span></span>
@@ -1380,31 +626,27 @@ Let’s look at the second file.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">df</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">select_basename</span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## # A tibble: 111 × 257
-##    participant_id note_vocab_mbcdipermission vocab_instructions1
-##    &lt;chr&gt;          &lt;chr&gt;                      &lt;chr&gt;              
-##  1 e0N0S0S1A      &lt;NA&gt;                       &lt;NA&gt;               
-##  2 e0N6T0S1A      &lt;NA&gt;                       &lt;NA&gt;               
-##  3 a9L2M0A2A      &lt;NA&gt;                       &lt;NA&gt;               
-##  4 o2C0C1C2A      &lt;NA&gt;                       &lt;NA&gt;               
-##  5 o2C0A1C2A      &lt;NA&gt;                       &lt;NA&gt;               
-##  6 a3W4N1F0A      &lt;NA&gt;                       &lt;NA&gt;               
-##  7 l3S3A1L1A      &lt;NA&gt;                       &lt;NA&gt;               
-##  8 o4C9K1M0A      &lt;NA&gt;                       &lt;NA&gt;               
-##  9 o4C3O1H0A      &lt;NA&gt;                       &lt;NA&gt;               
-## 10 a4S2B1P0A      &lt;NA&gt;                       &lt;NA&gt;               
-## # ℹ 101 more rows
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">select_basename</span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 257
+##   participant_id note_vocab_mbcdipermission vocab_instructions1
+##   &lt;chr&gt;          &lt;chr&gt;                      &lt;chr&gt;              
+## 1 e0N0S0S1A      &lt;NA&gt;                       &lt;NA&gt;               
+## 2 e0N6T0S1A      &lt;NA&gt;                       &lt;NA&gt;               
+## 3 a9L2M0A2A      &lt;NA&gt;                       &lt;NA&gt;               
+## 4 o2C0C1C2A      &lt;NA&gt;                       &lt;NA&gt;               
+## 5 o2C0A1C2A      &lt;NA&gt;                       &lt;NA&gt;               
+## 6 a3W4N1F0A      &lt;NA&gt;                       &lt;NA&gt;               
 ## # ℹ 254 more variables: vocab_instructions2 &lt;chr&gt;,
 ## #   vocab_instructions3 &lt;chr&gt;, vocab_instructions4 &lt;chr&gt;,
 ## #   vocab_instructions5 &lt;chr&gt;, vocab_instructions6 &lt;chr&gt;,
 ## #   vocab_instructions7 &lt;chr&gt;, vocab_instructions8 &lt;chr&gt;,
 ## #   choo_choo &lt;chr&gt;, meow &lt;chr&gt;, ouch &lt;chr&gt;, uh_oh &lt;chr&gt;, bird &lt;chr&gt;,
-## #   dog &lt;chr&gt;, duck &lt;chr&gt;, kitty &lt;chr&gt;, lion &lt;chr&gt;, mouse &lt;chr&gt;, …</code></pre>
+## #   dog &lt;chr&gt;, duck &lt;chr&gt;, kitty &lt;chr&gt;, lion &lt;chr&gt;, mouse &lt;chr&gt;,
+## #   car &lt;chr&gt;, stroller &lt;chr&gt;, ball &lt;chr&gt;, book &lt;chr&gt;, doll &lt;chr&gt;, …</code></pre>
 <p>Let’s trim unneeded fields.
 We’ll write several helper functions to do this.</p>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trim_cdi_fields</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"note"</span><span class="op">)</span>,</span>
@@ -1434,7 +676,7 @@ We’ll write several helper functions to do this.</p>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">word</span>, <span class="st">"bath_001"</span>, <span class="st">"bath"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Then we combine them into an omnibus function.</p>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clean_cdi</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">csv_fn</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">select_basename</span><span class="op">(</span><span class="va">csv_fn</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">trim_cdi_fields</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1443,10 +685,23 @@ We’ll write several helper functions to do this.</p>
 <span>    <span class="fu">add_particip_index</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Now, we can run <code>clean_cdi()</code> across all three files.</p>
-<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">eng_12_files</span><span class="op">$</span><span class="va">fn</span>, <span class="va">clean_cdi</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<pre><code>## Warning: Using an external vector in selections was deprecated in tidyselect
+## 1.1.0.
+## ℹ Please use `all_of()` or `any_of()` instead.
+##   # Was:
+##   data %&gt;% select(n_vars)
+## 
+##   # Now:
+##   data %&gt;% select(all_of(n_vars))
+## 
+## See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
+## was generated.</code></pre>
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">understands_or_says</span>, <span class="va">eng_12</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                 understands_or_says
 ## word             says understands
@@ -1704,40 +959,38 @@ We’ll write several helper functions to do this.</p>
 ##   yes               7          53
 ##   yumyum           11          37</code></pre>
 </div>
-<div id="mo-old-english-speakers-1" class="section level2" number="0.5">
-<h2>
-<span class="header-section-number">0.5</span> 18-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-1"><i class="fas fa-link"></i></a>
+<div id="mo-old-english-speakers-1" class="section level2 unnumbered">
+<h2>18-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let’s move on to the 18-mo-old English speakers.</p>
-<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_18_files</span> <span class="op">&lt;-</span> <span class="va">mbcdi_file_dat</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_group</span> <span class="op">==</span> <span class="st">'18'</span>, <span class="va">lang_cond</span> <span class="op">==</span> <span class="st">'english'</span>, <span class="va">n_subs</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 3 files with participant data.</p>
-<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">clean_cdi</span><span class="op">(</span><span class="va">eng_18_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu">clean_cdi</span><span class="op">(</span><span class="va">eng_18_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu">clean_cdi</span><span class="op">(</span><span class="va">eng_18_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>There are some duplicate entries for some words.</p>
-<div class="{callout-note}">
+<div class="rmdnote">
 <p><del>We need a strategy for reconciling these duplicates: <code>candy</code>, <code>leg</code>, <code>rain</code>, <code>wet</code>.</del></p>
 <p>It’s not elegant, but I have one for modifying the duplicate names. See below.</p>
 </div>
 </div>
-<div id="mo-old-english-speakers-2" class="section level2" number="0.6">
-<h2>
-<span class="header-section-number">0.6</span> 24-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-2"><i class="fas fa-link"></i></a>
+<div id="mo-old-english-speakers-2" class="section level2 unnumbered">
+<h2>24-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let’s move on to the 24-mo-old English speakers.</p>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_24_files</span> <span class="op">&lt;-</span> <span class="va">mbcdi_file_dat</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_group</span> <span class="op">==</span> <span class="st">'24'</span>, <span class="va">lang_cond</span> <span class="op">==</span> <span class="st">'english'</span>, <span class="va">n_subs</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 3 files with participant data.</p>
 <p>Let’s see how the <code>clean_cdi()</code> works on one of these.</p>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">clean_cdi</span><span class="op">(</span><span class="va">eng_24_files</span><span class="op">$</span><span class="va">fn</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>Once again, we have duplicates for several items: ‘candy’, ‘leg’, ‘rain’, ‘wet’.</p>
-<p>It’s very hacky, but I think we might want to drop these item names until we figure out a better way to handle the duplicates.</p>
-<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<p>It’s very hacky, but I think we might want to modify these item names until we figure out a better way to handle the duplicates.</p>
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modify_mcdi_dupes</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">dupe</span> <span class="op">=</span> <span class="st">'leg'</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">dup_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">==</span> <span class="va">dupe</span><span class="op">]</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">dup_index</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1787,7 +1040,7 @@ We’ll write several helper functions to do this.</p>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"participant_id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">make_cdi_18_24_longer</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_24</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">eng_24_files</span><span class="op">$</span><span class="va">fn</span>, <span class="va">clean_cdi_18_24_dedupe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">knows</span>, <span class="va">eng_24</span><span class="op">)</span></span></code></pre></div>
@@ -2167,7 +1420,7 @@ We’ll write several helper functions to do this.</p>
 ##   zero              67    7
 ##   zoom              63    1</code></pre>
 <p>Now, we can return to the 18-mo-old data to see if this works:</p>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_18</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">eng_18_files</span><span class="op">$</span><span class="va">fn</span>, <span class="va">clean_cdi_18_24_dedupe</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">knows</span>, <span class="va">eng_18</span><span class="op">)</span></span></code></pre></div>
@@ -2557,11 +1810,11 @@ We’ll write several helper functions to do this.</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#mb-cdi">MB-CDI</a></li>
-<li><a class="nav-link" href="#purpose-2"><span class="header-section-number">0.2</span> Purpose</a></li>
-<li><a class="nav-link" href="#preparation"><span class="header-section-number">0.3</span> Preparation</a></li>
-<li><a class="nav-link" href="#mo-old-english-speakers"><span class="header-section-number">0.4</span> 12-mo-old English speakers</a></li>
-<li><a class="nav-link" href="#mo-old-english-speakers-1"><span class="header-section-number">0.5</span> 18-mo-old English speakers</a></li>
-<li><a class="nav-link" href="#mo-old-english-speakers-2"><span class="header-section-number">0.6</span> 24-mo-old English speakers</a></li>
+<li><a class="nav-link" href="#purpose-2">Purpose</a></li>
+<li><a class="nav-link" href="#preparation">Preparation</a></li>
+<li><a class="nav-link" href="#mo-old-english-speakers">12-mo-old English speakers</a></li>
+<li><a class="nav-link" href="#mo-old-english-speakers-1">18-mo-old English speakers</a></li>
+<li><a class="nav-link" href="#mo-old-english-speakers-2">24-mo-old English speakers</a></li>
 </ul>
 
       <div class="book-extra">
