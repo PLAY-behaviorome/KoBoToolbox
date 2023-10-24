@@ -118,6 +118,7 @@ select_basename(eng_12_files$fn[3])
 ```
 
 Let's trim unneeded fields.
+We'll write several helper functions to do this.
 
 ```{r}
 trim_cdi_fields <- function(df) {
@@ -125,7 +126,8 @@ trim_cdi_fields <- function(df) {
     dplyr::select(-contains("note"),
                   -contains("instructions"),
                   -contains("comments"),
-                  -contains("continue"))
+                  -contains("continue"),
+                  -contains("vocab"))
 }
 
 add_particip_index <- function(df) {
@@ -140,16 +142,15 @@ make_cdi_longer <- function(df) {
                         names_to = "word",
                         values_to = "understands_or_says") |>
     dplyr::filter(!is.na(understands_or_says)) |>
-    # dplyr::mutate(
-    #   understands_or_says = stringr::str_replace(understands_or_says, "understands[_]+", "says")
-    # ) |>
-    # dplyr::mutate(understands_or_says, stringr::str_replace(understands_or_says, "sayssays", "says")) |>
+    dplyr::mutate(understands_or_says = stringr::str_replace(understands_or_says, "understands___", "says")) |>
+    dplyr::mutate(
+      understands_or_says = stringr::str_replace(understands_or_says, "understands_says", "says")) |>
     dplyr::mutate(word = stringr::str_replace(word, "mommy_001", "mommy")) |>
     dplyr::mutate(word = stringr::str_replace(word, "bath_001", "bath"))
 }
 ```
 
-
+Then we combine them into an omnibus function.
 
 ```{r}
 clean_cdi <- function(csv_fn) {
@@ -161,17 +162,80 @@ clean_cdi <- function(csv_fn) {
 }
 ```
 
+Now, we can run `clean_cdi()` across all three files.
+
 ```{r}
-eng_12_1 <- clean_cdi(eng_12_files$fn[1])
-xtabs(~ word + understands_or_says, eng_12_1)
+eng_12 <- purrr::map(eng_12_files$fn, clean_cdi) |>
+  purrr::list_rbind()
 ```
 
 ```{r}
-eng_12_2 <- clean_cdi(eng_12_files$fn[2])
-xtabs(~ word + understands_or_says, eng_12_2)
+xtabs(~ word + understands_or_says, eng_12)
+```
+
+
+
+
+## 18-mo-old English speakers
+
+Let's move on to the 18-mo-old English speakers.
+
+```{r}
+eng_18_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '18', lang_cond == 'english', n_subs > 0)
+```
+
+There are $n=$ `r dim(eng_18_files)[1]` files with participant data.
+
+First we examine the variable names for each of the files.
+
+```{r}
+eng_18_1 <- readr::read_csv(eng_18_files$fn[1],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_18_1)
 ```
 
 ```{r}
-eng_12_3 <- clean_cdi(eng_12_files$fn[3])
-xtabs(~ word + understands_or_says, eng_12_3)
+eng_18_2 <- readr::read_csv(eng_18_files$fn[2],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_18_2)
 ```
+
+```{r}
+eng_18_3 <- readr::read_csv(eng_18_files$fn[3],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_18_3)
+```
+
+Use the `basename()` function to trim the cruft.
+
+```{r}
+names(eng_18_1) |> basename()
+```
+
+```{r}
+names(eng_18_2) |> basename()
+```
+
+```{r}
+names(eng_18_3) |> basename()
+```
+```{r, eval=FALSE}
+clean_cdi(eng_18_files$fn[1])
+clean_cdi(eng_18_files$fn[2])
+clean_cdi(eng_18_files$fn[3])
+```
+
+There are some duplicate entries for some words.
+
+::: {callout-note}
+
+We need a strategy for reconciling these duplicates: `candy`, `leg`, `rain`, `wet`.
+
+:::

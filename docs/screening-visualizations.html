@@ -77,17 +77,17 @@
 <div id="setup-3" class="section level2 unnumbered">
 <h2>Setup<a class="anchor" aria-label="anchor" href="#setup-3"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/targets/">targets</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/">forcats</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 444 Columns: 70
-## ── Column specification ──────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: ","
-## chr  (55): session_name, session_release, participant_ID, participant_gend...
-## dbl  (10): session_id, vol_id, child_age_mos, child_birthage, child_weight...
+## chr  (55): session_name, session_release, participant_ID, participant_gender, participant_race, participan...
+## dbl  (10): session_id, vol_id, child_age_mos, child_birthage, child_weight_pounds, child_weight_ounces, mo...
 ## lgl   (2): pilot_pilot, exclusion2_reason
 ## dttm  (1): submit_date
 ## date  (2): session_date, participant_birthdate
@@ -98,7 +98,7 @@
 <div id="sharing-permission" class="section level2 unnumbered">
 <h2>Sharing permission<a class="anchor" aria-label="anchor" href="#sharing-permission"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">session_release</span> <span class="op">+</span> <span class="va">group_name</span>, <span class="va">screen_df</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                group_name
 ## session_release PLAY_Gold PLAY_Silver
@@ -111,14 +111,14 @@
 <h2>Dates &amp; times<a class="anchor" aria-label="anchor" href="#dates-times"><i class="fas fa-link"></i></a>
 </h2>
 <p>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</p>
-<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>n_calls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div id="calls-across-time" class="section level3 unnumbered">
 <h3>Calls across time<a class="anchor" aria-label="anchor" href="#calls-across-time"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">submit_date</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">n_calls</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -134,7 +134,7 @@ Figure 1: Cumulative screening calls by year and site
 <div id="calls-by-site" class="section level3 unnumbered">
 <h3>Calls by site<a class="anchor" aria-label="anchor" href="#calls-by-site"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">calls_by_site_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -166,7 +166,7 @@ Figure 2: Cumulative screening calls by site
 <h3>Child age<a class="anchor" aria-label="anchor" href="#child-age"><i class="fas fa-link"></i></a>
 </h3>
 <p>Child age in months (<code>child_age_mos</code>) by <code>child_sex</code>.</p>
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_age_mos</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -190,7 +190,7 @@ Figure 3: Histogram of child age at time of recruiting call.
 <h3>To child<a class="anchor" aria-label="anchor" href="#to-child"><i class="fas fa-link"></i></a>
 </h3>
 <p>Language(s) spoken to child by <code>child_sex</code>.</p>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    language_spoken_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_spoken_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span>,</span>
@@ -207,36 +207,25 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div id="at-home" class="section level3 unnumbered">
 <h3>At home<a class="anchor" aria-label="anchor" href="#at-home"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_home
-## child_sex english english_other english_spanish english_spanish_other other
-##    female     181             2              26                     1     1
-##    male       162             2              42                     2     1
-##          language_spoken_home
-## child_sex spanish
-##    female       7
-##    male        10</code></pre>
+## child_sex english english_other english_spanish english_spanish_other other spanish
+##    female     181             2              26                     1     1       7
+##    male       162             2              42                     2     1      10</code></pre>
 </div>
 <div id="to-child-vs.-at-home" class="section level3 unnumbered">
 <h3>To child vs. at home<a class="anchor" aria-label="anchor" href="#to-child-vs.-at-home"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">language_spoken_child</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        language_spoken_home
-## language_spoken_child   english english_other english_spanish
-##   english                   333             1              14
-##   english_other               1             3               0
-##   english_spanish             6             0              50
-##   english_spanish_other       2             0               0
-##   spanish                     1             0               4
-##                        language_spoken_home
-## language_spoken_child   english_spanish_other other spanish
-##   english                                   2     0       3
-##   english_other                             0     0       0
-##   english_spanish                           1     2       5
-##   english_spanish_other                     0     0       0
-##   spanish                                   0     0       9</code></pre>
+## language_spoken_child   english english_other english_spanish english_spanish_other other spanish
+##   english                   333             1              14                     2     0       3
+##   english_other               1             3               0                     0     0       0
+##   english_spanish             6             0              50                     1     2       5
+##   english_spanish_other       2             0               0                     0     0       0
+##   spanish                     1             0               4                     0     0       9</code></pre>
 </div>
 </div>
 <div id="child-health" class="section level2 unnumbered">
@@ -245,7 +234,7 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div id="child-born-on-due-date" class="section level3 unnumbered">
 <h3>Child born on due date<a class="anchor" aria-label="anchor" href="#child-born-on-due-date"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_bornonduedate</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_bornonduedate
@@ -255,7 +244,7 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div class="rmdnote">
 <p>There are <span class="math inline">\(n=\)</span> 7 NAs.</p>
 </div>
-<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_bornonduedate</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -332,7 +321,7 @@ participant_ID
 <div id="child-term" class="section level3 unnumbered">
 <h3>Child term<a class="anchor" aria-label="anchor" href="#child-term"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_bornonduedate</span> <span class="op">+</span> <span class="va">child_onterm</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                    child_onterm
@@ -344,7 +333,7 @@ participant_ID
 <h3>Child weight<a class="anchor" aria-label="anchor" href="#child-weight"><i class="fas fa-link"></i></a>
 </h3>
 <p>Must convert pounds and ounces to decimal pounds.</p>
-<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>                birth_weight_lbs <span class="op">=</span> <span class="va">child_weight_pounds</span> <span class="op">+</span> <span class="va">child_weight_ounces</span><span class="op">/</span><span class="fl">16</span><span class="op">)</span></span>
@@ -362,7 +351,7 @@ participant_ID
 <div id="birth-complications" class="section level3 unnumbered">
 <h3>Birth complications<a class="anchor" aria-label="anchor" href="#birth-complications"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_birth_complications</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_birth_complications
@@ -372,7 +361,7 @@ participant_ID
 <div class="rmdnote">
 <p>There are some first names in the <code>child_birth_complications_specify</code> field, so it is not shown here.</p>
 </div>
-<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_birth_complications_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_birth_complications_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -382,14 +371,14 @@ participant_ID
 <div id="major-illnesses-or-injuries" class="section level3 unnumbered">
 <h3>Major illnesses or injuries<a class="anchor" aria-label="anchor" href="#major-illnesses-or-injuries"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_major_illnesses_injuries</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_major_illnesses_injuries
 ## child_sex  no yes
 ##    female 210   8
 ##    male   206  10</code></pre>
-<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_illnesses_injuries_specify</span><span class="op">)</span>,</span>
 <span>                <span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">child_illnesses_injuries_specify</span>, <span class="st">"OK"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -602,14 +591,14 @@ Pneumonia at 5 months
 <div id="child-vision" class="section level3 unnumbered">
 <h3>Child vision<a class="anchor" aria-label="anchor" href="#child-vision"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_vision_disabilities</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_vision_disabilities
 ## child_sex  no yes
 ##    female 217   1
 ##    male   215   1</code></pre>
-<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_vision_disabilities_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_vision_disabilities_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -656,14 +645,14 @@ lazy eye but corrected
 <div id="child-hearing" class="section level3 unnumbered">
 <h3>Child hearing<a class="anchor" aria-label="anchor" href="#child-hearing"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_hearing_disabilities</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_hearing_disabilities
 ## child_sex  no yes
 ##    female 218   0
 ##    male   215   1</code></pre>
-<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb272"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_hearing_disabilities_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_hearing_disabilities_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -697,7 +686,7 @@ Temporary hearing loss so tubes in his ears, one still remaining
 <div id="child-developmental-delays" class="section level3 unnumbered">
 <h3>Child developmental delays<a class="anchor" aria-label="anchor" href="#child-developmental-delays"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb264"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_developmentaldelays</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          child_developmentaldelays
@@ -707,7 +696,7 @@ Temporary hearing loss so tubes in his ears, one still remaining
 <div class="rmdnote">
 <p>There may be first names in the <code>child_developmentaldelays_specify</code> field, so it is not shown here.</p>
 </div>
-<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_developmentaldelays_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_age_mos</span>, <span class="va">child_sex</span>, <span class="va">child_developmentaldelays_specify</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -724,7 +713,7 @@ visualization.</p>
 <div id="bed-time" class="section level4 unnumbered">
 <h4>Bed time<a class="anchor" aria-label="anchor" href="#bed-time"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">extract_sleep_hr</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">t</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="st">"^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -745,7 +734,7 @@ visualization.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/fig-bed-time-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Some of the bed times are probably not in correct 24 hr time.</p>
-<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">child_sleep_time</span> <span class="op">&lt;</span> <span class="fu">hms</span><span class="fu">::</span><span class="fu"><a href="https://hms.tidyverse.org/reference/hms.html">as_hms</a></span><span class="op">(</span><span class="st">"16:00:00"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">child_sleep_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -891,7 +880,7 @@ UTAUS
 <div id="wake-time" class="section level4 unnumbered">
 <h4>Wake time<a class="anchor" aria-label="anchor" href="#wake-time"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_wake_time <span class="op">=</span> <span class="fu">extract_sleep_hr</span><span class="op">(</span><span class="va">child_wake_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_wake_time</span><span class="op">)</span><span class="op">)</span> </span>
@@ -906,7 +895,7 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/fig-wake-time-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>There are some unusual wake times, too.</p>
-<div class="sourceCode" id="cb270"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">child_wake_time</span> <span class="op">&gt;</span> <span class="fu">hms</span><span class="fu">::</span><span class="fu"><a href="https://hms.tidyverse.org/reference/hms.html">as_hms</a></span><span class="op">(</span><span class="st">"16:00:00"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">child_wake_time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1217,7 +1206,7 @@ UTAUS
 <div id="sleep-duration" class="section level4 unnumbered">
 <h4>Sleep duration<a class="anchor" aria-label="anchor" href="#sleep-duration"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb280"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_sleep_time <span class="op">=</span> <span class="fu">extract_sleep_hr</span><span class="op">(</span><span class="va">child_sleep_time</span><span class="op">)</span>,</span>
 <span>                  child_wake_time <span class="op">=</span> <span class="fu">extract_sleep_hr</span><span class="op">(</span><span class="va">child_wake_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1232,11 +1221,10 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Don't know how to automatically pick scale for object of type &lt;difftime&gt;.
-## Defaulting to continuous.</code></pre>
+<pre><code>## Don't know how to automatically pick scale for object of type &lt;difftime&gt;. Defaulting to continuous.</code></pre>
 <div class="inline-figure"><img src="include/img/fig-sleep-dur-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Again, there are some unusual values.</p>
-<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">child_sleep_secs</span> <span class="op">&lt;</span> <span class="fl">12000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">child_sleep_time</span>, <span class="va">child_wake_time</span>, <span class="va">child_sleep_secs</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1828,7 +1816,7 @@ UTAUS
 <div id="nap-hours" class="section level4 unnumbered">
 <h4>Nap hours<a class="anchor" aria-label="anchor" href="#nap-hours"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_nap_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">child_nap_hours</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sleep_time</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
@@ -1836,7 +1824,7 @@ UTAUS
 ## ℹ In argument: `child_nap_hours = as.numeric(child_nap_hours)`.
 ## Caused by warning:
 ## ! NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_nap_hours</span><span class="op">)</span>,</span>
 <span>                <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1847,7 +1835,7 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/fig-nap-hrs-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>And there are some very long nappers or null values we need to capture.</p>
-<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">child_nap_hours</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">child_nap_hours</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1894,7 +1882,7 @@ UTAUS
 <div id="sleep-location" class="section level4 unnumbered">
 <h4>Sleep location<a class="anchor" aria-label="anchor" href="#sleep-location"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb278"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">child_sleep_location</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -1906,7 +1894,7 @@ UTAUS
 <div id="biological-or-adoptive" class="section level3 unnumbered">
 <h3>Biological or adoptive<a class="anchor" aria-label="anchor" href="#biological-or-adoptive"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">mom_bio</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">screen_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          mom_bio
@@ -1917,7 +1905,7 @@ UTAUS
 <div id="age-at-childbirth" class="section level3 unnumbered">
 <h3>Age at childbirth<a class="anchor" aria-label="anchor" href="#age-at-childbirth"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb281"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_childbirth_age</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1927,7 +1915,7 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/fig-mom-age-childbirth-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Clearly, there are some impossible (erroneous) maternal ages &gt; 100. Here are details:</p>
-<div class="sourceCode" id="cb282"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">old_moms</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">mom_childbirth_age</span> <span class="op">&gt;</span> <span class="fl">55</span><span class="op">)</span></span>
 <span></span>
@@ -1968,7 +1956,7 @@ mom_childbirth_age
 <div id="birth-country" class="section level3 unnumbered">
 <h3>Birth country<a class="anchor" aria-label="anchor" href="#birth-country"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mom_birth_country <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></span><span class="op">(</span></span>
 <span>    <span class="va">mom_birth_country</span>, </span>
@@ -1983,40 +1971,34 @@ mom_childbirth_age
 <pre><code>## mom_birth_country
 ##      Other puertorico         US 
 ##         54          1        374</code></pre>
-<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mom_birth_country_specify <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title</a></span><span class="op">(</span><span class="va">mom_birth_country_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_birth_country_specify</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">mom_birth_country_specify</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">mom_birth_country_specify</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "South Korea"        "Argentina"          "Spain"             
-##  [4] "Zimbabwe"           "Mexico"             "Bolivia"           
-##  [7] "Canada"             "Uk"                 "Refused"           
-## [10] "United Kingdom"     "Australia"          "Venezuela"         
-## [13] "India"              "Kenya"              "England"           
-## [16] "China"              "Ireland"            "Ecuador"           
-## [19] "Costa Rica"         "Italy"              "Colombia"          
-## [22] "Malaysia"           "Phillipines"        "Dominican Republic"
-## [25] "Honduras"           "Colomobia"          "Panama"            
-## [28] "El Salvador"        "Guatemala"</code></pre>
+<pre><code>##  [1] "South Korea"        "Argentina"          "Spain"              "Zimbabwe"           "Mexico"            
+##  [6] "Bolivia"            "Canada"             "Uk"                 "Refused"            "United Kingdom"    
+## [11] "Australia"          "Venezuela"          "India"              "Kenya"              "England"           
+## [16] "China"              "Ireland"            "Ecuador"            "Costa Rica"         "Italy"             
+## [21] "Colombia"           "Malaysia"           "Phillipines"        "Dominican Republic" "Honduras"          
+## [26] "Colomobia"          "Panama"             "El Salvador"        "Guatemala"</code></pre>
 </div>
 <div id="education" class="section level3 unnumbered">
 <h3>Education<a class="anchor" aria-label="anchor" href="#education"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_education</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">mom_education</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">mom_education</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## mom_education
-##        associates    bachelor_s_deg         bachelors           diploma 
-##                13                 3               143                11 
-##         doctorate               ged graduate_nodegree    master_s_degre 
-##                62                 2                13                 2 
-##           masters      professional    professional_d       somecollege 
-##               132                25                 2                19 
+##        associates    bachelor_s_deg         bachelors           diploma         doctorate               ged 
+##                13                 3               143                11                62                 2 
+## graduate_nodegree    master_s_degre           masters      professional    professional_d       somecollege 
+##                13                 2               132                25                 2                19 
 ##     voc_nodiplima 
 ##                 1</code></pre>
 <div class="rmdnote">
@@ -2026,7 +2008,7 @@ mom_childbirth_age
 <div id="employment" class="section level3 unnumbered">
 <h3>Employment<a class="anchor" aria-label="anchor" href="#employment"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_employment</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -2043,7 +2025,7 @@ mom_childbirth_age
 <div id="jobs-number" class="section level3 unnumbered">
 <h3>Jobs number<a class="anchor" aria-label="anchor" href="#jobs-number"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_jobs_number</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -2051,7 +2033,7 @@ mom_childbirth_age
 <pre><code>## mom_jobs_number
 ##   0   1   2   3   4 
 ##   1 293  38   1   1</code></pre>
-<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_jobs_number</span><span class="op">)</span>,</span>
 <span>                <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_employment</span><span class="op">)</span><span class="op">)</span></span>
@@ -2068,7 +2050,7 @@ mom_childbirth_age
 <div id="job-training" class="section level3 unnumbered">
 <h3>Job training<a class="anchor" aria-label="anchor" href="#job-training"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">mom_training</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -2084,20 +2066,18 @@ mom_childbirth_age
 <div id="types" class="section level3 unnumbered">
 <h3>Types<a class="anchor" aria-label="anchor" href="#types"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">childcare_types</span><span class="op">)</span><span class="op">)</span></span>
 <span>                </span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">childcare_types</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## childcare_types
-##                childcare           childcare_cent                    nanny 
-##                       89                        2                        4 
-##           nanny_babysitt               nanny_home     nanny_home childcare 
-##                        1                       18                        5 
-## nanny_home nanny_nothome      nanny_home relative            nanny_nothome 
-##                        2                        2                        7 
-##                     none                 relative       relative childcare 
-##                       69                       35                        8</code></pre>
+##                childcare           childcare_cent                    nanny           nanny_babysitt 
+##                       89                        2                        4                        1 
+##               nanny_home     nanny_home childcare nanny_home nanny_nothome      nanny_home relative 
+##                       18                        5                        2                        2 
+##            nanny_nothome                     none                 relative       relative childcare 
+##                        7                       69                       35                        8</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -2105,17 +2085,15 @@ mom_childbirth_age
 <div id="hours" class="section level3 unnumbered">
 <h3>Hours<a class="anchor" aria-label="anchor" href="#hours"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">childcare_hours</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">childcare_hours</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">childcare_hours</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "1"     "10"    "12"    "15"    "15-20" "16"    "17.5"  "18"    "20"   
-## [10] "24"    "25"    "27"    "3"     "30"    "30-35" "30-40" "32"    "33"   
-## [19] "34"    "35"    "35-40" "36"    "37"    "4"     "40"    "40+"   "40-45"
-## [28] "42"    "42.5"  "43"    "45"    "47"    "5"     "50"    "6"     "8"    
-## [37] "9"</code></pre>
+<pre><code>##  [1] "1"     "10"    "12"    "15"    "15-20" "16"    "17.5"  "18"    "20"    "24"    "25"    "27"    "3"    
+## [14] "30"    "30-35" "30-40" "32"    "33"    "34"    "35"    "35-40" "36"    "37"    "4"     "40"    "40+"  
+## [27] "40-45" "42"    "42.5"  "43"    "45"    "47"    "5"     "50"    "6"     "8"     "9"</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -2123,7 +2101,7 @@ mom_childbirth_age
 <div id="language-1" class="section level3 unnumbered">
 <h3>Language<a class="anchor" aria-label="anchor" href="#language-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">screen_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">childcare_language</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
