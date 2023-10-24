@@ -1511,7 +1511,8 @@ trim_cdi_fields <- function(df) {
                   -contains("instructions"),
                   -contains("comments"),
                   -contains("continue"),
-                  -contains("vocab"))
+                  -contains("vocab"),
+                  -contains("mcdi"))
 }
 
 add_particip_index <- function(df) {
@@ -1558,8 +1559,6 @@ xtabs(~ word + understands_or_says, eng_12)
 ```
 
 
-
-
 ## 18-mo-old English speakers
 
 Let's move on to the 18-mo-old English speakers.
@@ -1571,45 +1570,6 @@ eng_18_files <- mbcdi_file_dat |>
 
 There are $n=$ `r dim(eng_18_files)[1]` files with participant data.
 
-First we examine the variable names for each of the files.
-
-```{r}
-eng_18_1 <- readr::read_csv(eng_18_files$fn[1],
-                    col_types = readr::cols(.default = 'c'),
-                    show_col_types = FALSE)
-
-names(eng_18_1)
-```
-
-```{r}
-eng_18_2 <- readr::read_csv(eng_18_files$fn[2],
-                    col_types = readr::cols(.default = 'c'),
-                    show_col_types = FALSE)
-
-names(eng_18_2)
-```
-
-```{r}
-eng_18_3 <- readr::read_csv(eng_18_files$fn[3],
-                    col_types = readr::cols(.default = 'c'),
-                    show_col_types = FALSE)
-
-names(eng_18_3)
-```
-
-Use the `basename()` function to trim the cruft.
-
-```{r}
-names(eng_18_1) |> basename()
-```
-
-```{r}
-names(eng_18_2) |> basename()
-```
-
-```{r}
-names(eng_18_3) |> basename()
-```
 ```{r, eval=FALSE}
 clean_cdi(eng_18_files$fn[1])
 clean_cdi(eng_18_files$fn[2])
@@ -1620,9 +1580,101 @@ There are some duplicate entries for some words.
 
 ::: {callout-note}
 
-We need a strategy for reconciling these duplicates: `candy`, `leg`, `rain`, `wet`.
+~~We need a strategy for reconciling these duplicates: `candy`, `leg`, `rain`, `wet`.~~
+
+It's not elegant, but I have one for modifying the duplicate names. See below.
 
 :::
+
+
+## 24-mo-old English speakers
+
+Let's move on to the 24-mo-old English speakers.
+
+```{r}
+eng_24_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '24', lang_cond == 'english', n_subs > 0)
+```
+
+There are $n=$ `r dim(eng_24_files)[1]` files with participant data.
+
+Let's see how the `clean_cdi()` works on one of these.
+
+```{r, eval=FALSE}
+clean_cdi(eng_24_files$fn[1])
+```
+
+Once again, we have duplicates for several items: 'candy', 'leg', 'rain', 'wet'.
+
+It's very hacky, but I think we might want to drop these item names until we figure out a better way to handle the duplicates.
+
+```{r}
+modify_mcdi_dupes <- function(df, dupe = 'leg') {
+  dup_index <- seq_along(df)[names(df) == dupe]
+  for (i in 1:length(dup_index)) {
+    this_dup <- dup_index[i]
+    names(df)[this_dup] <- paste0(dupe, "_", i)
+  }
+  df
+}
+
+open_csv <- function(csv_fn) {
+  assertthat::is.string(csv_fn)
+  assertthat::is.readable(csv_fn)
+  
+  df <- readr::read_csv(csv_fn,
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+}
+
+trim_cdi_18_24_fields <- function(df) {
+  df |>
+    dplyr::select(-contains("note"),
+                  -contains("instructions"),
+                  -contains("comments"),
+                  -contains("continue"),
+                  -contains("vocab"),
+                  -contains("mcdi"))
+}
+
+make_cdi_18_24_longer <- function(df) {
+  n_vars <- dim(df)[2]
+  df |>
+    tidyr::pivot_longer(cols = 2:n_vars,
+                        names_to = "word",
+                        values_to = "knows")
+ }
+
+clean_cdi_18_24_dedupe <- function(csv_fn) {
+  df <- open_csv(csv_fn)
+  names(df) <- basename(names(df))
+  
+  df |>
+    modify_mcdi_dupes(dupe = 'leg') |>
+    modify_mcdi_dupes(dupe = 'candy') |>
+    modify_mcdi_dupes(dupe = 'rain') |>
+    modify_mcdi_dupes(dupe = 'wet') |>
+    trim_cdi_18_24_fields() |>
+    dplyr::rename("play_id" = "participant_id") |>
+    make_cdi_18_24_longer()
+}
+```
+
+```{r}
+eng_24 <- purrr::map(eng_24_files$fn, clean_cdi_18_24_dedupe) |>
+  purrr::list_rbind()
+xtabs(~ word + knows, eng_24)
+```
+
+Now, we can return to the 18-mo-old data to see if this works:
+
+```{r}
+eng_18 <- purrr::map(eng_18_files$fn, clean_cdi_18_24_dedupe) |>
+  purrr::list_rbind()
+xtabs(~ word + knows, eng_18)
+```
+
+It does.
 
 <!--chapter:end:15-mb-cdi.Rmd-->
 
