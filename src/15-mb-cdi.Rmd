@@ -1,0 +1,177 @@
+# MB-CDI {-}
+
+## Purpose
+
+This page documents the cleaning and merging procedures related to the MB-CDI data.
+The home visit workflow strips these files into their own set of CSVs under `data/csv/home_visit/mbcdi`.
+
+## Preparation
+
+```{r}
+source(file.path(here::here(), "R", "_OLD", "functions.R"))
+```
+
+
+Let's investigate the number of files, records, and variables per file.
+
+```{r}
+mbcdi_fns <-
+  list.files(file.path(here::here(), "data", "csv", "home_visit", "mbcdi"), "\\.csv$", full.names = TRUE)
+
+length(mbcdi_fns)
+```
+
+```{r make_datafile_summary}
+make_datafile_summary <- function(csv) {
+  assertthat::is.string(csv)
+  assertthat::is.readable(csv)
+  
+  df <-
+    readr::read_csv(csv,
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+  
+  
+  
+  data.frame(fn = csv,
+             age_group = extract_age_group_from_name(csv),
+             lang_cond = form_language(csv),
+             n_subs = dim(df)[1],
+             n_vars = dim(df)[2])
+}
+```
+
+```{r mbcdi-file-rpt}
+mbcdi_file_dat <-
+  purrr::map(mbcdi_fns, make_datafile_summary) |> purrr::list_rbind()
+
+mbcdi_file_dat |>
+  dplyr::arrange(age_group, lang_cond, n_subs) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+## 12-mo-old English speakers
+
+For simplicity, we'll start with the youngest age group, and with the English speakers.
+There are $n=3$ forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.
+Just for fun, let's try to bind them.
+
+```{r}
+eng_12_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '12', lang_cond == 'english', n_subs > 0)
+
+eng_12_331 <- readr::read_csv(eng_12_files$fn[1],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_12_331)
+```
+
+Let's try trimming the metadata labels.
+
+```{r}
+eng_12_331_trim_names <- 
+  names(eng_12_331) |> basename()
+eng_12_331_trim_names
+```
+
+That looks better.
+Let's look at the second file.
+
+```{r}
+eng_12_363 <- readr::read_csv(eng_12_files$fn[2],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_12_363) |> basename()
+```
+
+And the third one.
+
+```{r}
+eng_12_740625 <- readr::read_csv(eng_12_files$fn[3],
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+
+names(eng_12_740625) |> basename()
+```
+
+Now, we'll create a function to clean the variable names.
+
+```{r}
+select_basename <- function(csv_fn) {
+  assertthat::is.string(csv_fn)
+  assertthat::is.readable(csv_fn)
+  
+  df <- readr::read_csv(csv_fn,
+                    col_types = readr::cols(.default = 'c'),
+                    show_col_types = FALSE)
+  
+  names(df) <- basename(names(df))
+  df
+}
+```
+
+```{r}
+select_basename(eng_12_files$fn[3])
+```
+
+Let's trim unneeded fields.
+
+```{r}
+trim_cdi_fields <- function(df) {
+  df |>
+    dplyr::select(-contains("note"),
+                  -contains("instructions"),
+                  -contains("comments"),
+                  -contains("continue"))
+}
+
+add_particip_index <- function(df) {
+  df |> 
+    dplyr::mutate(play_i = 1:dim(df)[1])
+}
+
+make_cdi_longer <- function(df) {
+  n_vars <- dim(df)[2]
+  df |>
+    tidyr::pivot_longer(cols = 2:n_vars,
+                        names_to = "word",
+                        values_to = "understands_or_says") |>
+    dplyr::filter(!is.na(understands_or_says)) |>
+    # dplyr::mutate(
+    #   understands_or_says = stringr::str_replace(understands_or_says, "understands[_]+", "says")
+    # ) |>
+    # dplyr::mutate(understands_or_says, stringr::str_replace(understands_or_says, "sayssays", "says")) |>
+    dplyr::mutate(word = stringr::str_replace(word, "mommy_001", "mommy")) |>
+    dplyr::mutate(word = stringr::str_replace(word, "bath_001", "bath"))
+}
+```
+
+
+
+```{r}
+clean_cdi <- function(csv_fn) {
+  select_basename(csv_fn) |>
+    trim_cdi_fields() |>
+    dplyr::rename("play_id" = "participant_id") |>
+    make_cdi_longer() |>
+    add_particip_index()
+}
+```
+
+```{r}
+eng_12_1 <- clean_cdi(eng_12_files$fn[1])
+xtabs(~ word + understands_or_says, eng_12_1)
+```
+
+```{r}
+eng_12_2 <- clean_cdi(eng_12_files$fn[2])
+xtabs(~ word + understands_or_says, eng_12_2)
+```
+
+```{r}
+eng_12_3 <- clean_cdi(eng_12_files$fn[3])
+xtabs(~ word + understands_or_says, eng_12_3)
+```

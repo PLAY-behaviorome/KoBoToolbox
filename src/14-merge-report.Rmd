@@ -38,6 +38,14 @@ screen_df |>
 Volume 1103 is OHIOS. Volume 1482 is CSUFL. Volume 954 is GEORG.
 The missing values for `vol_id` indicate that there is a bug in the [cleaning code](screening-call.html).
 
+**2023-10-20**
+
+On closer investigation, the screening data do _not_ show an OHIOS session with `participant_ID` == '001'. There are three with '000' and two with '002'.
+
+Similarly, for CSUFL, there is no '003' or '006'. We have home visit data for '006'.
+
+Similarly, for GEORG, there is a '???', but no '001'.
+
 :::
 
 The following rows have incomplete or missing `participant_ID` values:

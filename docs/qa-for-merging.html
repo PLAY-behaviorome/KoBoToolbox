@@ -51,6 +51,7 @@
 <li><a class="" href="screening-call.html">Screening call</a></li>
 <li><a class="" href="home-visit.html">Home visit</a></li>
 <li><a class="active" href="qa-for-merging.html">QA for merging</a></li>
+<li><a class="" href="mb-cdi.html">MB-CDI</a></li>
 <li><a class="" href="post-visit-notes.html">Post-visit notes</a></li>
 <li><a class="" href="data-dictionary.html">Data dictionary</a></li>
 <li class="book-part">Data Visualization</li>
@@ -189,6 +190,10 @@ PLAY_Silver
 <div class="rmdnote">
 <p>Volume 1103 is OHIOS. Volume 1482 is CSUFL. Volume 954 is GEORG.
 The missing values for <code>vol_id</code> indicate that there is a bug in the <a href="screening-call.html">cleaning code</a>.</p>
+<p><strong>2023-10-20</strong></p>
+<p>On closer investigation, the screening data do <em>not</em> show an OHIOS session with <code>participant_ID</code> == ‘001’. There are three with ‘000’ and two with ‘002’.</p>
+<p>Similarly, for CSUFL, there is no ‘003’ or ‘006’. We have home visit data for ‘006’.</p>
+<p>Similarly, for GEORG, there is a ‘???’, but no ‘001’.</p>
 </div>
 <p>The following rows have incomplete or missing <code>participant_ID</code> values:</p>
 <div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
@@ -2969,7 +2974,7 @@ play_id
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="home-visit.html">Home visit</a></div>
-<div class="next"><a href="post-visit-notes.html">Post-visit notes</a></div>
+<div class="next"><a href="mb-cdi.html">MB-CDI</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -2994,7 +2999,7 @@ play_id
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-18.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
