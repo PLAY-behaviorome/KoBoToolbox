@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Language visualizations | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
-<meta name="description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) }        Language exposure df &lt;- home_visit_df %&gt;%  dplyr::mutate(., language_child =...">
+<meta name="description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Language visualizations | PLAY Project: Surveys">
 <meta property="og:type" content="book">
-<meta property="og:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) }        Language exposure df &lt;- home_visit_df %&gt;%  dplyr::mutate(., language_child =...">
+<meta property="og:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Language visualizations | PLAY Project: Surveys">
-<meta name="twitter:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) }        Language exposure df &lt;- home_visit_df %&gt;%  dplyr::mutate(., language_child =...">
+<meta name="twitter:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -73,224 +73,1090 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="language-visualizations" class="section level1 unnumbered">
 <h1>Language visualizations<a class="anchor" aria-label="anchor" href="#language-visualizations"><i class="fas fa-link"></i></a>
 </h1>
-<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">'home_visit_df'</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<!-- ### Demographics {-} -->
-<!-- #### Child age {-} -->
-<!-- Child age in months (`age_group`) by `child_sex`. -->
-<!-- Note: The child's exact age in months is part of the Databrary-related data.  -->
-<!-- That is on the work plan. -->
-<!-- ```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"} -->
-<!-- home_visit_df %>% -->
-<!--   dplyr::filter(.,!is.na(age_group),!is.na(child_sex)) %>% -->
-<!--   ggplot() + -->
-<!--   aes(age_group, fill = child_sex) + -->
-<!--   geom_bar() + -->
-<!--   theme(legend.position = "bottom") + -->
-<!--   theme(legend.title = element_blank()) -->
-<!-- ``` -->
 <div id="language-exposure" class="section level2 unnumbered">
 <h2>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, language_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>language_child <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">language_child</span>, <span class="st">" "</span>, <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
 ##    female     172              32
 ##    male       153              51</code></pre>
-<!-- ### Locomotor milestones {-} -->
-<!-- ```{r make-loco-df} -->
-<!-- play_loco <- home_visit_df %>% -->
-<!--   dplyr::select( -->
-<!--     ., -->
-<!--     age_group, -->
-<!--     child_sex, -->
-<!--     language_child, -->
-<!--     site_id, -->
-<!--     subject_number, -->
-<!--     locomotor_milestones.who_walk.who_walk_onset_mo, -->
-<!--     locomotor_milestones.k_walk.k_walk_onset_mo, -->
-<!--     locomotor_milestones.crawl_onset.crawl_onset_mo -->
-<!--   ) %>% -->
-<!--   dplyr::rename( -->
-<!--     ., -->
-<!--     walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo, -->
-<!--     walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo, -->
-<!--     crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo -->
-<!--   ) %>% -->
-<!--   dplyr::mutate( -->
-<!--     ., -->
-<!--     walk_mos_who = as.numeric(walk_mos_who), -->
-<!--     walk_mos_kea = as.numeric(walk_mos_kea), -->
-<!--     crawl_mos = as.numeric(crawl_mos) -->
-<!--   ) -->
-<!-- ``` -->
-<!-- #### Check for anomalous values {-} -->
-<!-- ```{r} -->
-<!-- crawl_mos_min <- 4 -->
-<!-- walk_mos_min <- 6 -->
-<!-- ``` -->
-<!-- ##### Anomalous crawling onset {-} -->
-<!-- ```{r} -->
-<!-- play_loco %>% -->
-<!--   dplyr::select(., site_id, subject_number, crawl_mos) %>% -->
-<!--   dplyr::filter(., crawl_mos < crawl_mos_min) %>% -->
-<!--   knitr::kable(format = 'html')  -->
-<!-- ``` -->
-<!-- ##### Anomalous walking onset (KEA criteria) {-} -->
-<!-- ```{r} -->
-<!-- play_loco %>% -->
-<!--   dplyr::select(., site_id, subject_number, walk_mos_kea) %>% -->
-<!--   dplyr::filter(., walk_mos_kea < walk_mos_min) %>% -->
-<!--   knitr::kable(format = 'html')  -->
-<!-- ``` -->
-<!-- ##### Anomalous walking onset (WHO criteria) {-} -->
-<!-- ```{r} -->
-<!-- play_loco %>% -->
-<!--   dplyr::select(., site_id, subject_number, walk_mos_who) %>% -->
-<!--   dplyr::filter(., walk_mos_who < walk_mos_min) %>% -->
-<!--   knitr::kable(format = 'html')  -->
-<!-- ``` -->
-<!-- #### Crawl onset {-} -->
-<!-- ```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"} -->
-<!-- play_loco %>% -->
-<!--   dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos)) %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(crawl_mos, fill = child_sex) + -->
-<!--   geom_histogram(bins = 12) + -->
-<!--   theme(legend.position = "bottom") + -->
-<!--   theme(legend.title = element_blank()) -->
-<!-- ``` -->
-<!-- #### Walk onset {-} -->
-<!-- ```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"} -->
-<!-- play_loco %>% -->
-<!--   dplyr::filter(., walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(walk_mos_kea, fill = child_sex) + -->
-<!--   theme(legend.position="bottom") + -->
-<!--   geom_histogram(bins = 10) -->
-<!-- ``` -->
-<!-- ```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"} -->
-<!-- play_loco %>% -->
-<!--   dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who)) %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(walk_mos_who, fill = child_sex) + -->
-<!--   geom_histogram(bins=12) + -->
-<!--   theme(legend.position="bottom") + -->
-<!--   theme(legend.title = element_blank()) -->
-<!-- ``` -->
-<!-- ```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"} -->
-<!-- play_loco %>% -->
-<!--   dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(walk_mos_who, walk_mos_kea, color = child_sex) + -->
-<!--   geom_point() + -->
-<!--   geom_smooth(method = "lm") + -->
-<!--   xlim(8, 18) + -->
-<!--   ylim(8, 18) + -->
-<!--   theme(legend.position = "bottom") + -->
-<!--   theme(aspect.ratio = 1) + -->
-<!--   theme(legend.title = element_blank()) -> walk_p -->
-<!-- ggExtra::ggMarginal( -->
-<!--   walk_p, -->
-<!--   play_loco, -->
-<!--   walk_mos_who, -->
-<!--   walk_mos_kea, -->
-<!--   type = "density", -->
-<!--   margins = "both", -->
-<!--   groupColour = TRUE, -->
-<!--   groupFill = TRUE -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"} -->
-<!-- play_loco %>% -->
-<!--   dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(crawl_mos, walk_mos_kea, color = child_sex) + -->
-<!--   geom_point() + -->
-<!--   geom_smooth(method = "lm") + -->
-<!--   theme(legend.position = "bottom") + -->
-<!--   theme(aspect.ratio = 1) + -->
-<!--   theme(legend.title = element_blank()) -> walk_p -->
-<!-- ggExtra::ggMarginal( -->
-<!--   walk_p, -->
-<!--   play_loco, -->
-<!--   walk_mos_who, -->
-<!--   walk_mos_kea, -->
-<!--   type = "density", -->
-<!--   margins = "both", -->
-<!--   groupColour = TRUE, -->
-<!--   groupFill = TRUE -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ### Health {-} -->
-<!-- #### Feeding {-} -->
-<!-- ```{r make-feeding-df} -->
-<!-- feeding <- home_visit_df %>% -->
-<!--   dplyr::select( -->
-<!--     ., -->
-<!--     age_group, -->
-<!--     child_sex, -->
-<!--     site_id, -->
-<!--     subject_number, -->
-<!--     language_child, -->
-<!--     health.feeding_nutrition.breastfeed, -->
-<!--     health.feeding_nutrition.solidfood_age -->
-<!--   ) %>% -->
-<!--   dplyr::rename(., breastfeed = health.feeding_nutrition.breastfeed, -->
-<!--                 solid_food_mos = health.feeding_nutrition.solidfood_age) %>% -->
-<!--   dplyr::mutate(., solid_food_mos = as.numeric(solid_food_mos)) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- xtabs(formula = ~ child_sex + breastfeed, data = feeding) -->
-<!-- ``` -->
-<!-- ```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"} -->
-<!-- feeding %>% -->
-<!--   ggplot(.) + -->
-<!--   aes(x = solid_food_mos, color = child_sex, fill = child_sex) + -->
-<!--   geom_histogram(bins = 15) + -->
-<!--   theme(legend.title = element_blank()) -->
-<!-- ``` -->
-<!-- Clearly, there are some impossible values here. -->
-<!-- ```{r anomalous-feeding} -->
-<!-- feeding |> -->
-<!--   dplyr::select(site_id, subject_number, solid_food_mos) %>% -->
-<!--   dplyr::filter(., solid_food_mos > 12) %>% -->
-<!--   knitr::kable(format = 'html') -->
-<!-- ``` -->
-<!-- #### Smoking/drinking {-} -->
-<!-- ```{r xtabs-smoking-drinking} -->
-<!-- smoking_drinking <- home_visit_df %>% -->
-<!--   dplyr::select( -->
-<!--     ., -->
-<!--     age_group, -->
-<!--     child_sex, -->
-<!--     language_child, -->
-<!--     health.smoking.pregnant_smoking, -->
-<!--     health.drinking.pregnant_drinking -->
-<!--   ) %>% -->
-<!--   dplyr::rename(., preg_smoking = health.smoking.pregnant_smoking, -->
-<!--                 preg_drinking = health.drinking.pregnant_drinking) -->
-<!-- xtabs(formula = ~ preg_smoking + preg_drinking, smoking_drinking) -->
-<!-- ``` -->
-<!-- #### Sleeping position {-} -->
-<!-- ```{r xtabs-sleeping} -->
-<!-- sleeping_pos <- home_visit_df %>% -->
-<!--   dplyr::select( -->
-<!--     ., -->
-<!--     age_group, -->
-<!--     child_sex, -->
-<!--     language_child, -->
-<!--     health.general_health.child_sleeping_position -->
-<!--   ) %>% -->
-<!--   dplyr::rename(., child_sleeping_position = health.general_health.child_sleeping_position) -->
-<!-- xtabs(formula = ~ child_sleeping_position, data = sleeping_pos) -->
-<!-- ``` -->
+</div>
+<div id="mb-cdi-1" class="section level2 unnumbered">
+<h2>MB-CDI<a class="anchor" aria-label="anchor" href="#mb-cdi-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="mo-old-english-speakers-5" class="section level3 unnumbered">
+<h3>12-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-5"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_12</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_12_combined.csv"</span>,</span>
+<span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 125 participant records.</p>
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_12_long</span> <span class="op">&lt;-</span> <span class="va">eng_12</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
+<span>                        values_to <span class="op">=</span> <span class="st">"understands_or_says"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">understands_or_says</span>, <span class="va">eng_12_long</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 understands_or_says
+## word             understands understands_says
+##   a                        3                0
+##   airplane                16                0
+##   allgone                 55                5
+##   also                     2                0
+##   animal                  10                0
+##   apple                    2                0
+##   arms                    20                0
+##   away                     5                0
+##   baabaa                   8               14
+##   baby                    53                4
+##   babysitter               2                0
+##   ball                    59               12
+##   balloon                 18                6
+##   banana                   2                0
+##   bath_1                  65                2
+##   bath_2                  19                0
+##   bath_3                  45                0
+##   bath_4                   1                0
+##   bear                    16                1
+##   bed                     41                0
+##   bellybutton              2                0
+##   bib                     39                0
+##   bicycle                 11                0
+##   big                     15                1
+##   bird                    20                0
+##   bite                    27                0
+##   blanket                 22                0
+##   blow                    18                0
+##   book                    60               10
+##   boots                    4                0
+##   bottle                  52               21
+##   box                     17                1
+##   boy                     11                0
+##   bread                   10                0
+##   break                    1                0
+##   broken                   2                0
+##   broom                    8                0
+##   brother                 16                3
+##   brush                   23                1
+##   bunny                   22                0
+##   button                   8                1
+##   bye                     60               31
+##   cake                     7                0
+##   candy                    1                0
+##   car                     35                3
+##   cat                     28               12
+##   cereal                   9                1
+##   chair                   18                0
+##   cheese                   1                0
+##   chicken                 13                1
+##   choo_choo                3                2
+##   choochoo                 1                0
+##   church                   7                0
+##   clockwatch              10                0
+##   close                   28                0
+##   cockadoodledoo           3                2
+##   comb                     8                0
+##   cookie                  10                0
+##   couch                   19                0
+##   cow                     15                4
+##   crib                     3                0
+##   cry                     26                0
+##   cup                     38                2
+##   daddy                   26               64
+##   dance                   48                0
+##   dark                     6                0
+##   diaper                  53                2
+##   dirty                   18                0
+##   dish                     1                0
+##   dog                     38               23
+##   doll                    17                0
+##   dont                    39                1
+##   door                    31                2
+##   draw                     6                0
+##   drawer                   2                0
+##   dress                   12                0
+##   drum                    22                0
+##   duck                    18                2
+##   eat                     70                2
+##   egg                     29                1
+##   elephant                17                0
+##   eye                     25                2
+##   face                     1                0
+##   fall                    11                0
+##   family                  11                0
+##   fast                    11                0
+##   feed                    14                0
+##   finger                  24                0
+##   finish                  15                4
+##   firetruck                8                0
+##   flower                  16                0
+##   foot                    37                0
+##   for                      1                0
+##   frog                    12                0
+##   girl                     6                0
+##   give                     1                0
+##   glass                    2                0
+##   glasses                 25                1
+##   go                      28                5
+##   goodmorning             41                0
+##   grandma                 44                8
+##   grandpa                 35               10
+##   hair                    36                0
+##   hammer                   3                0
+##   hand                    37                0
+##   hat                     21                3
+##   have                    10                0
+##   head                    25                0
+##   help                    23                0
+##   here                    20                0
+##   hi                      54               35
+##   hisher                   5                0
+##   hit                     18                0
+##   home                    25                0
+##   horse                   12                0
+##   hot                     32                2
+##   hurry                    1                0
+##   hurt                    15                0
+##   i                        6                1
+##   I                        1                0
+##   icecream                11                0
+##   in                      35                1
+##   juice                    2                0
+##   jump                    18                0
+##   keys                    21                0
+##   kick                    13                0
+##   kiss                    57                1
+##   kitchen                 18                0
+##   kitty                   31                7
+##   lady                     3                0
+##   lamp                     2                0
+##   leg                     13                0
+##   light                   25                3
+##   lion                     9                1
+##   look                    49                1
+##   man                      2                1
+##   many                     4                0
+##   me                       8                0
+##   meat                     6                0
+##   medicine                14                0
+##   meow                    26                6
+##   milk                    51                8
+##   mine                    14                0
+##   mommy_1                 33               61
+##   mommy_2                  0                1
+##   money                    3                0
+##   monkey                  17                0
+##   moo                      1                0
+##   moon                     6                1
+##   more                    43               11
+##   mouse                    3                0
+##   mouth                   34                2
+##   nap                      3                0
+##   necklace                 5                0
+##   new                      1                0
+##   night                   24                2
+##   nightnight              44                5
+##   none                     8                0
+##   nose                    33                1
+##   now                      9                0
+##   on                      25                2
+##   onetwothree             26                0
+##   open                    44                0
+##   other                    3                0
+##   ouch                    30                2
+##   out                     21                0
+##   outside_1               49                0
+##   pajamas                 27                0
+##   pants                   18                1
+##   paper                   10                0
+##   party                    6                0
+##   pattycake               25                0
+##   pen                      9                0
+##   penguin                  9                0
+##   picture                 18                0
+##   pillow                  20                0
+##   plant                    9                0
+##   play                    41                1
+##   please_1                20                1
+##   pretty                   6                0
+##   purse                    5                0
+##   push                    23                0
+##   put                     39                0
+##   quackquack              11                7
+##   rain                     4                0
+##   refrigerator            15                0
+##   rock                     6                1
+##   say                     14                0
+##   scissors                 1                0
+##   see                     29                0
+##   shh                     50                5
+##   shirt                    3                0
+##   shoe                    37                1
+##   sing                    19                0
+##   sink                     6                0
+##   sister                  15                1
+##   sit                     37                0
+##   sky                     14                0
+##   sleep                   47                0
+##   smile                   29                1
+##   soap                    11                0
+##   sock                    31                1
+##   soft                    22                0
+##   some                     3                0
+##   spoon                   35                0
+##   squirrel                12                0
+##   stairs                  34                0
+##   stop                     4                0
+##   store                    6                0
+##   street                   6                0
+##   stroller                30                0
+##   sun                     14                1
+##   swing                    1                0
+##   table                   17                0
+##   take                    20                0
+##   teddybear               21                0
+##   telelphone              28                0
+##   telephone                1                0
+##   television              10                0
+##   thankyou                39                4
+##   them                     1                0
+##   there                   15                1
+##   this                    13                2
+##   throw                   32                0
+##   tickle                  28                2
+##   tiger                    9                2
+##   tired                   38                0
+##   toast                    5                0
+##   today                    2                0
+##   tomorrow                 2                0
+##   tongue                  22                0
+##   tooth                   13                1
+##   touch                   29                0
+##   towel                   17                0
+##   toy                     52                0
+##   train                    7                1
+##   trash                   15                0
+##   tree                    20                2
+##   truck                   27                2
+##   turtle                  12                1
+##   uh_oh                   44               18
+##   uhoh                     7                2
+##   vroom                   11               16
+##   wait                    32                0
+##   walk                    39                0
+##   want                    19                0
+##   wash                    19                0
+##   water                   58                7
+##   where                   33                0
+##   who                     13                0
+##   window                  21                0
+##   woofwoof                31               16
+##   write                    2                0
+##   yes                     53                7
+##   yumyum                  37               11</code></pre>
+</div>
+<div id="mo-old-english-speakers-6" class="section level3 unnumbered">
+<h3>18-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-6"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_18</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_18_combined.csv"</span>,</span>
+<span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 116 participant records.</p>
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_18_long</span> <span class="op">&lt;-</span> <span class="va">eng_18</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
+<span>                        values_to <span class="op">=</span> <span class="st">"says"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">says</span>, <span class="va">eng_18_long</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 says
+## word             FALSE TRUE
+##   after             85    2
+##   airplane          63   24
+##   alexa             62    6
+##   all               70   14
+##   allgone           45   42
+##   animal            69    7
+##   ant               80    8
+##   apple             51   37
+##   applesauce        79    8
+##   arm               68   13
+##   baabaa            27   60
+##   baby              33   55
+##   bad               75    6
+##   ball              14   73
+##   balloon           50   38
+##   banana            12   69
+##   bathroom          73    8
+##   bathtub           66   22
+##   beach             12    0
+##   beans             81    7
+##   bear              61   26
+##   bed               60   27
+##   bedroom           85    2
+##   bee                6    3
+##   beepbeep           2   10
+##   beepbepp           2    1
+##   behind            66    2
+##   bell              76    5
+##   bellybutton       56   32
+##   bench             75    0
+##   beside            87    0
+##   bib               67   21
+##   bicycle           11    1
+##   bicylcle          58   18
+##   big               64   17
+##   bird              56   31
+##   blanket           74   14
+##   blow              78   10
+##   boat              65   22
+##   book              30   57
+##   bottle            49   32
+##   box               72   16
+##   boy               78    3
+##   bread              3    0
+##   break              8    1
+##   broken            76    5
+##   broom             82    5
+##   brother           67    9
+##   brush             67   21
+##   bubbles            7    5
+##   bug               73   15
+##   bunny              6    6
+##   butterfly         67   21
+##   buttocks          77   11
+##   button            71   17
+##   buy               74    7
+##   bye               10   77
+##   cake              77   11
+##   candy_1           84    3
+##   candy_2           12    0
+##   car               42   45
+##   carry             82    5
+##   cat               45   42
+##   cereal            78   10
+##   chair             66   22
+##   chase             87    0
+##   cheek             76   12
+##   cheese             2   10
+##   chicken           11    1
+##   chin              75   12
+##   chocolate         12    0
+##   choochoo          43   38
+##   church            80    1
+##   circle            56   12
+##   clockwatch        74   14
+##   close             72   16
+##   closet            75    1
+##   cloud             82    6
+##   clown             81    0
+##   coat              10    2
+##   cockadoodledoo    67   14
+##   coffee            72   16
+##   coke              86    1
+##   cold              67   20
+##   comb              77   10
+##   cookie            71   17
+##   corn              79    9
+##   couch             70    6
+##   could             86    1
+##   cow               49   32
+##   cracker           57   30
+##   crib              11    1
+##   cry               77   11
+##   cup               47   41
+##   daddy              3   85
+##   dance             76   12
+##   day               83    4
+##   diaper            65   23
+##   dirty             70   11
+##   do                73    8
+##   dog               37   50
+##   doll              80    8
+##   door              50   31
+##   down              48   39
+##   dress             84    4
+##   drink             71   17
+##   drum              74    7
+##   duck              42   45
+##   dump              83    4
+##   ear               48   39
+##   eat               51   37
+##   egg               50   31
+##   eye               35   41
+##   eyes               3    9
+##   face              76   12
+##   facetime          68    0
+##   fall              74    7
+##   fast              82    5
+##   few               68    0
+##   finger            77   11
+##   finish            80    7
+##   firetruck         62   14
+##   fit               87    0
+##   five              58   10
+##   flag              84    3
+##   flower            55   26
+##   foot              62   26
+##   four              57   11
+##   frenchfries       77   11
+##   friend            85    2
+##   frog              64   17
+##   game              86    1
+##   gentle            79    8
+##   girl              83    5
+##   glass             79    2
+##   glasses           67    9
+##   go                43   45
+##   godmother         81    0
+##   gonnagetyou        3    0
+##   good              74   14
+##   google            65    3
+##   grapes            74   14
+##   grass             69    7
+##   hair              58   30
+##   hand              67   20
+##   happy             69   18
+##   hat               41   46
+##   have              12    0
+##   head              64   24
+##   hear              77    4
+##   helicopter        70    6
+##   help              59   29
+##   here              70   11
+##   hi                17   70
+##   him               12    0
+##   his_hers          65    4
+##   hishers           12    0
+##   hit               84    4
+##   home               8    4
+##   horse             74   13
+##   hose              79    2
+##   hot               46   41
+##   house             64   12
+##   how               81    0
+##   hug               59   28
+##   hungry            74   14
+##   i                 78   10
+##   ice               76   12
+##   icecream          77   11
+##   if                86    1
+##   in                 2    1
+##   inside            44   21
+##   inthemorning      79    2
+##   into              66    2
+##   ipad              65    3
+##   juice             69   18
+##   jump              58   23
+##   key                9    3
+##   keys              54   22
+##   kick              80    8
+##   kiss              56   25
+##   kitchen           82    6
+##   knee              72   16
+##   know              75    6
+##   lady              88    0
+##   last              87    0
+##   leg_1             80    7
+##   leg_2             10    2
+##   letsgo            59   22
+##   light             59   22
+##   like              82    5
+##   lion              70   18
+##   listen            87    0
+##   little            12    0
+##   long              12    0
+##   look              67   14
+##   man               86    2
+##   many              67    1
+##   matches           81    0
+##   meat              84    3
+##   medicine          86    2
+##   meow              38   49
+##   milk              43   44
+##   mine              48   33
+##   mommy              7   80
+##   money             84    4
+##   monkey            70   18
+##   moo                0   12
+##   moon              67   21
+##   mop               84    3
+##   more              29   52
+##   motorcycle        11    1
+##   mouth             62   26
+##   much              84    3
+##   mustache          79    2
+##   necklace          84    3
+##   need              82    5
+##   new               79    2
+##   newspaper         69    0
+##   nightnight        40   41
+##   no                18   69
+##   none              67    2
+##   nose               3    9
+##   off               31   37
+##   on                34   34
+##   one               38   30
+##   open              52   36
+##   orange            71   17
+##   ouch              51   36
+##   our               86    1
+##   out               43   38
+##   oven              85    2
+##   pants             61   20
+##   paper             81    7
+##   park              76   12
+##   party             85    2
+##   pattycake         70    6
+##   peas              75   12
+##   pencil            12    0
+##   penguin           70    6
+##   penis             72    4
+##   person            86    1
+##   picture           81    7
+##   pillow            74   14
+##   plant             72    4
+##   plate             75   12
+##   play              60   21
+##   please            41   40
+##   popcorn           82    6
+##   pot               72    9
+##   potato            74    7
+##   potty             72   16
+##   pretend           87    0
+##   pretty            77    4
+##   pumpkin           69   12
+##   purse             87    1
+##   quackquack        35   53
+##   rabbit            64   12
+##   rain_1            76   11
+##   rain_2            68   20
+##   rain_3             7    5
+##   raisin            84    4
+##   rectangle         68    0
+##   rice              58   11
+##   rip               86    1
+##   rock              59   17
+##   room              83    5
+##   run               81    7
+##   school            79    8
+##   scissors          74    2
+##   see               78   10
+##   shake             75   12
+##   shh               36   52
+##   shirt             60   21
+##   shoe              32   55
+##   shopping          86    1
+##   shower            70    6
+##   sing              83    5
+##   siri              66    2
+##   sister            68    8
+##   sit               53   28
+##   six               56   12
+##   skirt             69    0
+##   sky               80    7
+##   skype             68    0
+##   sleep             68   13
+##   snake             72    9
+##   soap              67   14
+##   sock              49   38
+##   sodapop           10    2
+##   soup              10    2
+##   spaghetti         80    8
+##   spoon             56   32
+##   square            60    8
+##   squirrel          70    6
+##   stairs            76   11
+##   star              63   24
+##   stick             76   12
+##   store             85    3
+##   stove             86    2
+##   strawberry        71   17
+##   street            79    2
+##   sun               64   17
+##   sweater           87    1
+##   swing             69   18
+##   table             10    2
+##   taste             84    3
+##   teddybear         75   13
+##   telephone         73   15
+##   thankyou          54   33
+##   that              71   17
+##   the               75    6
+##   them              86    1
+##   then              79    2
+##   there             63    5
+##   thereis           66    3
+##   think             87    0
+##   this              66   21
+##   three             51   17
+##   tickle            65   11
+##   tiger             71   10
+##   tiny              86    1
+##   tired             71   10
+##   to                76    5
+##   tobe              68    1
+##   today             80    1
+##   tongue            77   11
+##   tonight           87    0
+##   tooth             68   20
+##   toothbrush        63   13
+##   touch             71    5
+##   towel             80    7
+##   toy               10    2
+##   trash             66   21
+##   tray              85    2
+##   tree              62   26
+##   triangle          59    9
+##   truck             42   39
+##   tummy             64   24
+##   turnoff           10    2
+##   turnon            59   10
+##   tv                10    2
+##   TV                62    7
+##   two               39   29
+##   uhoh              13   74
+##   under             79    8
+##   up                10   58
+##   us                85    2
+##   vagina            73    3
+##   vroom             35   53
+##   walk              67   21
+##   wash              74   14
+##   water              4    8
+##   wet_1             72   15
+##   wet_2             74   14
+##   what              76   12
+##   where             79    8
+##   who               80    1
+##   win               78    3
+##   window            78   10
+##   wish              87    0
+##   with              67    1
+##   wolf              74    2
+##   woofwoof          26   61
+##   would             86    1
+##   yes               24   57
+##   yogurt            70   18
+##   you               77   11
+##   youtube           65    3
+##   yucky             70   18
+##   yumyum            36   52
+##   zero              68    0
+##   zoom              56    0</code></pre>
+</div>
+<div id="mo-old-english-speakers-7" class="section level3 unnumbered">
+<h3>24-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-7"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_24</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>,</span>
+<span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>There are <span class="math inline">\(n=\)</span> 100 participant records.</p>
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eng_24_long</span> <span class="op">&lt;-</span> <span class="va">eng_24</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
+<span>                        values_to <span class="op">=</span> <span class="st">"says"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">word</span> <span class="op">+</span> <span class="va">says</span>, <span class="va">eng_24_long</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 says
+## word             FALSE TRUE
+##   after             57   18
+##   airplane          19   56
+##   alexa             60   14
+##   all               31   42
+##   allgone            7   68
+##   animal            22   43
+##   ant               32   43
+##   apple             11   64
+##   applesauce        40   35
+##   arm               19   56
+##   baabaa            14   61
+##   baby               8   67
+##   bad               43   32
+##   ball               1   74
+##   balloon           15   60
+##   banana             7   68
+##   bathroom          33   42
+##   bathtub           22   53
+##   beach              7    3
+##   beans             41   34
+##   bear              20   55
+##   bed               17   58
+##   bedroom           48   27
+##   bee                5    3
+##   beepbeep           2    8
+##   beepbepp           2    0
+##   behind            56   18
+##   bell              47   28
+##   bellybutton       22   53
+##   bench             51   14
+##   beside            69    6
+##   bib               39   36
+##   bicycle            7    3
+##   bicylcle          26   39
+##   big               20   55
+##   bird              14   61
+##   blanket           18   57
+##   blow              36   39
+##   boat              23   52
+##   book               5   70
+##   bottle            28   47
+##   box               22   53
+##   boy               39   36
+##   bread              1    1
+##   break              5    3
+##   broken            27   48
+##   broom             42   33
+##   brother           36   29
+##   brush             19   56
+##   bubbles            2    8
+##   bug               24   51
+##   bunny              3    7
+##   butterfly         16   59
+##   buttocks          18   57
+##   button            33   42
+##   buy               52   23
+##   bye                2   73
+##   cake              27   48
+##   candy_1           53   22
+##   candy_2           10    0
+##   car                7   68
+##   carry             39   36
+##   cat                8   67
+##   cereal            37   38
+##   chair             18   57
+##   chase             49   26
+##   cheek             27   48
+##   cheese             3    7
+##   chicken            3    7
+##   chin              33   42
+##   chocolate          8    2
+##   choochoo          12   63
+##   church            59   16
+##   circle            27   47
+##   clockwatch        36   39
+##   close             31   44
+##   closet            41   24
+##   cloud             35   40
+##   clown             65   10
+##   coat               3    7
+##   cockadoodledoo    33   42
+##   coffee            35   40
+##   coke              73    2
+##   cold              19   56
+##   comb              47   28
+##   cookie            16   59
+##   corn              27   48
+##   couch             19   46
+##   could             70    5
+##   cow                9   66
+##   cracker           17   58
+##   crib               7    3
+##   cry               31   44
+##   cup               13   62
+##   daddy              3   72
+##   dance             22   53
+##   day               44   31
+##   diaper            16   59
+##   dirty             19   56
+##   do                29   46
+##   dog                5   70
+##   doll              36   39
+##   door              14   61
+##   down               7   68
+##   dress             43   32
+##   drink             28   47
+##   drum              33   42
+##   duck               8   67
+##   dump              46   29
+##   ear               11   64
+##   eat               13   62
+##   egg               17   58
+##   eye                6   59
+##   eyes               2    8
+##   face              26   49
+##   facetime          66    8
+##   fall              29   46
+##   fast              25   50
+##   few               67    7
+##   finger            22   53
+##   finish            41   34
+##   firetruck         28   37
+##   fit               55   20
+##   five              24   50
+##   flag              56   19
+##   flower            18   57
+##   foot              12   63
+##   four              22   52
+##   frenchfries       33   42
+##   friend            32   43
+##   frog              17   58
+##   game              56   19
+##   gentle            34   41
+##   girl              42   33
+##   glass             59   16
+##   glasses           22   43
+##   go                 6   69
+##   godmother         73    2
+##   gonnagetyou        1    1
+##   good              30   45
+##   google            68    6
+##   grapes            22   53
+##   grass             27   38
+##   hair              12   63
+##   hand              15   60
+##   happy             26   49
+##   hat                8   67
+##   have               2    8
+##   head              13   62
+##   hear              37   38
+##   helicopter        38   27
+##   help              11   64
+##   here              26   49
+##   hi                 2   73
+##   him               10    0
+##   his_hers          39   26
+##   hishers            9    1
+##   hit               34   41
+##   home               3    7
+##   horse             21   54
+##   hose              54   21
+##   hot                8   67
+##   house             14   51
+##   how               55   20
+##   hug               16   59
+##   hungry            34   41
+##   i                 34   41
+##   ice               33   42
+##   icecream          28   47
+##   if                70    5
+##   in                 1    1
+##   inside            20   52
+##   inthemorning      66    9
+##   into              68    6
+##   ipad              61   13
+##   juice             26   49
+##   jump              13   62
+##   key                6    4
+##   keys              14   51
+##   kick              35   40
+##   kiss              15   60
+##   kitchen           33   42
+##   knee              22   53
+##   know              55   20
+##   lady              66    9
+##   last              65   10
+##   leg_1             20   55
+##   leg_2              2    8
+##   letsgo            23   52
+##   light             12   63
+##   like              35   40
+##   lion              23   52
+##   listen            53   22
+##   little             7    3
+##   long               8    2
+##   look              26   49
+##   man               63   12
+##   many              59   15
+##   matches           75    0
+##   meat              55   20
+##   medicine          42   33
+##   meow               8   67
+##   milk              11   64
+##   mine              11   64
+##   mommy              2   73
+##   money             58   17
+##   monkey            15   60
+##   moo                2    8
+##   moon              20   55
+##   mop               60   15
+##   more               2   73
+##   motorcycle         4    6
+##   mouth             16   59
+##   much              60   15
+##   mustache          71    4
+##   necklace          42   33
+##   need              45   30
+##   new               46   29
+##   newspaper         64    1
+##   nightnight        10   65
+##   no                 3   72
+##   none              45   20
+##   nose               2    8
+##   off                8   66
+##   on                11   63
+##   one               11   63
+##   open              14   61
+##   orange            22   53
+##   ouch              18   57
+##   our               59   16
+##   out               10   65
+##   oven              54   21
+##   pants             15   60
+##   paper             25   50
+##   park              27   48
+##   party             48   27
+##   pattycake         44   21
+##   peas              38   37
+##   pencil             9    1
+##   penguin           29   36
+##   penis             47   18
+##   person            56   19
+##   picture           30   45
+##   pillow            28   47
+##   plant             34   31
+##   plate             21   54
+##   play              16   59
+##   please             7   68
+##   popcorn           54   21
+##   pot               47   28
+##   potato            36   39
+##   potty             18   57
+##   pretend           62   13
+##   pretty            37   38
+##   pumpkin           35   40
+##   purse             50   25
+##   quackquack         8   67
+##   rabbit            28   37
+##   rain_1            20   55
+##   rain_2            15   60
+##   rain_3             3    7
+##   raisin            56   19
+##   rectangle         56   18
+##   rice              31   34
+##   rip               65   10
+##   rock              14   51
+##   room              29   46
+##   run               22   53
+##   school            31   44
+##   scissors          39   26
+##   see               20   55
+##   shake             32   43
+##   shh               12   63
+##   shirt             14   61
+##   shoe               5   70
+##   shopping          53   22
+##   shower            31   34
+##   sing              38   37
+##   siri              73    1
+##   sister            44   21
+##   sit               11   64
+##   six               29   45
+##   skirt             57    8
+##   sky               29   46
+##   skype             74    0
+##   sleep             14   61
+##   snake             35   40
+##   soap              14   61
+##   sock               8   67
+##   sodapop           10    0
+##   soup               7    3
+##   spaghetti         50   25
+##   spoon             13   62
+##   square            37   37
+##   squirrel          32   33
+##   stairs            14   61
+##   star              19   56
+##   stick             32   43
+##   store             39   36
+##   stove             57   18
+##   strawberry        16   59
+##   street            47   28
+##   sun               16   59
+##   sweater           59   16
+##   swing             15   60
+##   table              2    8
+##   taste             50   25
+##   teddybear         41   34
+##   telephone         25   50
+##   thankyou          12   63
+##   that              30   45
+##   the               40   35
+##   them              60   15
+##   then              67    8
+##   there             27   47
+##   thereis           49   16
+##   think             53   22
+##   this              21   54
+##   three             17   57
+##   tickle            27   38
+##   tiger             34   41
+##   tiny              49   26
+##   tired             28   47
+##   to                36   39
+##   tobe              61    4
+##   today             56   19
+##   tongue            36   39
+##   tonight           65   10
+##   tooth             29   46
+##   toothbrush        15   50
+##   touch             30   35
+##   towel             21   54
+##   toy                3    7
+##   trash             18   57
+##   tray              67    8
+##   tree              13   62
+##   triangle          42   32
+##   truck              8   67
+##   tummy             14   61
+##   turnoff            7    3
+##   turnon            23   42
+##   tv                 4    6
+##   TV                26   39
+##   two               10   64
+##   uhoh               3   72
+##   under             38   37
+##   up                 4   70
+##   us                62   13
+##   vagina            46   19
+##   vroom              8   67
+##   walk              14   61
+##   wash              25   50
+##   water              0   10
+##   wet_1             16   59
+##   wet_2             19   56
+##   what              34   41
+##   where             27   48
+##   who               46   29
+##   win               68    7
+##   window            35   40
+##   wish              73    2
+##   with              48   26
+##   wolf              47   18
+##   woofwoof          13   62
+##   would             71    4
+##   yes                5   70
+##   yogurt            21   54
+##   you               30   45
+##   youtube           70    4
+##   yucky             21   54
+##   yumyum            10   65
+##   zero              67    7
+##   zoom              63    1</code></pre>
 
+</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -301,6 +1167,13 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#language-visualizations">Language visualizations</a></li>
 <li><a class="nav-link" href="#language-exposure">Language exposure</a></li>
+<li>
+<a class="nav-link" href="#mb-cdi-1">MB-CDI</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mo-old-english-speakers-5">12-mo-old English speakers</a></li>
+<li><a class="nav-link" href="#mo-old-english-speakers-6">18-mo-old English speakers</a></li>
+<li><a class="nav-link" href="#mo-old-english-speakers-7">24-mo-old English speakers</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
@@ -318,7 +1191,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-24.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

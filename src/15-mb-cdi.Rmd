@@ -5,12 +5,15 @@
 This page documents the cleaning and merging procedures related to the MB-CDI data.
 The home visit workflow strips these files into their own set of CSVs under `data/csv/home_visit/mbcdi`.
 
+The aggregate (across language group and age) data files are saved under `data/csv/agg`.
+
 ## Preparation {-}
 
 ```{r}
 source(file.path(here::here(), "R", "_OLD", "functions.R"))
-```
 
+purrr::walk(list.files(file.path(here::here(), "R"), "\\.R$", full.names = TRUE), source)
+```
 
 Let's investigate the number of files, records, and variables per file.
 
@@ -53,17 +56,86 @@ mbcdi_file_dat |>
 
 ## 12-mo-old English speakers {-}
 
+```{r}
+eng_12_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '12', lang_cond == 'english', n_subs > 0)
+```
+
+```{r}
+eng_12_combined_df <- purrr::map(eng_12_files$fn, mcdi_clean_12_csv) |>
+  purrr::list_rbind()
+```
+
+```{r}
+eng_12_fn <- file.path(here::here(), "data", "csv", "home_visit", "agg", "mcdi_english_12_combined.csv")
+readr::write_csv(eng_12_combined_df, eng_12_fn)
+```
+
+There are $n=$ `r dim(eng_12_combined_df)[1]` participant records.
+
+## 18-mo-old English speakers {-}
+
+::: {.rmdnote}
+
+This code should be wrapped in functions since many of the components duplicate one another.
+
+:::
+
+```{r}
+eng_18_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '18', lang_cond == 'english', n_subs > 0)
+```
+
+```{r}
+eng_18_combined_df <- purrr::map(eng_18_files$fn, mcdi_clean_18_24_csv) |>
+  purrr::list_rbind()
+```
+
+```{r}
+eng_18_fn <- file.path(here::here(), "data", "csv", "home_visit", "agg", "mcdi_english_18_combined.csv")
+readr::write_csv(eng_18_combined_df, eng_18_fn)
+```
+
+There are $n=$ `r dim(eng_18_combined_df)[1]` participant records.
+
+## 24-mo-old English speakers {-}
+
+```{r}
+eng_24_files <- mbcdi_file_dat |>
+  dplyr::filter(age_group == '24', lang_cond == 'english', n_subs > 0)
+```
+
+```{r}
+eng_24_combined_df <- purrr::map(eng_24_files$fn, mcdi_clean_18_24_csv) |>
+  purrr::list_rbind()
+```
+
+```{r}
+eng_24_fn <- file.path(here::here(), "data", "csv", "home_visit", "agg", "mcdi_english_24_combined.csv")
+readr::write_csv(eng_24_combined_df, eng_24_fn)
+```
+
+There are $n=$ `r dim(eng_18_combined_df)[1]` participant records.
+
+## Old code {-}
+
+::: {.rmdnote}
+
+The following code is deprecated as of 2023-10-25, and is _not_ run.
+
+:::
+
 For simplicity, we'll start with the youngest age group, and with the English speakers.
 There are $n=3$ forms, with 4, 10, and 111 participants each, and 254, 253, and 257 variables.
 
-```{r}
+```{r, eval=FALSE}
 eng_12_files <- mbcdi_file_dat |>
   dplyr::filter(age_group == '12', lang_cond == 'english', n_subs > 0)
 ```
 
 We'll examine the first one.
 
-```{r}
+```{r, eval=FALSE}
 eng_12_331 <- readr::read_csv(eng_12_files$fn[1],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
@@ -73,7 +145,7 @@ names(eng_12_331) |> head()
 
 Let's try trimming the metadata labels.
 
-```{r}
+```{r, eval=FALSE}
 eng_12_331_trim_names <- 
   names(eng_12_331) |> basename()
 
@@ -83,7 +155,7 @@ eng_12_331_trim_names |> head()
 That looks better.
 Let's look at the second file.
 
-```{r}
+```{r, eval=FALSE}
 eng_12_363 <- readr::read_csv(eng_12_files$fn[2],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
@@ -93,7 +165,7 @@ names(eng_12_363) |> basename() |> head()
 
 And the third one.
 
-```{r}
+```{r, eval=FALSE}
 eng_12_740625 <- readr::read_csv(eng_12_files$fn[3],
                     col_types = readr::cols(.default = 'c'),
                     show_col_types = FALSE)
@@ -103,7 +175,7 @@ names(eng_12_740625) |> basename() |> head()
 
 Now, we'll create a function to clean the variable names.
 
-```{r}
+```{r, eval=FALSE}
 select_basename <- function(csv_fn) {
   assertthat::is.string(csv_fn)
   assertthat::is.readable(csv_fn)
@@ -117,14 +189,14 @@ select_basename <- function(csv_fn) {
 }
 ```
 
-```{r}
+```{r, eval=FALSE}
 select_basename(eng_12_files$fn[3]) |> head()
 ```
 
 Let's trim unneeded fields.
 We'll write several helper functions to do this.
 
-```{r}
+```{r, eval=FALSE}
 trim_cdi_fields <- function(df) {
   df |>
     dplyr::select(-contains("note"),
@@ -157,7 +229,7 @@ make_cdi_longer <- function(df) {
 
 Then we combine them into an omnibus function.
 
-```{r}
+```{r, eval=FALSE}
 clean_cdi <- function(csv_fn) {
   select_basename(csv_fn) |>
     trim_cdi_fields() |>
@@ -169,12 +241,12 @@ clean_cdi <- function(csv_fn) {
 
 Now, we can run `clean_cdi()` across all three files.
 
-```{r}
+```{r, eval=FALSE}
 eng_12 <- purrr::map(eng_12_files$fn, clean_cdi) |>
   purrr::list_rbind()
 ```
 
-```{r}
+```{r, eval=FALSE}
 xtabs(~ word + understands_or_says, eng_12)
 ```
 
@@ -182,7 +254,7 @@ xtabs(~ word + understands_or_says, eng_12)
 
 Let's move on to the 18-mo-old English speakers.
 
-```{r}
+```{r, eval=FALSE}
 eng_18_files <- mbcdi_file_dat |>
   dplyr::filter(age_group == '18', lang_cond == 'english', n_subs > 0)
 ```
@@ -209,7 +281,7 @@ It's not elegant, but I have one for modifying the duplicate names. See below.
 
 Let's move on to the 24-mo-old English speakers.
 
-```{r}
+```{r, eval=FALSE}
 eng_24_files <- mbcdi_file_dat |>
   dplyr::filter(age_group == '24', lang_cond == 'english', n_subs > 0)
 ```
@@ -226,7 +298,7 @@ Once again, we have duplicates for several items: 'candy', 'leg', 'rain', 'wet'.
 
 It's very hacky, but I think we might want to modify these item names until we figure out a better way to handle the duplicates.
 
-```{r}
+```{r, eval=FALSE}
 modify_mcdi_dupes <- function(df, dupe = 'leg') {
   dup_index <- seq_along(df)[names(df) == dupe]
   for (i in 1:length(dup_index)) {
@@ -278,7 +350,7 @@ clean_cdi_18_24_dedupe <- function(csv_fn) {
 }
 ```
 
-```{r}
+```{r, eval=FALSE}
 eng_24 <- purrr::map(eng_24_files$fn, clean_cdi_18_24_dedupe) |>
   purrr::list_rbind()
 xtabs(~ word + knows, eng_24)
@@ -286,7 +358,7 @@ xtabs(~ word + knows, eng_24)
 
 Now, we can return to the 18-mo-old data to see if this works:
 
-```{r}
+```{r, eval=FALSE}
 eng_18 <- purrr::map(eng_18_files$fn, clean_cdi_18_24_dedupe) |>
   purrr::list_rbind()
 xtabs(~ word + knows, eng_18)

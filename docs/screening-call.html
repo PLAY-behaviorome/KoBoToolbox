@@ -232,41 +232,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 236 columns.</code></pre>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks, child_sex,
-## day, day2, day1, play_id, language_spoken_mom,
-## `language_spoken_mom/english`, `language_spoken_mom/spanish`,
-## `language_spoken_mom/other`, language_spoken_mom_other,
-## language_spoken_child, `language_spoken_child/english`,
-## `language_spoken_child/spanish`, `language_spoken_child/other`,
-## language_spoken_child_other, language_spoken_house,
-## `language_spoken_house/english`, `language_spoken_house/spanish`,
-## `language_spoken_house/other`, language_spoken_house_other,
-## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`, `child_information/child_duedate`,
-## `child_information/child_birthage`,
-## `child_information/child_weight_pounds`,
-## `child_information/child_weight_ounces`,
-## `child_information/child_birth_complications`,
-## `child_information/specify_birth_complications`,
-## `child_information/hearing_disabilities`,
-## `child_information/specify_hearing`,
-## `child_information/vision_disabilities`,
-## `child_information/specify_vision`,
-## `child_information/major_illnesses_injuries`,
-## `child_information/specify_illnesses_injuries`,
-## `child_information/other_developmentaldelays`,
-## `child_information/specify_developmentaldelays`,
-## `child_information/child_race`, `child_information/child_sleep_time`,
-## `child_information/child_wake_time`,
-## `child_information/child_nap_hours`,
-## `child_information/child_sleep_location`,
-## `child_information/specify_child_sleep_location`,
-## `child_information/indicate_child`,
-## `child_information/indicate_child_2`,
-## `group_family_structure/only_child`,
-## `group_family_structure/specify_onlychild`,
-## `group_family_structure/household_members`,
+<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id, subject_number, state,
+## check_childage, check_childage_weeks, child_sex, day, day2, day1, play_id, language_spoken_mom,
+## `language_spoken_mom/english`, `language_spoken_mom/spanish`, `language_spoken_mom/other`,
+## language_spoken_mom_other, language_spoken_child, `language_spoken_child/english`,
+## `language_spoken_child/spanish`, `language_spoken_child/other`, language_spoken_child_other,
+## language_spoken_house, `language_spoken_house/english`, `language_spoken_house/spanish`,
+## `language_spoken_house/other`, language_spoken_house_other, `child_information/child_bornonduedate`,
+## `child_information/child_onterm`, `child_information/child_duedate`, `child_information/child_birthage`,
+## `child_information/child_weight_pounds`, `child_information/child_weight_ounces`,
+## `child_information/child_birth_complications`, `child_information/specify_birth_complications`,
+## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
+## `child_information/vision_disabilities`, `child_information/specify_vision`,
+## `child_information/major_illnesses_injuries`, `child_information/specify_illnesses_injuries`,
+## `child_information/other_developmentaldelays`, `child_information/specify_developmentaldelays`,
+## `child_information/child_race`, `child_information/child_sleep_time`, `child_information/child_wake_time`,
+## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
+## `child_information/specify_child_sleep_location`, `child_information/indicate_child`,
+## `child_information/indicate_child_2`, `group_family_structure/only_child`,
+## `group_family_structure/specify_onlychild`, `group_family_structure/household_members`,
 ## `group_family_structure/household_members/father_biological`,
 ## `group_family_structure/household_members/male_partner`,
 ## `group_family_structure/household_members/mother_biological`,
@@ -278,77 +262,47 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/household_members/grandfather`,
 ## `group_family_structure/household_members/great_grandmother`,
 ## `group_family_structure/household_members/great_grandfather`,
-## `group_family_structure/household_members/aunt`,
-## `group_family_structure/household_members/uncle`,
-## `group_family_structure/household_members/cousin`,
-## `group_family_structure/household_members/relative`,
-## `group_family_structure/household_members/non_relative`,
-## `group_family_structure/household_members/none`,
-## `group_family_structure/other_relatives`,
-## `group_family_structure/other_non_relatives`,
-## `group_family_structure/indicate_familystructure`,
-## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
-## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
-## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`,
-## `group_mominfo/mom_birth_country`,
-## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
-## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
-## `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
-## `group_biodad/biodad_childbirth_age`,
-## `group_biodad/check_biodad_childbirth_age`, `group_biodad/biodad_race`,
-## `group_biodad/indicate_biodad`, `group_biomom/biomom_childbirth_age`,
-## `group_biomom/check_biomom_childbirth_age`, `group_biomom/biomom_race`,
-## `group_biomom/indicate_biomom`,
-## `group_nonbiopartner/nonbiopartner_race`,
-## `group_nonbiopartner/indicate_nonbiopartner`,
-## `group_genpartner_info/partner_education`,
-## `group_genpartner_info/partner_employment`,
-## `group_genpartner_info/partner_occupation`,
-## `group_genpartner_info/partner_jobs_number`,
-## `group_genpartner_info/partner_program`,
-## `group_genpartner_info/indicate_genpartner`,
+## `group_family_structure/household_members/aunt`, `group_family_structure/household_members/uncle`,
+## `group_family_structure/household_members/cousin`, `group_family_structure/household_members/relative`,
+## `group_family_structure/household_members/non_relative`, `group_family_structure/household_members/none`,
+## `group_family_structure/other_relatives`, `group_family_structure/other_non_relatives`,
+## `group_family_structure/indicate_familystructure`, `group_mominfo/mom_biological`,
+## `group_mominfo/mom_relation`, `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
+## `group_mominfo/specify_mom_birth_country`, `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`, `group_mominfo/mom_training`,
+## `group_mominfo/mom_condition`, `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
+## `group_biodad/biodad_childbirth_age`, `group_biodad/check_biodad_childbirth_age`,
+## `group_biodad/biodad_race`, `group_biodad/indicate_biodad`, `group_biomom/biomom_childbirth_age`,
+## `group_biomom/check_biomom_childbirth_age`, `group_biomom/biomom_race`, `group_biomom/indicate_biomom`,
+## `group_nonbiopartner/nonbiopartner_race`, `group_nonbiopartner/indicate_nonbiopartner`,
+## `group_genpartner_info/partner_education`, `group_genpartner_info/partner_employment`,
+## `group_genpartner_info/partner_occupation`, `group_genpartner_info/partner_jobs_number`,
+## `group_genpartner_info/partner_program`, `group_genpartner_info/indicate_genpartner`,
 ## `group_child_care_arrangements/childcare_types`,
 ## `group_child_care_arrangements/childcare_types/nanny_home`,
 ## `group_child_care_arrangements/childcare_types/nanny_nothome`,
 ## `group_child_care_arrangements/childcare_types/relative`,
 ## `group_child_care_arrangements/childcare_types/childcare`,
-## `group_child_care_arrangements/childcare_types/none`,
-## `group_child_care_arrangements/childcare_location`,
-## `group_child_care_arrangements/childcare_hours`,
-## `group_child_care_arrangements/childcare_number`,
-## `group_child_care_arrangements/childcare_age`,
-## `group_child_care_arrangements/childcare_language`,
-## `group_inclusioncheck/inclusionreason`,
-## `group_inclusioncheck/indicate_inclusion`, indicate_demoquestionnaire,
-## indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks, child_sex,
-## day, day2, day1, language_spoken_child,
-## `language_spoken_child/english`, `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other,
-## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`, `child_information/child_duedate`,
-## `child_information/child_birthage`,
-## `child_information/child_weight_pounds`,
-## `child_information/child_weight_ounces`,
-## `child_information/child_birth_complications`,
-## `child_information/specify_birth_complications`,
-## `child_information/hearing_disabilities`,
-## `child_information/specify_hearing`,
-## `child_information/vision_disabilities`,
-## `child_information/specify_vision`,
-## `child_information/major_illnesses_injuries`,
-## `child_information/specify_illnesses_injuries`,
-## `child_information/child_sleep_time`,
-## `child_information/child_wake_time`,
-## `child_information/child_nap_hours`,
-## `child_information/child_sleep_location`,
-## `child_information/specify_child_sleep_location`,
-## `child_information/indicate_child`,
-## `child_information/indicate_child_2`,
-## `group_family_structure/household_members`,
+## `group_child_care_arrangements/childcare_types/none`, `group_child_care_arrangements/childcare_location`,
+## `group_child_care_arrangements/childcare_hours`, `group_child_care_arrangements/childcare_number`,
+## `group_child_care_arrangements/childcare_age`, `group_child_care_arrangements/childcare_language`,
+## `group_inclusioncheck/inclusionreason`, `group_inclusioncheck/indicate_inclusion`,
+## indicate_demoquestionnaire, indicate_databrary, `_id`)`
+## Joining with `by = join_by(start, end, c_today, update_date, site_id, subject_number, state,
+## check_childage, check_childage_weeks, child_sex, day, day2, day1, language_spoken_child,
+## `language_spoken_child/english`, `language_spoken_child/spanish`, `language_spoken_child/other`,
+## language_spoken_child_other, `child_information/child_bornonduedate`, `child_information/child_onterm`,
+## `child_information/child_duedate`, `child_information/child_birthage`,
+## `child_information/child_weight_pounds`, `child_information/child_weight_ounces`,
+## `child_information/child_birth_complications`, `child_information/specify_birth_complications`,
+## `child_information/hearing_disabilities`, `child_information/specify_hearing`,
+## `child_information/vision_disabilities`, `child_information/specify_vision`,
+## `child_information/major_illnesses_injuries`, `child_information/specify_illnesses_injuries`,
+## `child_information/child_sleep_time`, `child_information/child_wake_time`,
+## `child_information/child_nap_hours`, `child_information/child_sleep_location`,
+## `child_information/specify_child_sleep_location`, `child_information/indicate_child`,
+## `child_information/indicate_child_2`, `group_family_structure/household_members`,
 ## `group_family_structure/household_members/male_partner`,
 ## `group_family_structure/household_members/female_partner`,
 ## `group_family_structure/household_members/other_partner`,
@@ -356,42 +310,35 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/household_members/grandfather`,
 ## `group_family_structure/household_members/great_grandmother`,
 ## `group_family_structure/household_members/great_grandfather`,
-## `group_family_structure/household_members/aunt`,
-## `group_family_structure/household_members/uncle`,
-## `group_family_structure/household_members/cousin`,
-## `group_family_structure/household_members/relative`,
-## `group_family_structure/household_members/non_relative`,
-## `group_family_structure/other_relatives`,
-## `group_family_structure/other_non_relatives`,
-## `group_family_structure/indicate_familystructure`,
-## `group_child_care_arrangements/childcare_types`,
-## `group_child_care_arrangements/childcare_types/relative`,
+## `group_family_structure/household_members/aunt`, `group_family_structure/household_members/uncle`,
+## `group_family_structure/household_members/cousin`, `group_family_structure/household_members/relative`,
+## `group_family_structure/household_members/non_relative`, `group_family_structure/other_relatives`,
+## `group_family_structure/other_non_relatives`, `group_family_structure/indicate_familystructure`,
+## `group_child_care_arrangements/childcare_types`, `group_child_care_arrangements/childcare_types/relative`,
 ## `group_child_care_arrangements/childcare_types/childcare`,
-## `group_child_care_arrangements/childcare_types/none`,
-## `group_child_care_arrangements/childcare_hours`,
-## `group_child_care_arrangements/childcare_number`,
-## `group_child_care_arrangements/childcare_age`,
+## `group_child_care_arrangements/childcare_types/none`, `group_child_care_arrangements/childcare_hours`,
+## `group_child_care_arrangements/childcare_number`, `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
-<pre><code>## # A tibble: 574 × 162
-##    start          end   c_today update_date site_id subject_number state
-##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
-##  1 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
-##  2 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
-##  3 2019-12-18T16… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
-##  4 2020-01-01T12… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
-##  5 2020-01-15T14… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
-##  6 2020-01-15T15… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
-##  7 2020-01-24T14… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
-##  8 2020-01-30T13… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
-##  9 2020-02-03T17… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
-## 10 2020-02-05T09… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
-## # ℹ 564 more rows
-## # ℹ 155 more variables: check_childage &lt;chr&gt;,
-## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;, day2 &lt;chr&gt;,
-## #   day1 &lt;chr&gt;, play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
-## #   `language_spoken_mom/english` &lt;chr&gt;,
-## #   `language_spoken_mom/spanish` &lt;chr&gt;,
-## #   `language_spoken_mom/other` &lt;chr&gt;, …</code></pre>
+<pre><code>## # A tibble: 577 × 162
+##    start          end   c_today update_date site_id subject_number state check_childage check_childage_weeks
+##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;               
+##  1 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New … 32.6772408503… 2                   
+##  2 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New … 32.3813828621… 1                   
+##  3 2019-12-18T16… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA    26.7258382642… 3                   
+##  4 2020-01-01T12… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg… 12.7547666009… 3                   
+##  5 2020-01-15T14… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New … 13.4122287968… 1                   
+##  6 2020-01-15T15… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New … 19.3636313828… 1                   
+##  7 2020-01-24T14… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg… 17.8514683322… 3                   
+##  8 2020-01-30T13… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY    17.8514683322… 3                   
+##  9 2020-02-03T17… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New … 23.8001314924… 3                   
+## 10 2020-02-05T09… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA    17.5884834538… 2                   
+## # ℹ 567 more rows
+## # ℹ 153 more variables: child_sex &lt;chr&gt;, day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
+## #   language_spoken_mom &lt;chr&gt;, `language_spoken_mom/english` &lt;chr&gt;, `language_spoken_mom/spanish` &lt;chr&gt;,
+## #   `language_spoken_mom/other` &lt;chr&gt;, language_spoken_mom_other &lt;chr&gt;, language_spoken_child &lt;chr&gt;,
+## #   `language_spoken_child/english` &lt;chr&gt;, `language_spoken_child/spanish` &lt;chr&gt;,
+## #   `language_spoken_child/other` &lt;chr&gt;, language_spoken_child_other &lt;chr&gt;, language_spoken_house &lt;chr&gt;,
+## #   `language_spoken_house/english` &lt;chr&gt;, `language_spoken_house/spanish` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -420,58 +367,58 @@ a character string.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="fu">screen_clean_fields</span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">scr_df</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## tibble [574 × 51] (S3: tbl_df/tbl/data.frame)
-##  $ submit_date                       : chr [1:574] "2020-02-27T08:24:10.551-05:00" "2020-02-27T08:43:34.275-05:00" "2019-12-18T16:37:17.554-05:00" "2020-01-01T12:54:04.550-05:00" ...
-##  $ site_id                           : chr [1:574] "NYUNI" "NYUNI" "VCOMU" "GEORG" ...
-##  $ participant_ID                    : chr [1:574] "230" "229" "002" "010" ...
-##  $ play_id                           : chr [1:574] NA NA NA NA ...
-##  $ child_age_mos                     : chr [1:574] "32.677240850317695" "32.38138286215201" "26.725838264299803" "12.754766600920446" ...
-##  $ child_sex                         : chr [1:574] "male" "female" "female" "male" ...
-##  $ child_bornonduedate               : chr [1:574] "yes" "yes" "yes" "yes" ...
-##  $ child_onterm                      : chr [1:574] NA NA NA NA ...
-##  $ child_birthage                    : chr [1:574] "-7" "-10" "0" "1" ...
-##  $ child_weight_pounds               : chr [1:574] "8" "7" "6" "7" ...
-##  $ child_weight_ounces               : chr [1:574] "12" "10" "12" "15" ...
-##  $ child_birth_complications         : chr [1:574] "no" "no" "no" "no" ...
-##  $ child_birth_complications_specify : chr [1:574] NA NA NA NA ...
-##  $ child_hearing_disabilities        : chr [1:574] "yes" "no" "no" "no" ...
-##  $ child_hearing_disabilities_specify: chr [1:574] "Temporary hearing loss so tubes in his ears, one still remaining" NA NA NA ...
-##  $ child_vision_disabilities         : chr [1:574] "no" "no" "no" "no" ...
-##  $ child_vision_disabilities_specify : chr [1:574] NA NA NA NA ...
-##  $ child_major_illnesses_injuries    : chr [1:574] "yes" "no" "no" "no" ...
-##  $ child_illnesses_injuries_specify  : chr [1:574] "Pneumonia at 5 months" "" "" "" ...
-##  $ child_developmentaldelays         : chr [1:574] NA NA NA NA ...
-##  $ child_developmentaldelays_specify : chr [1:574] NA NA NA NA ...
-##  $ child_sleep_time                  : chr [1:574] "20:15:00.000-05:00" "20:15:00.000-05:00" "19:00:00.000-05:00" "19:00:00.000-05:00" ...
-##  $ child_wake_time                   : chr [1:574] "07:15:00.000-05:00" "06:45:00.000-05:00" "07:30:00.000-05:00" "06:15:00.000-05:00" ...
-##  $ child_nap_hours                   : chr [1:574] "2" "3" "1.5" "2" ...
-##  $ child_sleep_location              : chr [1:574] "crib_separate" "crib_separate" "crib_separate" "crib_separate" ...
-##  $ mom_bio                           : chr [1:574] "yes" "yes" "yes" "yes" ...
-##  $ mom_childbirth_age                : chr [1:574] "33.41" "38.84" "32.2" "30.38" ...
-##  $ mom_race                          : chr [1:574] "white" "white" "white" "white" ...
-##  $ mom_birth_country                 : chr [1:574] "unitedstates" "unitedstates" "unitedstates" "unitedstates" ...
-##  $ mom_birth_country_specify         : chr [1:574] "" "" "" "" ...
-##  $ mom_education                     : chr [1:574] "masters" "doctorate" "doctorate" "masters" ...
-##  $ mom_employment                    : chr [1:574] "full_time" "full_time" "full_time" "full_time" ...
-##  $ mom_occupation                    : chr [1:574] "Architect" "Spanish teacher" "Nurse instructor" "School Psychologist" ...
-##  $ mom_jobs_number                   : chr [1:574] "1" "1" "1" "1" ...
-##  $ mom_training                      : chr [1:574] "no" "no" "no" "no" ...
-##  $ biodad_childbirth_age             : chr [1:574] "33.85_NA" "30.42_NA" "37.32_NA" "30.53_NA" ...
-##  $ biodad_race                       : chr [1:574] "white_NA" "white_NA" "NA_NA" "NA_NA" ...
-##  $ language_spoken_mom               : chr [1:574] "english" "english spanish" "english" "english" ...
-##  $ language_spoken_mom_comments      : chr [1:574] NA NA NA NA ...
-##  $ language_spoken_child             : chr [1:574] "english" "spanish" "english" "english" ...
-##  $ language_spoken_home_comments     : chr [1:574] "FALSE_47706996" "TRUE_47707423" "FALSE_43397823" "FALSE_44074192" ...
-##  $ language_spoken_child_comments    : chr [1:574] NA NA NA NA ...
-##  $ language_spoken_home              : chr [1:574] "english" "english spanish" "english" "english" ...
-##  $ language_spoken_house_other       : chr [1:574] NA NA NA NA ...
-##  $ language_spoken_home_other        : chr [1:574] NA NA NA NA ...
-##  $ childcare_types                   : chr [1:574] NA NA NA NA ...
-##  $ childcare_location                : chr [1:574] NA NA NA NA ...
-##  $ childcare_hours                   : chr [1:574] NA NA NA NA ...
-##  $ childcare_number                  : chr [1:574] NA NA NA NA ...
-##  $ childcare_age                     : chr [1:574] NA NA NA NA ...
-##  $ childcare_language                : chr [1:574] NA NA NA NA ...</code></pre>
+<pre><code>## tibble [577 × 51] (S3: tbl_df/tbl/data.frame)
+##  $ submit_date                       : chr [1:577] "2020-02-27T08:24:10.551-05:00" "2020-02-27T08:43:34.275-05:00" "2019-12-18T16:37:17.554-05:00" "2020-01-01T12:54:04.550-05:00" ...
+##  $ site_id                           : chr [1:577] "NYUNI" "NYUNI" "VCOMU" "GEORG" ...
+##  $ participant_ID                    : chr [1:577] "230" "229" "002" "010" ...
+##  $ play_id                           : chr [1:577] NA NA NA NA ...
+##  $ child_age_mos                     : chr [1:577] "32.677240850317695" "32.38138286215201" "26.725838264299803" "12.754766600920446" ...
+##  $ child_sex                         : chr [1:577] "male" "female" "female" "male" ...
+##  $ child_bornonduedate               : chr [1:577] "yes" "yes" "yes" "yes" ...
+##  $ child_onterm                      : chr [1:577] NA NA NA NA ...
+##  $ child_birthage                    : chr [1:577] "-7" "-10" "0" "1" ...
+##  $ child_weight_pounds               : chr [1:577] "8" "7" "6" "7" ...
+##  $ child_weight_ounces               : chr [1:577] "12" "10" "12" "15" ...
+##  $ child_birth_complications         : chr [1:577] "no" "no" "no" "no" ...
+##  $ child_birth_complications_specify : chr [1:577] NA NA NA NA ...
+##  $ child_hearing_disabilities        : chr [1:577] "yes" "no" "no" "no" ...
+##  $ child_hearing_disabilities_specify: chr [1:577] "Temporary hearing loss so tubes in his ears, one still remaining" NA NA NA ...
+##  $ child_vision_disabilities         : chr [1:577] "no" "no" "no" "no" ...
+##  $ child_vision_disabilities_specify : chr [1:577] NA NA NA NA ...
+##  $ child_major_illnesses_injuries    : chr [1:577] "yes" "no" "no" "no" ...
+##  $ child_illnesses_injuries_specify  : chr [1:577] "Pneumonia at 5 months" "" "" "" ...
+##  $ child_developmentaldelays         : chr [1:577] NA NA NA NA ...
+##  $ child_developmentaldelays_specify : chr [1:577] NA NA NA NA ...
+##  $ child_sleep_time                  : chr [1:577] "20:15:00.000-05:00" "20:15:00.000-05:00" "19:00:00.000-05:00" "19:00:00.000-05:00" ...
+##  $ child_wake_time                   : chr [1:577] "07:15:00.000-05:00" "06:45:00.000-05:00" "07:30:00.000-05:00" "06:15:00.000-05:00" ...
+##  $ child_nap_hours                   : chr [1:577] "2" "3" "1.5" "2" ...
+##  $ child_sleep_location              : chr [1:577] "crib_separate" "crib_separate" "crib_separate" "crib_separate" ...
+##  $ mom_bio                           : chr [1:577] "yes" "yes" "yes" "yes" ...
+##  $ mom_childbirth_age                : chr [1:577] "33.41" "38.84" "32.2" "30.38" ...
+##  $ mom_race                          : chr [1:577] "white" "white" "white" "white" ...
+##  $ mom_birth_country                 : chr [1:577] "unitedstates" "unitedstates" "unitedstates" "unitedstates" ...
+##  $ mom_birth_country_specify         : chr [1:577] "" "" "" "" ...
+##  $ mom_education                     : chr [1:577] "masters" "doctorate" "doctorate" "masters" ...
+##  $ mom_employment                    : chr [1:577] "full_time" "full_time" "full_time" "full_time" ...
+##  $ mom_occupation                    : chr [1:577] "Architect" "Spanish teacher" "Nurse instructor" "School Psychologist" ...
+##  $ mom_jobs_number                   : chr [1:577] "1" "1" "1" "1" ...
+##  $ mom_training                      : chr [1:577] "no" "no" "no" "no" ...
+##  $ biodad_childbirth_age             : chr [1:577] "33.85_NA" "30.42_NA" "37.32_NA" "30.53_NA" ...
+##  $ biodad_race                       : chr [1:577] "white_NA" "white_NA" "NA_NA" "NA_NA" ...
+##  $ language_spoken_mom               : chr [1:577] "english" "english spanish" "english" "english" ...
+##  $ language_spoken_mom_comments      : chr [1:577] NA NA NA NA ...
+##  $ language_spoken_child             : chr [1:577] "english" "spanish" "english" "english" ...
+##  $ language_spoken_home_comments     : chr [1:577] "FALSE_47706996" "TRUE_47707423" "FALSE_43397823" "FALSE_44074192" ...
+##  $ language_spoken_child_comments    : chr [1:577] NA NA NA NA ...
+##  $ language_spoken_home              : chr [1:577] "english" "english spanish" "english" "english" ...
+##  $ language_spoken_house_other       : chr [1:577] NA NA NA NA ...
+##  $ language_spoken_home_other        : chr [1:577] NA NA NA NA ...
+##  $ childcare_types                   : chr [1:577] NA NA NA NA ...
+##  $ childcare_location                : chr [1:577] NA NA NA NA ...
+##  $ childcare_hours                   : chr [1:577] NA NA NA NA ...
+##  $ childcare_number                  : chr [1:577] NA NA NA NA ...
+##  $ childcare_age                     : chr [1:577] NA NA NA NA ...
+##  $ childcare_language                : chr [1:577] NA NA NA NA ...</code></pre>
 <p>There is more work to do, but we have a version worth exporting.</p>
 </div>
 </div>
@@ -482,12 +429,15 @@ a character string.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="va">scr_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">screen_add_db_vol_id</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details, e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
 <p>Then filter out rows that do not have valid volume IDs.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valid_db_vol</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">scr_df</span><span class="op">$</span><span class="va">vol_id</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">scr_df</span> <span class="op">&lt;-</span> <span class="va">scr_df</span><span class="op">[</span><span class="va">valid_db_vol</span>,<span class="op">]</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 562 valid Databrary volume IDs out of a total of <span class="math inline">\(n=\)</span> 574 screening records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 568 valid Databrary volume IDs out of a total of <span class="math inline">\(n=\)</span> 577 screening records.</p>
 <p>Next, we add a <code>play_status</code> field based on the <code>group-name</code> field from Databrary.
 We use <code>group-name</code> for indicating “Gold”, “Silver”, or “Not run.”</p>
 <p>Two targets in <code>_targets.R</code> are relevant for this operation:</p>
@@ -511,7 +461,7 @@ We load these CSVs into a single data frame.</p>
 <h3>
 <span class="header-section-number">0.1.1</span> Load site session data<a class="anchor" aria-label="anchor" href="#load-site-session-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">session_fns</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"../data/csv/site_sessions"</span>, <span class="st">"\\.csv$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -524,7 +474,7 @@ We load these CSVs into a single data frame.</p>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>group_name</code> variable contains status information about the sessions.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span>, data<span class="op">=</span><span class="va">df_sessions</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## group_name
 ##    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
@@ -533,7 +483,7 @@ We load these CSVs into a single data frame.</p>
 In addition, there are <span class="math inline">\(n=\)</span> 66 sessions with NA in the <code>group_name</code>.
 These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
 Here, we want to select only those sessions that occurred and which have passed QA–those sessions for which <code>group_name</code> is either ‘PLAY_Gold’ or ‘PLAY_Silver’.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sessions</span> <span class="op">&lt;-</span> <span class="va">df_sessions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">group_name</span>, <span class="st">"PLAY_"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -542,14 +492,14 @@ Here, we want to select only those sessions that occurred and which have passed 
 <span class="header-section-number">0.1.2</span> Sharing by session status<a class="anchor" aria-label="anchor" href="#sharing-by-session-status"><i class="fas fa-link"></i></a>
 </h3>
 <p>Here is information about the sharing status.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span> <span class="op">+</span> <span class="va">session_release</span>, <span class="va">df_sessions</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              session_release
 ## group_name    EXCERPTS PRIVATE SHARED
 ##   PLAY_Gold        256       0     78
 ##   PLAY_Silver       61       1     15</code></pre>
 <p>There was one session marked <code>PRIVATE</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_sessions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">session_release</span> <span class="op">==</span> <span class="st">"PRIVATE"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">session_id</span>, <span class="va">session_name</span>, <span class="va">group_name</span><span class="op">)</span></span></code></pre></div>
@@ -558,7 +508,7 @@ Here, we want to select only those sessions that occurred and which have passed 
 ##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;      
 ## 1 979    66932      PLAY_PRINU_024 PLAY_Silver</code></pre>
 <p>Now, we join the screening data with the Databrary session data.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_datab_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_sessions</span>, <span class="va">scr_df</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'vol_id'</span>, <span class="st">'participant_ID'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -566,11 +516,11 @@ Here, we want to select only those sessions that occurred and which have passed 
 <h2>Export cleaned file<a class="anchor" aria-label="anchor" href="#export-cleaned-file"><i class="fas fa-link"></i></a>
 </h2>
 <p>We date-stamp the exported file so we can monitor progress as this workflow develops.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"PLAY-screening-datab-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">screen_datab_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We also save a copy with “latest”.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sfn</span> <span class="op">&lt;-</span> <span class="st">"PLAY-screening-datab-latest.csv"</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">screen_datab_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/"</span>, <span class="va">sfn</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
@@ -621,7 +571,7 @@ Here, we want to select only those sessions that occurred and which have passed 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-24.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
