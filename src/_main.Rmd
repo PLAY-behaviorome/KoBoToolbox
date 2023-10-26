@@ -2390,7 +2390,7 @@ eng_12 <-
   )
 ```
 
-There are $n=$ `r dim(eng_12)[1]` participant records.
+There are $n=$ `r (n_12_eng <- dim(eng_12)[1])` participant records.
 
 ```{r mcdi-12-english}
 eng_12_long <- eng_12 |>
@@ -2398,9 +2398,19 @@ eng_12_long <- eng_12 |>
                         names_to = "word",
                         values_to = "understands_or_says")
 
-xtabs(~ word + understands_or_says, eng_12_long)
+#xtabs(~ word + understands_or_says, eng_12_long)
 ```
 
+```{r 12-eng-wordcloud}
+word_ct <- eng_12_long |>
+  dplyr::filter(!is.na(understands_or_says)) |>
+  dplyr::filter(understands_or_says == "understands") |>
+  dplyr::count(word, sort = TRUE)
+
+quant_25 <- round(n_12_eng*.25, 0)
+
+wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25)
+```
 
 ### 18-mo-old English speakers {-}
 
@@ -2411,17 +2421,23 @@ eng_18 <-
     col_types = readr::cols(.default = 'c'),
     show_col_types = FALSE
   )
+
 ```
 
-There are $n=$ `r dim(eng_18)[1]` participant records.
+There are $n=$ `r (n_18_eng <- dim(eng_18)[1])` participant records.
 
-```{r mcdi-18-english}
-eng_18_long <- eng_18 |>
+```{r 18-eng-wordcloud}
+word_ct <- eng_18_long <- eng_18 |>
   tidyr::pivot_longer(cols = !play_id,
                         names_to = "word",
-                        values_to = "says")
+                        values_to = "says") |>
+  dplyr::filter(!is.na(says)) |>
+  dplyr::filter(says == TRUE) |>
+  dplyr::count(word, sort = TRUE)
 
-xtabs(~ word + says, eng_18_long)
+quant_25 <- round(n_18_eng*.25, 0)
+
+wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25)
 ```
 
 ### 24-mo-old English speakers {-}
@@ -2438,13 +2454,31 @@ eng_24 <-
 There are $n=$ `r dim(eng_24)[1]` participant records.
 
 ```{r mcdi-24-english}
-eng_24_long <- eng_24 |>
+word_ct <- eng_24_long <- eng_24 |>
   tidyr::pivot_longer(cols = !play_id,
                         names_to = "word",
-                        values_to = "says")
+                        values_to = "says") |>
+  dplyr::filter(!is.na(says)) |>
+  dplyr::filter(says == TRUE) |>
+  dplyr::count(word, sort = TRUE)
 
-xtabs(~ word + says, eng_24_long)
+n_24_eng <- dim(eng_24)[1]
 ```
+
+```{r mcdi-24-eng-common-words-cloud}
+common_word_ct <- word_ct |>
+  dplyr::filter(n < n_24_eng*.5)
+
+wordcloud::wordcloud(words = common_word_ct$word, freq = common_word_ct$n)
+```
+
+```{r mcdi-24-eng-rare-words-cloud}
+rare_word_ct <- word_ct |>
+  dplyr::filter(n < n_24_eng*.25)
+
+wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
+```
+
 
 <!--chapter:end:23-viz-language.Rmd-->
 
