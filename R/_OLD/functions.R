@@ -803,13 +803,17 @@ extract_mbcdi <-
     play_id_col <-
       (1:length(names(df)))[stringr::str_detect(names(df), 'participant_id')]
     
+    # Add subject_number and site_id temporarily for cross-referencing.
+    subject_number <- (1:length(names(df)))[stringr::str_detect(names(df), 'subject_number')]
+    site_id <- (1:length(names(df)))[stringr::str_detect(names(df), 'site_id')]
+    
     # Select non-mcdi cols
     mcdi_qs <- stringr::str_detect(names(df), 'mcdi|vocab')
     # non_mcdi_qs <- !(mcdi_qs)
     mcdi_cols <- (1:length(names(df)))[mcdi_qs]
     
     mcdi <- df %>%
-      dplyr::select(., all_of(play_id_col), all_of(mcdi_cols))
+      dplyr::select(., all_of(play_id_col), all_of(site_id), all_of(subject_number), all_of(mcdi_cols))
     
     if (rename_cols) {
       mcdi <- dplyr::rename_with(mcdi, basename)
@@ -1067,7 +1071,7 @@ check_databrary_login <-
   }
 
 ###################################################################
-play_vols <- tibble::tibble(
+PLAY_VOLS <- tibble::tibble(
   play_site_id = c(
     'PLAYProject_GEORG',
     'PLAYProject_CHOPH',
@@ -1093,7 +1097,8 @@ play_vols <- tibble::tibble(
     'PLAYProject_UMIAM',
     'PLAYProject_UOREG',
     'PLAYProject_CORNL',
-    'PLAYProject_MICHS'
+    'PLAYProject_MICHS',
+    'PLAYProject_UPITT'
   ),
   play_vol_id = c(
     954,
@@ -1120,7 +1125,8 @@ play_vols <- tibble::tibble(
     996,
     1459,
     1576,
-    1590
+    1590,
+    0
   ),
   site_name = c(
     "Georgetown University",
@@ -1147,11 +1153,12 @@ play_vols <- tibble::tibble(
     "University of Miami",
     "University of Oregon",
     "Cornell University",
-    "Michigan State University"
+    "Michigan State University",
+    "University of Pittsburgh"
   )
 )
 
-PLAY_VOLS <- play_vols
+#PLAY_VOLS <- PLAY_VOLS
 
 load_play_site_vols_csv <- function(path2root = "..", fn =  "data/csv/play_site_vols.csv") {
   stopifnot(is.character(fn))
@@ -1160,7 +1167,7 @@ load_play_site_vols_csv <- function(path2root = "..", fn =  "data/csv/play_site_
   readr::read_csv(full_fn, show_col_types = FALSE)
 }
 
-#play_vols <- load_play_site_vols_csv()
+#PLAY_VOLS <- load_play_site_vols_csv()
 
 ###################################################################
 lookup_databrary_session <-
@@ -1181,7 +1188,7 @@ lookup_databrary_session <-
     # }
     
     this_volume <-
-      dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site_id))
+      dplyr::filter(PLAY_VOLS, stringr::str_detect(play_site_id, this_site_id))
     if (dim(this_volume)[1] <= 0) {
       message('No volume found for site ', this_site_id)
       return(NULL)
@@ -1228,7 +1235,7 @@ get_databrary_session_data <-  function(this_site_id,
   stopifnot(is.logical(vb))
   
   this_volume <-
-    dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site_id))
+    dplyr::filter(PLAY_VOLS, stringr::str_detect(play_site_id, this_site_id))
   if (dim(this_volume)[1] <= 0) {
     message('No volume found for site ', this_site_id)
     return(NULL)
@@ -1271,12 +1278,11 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   this_row <- df[row, ]
   
   this_volume <-
-    dplyr::filter(play_vols,
+    dplyr::filter(PLAY_VOLS,
                   stringr::str_detect(play_site_id, this_row$site_id))
-  # if (dim(this_volume)[1] <= 0) {
-  #   message('No volume found for site ', this_site_id)
-  #   return(NULL)
-  # }
+  if (dim(this_volume)[1] <= 0) {
+    message('No volume found for site ', this_site_id)
+  }
   
   if (vb)
     message("Row: ",
@@ -1285,8 +1291,17 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
             this_row$site_id,
             " | Session: ",
             this_row$subject_number)
-  vol_sessions <-
-    databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
+  
+  if (as.numeric(this_volume$play_vol_id) > 0) {
+    vol_sessions <-
+      databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
+  } else {
+    message(">> Invalid vol_id: ", this_volume$play_vol_id, " for site: ",  this_row$site_id)
+    return(NULL)
+  }
+  
+  # vol_sessions <-
+  #   databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
   
   if (!is.null(vol_sessions)) {
     s_number_zero_padded <-
@@ -1316,16 +1331,21 @@ get_db_session_data_from_site <- function(this_site, vb = FALSE) {
   # }
   
   this_volume <-
-    dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site))
+    dplyr::filter(PLAY_VOLS, stringr::str_detect(play_site_id, this_site))
   if (is.null(this_volume)) {
     if (vb)
-      message("Problem retrieving PLAY site data from `play_vols`")
+      message("Problem retrieving PLAY site data from `PLAY_VOLS`")
     return(NULL)
   }
   
-  vol_sessions <-
-    databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
-  
+  if (as.numeric(this_volume$play_vol_id) > 0) {
+    vol_sessions <-
+      databraryr::get_session_as_df(as.numeric(this_volume$play_vol_id))
+  } else {
+    message("Invalid vol_id: ", this_volume$play_vol_id, " for site ",  this_site)
+    return(NULL)
+  }
+
   if (!is.null(vol_sessions)) {
     vol_sessions
   } else {
@@ -1365,12 +1385,12 @@ summarize_sessions_by_site <- function(this_site, vb = FALSE) {
   }
 }
 
-make_site_session_summary_multiple <- function(play_vols) {
+make_site_session_summary_multiple <- function(PLAY_VOLS) {
   # if (!databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
   #   message("Not authenticated to Databrary.")
   #   return(NULL)
   # }
-  purrr::map_df(play_vols$play_site_id, make_site_session_summary)
+  purrr::map_df(PLAY_VOLS$play_site_id, make_site_session_summary)
 }
 
 make_site_session_summary <- function(this_site, vb = FALSE) {
@@ -1431,7 +1451,7 @@ get_save_all_databrary_session_csvs <- function(vb = FALSE) {
   require(databraryr)
   
   if (databraryr::login_db(Sys.getenv("DATABRARY_LOGIN"))) {
-    purrr::map(play_vols$play_site_id,
+    purrr::map(PLAY_VOLS$play_site_id,
                get_save_databrary_session_csv,
                vb = TRUE)
     #get_save_databrary_session_csv()
@@ -1448,7 +1468,7 @@ get_site_info <- function(this_site, vb = FALSE) {
   stopifnot(is.character(this_site))
   stopifnot(is.logical(vb))
   
-  dplyr::filter(play_vols, stringr::str_detect(play_site_id, this_site))
+  dplyr::filter(PLAY_VOLS, stringr::str_detect(play_site_id, this_site))
 }
 
 

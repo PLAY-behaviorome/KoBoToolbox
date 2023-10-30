@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Language visualizations | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
-<meta name="description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
+<meta name="description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } library(wordcloud) library(RColorBrewer) Language exposure df &lt;- home_visit_df |&gt; ...">
 <meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Language visualizations | PLAY Project: Surveys">
 <meta property="og:type" content="book">
-<meta property="og:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
+<meta property="og:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } library(wordcloud) library(RColorBrewer) Language exposure df &lt;- home_visit_df |&gt; ...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Language visualizations | PLAY Project: Surveys">
-<meta name="twitter:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } Language exposure df &lt;- home_visit_df |&gt;  dplyr::mutate(language_child =...">
+<meta name="twitter:description" content="if (!('home_visit_df' %in% ls())) {  targets::tar_load(home_visit_df, store=&quot;../_targets&quot;) } library(wordcloud) library(RColorBrewer) Language exposure df &lt;- home_visit_df |&gt; ...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -76,7 +76,10 @@
 <div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">'home_visit_df'</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://blog.fellstat.com/?cat=11">wordcloud</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></span></code></pre></div>
 <div id="language-exposure" class="section level2 unnumbered">
 <h2>Language exposure<a class="anchor" aria-label="anchor" href="#language-exposure"><i class="fas fa-link"></i></a>
 </h2>
@@ -86,8 +89,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_child</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female     172              32
-##    male       153              51</code></pre>
+##    female     177              32
+##    male       154              52</code></pre>
 </div>
 <div id="mb-cdi-1" class="section level2 unnumbered">
 <h2>MB-CDI<a class="anchor" aria-label="anchor" href="#mb-cdi-1"><i class="fas fa-link"></i></a>
@@ -102,10 +105,10 @@
 <span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 125 participant records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 137 participant records.</p>
 <div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_long</span> <span class="op">&lt;-</span> <span class="va">eng_12</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="op">(</span><span class="va">play_id</span> <span class="op">|</span> <span class="va">site_id</span> <span class="op">|</span> <span class="va">subject_number</span><span class="op">)</span>,</span>
 <span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
 <span>                        values_to <span class="op">=</span> <span class="st">"understands_or_says"</span><span class="op">)</span></span>
 <span></span>
@@ -116,578 +119,251 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">understands_or_says</span> <span class="op">==</span> <span class="st">"understands"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">quant_25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_12_eng</span><span class="op">*</span><span class="fl">.25</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">quant_25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_12_eng</span><span class="op">*</span><span class="fl">.25</span>, <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># rcb_color_paired &lt;- RColorBrewer::brewer.pal(12, 'Paired')</span></span>
+<span><span class="co"># wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
 <span></span>
-<span><span class="fu">wordcloud</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span><span class="op">(</span>words <span class="op">=</span> <span class="va">word_ct</span><span class="op">$</span><span class="va">word</span>, freq <span class="op">=</span> <span class="va">word_ct</span><span class="op">$</span><span class="va">n</span>, min.freq <span class="op">=</span> <span class="va">quant_25</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : grandma could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : allgone could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : nightnight could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : look could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : where could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : spoon could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : bye could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : cup could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : grandpa could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : mommy_1 could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : bath_1 could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : walk could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : uh_oh could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : woofwoof could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : eat could not be fit on page. It will not be plotted.</code></pre>
+<span><span class="fu">mcdi_viz_wordcloud</span><span class="op">(</span><span class="va">word_ct</span>, n_participants <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">eng_12</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, quantile <span class="op">=</span> <span class="fl">.40</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/12-eng-wordcloud-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="mo-old-english-speakers-6" class="section level3 unnumbered">
 <h3>18-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-6"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_18</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
 <span>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_18_combined.csv"</span>,</span>
 <span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 116 participant records.</p>
-<div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">word_ct</span> <span class="op">&lt;-</span> <span class="va">eng_18_long</span> <span class="op">&lt;-</span> <span class="va">eng_18</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<p>There are <span class="math inline">\(n=\)</span> 123 participant records.</p>
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">word_ct</span> <span class="op">&lt;-</span> <span class="va">eng_18</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="op">(</span><span class="va">play_id</span> <span class="op">|</span> <span class="va">site_id</span> <span class="op">|</span> <span class="va">subject_number</span><span class="op">)</span>,</span>
 <span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
 <span>                        values_to <span class="op">=</span> <span class="st">"says"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">says</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">says</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">quant_25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_18_eng</span><span class="op">*</span><span class="fl">.25</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">wordcloud</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span><span class="op">(</span>words <span class="op">=</span> <span class="va">word_ct</span><span class="op">$</span><span class="va">word</span>, freq <span class="op">=</span> <span class="va">word_ct</span><span class="op">$</span><span class="va">n</span>, min.freq <span class="op">=</span> <span class="va">quant_25</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : quackquack could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : mommy could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : yumyum could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : bellybutton could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : choochoo could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : shoe could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = word_ct$word, freq =
-## word_ct$n, : yes could not be fit on page. It will not be plotted.</code></pre>
+<span><span class="va">quant_25</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_18_eng</span><span class="op">*</span><span class="fl">.25</span>, <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
+<span><span class="fu">mcdi_viz_wordcloud</span><span class="op">(</span><span class="va">word_ct</span>, n_participants <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">eng_18</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, quantile <span class="op">=</span> <span class="fl">.50</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/18-eng-wordcloud-1.png" width="672" style="display: block; margin: auto;"></div>
 </div>
 <div id="mo-old-english-speakers-7" class="section level3 unnumbered">
 <h3>24-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-7"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_24</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
 <span>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>,</span>
 <span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
 <span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 100 participant records.</p>
-<div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">word_ct</span> <span class="op">&lt;-</span> <span class="va">eng_24_long</span> <span class="op">&lt;-</span> <span class="va">eng_24</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="va">play_id</span>,</span>
+<p>There are <span class="math inline">\(n=\)</span> 109 participant records.</p>
+<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">word_ct</span> <span class="op">&lt;-</span> <span class="va">eng_24</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">!</span><span class="op">(</span><span class="va">play_id</span> <span class="op">|</span> <span class="va">site_id</span> <span class="op">|</span> <span class="va">subject_number</span><span class="op">)</span>,</span>
 <span>                        names_to <span class="op">=</span> <span class="st">"word"</span>,</span>
 <span>                        values_to <span class="op">=</span> <span class="st">"says"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">says</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">says</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">n_24_eng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">eng_24</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
-<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">common_word_ct</span> <span class="op">&lt;-</span> <span class="va">word_ct</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="va">n_24_eng</span><span class="op">*</span><span class="fl">.5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">wordcloud</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span><span class="op">(</span>words <span class="op">=</span> <span class="va">common_word_ct</span><span class="op">$</span><span class="va">word</span>, freq <span class="op">=</span> <span class="va">common_word_ct</span><span class="op">$</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): corn could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): drum could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bathroom could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): broken could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): clockwatch could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): ant could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): grass could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): party could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): firetruck could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): tooth could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): rabbit could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): coffee could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): tired could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): juice could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): close could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): cry could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): think could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): squirrel could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): potato could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): blow could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): good could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): picture could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): chin could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): the could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): carry could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): girl could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): pretend could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): know could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): what could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): hose could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): touch could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): inthemorning could not be fit on page. It will not
-## be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): shopping could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bib could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): taste could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): beans could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): snake could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): ice could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): necklace could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): day could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): listen could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): rice could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): pillow could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): button could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): oven could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): beepbeep could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): cheek could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): tickle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bad could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): peas could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): pumpkin could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): need could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): cockadoodledoo could not be fit on page. It will
-## not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): friend could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bedroom could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): applesauce could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): look could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): kick could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): scissors could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): pretty could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): TV could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): pattycake could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): gentle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): square could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): hear could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): new could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): dump could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): buy could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): kitchen could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): happy could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): ipad could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): animal could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): where could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): all could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): broom could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bottle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): shower could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): cloud could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): stick could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): do could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): park could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): sky could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): game could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): sweater could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): window could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): raisin could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): brother could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): our could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): boy could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): helicopter could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): you could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): stove could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): rip could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): glass could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): mustache could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): rectangle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): cake could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bicylcle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): icecream could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): finish could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): many could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): facetime could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): glasses could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): vagina could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): to could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): triangle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): spaghetti could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): lady could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): tiger could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): sister could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): circle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): dress could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): frenchfries could not be fit on page. It will not
-## be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): tongue could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): sing could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): behind could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): chase could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): school could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): that could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): bunny could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): shake could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): hungry could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): motorcycle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): medicine could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): with could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): them could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = common_word_ct$word, freq =
-## common_word_ct$n): teddybear could not be fit on page. It will not be
-## plotted.</code></pre>
-<div class="inline-figure"><img src="include/img/mcdi-24-eng-common-words-cloud-1.png" width="672" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mcdi_viz_wordcloud</span><span class="op">(</span><span class="va">word_ct</span>, n_participants <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">eng_24</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, quantile <span class="op">=</span> <span class="fl">.60</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : choochoo could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cat could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : allgone could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : down could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cracker could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : truck could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : foot could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : book could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hair could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : quackquack could not be fit
+## on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : three could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : monkey could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : jump could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : out could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : bed could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : car could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : wet_1 could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : tree could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : daddy could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : yumyum could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : apple could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : baby could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : shirt could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : ear could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cookie could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cup could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : shoe could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : frog could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : duck could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : balloon could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : rain_2 could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : spoon could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : sun could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hand could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : two could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : meow could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : milk could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : baabaa could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : head could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : thankyou could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hug could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : eye could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : open could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : swing could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hat could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : ball could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : banana could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hot could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : mommy could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : yes could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : mouth could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : tummy could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : bird could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : woofwoof could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : butterfly could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : shh could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : help could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : chair could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : more could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : no could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : mine could not be fit on
+## page. It will not be plotted.</code></pre>
+<div class="inline-figure"><img src="include/img/mcdi-24-eng-word-cloud-1.png" width="672" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb386"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rare_word_ct</span> <span class="op">&lt;-</span> <span class="va">word_ct</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="va">n_24_eng</span><span class="op">*</span><span class="fl">.25</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">wordcloud</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span><span class="op">(</span>words <span class="op">=</span> <span class="va">rare_word_ct</span><span class="op">$</span><span class="va">word</span>, freq <span class="op">=</span> <span class="va">rare_word_ct</span><span class="op">$</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): vagina could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): rectangle could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): much could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): money could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): popcorn could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): hose could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): sister could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): listen could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): beepbeep could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): behind could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): person could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): after could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): tonight could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): glass could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): pattycake could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): facetime could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): sweater could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): game could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): know could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): fit could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): water could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): inthemorning could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): penis could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): stove could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): them could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): none could not be fit on page. It will not be
-## plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = rare_word_ct$word, freq =
-## rare_word_ct$n): cheese could not be fit on page. It will not be
-## plotted.</code></pre>
+<span><span class="co"># </span></span>
+<span><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
+<span><span class="fu">mcdi_viz_wordcloud</span><span class="op">(</span><span class="va">rare_word_ct</span>, n_participants <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">eng_24</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, quantile <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="include/img/mcdi-24-eng-rare-words-cloud-1.png" width="672" style="display: block; margin: auto;"></div>
 
 </div>
@@ -725,7 +401,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-26.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-10-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

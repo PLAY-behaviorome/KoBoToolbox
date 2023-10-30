@@ -4,6 +4,9 @@
 if (!('home_visit_df' %in% ls())) {
   targets::tar_load(home_visit_df, store="../_targets")
 }
+
+library(wordcloud)
+library(RColorBrewer)
 ```
 
 ## Language exposure {-}
@@ -31,22 +34,27 @@ There are $n=$ `r (n_12_eng <- dim(eng_12)[1])` participant records.
 
 ```{r mcdi-12-english}
 eng_12_long <- eng_12 |>
-  tidyr::pivot_longer(cols = !play_id,
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
                         names_to = "word",
                         values_to = "understands_or_says")
 
 #xtabs(~ word + understands_or_says, eng_12_long)
 ```
 
-```{r 12-eng-wordcloud}
+```{r}
 word_ct <- eng_12_long |>
   dplyr::filter(!is.na(understands_or_says)) |>
   dplyr::filter(understands_or_says == "understands") |>
   dplyr::count(word, sort = TRUE)
 
 quant_25 <- round(n_12_eng*.25, 0)
+```
 
-wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25)
+```{r 12-eng-wordcloud}
+# rcb_color_paired <- RColorBrewer::brewer.pal(12, 'Paired')
+# wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
+
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_12)[1], quantile = .40)
 ```
 
 ### 18-mo-old English speakers {-}
@@ -63,9 +71,9 @@ eng_18 <-
 
 There are $n=$ `r (n_18_eng <- dim(eng_18)[1])` participant records.
 
-```{r 18-eng-wordcloud}
-word_ct <- eng_18_long <- eng_18 |>
-  tidyr::pivot_longer(cols = !play_id,
+```{r}
+word_ct <- eng_18 |>
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
                         names_to = "word",
                         values_to = "says") |>
   dplyr::filter(!is.na(says)) |>
@@ -73,8 +81,11 @@ word_ct <- eng_18_long <- eng_18 |>
   dplyr::count(word, sort = TRUE)
 
 quant_25 <- round(n_18_eng*.25, 0)
+```
 
-wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25)
+```{r 18-eng-wordcloud}
+#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_18)[1], quantile = .50)
 ```
 
 ### 24-mo-old English speakers {-}
@@ -91,28 +102,24 @@ eng_24 <-
 There are $n=$ `r dim(eng_24)[1]` participant records.
 
 ```{r mcdi-24-english}
-word_ct <- eng_24_long <- eng_24 |>
-  tidyr::pivot_longer(cols = !play_id,
+word_ct <- eng_24 |>
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
                         names_to = "word",
                         values_to = "says") |>
   dplyr::filter(!is.na(says)) |>
   dplyr::filter(says == TRUE) |>
   dplyr::count(word, sort = TRUE)
-
-n_24_eng <- dim(eng_24)[1]
 ```
 
-```{r mcdi-24-eng-common-words-cloud}
-common_word_ct <- word_ct |>
-  dplyr::filter(n < n_24_eng*.5)
-
-wordcloud::wordcloud(words = common_word_ct$word, freq = common_word_ct$n)
+```{r mcdi-24-eng-word-cloud}
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_24)[1], quantile = .60)
 ```
 
 ```{r mcdi-24-eng-rare-words-cloud}
 rare_word_ct <- word_ct |>
   dplyr::filter(n < n_24_eng*.25)
-
-wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
+# 
+# wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
+mcdi_viz_wordcloud(rare_word_ct, n_participants = dim(eng_24)[1], quantile = .25)
 ```
 

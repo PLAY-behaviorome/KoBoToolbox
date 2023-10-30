@@ -10,7 +10,7 @@ fl <-
              full.names = TRUE)
 purrr::walk(fl, source)
 
-# Login to Databrary
+# Log in to Databrary
 databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"), store = TRUE)
 
 suppressPackageStartupMessages(library(tidyverse))
