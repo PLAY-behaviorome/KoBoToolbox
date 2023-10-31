@@ -2,7 +2,7 @@ home_select_site_data <- function(this_site_id = "UCSCR",
                                   in_dir = "data/csv/home_visit/agg",
                                   in_fn = "PLAY-non-mcdi-latest.csv",
                                   out_dir = "data/csv/home_visit/agg/by-site",
-                                  vb = TRUE) {
+                                  vb = FALSE) {
   assertthat::is.string(this_site_id)
   
   assertthat::is.string(in_dir)
