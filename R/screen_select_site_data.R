@@ -2,7 +2,7 @@ screen_select_site_data <- function(this_site_id = "UCSCR",
                                     in_dir = "data/csv/screening/agg",
                                     in_fn = "PLAY-screening-datab-latest.csv",
                                     out_dir = "data/csv/screening/agg/by-site",
-                                    vb = TRUE) {
+                                    vb = FALSE) {
   
   # Check parameters
   assertthat::is.string(this_site_id)

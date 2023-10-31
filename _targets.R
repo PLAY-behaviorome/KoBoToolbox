@@ -6,7 +6,7 @@ library(tarchetypes)
 source("R/_OLD/functions.R")
 fl <-
   list.files("R",
-             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary",
+             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^export",
              full.names = TRUE)
 purrr::walk(fl, source)
 
@@ -273,12 +273,20 @@ list(
     readr::read_csv("data/csv/_meta/play_site_vols.csv",
                     show_col_types = FALSE)
   ),
+  # Export Databrary session CSVs
   tar_target(
     databrary_session_csvs,
-    purrr::map(play_vols_df$site_id, databrary_get_save_session_csv),
+    purrr::walk(play_vols_df$site_id, databrary_get_save_session_csv),
     cue = tarchetypes::tar_cue_age(
       name = databrary_session_csvs,
       age = as.difftime(update_interval, units = update_interval_units)
     )
-  )
+  ),
+  # Export site-specific CSVs
+  tar_target(export_all_site_csvs,
+             purrr::walk(play_vols_df$site_id, export_site_csvs, vb = FALSE),
+             cue = tarchetypes::tar_cue_age(
+               name = export_all_site_csvs,
+               age = as.difftime(update_interval, units = update_interval_units)
+             ))
 )

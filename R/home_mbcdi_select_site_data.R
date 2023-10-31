@@ -2,7 +2,7 @@ home_mbcdi_select_site_data <-
   function(this_site_id = "UCSCR",
            in_dir = "data/csv/home_visit/agg",
            out_dir = "data/csv/home_visit/agg/by-site",
-           vb = TRUE) {
+           vb = FALSE) {
     assertthat::is.string(this_site_id)
     
     assertthat::is.string(in_dir)
@@ -19,7 +19,7 @@ home_mbcdi_select_site_data <-
                in_dir = "data/csv/home_visit/agg",
                out_dir = "data/csv/home_visit/agg/by-site",
                out_fn = paste0("PLAY-", tools::file_path_sans_ext(in_fn)),
-               vb = TRUE) {
+               vb = FALSE) {
         out_fn <- paste0(out_dir, "/", out_fn, "-", this_site_id, ".csv")
         
         in_fn_full <- paste0(in_dir, "/", in_fn)
@@ -51,7 +51,7 @@ home_mbcdi_select_site_data <-
       this_site_id = this_site_id,
       in_dir = in_dir,
       out_dir = out_dir,
-      vb = TRUE
+      vb = vb
     )
   }
 #--------------------------------------------------------------------------
