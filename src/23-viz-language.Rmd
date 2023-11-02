@@ -117,7 +117,7 @@ mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_24)[1], quantile = .60)
 
 ```{r mcdi-24-eng-rare-words-cloud}
 rare_word_ct <- word_ct |>
-  dplyr::filter(n < n_24_eng*.25)
+  dplyr::filter(n < dim(eng_24)[1]*.25)
 # 
 # wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
 mcdi_viz_wordcloud(rare_word_ct, n_participants = dim(eng_24)[1], quantile = .25)

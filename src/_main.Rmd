@@ -418,6 +418,14 @@ Now, we join the screening data with the Databrary session data.
 screen_datab_df <- dplyr::left_join(df_sessions, scr_df, by = c('vol_id', 'participant_ID'))
 ```
 
+Let's do some additional cleaning of redundant column names, e.g., exclusion.
+
+```{r}
+screen_datab_df <- screen_datab_df |>
+  tidyr::unite(exclusion_reason, c("exclusion1_reason", "exclusion2_reason", "exclusion_reason")) |>
+  dplyr::mutate(exclusion_reason = stringr::str_remove_all(exclusion_reason, "NA|_"))
+```
+
 ## Export cleaned file {-}
 
 We date-stamp the exported file so we can monitor progress as this workflow develops.
@@ -2481,7 +2489,7 @@ mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_24)[1], quantile = .60)
 
 ```{r mcdi-24-eng-rare-words-cloud}
 rare_word_ct <- word_ct |>
-  dplyr::filter(n < n_24_eng*.25)
+  dplyr::filter(n < dim(eng_24)[1]*.25)
 # 
 # wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
 mcdi_viz_wordcloud(rare_word_ct, n_participants = dim(eng_24)[1], quantile = .25)
