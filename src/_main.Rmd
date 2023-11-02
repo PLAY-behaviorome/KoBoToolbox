@@ -1794,6 +1794,35 @@ tar_target(
 
 # Data dictionary {-}
 
+## Background {-}
+
+We make use of the `datadictionary` package here.
+
+## Screening/Demographic data
+
+```{r}
+scr_df <- readr::read_csv(paste0(here::here(), "/data/csv/screening/agg/PLAY-screening-datab-latest.csv"),
+                          show_col_types = FALSE)
+
+scr_dd <- datadictionary::create_dictionary(scr_df)
+
+readr::write_csv(scr_dd, paste0(here::here(), "/data/csv/screening/dd/PLAY-screening-data-dictionary.csv"))
+```
+
+## Screening/Demographic data
+
+```{r}
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store=paste0(here::here(), "_targets"))
+}
+```
+
+```{r}
+scr_dd <- datadictionary::create_dictionary(home_visit_df)
+
+readr::write_csv(scr_dd, paste0(here::here(), "/data/csv/home_visit/dd/PLAY-home-visit-data-dictionary.csv"))
+```
+
 <!--chapter:end:19-data-dictionary.Rmd-->
 
 # (PART\*) Data Visualization {-} 
