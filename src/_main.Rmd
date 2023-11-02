@@ -1798,7 +1798,11 @@ tar_target(
 
 We make use of the `datadictionary` package here.
 
-## Screening/Demographic data
+This is not a perfect solution.
+Among other challenges, this package throws many warnings.
+But we will use it for the time being.
+
+## Screening/Demographic data {-}
 
 ```{r}
 scr_df <- readr::read_csv(paste0(here::here(), "/data/csv/screening/agg/PLAY-screening-datab-latest.csv"),
@@ -1809,7 +1813,7 @@ scr_dd <- datadictionary::create_dictionary(scr_df)
 readr::write_csv(scr_dd, paste0(here::here(), "/data/csv/screening/dd/PLAY-screening-data-dictionary.csv"))
 ```
 
-## Screening/Demographic data
+## Screening/Demographic data {-}
 
 ```{r}
 if (!('home_visit_df' %in% ls())) {
