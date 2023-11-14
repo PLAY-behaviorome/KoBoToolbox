@@ -66,7 +66,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -234,17 +234,15 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
 <pre><code>## Joining with `by = join_by(start, end, c_today,
 ## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex,
-## day, day2, day1, play_id, language_spoken_mom,
+## check_childage, check_childage_weeks, child_sex, day,
+## day2, day1, play_id, language_spoken_mom,
 ## `language_spoken_mom/english`,
 ## `language_spoken_mom/spanish`,
-## `language_spoken_mom/other`,
-## language_spoken_mom_other, language_spoken_child,
-## `language_spoken_child/english`,
+## `language_spoken_mom/other`, language_spoken_mom_other,
+## language_spoken_child, `language_spoken_child/english`,
 ## `language_spoken_child/spanish`,
 ## `language_spoken_child/other`,
-## language_spoken_child_other,
-## language_spoken_house,
+## language_spoken_child_other, language_spoken_house,
 ## `language_spoken_house/english`,
 ## `language_spoken_house/spanish`,
 ## `language_spoken_house/other`,
@@ -341,12 +339,11 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_language`,
 ## `group_inclusioncheck/inclusionreason`,
 ## `group_inclusioncheck/indicate_inclusion`,
-## indicate_demoquestionnaire, indicate_databrary,
-## `_id`)`
+## indicate_demoquestionnaire, indicate_databrary, `_id`)`
 ## Joining with `by = join_by(start, end, c_today,
 ## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex,
-## day, day2, day1, language_spoken_child,
+## check_childage, check_childage_weeks, child_sex, day,
+## day2, day1, language_spoken_child,
 ## `language_spoken_child/english`,
 ## `language_spoken_child/spanish`,
 ## `language_spoken_child/other`,
@@ -398,25 +395,25 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_language`,
 ## `_id`)`</code></pre>
 <pre><code>## # A tibble: 591 × 162
-##    start          end   c_today update_date site_id
-##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;  
-##  1 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-##  2 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-##  3 2019-12-18T16… 2020… 2020-0… &lt;NA&gt;        VCOMU  
-##  4 2020-01-01T12… 2020… 2020-0… &lt;NA&gt;        GEORG  
-##  5 2020-01-15T14… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-##  6 2020-01-15T15… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-##  7 2020-01-24T14… 2020… 2020-0… &lt;NA&gt;        GEORG  
-##  8 2020-01-30T13… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-##  9 2020-02-03T17… 2020… 2020-0… &lt;NA&gt;        NYUNI  
-## 10 2020-02-05T09… 2020… 2020-0… &lt;NA&gt;        VCOMU  
+##    start   end   c_today update_date site_id subject_number
+##    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;         
+##  1 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   230           
+##  2 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   229           
+##  3 2019-1… 2020… 2020-0… &lt;NA&gt;        VCOMU   002           
+##  4 2020-0… 2020… 2020-0… &lt;NA&gt;        GEORG   010           
+##  5 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   008           
+##  6 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   009           
+##  7 2020-0… 2020… 2020-0… &lt;NA&gt;        GEORG   011           
+##  8 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   010           
+##  9 2020-0… 2020… 2020-0… &lt;NA&gt;        NYUNI   011           
+## 10 2020-0… 2020… 2020-0… &lt;NA&gt;        VCOMU   003           
 ## # ℹ 581 more rows
-## # ℹ 157 more variables: subject_number &lt;chr&gt;,
-## #   state &lt;chr&gt;, check_childage &lt;chr&gt;,
+## # ℹ 156 more variables: state &lt;chr&gt;, check_childage &lt;chr&gt;,
 ## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;,
-## #   day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;,
-## #   play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
-## #   `language_spoken_mom/english` &lt;chr&gt;, …</code></pre>
+## #   day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
+## #   language_spoken_mom &lt;chr&gt;,
+## #   `language_spoken_mom/english` &lt;chr&gt;,
+## #   `language_spoken_mom/spanish` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -640,8 +637,8 @@ Here, we want to select only those sessions that occurred and which have passed 
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src/blob/main/12-screening.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src/edit/main/12-screening.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/src/12-screening.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/12-screening.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
