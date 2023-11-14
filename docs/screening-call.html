@@ -66,7 +66,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -232,18 +232,26 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 236 columns.</code></pre>
 <pre><code>## Cleaning '/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv'.</code></pre>
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks,
-## child_sex, day, day2, day1, play_id, language_spoken_mom,
-## `language_spoken_mom/english`, `language_spoken_mom/spanish`,
-## `language_spoken_mom/other`, language_spoken_mom_other,
-## language_spoken_child, `language_spoken_child/english`,
-## `language_spoken_child/spanish`, `language_spoken_child/other`,
-## language_spoken_child_other, language_spoken_house,
-## `language_spoken_house/english`, `language_spoken_house/spanish`,
-## `language_spoken_house/other`, language_spoken_house_other,
+<pre><code>## Joining with `by = join_by(start, end, c_today,
+## update_date, site_id, subject_number, state,
+## check_childage, check_childage_weeks, child_sex,
+## day, day2, day1, play_id, language_spoken_mom,
+## `language_spoken_mom/english`,
+## `language_spoken_mom/spanish`,
+## `language_spoken_mom/other`,
+## language_spoken_mom_other, language_spoken_child,
+## `language_spoken_child/english`,
+## `language_spoken_child/spanish`,
+## `language_spoken_child/other`,
+## language_spoken_child_other,
+## language_spoken_house,
+## `language_spoken_house/english`,
+## `language_spoken_house/spanish`,
+## `language_spoken_house/other`,
+## language_spoken_house_other,
 ## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`, `child_information/child_duedate`,
+## `child_information/child_onterm`,
+## `child_information/child_duedate`,
 ## `child_information/child_birthage`,
 ## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
@@ -257,7 +265,8 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `child_information/specify_illnesses_injuries`,
 ## `child_information/other_developmentaldelays`,
 ## `child_information/specify_developmentaldelays`,
-## `child_information/child_race`, `child_information/child_sleep_time`,
+## `child_information/child_race`,
+## `child_information/child_sleep_time`,
 ## `child_information/child_wake_time`,
 ## `child_information/child_nap_hours`,
 ## `child_information/child_sleep_location`,
@@ -287,21 +296,30 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/other_relatives`,
 ## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
-## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
-## `group_mominfo/mom_datecare`, `group_mominfo/mom_childbirth_age`,
-## `group_mominfo/check_mom_childbirth_age`, `group_mominfo/mom_race`,
+## `group_mominfo/mom_biological`,
+## `group_mominfo/mom_relation`,
+## `group_mominfo/mom_datecare`,
+## `group_mominfo/mom_childbirth_age`,
+## `group_mominfo/check_mom_childbirth_age`,
+## `group_mominfo/mom_race`,
 ## `group_mominfo/mom_birth_country`,
 ## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
-## `group_mominfo/mom_occupation`, `group_mominfo/mom_jobs_number`,
-## `group_mominfo/mom_training`, `group_mominfo/mom_condition`,
-## `group_mominfo/specify_mom_condition`, `group_mominfo/indicate_mom`,
+## `group_mominfo/mom_education`,
+## `group_mominfo/mom_employment`,
+## `group_mominfo/mom_occupation`,
+## `group_mominfo/mom_jobs_number`,
+## `group_mominfo/mom_training`,
+## `group_mominfo/mom_condition`,
+## `group_mominfo/specify_mom_condition`,
+## `group_mominfo/indicate_mom`,
 ## `group_biodad/biodad_childbirth_age`,
 ## `group_biodad/check_biodad_childbirth_age`,
-## `group_biodad/biodad_race`, `group_biodad/indicate_biodad`,
+## `group_biodad/biodad_race`,
+## `group_biodad/indicate_biodad`,
 ## `group_biomom/biomom_childbirth_age`,
 ## `group_biomom/check_biomom_childbirth_age`,
-## `group_biomom/biomom_race`, `group_biomom/indicate_biomom`,
+## `group_biomom/biomom_race`,
+## `group_biomom/indicate_biomom`,
 ## `group_nonbiopartner/nonbiopartner_race`,
 ## `group_nonbiopartner/indicate_nonbiopartner`,
 ## `group_genpartner_info/partner_education`,
@@ -323,14 +341,19 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_language`,
 ## `group_inclusioncheck/inclusionreason`,
 ## `group_inclusioncheck/indicate_inclusion`,
-## indicate_demoquestionnaire, indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today, update_date, site_id,
-## subject_number, state, check_childage, check_childage_weeks,
-## child_sex, day, day2, day1, language_spoken_child,
-## `language_spoken_child/english`, `language_spoken_child/spanish`,
-## `language_spoken_child/other`, language_spoken_child_other,
+## indicate_demoquestionnaire, indicate_databrary,
+## `_id`)`
+## Joining with `by = join_by(start, end, c_today,
+## update_date, site_id, subject_number, state,
+## check_childage, check_childage_weeks, child_sex,
+## day, day2, day1, language_spoken_child,
+## `language_spoken_child/english`,
+## `language_spoken_child/spanish`,
+## `language_spoken_child/other`,
+## language_spoken_child_other,
 ## `child_information/child_bornonduedate`,
-## `child_information/child_onterm`, `child_information/child_duedate`,
+## `child_information/child_onterm`,
+## `child_information/child_duedate`,
 ## `child_information/child_birthage`,
 ## `child_information/child_weight_pounds`,
 ## `child_information/child_weight_ounces`,
@@ -372,27 +395,28 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_hours`,
 ## `group_child_care_arrangements/childcare_number`,
 ## `group_child_care_arrangements/childcare_age`,
-## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
+## `group_child_care_arrangements/childcare_language`,
+## `_id`)`</code></pre>
 <pre><code>## # A tibble: 591 × 162
-##    start        end   c_today update_date site_id subject_number state
-##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
-##  1 2020-02-27T… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
-##  2 2020-02-27T… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
-##  3 2019-12-18T… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
-##  4 2020-01-01T… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
-##  5 2020-01-15T… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
-##  6 2020-01-15T… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
-##  7 2020-01-24T… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
-##  8 2020-01-30T… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
-##  9 2020-02-03T… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
-## 10 2020-02-05T… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
+##    start          end   c_today update_date site_id
+##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;  
+##  1 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+##  2 2020-02-27T08… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+##  3 2019-12-18T16… 2020… 2020-0… &lt;NA&gt;        VCOMU  
+##  4 2020-01-01T12… 2020… 2020-0… &lt;NA&gt;        GEORG  
+##  5 2020-01-15T14… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+##  6 2020-01-15T15… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+##  7 2020-01-24T14… 2020… 2020-0… &lt;NA&gt;        GEORG  
+##  8 2020-01-30T13… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+##  9 2020-02-03T17… 2020… 2020-0… &lt;NA&gt;        NYUNI  
+## 10 2020-02-05T09… 2020… 2020-0… &lt;NA&gt;        VCOMU  
 ## # ℹ 581 more rows
-## # ℹ 155 more variables: check_childage &lt;chr&gt;,
-## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
-## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
-## #   `language_spoken_mom/english` &lt;chr&gt;,
-## #   `language_spoken_mom/spanish` &lt;chr&gt;,
-## #   `language_spoken_mom/other` &lt;chr&gt;, …</code></pre>
+## # ℹ 157 more variables: subject_number &lt;chr&gt;,
+## #   state &lt;chr&gt;, check_childage &lt;chr&gt;,
+## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;,
+## #   day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;,
+## #   play_id &lt;chr&gt;, language_spoken_mom &lt;chr&gt;,
+## #   `language_spoken_mom/english` &lt;chr&gt;, …</code></pre>
 </div>
 <div id="clean-individual-fields" class="section level3 unnumbered">
 <h3>Clean individual fields<a class="anchor" aria-label="anchor" href="#clean-individual-fields"><i class="fas fa-link"></i></a>
@@ -528,8 +552,10 @@ We load these CSVs into a single data frame.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">group_name</span>, data<span class="op">=</span><span class="va">df_sessions</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## group_name
-##    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
-##           1          15          61         344          77</code></pre>
+##    No visit    No_visit    No_Visit   PLAY_Gold 
+##           1          15          61         344 
+## PLAY_Silver 
+##          77</code></pre>
 <p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”.
 In addition, there are <span class="math inline">\(n=\)</span> 68 sessions with NA in the <code>group_name</code>.
 These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
@@ -614,8 +640,8 @@ Here, we want to select only those sessions that occurred and which have passed 
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/12-screening.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/12-screening.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src/blob/main/12-screening.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/src/edit/main/12-screening.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -627,7 +653,7 @@ Here, we want to select only those sessions that occurred and which have passed 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-13.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
