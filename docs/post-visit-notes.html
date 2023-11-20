@@ -80,19 +80,6 @@
 <pre><code>tar_target(kb_post_visit, dplyr::filter(
     kb_df, stringr::str_detect(title, "Post\\-Visit")
   ))</code></pre>
-</div>
-<div id="download-forms-as-xlsx" class="section level2 unnumbered">
-<h2>Download forms as XLSX<a class="anchor" aria-label="anchor" href="#download-forms-as-xlsx"><i class="fas fa-link"></i></a>
-</h2>
-<p>A special function <code>make_post_visit_df()</code> downloads the XLSX forms, converts them to CSVs,
-saves the CSVs in a specific directory, and then selects one of them–the most recent form–to open as a data frame.</p>
-<p>There is a smaller, older post-visit data file with fewer fields that can be reconciled with the current active one at a later date.</p>
-<pre><code>tar_target(
-    post_visit_df,
-    make_post_visit_df(kb_post_visit,
-                       "data/xlsx/post_visit",
-                       "data/csv/post_visit")
-  ),</code></pre>
 
 </div>
 </div>
@@ -104,7 +91,6 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#post-visit-notes">Post-visit notes</a></li>
 <li><a class="nav-link" href="#select-forms-from-kbt">Select forms from KBT</a></li>
-<li><a class="nav-link" href="#download-forms-as-xlsx">Download forms as XLSX</a></li>
 </ul>
 
       <div class="book-extra">
@@ -122,7 +108,7 @@ saves the CSVs in a specific directory, and then selects one of them–the most 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-14.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

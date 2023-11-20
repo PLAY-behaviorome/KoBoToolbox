@@ -10,19 +10,5 @@ tar_target(kb_post_visit, dplyr::filter(
   ))
 ```
 
-## Download forms as XLSX {-}
 
-A special function `make_post_visit_df()` downloads the XLSX forms, converts them to CSVs, 
-saves the CSVs in a specific directory, and then selects one of them--the most recent form--to open as a data frame.
-
-There is a smaller, older post-visit data file with fewer fields that can be reconciled with the current active one at a later date.
-
-```
-tar_target(
-    post_visit_df,
-    make_post_visit_df(kb_post_visit,
-                       "data/xlsx/post_visit",
-                       "data/csv/post_visit")
-  ),
-```
 

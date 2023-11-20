@@ -6,7 +6,7 @@ library(tarchetypes)
 source("R/_OLD/functions.R")
 fl <-
   list.files("R",
-             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^export",
+             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^export|^post_visit",
              full.names = TRUE)
 purrr::walk(fl, source)
 
@@ -89,6 +89,15 @@ list(
     load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
     cue = tarchetypes::tar_cue_age(
       name = post_visit_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_combined_df,
+    post_visit_make_df(kb_post_visit_df, "data/xlsx/post_visit",
+                       "data/csv/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
