@@ -462,7 +462,7 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_number`,
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
-<pre><code>## # A tibble: 601 × 162
+<pre><code>## # A tibble: 608 × 162
 ##    start  end   c_today update_date site_id subject_number state check_childage
 ##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;         
 ##  1 2020-… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New … 32.6772408503…
@@ -475,7 +475,7 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ##  8 2020-… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY    17.8514683322…
 ##  9 2020-… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New … 23.8001314924…
 ## 10 2020-… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA    17.5884834538…
-## # ℹ 591 more rows
+## # ℹ 598 more rows
 ## # ℹ 154 more variables: check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;,
 ## #   day &lt;chr&gt;, day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
 ## #   language_spoken_mom &lt;chr&gt;, `language_spoken_mom/english` &lt;chr&gt;,
@@ -507,58 +507,58 @@ a character string.</p>
 </div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> <span class="fu">screen_clean_fields</span>(scr_df)</span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">str</span>(scr_df)</span></code></pre></div>
-<pre><code>## tibble [601 × 51] (S3: tbl_df/tbl/data.frame)
-##  $ submit_date                       : chr [1:601] &quot;2020-02-27T08:24:10.551-05:00&quot; &quot;2020-02-27T08:43:34.275-05:00&quot; &quot;2019-12-18T16:37:17.554-05:00&quot; &quot;2020-01-01T12:54:04.550-05:00&quot; ...
-##  $ site_id                           : chr [1:601] &quot;NYUNI&quot; &quot;NYUNI&quot; &quot;VCOMU&quot; &quot;GEORG&quot; ...
-##  $ participant_ID                    : chr [1:601] &quot;230&quot; &quot;229&quot; &quot;002&quot; &quot;010&quot; ...
-##  $ play_id                           : chr [1:601] NA NA NA NA ...
-##  $ child_age_mos                     : chr [1:601] &quot;32.677240850317695&quot; &quot;32.38138286215201&quot; &quot;26.725838264299803&quot; &quot;12.754766600920446&quot; ...
-##  $ child_sex                         : chr [1:601] &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
-##  $ child_bornonduedate               : chr [1:601] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
-##  $ child_onterm                      : chr [1:601] NA NA NA NA ...
-##  $ child_birthage                    : chr [1:601] &quot;-7&quot; &quot;-10&quot; &quot;0&quot; &quot;1&quot; ...
-##  $ child_weight_pounds               : chr [1:601] &quot;8&quot; &quot;7&quot; &quot;6&quot; &quot;7&quot; ...
-##  $ child_weight_ounces               : chr [1:601] &quot;12&quot; &quot;10&quot; &quot;12&quot; &quot;15&quot; ...
-##  $ child_birth_complications         : chr [1:601] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_birth_complications_specify : chr [1:601] NA NA NA NA ...
-##  $ child_hearing_disabilities        : chr [1:601] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_hearing_disabilities_specify: chr [1:601] &quot;Temporary hearing loss so tubes in his ears, one still remaining&quot; NA NA NA ...
-##  $ child_vision_disabilities         : chr [1:601] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_vision_disabilities_specify : chr [1:601] NA NA NA NA ...
-##  $ child_major_illnesses_injuries    : chr [1:601] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ child_illnesses_injuries_specify  : chr [1:601] &quot;Pneumonia at 5 months&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
-##  $ child_developmentaldelays         : chr [1:601] NA NA NA NA ...
-##  $ child_developmentaldelays_specify : chr [1:601] NA NA NA NA ...
-##  $ child_sleep_time                  : chr [1:601] &quot;20:15:00.000-05:00&quot; &quot;20:15:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; ...
-##  $ child_wake_time                   : chr [1:601] &quot;07:15:00.000-05:00&quot; &quot;06:45:00.000-05:00&quot; &quot;07:30:00.000-05:00&quot; &quot;06:15:00.000-05:00&quot; ...
-##  $ child_nap_hours                   : chr [1:601] &quot;2&quot; &quot;3&quot; &quot;1.5&quot; &quot;2&quot; ...
-##  $ child_sleep_location              : chr [1:601] &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; ...
-##  $ mom_bio                           : chr [1:601] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
-##  $ mom_childbirth_age                : chr [1:601] &quot;33.41&quot; &quot;38.84&quot; &quot;32.2&quot; &quot;30.38&quot; ...
-##  $ mom_race                          : chr [1:601] &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; ...
-##  $ mom_birth_country                 : chr [1:601] &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; ...
-##  $ mom_birth_country_specify         : chr [1:601] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
-##  $ mom_education                     : chr [1:601] &quot;masters&quot; &quot;doctorate&quot; &quot;doctorate&quot; &quot;masters&quot; ...
-##  $ mom_employment                    : chr [1:601] &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; ...
-##  $ mom_occupation                    : chr [1:601] &quot;Architect&quot; &quot;Spanish teacher&quot; &quot;Nurse instructor&quot; &quot;School Psychologist&quot; ...
-##  $ mom_jobs_number                   : chr [1:601] &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; ...
-##  $ mom_training                      : chr [1:601] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
-##  $ biodad_childbirth_age             : chr [1:601] &quot;33.85_NA&quot; &quot;30.42_NA&quot; &quot;37.32_NA&quot; &quot;30.53_NA&quot; ...
-##  $ biodad_race                       : chr [1:601] &quot;white_NA&quot; &quot;white_NA&quot; &quot;NA_NA&quot; &quot;NA_NA&quot; ...
-##  $ language_spoken_mom               : chr [1:601] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_mom_comments      : chr [1:601] NA NA NA NA ...
-##  $ language_spoken_child             : chr [1:601] &quot;english&quot; &quot;spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_home_comments     : chr [1:601] &quot;FALSE_47706996&quot; &quot;TRUE_47707423&quot; &quot;FALSE_43397823&quot; &quot;FALSE_44074192&quot; ...
-##  $ language_spoken_child_comments    : chr [1:601] NA NA NA NA ...
-##  $ language_spoken_home              : chr [1:601] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
-##  $ language_spoken_house_other       : chr [1:601] NA NA NA NA ...
-##  $ language_spoken_home_other        : chr [1:601] NA NA NA NA ...
-##  $ childcare_types                   : chr [1:601] NA NA NA NA ...
-##  $ childcare_location                : chr [1:601] NA NA NA NA ...
-##  $ childcare_hours                   : chr [1:601] NA NA NA NA ...
-##  $ childcare_number                  : chr [1:601] NA NA NA NA ...
-##  $ childcare_age                     : chr [1:601] NA NA NA NA ...
-##  $ childcare_language                : chr [1:601] NA NA NA NA ...</code></pre>
+<pre><code>## tibble [608 × 51] (S3: tbl_df/tbl/data.frame)
+##  $ submit_date                       : chr [1:608] &quot;2020-02-27T08:24:10.551-05:00&quot; &quot;2020-02-27T08:43:34.275-05:00&quot; &quot;2019-12-18T16:37:17.554-05:00&quot; &quot;2020-01-01T12:54:04.550-05:00&quot; ...
+##  $ site_id                           : chr [1:608] &quot;NYUNI&quot; &quot;NYUNI&quot; &quot;VCOMU&quot; &quot;GEORG&quot; ...
+##  $ participant_ID                    : chr [1:608] &quot;230&quot; &quot;229&quot; &quot;002&quot; &quot;010&quot; ...
+##  $ play_id                           : chr [1:608] NA NA NA NA ...
+##  $ child_age_mos                     : chr [1:608] &quot;32.677240850317695&quot; &quot;32.38138286215201&quot; &quot;26.725838264299803&quot; &quot;12.754766600920446&quot; ...
+##  $ child_sex                         : chr [1:608] &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
+##  $ child_bornonduedate               : chr [1:608] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
+##  $ child_onterm                      : chr [1:608] NA NA NA NA ...
+##  $ child_birthage                    : chr [1:608] &quot;-7&quot; &quot;-10&quot; &quot;0&quot; &quot;1&quot; ...
+##  $ child_weight_pounds               : chr [1:608] &quot;8&quot; &quot;7&quot; &quot;6&quot; &quot;7&quot; ...
+##  $ child_weight_ounces               : chr [1:608] &quot;12&quot; &quot;10&quot; &quot;12&quot; &quot;15&quot; ...
+##  $ child_birth_complications         : chr [1:608] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_birth_complications_specify : chr [1:608] NA NA NA NA ...
+##  $ child_hearing_disabilities        : chr [1:608] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_hearing_disabilities_specify: chr [1:608] &quot;Temporary hearing loss so tubes in his ears, one still remaining&quot; NA NA NA ...
+##  $ child_vision_disabilities         : chr [1:608] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_vision_disabilities_specify : chr [1:608] NA NA NA NA ...
+##  $ child_major_illnesses_injuries    : chr [1:608] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ child_illnesses_injuries_specify  : chr [1:608] &quot;Pneumonia at 5 months&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ child_developmentaldelays         : chr [1:608] NA NA NA NA ...
+##  $ child_developmentaldelays_specify : chr [1:608] NA NA NA NA ...
+##  $ child_sleep_time                  : chr [1:608] &quot;20:15:00.000-05:00&quot; &quot;20:15:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; &quot;19:00:00.000-05:00&quot; ...
+##  $ child_wake_time                   : chr [1:608] &quot;07:15:00.000-05:00&quot; &quot;06:45:00.000-05:00&quot; &quot;07:30:00.000-05:00&quot; &quot;06:15:00.000-05:00&quot; ...
+##  $ child_nap_hours                   : chr [1:608] &quot;2&quot; &quot;3&quot; &quot;1.5&quot; &quot;2&quot; ...
+##  $ child_sleep_location              : chr [1:608] &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; &quot;crib_separate&quot; ...
+##  $ mom_bio                           : chr [1:608] &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...
+##  $ mom_childbirth_age                : chr [1:608] &quot;33.41&quot; &quot;38.84&quot; &quot;32.2&quot; &quot;30.38&quot; ...
+##  $ mom_race                          : chr [1:608] &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; ...
+##  $ mom_birth_country                 : chr [1:608] &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; &quot;unitedstates&quot; ...
+##  $ mom_birth_country_specify         : chr [1:608] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ mom_education                     : chr [1:608] &quot;masters&quot; &quot;doctorate&quot; &quot;doctorate&quot; &quot;masters&quot; ...
+##  $ mom_employment                    : chr [1:608] &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; &quot;full_time&quot; ...
+##  $ mom_occupation                    : chr [1:608] &quot;Architect&quot; &quot;Spanish teacher&quot; &quot;Nurse instructor&quot; &quot;School Psychologist&quot; ...
+##  $ mom_jobs_number                   : chr [1:608] &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; ...
+##  $ mom_training                      : chr [1:608] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ biodad_childbirth_age             : chr [1:608] &quot;33.85_NA&quot; &quot;30.42_NA&quot; &quot;37.32_NA&quot; &quot;30.53_NA&quot; ...
+##  $ biodad_race                       : chr [1:608] &quot;white_NA&quot; &quot;white_NA&quot; &quot;NA_NA&quot; &quot;NA_NA&quot; ...
+##  $ language_spoken_mom               : chr [1:608] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_mom_comments      : chr [1:608] NA NA NA NA ...
+##  $ language_spoken_child             : chr [1:608] &quot;english&quot; &quot;spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_home_comments     : chr [1:608] &quot;FALSE_47706996&quot; &quot;TRUE_47707423&quot; &quot;FALSE_43397823&quot; &quot;FALSE_44074192&quot; ...
+##  $ language_spoken_child_comments    : chr [1:608] NA NA NA NA ...
+##  $ language_spoken_home              : chr [1:608] &quot;english&quot; &quot;english spanish&quot; &quot;english&quot; &quot;english&quot; ...
+##  $ language_spoken_house_other       : chr [1:608] NA NA NA NA ...
+##  $ language_spoken_home_other        : chr [1:608] NA NA NA NA ...
+##  $ childcare_types                   : chr [1:608] NA NA NA NA ...
+##  $ childcare_location                : chr [1:608] NA NA NA NA ...
+##  $ childcare_hours                   : chr [1:608] NA NA NA NA ...
+##  $ childcare_number                  : chr [1:608] NA NA NA NA ...
+##  $ childcare_age                     : chr [1:608] NA NA NA NA ...
+##  $ childcare_language                : chr [1:608] NA NA NA NA ...</code></pre>
 <p>There is more work to do, but we have a version worth exporting.</p>
 </div>
 </div>
@@ -571,7 +571,7 @@ a character string.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>valid_db_vol <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(scr_df<span class="sc">$</span>vol_id)</span>
 <span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> scr_df[valid_db_vol,]</span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 592 valid Databrary volume IDs out of a total of <span class="math inline">\(n=\)</span> 601 screening records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 599 valid Databrary volume IDs out of a total of <span class="math inline">\(n=\)</span> 608 screening records.</p>
 <p>Next, we add a <code>play_status</code> field based on the <code>group-name</code> field from Databrary.
 We use <code>group-name</code> for indicating “Gold”, “Silver”, or “Not run.”</p>
 <p>Two targets in <code>_targets.R</code> are relevant for this operation:</p>
@@ -607,10 +607,10 @@ We load these CSVs into a single data frame.</p>
 <p>The <code>group_name</code> variable contains status information about the sessions.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name, <span class="at">data=</span>df_sessions)</span></code></pre></div>
 <pre><code>## group_name
-##    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver       UOREG 
-##           1          15          61         350          77           1</code></pre>
+##    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
+##           1          15          61         354          78</code></pre>
 <p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”.
-In addition, there are <span class="math inline">\(n=\)</span> 68 sessions with NA in the <code>group_name</code>.
+In addition, there are <span class="math inline">\(n=\)</span> 70 sessions with NA in the <code>group_name</code>.
 These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
 Here, we want to select only those sessions that occurred and which have passed QA–those sessions for which <code>group_name</code> is either ‘PLAY_Gold’ or ‘PLAY_Silver’.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>df_sessions <span class="ot">&lt;-</span> df_sessions <span class="sc">|&gt;</span></span>
@@ -622,8 +622,8 @@ Here, we want to select only those sessions that occurred and which have passed 
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> group_name <span class="sc">+</span> session_release, df_sessions)</span></code></pre></div>
 <pre><code>##              session_release
 ## group_name    EXCERPTS PRIVATE SHARED
-##   PLAY_Gold        270       0     80
-##   PLAY_Silver       61       1     15</code></pre>
+##   PLAY_Gold        273       0     81
+##   PLAY_Silver       62       1     15</code></pre>
 <p>There was one session marked <code>PRIVATE</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>df_sessions <span class="sc">|&gt;</span></span>
 <span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(session_release <span class="sc">==</span> <span class="st">&quot;PRIVATE&quot;</span>) <span class="sc">|&gt;</span></span>
@@ -1133,7 +1133,7 @@ n_vars
 740625_non_mbcdi_12_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-126
+128
 </td>
 <td style="text-align:right;">
 288
@@ -1144,7 +1144,7 @@ n_vars
 740626_non_mbcdi_18_bilingual_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-33
+34
 </td>
 <td style="text-align:right;">
 287
@@ -1177,7 +1177,7 @@ n_vars
 740629_non_mbcdi_24_english_deidentified.csv
 </td>
 <td style="text-align:right;">
-103
+104
 </td>
 <td style="text-align:right;">
 287
@@ -2343,7 +2343,7 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb164-6"><a href="#cb164-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;group_databrary&#39;</span>))</span>
 <span id="cb164-7"><a href="#cb164-7" tabindex="-1"></a></span>
 <span id="cb164-8"><a href="#cb164-8" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code></pre></div>
-<pre><code>## [1] 136 281  32 281 263 283</code></pre>
+<pre><code>## [1] 138 281  32 281 265 283</code></pre>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
 <pre><code>## Warning in names(df1) == names(df3): longer object length is not a multiple of
 ## shorter object length</code></pre>
@@ -2429,8 +2429,8 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb176-3"><a href="#cb176-3" tabindex="-1"></a></span>
 <span id="cb176-4"><a href="#cb176-4" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df3))</span></code></pre></div>
 <pre><code>##      [,1] [,2]
-## [1,]  136  281
-## [2,]  263  281</code></pre>
+## [1,]  138  281
+## [2,]  265  281</code></pre>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2518,13 +2518,13 @@ These are incorporated into <code>R/functions.R</code> so we do not source them 
 <span id="cb181-4"><a href="#cb181-4" tabindex="-1"></a></span>
 <span id="cb181-5"><a href="#cb181-5" tabindex="-1"></a>df1m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_1)</span>
 <span id="cb181-6"><a href="#cb181-6" tabindex="-1"></a><span class="fu">dim</span>(df1m)</span></code></pre></div>
-<pre><code>## [1] 136 272</code></pre>
+<pre><code>## [1] 138 272</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" tabindex="-1"></a>df2m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_2)</span>
 <span id="cb183-2"><a href="#cb183-2" tabindex="-1"></a><span class="fu">dim</span>(df2m)</span></code></pre></div>
 <pre><code>## [1]  32 272</code></pre>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" tabindex="-1"></a>df3m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_288_cols)</span>
 <span id="cb185-2"><a href="#cb185-2" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span></code></pre></div>
-<pre><code>## [1] 263 272</code></pre>
+<pre><code>## [1] 265 272</code></pre>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df2m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
 <pre><code>## [1] 272</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df3m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code></pre></div>
@@ -6641,7 +6641,7 @@ But we will use it for the time being.</p>
 <span id="cb405-2"><a href="#cb405-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb405-3"><a href="#cb405-3" tabindex="-1"></a><span class="fu">library</span>(forcats)</span></code></pre></div>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="#cb406-1" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-datab-latest.csv&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 462 Columns: 68
+<pre><code>## Rows: 467 Columns: 68
 ## ── Column specification ───────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr  (54): session_name, session_release, participant_ID, participant_gende...
@@ -6658,10 +6658,10 @@ But we will use it for the time being.</p>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="#cb408-1" tabindex="-1"></a>(s <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> session_release <span class="sc">+</span> group_name, screen_df))</span></code></pre></div>
 <pre><code>##                group_name
 ## session_release PLAY_Gold PLAY_Silver
-##        EXCERPTS       284          67
+##        EXCERPTS       287          68
 ##        PRIVATE          0           1
-##        SHARED          92          18</code></pre>
-<p>Of the <span class="math inline">\(n=\)</span> 462 sessions so far, 75.974026% have agreed to EXCERPTS or “Learning Audiences” sharing.</p>
+##        SHARED          93          18</code></pre>
+<p>Of the <span class="math inline">\(n=\)</span> 467 sessions so far, 76.0171306% have agreed to EXCERPTS or “Learning Audiences” sharing.</p>
 </div>
 <div id="dates-times" class="section level2 unnumbered">
 <h2 class="unnumbered">Dates &amp; times</h2>
@@ -6745,16 +6745,16 @@ But we will use it for the time being.</p>
 <span id="cb414-8"><a href="#cb414-8" tabindex="-1"></a>      <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_spoken_child
 ## child_sex english english_other english_spanish english_spanish_other spanish
-##    female     191             1              31                     2       9
-##    male       175             3              37                     0      10</code></pre>
+##    female     193             1              31                     2       9
+##    male       178             3              37                     0      10</code></pre>
 </div>
 <div id="at-home" class="section level3 unnumbered">
 <h3 class="unnumbered">At home</h3>
 <div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="#cb416-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_spoken_home
 ## child_sex english english_other english_spanish english_spanish_other other
-##    female     190             3              26                     1     1
-##    male       165             2              43                     2     1
+##    female     192             3              26                     1     1
+##    male       168             2              43                     2     1
 ##          language_spoken_home
 ## child_sex spanish
 ##    female       9
@@ -6765,7 +6765,7 @@ But we will use it for the time being.</p>
 <div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="#cb418-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> language_spoken_child <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##                        language_spoken_home
 ## language_spoken_child   english english_other english_spanish
-##   english                   345             2              14
+##   english                   350             2              14
 ##   english_other               1             3               0
 ##   english_spanish             6             0              50
 ##   english_spanish_other       2             0               0
@@ -6787,8 +6787,8 @@ But we will use it for the time being.</p>
 <span id="cb420-2"><a href="#cb420-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_bornonduedate
 ## child_sex  no yes
-##    female   5 224
-##    male     5 220</code></pre>
+##    female   5 226
+##    male     5 223</code></pre>
 <div class="rmdnote">
 <p>There are <span class="math inline">\(n=\)</span> 8 NAs.</p>
 </div>
@@ -6882,7 +6882,7 @@ participant_ID
 <pre><code>##                    child_onterm
 ## child_bornonduedate yes
 ##                 no   10
-##                 yes 330</code></pre>
+##                 yes 335</code></pre>
 </div>
 <div id="child-weight" class="section level3 unnumbered">
 <h3 class="unnumbered">Child weight</h3>
@@ -6907,8 +6907,8 @@ participant_ID
 <span id="cb426-2"><a href="#cb426-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_birth_complications
 ## child_sex  no yes
-##    female 208  21
-##    male   205  17</code></pre>
+##    female 210  21
+##    male   207  18</code></pre>
 <div class="rmdnote">
 <p>There are some first names in the <code>child_birth_complications_specify</code> field, so it is not shown here.</p>
 </div>
@@ -6924,8 +6924,8 @@ participant_ID
 <span id="cb429-2"><a href="#cb429-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_major_illnesses_injuries
 ## child_sex  no yes
-##    female 221   8
-##    male   212  10</code></pre>
+##    female 223   8
+##    male   215  10</code></pre>
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="#cb431-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb431-2"><a href="#cb431-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_illnesses_injuries_specify),</span>
 <span id="cb431-3"><a href="#cb431-3" tabindex="-1"></a>                <span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(child_illnesses_injuries_specify, <span class="st">&quot;OK&quot;</span>)) <span class="sc">|&gt;</span></span>
@@ -7143,8 +7143,8 @@ Pneumonia at 5 months
 <span id="cb432-2"><a href="#cb432-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_vision_disabilities
 ## child_sex  no yes
-##    female 228   1
-##    male   221   1</code></pre>
+##    female 230   1
+##    male   224   1</code></pre>
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="#cb434-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb434-2"><a href="#cb434-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vision_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb434-3"><a href="#cb434-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_vision_disabilities_specify) <span class="sc">|&gt;</span></span>
@@ -7196,8 +7196,8 @@ lazy eye but corrected
 <span id="cb435-2"><a href="#cb435-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_hearing_disabilities
 ## child_sex  no yes
-##    female 229   0
-##    male   221   1</code></pre>
+##    female 231   0
+##    male   224   1</code></pre>
 <div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="#cb437-1" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb437-2"><a href="#cb437-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_hearing_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb437-3"><a href="#cb437-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_hearing_disabilities_specify) <span class="sc">|&gt;</span></span>
@@ -7238,8 +7238,8 @@ Temporary hearing loss so tubes in his ears, one still remaining
 <span id="cb438-2"><a href="#cb438-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          child_developmentaldelays
 ## child_sex  no yes
-##    female 165   2
-##    male   163   4</code></pre>
+##    female 167   2
+##    male   166   4</code></pre>
 <div class="rmdnote">
 <p>There may be first names in the <code>child_developmentaldelays_specify</code> field, so it is not shown here.</p>
 </div>
@@ -8502,8 +8502,8 @@ UTAUS
 <span id="cb453-2"><a href="#cb453-2" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code></pre></div>
 <pre><code>##          mom_bio
 ## child_sex no_partnerchild yes
-##    female               1 216
-##    male                 0 217</code></pre>
+##    female               1 218
+##    male                 0 220</code></pre>
 </div>
 <div id="age-at-childbirth" class="section level3 unnumbered">
 <h3 class="unnumbered">Age at childbirth</h3>
@@ -8572,7 +8572,7 @@ mom_childbirth_age
 <span id="cb457-11"><a href="#cb457-11" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_birth_country, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_birth_country
 ##      Other puertorico         US 
-##         57          2        387</code></pre>
+##         57          2        392</code></pre>
 <div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="#cb459-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb459-2"><a href="#cb459-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country_specify =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb459-3"><a href="#cb459-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
@@ -8599,11 +8599,11 @@ mom_childbirth_age
 <span id="cb461-5"><a href="#cb461-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_education, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_education
 ##        associates    bachelor_s_deg         bachelors           diploma 
-##                14                 3               148                11 
+##                14                 3               150                11 
 ##         doctorate               ged graduate_nodegree    master_s_degre 
 ##                64                 2                13                 2 
 ##           masters             ninth      professional    professional_d 
-##               139                 1                26                 2 
+##               142                 1                26                 2 
 ##       somecollege     voc_nodiplima 
 ##                19                 1</code></pre>
 <div class="rmdnote">
@@ -8618,7 +8618,7 @@ mom_childbirth_age
 <span id="cb463-4"><a href="#cb463-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_employment, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_employment
 ## full_time        no part_time 
-##       269        96        80</code></pre>
+##       274        96        80</code></pre>
 </div>
 <div id="occupation" class="section level3 unnumbered">
 <h3 class="unnumbered">Occupation</h3>
@@ -8632,7 +8632,7 @@ mom_childbirth_age
 <span id="cb465-4"><a href="#cb465-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_jobs_number
 ##   0   1   2   3   4 
-##   1 306  40   1   1</code></pre>
+##   1 311  40   1   1</code></pre>
 <div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="#cb467-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb467-2"><a href="#cb467-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number),</span>
 <span id="cb467-3"><a href="#cb467-3" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
@@ -8641,7 +8641,7 @@ mom_childbirth_age
 <pre><code>##                mom_employment
 ## mom_jobs_number full_time part_time
 ##               0         0         1
-##               1       245        61
+##               1       250        61
 ##               2        22        18
 ##               3         1         0
 ##               4         1         0</code></pre>
@@ -8654,7 +8654,7 @@ mom_childbirth_age
 <span id="cb469-4"><a href="#cb469-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_training, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## mom_training
 ##  no yes 
-## 433  12</code></pre>
+## 438  12</code></pre>
 </div>
 </div>
 <div id="childcare" class="section level2 unnumbered">
@@ -8667,13 +8667,15 @@ mom_childbirth_age
 <span id="cb471-4"><a href="#cb471-4" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> childcare_types, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>## childcare_types
 ##                childcare           childcare_cent                    nanny 
-##                       96                        2                        4 
+##                       97                        2                        4 
 ##           nanny_babysitt               nanny_home     nanny_home childcare 
 ##                        1                       20                        5 
 ## nanny_home nanny_nothome      nanny_home relative            nanny_nothome 
 ##                        2                        2                        8 
-##                     none                 relative       relative childcare 
-##                       73                       38                        8</code></pre>
+##  nanny_nothome childcare                     none                 relative 
+##                        1                       73                       41 
+##       relative childcare 
+##                        8</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -8685,11 +8687,11 @@ mom_childbirth_age
 <span id="cb473-3"><a href="#cb473-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(childcare_hours)</span>
 <span id="cb473-4"><a href="#cb473-4" tabindex="-1"></a></span>
 <span id="cb473-5"><a href="#cb473-5" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_hours)</span></code></pre></div>
-<pre><code>##  [1] &quot;1&quot;     &quot;10&quot;    &quot;12&quot;    &quot;14.5&quot;  &quot;15&quot;    &quot;15-20&quot; &quot;16&quot;    &quot;17.5&quot;  &quot;18&quot;   
-## [10] &quot;20&quot;    &quot;24&quot;    &quot;25&quot;    &quot;27&quot;    &quot;3&quot;     &quot;30&quot;    &quot;30-35&quot; &quot;30-40&quot; &quot;32&quot;   
-## [19] &quot;33&quot;    &quot;34&quot;    &quot;35&quot;    &quot;35-40&quot; &quot;36&quot;    &quot;37&quot;    &quot;38&quot;    &quot;4&quot;     &quot;40&quot;   
-## [28] &quot;40+&quot;   &quot;40-45&quot; &quot;42&quot;    &quot;42.5&quot;  &quot;43&quot;    &quot;45&quot;    &quot;47&quot;    &quot;5&quot;     &quot;50&quot;   
-## [37] &quot;52.5&quot;  &quot;6&quot;     &quot;8&quot;     &quot;9&quot;</code></pre>
+<pre><code>##  [1] &quot;1&quot;     &quot;10&quot;    &quot;12&quot;    &quot;14.5&quot;  &quot;15&quot;    &quot;15-20&quot; &quot;16&quot;    &quot;16-20&quot; &quot;17.5&quot; 
+## [10] &quot;18&quot;    &quot;20&quot;    &quot;24&quot;    &quot;25&quot;    &quot;27&quot;    &quot;3&quot;     &quot;30&quot;    &quot;30-35&quot; &quot;30-40&quot;
+## [19] &quot;32&quot;    &quot;33&quot;    &quot;34&quot;    &quot;35&quot;    &quot;35-40&quot; &quot;36&quot;    &quot;37&quot;    &quot;38&quot;    &quot;4&quot;    
+## [28] &quot;40&quot;    &quot;40+&quot;   &quot;40-45&quot; &quot;42&quot;    &quot;42.5&quot;  &quot;43&quot;    &quot;45&quot;    &quot;47&quot;    &quot;5&quot;    
+## [37] &quot;50&quot;    &quot;52.5&quot;  &quot;6&quot;     &quot;8&quot;     &quot;9&quot;</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -8770,8 +8772,8 @@ That is on the work plan.</p>
 <span id="cb482-3"><a href="#cb482-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
-##    female     185              34
-##    male       158              54</code></pre>
+##    female     186              35
+##    male       160              54</code></pre>
 </div>
 <div id="mb-cdi-1" class="section level2 unnumbered">
 <h2 class="unnumbered">MB-CDI</h2>
@@ -8842,129 +8844,135 @@ That is on the work plan.</p>
 <span id="cb492-7"><a href="#cb492-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="#cb493-1" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">60</span>)</span></code></pre></div>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : choochoo could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : cookie could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : monkey could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : truck could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : duck could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : daddy could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : meow could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : head could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 ## my_thresh, : allgone could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : dog could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : swing could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : light could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : wet_1 could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : ouch could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : cracker could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : egg could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : mommy could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : rain_2 could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : trash could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : hair could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : ear could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : three could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : more could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : go could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : tummy could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : door could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : nightnight could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : soap could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : shoe could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : spoon could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 ## my_thresh, : vroom could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : eat could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : car could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : shirt could not be fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 ## my_thresh, : uhoh could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : nightnight could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : chair could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : head could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : mouth could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : cup could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : diaper could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : out could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : monkey could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : no could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : dog could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : hot could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : sleep could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : mommy could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : sun could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 ## my_thresh, : down could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : choochoo could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : open could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : ball could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : car could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : two could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : diaper could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : banana could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : tree could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : pants could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : cracker could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : shh could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : shoe could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : rain_2 could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : cookie could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : up could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : milk could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : ouch could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : spoon could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : frog could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : bird could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 ## my_thresh, : mine could not be fit on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-## my_thresh, : sock could not be fit on page. It will not be plotted.</code></pre>
+## my_thresh, : thankyou could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : more could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : mouth could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : sit could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : soap could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : play could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : trash could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : eye could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : swing could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : kiss could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : walk could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+## my_thresh, : one could not be fit on page. It will not be plotted.</code></pre>
 <p><img src="include/img/mcdi-24-eng-word-cloud-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="#cb553-1" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
-<span id="cb553-2"><a href="#cb553-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
-<span id="cb553-3"><a href="#cb553-3" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb553-4"><a href="#cb553-4" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
-<span id="cb553-5"><a href="#cb553-5" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">25</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="#cb556-1" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
+<span id="cb556-2"><a href="#cb556-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
+<span id="cb556-3"><a href="#cb556-3" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb556-4"><a href="#cb556-4" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
+<span id="cb556-5"><a href="#cb556-5" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">25</span>)</span></code></pre></div>
 <p><img src="include/img/mcdi-24-eng-rare-words-cloud-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!--chapter:end:23-viz-language.Rmd-->
 </div>
@@ -8972,50 +8980,50 @@ That is on the work plan.</p>
 </div>
 <div id="locomotion-visualizations" class="section level1 unnumbered">
 <h1 class="unnumbered">Locomotion visualizations</h1>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="#cb554-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;home_visit_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb554-2"><a href="#cb554-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb554-3"><a href="#cb554-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="#cb557-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;home_visit_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb557-2"><a href="#cb557-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb557-3"><a href="#cb557-3" tabindex="-1"></a>}</span></code></pre></div>
 <div id="select-summarize" class="section level2 unnumbered">
 <h2 class="unnumbered">Select &amp; Summarize</h2>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="#cb555-1" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
-<span id="cb555-2"><a href="#cb555-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb555-3"><a href="#cb555-3" tabindex="-1"></a>    .,</span>
-<span id="cb555-4"><a href="#cb555-4" tabindex="-1"></a>    age_group,</span>
-<span id="cb555-5"><a href="#cb555-5" tabindex="-1"></a>    child_sex,</span>
-<span id="cb555-6"><a href="#cb555-6" tabindex="-1"></a>    language_child,</span>
-<span id="cb555-7"><a href="#cb555-7" tabindex="-1"></a>    site_id,</span>
-<span id="cb555-8"><a href="#cb555-8" tabindex="-1"></a>    subject_number,</span>
-<span id="cb555-9"><a href="#cb555-9" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb555-10"><a href="#cb555-10" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb555-11"><a href="#cb555-11" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb555-12"><a href="#cb555-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb555-13"><a href="#cb555-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb555-14"><a href="#cb555-14" tabindex="-1"></a>    .,</span>
-<span id="cb555-15"><a href="#cb555-15" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb555-16"><a href="#cb555-16" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb555-17"><a href="#cb555-17" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb555-18"><a href="#cb555-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb555-19"><a href="#cb555-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb555-20"><a href="#cb555-20" tabindex="-1"></a>    .,</span>
-<span id="cb555-21"><a href="#cb555-21" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
-<span id="cb555-22"><a href="#cb555-22" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
-<span id="cb555-23"><a href="#cb555-23" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
-<span id="cb555-24"><a href="#cb555-24" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="#cb556-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> age_group, <span class="at">data =</span> play_loco)</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="#cb558-1" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">%&gt;%</span></span>
+<span id="cb558-2"><a href="#cb558-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb558-3"><a href="#cb558-3" tabindex="-1"></a>    .,</span>
+<span id="cb558-4"><a href="#cb558-4" tabindex="-1"></a>    age_group,</span>
+<span id="cb558-5"><a href="#cb558-5" tabindex="-1"></a>    child_sex,</span>
+<span id="cb558-6"><a href="#cb558-6" tabindex="-1"></a>    language_child,</span>
+<span id="cb558-7"><a href="#cb558-7" tabindex="-1"></a>    site_id,</span>
+<span id="cb558-8"><a href="#cb558-8" tabindex="-1"></a>    subject_number,</span>
+<span id="cb558-9"><a href="#cb558-9" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb558-10"><a href="#cb558-10" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb558-11"><a href="#cb558-11" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb558-12"><a href="#cb558-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb558-13"><a href="#cb558-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb558-14"><a href="#cb558-14" tabindex="-1"></a>    .,</span>
+<span id="cb558-15"><a href="#cb558-15" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb558-16"><a href="#cb558-16" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb558-17"><a href="#cb558-17" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb558-18"><a href="#cb558-18" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb558-19"><a href="#cb558-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb558-20"><a href="#cb558-20" tabindex="-1"></a>    .,</span>
+<span id="cb558-21"><a href="#cb558-21" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
+<span id="cb558-22"><a href="#cb558-22" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
+<span id="cb558-23"><a href="#cb558-23" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
+<span id="cb558-24"><a href="#cb558-24" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="#cb559-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> age_group, <span class="at">data =</span> play_loco)</span></code></pre></div>
 <pre><code>##          age_group
 ## child_sex 12mo 18mo 24mo
-##    female   83   72   64
-##    male     66   79   67</code></pre>
+##    female   83   73   65
+##    male     68   79   67</code></pre>
 <div id="check-for-anomalous-values" class="section level3 unnumbered">
 <h3 class="unnumbered">Check for anomalous values</h3>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="#cb558-1" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb558-2"><a href="#cb558-2" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="#cb561-1" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb561-2"><a href="#cb561-2" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code></pre></div>
 <div id="anomalous-crawling-onset" class="section level4 unnumbered">
 <h4 class="unnumbered">Anomalous crawling onset</h4>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="#cb559-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb559-2"><a href="#cb559-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, crawl_mos) <span class="sc">%&gt;%</span></span>
-<span id="cb559-3"><a href="#cb559-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb559-4"><a href="#cb559-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="#cb562-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb562-2"><a href="#cb562-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, crawl_mos) <span class="sc">%&gt;%</span></span>
+<span id="cb562-3"><a href="#cb562-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb562-4"><a href="#cb562-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9069,10 +9077,10 @@ UTAUS
 </div>
 <div id="anomalous-walking-onset-kea-criteria" class="section level4 unnumbered">
 <h4 class="unnumbered">Anomalous walking onset (KEA criteria)</h4>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="#cb560-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb560-2"><a href="#cb560-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_kea) <span class="sc">%&gt;%</span></span>
-<span id="cb560-3"><a href="#cb560-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb560-4"><a href="#cb560-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="#cb563-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb563-2"><a href="#cb563-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_kea) <span class="sc">%&gt;%</span></span>
+<span id="cb563-3"><a href="#cb563-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb563-4"><a href="#cb563-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9114,10 +9122,10 @@ PRINU
 </table>
 <div id="anomalous-walking-onset-who-criteria" class="section level5 unnumbered">
 <h5 class="unnumbered">Anomalous walking onset (WHO criteria)</h5>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="#cb561-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb561-2"><a href="#cb561-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_who) <span class="sc">%&gt;%</span></span>
-<span id="cb561-3"><a href="#cb561-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
-<span id="cb561-4"><a href="#cb561-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="#cb564-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb564-2"><a href="#cb564-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., site_id, subject_number, walk_mos_who) <span class="sc">%&gt;%</span></span>
+<span id="cb564-3"><a href="#cb564-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">%&gt;%</span></span>
+<span id="cb564-4"><a href="#cb564-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>) </span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9151,13 +9159,13 @@ PRINU
 </div>
 <div id="crawl-onset" class="section level3 unnumbered">
 <h3 class="unnumbered">Crawl onset</h3>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="#cb562-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb562-2"><a href="#cb562-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">%&gt;%</span></span>
-<span id="cb562-3"><a href="#cb562-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb562-4"><a href="#cb562-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb562-5"><a href="#cb562-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb562-6"><a href="#cb562-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb562-7"><a href="#cb562-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="#cb565-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb565-2"><a href="#cb565-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">%&gt;%</span></span>
+<span id="cb565-3"><a href="#cb565-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb565-4"><a href="#cb565-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb565-5"><a href="#cb565-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb565-6"><a href="#cb565-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb565-7"><a href="#cb565-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-crawl-onset-hist-1.png" alt="Age of crawling onset (mos) by sex" width="672" />
 <p class="caption">
@@ -9167,53 +9175,53 @@ PRINU
 </div>
 <div id="walk-onset" class="section level3 unnumbered">
 <h3 class="unnumbered">Walk onset</h3>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="#cb563-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb563-2"><a href="#cb563-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb563-3"><a href="#cb563-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb563-4"><a href="#cb563-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb563-5"><a href="#cb563-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb563-6"><a href="#cb563-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="#cb566-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb566-2"><a href="#cb566-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb566-3"><a href="#cb566-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb566-4"><a href="#cb566-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb566-5"><a href="#cb566-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb566-6"><a href="#cb566-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-walk-mos-kea-1.png" alt="Age (mos) of walking onset (KEA criteria) by sex" width="672" />
 <p class="caption">
 (#fig:fig-walk-mos-kea)Age (mos) of walking onset (KEA criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="#cb564-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb564-2"><a href="#cb564-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">%&gt;%</span></span>
-<span id="cb564-3"><a href="#cb564-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb564-4"><a href="#cb564-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb564-5"><a href="#cb564-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb564-6"><a href="#cb564-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb564-7"><a href="#cb564-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="#cb567-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb567-2"><a href="#cb567-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">%&gt;%</span></span>
+<span id="cb567-3"><a href="#cb567-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb567-4"><a href="#cb567-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb567-5"><a href="#cb567-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb567-6"><a href="#cb567-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb567-7"><a href="#cb567-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-walk-mos-who-1.png" alt="Age (mos) of walking onset (WHO criteria) by sex" width="672" />
 <p class="caption">
 (#fig:fig-walk-mos-who)Age (mos) of walking onset (WHO criteria) by sex
 </p>
 </div>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="#cb565-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb565-2"><a href="#cb565-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb565-3"><a href="#cb565-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb565-4"><a href="#cb565-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb565-5"><a href="#cb565-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb565-6"><a href="#cb565-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb565-7"><a href="#cb565-7" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb565-8"><a href="#cb565-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb565-9"><a href="#cb565-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb565-10"><a href="#cb565-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb565-11"><a href="#cb565-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb565-12"><a href="#cb565-12" tabindex="-1"></a></span>
-<span id="cb565-13"><a href="#cb565-13" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb565-14"><a href="#cb565-14" tabindex="-1"></a>  walk_p,</span>
-<span id="cb565-15"><a href="#cb565-15" tabindex="-1"></a>  play_loco,</span>
-<span id="cb565-16"><a href="#cb565-16" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb565-17"><a href="#cb565-17" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb565-18"><a href="#cb565-18" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
-<span id="cb565-19"><a href="#cb565-19" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
-<span id="cb565-20"><a href="#cb565-20" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb565-21"><a href="#cb565-21" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb565-22"><a href="#cb565-22" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="#cb568-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb568-2"><a href="#cb568-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb568-3"><a href="#cb568-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb568-4"><a href="#cb568-4" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb568-5"><a href="#cb568-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb568-6"><a href="#cb568-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb568-7"><a href="#cb568-7" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb568-8"><a href="#cb568-8" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb568-9"><a href="#cb568-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb568-10"><a href="#cb568-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb568-11"><a href="#cb568-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb568-12"><a href="#cb568-12" tabindex="-1"></a></span>
+<span id="cb568-13"><a href="#cb568-13" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb568-14"><a href="#cb568-14" tabindex="-1"></a>  walk_p,</span>
+<span id="cb568-15"><a href="#cb568-15" tabindex="-1"></a>  play_loco,</span>
+<span id="cb568-16"><a href="#cb568-16" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb568-17"><a href="#cb568-17" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb568-18"><a href="#cb568-18" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb568-19"><a href="#cb568-19" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb568-20"><a href="#cb568-20" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb568-21"><a href="#cb568-21" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb568-22"><a href="#cb568-22" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_smooth()`).</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
@@ -9225,26 +9233,26 @@ PRINU
 (#fig:fig-walk-mos-kea-who)Walking onset by WHO vs. KEA criteria
 </p>
 </div>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="#cb571-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
-<span id="cb571-2"><a href="#cb571-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
-<span id="cb571-3"><a href="#cb571-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
-<span id="cb571-4"><a href="#cb571-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb571-5"><a href="#cb571-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb571-6"><a href="#cb571-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb571-7"><a href="#cb571-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb571-8"><a href="#cb571-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb571-9"><a href="#cb571-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb571-10"><a href="#cb571-10" tabindex="-1"></a></span>
-<span id="cb571-11"><a href="#cb571-11" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb571-12"><a href="#cb571-12" tabindex="-1"></a>  walk_p,</span>
-<span id="cb571-13"><a href="#cb571-13" tabindex="-1"></a>  play_loco,</span>
-<span id="cb571-14"><a href="#cb571-14" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb571-15"><a href="#cb571-15" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb571-16"><a href="#cb571-16" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
-<span id="cb571-17"><a href="#cb571-17" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
-<span id="cb571-18"><a href="#cb571-18" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb571-19"><a href="#cb571-19" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb571-20"><a href="#cb571-20" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="#cb574-1" tabindex="-1"></a>play_loco <span class="sc">%&gt;%</span></span>
+<span id="cb574-2"><a href="#cb574-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(., crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">%&gt;%</span></span>
+<span id="cb574-3"><a href="#cb574-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(.) <span class="sc">+</span></span>
+<span id="cb574-4"><a href="#cb574-4" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb574-5"><a href="#cb574-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb574-6"><a href="#cb574-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb574-7"><a href="#cb574-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb574-8"><a href="#cb574-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb574-9"><a href="#cb574-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb574-10"><a href="#cb574-10" tabindex="-1"></a></span>
+<span id="cb574-11"><a href="#cb574-11" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb574-12"><a href="#cb574-12" tabindex="-1"></a>  walk_p,</span>
+<span id="cb574-13"><a href="#cb574-13" tabindex="-1"></a>  play_loco,</span>
+<span id="cb574-14"><a href="#cb574-14" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb574-15"><a href="#cb574-15" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb574-16"><a href="#cb574-16" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb574-17"><a href="#cb574-17" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb574-18"><a href="#cb574-18" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb574-19"><a href="#cb574-19" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb574-20"><a href="#cb574-20" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <div class="figure" style="text-align: center">
@@ -9259,24 +9267,24 @@ PRINU
 </div>
 <div id="health-visualizations" class="section level1 unnumbered">
 <h1 class="unnumbered">Health visualizations</h1>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="#cb573-1" tabindex="-1"></a><span class="co"># Load home_visit_df if not in environment</span></span>
-<span id="cb573-2"><a href="#cb573-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&quot;health_df&quot;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb573-3"><a href="#cb573-3" tabindex="-1"></a> targets<span class="sc">::</span><span class="fu">tar_load</span>(health_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>) </span>
-<span id="cb573-4"><a href="#cb573-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="#cb576-1" tabindex="-1"></a><span class="co"># Load home_visit_df if not in environment</span></span>
+<span id="cb576-2"><a href="#cb576-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&quot;health_df&quot;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb576-3"><a href="#cb576-3" tabindex="-1"></a> targets<span class="sc">::</span><span class="fu">tar_load</span>(health_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>) </span>
+<span id="cb576-4"><a href="#cb576-4" tabindex="-1"></a>}</span></code></pre></div>
 <div id="feeding" class="section level2 unnumbered">
 <h2 class="unnumbered">Feeding</h2>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="#cb574-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> feeding_breastfeed, <span class="at">data =</span> health_df)</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="#cb577-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> feeding_breastfeed, <span class="at">data =</span> health_df)</span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0   6       0 153
-##      18mo         1   8       0 145
-##      24mo         0   6       1 126</code></pre>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="#cb576-1" tabindex="-1"></a>health_df <span class="sc">%&gt;%</span></span>
-<span id="cb576-2"><a href="#cb576-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
-<span id="cb576-3"><a href="#cb576-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb576-4"><a href="#cb576-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> feeding_solidfood_age, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb576-5"><a href="#cb576-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb576-6"><a href="#cb576-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+##      12mo         0   6       0 154
+##      18mo         1   8       0 149
+##      24mo         0   6       1 127</code></pre>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="#cb579-1" tabindex="-1"></a>health_df <span class="sc">%&gt;%</span></span>
+<span id="cb579-2"><a href="#cb579-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
+<span id="cb579-3"><a href="#cb579-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb579-4"><a href="#cb579-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> feeding_solidfood_age, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb579-5"><a href="#cb579-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb579-6"><a href="#cb579-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <pre><code>## Warning: Removed 5 rows containing non-finite values (`stat_bin()`).</code></pre>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672" />
@@ -9285,10 +9293,10 @@ PRINU
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="#cb578-1" tabindex="-1"></a>health_df <span class="sc">|&gt;</span></span>
-<span id="cb578-2"><a href="#cb578-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
-<span id="cb578-3"><a href="#cb578-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb578-4"><a href="#cb578-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="#cb581-1" tabindex="-1"></a>health_df <span class="sc">|&gt;</span></span>
+<span id="cb581-2"><a href="#cb581-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
+<span id="cb581-3"><a href="#cb581-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb581-4"><a href="#cb581-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9320,17 +9328,17 @@ a9M6Q1C1A
 <h2 class="unnumbered">Sleeping position</h2>
 <p>These data only focus on <code>child_sleeping_position</code>.
 Other sleeping data are in the screening questionnaire.</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="#cb579-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb579-2"><a href="#cb579-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_sleeping_position) <span class="sc">|&gt;</span></span>
-<span id="cb579-3"><a href="#cb579-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleeping_position))</span>
-<span id="cb579-4"><a href="#cb579-4" tabindex="-1"></a></span>
-<span id="cb579-5"><a href="#cb579-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="#cb582-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb582-2"><a href="#cb582-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_sleeping_position) <span class="sc">|&gt;</span></span>
+<span id="cb582-3"><a href="#cb582-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleeping_position))</span>
+<span id="cb582-4"><a href="#cb582-4" tabindex="-1"></a></span>
+<span id="cb582-5"><a href="#cb582-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          149  150  127
+##            back          150  153  128
 ##            changed         3    0    1
 ##            donotknow       0    1    0
-##            other           2    0    0
+##            other           2    1    0
 ##            refused         0    0    1
 ##            side            1    0    3
 ##            stomach_down    0    1    0
@@ -9338,31 +9346,31 @@ Other sleeping data are in the screening questionnaire.</p>
 </div>
 <div id="smokingdrinking" class="section level2 unnumbered">
 <h2 class="unnumbered">Smoking/drinking</h2>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="#cb581-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb581-2"><a href="#cb581-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(age_group,</span>
-<span id="cb581-3"><a href="#cb581-3" tabindex="-1"></a>    child_sex,</span>
-<span id="cb581-4"><a href="#cb581-4" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;smoking&quot;</span>),</span>
-<span id="cb581-5"><a href="#cb581-5" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;drinking&quot;</span>)</span>
-<span id="cb581-6"><a href="#cb581-6" tabindex="-1"></a>  )</span>
-<span id="cb581-7"><a href="#cb581-7" tabindex="-1"></a></span>
-<span id="cb581-8"><a href="#cb581-8" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> pregnant_smoking <span class="sc">+</span> pregnant_drinking, smoking_drinking)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="#cb584-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb584-2"><a href="#cb584-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(age_group,</span>
+<span id="cb584-3"><a href="#cb584-3" tabindex="-1"></a>    child_sex,</span>
+<span id="cb584-4"><a href="#cb584-4" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;smoking&quot;</span>),</span>
+<span id="cb584-5"><a href="#cb584-5" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;drinking&quot;</span>)</span>
+<span id="cb584-6"><a href="#cb584-6" tabindex="-1"></a>  )</span>
+<span id="cb584-7"><a href="#cb584-7" tabindex="-1"></a></span>
+<span id="cb584-8"><a href="#cb584-8" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> pregnant_smoking <span class="sc">+</span> pregnant_drinking, smoking_drinking)</span></code></pre></div>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
-##        no        352       1  88
+##        no        357       1  89
 ##        refused     0       1   0
 ##        yes         0       0   1</code></pre>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="#cb583-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="#cb586-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code></pre></div>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
-##     no                3 431       0   0
+##     no                3 437       0   0
 ##     refused           0   3       1   0
 ##     yes               0   6       0   1</code></pre>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="#cb585-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
-<span id="cb585-2"><a href="#cb585-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_smoking) <span class="sc">|&gt;</span></span>
-<span id="cb585-3"><a href="#cb585-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_smoking)) <span class="sc">|&gt;</span></span>
-<span id="cb585-4"><a href="#cb585-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="#cb588-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb588-2"><a href="#cb588-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_smoking) <span class="sc">|&gt;</span></span>
+<span id="cb588-3"><a href="#cb588-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_smoking)) <span class="sc">|&gt;</span></span>
+<span id="cb588-4"><a href="#cb588-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9439,10 +9447,10 @@ Vapes inside the house
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="#cb586-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
-<span id="cb586-2"><a href="#cb586-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_drinking) <span class="sc">|&gt;</span></span>
-<span id="cb586-3"><a href="#cb586-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_drinking)) <span class="sc">|&gt;</span></span>
-<span id="cb586-4"><a href="#cb586-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="#cb589-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb589-2"><a href="#cb589-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_drinking) <span class="sc">|&gt;</span></span>
+<span id="cb589-3"><a href="#cb589-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_drinking)) <span class="sc">|&gt;</span></span>
+<span id="cb589-4"><a href="#cb589-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9667,29 +9675,29 @@ Just during the last weeks of her maybe one glass of wine
 </div>
 <div id="patient-health-questionnaire-phq-4" class="section level2 unnumbered">
 <h2 class="unnumbered">Patient Health Questionnaire (PHQ-4)</h2>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="#cb587-1" tabindex="-1"></a>phq4 <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb587-2"><a href="#cb587-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;phq4_&quot;</span>))</span>
-<span id="cb587-3"><a href="#cb587-3" tabindex="-1"></a></span>
-<span id="cb587-4"><a href="#cb587-4" tabindex="-1"></a><span class="fu">names</span>(phq4) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;phq4_&quot;</span>, </span>
-<span id="cb587-5"><a href="#cb587-5" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb587-6"><a href="#cb587-6" tabindex="-1"></a>                    <span class="fu">names</span>(phq4))</span>
-<span id="cb587-7"><a href="#cb587-7" tabindex="-1"></a></span>
-<span id="cb587-8"><a href="#cb587-8" tabindex="-1"></a>phq4 <span class="sc">|&gt;</span></span>
-<span id="cb587-9"><a href="#cb587-9" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>), <span class="at">names_to =</span> <span class="st">&quot;question&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb587-10"><a href="#cb587-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
-<span id="cb587-11"><a href="#cb587-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
-<span id="cb587-12"><a href="#cb587-12" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;notatall&quot;</span>,</span>
-<span id="cb587-13"><a href="#cb587-13" tabindex="-1"></a>                                    <span class="st">&quot;severaldays&quot;</span>,</span>
-<span id="cb587-14"><a href="#cb587-14" tabindex="-1"></a>                                    <span class="st">&quot;morethanhalf&quot;</span>,</span>
-<span id="cb587-15"><a href="#cb587-15" tabindex="-1"></a>                                    <span class="st">&quot;nearly&quot;</span>)),</span>
-<span id="cb587-16"><a href="#cb587-16" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb587-17"><a href="#cb587-17" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb587-18"><a href="#cb587-18" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb587-19"><a href="#cb587-19" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb587-20"><a href="#cb587-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(question), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
-<span id="cb587-21"><a href="#cb587-21" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb587-22"><a href="#cb587-22" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb587-23"><a href="#cb587-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="#cb590-1" tabindex="-1"></a>phq4 <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb590-2"><a href="#cb590-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;phq4_&quot;</span>))</span>
+<span id="cb590-3"><a href="#cb590-3" tabindex="-1"></a></span>
+<span id="cb590-4"><a href="#cb590-4" tabindex="-1"></a><span class="fu">names</span>(phq4) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;phq4_&quot;</span>, </span>
+<span id="cb590-5"><a href="#cb590-5" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb590-6"><a href="#cb590-6" tabindex="-1"></a>                    <span class="fu">names</span>(phq4))</span>
+<span id="cb590-7"><a href="#cb590-7" tabindex="-1"></a></span>
+<span id="cb590-8"><a href="#cb590-8" tabindex="-1"></a>phq4 <span class="sc">|&gt;</span></span>
+<span id="cb590-9"><a href="#cb590-9" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>), <span class="at">names_to =</span> <span class="st">&quot;question&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb590-10"><a href="#cb590-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb590-11"><a href="#cb590-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb590-12"><a href="#cb590-12" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;notatall&quot;</span>,</span>
+<span id="cb590-13"><a href="#cb590-13" tabindex="-1"></a>                                    <span class="st">&quot;severaldays&quot;</span>,</span>
+<span id="cb590-14"><a href="#cb590-14" tabindex="-1"></a>                                    <span class="st">&quot;morethanhalf&quot;</span>,</span>
+<span id="cb590-15"><a href="#cb590-15" tabindex="-1"></a>                                    <span class="st">&quot;nearly&quot;</span>)),</span>
+<span id="cb590-16"><a href="#cb590-16" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb590-17"><a href="#cb590-17" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb590-18"><a href="#cb590-18" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb590-19"><a href="#cb590-19" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb590-20"><a href="#cb590-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(question), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb590-21"><a href="#cb590-21" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb590-22"><a href="#cb590-22" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb590-23"><a href="#cb590-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-phq4-1.png" alt="PHQ4 responses by age group and child sex" width="672" />
 <p class="caption">
@@ -9701,84 +9709,84 @@ Just during the last weeks of her maybe one glass of wine
 <h2 class="unnumbered">Child health</h2>
 <div id="overall-rating" class="section level3 unnumbered">
 <h3 class="unnumbered">Overall rating</h3>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="#cb588-1" tabindex="-1"></a>child_health_rating <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb588-2"><a href="#cb588-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_health) <span class="sc">|&gt;</span></span>
-<span id="cb588-3"><a href="#cb588-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_health)) <span class="sc">|&gt;</span></span>
-<span id="cb588-4"><a href="#cb588-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_health =</span> <span class="fu">factor</span>(child_health,</span>
-<span id="cb588-5"><a href="#cb588-5" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">&quot;poor&quot;</span>,</span>
-<span id="cb588-6"><a href="#cb588-6" tabindex="-1"></a>                                        <span class="st">&quot;fair&quot;</span>,</span>
-<span id="cb588-7"><a href="#cb588-7" tabindex="-1"></a>                                        <span class="st">&quot;good&quot;</span>,</span>
-<span id="cb588-8"><a href="#cb588-8" tabindex="-1"></a>                                        <span class="st">&quot;verygood&quot;</span>,</span>
-<span id="cb588-9"><a href="#cb588-9" tabindex="-1"></a>                                        <span class="st">&quot;excellent&quot;</span>,</span>
-<span id="cb588-10"><a href="#cb588-10" tabindex="-1"></a>                                        <span class="st">&quot;donotknow&quot;</span>,</span>
-<span id="cb588-11"><a href="#cb588-11" tabindex="-1"></a>                                        <span class="st">&quot;refused&quot;</span>),</span>
-<span id="cb588-12"><a href="#cb588-12" tabindex="-1"></a>                                      <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb588-13"><a href="#cb588-13" tabindex="-1"></a></span>
-<span id="cb588-14"><a href="#cb588-14" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_health <span class="sc">+</span> age_group, <span class="at">data =</span> child_health_rating)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="#cb591-1" tabindex="-1"></a>child_health_rating <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb591-2"><a href="#cb591-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_health) <span class="sc">|&gt;</span></span>
+<span id="cb591-3"><a href="#cb591-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_health)) <span class="sc">|&gt;</span></span>
+<span id="cb591-4"><a href="#cb591-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_health =</span> <span class="fu">factor</span>(child_health,</span>
+<span id="cb591-5"><a href="#cb591-5" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">&quot;poor&quot;</span>,</span>
+<span id="cb591-6"><a href="#cb591-6" tabindex="-1"></a>                                        <span class="st">&quot;fair&quot;</span>,</span>
+<span id="cb591-7"><a href="#cb591-7" tabindex="-1"></a>                                        <span class="st">&quot;good&quot;</span>,</span>
+<span id="cb591-8"><a href="#cb591-8" tabindex="-1"></a>                                        <span class="st">&quot;verygood&quot;</span>,</span>
+<span id="cb591-9"><a href="#cb591-9" tabindex="-1"></a>                                        <span class="st">&quot;excellent&quot;</span>,</span>
+<span id="cb591-10"><a href="#cb591-10" tabindex="-1"></a>                                        <span class="st">&quot;donotknow&quot;</span>,</span>
+<span id="cb591-11"><a href="#cb591-11" tabindex="-1"></a>                                        <span class="st">&quot;refused&quot;</span>),</span>
+<span id="cb591-12"><a href="#cb591-12" tabindex="-1"></a>                                      <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb591-13"><a href="#cb591-13" tabindex="-1"></a></span>
+<span id="cb591-14"><a href="#cb591-14" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_health <span class="sc">+</span> age_group, <span class="at">data =</span> child_health_rating)</span></code></pre></div>
 <pre><code>##             age_group
 ## child_health 12mo 18mo 24mo
 ##    poor         0    0    0
 ##    fair         1    1    0
 ##    good         9    9   10
 ##    verygood    44   34   30
-##    excellent  105  109   92
+##    excellent  106  113   93
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
 <div id="recent-vaccination" class="section level3 unnumbered">
 <h3 class="unnumbered">Recent vaccination</h3>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="#cb590-1" tabindex="-1"></a>recent_vax <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb590-2"><a href="#cb590-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_vaccination) <span class="sc">|&gt;</span></span>
-<span id="cb590-3"><a href="#cb590-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vaccination))</span>
-<span id="cb590-4"><a href="#cb590-4" tabindex="-1"></a></span>
-<span id="cb590-5"><a href="#cb590-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_vaccination <span class="sc">+</span> age_group, <span class="at">data =</span> recent_vax)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="#cb593-1" tabindex="-1"></a>recent_vax <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb593-2"><a href="#cb593-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_vaccination) <span class="sc">|&gt;</span></span>
+<span id="cb593-3"><a href="#cb593-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vaccination))</span>
+<span id="cb593-4"><a href="#cb593-4" tabindex="-1"></a></span>
+<span id="cb593-5"><a href="#cb593-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_vaccination <span class="sc">+</span> age_group, <span class="at">data =</span> recent_vax)</span></code></pre></div>
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    3
-##         no          85  105   96
-##         yes         74   47   34</code></pre>
+##         no          86  106   96
+##         yes         74   50   35</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3 class="unnumbered">Seen medical specialist</h3>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="#cb592-1" tabindex="-1"></a>seen_specialist <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb592-2"><a href="#cb592-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_medical_specialist) <span class="sc">|&gt;</span></span>
-<span id="cb592-3"><a href="#cb592-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_medical_specialist))</span>
-<span id="cb592-4"><a href="#cb592-4" tabindex="-1"></a></span>
-<span id="cb592-5"><a href="#cb592-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_medical_specialist <span class="sc">+</span> age_group, <span class="at">data =</span> seen_specialist)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="#cb595-1" tabindex="-1"></a>seen_specialist <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb595-2"><a href="#cb595-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_medical_specialist) <span class="sc">|&gt;</span></span>
+<span id="cb595-3"><a href="#cb595-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_medical_specialist))</span>
+<span id="cb595-4"><a href="#cb595-4" tabindex="-1"></a></span>
+<span id="cb595-5"><a href="#cb595-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_medical_specialist <span class="sc">+</span> age_group, <span class="at">data =</span> seen_specialist)</span></code></pre></div>
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
-##                no          79   68   54
+##                no          80   70   55
 ##                refused      0    0    1
-##                yes         80   85   77</code></pre>
+##                yes         80   87   77</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
 </div>
 <div id="illnesses-and-allergies" class="section level3 unnumbered">
 <h3 class="unnumbered">Illnesses and allergies</h3>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="#cb594-1" tabindex="-1"></a>illness_allergy <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb594-2"><a href="#cb594-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;illness_&quot;</span>))</span>
-<span id="cb594-3"><a href="#cb594-3" tabindex="-1"></a></span>
-<span id="cb594-4"><a href="#cb594-4" tabindex="-1"></a></span>
-<span id="cb594-5"><a href="#cb594-5" tabindex="-1"></a><span class="fu">names</span>(illness_allergy) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;illness_&quot;</span>,</span>
-<span id="cb594-6"><a href="#cb594-6" tabindex="-1"></a>                               <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb594-7"><a href="#cb594-7" tabindex="-1"></a>                               <span class="fu">names</span>(illness_allergy))</span>
-<span id="cb594-8"><a href="#cb594-8" tabindex="-1"></a></span>
-<span id="cb594-9"><a href="#cb594-9" tabindex="-1"></a>illness_allergy <span class="sc">|&gt;</span></span>
-<span id="cb594-10"><a href="#cb594-10" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>),</span>
-<span id="cb594-11"><a href="#cb594-11" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>,</span>
-<span id="cb594-12"><a href="#cb594-12" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb594-13"><a href="#cb594-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
-<span id="cb594-14"><a href="#cb594-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
-<span id="cb594-15"><a href="#cb594-15" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;donotknow&quot;</span>, <span class="st">&quot;refused&quot;</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb594-16"><a href="#cb594-16" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb594-17"><a href="#cb594-17" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb594-18"><a href="#cb594-18" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb594-19"><a href="#cb594-19" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
-<span id="cb594-20"><a href="#cb594-20" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb594-21"><a href="#cb594-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb594-22"><a href="#cb594-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="#cb597-1" tabindex="-1"></a>illness_allergy <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb597-2"><a href="#cb597-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;illness_&quot;</span>))</span>
+<span id="cb597-3"><a href="#cb597-3" tabindex="-1"></a></span>
+<span id="cb597-4"><a href="#cb597-4" tabindex="-1"></a></span>
+<span id="cb597-5"><a href="#cb597-5" tabindex="-1"></a><span class="fu">names</span>(illness_allergy) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;illness_&quot;</span>,</span>
+<span id="cb597-6"><a href="#cb597-6" tabindex="-1"></a>                               <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb597-7"><a href="#cb597-7" tabindex="-1"></a>                               <span class="fu">names</span>(illness_allergy))</span>
+<span id="cb597-8"><a href="#cb597-8" tabindex="-1"></a></span>
+<span id="cb597-9"><a href="#cb597-9" tabindex="-1"></a>illness_allergy <span class="sc">|&gt;</span></span>
+<span id="cb597-10"><a href="#cb597-10" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>),</span>
+<span id="cb597-11"><a href="#cb597-11" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>,</span>
+<span id="cb597-12"><a href="#cb597-12" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb597-13"><a href="#cb597-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb597-14"><a href="#cb597-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb597-15"><a href="#cb597-15" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;donotknow&quot;</span>, <span class="st">&quot;refused&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb597-16"><a href="#cb597-16" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb597-17"><a href="#cb597-17" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb597-18"><a href="#cb597-18" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb597-19"><a href="#cb597-19" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb597-20"><a href="#cb597-20" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb597-21"><a href="#cb597-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb597-22"><a href="#cb597-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="include/img/fig-illness-allergies-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!--chapter:end:25-viz-health.Rmd-->
 </div>
@@ -9793,77 +9801,77 @@ Just during the last weeks of her maybe one glass of wine
 <p>The functions are found in <code>R/</code> with the prefix <code>ecbq_</code>.</p>
 <p>We create a “wide” data frame <code>ecbq_wide_df</code> as one of the targets of <code>targets:tar_make()</code>.
 We attempt to load that here and ensure that all <code>R/ecbq_</code> functions are in the local environment.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="#cb595-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_wide_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb595-2"><a href="#cb595-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb595-3"><a href="#cb595-3" tabindex="-1"></a>}</span>
-<span id="cb595-4"><a href="#cb595-4" tabindex="-1"></a></span>
-<span id="cb595-5"><a href="#cb595-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_plot_all&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb595-6"><a href="#cb595-6" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;../R&quot;</span>, <span class="st">&quot;^ecbq_&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb595-7"><a href="#cb595-7" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
-<span id="cb595-8"><a href="#cb595-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="#cb598-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_wide_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb598-2"><a href="#cb598-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb598-3"><a href="#cb598-3" tabindex="-1"></a>}</span>
+<span id="cb598-4"><a href="#cb598-4" tabindex="-1"></a></span>
+<span id="cb598-5"><a href="#cb598-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_plot_all&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb598-6"><a href="#cb598-6" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;../R&quot;</span>, <span class="st">&quot;^ecbq_&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb598-7"><a href="#cb598-7" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
+<span id="cb598-8"><a href="#cb598-8" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="summarize" class="section level2 unnumbered">
 <h2 class="unnumbered">Summarize</h2>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="#cb596-1" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
-<span id="cb596-2"><a href="#cb596-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
-<span id="cb596-3"><a href="#cb596-3" tabindex="-1"></a></span>
-<span id="cb596-4"><a href="#cb596-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
-<pre><code>## tibble [451 × 40] (S3: tbl_df/tbl/data.frame)
-##  $ participant_id              : chr [1:451] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
-##  $ child_sex                   : chr [1:451] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
-##  $ age_group                   : chr [1:451] &quot;18mo&quot; &quot;18mo&quot; &quot;24mo&quot; &quot;12mo&quot; ...
-##  $ rothbart_unfamiliarperson   : chr [1:451] &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_troubletask        : chr [1:451] &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_companyofchild     : chr [1:451] &quot;more_than_half&quot; NA &quot;always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_choiceactivities   : chr [1:451] &quot;almost_always&quot; &quot;always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_quietlysung        : chr [1:451] NA &quot;almost_always&quot; &quot;less_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_playingoutdoors    : chr [1:451] &quot;about_half&quot; &quot;more_than_half&quot; &quot;always&quot; &quot;always&quot; ...
-##  $ rothbart_morethan10         : chr [1:451] &quot;less_than_half&quot; &quot;never&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_respondingremarks  : chr [1:451] &quot;almost_always&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;about_half&quot; ...
-##  $ rothbart_excitedlovedadults : chr [1:451] NA &quot;very_rarely&quot; &quot;almost_always&quot; NA ...
-##  $ rothbart_fiddlehair         : chr [1:451] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_roughrowdy         : chr [1:451] &quot;about_half&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; ...
-##  $ rothbart_rockedhugged       : chr [1:451] &quot;never&quot; &quot;about_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; ...
-##  $ rothbart_involvednewactivity: chr [1:451] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_tirequickly        : chr [1:451] &quot;very_rarely&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;less_than_half&quot; ...
-##  $ rothbart_callattention      : chr [1:451] &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_tags               : chr [1:451] &quot;never&quot; &quot;never&quot; &quot;never&quot; &quot;never&quot; ...
-##  $ rothbart_noisyenvironment   : chr [1:451] &quot;very_rarely&quot; &quot;never&quot; NA &quot;never&quot; ...
-##  $ rothbart_energy             : chr [1:451] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_vehicles           : chr [1:451] &quot;very_rarely&quot; &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_active             : chr [1:451] &quot;almost_always&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_forbidden          : chr [1:451] &quot;more_than_half&quot; &quot;almost_always&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
-##  $ rothbart_sadlytearful       : chr [1:451] &quot;less_than_half&quot; &quot;very_rarely&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_downblue           : chr [1:451] &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; &quot;never&quot; ...
-##  $ rothbart_runhouse           : chr [1:451] &quot;less_than_half&quot; &quot;about_half&quot; &quot;always&quot; NA ...
-##  $ rothbart_excitingevent      : chr [1:451] &quot;less_than_half&quot; NA &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_tempertantrum      : chr [1:451] &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_waitpatiently      : chr [1:451] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
-##  $ rothbart_rockedsmile        : chr [1:451] &quot;almost_always&quot; NA NA &quot;almost_always&quot; ...
-##  $ rothbart_mold               : chr [1:451] &quot;almost_always&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
-##  $ rothbart_interactadult      : chr [1:451] &quot;always&quot; &quot;always&quot; &quot;always&quot; &quot;always&quot; ...
-##  $ rothbart_careful            : chr [1:451] NA &quot;almost_always&quot; &quot;almost_always&quot; NA ...
-##  $ rothbart_enternewplace      : chr [1:451] &quot;never&quot; &quot;never&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_crymorethan3       : chr [1:451] &quot;never&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
-##  $ rothbart_easilysoothed      : chr [1:451] &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
-##  $ rothbart_busyother          : chr [1:451] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
-##  $ rothbart_differentpeople    : chr [1:451] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
-##  $ rothbart_comments           : chr [1:451] NA NA NA NA ...</code></pre>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="#cb598-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="#cb599-1" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
+<span id="cb599-2"><a href="#cb599-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
+<span id="cb599-3"><a href="#cb599-3" tabindex="-1"></a></span>
+<span id="cb599-4"><a href="#cb599-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
+<pre><code>## tibble [457 × 40] (S3: tbl_df/tbl/data.frame)
+##  $ participant_id              : chr [1:457] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
+##  $ child_sex                   : chr [1:457] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
+##  $ age_group                   : chr [1:457] &quot;18mo&quot; &quot;18mo&quot; &quot;24mo&quot; &quot;12mo&quot; ...
+##  $ rothbart_unfamiliarperson   : chr [1:457] &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_troubletask        : chr [1:457] &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_companyofchild     : chr [1:457] &quot;more_than_half&quot; NA &quot;always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_choiceactivities   : chr [1:457] &quot;almost_always&quot; &quot;always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_quietlysung        : chr [1:457] NA &quot;almost_always&quot; &quot;less_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_playingoutdoors    : chr [1:457] &quot;about_half&quot; &quot;more_than_half&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_morethan10         : chr [1:457] &quot;less_than_half&quot; &quot;never&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_respondingremarks  : chr [1:457] &quot;almost_always&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_excitedlovedadults : chr [1:457] NA &quot;very_rarely&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_fiddlehair         : chr [1:457] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_roughrowdy         : chr [1:457] &quot;about_half&quot; &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; ...
+##  $ rothbart_rockedhugged       : chr [1:457] &quot;never&quot; &quot;about_half&quot; &quot;less_than_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_involvednewactivity: chr [1:457] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tirequickly        : chr [1:457] &quot;very_rarely&quot; &quot;almost_always&quot; &quot;about_half&quot; &quot;less_than_half&quot; ...
+##  $ rothbart_callattention      : chr [1:457] &quot;more_than_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_tags               : chr [1:457] &quot;never&quot; &quot;never&quot; &quot;never&quot; &quot;never&quot; ...
+##  $ rothbart_noisyenvironment   : chr [1:457] &quot;very_rarely&quot; &quot;never&quot; NA &quot;never&quot; ...
+##  $ rothbart_energy             : chr [1:457] &quot;almost_always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_vehicles           : chr [1:457] &quot;very_rarely&quot; &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_active             : chr [1:457] &quot;almost_always&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_forbidden          : chr [1:457] &quot;more_than_half&quot; &quot;almost_always&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_sadlytearful       : chr [1:457] &quot;less_than_half&quot; &quot;very_rarely&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_downblue           : chr [1:457] &quot;never&quot; &quot;never&quot; &quot;very_rarely&quot; &quot;never&quot; ...
+##  $ rothbart_runhouse           : chr [1:457] &quot;less_than_half&quot; &quot;about_half&quot; &quot;always&quot; NA ...
+##  $ rothbart_excitingevent      : chr [1:457] &quot;less_than_half&quot; NA &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_tempertantrum      : chr [1:457] &quot;very_rarely&quot; &quot;more_than_half&quot; &quot;about_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_waitpatiently      : chr [1:457] &quot;about_half&quot; &quot;very_rarely&quot; &quot;very_rarely&quot; &quot;almost_always&quot; ...
+##  $ rothbart_rockedsmile        : chr [1:457] &quot;almost_always&quot; NA NA &quot;almost_always&quot; ...
+##  $ rothbart_mold               : chr [1:457] &quot;almost_always&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;more_than_half&quot; ...
+##  $ rothbart_interactadult      : chr [1:457] &quot;always&quot; &quot;always&quot; &quot;always&quot; &quot;always&quot; ...
+##  $ rothbart_careful            : chr [1:457] NA &quot;almost_always&quot; &quot;almost_always&quot; NA ...
+##  $ rothbart_enternewplace      : chr [1:457] &quot;never&quot; &quot;never&quot; &quot;almost_always&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_crymorethan3       : chr [1:457] &quot;never&quot; &quot;never&quot; &quot;less_than_half&quot; &quot;very_rarely&quot; ...
+##  $ rothbart_easilysoothed      : chr [1:457] &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; &quot;almost_always&quot; ...
+##  $ rothbart_busyother          : chr [1:457] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
+##  $ rothbart_differentpeople    : chr [1:457] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
+##  $ rothbart_comments           : chr [1:457] NA NA NA NA ...</code></pre>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="#cb601-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
 <pre><code>##          child_sex
 ## age_group female male
-##      12mo     91   68
-##      18mo     72   82
-##      24mo     66   72</code></pre>
+##      12mo     91   69
+##      18mo     75   83
+##      24mo     66   73</code></pre>
 </div>
 <div id="visualize" class="section level2 unnumbered">
 <h2 class="unnumbered">Visualize</h2>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="#cb600-1" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">&quot;rothbart_&quot;</span>)]</span>
-<span id="cb600-2"><a href="#cb600-2" tabindex="-1"></a></span>
-<span id="cb600-3"><a href="#cb600-3" tabindex="-1"></a><span class="co"># Omit comments</span></span>
-<span id="cb600-4"><a href="#cb600-4" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> ecbq_vars[<span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(ecbq_vars, <span class="st">&quot;comments&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="#cb603-1" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">&quot;rothbart_&quot;</span>)]</span>
+<span id="cb603-2"><a href="#cb603-2" tabindex="-1"></a></span>
+<span id="cb603-3"><a href="#cb603-3" tabindex="-1"></a><span class="co"># Omit comments</span></span>
+<span id="cb603-4"><a href="#cb603-4" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> ecbq_vars[<span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(ecbq_vars, <span class="st">&quot;comments&quot;</span>)]</span></code></pre></div>
 <p>We use <code>purrr::map()</code> to plot all of the responses to individual ECBQ items.</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="#cb601-1" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(ecbq_vars, <span class="fu">suppressMessages</span>(ecbq_plot), <span class="at">df =</span> ecbq_complete)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="#cb604-1" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(ecbq_vars, <span class="fu">suppressMessages</span>(ecbq_plot), <span class="at">df =</span> ecbq_complete)</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="include/img/purrr-map-ecbq-figs-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -9975,11 +9983,11 @@ We attempt to load that here and ensure that all <code>R/ecbq_</code> functions 
 <h3 class="unnumbered">Comments</h3>
 <p>Manual inspection shows that the comments field has some names.
 We omit printing the comments here until we can be assured that there is no identifiying information in the comments.</p>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="#cb638-1" tabindex="-1"></a>ecbq_complete <span class="sc">|&gt;</span></span>
-<span id="cb638-2"><a href="#cb638-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, age_group, rothbart_comments) <span class="sc">|&gt;</span></span>
-<span id="cb638-3"><a href="#cb638-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(rothbart_comments)) <span class="sc">|&gt;</span></span>
-<span id="cb638-4"><a href="#cb638-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group) <span class="sc">|&gt;</span></span>
-<span id="cb638-5"><a href="#cb638-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="#cb641-1" tabindex="-1"></a>ecbq_complete <span class="sc">|&gt;</span></span>
+<span id="cb641-2"><a href="#cb641-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, age_group, rothbart_comments) <span class="sc">|&gt;</span></span>
+<span id="cb641-3"><a href="#cb641-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(rothbart_comments)) <span class="sc">|&gt;</span></span>
+<span id="cb641-4"><a href="#cb641-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group) <span class="sc">|&gt;</span></span>
+<span id="cb641-5"><a href="#cb641-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <!--chapter:end:26-viz-temperament.Rmd-->
 </div>
 </div>
@@ -9987,9 +9995,9 @@ We omit printing the comments here until we can be assured that there is no iden
 <div id="post-visit-data" class="section level1 unnumbered">
 <h1 class="unnumbered">Post-visit data</h1>
 <p>We load the post-visit survey data.</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="#cb639-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb639-2"><a href="#cb639-2" tabindex="-1"></a></span>
-<span id="cb639-3"><a href="#cb639-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="#cb642-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb642-2"><a href="#cb642-2" tabindex="-1"></a></span>
+<span id="cb642-3"><a href="#cb642-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
 <pre><code>## [1] 384 178</code></pre>
 <div class="rmdnote">
 <p>Cleaning this data is set aside for future work.</p>
@@ -10024,7 +10032,7 @@ We omit printing the comments here until we can be assured that there is no iden
   <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-20.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-11-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
