@@ -2377,14 +2377,44 @@ Child age in months (`age_group`) by `child_sex`.
 Note: The child's exact age in months is part of the Databrary-related data. 
 That is on the work plan.
 
+```{r filter-home-visit}
+home_visit_filtered <- home_visit_df |>
+  dplyr::filter(!is.na(age_group),!is.na(child_sex))
+```
+
+```{r}
+xtabs(formula = ~ age_group + child_sex, data = home_visit_filtered)
+```
+A total of $n=$ `r dim(home_visit_filtered)[1]` mother-infant dyads have been tested.
+This includes training and pilot visits.
+
 ```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
-home_visit_df %>%
-  dplyr::filter(.,!is.na(age_group),!is.na(child_sex)) %>%
+home_visit_filtered |>
   ggplot() +
   aes(age_group, fill = child_sex) +
   geom_bar() +
   theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
+```
+
+## Time series {-}
+
+To calculate cumulative visits, we have to add an index variable
+
+```{r}
+df <- home_visit_filtered |>
+  dplyr::select(test_date, site_id) |>
+  dplyr::mutate(test_date = as.Date(test_date)) |>
+  dplyr::arrange(test_date) |>
+  dplyr::mutate(n_calls = seq_along(test_date))
+```
+
+```{r fig-home-visit-time-series, fig.cap="Cumulative screening calls by year and site"}
+df |>
+    dplyr::filter(!is.na(test_date), !is.na(n_calls), !is.na(site_id)) |>
+    ggplot() +
+    aes(test_date, n_calls, color = site_id) +
+    geom_point()
 ```
 
 <!--chapter:end:22-viz-demographics.Rmd-->
