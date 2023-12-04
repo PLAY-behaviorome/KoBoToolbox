@@ -17,11 +17,11 @@ update_report_render <- function(src_dir = 'src',
   assertthat::is.string(rpt_URL)
   assertthat::is.readable(rpt_URL)
   
-  message("\n\n-------Updating data-------")
+  message("\n-------Updating data-------")
   library(targets)
   tar_make()
   
-  message("\n\n-------Rendering report-------")
+  message("\n-------Rendering report-------")
   bookdown::render_book(src_dir)
   
   if (open_rpt)
