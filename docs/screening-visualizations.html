@@ -84,10 +84,10 @@
 <div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 467 Columns: 68
-## ── Column specification ──────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────
 ## Delimiter: ","
-## chr  (54): session_name, session_release, participant_ID, participant_gend...
-## dbl  (10): session_id, vol_id, child_age_mos, child_birthage, child_weight...
+## chr  (54): session_name, session_release, participant_ID, participant_...
+## dbl  (10): session_id, vol_id, child_age_mos, child_birthage, child_we...
 ## lgl   (1): pilot_pilot
 ## dttm  (1): submit_date
 ## date  (2): session_date, participant_birthdate
@@ -200,9 +200,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_child</span>,</span>
 <span>      data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_child
-## child_sex english english_other english_spanish english_spanish_other spanish
-##    female     193             1              31                     2       9
-##    male       178             3              37                     0      10</code></pre>
+## child_sex english english_other english_spanish english_spanish_other
+##    female     193             1              31                     2
+##    male       178             3              37                     0
+##          language_spoken_child
+## child_sex spanish
+##    female       9
+##    male        10</code></pre>
 </div>
 <div id="at-home" class="section level3 unnumbered">
 <h3>At home<a class="anchor" aria-label="anchor" href="#at-home"><i class="fas fa-link"></i></a>
@@ -210,13 +214,13 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sex</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          language_spoken_home
-## child_sex english english_other english_spanish english_spanish_other other
-##    female     192             3              26                     1     1
-##    male       168             2              43                     2     1
+## child_sex english english_other english_spanish english_spanish_other
+##    female     192             3              26                     1
+##    male       168             2              43                     2
 ##          language_spoken_home
-## child_sex spanish
-##    female       9
-##    male        12</code></pre>
+## child_sex other spanish
+##    female     1       9
+##    male       1      12</code></pre>
 </div>
 <div id="to-child-vs.-at-home" class="section level3 unnumbered">
 <h3>To child vs. at home<a class="anchor" aria-label="anchor" href="#to-child-vs.-at-home"><i class="fas fa-link"></i></a>
@@ -2165,14 +2169,18 @@ mom_childbirth_age
 <span>                </span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">childcare_types</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## childcare_types
-##                childcare           childcare_cent                    nanny 
-##                       97                        2                        4 
-##           nanny_babysitt               nanny_home     nanny_home childcare 
-##                        1                       20                        5 
-## nanny_home nanny_nothome      nanny_home relative            nanny_nothome 
-##                        2                        2                        8 
-##  nanny_nothome childcare                     none                 relative 
-##                        1                       73                       41 
+##                childcare           childcare_cent 
+##                       97                        2 
+##                    nanny           nanny_babysitt 
+##                        4                        1 
+##               nanny_home     nanny_home childcare 
+##                       20                        5 
+## nanny_home nanny_nothome      nanny_home relative 
+##                        2                        2 
+##            nanny_nothome  nanny_nothome childcare 
+##                        8                        1 
+##                     none                 relative 
+##                       73                       41 
 ##       relative childcare 
 ##                        8</code></pre>
 <div class="rmdnote">
@@ -2188,11 +2196,12 @@ mom_childbirth_age
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">childcare_hours</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">childcare_hours</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] "1"     "10"    "12"    "14.5"  "15"    "15-20" "16"    "16-20" "17.5" 
-## [10] "18"    "20"    "24"    "25"    "27"    "3"     "30"    "30-35" "30-40"
-## [19] "32"    "33"    "34"    "35"    "35-40" "36"    "37"    "38"    "4"    
-## [28] "40"    "40+"   "40-45" "42"    "42.5"  "43"    "45"    "47"    "5"    
-## [37] "50"    "52.5"  "6"     "8"     "9"</code></pre>
+<pre><code>##  [1] "1"     "10"    "12"    "14.5"  "15"    "15-20" "16"    "16-20"
+##  [9] "17.5"  "18"    "20"    "24"    "25"    "27"    "3"     "30"   
+## [17] "30-35" "30-40" "32"    "33"    "34"    "35"    "35-40" "36"   
+## [25] "37"    "38"    "4"     "40"    "40+"   "40-45" "42"    "42.5" 
+## [33] "43"    "45"    "47"    "5"     "50"    "52.5"  "6"     "8"    
+## [41] "9"</code></pre>
 <div class="rmdnote">
 <p>This requires some cleaning.</p>
 </div>
@@ -2307,7 +2316,7 @@ mom_childbirth_age
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-04.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

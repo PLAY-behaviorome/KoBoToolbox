@@ -3,11 +3,6 @@
 update_report_render <- function(src_dir = 'src',
                                  open_rpt = TRUE,
                                  rpt_URL = 'docs/index.html') {
-  # stopifnot(is.character(src_dir))
-  # stopifnot(dir.exists(src_dir))
-  # stopifnot(is.logical(open_rpt))
-  # stopifnot(is.character(rpt_URL))
-  # stopifnot(file.exists(rpt_URL))
   
   assertthat::is.string(src_dir)
   assertthat::is.dir(src_dir)
