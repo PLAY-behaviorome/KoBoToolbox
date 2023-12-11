@@ -2,7 +2,7 @@
 screen_add_db_vol_id <- function(df) {
   PLAY_VOLS <-
     readr::read_csv(
-      "../data/csv/play_site_vols.csv",
+      "../data/csv/_meta/play_site_vols.csv",
       col_types = readr::cols(.default = 'c'),
       show_col_types = FALSE
     )
