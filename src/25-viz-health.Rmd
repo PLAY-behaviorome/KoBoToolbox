@@ -28,7 +28,8 @@ Clearly, there are some impossible values here.
 ```{r anomalous-feeding}
 health_df |>
   dplyr::select(participant_id, feeding_solidfood_age) |>
-  dplyr::filter(feeding_solidfood_age > 12) %>%
+  
+  dplyr::filter(feeding_solidfood_age > 12 | feeding_solidfood_age < 3) %>%
   knitr::kable(format = 'html')
 ```
 
