@@ -2723,9 +2723,10 @@ xtabs(formula = ~ age_group + feeding_breastfeed, data = health_df)
 ```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
 health_df %>%
   dplyr::select(child_sex, feeding_solidfood_age) |>
+  dplyr::filter(feeding_solidfood_age < 12) |>
   ggplot() +
   aes(x = feeding_solidfood_age, color = child_sex, fill = child_sex) +
-  geom_histogram(bins = 15) +
+  geom_histogram(bins = 14) +
   theme(legend.title = element_blank())
 ```
 

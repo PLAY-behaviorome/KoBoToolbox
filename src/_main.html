@@ -337,11 +337,10 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 <pre><code>## Removed n = 47 of 236 columns.</code></pre>
 <pre><code>## Cleaning &#39;/Users/rog1/rrr/KoBoToolbox/data/csv/screening/359546_PLAY_Demographic_Questionnaire.csv&#39;.</code></pre>
 <pre><code>## Removed n = 47 of 239 columns.</code></pre>
-<pre><code>## Joining with `by = join_by(start, end, c_today,
-## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex, day, day2,
-## day1, play_id, language_spoken_mom,
-## `language_spoken_mom/english`,
+<pre><code>## Joining with `by = join_by(start, end, c_today, update_date,
+## site_id, subject_number, state, check_childage,
+## check_childage_weeks, child_sex, day, day2, day1, play_id,
+## language_spoken_mom, `language_spoken_mom/english`,
 ## `language_spoken_mom/spanish`, `language_spoken_mom/other`,
 ## language_spoken_mom_other, language_spoken_child,
 ## `language_spoken_child/english`,
@@ -397,18 +396,15 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_family_structure/other_relatives`,
 ## `group_family_structure/other_non_relatives`,
 ## `group_family_structure/indicate_familystructure`,
-## `group_mominfo/mom_biological`,
-## `group_mominfo/mom_relation`, `group_mominfo/mom_datecare`,
+## `group_mominfo/mom_biological`, `group_mominfo/mom_relation`,
+## `group_mominfo/mom_datecare`,
 ## `group_mominfo/mom_childbirth_age`,
 ## `group_mominfo/check_mom_childbirth_age`,
-## `group_mominfo/mom_race`,
-## `group_mominfo/mom_birth_country`,
+## `group_mominfo/mom_race`, `group_mominfo/mom_birth_country`,
 ## `group_mominfo/specify_mom_birth_country`,
-## `group_mominfo/mom_education`,
-## `group_mominfo/mom_employment`,
+## `group_mominfo/mom_education`, `group_mominfo/mom_employment`,
 ## `group_mominfo/mom_occupation`,
-## `group_mominfo/mom_jobs_number`,
-## `group_mominfo/mom_training`,
+## `group_mominfo/mom_jobs_number`, `group_mominfo/mom_training`,
 ## `group_mominfo/mom_condition`,
 ## `group_mominfo/specify_mom_condition`,
 ## `group_mominfo/indicate_mom`,
@@ -440,11 +436,10 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_inclusioncheck/inclusionreason`,
 ## `group_inclusioncheck/indicate_inclusion`,
 ## indicate_demoquestionnaire, indicate_databrary, `_id`)`
-## Joining with `by = join_by(start, end, c_today,
-## update_date, site_id, subject_number, state,
-## check_childage, check_childage_weeks, child_sex, day, day2,
-## day1, language_spoken_child,
-## `language_spoken_child/english`,
+## Joining with `by = join_by(start, end, c_today, update_date,
+## site_id, subject_number, state, check_childage,
+## check_childage_weeks, child_sex, day, day2, day1,
+## language_spoken_child, `language_spoken_child/english`,
 ## `language_spoken_child/spanish`,
 ## `language_spoken_child/other`, language_spoken_child_other,
 ## `child_information/child_bornonduedate`,
@@ -493,20 +488,20 @@ The <code>screen_clean_raw_join()</code> function cleans each CSV then joins the
 ## `group_child_care_arrangements/childcare_age`,
 ## `group_child_care_arrangements/childcare_language`, `_id`)`</code></pre>
 <pre><code>## # A tibble: 630 × 162
-##    start    end   c_today update_date site_id subject_number
-##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;         
-##  1 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   230           
-##  2 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   229           
-##  3 2019-12… 2020… 2020-0… &lt;NA&gt;        VCOMU   002           
-##  4 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   010           
-##  5 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   008           
-##  6 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   009           
-##  7 2020-01… 2020… 2020-0… &lt;NA&gt;        GEORG   011           
-##  8 2020-01… 2020… 2020-0… &lt;NA&gt;        NYUNI   010           
-##  9 2020-02… 2020… 2020-0… &lt;NA&gt;        NYUNI   011           
-## 10 2020-02… 2020… 2020-0… &lt;NA&gt;        VCOMU   003           
+##    start end   c_today update_date site_id subject_number state
+##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;
+##  1 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   230            New …
+##  2 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   229            New …
+##  3 2019… 2020… 2020-0… &lt;NA&gt;        VCOMU   002            VA   
+##  4 2020… 2020… 2020-0… &lt;NA&gt;        GEORG   010            Virg…
+##  5 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   008            New …
+##  6 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   009            New …
+##  7 2020… 2020… 2020-0… &lt;NA&gt;        GEORG   011            Virg…
+##  8 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   010            NY   
+##  9 2020… 2020… 2020-0… &lt;NA&gt;        NYUNI   011            New …
+## 10 2020… 2020… 2020-0… &lt;NA&gt;        VCOMU   003            VA   
 ## # ℹ 620 more rows
-## # ℹ 156 more variables: state &lt;chr&gt;, check_childage &lt;chr&gt;,
+## # ℹ 155 more variables: check_childage &lt;chr&gt;,
 ## #   check_childage_weeks &lt;chr&gt;, child_sex &lt;chr&gt;, day &lt;chr&gt;,
 ## #   day2 &lt;chr&gt;, day1 &lt;chr&gt;, play_id &lt;chr&gt;,
 ## #   language_spoken_mom &lt;chr&gt;,
@@ -1575,19 +1570,13 @@ tar_target(df_merge_274_cols, make_aggregate_data_file(home_visit_remove_identif
 <span id="cb99-2"><a href="#cb99-2" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">names</span>(df334099)</span>
 <span id="cb99-3"><a href="#cb99-3" tabindex="-1"></a></span>
 <span id="cb99-4"><a href="#cb99-4" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_combinedquestionnaires/&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;participant_id&quot;             
-## [2] &quot;start&quot;                      
-## [3] &quot;end&quot;                        
-## [4] &quot;note_fillthisoutbeforestudy&quot;
-## [5] &quot;site_id&quot;                    
-## [6] &quot;subject_number&quot;</code></pre>
+<pre><code>## [1] &quot;participant_id&quot;              &quot;start&quot;                      
+## [3] &quot;end&quot;                         &quot;note_fillthisoutbeforestudy&quot;
+## [5] &quot;site_id&quot;                     &quot;subject_number&quot;</code></pre>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_jo84c13/&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;participant_id&quot;             
-## [2] &quot;start&quot;                      
-## [3] &quot;end&quot;                        
-## [4] &quot;note_fillthisoutbeforestudy&quot;
-## [5] &quot;site_id&quot;                    
-## [6] &quot;subject_number&quot;</code></pre>
+<pre><code>## [1] &quot;participant_id&quot;              &quot;start&quot;                      
+## [3] &quot;end&quot;                         &quot;note_fillthisoutbeforestudy&quot;
+## [5] &quot;site_id&quot;                     &quot;subject_number&quot;</code></pre>
 <p>That looks promising.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_combinedquestionnaires/&quot;</span>) <span class="ot">-&gt;</span> n1</span>
 <span id="cb103-2"><a href="#cb103-2" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">&quot;group_jo84c13/&quot;</span>) <span class="ot">-&gt;</span> n2</span>
@@ -1640,8 +1629,8 @@ Let’s explore that anyway.</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" tabindex="-1"></a>n2_2 <span class="ot">&lt;-</span> n2[<span class="sc">-</span><span class="dv">9</span>]</span>
 <span id="cb109-2"><a href="#cb109-2" tabindex="-1"></a></span>
 <span id="cb109-3"><a href="#cb109-3" tabindex="-1"></a>n1 <span class="sc">==</span> n2_2</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_2: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in n1 == n2_2: longer object length is not a multiple
+## of shorter object length</code></pre>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -1732,8 +1721,8 @@ There are just some minor changes in the variable names.
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" tabindex="-1"></a>n2_3 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;yes__in_the_bi&quot;</span>, <span class="st">&quot;birthhospital&quot;</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;yes__after_goi&quot;</span>, <span class="st">&quot;afterhome&quot;</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;don_t_know&quot;</span>, <span class="st">&quot;donotknow&quot;</span>) <span class="ot">-&gt;</span> n2_4</span>
 <span id="cb115-2"><a href="#cb115-2" tabindex="-1"></a></span>
 <span id="cb115-3"><a href="#cb115-3" tabindex="-1"></a>n1 <span class="sc">==</span> n2_4</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_4: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in n1 == n2_4: longer object length is not a multiple
+## of shorter object length</code></pre>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -1796,8 +1785,8 @@ There are just some minor changes in the variable names.
 <p><code>n1</code> has a <code>group_medicalprof</code> label from <code>allergies</code> through <code>gastrointestinal</code>; <code>n2_4</code> has <code>child_allergies_infections_ill</code> for the same questions.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" tabindex="-1"></a>n2_4 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;child_allergies_infections_ill&quot;</span>, <span class="st">&quot;group_medicalprof&quot;</span>) <span class="ot">-&gt;</span> n2_5</span>
 <span id="cb120-2"><a href="#cb120-2" tabindex="-1"></a>n1 <span class="sc">==</span> n2_5</span></code></pre></div>
-<pre><code>## Warning in n1 == n2_5: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in n1 == n2_5: longer object length is not a multiple
+## of shorter object length</code></pre>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2477,8 +2466,8 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb164-8"><a href="#cb164-8" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code></pre></div>
 <pre><code>## [1] 142 281  34 281 281 283</code></pre>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
-<pre><code>## Warning in names(df1) == names(df3): longer object length
-## is not a multiple of shorter object length</code></pre>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is
+## not a multiple of shorter object length</code></pre>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2523,8 +2512,8 @@ We cannot proceed without further discussion with our team.</p>
 <span id="cb171-2"><a href="#cb171-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;doctor_told_you&#39;</span>))</span>
 <span id="cb171-3"><a href="#cb171-3" tabindex="-1"></a></span>
 <span id="cb171-4"><a href="#cb171-4" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code></pre></div>
-<pre><code>## Warning in names(df1) == names(df3): longer object length
-## is not a multiple of shorter object length</code></pre>
+<pre><code>## Warning in names(df1) == names(df3): longer object length is
+## not a multiple of shorter object length</code></pre>
 <pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [10]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ##  [19]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -6346,42 +6335,39 @@ But we will use it for the time being.</p>
 <span id="cb237-2"><a href="#cb237-2" tabindex="-1"></a>                          <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb237-3"><a href="#cb237-3" tabindex="-1"></a></span>
 <span id="cb237-4"><a href="#cb237-4" tabindex="-1"></a>scr_dd <span class="ot">&lt;-</span> datadictionary<span class="sc">::</span><span class="fu">create_dictionary</span>(scr_df)</span></code></pre></div>
-<pre><code>## Warning in character_summary(dataset, column):
-## session_release has fewer than 10 unique values, did you
-## want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): session_release
+## has fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## participant_gender has fewer than 10 unique values, did you
 ## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## participant_race has fewer than 10 unique values, did you
+## participant_race has fewer than 10 unique values, did you want
+## a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## participant_ethnicity has fewer than 10 unique values, did you
 ## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## participant_ethnicity has fewer than 10 unique values, did
-## you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## participant_language has fewer than 10 unique values, did
-## you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column): group_name
+## participant_language has fewer than 10 unique values, did you
+## want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): group_name has
+## fewer than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): context_setting
 ## has fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## context_setting has fewer than 10 unique values, did you
-## want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## context_country has fewer than 10 unique values, did you
-## want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): context_country
+## has fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## participant_disability has fewer than 10 unique values, did
 ## you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column): child_sex
-## has fewer than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): child_sex has
+## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## child_bornonduedate has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## child_bornonduedate has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column): child_onterm
 ## has fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## child_birth_complications has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## child_birth_complications has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## child_hearing_disabilities has fewer than 10 unique values,
 ## did you want a factor?</code></pre>
@@ -6389,8 +6375,8 @@ But we will use it for the time being.</p>
 ## child_hearing_disabilities_specify has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## child_vision_disabilities has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## child_vision_disabilities has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## child_vision_disabilities_specify has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6398,14 +6384,14 @@ But we will use it for the time being.</p>
 ## child_major_illnesses_injuries has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## child_developmentaldelays has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## child_developmentaldelays has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## child_developmentaldelays_specify has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## child_sleep_location has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## child_sleep_location has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column): mom_bio has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column): mom_race has
@@ -6413,26 +6399,25 @@ But we will use it for the time being.</p>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mom_birth_country has fewer than 10 unique values, did you
 ## want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## mom_employment has fewer than 10 unique values, did you
-## want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): mom_employment
+## has fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column): mom_training
 ## has fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## language_spoken_mom has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## language_spoken_mom has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## language_spoken_child has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## language_spoken_child has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## language_spoken_child_comments has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## language_spoken_home has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## language_spoken_home has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## language_spoken_house_other has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## language_spoken_house_other has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## language_spoken_home_other has fewer than 10 unique values,
 ## did you want a factor?</code></pre>
@@ -6444,13 +6429,12 @@ But we will use it for the time being.</p>
 <span id="cb271-2"><a href="#cb271-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="fu">paste0</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;_targets&quot;</span>))</span>
 <span id="cb271-3"><a href="#cb271-3" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="#cb272-1" tabindex="-1"></a>scr_dd <span class="ot">&lt;-</span> datadictionary<span class="sc">::</span><span class="fu">create_dictionary</span>(home_visit_df)</span></code></pre></div>
-<pre><code>## Warning in character_summary(dataset, column): child_sex
+<pre><code>## Warning in character_summary(dataset, column): child_sex has
+## fewer than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): age_group has
+## fewer than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column): language_child
 ## has fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column): age_group
-## has fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## language_child has fewer than 10 unique values, did you
-## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## language_child.english has fewer than 10 unique values, did
 ## you want a factor?</code></pre>
@@ -6458,20 +6442,20 @@ But we will use it for the time being.</p>
 ## language_child.spanish has fewer than 10 unique values, did
 ## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## language_instruction has fewer than 10 unique values, did
-## you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## acknowledge_site has fewer than 10 unique values, did you
+## language_instruction has fewer than 10 unique values, did you
 ## want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## acknowledge_site has fewer than 10 unique values, did you want
+## a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## locomotor_milestones.date_format has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.feeding_nutrition.breastfeed has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## health.feeding_nutrition.breastfeed has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_sleeping_position has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_sleeping_position has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.general_health.child_health has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6479,26 +6463,26 @@ But we will use it for the time being.</p>
 ## health.general_health.child_vaccination has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_medical_specialist has fewer
-## than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested has fewer than
+## health.general_health.child_medical_specialist has fewer than
 ## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested.birthhospital
-## has fewer than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_hearing_tested has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested.afterhome has
+## health.general_health.child_hearing_tested.birthhospital has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested.no has fewer
+## health.general_health.child_hearing_tested.afterhome has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested.refused has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_hearing_tested.no has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_hearing_tested.donotknow has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_hearing_tested.refused has fewer
+## than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## health.general_health.child_hearing_tested.donotknow has fewer
+## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.general_health.child_vision_tested has fewer than 10
 ## unique values, did you want a factor?</code></pre>
@@ -6506,17 +6490,17 @@ But we will use it for the time being.</p>
 ## health.general_health.child_vision_tested.birthhospital has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_vision_tested.afterhome has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_vision_tested.afterhome has fewer
+## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_vision_tested.no has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_vision_tested.no has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.general_health.child_vision_tested.refused has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.general_health.child_vision_tested.donotknow has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## health.general_health.child_vision_tested.donotknow has fewer
+## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.general_health.child_allergies_infections_ill.allergies
 ## has fewer than 10 unique values, did you want a factor?</code></pre>
@@ -6536,8 +6520,8 @@ But we will use it for the time being.</p>
 ## health.general_health.child_injury_times has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.prenatal.prenatal_care has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## health.prenatal.prenatal_care has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.smoking.pregnant_smoking has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6554,11 +6538,11 @@ But we will use it for the time being.</p>
 ## health.smoking.mom_smoking_now has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.smoking.mom_smoking_now_amount has fewer than 10
-## unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## health.smoking.smoking_house has fewer than 10 unique
+## health.smoking.mom_smoking_now_amount has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## health.smoking.smoking_house has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.smoking.smoking_car has fewer than 10 unique values,
 ## did you want a factor?</code></pre>
@@ -6566,47 +6550,47 @@ But we will use it for the time being.</p>
 ## health.drinking.pregnant_drinking has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.drinking.drinking_trimester_1 has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## health.drinking.drinking_trimester_1 has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.drinking.drinking_trimester_2 has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## health.drinking.drinking_trimester_2 has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.drinking.drinking_trimester_3 has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## health.drinking.drinking_trimester_3 has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.phq4.phq4_nervous has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## health.phq4.phq4_nervous has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.phq4.phq4_worrying has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## health.phq4.phq4_worrying has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## health.phq4.phq4_littleinterest has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## health.phq4.phq4_down has fewer than 10 unique values, did
-## you want a factor?</code></pre>
+## health.phq4.phq4_down has fewer than 10 unique values, did you
+## want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_unfamiliarperson has
-## fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_troubletask has fewer
+## rothbart.rothbartquestions.rothbart_unfamiliarperson has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_companyofchild has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_troubletask has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_choiceactivities has
-## fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_quietlysung has fewer
+## rothbart.rothbartquestions.rothbart_companyofchild has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_playingoutdoors has
-## fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_morethan10 has fewer
+## rothbart.rothbartquestions.rothbart_choiceactivities has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_quietlysung has fewer than
+## 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_playingoutdoors has fewer
+## than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_morethan10 has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_respondingremarks has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
@@ -6614,11 +6598,11 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_excitedlovedadults has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_fiddlehair has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_fiddlehair has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_roughrowdy has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_roughrowdy has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_rockedhugged has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
@@ -6626,8 +6610,8 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_involvednewactivity has
 ## fewer than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_tirequickly has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_tirequickly has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_callattention has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
@@ -6635,29 +6619,29 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_tags has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_noisyenvironment has
-## fewer than 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_energy has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_vehicles has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_active has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_forbidden has fewer
+## rothbart.rothbartquestions.rothbart_noisyenvironment has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_energy has fewer than 10
+## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_vehicles has fewer than 10
+## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_active has fewer than 10
+## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_forbidden has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_sadlytearful has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_downblue has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_downblue has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_runhouse has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_runhouse has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_excitingevent has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
@@ -6668,8 +6652,8 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_waitpatiently has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_rockedsmile has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_rockedsmile has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_mold has fewer than 10
 ## unique values, did you want a factor?</code></pre>
@@ -6677,8 +6661,8 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_interactadult has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_careful has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## rothbart.rothbartquestions.rothbart_careful has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## rothbart.rothbartquestions.rothbart_enternewplace has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
@@ -6689,23 +6673,23 @@ But we will use it for the time being.</p>
 ## rothbart.rothbartquestions.rothbart_easilysoothed has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_busyother has fewer
+## rothbart.rothbartquestions.rothbart_busyother has fewer than
+## 10 unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## rothbart.rothbartquestions.rothbart_differentpeople has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## rothbart.rothbartquestions.rothbart_differentpeople has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## mediause.home_technology.tv has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.home_technology.tv has fewer than 10 unique
-## values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## mediause.home_technology.dvd has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## mediause.home_technology.dvd has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mediause.home_technology.computer has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.home_technology.ipad has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## mediause.home_technology.ipad has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mediause.home_technology.educationalgame has fewer than 10
 ## unique values, did you want a factor?</code></pre>
@@ -6713,11 +6697,11 @@ But we will use it for the time being.</p>
 ## mediause.home_technology.videogame has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.technology_child_tv has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## mediause.technology_child_tv has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.technology_child_dvd has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## mediause.technology_child_dvd has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mediause.technology_child_computer has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6725,20 +6709,20 @@ But we will use it for the time being.</p>
 ## mediause.technology_child_ipad has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.technology_child_educational has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## mediause.technology_child_educational has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.technology_child_videogame has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## mediause.technology_child_videogame has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mediause.techuse.meals has fewer than 10 unique values, did
 ## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.techuse.playtime has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## mediause.techuse.playtime has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## mediause.techuse.bedtime has fewer than 10 unique values,
-## did you want a factor?</code></pre>
+## mediause.techuse.bedtime has fewer than 10 unique values, did
+## you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## mediause.techuse.transportation has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6749,23 +6733,23 @@ But we will use it for the time being.</p>
 ## pets.pets_indoors_outdoors has fewer than 10 unique values,
 ## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.laundry.laundry_self has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## division_labor.laundry.laundry_self has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.laundry.laundry_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.laundry.laundry_otherperson has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## division_labor.cleaning.cleaning_self has fewer than 10
+## division_labor.laundry.laundry_otherperson has fewer than 10
 ## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## division_labor.cleaning.cleaning_self has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.cleaning.cleaning_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.cleaning.cleaning_otherperson has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## division_labor.cleaning.cleaning_otherperson has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.dishwashing.dishes_self has fewer than 10
 ## unique values, did you want a factor?</code></pre>
@@ -6773,38 +6757,38 @@ But we will use it for the time being.</p>
 ## division_labor.dishwashing.dishes_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.dishwashing.dishes_otherperson has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## division_labor.dishwashing.dishes_otherperson has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.cooking.cooking_self has fewer than 10
-## unique values, did you want a factor?</code></pre>
+## division_labor.cooking.cooking_self has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.cooking.cooking_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.cooking.cooking_otherperson has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## division_labor.feeding.feeding_self has fewer than 10
+## division_labor.cooking.cooking_otherperson has fewer than 10
 ## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## division_labor.feeding.feeding_self has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.feeding.feeding_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.feeding.feeding_otherperson has fewer than
-## 10 unique values, did you want a factor?</code></pre>
-<pre><code>## Warning in character_summary(dataset, column):
-## division_labor.droppick.droppick_self has fewer than 10
+## division_labor.feeding.feeding_otherperson has fewer than 10
 ## unique values, did you want a factor?</code></pre>
+<pre><code>## Warning in character_summary(dataset, column):
+## division_labor.droppick.droppick_self has fewer than 10 unique
+## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.droppick.droppick_partner has fewer than 10
 ## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.droppick.droppick_otherperson has fewer than
-## 10 unique values, did you want a factor?</code></pre>
+## division_labor.droppick.droppick_otherperson has fewer than 10
+## unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.bed.bed_self has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## division_labor.bed.bed_self has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.bed.bed_partner has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6812,17 +6796,17 @@ But we will use it for the time being.</p>
 ## division_labor.bed.bed_otherperson has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.disciplining.disciplining_self has fewer
-## than 10 unique values, did you want a factor?</code></pre>
+## division_labor.disciplining.disciplining_self has fewer than
+## 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## division_labor.disciplining.disciplining_partner has fewer
 ## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## division_labor.disciplining.disciplining_otherperson has
-## fewer than 10 unique values, did you want a factor?</code></pre>
+## division_labor.disciplining.disciplining_otherperson has fewer
+## than 10 unique values, did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
-## typical_day.typical_behavior has fewer than 10 unique
-## values, did you want a factor?</code></pre>
+## typical_day.typical_behavior has fewer than 10 unique values,
+## did you want a factor?</code></pre>
 <pre><code>## Warning in character_summary(dataset, column):
 ## typical_day.typical_activities has fewer than 10 unique
 ## values, did you want a factor?</code></pre>
@@ -6853,10 +6837,10 @@ But we will use it for the time being.</p>
 <span id="cb405-3"><a href="#cb405-3" tabindex="-1"></a><span class="fu">library</span>(forcats)</span></code></pre></div>
 <div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="#cb406-1" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">&quot;data/csv/screening/agg/PLAY-screening-datab-latest.csv&quot;</span>))</span></code></pre></div>
 <pre><code>## Rows: 486 Columns: 68
-## ── Column specification ────────────────────────────────────
+## ── Column specification ───────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr  (54): session_name, session_release, participant_ID...
-## dbl  (10): session_id, vol_id, child_age_mos, child_birt...
+## chr  (54): session_name, session_release, participant_ID, p...
+## dbl  (10): session_id, vol_id, child_age_mos, child_birthag...
 ## lgl   (1): pilot_pilot
 ## dttm  (1): submit_date
 ## date  (2): session_date, participant_birthdate
@@ -6979,19 +6963,12 @@ But we will use it for the time being.</p>
 <h3 class="unnumbered">To child vs. at home</h3>
 <div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="#cb418-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> language_spoken_child <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##                        language_spoken_home
-## language_spoken_child   english english_other
-##   english                   366             2
-##   english_other               1             3
-##   english_spanish             6             0
-##   english_spanish_other       2             0
-##   spanish                     1             0
-##                        language_spoken_home
-## language_spoken_child   english_spanish
-##   english                            14
-##   english_other                       0
-##   english_spanish                    53
-##   english_spanish_other               0
-##   spanish                             5
+## language_spoken_child   english english_other english_spanish
+##   english                   366             2              14
+##   english_other               1             3               0
+##   english_spanish             6             0              53
+##   english_spanish_other       2             0               0
+##   spanish                     1             0               5
 ##                        language_spoken_home
 ## language_spoken_child   english_spanish_other other spanish
 ##   english                                   2     0       3
@@ -8028,8 +8005,8 @@ UTAUS
 <span id="cb445-12"><a href="#cb445-12" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
 <span id="cb445-13"><a href="#cb445-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
 <span id="cb445-14"><a href="#cb445-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of
-## type &lt;difftime&gt;. Defaulting to continuous.</code></pre>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type
+## &lt;difftime&gt;. Defaulting to continuous.</code></pre>
 <p><img src="include/img/fig-sleep-dur-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Again, there are some unusual values.</p>
 <div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="#cb447-1" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -9056,14 +9033,13 @@ This includes training and pilot visits.</p>
 <span id="cb484-2"><a href="#cb484-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
 <span id="cb484-3"><a href="#cb484-3" tabindex="-1"></a>}</span>
 <span id="cb484-4"><a href="#cb484-4" tabindex="-1"></a></span>
-<span id="cb484-5"><a href="#cb484-5" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code></pre></div>
-<pre><code>## Loading required package: RColorBrewer</code></pre>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="#cb486-1" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code></pre></div>
+<span id="cb484-5"><a href="#cb484-5" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span>
+<span id="cb484-6"><a href="#cb484-6" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code></pre></div>
 <div id="language-exposure" class="section level2 unnumbered">
 <h2 class="unnumbered">Language exposure</h2>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="#cb487-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> home_visit_df <span class="sc">|&gt;</span></span>
-<span id="cb487-2"><a href="#cb487-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">language_child =</span> stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(language_child, <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb487-3"><a href="#cb487-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="#cb485-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> home_visit_df <span class="sc">|&gt;</span></span>
+<span id="cb485-2"><a href="#cb485-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">language_child =</span> stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(language_child, <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb485-3"><a href="#cb485-3" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_child, <span class="at">data =</span> df)</span></code></pre></div>
 <pre><code>##          language_child
 ## child_sex english english_spanish
 ##    female     192              36
@@ -9073,253 +9049,259 @@ This includes training and pilot visits.</p>
 <h2 class="unnumbered">MB-CDI</h2>
 <div id="mo-old-english-speakers-5" class="section level3 unnumbered">
 <h3 class="unnumbered">12-mo-old English speakers</h3>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="#cb489-1" tabindex="-1"></a>eng_12 <span class="ot">&lt;-</span></span>
-<span id="cb489-2"><a href="#cb489-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb489-3"><a href="#cb489-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_12_combined.csv&quot;</span>,</span>
-<span id="cb489-4"><a href="#cb489-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
-<span id="cb489-5"><a href="#cb489-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb489-6"><a href="#cb489-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="#cb487-1" tabindex="-1"></a>eng_12 <span class="ot">&lt;-</span></span>
+<span id="cb487-2"><a href="#cb487-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb487-3"><a href="#cb487-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_12_combined.csv&quot;</span>,</span>
+<span id="cb487-4"><a href="#cb487-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb487-5"><a href="#cb487-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb487-6"><a href="#cb487-6" tabindex="-1"></a>  )</span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 138 participant records.</p>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="#cb490-1" tabindex="-1"></a>eng_12_long <span class="ot">&lt;-</span> eng_12 <span class="sc">|&gt;</span></span>
-<span id="cb490-2"><a href="#cb490-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
-<span id="cb490-3"><a href="#cb490-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
-<span id="cb490-4"><a href="#cb490-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;understands_or_says&quot;</span>)</span>
-<span id="cb490-5"><a href="#cb490-5" tabindex="-1"></a></span>
-<span id="cb490-6"><a href="#cb490-6" tabindex="-1"></a><span class="co">#xtabs(~ word + understands_or_says, eng_12_long)</span></span></code></pre></div>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="#cb491-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_12_long <span class="sc">|&gt;</span></span>
-<span id="cb491-2"><a href="#cb491-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(understands_or_says)) <span class="sc">|&gt;</span></span>
-<span id="cb491-3"><a href="#cb491-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(understands_or_says <span class="sc">==</span> <span class="st">&quot;understands&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb491-4"><a href="#cb491-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb491-5"><a href="#cb491-5" tabindex="-1"></a></span>
-<span id="cb491-6"><a href="#cb491-6" tabindex="-1"></a>quant_25 <span class="ot">&lt;-</span> <span class="fu">round</span>(n_12_eng<span class="sc">*</span>.<span class="dv">25</span>, <span class="dv">0</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="#cb492-1" tabindex="-1"></a><span class="co"># rcb_color_paired &lt;- RColorBrewer::brewer.pal(12, &#39;Paired&#39;)</span></span>
-<span id="cb492-2"><a href="#cb492-2" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
-<span id="cb492-3"><a href="#cb492-3" tabindex="-1"></a></span>
-<span id="cb492-4"><a href="#cb492-4" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_12)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">40</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="#cb488-1" tabindex="-1"></a>eng_12_long <span class="ot">&lt;-</span> eng_12 <span class="sc">|&gt;</span></span>
+<span id="cb488-2"><a href="#cb488-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
+<span id="cb488-3"><a href="#cb488-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
+<span id="cb488-4"><a href="#cb488-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;understands_or_says&quot;</span>)</span>
+<span id="cb488-5"><a href="#cb488-5" tabindex="-1"></a></span>
+<span id="cb488-6"><a href="#cb488-6" tabindex="-1"></a><span class="co">#xtabs(~ word + understands_or_says, eng_12_long)</span></span></code></pre></div>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="#cb489-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_12_long <span class="sc">|&gt;</span></span>
+<span id="cb489-2"><a href="#cb489-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(understands_or_says)) <span class="sc">|&gt;</span></span>
+<span id="cb489-3"><a href="#cb489-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(understands_or_says <span class="sc">==</span> <span class="st">&quot;understands&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb489-4"><a href="#cb489-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb489-5"><a href="#cb489-5" tabindex="-1"></a></span>
+<span id="cb489-6"><a href="#cb489-6" tabindex="-1"></a>quant_25 <span class="ot">&lt;-</span> <span class="fu">round</span>(n_12_eng<span class="sc">*</span>.<span class="dv">25</span>, <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="#cb490-1" tabindex="-1"></a><span class="co"># rcb_color_paired &lt;- RColorBrewer::brewer.pal(12, &#39;Paired&#39;)</span></span>
+<span id="cb490-2"><a href="#cb490-2" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
+<span id="cb490-3"><a href="#cb490-3" tabindex="-1"></a></span>
+<span id="cb490-4"><a href="#cb490-4" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_12)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">40</span>)</span></code></pre></div>
 <p><img src="include/img/12-eng-wordcloud-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mo-old-english-speakers-6" class="section level3 unnumbered">
 <h3 class="unnumbered">18-mo-old English speakers</h3>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="#cb493-1" tabindex="-1"></a>eng_18 <span class="ot">&lt;-</span></span>
-<span id="cb493-2"><a href="#cb493-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb493-3"><a href="#cb493-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_18_combined.csv&quot;</span>,</span>
-<span id="cb493-4"><a href="#cb493-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
-<span id="cb493-5"><a href="#cb493-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb493-6"><a href="#cb493-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="#cb491-1" tabindex="-1"></a>eng_18 <span class="ot">&lt;-</span></span>
+<span id="cb491-2"><a href="#cb491-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb491-3"><a href="#cb491-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_18_combined.csv&quot;</span>,</span>
+<span id="cb491-4"><a href="#cb491-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb491-5"><a href="#cb491-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb491-6"><a href="#cb491-6" tabindex="-1"></a>  )</span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 123 participant records.</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="#cb494-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_18 <span class="sc">|&gt;</span></span>
-<span id="cb494-2"><a href="#cb494-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
-<span id="cb494-3"><a href="#cb494-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
-<span id="cb494-4"><a href="#cb494-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;says&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb494-5"><a href="#cb494-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
-<span id="cb494-6"><a href="#cb494-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb494-7"><a href="#cb494-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb494-8"><a href="#cb494-8" tabindex="-1"></a></span>
-<span id="cb494-9"><a href="#cb494-9" tabindex="-1"></a>quant_25 <span class="ot">&lt;-</span> <span class="fu">round</span>(n_18_eng<span class="sc">*</span>.<span class="dv">25</span>, <span class="dv">0</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="#cb495-1" tabindex="-1"></a><span class="co">#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
-<span id="cb495-2"><a href="#cb495-2" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_18)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="#cb492-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_18 <span class="sc">|&gt;</span></span>
+<span id="cb492-2"><a href="#cb492-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
+<span id="cb492-3"><a href="#cb492-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
+<span id="cb492-4"><a href="#cb492-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;says&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb492-5"><a href="#cb492-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
+<span id="cb492-6"><a href="#cb492-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb492-7"><a href="#cb492-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb492-8"><a href="#cb492-8" tabindex="-1"></a></span>
+<span id="cb492-9"><a href="#cb492-9" tabindex="-1"></a>quant_25 <span class="ot">&lt;-</span> <span class="fu">round</span>(n_18_eng<span class="sc">*</span>.<span class="dv">25</span>, <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="#cb493-1" tabindex="-1"></a><span class="co">#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
+<span id="cb493-2"><a href="#cb493-2" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_18)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code></pre></div>
 <p><img src="include/img/18-eng-wordcloud-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mo-old-english-speakers-7" class="section level3 unnumbered">
 <h3 class="unnumbered">24-mo-old English speakers</h3>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="#cb496-1" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
-<span id="cb496-2"><a href="#cb496-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb496-3"><a href="#cb496-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_24_combined.csv&quot;</span>,</span>
-<span id="cb496-4"><a href="#cb496-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
-<span id="cb496-5"><a href="#cb496-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb496-6"><a href="#cb496-6" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="#cb494-1" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
+<span id="cb494-2"><a href="#cb494-2" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb494-3"><a href="#cb494-3" tabindex="-1"></a>    <span class="st">&quot;../data/csv/home_visit/agg/mcdi_english_24_combined.csv&quot;</span>,</span>
+<span id="cb494-4"><a href="#cb494-4" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">&#39;c&#39;</span>),</span>
+<span id="cb494-5"><a href="#cb494-5" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb494-6"><a href="#cb494-6" tabindex="-1"></a>  )</span></code></pre></div>
 <p>There are <span class="math inline">\(n=\)</span> 109 participant records.</p>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="#cb497-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
-<span id="cb497-2"><a href="#cb497-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
-<span id="cb497-3"><a href="#cb497-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
-<span id="cb497-4"><a href="#cb497-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;says&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb497-5"><a href="#cb497-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
-<span id="cb497-6"><a href="#cb497-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb497-7"><a href="#cb497-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="#cb498-1" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">60</span>)</span></code></pre></div>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : yumyum could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : mine could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : monkey could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : play could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : cup could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : shh could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : nightnight could not be
-## fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : quackquack could not be
-## fit on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : two could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : baabaa could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : eat could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : door could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : banana could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : baby could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : balloon could not be fit
-## on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : bye could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : more could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : light could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : car could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : eye could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : shoe could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : shirt could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : wet_1 could not be fit on
-## page. It will not be plotted.</code></pre>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="#cb495-1" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
+<span id="cb495-2"><a href="#cb495-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
+<span id="cb495-3"><a href="#cb495-3" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">&quot;word&quot;</span>,</span>
+<span id="cb495-4"><a href="#cb495-4" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">&quot;says&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb495-5"><a href="#cb495-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
+<span id="cb495-6"><a href="#cb495-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb495-7"><a href="#cb495-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="#cb496-1" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">60</span>)</span></code></pre></div>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : mommy could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : mouth could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : cat could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : jump could not be fit on
+## wd_ct$n, min.freq = my_thresh, : woofwoof could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : daddy could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : uhoh could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : jump could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : meow could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : tree could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cow could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : tummy could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : truck could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : cookie could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : down could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : spoon could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : duck could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : choochoo could not be fit
-## on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : bird could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : stairs could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : one could not be fit on
+## wd_ct$n, min.freq = my_thresh, : cracker could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : vroom could not be fit on
+## wd_ct$n, min.freq = my_thresh, : more could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : kiss could not be fit on
+## wd_ct$n, min.freq = my_thresh, : duck could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : bed could not be fit on
+## wd_ct$n, min.freq = my_thresh, : help could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : butterfly could not be fit
+## wd_ct$n, min.freq = my_thresh, : quackquack could not be fit
 ## on page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : tree could not be fit on
+## wd_ct$n, min.freq = my_thresh, : down could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : allgone could not be fit
-## on page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : frog could not be fit on
+## wd_ct$n, min.freq = my_thresh, : thankyou could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : book could not be fit on
+## wd_ct$n, min.freq = my_thresh, : shh could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hair could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : yes could not be fit on
+## wd_ct$n, min.freq = my_thresh, : banana could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : no could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : dog could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : please could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : sun could not be fit on
-## page. It will not be plotted.</code></pre>
-<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : apple could not be fit on
+## wd_ct$n, min.freq = my_thresh, : yumyum could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : three could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : cow could not be fit on
+## wd_ct$n, min.freq = my_thresh, : soap could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : on could not be fit on
+## wd_ct$n, min.freq = my_thresh, : ouch could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : hug could not be fit on
+## wd_ct$n, min.freq = my_thresh, : spoon could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : pants could not be fit on
+## wd_ct$n, min.freq = my_thresh, : shoe could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : thankyou could not be fit
-## on page. It will not be plotted.</code></pre>
+## wd_ct$n, min.freq = my_thresh, : eye could not be fit on page.
+## It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : hot could not be fit on
+## wd_ct$n, min.freq = my_thresh, : apple could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : diaper could not be fit on
+## wd_ct$n, min.freq = my_thresh, : walk could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : cracker could not be fit
-## on page. It will not be plotted.</code></pre>
+## wd_ct$n, min.freq = my_thresh, : go could not be fit on page.
+## It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
-## wd_ct$n, min.freq = my_thresh, : sleep could not be fit on
+## wd_ct$n, min.freq = my_thresh, : dog could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : up could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : baby could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : door could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : vroom could not be fit on
 ## page. It will not be plotted.</code></pre>
 <pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
 ## wd_ct$n, min.freq = my_thresh, : ball could not be fit on
 ## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : wet_1 could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : book could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : sleep could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : light could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : no could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : out could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : allgone could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : chair could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : ear could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : choochoo could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : mouth could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : sun could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hat could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : shirt could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : yes could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : kiss could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : hand could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : cup could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : mine could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : milk could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : bye could not be fit on page.
+## It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : bird could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : balloon could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : sock could not be fit on
+## page. It will not be plotted.</code></pre>
+<pre><code>## Warning in wordcloud::wordcloud(words = wd_ct$word, freq =
+## wd_ct$n, min.freq = my_thresh, : one could not be fit on page.
+## It will not be plotted.</code></pre>
 <p><img src="include/img/mcdi-24-eng-word-cloud-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="#cb560-1" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
 <span id="cb560-2"><a href="#cb560-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
@@ -9659,12 +9641,11 @@ PRINU
 ##      24mo         0   6       1 131</code></pre>
 <div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="#cb583-1" tabindex="-1"></a>health_df <span class="sc">%&gt;%</span></span>
 <span id="cb583-2"><a href="#cb583-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
-<span id="cb583-3"><a href="#cb583-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb583-4"><a href="#cb583-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> feeding_solidfood_age, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb583-5"><a href="#cb583-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb583-6"><a href="#cb583-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<pre><code>## Warning: Removed 5 rows containing non-finite values
-## (`stat_bin()`).</code></pre>
+<span id="cb583-3"><a href="#cb583-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&lt;</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
+<span id="cb583-4"><a href="#cb583-4" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb583-5"><a href="#cb583-5" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> feeding_solidfood_age, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb583-6"><a href="#cb583-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb583-7"><a href="#cb583-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-solid-food-mos-1.png" alt="Age at introduction of solid foods" width="672" />
 <p class="caption">
@@ -9672,10 +9653,10 @@ PRINU
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="#cb585-1" tabindex="-1"></a>health_df <span class="sc">|&gt;</span></span>
-<span id="cb585-2"><a href="#cb585-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
-<span id="cb585-3"><a href="#cb585-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb585-4"><a href="#cb585-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="#cb584-1" tabindex="-1"></a>health_df <span class="sc">|&gt;</span></span>
+<span id="cb584-2"><a href="#cb584-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
+<span id="cb584-3"><a href="#cb584-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&gt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb584-4"><a href="#cb584-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9707,11 +9688,11 @@ a9M6Q1C1A
 <h2 class="unnumbered">Sleeping position</h2>
 <p>These data only focus on <code>child_sleeping_position</code>.
 Other sleeping data are in the screening questionnaire.</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="#cb586-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb586-2"><a href="#cb586-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_sleeping_position) <span class="sc">|&gt;</span></span>
-<span id="cb586-3"><a href="#cb586-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleeping_position))</span>
-<span id="cb586-4"><a href="#cb586-4" tabindex="-1"></a></span>
-<span id="cb586-5"><a href="#cb586-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="#cb585-1" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb585-2"><a href="#cb585-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_sleeping_position) <span class="sc">|&gt;</span></span>
+<span id="cb585-3"><a href="#cb585-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleeping_position))</span>
+<span id="cb585-4"><a href="#cb585-4" tabindex="-1"></a></span>
+<span id="cb585-5"><a href="#cb585-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
 ##            back          157  160  131
@@ -9725,31 +9706,31 @@ Other sleeping data are in the screening questionnaire.</p>
 </div>
 <div id="smokingdrinking" class="section level2 unnumbered">
 <h2 class="unnumbered">Smoking/drinking</h2>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="#cb588-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb588-2"><a href="#cb588-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(age_group,</span>
-<span id="cb588-3"><a href="#cb588-3" tabindex="-1"></a>    child_sex,</span>
-<span id="cb588-4"><a href="#cb588-4" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;smoking&quot;</span>),</span>
-<span id="cb588-5"><a href="#cb588-5" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;drinking&quot;</span>)</span>
-<span id="cb588-6"><a href="#cb588-6" tabindex="-1"></a>  )</span>
-<span id="cb588-7"><a href="#cb588-7" tabindex="-1"></a></span>
-<span id="cb588-8"><a href="#cb588-8" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> pregnant_smoking <span class="sc">+</span> pregnant_drinking, smoking_drinking)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="#cb587-1" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb587-2"><a href="#cb587-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(age_group,</span>
+<span id="cb587-3"><a href="#cb587-3" tabindex="-1"></a>    child_sex,</span>
+<span id="cb587-4"><a href="#cb587-4" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;smoking&quot;</span>),</span>
+<span id="cb587-5"><a href="#cb587-5" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">&quot;drinking&quot;</span>)</span>
+<span id="cb587-6"><a href="#cb587-6" tabindex="-1"></a>  )</span>
+<span id="cb587-7"><a href="#cb587-7" tabindex="-1"></a></span>
+<span id="cb587-8"><a href="#cb587-8" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> pregnant_smoking <span class="sc">+</span> pregnant_drinking, smoking_drinking)</span></code></pre></div>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
 ##        no        372       1  91
 ##        refused     0       1   0
 ##        yes         1       0   1</code></pre>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="#cb590-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="#cb589-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code></pre></div>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
 ##     no                3 454       0   0
 ##     refused           0   3       1   0
 ##     yes               0   7       0   1</code></pre>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="#cb592-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
-<span id="cb592-2"><a href="#cb592-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_smoking) <span class="sc">|&gt;</span></span>
-<span id="cb592-3"><a href="#cb592-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_smoking)) <span class="sc">|&gt;</span></span>
-<span id="cb592-4"><a href="#cb592-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="#cb591-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb591-2"><a href="#cb591-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_smoking) <span class="sc">|&gt;</span></span>
+<span id="cb591-3"><a href="#cb591-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_smoking)) <span class="sc">|&gt;</span></span>
+<span id="cb591-4"><a href="#cb591-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -9831,10 +9812,10 @@ Vapes inside the house
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="#cb593-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
-<span id="cb593-2"><a href="#cb593-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_drinking) <span class="sc">|&gt;</span></span>
-<span id="cb593-3"><a href="#cb593-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_drinking)) <span class="sc">|&gt;</span></span>
-<span id="cb593-4"><a href="#cb593-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="#cb592-1" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb592-2"><a href="#cb592-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_drinking) <span class="sc">|&gt;</span></span>
+<span id="cb592-3"><a href="#cb592-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_drinking)) <span class="sc">|&gt;</span></span>
+<span id="cb592-4"><a href="#cb592-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -10064,29 +10045,29 @@ Just during the last weeks of her maybe one glass of wine
 </div>
 <div id="patient-health-questionnaire-phq-4" class="section level2 unnumbered">
 <h2 class="unnumbered">Patient Health Questionnaire (PHQ-4)</h2>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="#cb594-1" tabindex="-1"></a>phq4 <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb594-2"><a href="#cb594-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;phq4_&quot;</span>))</span>
-<span id="cb594-3"><a href="#cb594-3" tabindex="-1"></a></span>
-<span id="cb594-4"><a href="#cb594-4" tabindex="-1"></a><span class="fu">names</span>(phq4) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;phq4_&quot;</span>, </span>
-<span id="cb594-5"><a href="#cb594-5" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb594-6"><a href="#cb594-6" tabindex="-1"></a>                    <span class="fu">names</span>(phq4))</span>
-<span id="cb594-7"><a href="#cb594-7" tabindex="-1"></a></span>
-<span id="cb594-8"><a href="#cb594-8" tabindex="-1"></a>phq4 <span class="sc">|&gt;</span></span>
-<span id="cb594-9"><a href="#cb594-9" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>), <span class="at">names_to =</span> <span class="st">&quot;question&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb594-10"><a href="#cb594-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
-<span id="cb594-11"><a href="#cb594-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
-<span id="cb594-12"><a href="#cb594-12" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;notatall&quot;</span>,</span>
-<span id="cb594-13"><a href="#cb594-13" tabindex="-1"></a>                                    <span class="st">&quot;severaldays&quot;</span>,</span>
-<span id="cb594-14"><a href="#cb594-14" tabindex="-1"></a>                                    <span class="st">&quot;morethanhalf&quot;</span>,</span>
-<span id="cb594-15"><a href="#cb594-15" tabindex="-1"></a>                                    <span class="st">&quot;nearly&quot;</span>)),</span>
-<span id="cb594-16"><a href="#cb594-16" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb594-17"><a href="#cb594-17" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb594-18"><a href="#cb594-18" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb594-19"><a href="#cb594-19" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb594-20"><a href="#cb594-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(question), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
-<span id="cb594-21"><a href="#cb594-21" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb594-22"><a href="#cb594-22" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb594-23"><a href="#cb594-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="#cb593-1" tabindex="-1"></a>phq4 <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb593-2"><a href="#cb593-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;phq4_&quot;</span>))</span>
+<span id="cb593-3"><a href="#cb593-3" tabindex="-1"></a></span>
+<span id="cb593-4"><a href="#cb593-4" tabindex="-1"></a><span class="fu">names</span>(phq4) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;phq4_&quot;</span>, </span>
+<span id="cb593-5"><a href="#cb593-5" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb593-6"><a href="#cb593-6" tabindex="-1"></a>                    <span class="fu">names</span>(phq4))</span>
+<span id="cb593-7"><a href="#cb593-7" tabindex="-1"></a></span>
+<span id="cb593-8"><a href="#cb593-8" tabindex="-1"></a>phq4 <span class="sc">|&gt;</span></span>
+<span id="cb593-9"><a href="#cb593-9" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>), <span class="at">names_to =</span> <span class="st">&quot;question&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb593-10"><a href="#cb593-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb593-11"><a href="#cb593-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb593-12"><a href="#cb593-12" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;notatall&quot;</span>,</span>
+<span id="cb593-13"><a href="#cb593-13" tabindex="-1"></a>                                    <span class="st">&quot;severaldays&quot;</span>,</span>
+<span id="cb593-14"><a href="#cb593-14" tabindex="-1"></a>                                    <span class="st">&quot;morethanhalf&quot;</span>,</span>
+<span id="cb593-15"><a href="#cb593-15" tabindex="-1"></a>                                    <span class="st">&quot;nearly&quot;</span>)),</span>
+<span id="cb593-16"><a href="#cb593-16" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb593-17"><a href="#cb593-17" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb593-18"><a href="#cb593-18" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb593-19"><a href="#cb593-19" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb593-20"><a href="#cb593-20" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(question), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb593-21"><a href="#cb593-21" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb593-22"><a href="#cb593-22" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb593-23"><a href="#cb593-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="include/img/fig-phq4-1.png" alt="PHQ4 responses by age group and child sex" width="672" />
 <p class="caption">
@@ -10098,20 +10079,20 @@ Just during the last weeks of her maybe one glass of wine
 <h2 class="unnumbered">Child health</h2>
 <div id="overall-rating" class="section level3 unnumbered">
 <h3 class="unnumbered">Overall rating</h3>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="#cb595-1" tabindex="-1"></a>child_health_rating <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb595-2"><a href="#cb595-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_health) <span class="sc">|&gt;</span></span>
-<span id="cb595-3"><a href="#cb595-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_health)) <span class="sc">|&gt;</span></span>
-<span id="cb595-4"><a href="#cb595-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_health =</span> <span class="fu">factor</span>(child_health,</span>
-<span id="cb595-5"><a href="#cb595-5" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">&quot;poor&quot;</span>,</span>
-<span id="cb595-6"><a href="#cb595-6" tabindex="-1"></a>                                        <span class="st">&quot;fair&quot;</span>,</span>
-<span id="cb595-7"><a href="#cb595-7" tabindex="-1"></a>                                        <span class="st">&quot;good&quot;</span>,</span>
-<span id="cb595-8"><a href="#cb595-8" tabindex="-1"></a>                                        <span class="st">&quot;verygood&quot;</span>,</span>
-<span id="cb595-9"><a href="#cb595-9" tabindex="-1"></a>                                        <span class="st">&quot;excellent&quot;</span>,</span>
-<span id="cb595-10"><a href="#cb595-10" tabindex="-1"></a>                                        <span class="st">&quot;donotknow&quot;</span>,</span>
-<span id="cb595-11"><a href="#cb595-11" tabindex="-1"></a>                                        <span class="st">&quot;refused&quot;</span>),</span>
-<span id="cb595-12"><a href="#cb595-12" tabindex="-1"></a>                                      <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb595-13"><a href="#cb595-13" tabindex="-1"></a></span>
-<span id="cb595-14"><a href="#cb595-14" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_health <span class="sc">+</span> age_group, <span class="at">data =</span> child_health_rating)</span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="#cb594-1" tabindex="-1"></a>child_health_rating <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb594-2"><a href="#cb594-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_health) <span class="sc">|&gt;</span></span>
+<span id="cb594-3"><a href="#cb594-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_health)) <span class="sc">|&gt;</span></span>
+<span id="cb594-4"><a href="#cb594-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_health =</span> <span class="fu">factor</span>(child_health,</span>
+<span id="cb594-5"><a href="#cb594-5" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">&quot;poor&quot;</span>,</span>
+<span id="cb594-6"><a href="#cb594-6" tabindex="-1"></a>                                        <span class="st">&quot;fair&quot;</span>,</span>
+<span id="cb594-7"><a href="#cb594-7" tabindex="-1"></a>                                        <span class="st">&quot;good&quot;</span>,</span>
+<span id="cb594-8"><a href="#cb594-8" tabindex="-1"></a>                                        <span class="st">&quot;verygood&quot;</span>,</span>
+<span id="cb594-9"><a href="#cb594-9" tabindex="-1"></a>                                        <span class="st">&quot;excellent&quot;</span>,</span>
+<span id="cb594-10"><a href="#cb594-10" tabindex="-1"></a>                                        <span class="st">&quot;donotknow&quot;</span>,</span>
+<span id="cb594-11"><a href="#cb594-11" tabindex="-1"></a>                                        <span class="st">&quot;refused&quot;</span>),</span>
+<span id="cb594-12"><a href="#cb594-12" tabindex="-1"></a>                                      <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb594-13"><a href="#cb594-13" tabindex="-1"></a></span>
+<span id="cb594-14"><a href="#cb594-14" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_health <span class="sc">+</span> age_group, <span class="at">data =</span> child_health_rating)</span></code></pre></div>
 <pre><code>##             age_group
 ## child_health 12mo 18mo 24mo
 ##    poor         0    0    0
@@ -10124,11 +10105,11 @@ Just during the last weeks of her maybe one glass of wine
 </div>
 <div id="recent-vaccination" class="section level3 unnumbered">
 <h3 class="unnumbered">Recent vaccination</h3>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="#cb597-1" tabindex="-1"></a>recent_vax <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb597-2"><a href="#cb597-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_vaccination) <span class="sc">|&gt;</span></span>
-<span id="cb597-3"><a href="#cb597-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vaccination))</span>
-<span id="cb597-4"><a href="#cb597-4" tabindex="-1"></a></span>
-<span id="cb597-5"><a href="#cb597-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_vaccination <span class="sc">+</span> age_group, <span class="at">data =</span> recent_vax)</span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="#cb596-1" tabindex="-1"></a>recent_vax <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb596-2"><a href="#cb596-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_vaccination) <span class="sc">|&gt;</span></span>
+<span id="cb596-3"><a href="#cb596-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vaccination))</span>
+<span id="cb596-4"><a href="#cb596-4" tabindex="-1"></a></span>
+<span id="cb596-5"><a href="#cb596-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_vaccination <span class="sc">+</span> age_group, <span class="at">data =</span> recent_vax)</span></code></pre></div>
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    3
@@ -10137,11 +10118,11 @@ Just during the last weeks of her maybe one glass of wine
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3 class="unnumbered">Seen medical specialist</h3>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="#cb599-1" tabindex="-1"></a>seen_specialist <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb599-2"><a href="#cb599-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_medical_specialist) <span class="sc">|&gt;</span></span>
-<span id="cb599-3"><a href="#cb599-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_medical_specialist))</span>
-<span id="cb599-4"><a href="#cb599-4" tabindex="-1"></a></span>
-<span id="cb599-5"><a href="#cb599-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_medical_specialist <span class="sc">+</span> age_group, <span class="at">data =</span> seen_specialist)</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="#cb598-1" tabindex="-1"></a>seen_specialist <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb598-2"><a href="#cb598-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_medical_specialist) <span class="sc">|&gt;</span></span>
+<span id="cb598-3"><a href="#cb598-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_medical_specialist))</span>
+<span id="cb598-4"><a href="#cb598-4" tabindex="-1"></a></span>
+<span id="cb598-5"><a href="#cb598-5" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_medical_specialist <span class="sc">+</span> age_group, <span class="at">data =</span> seen_specialist)</span></code></pre></div>
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
@@ -10154,28 +10135,28 @@ Just during the last weeks of her maybe one glass of wine
 </div>
 <div id="illnesses-and-allergies" class="section level3 unnumbered">
 <h3 class="unnumbered">Illnesses and allergies</h3>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="#cb601-1" tabindex="-1"></a>illness_allergy <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
-<span id="cb601-2"><a href="#cb601-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;illness_&quot;</span>))</span>
-<span id="cb601-3"><a href="#cb601-3" tabindex="-1"></a></span>
-<span id="cb601-4"><a href="#cb601-4" tabindex="-1"></a></span>
-<span id="cb601-5"><a href="#cb601-5" tabindex="-1"></a><span class="fu">names</span>(illness_allergy) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;illness_&quot;</span>,</span>
-<span id="cb601-6"><a href="#cb601-6" tabindex="-1"></a>                               <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb601-7"><a href="#cb601-7" tabindex="-1"></a>                               <span class="fu">names</span>(illness_allergy))</span>
-<span id="cb601-8"><a href="#cb601-8" tabindex="-1"></a></span>
-<span id="cb601-9"><a href="#cb601-9" tabindex="-1"></a>illness_allergy <span class="sc">|&gt;</span></span>
-<span id="cb601-10"><a href="#cb601-10" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>),</span>
-<span id="cb601-11"><a href="#cb601-11" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>,</span>
-<span id="cb601-12"><a href="#cb601-12" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb601-13"><a href="#cb601-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
-<span id="cb601-14"><a href="#cb601-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
-<span id="cb601-15"><a href="#cb601-15" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;donotknow&quot;</span>, <span class="st">&quot;refused&quot;</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb601-16"><a href="#cb601-16" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb601-17"><a href="#cb601-17" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb601-18"><a href="#cb601-18" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb601-19"><a href="#cb601-19" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
-<span id="cb601-20"><a href="#cb601-20" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb601-21"><a href="#cb601-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb601-22"><a href="#cb601-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="#cb600-1" tabindex="-1"></a>illness_allergy <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb600-2"><a href="#cb600-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">&quot;illness_&quot;</span>))</span>
+<span id="cb600-3"><a href="#cb600-3" tabindex="-1"></a></span>
+<span id="cb600-4"><a href="#cb600-4" tabindex="-1"></a></span>
+<span id="cb600-5"><a href="#cb600-5" tabindex="-1"></a><span class="fu">names</span>(illness_allergy) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;illness_&quot;</span>,</span>
+<span id="cb600-6"><a href="#cb600-6" tabindex="-1"></a>                               <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb600-7"><a href="#cb600-7" tabindex="-1"></a>                               <span class="fu">names</span>(illness_allergy))</span>
+<span id="cb600-8"><a href="#cb600-8" tabindex="-1"></a></span>
+<span id="cb600-9"><a href="#cb600-9" tabindex="-1"></a>illness_allergy <span class="sc">|&gt;</span></span>
+<span id="cb600-10"><a href="#cb600-10" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&#39;child_sex&#39;</span>, <span class="st">&#39;age_group&#39;</span>),</span>
+<span id="cb600-11"><a href="#cb600-11" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>,</span>
+<span id="cb600-12"><a href="#cb600-12" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb600-13"><a href="#cb600-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb600-14"><a href="#cb600-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb600-15"><a href="#cb600-15" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>, <span class="st">&quot;donotknow&quot;</span>, <span class="st">&quot;refused&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb600-16"><a href="#cb600-16" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb600-17"><a href="#cb600-17" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb600-18"><a href="#cb600-18" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb600-19"><a href="#cb600-19" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb600-20"><a href="#cb600-20" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb600-21"><a href="#cb600-21" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb600-22"><a href="#cb600-22" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="include/img/fig-illness-allergies-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!--chapter:end:25-viz-health.Rmd-->
 </div>
@@ -10190,21 +10171,21 @@ Just during the last weeks of her maybe one glass of wine
 <p>The functions are found in <code>R/</code> with the prefix <code>ecbq_</code>.</p>
 <p>We create a “wide” data frame <code>ecbq_wide_df</code> as one of the targets of <code>targets:tar_make()</code>.
 We attempt to load that here and ensure that all <code>R/ecbq_</code> functions are in the local environment.</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="#cb602-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_wide_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb602-2"><a href="#cb602-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb602-3"><a href="#cb602-3" tabindex="-1"></a>}</span>
-<span id="cb602-4"><a href="#cb602-4" tabindex="-1"></a></span>
-<span id="cb602-5"><a href="#cb602-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_plot_all&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb602-6"><a href="#cb602-6" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;../R&quot;</span>, <span class="st">&quot;^ecbq_&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb602-7"><a href="#cb602-7" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
-<span id="cb602-8"><a href="#cb602-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="#cb601-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_wide_df&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb601-2"><a href="#cb601-2" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb601-3"><a href="#cb601-3" tabindex="-1"></a>}</span>
+<span id="cb601-4"><a href="#cb601-4" tabindex="-1"></a></span>
+<span id="cb601-5"><a href="#cb601-5" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">&#39;ecbq_plot_all&#39;</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb601-6"><a href="#cb601-6" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;../R&quot;</span>, <span class="st">&quot;^ecbq_&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb601-7"><a href="#cb601-7" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
+<span id="cb601-8"><a href="#cb601-8" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="summarize" class="section level2 unnumbered">
 <h2 class="unnumbered">Summarize</h2>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="#cb603-1" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
-<span id="cb603-2"><a href="#cb603-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
-<span id="cb603-3"><a href="#cb603-3" tabindex="-1"></a></span>
-<span id="cb603-4"><a href="#cb603-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="#cb602-1" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
+<span id="cb602-2"><a href="#cb602-2" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
+<span id="cb602-3"><a href="#cb602-3" tabindex="-1"></a></span>
+<span id="cb602-4"><a href="#cb602-4" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code></pre></div>
 <pre><code>## tibble [475 × 40] (S3: tbl_df/tbl/data.frame)
 ##  $ participant_id              : chr [1:475] &quot;PILOT&quot; &quot;o6Ri9H8Ka0A&quot; &quot;U1Ro3M7Ri&quot; &quot;e0N4H8O2A&quot; ...
 ##  $ child_sex                   : chr [1:475] &quot;male&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
@@ -10246,7 +10227,7 @@ We attempt to load that here and ensure that all <code>R/ecbq_</code> functions 
 ##  $ rothbart_busyother          : chr [1:475] &quot;less_than_half&quot; &quot;about_half&quot; &quot;more_than_half&quot; &quot;almost_always&quot; ...
 ##  $ rothbart_differentpeople    : chr [1:475] &quot;always&quot; &quot;more_than_half&quot; &quot;almost_always&quot; &quot;always&quot; ...
 ##  $ rothbart_comments           : chr [1:475] NA NA NA NA ...</code></pre>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="#cb605-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="#cb604-1" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code></pre></div>
 <pre><code>##          child_sex
 ## age_group female male
 ##      12mo     93   74
@@ -10255,12 +10236,12 @@ We attempt to load that here and ensure that all <code>R/ecbq_</code> functions 
 </div>
 <div id="visualize" class="section level2 unnumbered">
 <h2 class="unnumbered">Visualize</h2>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="#cb607-1" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">&quot;rothbart_&quot;</span>)]</span>
-<span id="cb607-2"><a href="#cb607-2" tabindex="-1"></a></span>
-<span id="cb607-3"><a href="#cb607-3" tabindex="-1"></a><span class="co"># Omit comments</span></span>
-<span id="cb607-4"><a href="#cb607-4" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> ecbq_vars[<span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(ecbq_vars, <span class="st">&quot;comments&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="#cb606-1" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">&quot;rothbart_&quot;</span>)]</span>
+<span id="cb606-2"><a href="#cb606-2" tabindex="-1"></a></span>
+<span id="cb606-3"><a href="#cb606-3" tabindex="-1"></a><span class="co"># Omit comments</span></span>
+<span id="cb606-4"><a href="#cb606-4" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> ecbq_vars[<span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(ecbq_vars, <span class="st">&quot;comments&quot;</span>)]</span></code></pre></div>
 <p>We use <code>purrr::map()</code> to plot all of the responses to individual ECBQ items.</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="#cb608-1" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(ecbq_vars, <span class="fu">suppressMessages</span>(ecbq_plot), <span class="at">df =</span> ecbq_complete)</span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="#cb607-1" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(ecbq_vars, <span class="fu">suppressMessages</span>(ecbq_plot), <span class="at">df =</span> ecbq_complete)</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="include/img/purrr-map-ecbq-figs-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -10372,11 +10353,11 @@ We attempt to load that here and ensure that all <code>R/ecbq_</code> functions 
 <h3 class="unnumbered">Comments</h3>
 <p>Manual inspection shows that the comments field has some names.
 We omit printing the comments here until we can be assured that there is no identifiying information in the comments.</p>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="#cb645-1" tabindex="-1"></a>ecbq_complete <span class="sc">|&gt;</span></span>
-<span id="cb645-2"><a href="#cb645-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, age_group, rothbart_comments) <span class="sc">|&gt;</span></span>
-<span id="cb645-3"><a href="#cb645-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(rothbart_comments)) <span class="sc">|&gt;</span></span>
-<span id="cb645-4"><a href="#cb645-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group) <span class="sc">|&gt;</span></span>
-<span id="cb645-5"><a href="#cb645-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="#cb644-1" tabindex="-1"></a>ecbq_complete <span class="sc">|&gt;</span></span>
+<span id="cb644-2"><a href="#cb644-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, age_group, rothbart_comments) <span class="sc">|&gt;</span></span>
+<span id="cb644-3"><a href="#cb644-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(rothbart_comments)) <span class="sc">|&gt;</span></span>
+<span id="cb644-4"><a href="#cb644-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group) <span class="sc">|&gt;</span></span>
+<span id="cb644-5"><a href="#cb644-5" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&#39;html&#39;</span>)</span></code></pre></div>
 <!--chapter:end:26-viz-temperament.Rmd-->
 </div>
 </div>
@@ -10384,9 +10365,9 @@ We omit printing the comments here until we can be assured that there is no iden
 <div id="post-visit-data" class="section level1 unnumbered">
 <h1 class="unnumbered">Post-visit data</h1>
 <p>We load the post-visit survey data.</p>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="#cb646-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
-<span id="cb646-2"><a href="#cb646-2" tabindex="-1"></a></span>
-<span id="cb646-3"><a href="#cb646-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="#cb645-1" tabindex="-1"></a><span class="fu">tar_load</span>(post_visit_df, <span class="at">store=</span><span class="st">&quot;../_targets&quot;</span>)</span>
+<span id="cb645-2"><a href="#cb645-2" tabindex="-1"></a></span>
+<span id="cb645-3"><a href="#cb645-3" tabindex="-1"></a><span class="fu">dim</span>(post_visit_df)</span></code></pre></div>
 <pre><code>## [1] 384 178</code></pre>
 <div class="rmdnote">
 <p>Cleaning this data is set aside for future work.</p>
@@ -10421,7 +10402,7 @@ We omit printing the comments here until we can be assured that there is no iden
   <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-18.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

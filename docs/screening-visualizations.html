@@ -84,10 +84,10 @@
 <div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 486 Columns: 68
-## ── Column specification ────────────────────────────────────
+## ── Column specification ───────────────────────────────────────
 ## Delimiter: ","
-## chr  (54): session_name, session_release, participant_ID...
-## dbl  (10): session_id, vol_id, child_age_mos, child_birt...
+## chr  (54): session_name, session_release, participant_ID, p...
+## dbl  (10): session_id, vol_id, child_age_mos, child_birthag...
 ## lgl   (1): pilot_pilot
 ## dttm  (1): submit_date
 ## date  (2): session_date, participant_birthdate
@@ -228,19 +228,12 @@ Figure 3: Histogram of child age at time of recruiting call.
 <div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">language_spoken_child</span> <span class="op">+</span> <span class="va">language_spoken_home</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        language_spoken_home
-## language_spoken_child   english english_other
-##   english                   366             2
-##   english_other               1             3
-##   english_spanish             6             0
-##   english_spanish_other       2             0
-##   spanish                     1             0
-##                        language_spoken_home
-## language_spoken_child   english_spanish
-##   english                            14
-##   english_other                       0
-##   english_spanish                    53
-##   english_spanish_other               0
-##   spanish                             5
+## language_spoken_child   english english_other english_spanish
+##   english                   366             2              14
+##   english_other               1             3               0
+##   english_spanish             6             0              53
+##   english_spanish_other       2             0               0
+##   spanish                     1             0               5
 ##                        language_spoken_home
 ## language_spoken_child   english_spanish_other other spanish
 ##   english                                   2     0       3
@@ -1295,8 +1288,8 @@ UTAUS
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Don't know how to automatically pick scale for object of
-## type &lt;difftime&gt;. Defaulting to continuous.</code></pre>
+<pre><code>## Don't know how to automatically pick scale for object of type
+## &lt;difftime&gt;. Defaulting to continuous.</code></pre>
 <div class="inline-figure"><img src="include/img/fig-sleep-dur-hist-1.png" width="672" style="display: block; margin: auto;"></div>
 <p>Again, there are some unusual values.</p>
 <div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
@@ -2361,7 +2354,7 @@ mom_childbirth_age
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-18.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2023-12-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
