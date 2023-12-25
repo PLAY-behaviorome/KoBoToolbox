@@ -411,6 +411,19 @@ old_moms |>
   knitr::kable(format = 'html')
 ```
 
+### Race {-}
+
+```{r xtabs-mom-race, fig.cap="Histogram of child age at time of recruiting call."}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_race)) |>
+  dplyr::mutate(mom_race = dplyr::recode(
+    mom_race,
+    morethanone = "more_than_one",
+    americanindian = "american_indian"))
+
+xtabs(~mom_race, df)
+```
+
 ### Birth country {-}
 
 ```{r xtabs-mom-birth-country}
@@ -489,6 +502,48 @@ df <- screen_df |>
   dplyr::filter(!is.na(mom_training))
 
 xtabs(~ mom_training, data = df)
+```
+
+## Biological father
+
+### Race
+
+```{r xtabs-biodad-race}
+df <- screen_df |>
+  dplyr::select(biodad_childbirth_age, biodad_race, child_sex) |>
+  dplyr::mutate(
+    biodad_race =
+      dplyr::recode(
+        biodad_race,
+        americanindian_NA = "american_indian",
+        asian_NA = "asian",
+        NA_asian = "asian",
+        black_NA = "black",
+        donotknow_NA = "do_not_know",
+        NA_NA = "NA",
+        NA_white = "white",
+        other_NA = "other",
+        refused_NA = "refused",
+        white_NA = "white",
+        morethanone_NA = "more_than_one"
+      )
+  ) |>
+  dplyr::mutate(biodad_childbirth_age = stringr::str_remove_all(biodad_childbirth_age, "[_NA]")) |>
+  # dplyr::filter(!is.na(biodad_childbirth_age), !is.na(biodad_race)) |>
+  dplyr::mutate(biodad_childbirth_age = as.numeric(biodad_childbirth_age))
+
+xtabs(~ biodad_race, df)
+```
+###  Age at child birth
+
+```{r fig-biodad-age-childbirth}
+df |>
+  dplyr::filter(!is.na(biodad_childbirth_age)) |>
+  ggplot() +
+  aes(x = biodad_childbirth_age, fill = child_sex) +
+  geom_histogram(bins = 25) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
 ```
 
 ## Childcare {-}
