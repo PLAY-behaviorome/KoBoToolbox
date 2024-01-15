@@ -218,7 +218,7 @@ Two targets in `_targets.R` are relevant for this operation:
 These targets generate site-specific CSVs in `data/csv/site_sessions` based on the database of PLAY sites contained in `data/csv/_meta/play_site_vols.csv`.
 We load these CSVs into a single data frame.
 
-### Load site session data
+### Load site session data {-}
 
 ```{r add-db-status}
 session_fns <-
@@ -250,7 +250,7 @@ df_sessions <- df_sessions |>
   dplyr::filter(stringr::str_detect(group_name, "PLAY_"))
 ```
 
-### Sharing by session status
+### Sharing by session status {-}
 
 Here is information about the sharing status.
 

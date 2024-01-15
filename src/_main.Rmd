@@ -366,7 +366,7 @@ Two targets in `_targets.R` are relevant for this operation:
 These targets generate site-specific CSVs in `data/csv/site_sessions` based on the database of PLAY sites contained in `data/csv/_meta/play_site_vols.csv`.
 We load these CSVs into a single data frame.
 
-### Load site session data
+### Load site session data {-}
 
 ```{r add-db-status}
 session_fns <-
@@ -398,7 +398,7 @@ df_sessions <- df_sessions |>
   dplyr::filter(stringr::str_detect(group_name, "PLAY_"))
 ```
 
-### Sharing by session status
+### Sharing by session status {-}
 
 Here is information about the sharing status.
 
@@ -1840,7 +1840,7 @@ screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLA
 (s <- xtabs(~ session_release + group_name, screen_df))
 ```
 
-Of the $n=$ `r sum(s)` sessions so far, `r 100*(s[1,1]+s[1,2])/sum(s)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
+Of the $n=$ `r sum(s)` sessions so far, `r round(100*(s[1,1]+s[1,2])/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
 
 ## Dates & times {-}
 
@@ -2325,9 +2325,9 @@ df <- screen_df |>
 xtabs(~ mom_training, data = df)
 ```
 
-## Biological father
+## Biological father {-}
 
-### Race
+### Race {-}
 
 ```{r xtabs-biodad-race}
 df <- screen_df |>
@@ -2355,7 +2355,7 @@ df <- screen_df |>
 
 xtabs(~ biodad_race, df)
 ```
-###  Age at child birth
+### Age at child birth {-}
 
 ```{r fig-biodad-age-childbirth}
 df |>
@@ -2461,14 +2461,14 @@ df <- home_visit_filtered |>
   dplyr::select(test_date, site_id) |>
   dplyr::mutate(test_date = as.Date(test_date)) |>
   dplyr::arrange(test_date) |>
-  dplyr::mutate(n_calls = seq_along(test_date))
+  dplyr::mutate(n_visits = seq_along(test_date))
 ```
 
 ```{r fig-home-visit-time-series, fig.cap="Cumulative home visits by year"}
 df |>
-    dplyr::filter(!is.na(test_date), !is.na(n_calls), !is.na(site_id)) |>
+    dplyr::filter(!is.na(test_date), !is.na(n_visits), !is.na(site_id)) |>
     ggplot() +
-    aes(test_date, n_calls) +
+    aes(test_date, n_visits) +
     geom_point()
 ```
 

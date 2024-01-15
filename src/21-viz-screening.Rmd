@@ -19,7 +19,7 @@ screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLA
 (s <- xtabs(~ session_release + group_name, screen_df))
 ```
 
-Of the $n=$ `r sum(s)` sessions so far, `r 100*(s[1,1]+s[1,2])/sum(s)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
+Of the $n=$ `r sum(s)` sessions so far, `r round(100*(s[1,1]+s[1,2])/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
 
 ## Dates & times {-}
 
@@ -504,9 +504,9 @@ df <- screen_df |>
 xtabs(~ mom_training, data = df)
 ```
 
-## Biological father
+## Biological father {-}
 
-### Race
+### Race {-}
 
 ```{r xtabs-biodad-race}
 df <- screen_df |>
@@ -534,7 +534,7 @@ df <- screen_df |>
 
 xtabs(~ biodad_race, df)
 ```
-###  Age at child birth
+### Age at child birth {-}
 
 ```{r fig-biodad-age-childbirth}
 df |>

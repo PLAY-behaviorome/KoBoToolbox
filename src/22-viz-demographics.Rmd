@@ -42,13 +42,13 @@ df <- home_visit_filtered |>
   dplyr::select(test_date, site_id) |>
   dplyr::mutate(test_date = as.Date(test_date)) |>
   dplyr::arrange(test_date) |>
-  dplyr::mutate(n_calls = seq_along(test_date))
+  dplyr::mutate(n_visits = seq_along(test_date))
 ```
 
 ```{r fig-home-visit-time-series, fig.cap="Cumulative home visits by year"}
 df |>
-    dplyr::filter(!is.na(test_date), !is.na(n_calls), !is.na(site_id)) |>
+    dplyr::filter(!is.na(test_date), !is.na(n_visits), !is.na(site_id)) |>
     ggplot() +
-    aes(test_date, n_calls) +
+    aes(test_date, n_visits) +
     geom_point()
 ```
