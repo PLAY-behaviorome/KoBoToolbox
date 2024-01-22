@@ -73,7 +73,7 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="health-visualizations" class="section level1 unnumbered">
 <h1>Health visualizations<a class="anchor" aria-label="anchor" href="#health-visualizations"><i class="fas fa-link"></i></a>
 </h1>
-<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load home_visit_df if not in environment</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"health_df"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span> <span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">health_df</span>, store<span class="op">=</span><span class="st">"../_targets"</span><span class="op">)</span> </span>
@@ -81,14 +81,14 @@
 <div id="feeding" class="section level2 unnumbered">
 <h2>Feeding<a class="anchor" aria-label="anchor" href="#feeding"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">age_group</span> <span class="op">+</span> <span class="va">feeding_breastfeed</span>, data <span class="op">=</span> <span class="va">health_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0   6       0 166
-##      18mo         1   9       0 160
-##      24mo         0   6       1 132</code></pre>
-<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
+##      12mo         0   6       0 168
+##      18mo         1   9       0 161
+##      24mo         0   6       1 133</code></pre>
+<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">health_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">feeding_solidfood_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">feeding_solidfood_age</span> <span class="op">&lt;</span> <span class="fl">12</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -103,7 +103,7 @@ Figure 11: Age at introduction of solid foods
 </p>
 </div>
 <p>Clearly, there are some impossible values here.</p>
-<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">participant_id</span>, <span class="va">feeding_solidfood_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  </span>
@@ -147,7 +147,7 @@ a9M6Q1C1A
 </h2>
 <p>These data only focus on <code>child_sleeping_position</code>.
 Other sleeping data are in the screening questionnaire.</p>
-<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sleeping_pos</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="va">child_sleeping_position</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_sleeping_position</span><span class="op">)</span><span class="op">)</span></span>
@@ -155,7 +155,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span> <span class="op">+</span> <span class="va">age_group</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          162  165  132
+##            back          164  166  133
 ##            changed         3    0    1
 ##            donotknow       0    1    0
 ##            other           2    1    0
@@ -167,7 +167,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <div id="smokingdrinking" class="section level2 unnumbered">
 <h2>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_group</span>,</span>
 <span>    <span class="va">child_sex</span>,</span>
@@ -179,18 +179,18 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking  no refused yes
 ##        donotknow   1       0   0
-##        no        376       1  98
+##        no        378       1 100
 ##        refused     0       1   0
 ##        yes         1       0   1</code></pre>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">smoking_house</span> <span class="op">+</span> <span class="va">smoking_car</span>, <span class="va">smoking_drinking</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   0       0   0
-##     no                3 464       0   1
+##     no                3 468       0   1
 ##     refused           0   3       1   0
 ##     yes               0   7       0   1</code></pre>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">comments_smoking</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">comments_smoking</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -274,7 +274,7 @@ Vapes inside the house
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoking_drinking</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">comments_drinking</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">comments_drinking</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -512,7 +512,7 @@ Just during the last weeks of her maybe one glass of wine
 <div id="patient-health-questionnaire-phq-4" class="section level2 unnumbered">
 <h2>Patient Health Questionnaire (PHQ-4)<a class="anchor" aria-label="anchor" href="#patient-health-questionnaire-phq-4"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb603"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">phq4</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"phq4_"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -549,7 +549,7 @@ Figure 12: PHQ4 responses by age group and child sex
 <div id="overall-rating" class="section level3 unnumbered">
 <h3>Overall rating<a class="anchor" aria-label="anchor" href="#overall-rating"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">child_health_rating</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="va">child_health</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_health</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -569,15 +569,15 @@ Figure 12: PHQ4 responses by age group and child sex
 ##    poor         0    0    0
 ##    fair         1    1    1
 ##    good        10    9   10
-##    verygood    47   38   31
-##    excellent  114  121   96
+##    verygood    47   39   31
+##    excellent  116  121   97
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
 <div id="recent-vaccination" class="section level3 unnumbered">
 <h3>Recent vaccination<a class="anchor" aria-label="anchor" href="#recent-vaccination"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">recent_vax</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="va">child_vaccination</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_vaccination</span><span class="op">)</span><span class="op">)</span></span>
@@ -586,13 +586,13 @@ Figure 12: PHQ4 responses by age group and child sex
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    3
-##         no          92  112  100
-##         yes         80   56   36</code></pre>
+##         no          93  113  101
+##         yes         81   56   36</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3>Seen medical specialist<a class="anchor" aria-label="anchor" href="#seen-medical-specialist"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seen_specialist</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="va">child_medical_specialist</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">child_medical_specialist</span><span class="op">)</span><span class="op">)</span></span>
@@ -601,9 +601,9 @@ Figure 12: PHQ4 responses by age group and child sex
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    1
-##                no          86   74   57
+##                no          87   75   57
 ##                refused      0    0    1
-##                yes         86   95   80</code></pre>
+##                yes         87   95   81</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
@@ -611,7 +611,7 @@ Figure 12: PHQ4 responses by age group and child sex
 <div id="illnesses-and-allergies" class="section level3 unnumbered">
 <h3>Illnesses and allergies<a class="anchor" aria-label="anchor" href="#illnesses-and-allergies"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">illness_allergy</span> <span class="op">&lt;-</span> <span class="va">health_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">age_group</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"illness_"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -675,7 +675,7 @@ Figure 12: PHQ4 responses by age group and child sex
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-01-15.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-01-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
