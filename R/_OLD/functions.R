@@ -1099,7 +1099,9 @@ PLAY_VOLS <- tibble::tibble(
     'PLAYProject_CORNL',
     'PLAYProject_MICHS',
     'PLAYProject_UPITT',
-    'PLAYProject_UCDAV'
+    'PLAYProject_UCDAV',
+    'PLAYProject_ASUNI',
+    'PLAYProject_OHUNI'
   ),
   play_vol_id = c(
     954,
@@ -1128,7 +1130,9 @@ PLAY_VOLS <- tibble::tibble(
     1576,
     1590,
     1663,
-    1624
+    1624,
+    1656,
+    1596
   ),
   site_name = c(
     "Georgetown University",
@@ -1157,7 +1161,9 @@ PLAY_VOLS <- tibble::tibble(
     "Cornell University",
     "Michigan State University",
     "University of Pittsburgh",
-    "UC Davis"
+    "UC Davis",
+    "Arizona State",
+    "Ohio University"
   )
 )
 
@@ -1289,7 +1295,7 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
   
   if (vb)
     message("Row: ",
-            row,
+            stringr::str_pad(row, 3, pad = "0"),
             " | Site: ",
             this_row$site_id,
             " | Session: ",
@@ -1311,7 +1317,8 @@ get_databrary_session_data_2 <-  function(row, df, vb = FALSE) {
       stringr::str_pad(this_row$subject_number, 3, 'left', 0)
     df <-
       dplyr::filter(vol_sessions, stringr::str_detect(session_name, paste0(s_number_zero_padded, '$'))) |>
-      dplyr::mutate(session_date = as.character(session_date))
+      dplyr::mutate(session_date = as.character(session_date),
+                    participant_birthdate = as.character(participant_birthdate))
     #df <- dplyr::rename(df, session_name = name)
     #df <- dplyr::mutate(df, release = recode(release, "1"="shared", "2"= "learning", "0"="private"))
     #dplyr::select(df, -context.state)
@@ -1589,7 +1596,7 @@ add_databrary_info_to_home_visit_df <- function(df, vb = FALSE) {
     dplyr::mutate(
       play_db_sessions,
       databrary_guid = generate_databrary_guid(play_db_sessions),
-      databrary_url = generate_databrary_url(play_db_sessions),
+      databrary_url = generate_databrary_url(play_db_sessions)
     )
   
   # Join databases with common session_id's
