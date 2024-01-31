@@ -8,11 +8,15 @@
 #' output of list_kobo_data(). The default is to call list_kobo_data().
 #' @param save_dir A character string indicating the directory to save the
 #' exported file. The default is 'tmp'.
+#' @param save_form A logical value. Save the KBT "form" file. Default is TRUE.
 #' @returns The name of the saved .xlsx file.
+#' 
+#' @export
 kobo_retrieve_save_xlsx <-
   function(form_index = 13,
            kb_df = kobo_list_data(),
-           save_dir = 'tmp') {
+           save_dir = 'tmp',
+           save_form = TRUE) {
     if (!is.numeric(form_index)) {
       stop('`form_index` must be a number')
     }
@@ -29,7 +33,9 @@ kobo_retrieve_save_xlsx <-
       message('Unable to return list of KoBoToolbox forms.')
       NULL
     } else {
+      
       form_URL <- paste0(kb_df$url[form_index], '.xls')
+      questions_URL <- kb_df$form_url[form_index]
       
       # suppressPackageStartupMessages(require(httr))
       
@@ -39,6 +45,7 @@ kobo_retrieve_save_xlsx <-
       
       # Must export as .xlsx even though API queries for .xls
       file_name <- file.path(save_dir, paste0(form_name, '.xlsx'))
+      file_name_qs <- file.path(save_dir, "form", paste0(form_name, '-forms.xlsx'))
       
       kobo_api_key <- Sys.getenv("KOBO_API_KEY")
       if (!is.character(kobo_api_key)) {
@@ -47,6 +54,7 @@ kobo_retrieve_save_xlsx <-
       
       config_params <-
         httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
+      
       r <- httr::GET(form_URL, config = config_params)
       if (httr::status_code(r) == 200) {
         c <- httr::content(r, as = 'raw')
@@ -60,6 +68,28 @@ kobo_retrieve_save_xlsx <-
                 httr::status_code(r),
                 '`')
         "NULL"
+      }
+      
+      # Questionnaire forms
+      if (save_form) {
+        if (!dir.exists(file.path(save_dir, "form"))) {
+          message("Directory does not exist: ", file.path(save_dir, "form"))
+          return(NULL)
+        }
+        r <- httr::GET(questions_URL, config = config_params)
+        if (httr::status_code(r) == 200) {
+          c <- httr::content(r, as = 'raw')
+          writeBin(c, file_name_qs)
+          # message('Saved `', file_name, '`')
+          file_name_qs
+        } else {
+          message('HTTP call to ',
+                  form_URL,
+                  ' failed with status `',
+                  httr::status_code(r),
+                  '`')
+          "NULL"
+        }        
       }
     }
   }
@@ -85,6 +115,10 @@ kobo_create_cleaned_augmented_form_name <-
       message('Unable to return list of KoBoToolbox forms.')
       NULL
     } else {
+      # source("R/kobo_extract_form_id.R")
+      # source("R/kobo_clean_form_name.R")
+      # source("R/kobo_extract_form_name.R")
+      
       paste0(
         kobo_extract_form_id(form_index, kb_df),
         "_",

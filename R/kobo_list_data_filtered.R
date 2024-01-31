@@ -8,6 +8,8 @@
 kobo_list_data_filtered <- function(filter_str = '[Dd]emographic') {
   stopifnot(is.character(filter_str))
   
+  # source("R/kobo_list_data.R")
+  
   kb_df <- kobo_list_data()
   
   dplyr::filter(kb_df,

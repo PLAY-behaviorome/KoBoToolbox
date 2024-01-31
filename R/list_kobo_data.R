@@ -27,7 +27,12 @@ list_kobo_data <-
     if (httr::status_code(r) == 200) {
       c <- httr::content(r, as = 'text', encoding = 'utf8')
       if (return_df) {
-        jsonlite::fromJSON(c)
+        df <- jsonlite::fromJSON(c)
+        
+        # Add form URL
+        df |>
+          dplyr::mutate(form_url = paste0("https://kf.kobotoolbox.org/api/v2/assets/", 
+                                          id_string, ".xls"))
       } else {
         # JSON
         c

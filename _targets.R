@@ -29,8 +29,8 @@ tar_option_set(
   )
 )
 
-update_interval <- 2
-update_interval_units <- "days"
+update_interval <- 1
+update_interval_units <- "mins"
 
 list(
   tar_target(
@@ -38,15 +38,6 @@ list(
     list_kobo_data(),
     cue = tarchetypes::tar_cue_age(
       name = kb_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    kb_home,
-    dplyr::filter(kb_df,
-                  stringr::str_detect(title, "Home")),
-    cue = tarchetypes::tar_cue_age(
-      name = kb_home,
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
@@ -103,8 +94,16 @@ list(
   ),
   # Home visit data
   tar_target(
+    kb_home_df,
+    kobo_list_data_filtered("Home"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_home,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
     home_visit_downloads,
-    retrieve_kobo_xlsx(kb_home, "data/xlsx/home_visit/raw"),
+    retrieve_kobo_xlsx(kb_home_df, "data/xlsx/home_visit/raw"),
     cue = tarchetypes::tar_cue_age(
       name = home_visit_downloads,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -124,6 +123,14 @@ list(
     load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw"),
     cue = tarchetypes::tar_cue_age(
       name = home_visit_xlsx_to_csv,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    home_visit_forms,
+    home_visit_retrieve_forms(kb_home, "data/xlsx/home_visit/forms"),
+    cue = tarchetypes::tar_cue_age(
+      name = home_visit_forms,
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
