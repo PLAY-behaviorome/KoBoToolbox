@@ -13,6 +13,7 @@ purrr::walk(fl, source)
 # Log in to Databrary
 databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"), store = TRUE)
 
+# Package dependencies
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(databraryr))
 
@@ -29,8 +30,8 @@ tar_option_set(
   )
 )
 
-update_interval <- 1
-update_interval_units <- "mins"
+update_interval <- 3
+update_interval_units <- "days"
 
 list(
   tar_target(
@@ -53,40 +54,6 @@ list(
   tar_target(
     screen_download,
     screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening"),
-    cue = tarchetypes::tar_cue_age(
-      name = screen_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  # Post-visit surveys
-  tar_target(
-    kb_post_visit_df,
-    kobo_list_data_filtered("Post\\-Visit"),
-    cue = tarchetypes::tar_cue_age(
-      name = kb_post_visit,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    post_visit_download,
-    kobo_retrieve_save_many_xlsx(kb_post_visit_df, "data/xlsx/post_visit"),
-    cue = tarchetypes::tar_cue_age(
-      name = screen_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    post_visit_csvs,
-    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
-    cue = tarchetypes::tar_cue_age(
-      name = post_visit_csvs,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    post_visit_combined_df,
-    post_visit_make_df(kb_post_visit_df, "data/xlsx/post_visit",
-                       "data/csv/post_visit"),
     cue = tarchetypes::tar_cue_age(
       name = screen_df,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -304,5 +271,39 @@ list(
              cue = tarchetypes::tar_cue_age(
                name = export_all_site_csvs,
                age = as.difftime(update_interval, units = update_interval_units)
-             ))
+             )),
+  # Post-visit surveys
+  tar_target(
+    kb_post_visit_df,
+    kobo_list_data_filtered("Post\\-Visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_post_visit,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_download,
+    kobo_retrieve_save_many_xlsx(kb_post_visit_df, "data/xlsx/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_csvs,
+    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
+    cue = tarchetypes::tar_cue_age(
+      name = post_visit_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_combined_df,
+    post_visit_make_df(kb_post_visit_df, "data/xlsx/post_visit",
+                       "data/csv/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  )
 )
