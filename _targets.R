@@ -59,6 +59,11 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
+  tar_target(
+    screen_clean_forms,
+    purrr::map(list.files("data/xlsx/screening/form", pattern = "\\.xlsx$", full.names = TRUE),
+               screen_clean_form_export)
+  ),
   # Home visit data
   tar_target(
     kb_home_df,
@@ -93,13 +98,18 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
+  # tar_target(
+  #   home_visit_forms,
+  #   home_visit_retrieve_forms(kb_home, "data/xlsx/home_visit/forms"),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = home_visit_forms,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   tar_target(
-    home_visit_forms,
-    home_visit_retrieve_forms(kb_home, "data/xlsx/home_visit/forms"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_forms,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+    home_visit_clean_forms,
+    purrr::map(list.files("data/xlsx/home_visit/raw/form", pattern = "\\.xlsx$", full.names = TRUE),
+               home_visit_clean_form_export)
   ),
   # Non-MB-CDIs
   tar_target(
