@@ -17,6 +17,7 @@ kobo_retrieve_save_xlsx <-
            kb_df = kobo_list_data(),
            save_dir = 'tmp',
            save_form = TRUE) {
+    
     if (!is.numeric(form_index)) {
       stop('`form_index` must be a number')
     }
@@ -35,6 +36,7 @@ kobo_retrieve_save_xlsx <-
     } else {
       
       form_URL <- paste0(kb_df$url[form_index], '.xls')
+      #form_URL <- kb_df$url[form_index]
       questions_URL <- kb_df$form_url[form_index]
       
       # suppressPackageStartupMessages(require(httr))
@@ -47,27 +49,45 @@ kobo_retrieve_save_xlsx <-
       file_name <- file.path(save_dir, paste0(form_name, '.xlsx'))
       file_name_qs <- file.path(save_dir, "form", paste0(form_name, '-forms.xlsx'))
       
-      kobo_api_key <- Sys.getenv("KOBO_API_KEY")
-      if (!is.character(kobo_api_key)) {
-        stop('No KoBoToolbox API key stored in ~/.Renviron.')
-      }
+      # kobo_api_key <- Sys.getenv("KOBO_API_KEY")
+      # if (!is.character(kobo_api_key)) {
+      #   stop('No KoBoToolbox API key stored in ~/.Renviron.')
+      # }
+      # 
+      # config_params <-
+      #   httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
+      # 
+      # r <- httr::GET(form_URL, config = config_params)
+      # if (httr::status_code(r) == 200) {
+      #   c <- httr::content(r, as = 'raw')
+      #   writeBin(c, file_name)
+      #   # message('Saved `', file_name, '`')
+      #   file_name
+      # } else {
+      #   message('HTTP call to ',
+      #           form_URL,
+      #           ' failed with status `',
+      #           httr::status_code(r),
+      #           '`')
+      #   "NULL"
+      # }
       
-      config_params <-
-        httr::add_headers(Authorization = paste0('Token ', kobo_api_key))
+      rq <- make_kobo_request(form_URL)
+      resp <- tryCatch(
+        httr2::req_perform(rq),
+        httr2_error = function(cnd) {
+          if (vb)
+            message("Error retrieving data.")
+          NULL
+        }
+      )
       
-      r <- httr::GET(form_URL, config = config_params)
-      if (httr::status_code(r) == 200) {
-        c <- httr::content(r, as = 'raw')
-        writeBin(c, file_name)
-        # message('Saved `', file_name, '`')
-        file_name
+      if (!is.null(resp)) {
+        body <- httr2::resp_body_raw(resp)
+        writeBin(body, file_name)
+        message('Saved `', file_name, '`')
       } else {
-        message('HTTP call to ',
-                form_URL,
-                ' failed with status `',
-                httr::status_code(r),
-                '`')
-        "NULL"
+        resp
       }
       
       # Questionnaire forms
@@ -76,20 +96,39 @@ kobo_retrieve_save_xlsx <-
           message("Directory does not exist: ", file.path(save_dir, "form"))
           return(NULL)
         }
-        r <- httr::GET(questions_URL, config = config_params)
-        if (httr::status_code(r) == 200) {
-          c <- httr::content(r, as = 'raw')
-          writeBin(c, file_name_qs)
-          # message('Saved `', file_name, '`')
-          file_name_qs
+        
+        rq <- make_kobo_request(questions_URL)
+        resp <- tryCatch(
+          httr2::req_perform(rq),
+          httr2_error = function(cnd) {
+            if (vb)
+              message("Error retrieving data.")
+            NULL
+          }
+        )
+        
+        if (!is.null(resp)) {
+          body <- httr2::resp_body_raw(resp)
+          writeBin(body, file_name_qs)
+          message('Saved `', file_name, '`')
         } else {
-          message('HTTP call to ',
-                  form_URL,
-                  ' failed with status `',
-                  httr::status_code(r),
-                  '`')
-          "NULL"
-        }        
+          resp
+        }
+        
+        # r <- httr::GET(questions_URL, config = config_params)
+        # if (httr::status_code(r) == 200) {
+        #   c <- httr::content(r, as = 'raw')
+        #   writeBin(c, file_name_qs)
+        #   # message('Saved `', file_name, '`')
+        #   file_name_qs
+        # } else {
+        #   message('HTTP call to ',
+        #           form_URL,
+        #           ' failed with status `',
+        #           httr::status_code(r),
+        #           '`')
+        #   "NULL"
+        # }        
       }
     }
   }

@@ -1,6 +1,7 @@
 databrary_get_save_session_csv <- function(this_site = "NYUNI",
                                            csv_dir = "data/csv/site_sessions",
-                                           vb = FALSE) {
+                                           vb = FALSE,
+                                           rq = NULL) {
   stopifnot(is.character(this_site))
   stopifnot(is.character(csv_dir), dir.exists(csv_dir))
   stopifnot(is.logical(vb))
