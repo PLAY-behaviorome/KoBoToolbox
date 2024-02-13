@@ -5,13 +5,19 @@ library(tarchetypes)
 
 source("R/_OLD/functions.R")
 fl <-
-  list.files("R",
-             "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^export|^post_visit",
-             full.names = TRUE)
+  list.files(
+    "R",
+    "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS",
+    full.names = TRUE
+  )
 purrr::walk(fl, source)
 
 # Log in to Databrary
-databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"), store = TRUE)
+message("----- Logging in to Databrary -----")
+lrq <- databraryr::make_default_request()
+databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"),
+                     store = TRUE,
+                     rq = lrq)
 
 # Package dependencies
 suppressPackageStartupMessages(library(tidyverse))
@@ -25,6 +31,7 @@ tar_option_set(
     "purrr",
     "tools",
     "httr",
+    "httr2",
     "stringr",
     "databraryr"
   )
@@ -36,7 +43,7 @@ update_interval_units <- "days"
 list(
   tar_target(
     kb_df,
-    list_kobo_data(),
+    kobo_list_data(),
     cue = tarchetypes::tar_cue_age(
       name = kb_df,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -45,7 +52,7 @@ list(
   # Download screening/demographic survey
   tar_target(
     kb_screen_df,
-    kobo_list_data_filtered("[Dd]emographic"),
+    kobo_list_data_filtered(kb_df, "[Dd]emographic"),
     cue = tarchetypes::tar_cue_age(
       name = kb_screen,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -61,13 +68,19 @@ list(
   ),
   tar_target(
     screen_clean_forms,
-    purrr::map(list.files("data/xlsx/screening/form", pattern = "\\.xlsx$", full.names = TRUE),
-               screen_clean_form_export)
+    purrr::map(
+      list.files(
+        "data/xlsx/screening/form",
+        pattern = "\\.xlsx$",
+        full.names = TRUE
+      ),
+      screen_clean_form_export
+    )
   ),
   # Home visit data
   tar_target(
     kb_home_df,
-    kobo_list_data_filtered("Home"),
+    kobo_list_data_filtered(kb_df, "Home"),
     cue = tarchetypes::tar_cue_age(
       name = kb_home,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -108,8 +121,14 @@ list(
   # ),
   tar_target(
     home_visit_clean_forms,
-    purrr::map(list.files("data/xlsx/home_visit/raw/form", pattern = "\\.xlsx$", full.names = TRUE),
-               home_visit_clean_form_export)
+    purrr::map(
+      list.files(
+        "data/xlsx/home_visit/raw/form",
+        pattern = "\\.xlsx$",
+        full.names = TRUE
+      ),
+      home_visit_clean_form_export
+    )
   ),
   # Non-MB-CDIs
   tar_target(
@@ -269,23 +288,30 @@ list(
   # Export Databrary session CSVs
   tar_target(
     databrary_session_csvs,
-    purrr::walk(play_vols_df$site_id, databrary_get_save_session_csv),
+    purrr::walk(
+      play_vols_df$site_id,
+      databrary_get_save_session_csv,
+      vb = FALSE,
+      rq = lrq
+    ),
     cue = tarchetypes::tar_cue_age(
       name = databrary_session_csvs,
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
   # Export site-specific CSVs
-  tar_target(export_all_site_csvs,
-             purrr::walk(play_vols_df$site_id, export_site_csvs, vb = FALSE),
-             cue = tarchetypes::tar_cue_age(
-               name = export_all_site_csvs,
-               age = as.difftime(update_interval, units = update_interval_units)
-             )),
+  tar_target(
+    export_all_site_csvs,
+    purrr::walk(play_vols_df$site_id, export_site_csvs, vb = FALSE),
+    cue = tarchetypes::tar_cue_age(
+      name = export_all_site_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
   # Post-visit surveys
   tar_target(
     kb_post_visit_df,
-    kobo_list_data_filtered("Post\\-Visit"),
+    kobo_list_data_filtered(kb_df, "Post\\-Visit"),
     cue = tarchetypes::tar_cue_age(
       name = kb_post_visit,
       age = as.difftime(update_interval, units = update_interval_units)
@@ -309,8 +335,11 @@ list(
   ),
   tar_target(
     post_visit_combined_df,
-    post_visit_make_df(kb_post_visit_df, "data/xlsx/post_visit",
-                       "data/csv/post_visit"),
+    post_visit_make_df(
+      kb_post_visit_df,
+      "data/xlsx/post_visit",
+      "data/csv/post_visit"
+    ),
     cue = tarchetypes::tar_cue_age(
       name = screen_df,
       age = as.difftime(update_interval, units = update_interval_units)
