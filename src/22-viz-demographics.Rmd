@@ -15,11 +15,13 @@ That is on the work plan.
 
 ```{r filter-home-visit}
 home_visit_filtered <- home_visit_df |>
-  dplyr::filter(!is.na(age_group),!is.na(child_sex))
+  dplyr::filter(!is.na(age_group),
+                !is.na(child_sex))
 ```
 
 ```{r}
-xtabs(formula = ~ age_group + child_sex, data = home_visit_filtered)
+xtabs(formula = ~ age_group + child_sex, 
+      data = home_visit_filtered)
 ```
 A total of $n=$ `r dim(home_visit_filtered)[1]` mother-infant dyads have been tested.
 This includes training and pilot visits.
@@ -47,8 +49,10 @@ df <- home_visit_filtered |>
 
 ```{r fig-home-visit-time-series, fig.cap="Cumulative home visits by year"}
 df |>
-    dplyr::filter(!is.na(test_date), !is.na(n_visits), !is.na(site_id)) |>
-    ggplot() +
-    aes(test_date, n_visits) +
-    geom_point()
+  dplyr::filter(!is.na(test_date),
+                !is.na(n_visits),
+                !is.na(site_id)) |>
+  ggplot() +
+  aes(test_date, n_visits) +
+  geom_point()
 ```

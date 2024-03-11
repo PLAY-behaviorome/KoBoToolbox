@@ -27,8 +27,8 @@ Clearly, there are some impossible values here.
 
 ```{r anomalous-feeding}
 health_df |>
-  dplyr::select(participant_id, feeding_solidfood_age) |>
-  
+  dplyr::select(participant_id, 
+                feeding_solidfood_age) |>
   dplyr::filter(feeding_solidfood_age > 12 | feeding_solidfood_age < 3) %>%
   knitr::kable(format = 'html')
 ```
@@ -48,7 +48,8 @@ Other sleeping data are in the screening questionnaire.
 
 ```{r}
 sleeping_pos <- health_df |>
-  dplyr::select(child_sex, age_group, child_sleeping_position) |>
+  dplyr::select(child_sex, age_group, 
+                child_sleeping_position) |>
   dplyr::filter(!is.na(child_sleeping_position))
 
 xtabs(formula = ~ child_sleeping_position + age_group, data = sleeping_pos)
@@ -96,7 +97,9 @@ names(phq4) <- gsub(pattern = "phq4_",
                     names(phq4))
 
 phq4 |>
-  tidyr::pivot_longer(!c('child_sex', 'age_group'), names_to = "question", values_to = "response") |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'), 
+                      names_to = "question", 
+                      values_to = "response") |>
   dplyr::filter(!is.na(response)) |>
   dplyr::mutate(response = factor(response,
                                   c("notatall",
