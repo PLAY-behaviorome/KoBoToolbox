@@ -108,7 +108,8 @@ play_loco %>%
 
 ```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
 play_loco %>%
-  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
+  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who), 
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
   geom_point() +
@@ -133,7 +134,8 @@ ggExtra::ggMarginal(
 
 ```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"}
 play_loco %>%
-  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos), walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
+  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos), 
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
   ggplot(.) +
   aes(crawl_mos, walk_mos_kea, color = child_sex) +
   geom_point() +
