@@ -30,7 +30,8 @@ PLAY_VOLS <- tibble::tibble(
     'PLAYProject_UCDAV',
     'PLAYProject_ASUNI',
     'PLAYProject_OHUNI',
-    'PLAYProject_UALAB'
+    'PLAYProject_UALAB',
+    'PLAYProject_UCMER'
   ),
   play_vol_id = c(
     954,
@@ -63,7 +64,8 @@ PLAY_VOLS <- tibble::tibble(
     1624,
     1656,
     1596,
-    1696
+    1696,
+    1705
   ),
   site_name = c(
     "Georgetown University",
@@ -96,6 +98,7 @@ PLAY_VOLS <- tibble::tibble(
     "UC Davis",
     "Arizona State University",
     "Ohio University",
-    "University of Alabama"
+    "University of Alabama",
+    "UC Merced"
   )
 )

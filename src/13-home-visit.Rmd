@@ -407,6 +407,7 @@ n2 <- names(df334099)
 names(df331848) %>% stringr::str_remove("group_combinedquestionnaires/") |> head()
 names(df334099) %>% stringr::str_remove("group_jo84c13/") |> head()
 ```
+
 That looks promising.
 
 ```{r}
@@ -417,6 +418,7 @@ n1 == n2
 ```{r}
 cbind(n1[8:15], n2[8:15])
 ```
+
 `n2` or `df334099` has a `child_birth_date` field in position 9 that the other data frame does not have.
 
 ```{r}
