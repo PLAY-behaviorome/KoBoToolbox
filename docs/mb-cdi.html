@@ -7,7 +7,7 @@
 <title>MB-CDI | PLAY Project: Surveys</title>
 <meta name="author" content="Rick Gilmore">
 <meta name="description" content="Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under data/csv/home_visit/mbcdi....">
-<meta name="generator" content="bookdown 0.37 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="MB-CDI | PLAY Project: Surveys">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Purpose This page documents the cleaning and merging procedures related to the MB-CDI data. The home visit workflow strips these files into their own set of CSVs under data/csv/home_visit/mbcdi....">
@@ -184,24 +184,7 @@ bilingual_english
 bilingual_english
 </td>
 <td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-712
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740624_mbcdi_12_bilingual_spanish.csv
-</td>
-<td style="text-align:left;">
-12
-</td>
-<td style="text-align:left;">
-bilingual_spanish
-</td>
-<td style="text-align:right;">
-0
+33
 </td>
 <td style="text-align:right;">
 712
@@ -222,6 +205,23 @@ bilingual_spanish
 </td>
 <td style="text-align:right;">
 717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/mbcdi/740624_mbcdi_12_bilingual_spanish.csv
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+bilingual_spanish
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+712
 </td>
 </tr>
 <tr>
@@ -269,7 +269,7 @@ english
 english
 </td>
 <td style="text-align:right;">
-157
+172
 </td>
 <td style="text-align:right;">
 259
@@ -303,7 +303,7 @@ bilingual_english
 bilingual_english
 </td>
 <td style="text-align:right;">
-43
+47
 </td>
 <td style="text-align:right;">
 829
@@ -337,7 +337,7 @@ bilingual_spanish
 bilingual_spanish
 </td>
 <td style="text-align:right;">
-4
+5
 </td>
 <td style="text-align:right;">
 829
@@ -422,7 +422,7 @@ english
 english
 </td>
 <td style="text-align:right;">
-144
+157
 </td>
 <td style="text-align:right;">
 358
@@ -490,7 +490,7 @@ bilingual_spanish
 bilingual_spanish
 </td>
 <td style="text-align:right;">
-1
+2
 </td>
 <td style="text-align:right;">
 829
@@ -558,7 +558,7 @@ english
 english
 </td>
 <td style="text-align:right;">
-122
+133
 </td>
 <td style="text-align:right;">
 358
@@ -579,7 +579,7 @@ english
 <div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_12_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>, <span class="st">"mcdi_english_12_combined.csv"</span><span class="op">)</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">eng_12_combined_df</span>, <span class="va">eng_12_fn</span><span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 171 participant records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 186 participant records.</p>
 </div>
 <div id="mo-old-english-speakers-1" class="section level2 unnumbered">
 <h2>18-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-1"><i class="fas fa-link"></i></a>
@@ -596,7 +596,7 @@ english
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_18_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>, <span class="st">"mcdi_english_18_combined.csv"</span><span class="op">)</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">eng_18_combined_df</span>, <span class="va">eng_18_fn</span><span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 157 participant records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 170 participant records.</p>
 </div>
 <div id="mo-old-english-speakers-2" class="section level2 unnumbered">
 <h2>24-mo-old English speakers<a class="anchor" aria-label="anchor" href="#mo-old-english-speakers-2"><i class="fas fa-link"></i></a>
@@ -610,7 +610,7 @@ english
 <div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eng_24_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>, <span class="st">"mcdi_english_24_combined.csv"</span><span class="op">)</span></span>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">eng_24_combined_df</span>, <span class="va">eng_24_fn</span><span class="op">)</span></span></code></pre></div>
-<p>There are <span class="math inline">\(n=\)</span> 157 participant records.</p>
+<p>There are <span class="math inline">\(n=\)</span> 170 participant records.</p>
 </div>
 <div id="old-code" class="section level2 unnumbered">
 <h2>Old code<a class="anchor" aria-label="anchor" href="#old-code"><i class="fas fa-link"></i></a>
@@ -839,7 +839,7 @@ We’ll write several helper functions to do this.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-04-22.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-04-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
