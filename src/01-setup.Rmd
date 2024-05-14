@@ -69,11 +69,3 @@ This document describes the workflow, but none of these code chunks are executed
 
 We leave execution to the `targets::tar_make()` function which updates components as needed.
 
-:::{.rmdnote}
-I am currently working on implementing most of the functions using the `box` package. This allows better isolation of dependencies within different components of the workflow.
-
-The box-related functions are in a new `play/` directory, and the R source files are divided into categories.
-The functions related to processing the screening/demographic data are in `play/screen.R`.
-
-They will be loaded into the workspace via `box::use(play/screen)` or for modules within `play/` via `box::use(./screen)`.
-:::
