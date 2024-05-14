@@ -1,0 +1,81 @@
+---
+title: ""
+---
+
+This section describes the background about the setup procedure.
+
+## Authentication {-}
+
+The data are stored in an account on <https://kf.kobotoolbox.org>. 
+The login credentials for that account are shared among the PLAY Project staff. 
+To access the site's API programmatically, an API key was downloaded and added to the local `~/.Renviron` file.
+
+::: {.callout-important}
+
+The KoBoToolBox API key is **not** synched to GitHub.
+
+:::
+
+## Set-up {-}
+
+To test whether the local system has the API key installed, we can run the command `Sys.getenv("KOBO_API_KEY")`. 
+
+### Check KoBo API Key {-}
+
+```{r check-api-key}
+kb_api <- Sys.getenv("KOBO_API_KEY")
+if ((length(kb_api) != 1) || (!is.character(kb_api))) {
+  stop("'KOBO_API_KEY' not installed in .Renviron")
+} else {
+  message("'KOBO_API_KEY' installed.")
+}
+```
+
+### Databrary credentials {-}
+
+The [`databraryr`](https://databrary.github.io/databraryr) package handles authenticating to Databrary.
+For scripting access to Databrary that require authentication, it is useful to store the user's Databrary login (email) in `.Renviron` using the R command `Sys.setenv(DATABRARY_LOGIN = "<email@provider.com>")` where you substitute your Databrary login (email) for `<email@provider.com>`.
+
+Here, we check that `.Renviron` contains `DATABRARY_LOGIN`.
+
+```{r check-db-key}
+db_api <- Sys.getenv("DATABRARY_LOGIN")
+if ((length(kb_api) != 1) || (!is.character(db_api))) {
+  stop("'DATABRARY_LOGIN' not installed in .Renviron")
+} else {
+  message("'DATABRARY_LOGIN' installed.")
+}
+```
+
+### Install dependencies {-}
+
+We use the [`renv`](https://cran.r-project.org/web/packages/renv/index.html) package to manage package dependencies.
+
+### Load/source helper functions {-}
+
+Most of the work is contained in functions located in `R/`.
+The functions in this directory are sourced when `tar_make()` from the `{targets}` package is sourced.
+
+::: {.callout-note}
+
+The `update_report_render.R` function handles updating all data targets and rendering the report.
+So, the typical workflow to update the report is as follows;
+
+```r
+source("R/update_report_render.R")
+update_report_render()
+```
+
+:::
+
+::: {.callout-important}
+None of the data outputs are synched to GitHub.
+
+We have `.gitignore` files in the `data/` directories and subdirectories that keep all data out of the version control database.
+
+:::
+
+## Approach
+
+To make the workflow more robust and reproducible, much of the work is embedded in functions and extensive use is made of the [`{targets}`](https://cran.r-project.org/web/packages/targets/) package mentioned previously. 
+

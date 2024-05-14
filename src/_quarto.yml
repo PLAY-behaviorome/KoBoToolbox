@@ -1,0 +1,34 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+  output-dir: "../docs"
+website:
+  title: "PLAY Survey Data"
+  comments: 
+    hypothesis:
+      theme: clean
+  navbar:
+    left:
+      - href: index.qmd
+        text: home
+      - href: setup.qmd
+        text: background
+      - text: screening
+        menu: 
+          - href: gathering-screening.qmd
+  repo-url: https://github.com/PLAY-behaviorome/KoBoToolbox
+  repo-actions: [edit, issue]
+  repo-subdir: src
+format:
+  html:
+    theme: default
+    css: include/css/styles.css
+    csl: include/bib/apa.csl
+    bibliography: [include/bib/book.bib, include/bib/packages.bib]
+    citations-hover: true
+    code_folding: hide
+    toc: true
+    toc_depth: 2
+    toc_float: true
+editor: source
