@@ -1,0 +1,3230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>QA for merging | PLAY Project: Surveys</title>
+<meta name="author" content="Rick Gilmore">
+<meta name="description" content="Purpose This page summarizes which screening/demographics data and which home visit data have anomalies or missing data.  Screening/demographic data screen_df &lt;-  readr::read_csv(   file.path(   ...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="QA for merging | PLAY Project: Surveys">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Purpose This page summarizes which screening/demographics data and which home visit data have anomalies or missing data.  Screening/demographic data screen_df &lt;-  readr::read_csv(   file.path(   ...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QA for merging | PLAY Project: Surveys">
+<meta name="twitter:description" content="Purpose This page summarizes which screening/demographics data and which home visit data have anomalies or missing data.  Screening/demographic data screen_df &lt;-  readr::read_csv(   file.path(   ...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="include/css/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">PLAY Project: Surveys</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li class="book-part">Tools and Processes</li>
+<li><a class="" href="setup.html">Setup</a></li>
+<li class="book-part">Data Wrangling</li>
+<li><a class="" href="screening-call.html">Screening call</a></li>
+<li><a class="" href="home-visit.html">Home visit</a></li>
+<li><a class="active" href="qa-for-merging.html">QA for merging</a></li>
+<li><a class="" href="mb-cdi.html">MB-CDI</a></li>
+<li><a class="" href="post-visit-notes.html">Post-visit notes</a></li>
+<li><a class="" href="data-dictionary.html">Data dictionary</a></li>
+<li class="book-part">Data Visualization</li>
+<li><a class="" href="screening-visualizations.html">Screening visualizations</a></li>
+<li><a class="" href="demographics-visualizations.html">Demographics visualizations</a></li>
+<li><a class="" href="language-visualizations.html">Language visualizations</a></li>
+<li><a class="" href="locomotion-visualizations.html">Locomotion visualizations</a></li>
+<li><a class="" href="health-visualizations.html">Health visualizations</a></li>
+<li><a class="" href="temperament-visualizations.html">Temperament visualizations</a></li>
+<li><a class="" href="post-visit-data.html">Post-visit data</a></li>
+<li class="book-part">Project Monitoring</li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/PLAY-behaviorome/KoBoToolbox">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="qa-for-merging" class="section level1 unnumbered">
+<h1>QA for merging<a class="anchor" aria-label="anchor" href="#qa-for-merging"><i class="fas fa-link"></i></a>
+</h1>
+<div id="purpose-1" class="section level2 unnumbered">
+<h2>Purpose<a class="anchor" aria-label="anchor" href="#purpose-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>This page summarizes which screening/demographics data and which home visit data have anomalies or missing data.</p>
+</div>
+<div id="screeningdemographic-data" class="section level2 unnumbered">
+<h2>Screening/demographic data<a class="anchor" aria-label="anchor" href="#screeningdemographic-data"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span></span>
+<span>      <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>      <span class="st">"data"</span>,</span>
+<span>      <span class="st">"csv"</span>,</span>
+<span>      <span class="st">"screening"</span>,</span>
+<span>      <span class="st">"agg"</span>,</span>
+<span>      <span class="st">"PLAY-screening-datab-latest.csv"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    col_types <span class="op">=</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="st">'c'</span><span class="op">)</span>,</span>
+<span>    show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The following rows have incomplete or missing <code>site_id</code> values:</p>
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+vol_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+session_id
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+<th style="text-align:left;">
+group_name
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+44638
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1481
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+64916
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1576
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+64939
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1656
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+70116
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+39302
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="rmdnote">
+<p>Volume 1103 is OHIOS. Volume 1482 is CSUFL. Volume 954 is GEORG.
+The missing values for <code>vol_id</code> indicate that there is a bug in the <a href="screening-call.html">cleaning code</a>.</p>
+<p><strong>2023-10-20</strong></p>
+<p>On closer investigation, the screening data do <em>not</em> show an OHIOS session with <code>participant_ID</code> == ‘001’. There are three with ‘000’ and two with ‘002’.</p>
+<p>Similarly, for CSUFL, there is no ‘003’ or ‘006’. We have home visit data for ‘006’.</p>
+<p>Similarly, for GEORG, there is a ‘???’, but no ‘001’.</p>
+</div>
+<p>The following rows have incomplete or missing <code>participant_ID</code> values:</p>
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+vol_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+session_id
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+<th style="text-align:left;">
+group_name
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+:——-
+</td>
+<td style="text-align:left;">
+:——
+</td>
+<td style="text-align:left;">
+:————–
+</td>
+<td style="text-align:left;">
+:———-
+</td>
+<td style="text-align:left;">
+:——-
+</td>
+<td style="text-align:left;">
+:———-
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>The following rows have incomplete or missing <code>play_id</code> values:</p>
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">vol_id</span>, <span class="va">participant_ID</span>, <span class="va">session_id</span>, <span class="va">play_id</span>, <span class="va">group_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">vol_id</span>, <span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+vol_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+session_id
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+<th style="text-align:left;">
+group_name
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+56051
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+56073
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+56321
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+57998
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+58358
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+010
+</td>
+<td style="text-align:left;">
+58466
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+011
+</td>
+<td style="text-align:left;">
+58472
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+012
+</td>
+<td style="text-align:left;">
+58477
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+58805
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+015
+</td>
+<td style="text-align:left;">
+59804
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCSCR
+</td>
+<td style="text-align:left;">
+1066
+</td>
+<td style="text-align:left;">
+016
+</td>
+<td style="text-align:left;">
+59805
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+56674
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+56674
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+57182
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+58204
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+008
+</td>
+<td style="text-align:left;">
+58230
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+57371
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+010
+</td>
+<td style="text-align:left;">
+57212
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+011
+</td>
+<td style="text-align:left;">
+57324
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+012
+</td>
+<td style="text-align:left;">
+58231
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+58232
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+015
+</td>
+<td style="text-align:left;">
+58641
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+016
+</td>
+<td style="text-align:left;">
+58315
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+017
+</td>
+<td style="text-align:left;">
+58642
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+58724
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+019
+</td>
+<td style="text-align:left;">
+58725
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+021
+</td>
+<td style="text-align:left;">
+58747
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+023
+</td>
+<td style="text-align:left;">
+59001
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+024
+</td>
+<td style="text-align:left;">
+59029
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+025
+</td>
+<td style="text-align:left;">
+59109
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+026
+</td>
+<td style="text-align:left;">
+59802
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+027
+</td>
+<td style="text-align:left;">
+59806
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+028
+</td>
+<td style="text-align:left;">
+59820
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+029
+</td>
+<td style="text-align:left;">
+59858
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OHIOS
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+030
+</td>
+<td style="text-align:left;">
+59966
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1103
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+44638
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STANF
+</td>
+<td style="text-align:left;">
+1362
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+57209
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STANF
+</td>
+<td style="text-align:left;">
+1362
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+58017
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+56367
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+58740
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+58918
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+59150
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+60049
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PURDU
+</td>
+<td style="text-align:left;">
+1363
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+60049
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHOPH
+</td>
+<td style="text-align:left;">
+1370
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+57863
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHOPH
+</td>
+<td style="text-align:left;">
+1370
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+60897
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+56400
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+56399
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+57852
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+58612
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+59735
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+007
+</td>
+<td style="text-align:left;">
+57857
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSULB
+</td>
+<td style="text-align:left;">
+1376
+</td>
+<td style="text-align:left;">
+010
+</td>
+<td style="text-align:left;">
+60080
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VBLTU
+</td>
+<td style="text-align:left;">
+1391
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+59779
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VBLTU
+</td>
+<td style="text-align:left;">
+1391
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+60236
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VBLTU
+</td>
+<td style="text-align:left;">
+1391
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+60243
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VBLTU
+</td>
+<td style="text-align:left;">
+1391
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+60311
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+57374
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+57916
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+58465
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+59144
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+60333
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+007
+</td>
+<td style="text-align:left;">
+61697
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UHOUS
+</td>
+<td style="text-align:left;">
+1397
+</td>
+<td style="text-align:left;">
+008
+</td>
+<td style="text-align:left;">
+61748
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+1400
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+58458
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+INDNA
+</td>
+<td style="text-align:left;">
+1400
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+62176
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UIOWA
+</td>
+<td style="text-align:left;">
+1422
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+57544
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UIOWA
+</td>
+<td style="text-align:left;">
+1422
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+58798
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UIOWA
+</td>
+<td style="text-align:left;">
+1422
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+59206
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UIOWA
+</td>
+<td style="text-align:left;">
+1422
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+59892
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UIOWA
+</td>
+<td style="text-align:left;">
+1422
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+60749
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CSUFL
+</td>
+<td style="text-align:left;">
+1481
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+60393
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1481
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+64916
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1576
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+64939
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1656
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+70116
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+41534
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+41534
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+41800
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+41800
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41455
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41455
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41455
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+41535
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41608
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41608
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+41808
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+006
+</td>
+<td style="text-align:left;">
+41808
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+007
+</td>
+<td style="text-align:left;">
+41894
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+007
+</td>
+<td style="text-align:left;">
+41894
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+013
+</td>
+<td style="text-align:left;">
+43207
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+014
+</td>
+<td style="text-align:left;">
+43530
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+017
+</td>
+<td style="text-align:left;">
+55842
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+018
+</td>
+<td style="text-align:left;">
+55863
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+020
+</td>
+<td style="text-align:left;">
+56064
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+021
+</td>
+<td style="text-align:left;">
+56065
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+022
+</td>
+<td style="text-align:left;">
+56103
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+023
+</td>
+<td style="text-align:left;">
+56104
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+024
+</td>
+<td style="text-align:left;">
+56311
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+026
+</td>
+<td style="text-align:left;">
+56417
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+028
+</td>
+<td style="text-align:left;">
+56526
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+029
+</td>
+<td style="text-align:left;">
+56571
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+031
+</td>
+<td style="text-align:left;">
+57373
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+032
+</td>
+<td style="text-align:left;">
+57410
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+035
+</td>
+<td style="text-align:left;">
+57894
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+037
+</td>
+<td style="text-align:left;">
+59428
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+227
+</td>
+<td style="text-align:left;">
+38196
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+228
+</td>
+<td style="text-align:left;">
+38197
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+229
+</td>
+<td style="text-align:left;">
+38215
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+230
+</td>
+<td style="text-align:left;">
+38236
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NYUNI
+</td>
+<td style="text-align:left;">
+899
+</td>
+<td style="text-align:left;">
+231
+</td>
+<td style="text-align:left;">
+38485
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+40510
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+40510
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41417
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+41417
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+004
+</td>
+<td style="text-align:left;">
+41428
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41873
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41873
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+005
+</td>
+<td style="text-align:left;">
+41873
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+008
+</td>
+<td style="text-align:left;">
+42127
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+008
+</td>
+<td style="text-align:left;">
+42127
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+42354
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+009
+</td>
+<td style="text-align:left;">
+42354
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+010
+</td>
+<td style="text-align:left;">
+42353
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+011
+</td>
+<td style="text-align:left;">
+42694
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+012
+</td>
+<td style="text-align:left;">
+57864
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+015
+</td>
+<td style="text-align:left;">
+58803
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+016
+</td>
+<td style="text-align:left;">
+59778
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GEORG
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+021
+</td>
+<td style="text-align:left;">
+60059
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+954
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+39302
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UCRIV
+</td>
+<td style="text-align:left;">
+966
+</td>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+43624
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VCOMU
+</td>
+<td style="text-align:left;">
+982
+</td>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+42292
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Silver
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VCOMU
+</td>
+<td style="text-align:left;">
+982
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+42940
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UMIAM
+</td>
+<td style="text-align:left;">
+996
+</td>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+65077
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+PLAY_Gold
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="rmdnote">
+<p>There are duplicate entries for OHIOS 1103 56674 002.</p>
+<p>We should add duplicate checking to the cleaning code.</p>
+</div>
+<div class="rmdnote">
+<p>There are 1 variables with information about exclusion status:</p>
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ex_dups</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">screen_df</span><span class="op">)</span>, <span class="st">"exclusion"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">screen_df</span><span class="op">)</span><span class="op">[</span><span class="va">ex_dups</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## [1] "exclusion_reason"</code></pre>
+<p>These probably result from some bug in the <code>*_join</code> operation in the <a href="screening-call.html#merge">cleaning process</a>.
+They should be merged.</p>
+</div>
+</div>
+<div id="home-visit-data-1" class="section level2 unnumbered">
+<h2>Home visit data<a class="anchor" aria-label="anchor" href="#home-visit-data-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">targets</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/targets/reference/tar_load.html">tar_load</a></span><span class="op">(</span><span class="va">home_visit_df</span>, store<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_targets"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>home_visit_df</code> data have some field names that are inconsistent with the screening/demographic data files.
+We reconcile these differences first.</p>
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">&lt;-</span> <span class="va">home_visit_df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"play_id"</span> <span class="op">=</span> <span class="st">"participant_id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"participant_ID"</span> <span class="op">=</span> <span class="st">"subject_number"</span><span class="op">)</span></span></code></pre></div>
+<p>Since the <code>home_visit_df</code> data have not yet been merged with Databrary information, the <code>vol_id</code> and <code>group_name</code> variables are not available.</p>
+<p>The following rows have incomplete or missing <code>site_id</code> values:</p>
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">site_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+:——-
+</td>
+<td style="text-align:left;">
+:————–
+</td>
+<td style="text-align:left;">
+:——-
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>The following rows have incomplete or missing <code>participant_ID</code> values:</p>
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">participant_ID</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+:——-
+</td>
+<td style="text-align:left;">
+:————–
+</td>
+<td style="text-align:left;">
+:——-
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>The following rows have incomplete or missing <code>play_id</code> values:</p>
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">home_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">play_id</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span>, <span class="va">play_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">site_id</span>, <span class="va">participant_ID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+site_id
+</th>
+<th style="text-align:left;">
+participant_ID
+</th>
+<th style="text-align:left;">
+play_id
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+:——-
+</td>
+<td style="text-align:left;">
+:————–
+</td>
+<td style="text-align:left;">
+:——-
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="home-visit.html">Home visit</a></div>
+<div class="next"><a href="mb-cdi.html">MB-CDI</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#qa-for-merging">QA for merging</a></li>
+<li><a class="nav-link" href="#purpose-1">Purpose</a></li>
+<li><a class="nav-link" href="#screeningdemographic-data">Screening/demographic data</a></li>
+<li><a class="nav-link" href="#home-visit-data-1">Home visit data</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/PLAY-behaviorome/KoBoToolbox/blob/main/src/14-merge-report.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/14-merge-report.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-05-20.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
