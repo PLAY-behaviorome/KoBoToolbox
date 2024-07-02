@@ -15,9 +15,15 @@ purrr::walk(fl, source)
 # Log in to Databrary
 message("----- Logging in to Databrary -----")
 lrq <- databraryr::make_default_request()
-databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"),
+logged_in <- databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"),
                      store = TRUE,
                      rq = lrq)
+if (logged_in) {
+  message("Login successful")
+} else {
+  message("Login failed")
+  return(NULL)
+}
 
 # Package dependencies
 suppressPackageStartupMessages(library(tidyverse))
@@ -239,14 +245,14 @@ list(
       age = as.difftime(update_interval, units = update_interval_units)
     )
   ),
-  tar_target(
-    home_visit_w_databrary_df,
-    add_databrary_info_to_home_visit_df(home_visit_df, vb = TRUE),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_w_databrary_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   home_visit_w_databrary_df,
+  #   add_databrary_info_to_home_visit_df(home_visit_df, vb = TRUE),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = home_visit_w_databrary_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   # MB-CDI CSVs
   tar_target(
     home_visit_mbcdi,
