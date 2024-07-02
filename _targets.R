@@ -19,9 +19,9 @@ logged_in <- databraryr::login_db(email = Sys.getenv("DATABRARY_LOGIN"),
                      store = TRUE,
                      rq = lrq)
 if (logged_in) {
-  message("Login successful")
+  message("Login successful.")
 } else {
-  message("Login failed")
+  message("Login failed.")
   return(NULL)
 }
 
