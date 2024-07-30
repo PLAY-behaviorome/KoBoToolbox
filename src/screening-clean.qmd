@@ -1,0 +1,250 @@
+# Screening survey: Data cleaning
+
+### Setup {-}
+
+A set of cleaning functions have the `screen_` prefix.
+
+```{r}
+purrr::walk(list.files(file.path(here::here(), "R"), 
+                    "^screen_", full.names = TRUE), source)
+```
+
+There are three CSV files to clean:
+
+```{r}
+(fn <- list.files("../data/csv/screening", "[Dd]emographic", full.names = TRUE))
+```
+
+We clean them separately, as needed, then merge them.
+
+### Clean variable names {-}
+
+```{r read-screening-csvs}
+df1 <-
+  readr::read_csv(fn[1],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+df2 <-
+  readr::read_csv(fn[2],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+df3 <-
+  readr::read_csv(fn[3],
+                  col_types = readr::cols(.default = 'c'),
+                  show_col_types = FALSE)
+```
+
+```{r}
+head(names(df1), 15)
+```
+
+```{r}
+head(names(df2), 15)
+```
+
+```{r}
+head(names(df3), 15)
+```
+
+```{r}
+head(names(df1), 15)
+```
+
+```{r}
+head(names(df2), 15)
+```
+
+```{r}
+head(names(df3), 15)
+```
+
+There are a separate set of variable-by-variable cleaning functions in `R/screen_clean_utils.R`.
+
+We remove the unneeded 'play_demo_*' and 'play_phone_questionnaire_' variable headers using `screen_remove_variable_headers()`.
+
+We remove fields that contain administrative metadata with `screen_remove_metadata_fields()`.
+
+We remove fields used only by staff in uploading data to Databrary using `screen_remove_databrary_fields()`.
+
+We have name and address information in the screening data (e.g., '..parent_phone', '..parent_email', etc.) 
+
+::: {.rmdnote}
+
+In a future workflow, we will add Census FIPS IDs for the State and Country 
+**before** removing the address information.
+
+The Census queries stopped working around 2023-06-16.
+
+For now, we remove identifiers without querying the Census.
+
+:::
+
+We remove identifiable information using `screen_remove_identifiers()`.
+
+Then, we use `dplyr::full_join()` to combine the set of individually 
+cleaned data files.
+The `screen_clean_raw_csv()` function combines the previous `screen_remove*` functions.
+The `screen_clean_raw_join()` function cleans each CSV then joins them.
+
+```{r clean-screening-join}
+(scr_df <- screen_clean_raw_join())
+```
+
+### Clean individual fields {-}
+
+Now, we can proceed to clean-up the merged data frame.
+The sequence of functions called below cleans 'construct-specific' variables
+as indicated by the function names.
+
+```{r show-screening-field-cleaning, eval=FALSE}
+scr_df <- scr_df |> 
+    screen_clean_child_info() |>
+    screen_clean_lang_info() |>
+    screen_clean_mom_info() |>
+    screen_clean_biodad_father_info() |>
+    screen_clean_childcare_info() |>
+    screen_clean_family_structure() |>
+    screen_clean_play_id() |>
+    screen_remove_selected_cols() |>
+    screen_select_reorder_cols()
+```
+
+For convenience, we package this sequence in its own function, `screen_clean_fields()`.
+
+::: {.rmdnote}
+
+Note that all of the variables are considered character strings. The `tidyverse`
+suite does a great job of guessing what variables are what, but sometimes it
+guesses wrongly. So, in preliminary stages, it has proved easier to make everything
+a character string.
+
+:::
+
+```{r clean-merged-screen-fields}
+scr_df <- screen_clean_fields(scr_df)
+str(scr_df)
+```
+
+There is more work to do, but we have a version worth exporting.
+
+## Merge {-}
+
+Let's add the Databrary volume ID info.
+
+```{r add-db-vol-id}
+scr_df <- scr_df |>
+  screen_add_db_vol_id()
+```
+
+Then filter out rows that do not have valid volume IDs.
+
+```{r filter-invalid-db-vol-ids}
+valid_db_vol <- !is.na(scr_df$vol_id)
+
+scr_df <- scr_df[valid_db_vol,]
+```
+
+There are $n=$ `r sum(valid_db_vol)` valid Databrary volume IDs out of a total of $n=$ `r length(valid_db_vol)` screening records.
+
+Next, we add a `play_status` field based on the `group-name` field from Databrary.
+We use `group-name` for indicating "Gold", "Silver", or "Not run."
+
+Two targets in `_targets.R` are relevant for this operation:
+
+```
+  tar_target(
+    play_vols_df,
+    readr::read_csv("data/csv/_meta/play_site_vols.csv",
+                    show_col_types = FALSE)
+  ),
+  tar_target(
+    databrary_session_csvs,
+    purrr::map(play_vols_df$site_id, databrary_get_save_session_csv),
+    cue = tarchetypes::tar_cue_age(
+      name = databrary_session_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  )
+
+```
+
+These targets generate site-specific CSVs in `data/csv/site_sessions` based on the database of PLAY sites contained in `data/csv/_meta/play_site_vols.csv`.
+We load these CSVs into a single data frame.
+
+### Load site session data {-}
+
+```{r add-db-status}
+session_fns <-
+  list.files("../data/csv/site_sessions", "\\.csv$", full.names = TRUE)
+
+df_sessions <-
+  purrr::map(
+    session_fns,
+    readr::read_csv,
+    col_types = readr::cols(.default = 'c'),
+    show_col_types = FALSE
+  ) |>
+  purrr::list_rbind()
+```
+
+The `group_name` variable contains status information about the sessions.
+
+```{r}
+xtabs(~ group_name, data=df_sessions)
+```
+
+We note that there are three different versions of no visit: "No visit", "No_visit", and "No_Visit". 
+In addition, there are $n=$ `r sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
+These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
+Here, we want to select only those sessions that occurred and which have passed QA--those sessions for which `group_name` is either 'PLAY_Gold' or 'PLAY_Silver'.
+
+```{r}
+df_sessions <- df_sessions |>
+  dplyr::filter(stringr::str_detect(group_name, "PLAY_"))
+```
+
+### Sharing by session status {-}
+
+Here is information about the sharing status.
+
+```{r}
+xtabs(~ group_name + session_release, df_sessions)
+```
+
+There was one session marked `PRIVATE`.
+
+```{r}
+df_sessions |>
+  dplyr::filter(session_release == "PRIVATE") |>
+  dplyr::select(vol_id, session_id, session_name, group_name)
+```
+
+Now, we join the screening data with the Databrary session data.
+
+```{r}
+screen_datab_df <- dplyr::left_join(df_sessions, scr_df, by = c('vol_id', 'participant_ID'))
+```
+
+Let's do some additional cleaning of redundant column names, e.g., exclusion.
+
+```{r}
+screen_datab_df <- screen_datab_df |>
+  tidyr::unite(exclusion_reason, c("exclusion1_reason", "exclusion2_reason", "exclusion_reason")) |>
+  dplyr::mutate(exclusion_reason = stringr::str_remove_all(exclusion_reason, "NA|_"))
+```
+
+## Export cleaned file {-}
+
+We date-stamp the exported file so we can monitor progress as this workflow develops.
+
+```{r export-screen}
+sfn <- paste0("PLAY-screening-datab-", Sys.Date(), ".csv")
+readr::write_csv(screen_datab_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+```
+
+We also save a copy with "latest".
+
+```{r export-latest}
+sfn <- "PLAY-screening-datab-latest.csv"
+readr::write_csv(screen_datab_df, file.path(here::here(), "data/csv/screening/agg/", sfn))
+```
