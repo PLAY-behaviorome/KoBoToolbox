@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rick Gilmore">
 
-<title>Play Survey Data</title>
+<title>Play Survey Data - Post-visit: Visualization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./setup.html" rel="next">
+<link href="./post-visit-clean.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Overview</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./post-visit-gather.html">Post visit</a></li><li class="breadcrumb-item"><a href="./post-visit-viz.html"><span class="chapter-title">Post-visit: Visualization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -112,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Overview</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -193,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./post-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Post-visit: Visualization</span></a>
+  <a href="./post-visit-viz.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Post-visit: Visualization</span></a>
   </div>
 </li>
       </ul>
@@ -204,37 +203,20 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#overview-of-data-sets" id="toc-overview-of-data-sets" class="nav-link" data-scroll-target="#overview-of-data-sets">Overview of data sets</a>
-  <ul class="collapse">
-  <li><a href="#data-access-and-processing" id="toc-data-access-and-processing" class="nav-link" data-scroll-target="#data-access-and-processing">Data access and processing</a></li>
-  <li><a href="#home-visit-data" id="toc-home-visit-data" class="nav-link" data-scroll-target="#home-visit-data">Home visit data</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./post-visit-gather.html">Post visit</a></li><li class="breadcrumb-item"><a href="./post-visit-viz.html"><span class="chapter-title">Post-visit: Visualization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Play Survey Data</h1>
+<h1 class="title"><span class="chapter-title">Post-visit: Visualization</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rick Gilmore </p>
-          </div>
-  </div>
     
   
     <div>
@@ -251,37 +233,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://play-project.org"><img src="include/img/PLAY-logo.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p><em>Version</em>: 2024-08-06 15:20:50.034822</p>
-<section id="purpose" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="purpose">Purpose</h2>
-<p>PLAY project researchers use <a href="https://www.kobotoolbox.org/">KoBoToolbox</a> to collect data from participant families. Data from all sessions at all PLAY data collection sites are pushed to a common set of files on the KoBoToolbox server.</p>
-<p>This document describes the process of i) downloading, ii) parsing, iii) cleaning, and iv) exporting these files into forms more suitable for data analysis.</p>
-<p>For details about the PLAY Project data collection protocol, see <a href="https://PLAY-behaviorome.github.io/protocol/" class="uri">https://PLAY-behaviorome.github.io/protocol/</a>.</p>
-</section>
-<section id="overview-of-data-sets" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="overview-of-data-sets">Overview of data sets</h2>
-<p>There are three sets of data collected using KoBoToolbox. One set is collected during the recruiting and screening calls for the study. The second set is collected during the home visit. The third set consists of notes generated by the experimenter after the visit.</p>
-<section id="data-access-and-processing" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="data-access-and-processing">Data access and processing</h3>
-<p>All data are downloaded and manipulated locally but are <strong>not</strong> synched to GitHub. This is accomplished by adding <code>data</code> to <a href=".gitignore"><code>.gitignore</code></a>.</p>
-<p>There are separate processes for detecting and deleting personal identifiers from specific data files and exporting ‘cleaned’ versions that may be shared on Databrary.</p>
-</section>
-<section id="home-visit-data" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="home-visit-data">Home visit data</h3>
-<p>There are three (3) age groups (12-, 18-, and 24-month-olds) and four (4) different language environment groups (English-only, Spanish-only, Bilingual-English-dominant, Bilingual-Spanish-dominant). Since the language of the questions and some of the specific questions vary by age group and by language environment group, there multiple KoBoToolbox survey form files that must be processed.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -673,11 +626,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./post-visit-clean.html" class="pagination-link  aria-label=" &lt;span="" cleaning&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Post-visit: Cleaning</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./setup.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>Setup</span>">
-        <span class="nav-page-text"><span class="chapter-title">Setup</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -685,4 +638,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

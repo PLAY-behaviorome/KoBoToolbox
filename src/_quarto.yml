@@ -1,33 +1,66 @@
 project:
-  type: website
+  type: book
   render:
     - "*.qmd"
   output-dir: "../docs"
-website:
-  title: "PLAY Survey Data"
-  comments: 
-    hypothesis:
-      theme: clean
-  navbar:
-    left:
-      - href: index.qmd
-        text: home
-      - href: setup.qmd
-        text: background
-      - text: screening
-        menu: 
-          - href: screening-gather.qmd
-          - href: screening-clean.qmd
-          - href: screening-viz.qmd
-      # - text: home-visit
-      #   menu:
-      #     - href: home-visit-gather.qmd
-      # - text: post-visit
-      #   menu:
-      #     - href: post-visit-gather.qmd
+  
+# website:
+#   title: "PLAY Survey Data"
+#   comments: 
+#     hypothesis:
+#       theme: clean
+#   navbar:
+#     left:
+#       - href: index.qmd
+#         text: home
+#       - href: setup.qmd
+#         text: background
+#       - text: screening
+#         menu: 
+#           - href: screening-gather.qmd
+#           - href: screening-clean.qmd
+#           - href: screening-viz.qmd
+#       - text: home-visit
+#         menu:
+#           - href: home-visit-gather.qmd
+#           - href: home-visit-clean.qmd
+#           - href: home-visit-viz.qmd
+#       - text: post-visit
+#         menu:
+#           - href: post-visit-gather.qmd
+#           - href: post-visit-clean.qmd
+#           - href: post-visit-viz.qmd
+#   repo-url: https://github.com/PLAY-behaviorome/KoBoToolbox
+#   repo-actions: [edit, issue]
+#   repo-subdir: src
+  
+book:
+  title: "Play Survey Data"
+  author: "Rick Gilmore"
+  chapters:
+    - href: index.qmd
+      text: Overview
+    - href: setup.qmd
+      text: Setup
+    - part: "Screening"
+      chapters:
+        - href: screening-gather.qmd
+        - href: screening-clean.qmd
+        - href: screening-viz.qmd
+    - part: "Home visit"
+      chapters:
+        - href: home-visit-gather.qmd
+        - href: home-visit-clean.qmd
+        - href: home-visit-viz.qmd
+    - part: "Post visit"
+      chapters:
+        - href: post-visit-gather.qmd
+        - href: post-visit-clean.qmd
+        - href: post-visit-viz.qmd
   repo-url: https://github.com/PLAY-behaviorome/KoBoToolbox
   repo-actions: [edit, issue]
   repo-subdir: src
+
 format:
   html:
     theme: default
@@ -36,7 +69,8 @@ format:
     bibliography: [include/bib/book.bib, include/bib/packages.bib]
     citations-hover: true
     code_folding: hide
+    number-sections: false
+    date-modified: last-modified
     toc: true
-    toc_depth: 2
-    toc_float: true
+    toc-depth: 3
 editor: source
