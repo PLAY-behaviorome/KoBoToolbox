@@ -1,4 +1,4 @@
-# Screening
+# Screening: Gathering
 
 ## Collection protocol {-}
 
@@ -6,11 +6,13 @@ Details about the data collection [protocol for participant screening and recrui
 
 ### Setup {-}
 
-Load functions needed to download KBT screening/demographic questionnaire files.
+We load functions needed to download KBT screening/demographic questionnaire files.
 
 ```{r}
-fl <- list.files(file.path(here::here(), "R"), "^kobo_|^file_", full.names = TRUE)
+fl <- list.files(file.path(here::here(), "R"), "^kobo_|^file_|^screen_|CONSTANTS", full.names = TRUE)
 purrr::walk(fl, source)
+
+library(tidyverse) # for the `magrittr` pipe `%>%`
 ```
 
 ## Retrieve from KoBoToolbox (KBT) {-}
@@ -55,62 +57,69 @@ The `kb_df` data frame is input to the first target `kb_screen_df`.
   ),
 ```
 
-The following code shows how this works:
+### Download {-}
 
-```{r}
-library(tidyverse) # for the `magrittr` pipe `%>%`
+We have two targets specified in `_targets.R` that handle the regular downloading of screening data files.
 
-fl <-
-  list.files(
-    "../R",
-    "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS",
-    full.names = TRUE
-  )
-purrr::walk(fl, source)
+First, we generate a data frame of KoBoToolbox forms that contain the screening ("Demographic") data.
+Here is the target for that process:
 
-kobo_list_data()
+```r
+# Not evaluated
+  tar_target(
+    kb_screen_df,
+    kobo_list_data_filtered("[Dd]emographic"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_screen,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
 ```
 
+Then we download and save the raw XLSX files to `../data/xlsx/screening` using `kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")`.
+Finally, we convert the XLSX files to CSVs via `file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")`.
+The latter two steps are handled by the wrapper function `screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening")`.
+Here is the accompanying target:
 
-<!-- ### Download {-} -->
+```r
+# Download screening/demographic survey
+  tar_target(
+    screen_download,
+    screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+```
 
-<!-- We have two targets specified in `_targets.R` that handle the regular downloading of screening data files. -->
+We can confirm that these functions have run properly, as follows:
 
-<!-- First, we generate a data frame of KoBoToolbox forms that contain the screening ("Demographic") data. -->
-<!-- Here is the target for that process: -->
+```{r}
+#| label: list-downloaded-screening-demo-csv
 
-<!-- ``` -->
-<!-- # Not evaluated -->
-<!--   tar_target( -->
-<!--     kb_screen_df, -->
-<!--     kobo_list_data_filtered("[Dd]emographic"), -->
-<!--     cue = tarchetypes::tar_cue_age( -->
-<!--       name = kb_screen, -->
-<!--       age = as.difftime(update_interval, units = update_interval_units) -->
-<!--     ) -->
-<!--   ), -->
-<!-- ``` -->
+screening_fl <- list.files("../data/csv/screening/", pattern = "*.csv$")
+```
 
-<!-- Then we download and save the raw XLSX files to `../data/xlsx/screening` using `kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")`. -->
-<!-- Finally, we convert the XLSX files to CSVs via `file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")`. -->
-<!-- The latter two steps are handled by the wrapper function `screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening")`. -->
-<!-- Here is the accompanying target: -->
+### Survey questions
 
-<!-- ``` -->
-<!-- # Download screening/demographic survey -->
-<!--   tar_target( -->
-<!--     screen_download, -->
-<!--     screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening"), -->
-<!--     cue = tarchetypes::tar_cue_age( -->
-<!--       name = screen_df, -->
-<!--       age = as.difftime(update_interval, units = update_interval_units) -->
-<!--     ) -->
-<!--   ), -->
-<!-- ``` -->
+There are *n*=`{r} length(screening_fl)` screening/demographic data files.
 
-#### Survey questions
+The KoBoToolbox API enables us to download a table with the questions, as follows.
 
-The form for the survey questions can be downloaded from the following URL:
+```{r}
+#| label: list-screening-demog-questionnaires
 
-<https://kf.kobotoolbox.org/api/v2/assets/aGLEqT7eRBhuPgizCQBeqA.xls>
+targets::tar_load(kb_screen_df, store="../_targets")
+kb_screen_df
+```
 
+Based on this information, we know that the questionnaires may be downloaded from the following URLs:
+
+```{r}
+#| label: list screening-demog-questionnaire-urls
+
+paste0("https://kf.kobotoolbox.org/api/v2/assets/", kb_screen_df$id_string, ".xls")
+```
+
+We import and clean the screening/demographic data in the next section.

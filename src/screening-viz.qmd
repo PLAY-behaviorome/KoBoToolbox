@@ -20,7 +20,8 @@ screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLA
 (s <- xtabs(~ session_release + group_name, screen_df))
 ```
 
-Of the $n=$ `r sum(s)` sessions so far, `r round(100*(s[1,1]+s[1,2])/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
+Of the *n*=`{r} sum(s)` sessions so far, `{r} round(100*(s[1,1]+s[1,2])/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
+Conversely, only *n*=`{r} s[2,1]+s[2,2]` or `{r} round(100*(s[2,1]+s[2,2])/sum(s), 1)`% have declined to share at all.
 
 ## Dates & times {-}
 
@@ -123,7 +124,7 @@ xtabs(formula = ~ child_sex + child_bornonduedate,
 
 ::: {.rmdnote}
 
-There are $n=$ `r sum(is.na(screen_df$child_bornonduedate))` NAs.
+There are *n*=`r sum(is.na(screen_df$child_bornonduedate))` NAs.
 
 :::
 

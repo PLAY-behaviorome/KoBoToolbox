@@ -1,8 +1,8 @@
-# Screening survey: Data cleaning
+# Screening: Cleaning
 
 ### Setup {-}
 
-A set of cleaning functions have the `screen_` prefix.
+We source a set of cleaning functions have the `screen_` prefix.
 
 ```{r}
 purrr::walk(list.files(file.path(here::here(), "R"), 
@@ -58,7 +58,7 @@ head(names(df2), 15)
 head(names(df3), 15)
 ```
 
-There are a separate set of variable-by-variable cleaning functions in `R/screen_clean_utils.R`.
+<!-- There are a separate set of variable-by-variable cleaning functions in `R/screen_clean_utils.R`. -->
 
 We remove the unneeded 'play_demo_*' and 'play_phone_questionnaire_' variable headers using `screen_remove_variable_headers()`.
 
@@ -66,9 +66,10 @@ We remove fields that contain administrative metadata with `screen_remove_metada
 
 We remove fields used only by staff in uploading data to Databrary using `screen_remove_databrary_fields()`.
 
-We have name and address information in the screening data (e.g., '..parent_phone', '..parent_email', etc.) 
+We have name and address information in the screening data (e.g., '..parent_phone', '..parent_email', etc.).
+We remove this and other identifiable information using `screen_remove_identifiers()`.
 
-::: {.rmdnote}
+::: {.callout-note}
 
 In a future workflow, we will add Census FIPS IDs for the State and Country 
 **before** removing the address information.
@@ -111,7 +112,7 @@ scr_df <- scr_df |>
 
 For convenience, we package this sequence in its own function, `screen_clean_fields()`.
 
-::: {.rmdnote}
+::: {.callout-note}
 
 Note that all of the variables are considered character strings. The `tidyverse`
 suite does a great job of guessing what variables are what, but sometimes it
@@ -144,7 +145,7 @@ valid_db_vol <- !is.na(scr_df$vol_id)
 scr_df <- scr_df[valid_db_vol,]
 ```
 
-There are $n=$ `r sum(valid_db_vol)` valid Databrary volume IDs out of a total of $n=$ `r length(valid_db_vol)` screening records.
+There are *n=*`{r} sum(valid_db_vol)` valid Databrary volume IDs out of a total of *n*=`r length(valid_db_vol)` screening records.
 
 Next, we add a `play_status` field based on the `group-name` field from Databrary.
 We use `group-name` for indicating "Gold", "Silver", or "Not run."
@@ -194,7 +195,15 @@ xtabs(~ group_name, data=df_sessions)
 ```
 
 We note that there are three different versions of no visit: "No visit", "No_visit", and "No_Visit". 
-In addition, there are $n=$ `r sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
+In addition, there are *n*=`r sum(is.na(df_sessions$group_name))` sessions with NA in the `group_name`.
+
+Let's modify those values that specify no visit on one of these forms to conform with one another.
+
+```{r}
+df_sessions <- df_sessions |>
+  dplyr::mutate(group_name = stringr::str_replace(group_name, "No.*isit", "No_visit"))
+```
+
 These could be sessions that are still in QA or which are scheduled, or there could be some other anomaly.
 Here, we want to select only those sessions that occurred and which have passed QA--those sessions for which `group_name` is either 'PLAY_Gold' or 'PLAY_Silver'.
 
