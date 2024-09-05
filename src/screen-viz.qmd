@@ -1,4 +1,4 @@
-# Screening survey: Visualizations
+# Screening: Visualizations
 
 These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow.
 
@@ -104,7 +104,7 @@ xtabs(formula = ~ child_sex + language_spoken_child,
 ### At home {-}
 
 ```{r xtabs-language-at-home-by-sex}
-xtabs(formula = ~ child_sex + language_spoken_home, data = df)
+xtabs(formula = ~ language_spoken_home + child_sex, data = df)
 ```
 
 ### To child vs. at home {-}
@@ -137,7 +137,8 @@ screen_df |>
 
 ### Child term {-}
 
-```{r xtabs-duedate}
+```{r}
+#| label: tbl-xtabs-duedate
 xtabs(formula = ~ child_bornonduedate + child_onterm,
       data = screen_df)
 ```
@@ -146,7 +147,9 @@ xtabs(formula = ~ child_bornonduedate + child_onterm,
 
 Must convert pounds and ounces to decimal pounds.
 
-```{r fig-birthwt-hist}
+```{r}
+#| label: fig-birthwt-hist
+#| fig-cap: "Histogram of reported child birthweights in pounds."
 df <- screen_df %>%
   dplyr::mutate(.,
                 birth_weight_lbs = child_weight_pounds + child_weight_ounces/16)
@@ -260,7 +263,9 @@ visualization.
 
 #### Bed time {-}
 
-```{r fig-bed-time-hist}
+```{r}
+#| label: fig-bed-time-hist
+#| fig-cap: "Histogram of parent-reported child bedtimes (24 hr scale)."
 extract_sleep_hr <- function(t) {
   t |>
     stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
@@ -293,7 +298,9 @@ df |>
 
 #### Wake time {-}
 
-```{r fig-wake-time-hist}
+```{r}
+#| label: fig-wake-time-hist
+#| fig-cap: "Histogram of parent-reported child wake times (24 hr scale)."
 df <- screen_df |>
   dplyr::mutate(child_wake_time = extract_sleep_hr(child_wake_time)) |>
   dplyr::filter(!is.na(child_wake_time)) 
