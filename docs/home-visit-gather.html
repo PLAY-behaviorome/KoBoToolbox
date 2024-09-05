@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Play Survey Data - Home visit: Gathering</title>
+<title>Home visit: Gathering – Play Survey Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -69,6 +103,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="include/css/style.css">
 </head>
@@ -79,13 +142,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./home-visit-gather.html">Home visit</a></li><li class="breadcrumb-item"><a href="./home-visit-gather.html"><span class="chapter-title">Home visit: Gathering</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -122,9 +185,9 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Screening</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -153,9 +216,9 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Home visit</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -184,9 +247,9 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Post visit</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -219,7 +282,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#download-data" id="toc-download-data" class="nav-link active" data-scroll-target="#download-data">Download data</a>
+  <ul class="collapse">
+  <li><a href="#save-selected-raw-files-to-local-directory" id="toc-save-selected-raw-files-to-local-directory" class="nav-link" data-scroll-target="#save-selected-raw-files-to-local-directory">Save selected raw files to local directory</a></li>
+  <li><a href="#normalize-file-names" id="toc-normalize-file-names" class="nav-link" data-scroll-target="#normalize-file-names">Normalize file names</a></li>
+  <li><a href="#save-xlsx-as-csv" id="toc-save-xlsx-as-csv" class="nav-link" data-scroll-target="#save-xlsx-as-csv">Save xlsx as csv</a></li>
+  <li><a href="#split-mb-cdi-from-other-questions" id="toc-split-mb-cdi-from-other-questions" class="nav-link" data-scroll-target="#split-mb-cdi-from-other-questions">Split MB-CDI from other questions</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/home-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -238,7 +313,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">August 6, 2024</p>
+      <p class="date-modified">August 27, 2024</p>
     </div>
   </div>
     
@@ -249,8 +324,185 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="download-data" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="download-data">Download data</h2>
+<p>Data files for each of the language by age-group conditions are stored on KoBoToolbox (KBT).</p>
+<p>Store all of the data files on KBT in <code>kb_df</code>.</p>
+<pre><code>tar_target(kb_df, list_kobo_data()),</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(targets)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(kb_df, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>kb_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>List data forms specific to the home visit by filtering the files with names that contain “Home”.</p>
+<pre><code>tar_target(kb_home, dplyr::filter(kb_df, stringr::str_detect(title, "Home")))</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(kb_home, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>kb_home</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        id              id_string
+1   411456 a58ZhjX6M8WXtzLGvBaEaG
+2   740625 a8HyzdxnVjK53dt4fX3Vup
+3   331453 aae4wz2tpkSnAkea2PAzin
+4   363465 abYGMsrMvkGsnA4xm9kqC9
+5   363431 acCBJaRqBkSMPYdvaaWCSu
+6   334099 ad3NtS6TDPuKTUKCAyCuby
+7   363349 aEMERWLYQAdhaMKMt5QkD7
+8   307736 aeMJQLo56HWyVHkKX9oaJD
+9   740631 ahYJ7XRUcit8gbFYwaxnAV
+10 1151489 aLqdPLTCZb8jvFkDxcFwzy
+11 1136694 aMteoHisncRUStdyZfsjMB
+12  740623 aoLcmmN8KWG4N6A3XpUiRT
+13  740628 aRJW7SwKsVyZu8b4FighiM
+14  363466 asv7tL6CEYjiW2XCkLxhcX
+15  411469 aswcEAtxj24u9MfuBmS9AW
+16  740630 aThMD6zuEFjtTfptwcpZPg
+17  411388 aTyGBYk6HvRXmki9ksb29p
+18  740624 aUeYzPfq6WED4dDF28VT9D
+19  363381 aWd7wujF5d5HYaYMhT4jBZ
+20  740626 awMnFDna5kWR3LXKyGmFMd
+21  331848 axYbEbLcJxzUNFbqMVySjJ
+22  740629 axyJSgLRDeSk3BHB6cJmYk
+23  408149 ayhCy68ZTaDGc7tuGthQpJ
+24  740627 aYokcZAjTZ9JCyVXz4R5rh
+                                                                     title
+1              PLAY Home Questionaires - 12 Bilingual English (2020-03-04)
+2                                        PLAY_HomeQuestionaires_12_English
+3                                    PLAY Home Questionnaires (24 English)
+4             PLAY Home Questionnaires - 24 Bilingual English (2020-03-04)
+5                       PLAY Home Questionnaires - 12 English (2020-03-04)
+6                        PLAY Home Questionnaires (12 Bilingual - English)
+7                       PLAY Home Questionnaires - 18 English (2020-03-04)
+8                                    PLAY Home Questionnaires (18 English)
+9                              PLAY_HomeQuestionaires_24_Bilingual_English
+10 Clone of Clone of PLAY_HomeQuestionnaires_18_English - NO AUTO METADATA
+11             Clone of PLAY_HomeQuestionnaires_18_English - NO AUTO TODAY
+12                             PLAY_HomeQuestionaires_12_Bilingual_English
+13                                      PLAY_HomeQuestionnaires_18_English
+14            PLAY Home Questionnaires - 18 Bilingual English (2020-03-04)
+15            PLAY Home Questionnaires - 12 Bilingual Spanish (2020-03-04)
+16                             PLAY_HomeQuestionaires_24_Bilingual_Spanish
+17            PLAY Home Questionnaires - 18 Bilingual Spanish (2020-03-04)
+18                             PLAY_HomeQuestionaires_12_Bilingual_Spanish
+19                      PLAY Home Questionnaires - 24 English (2020-03-04)
+20                             PLAY_HomeQuestionaires_18_Bilingual_English
+21                                   PLAY Home Questionnaires (12 English)
+22                                      PLAY_HomeQuestionnaires_24_English
+23            PLAY Home Questionnaires - 24 Bilingual Spanish (2020-03-04)
+24                             PLAY_HomeQuestionaires_18_Bilingual_Spanish
+                                                               description
+1            PLAY Home Questionaires - 12 Bilingual (English) (2020-03-04)
+2                             PLAY_HomeQuestionaires_12_English-2021-07-29
+3                                    PLAY Home Questionnaires (24 English)
+4             PLAY Home Questionnaires - 24 Bilingual English (2019-11-20)
+5                       PLAY Home Questionnaires - 12 English (2019-11-20)
+6                        PLAY Home Questionnaires (12 Bilingual - English)
+7                       PLAY Home Questionnaires - 18 English (2018-11-20)
+8                                    PLAY Home Questionnaires (18 English)
+9                   PLAY_HomeQuestionaires_24_Bilingual_English-2021-07-30
+10 Clone of Clone of PLAY_HomeQuestionnaires_18_English - NO AUTO METADATA
+11                             Clone of PLAY_HomeQuestionnaires_18_English
+12                  PLAY_HomeQuestionaires_12_Bilingual_English-2021-07-29
+13                           PLAY_HomeQuestionnaires_18_English-2021-07-29
+14            PLAY Home Questionnaires - 18 Bilingual English (2019-11-20)
+15            PLAY Home Questionnaires - 12 Bilingual Spanish (2020-03-04)
+16                  PLAY_HomeQuestionaires_24_Bilingual_Spanish-2021-07-30
+17            PLAY Home Questionnaires - 18 Bilingual Spanish (2020-03-04)
+18                  PLAY_HomeQuestionaires_12_Bilingual_Spanish-2021-07-29
+19                      PLAY Home Questionnaires - 24 English (2019-11-20)
+20                  PLAY_HomeQuestionaires_18_Bilingual_English-2021-07-29
+21                                   PLAY Home Questionnaires (12 English)
+22                           PLAY_HomeQuestionnaires_24_English-2021-07-30
+23            PLAY Home Questionnaires - 24 Bilingual Spanish (2020-02-27)
+24                  PLAY_HomeQuestionaires_18_Bilingual_Spanish-2021-07-29
+                                              url
+1   https://kc.kobotoolbox.org/api/v1/data/411456
+2   https://kc.kobotoolbox.org/api/v1/data/740625
+3   https://kc.kobotoolbox.org/api/v1/data/331453
+4   https://kc.kobotoolbox.org/api/v1/data/363465
+5   https://kc.kobotoolbox.org/api/v1/data/363431
+6   https://kc.kobotoolbox.org/api/v1/data/334099
+7   https://kc.kobotoolbox.org/api/v1/data/363349
+8   https://kc.kobotoolbox.org/api/v1/data/307736
+9   https://kc.kobotoolbox.org/api/v1/data/740631
+10 https://kc.kobotoolbox.org/api/v1/data/1151489
+11 https://kc.kobotoolbox.org/api/v1/data/1136694
+12  https://kc.kobotoolbox.org/api/v1/data/740623
+13  https://kc.kobotoolbox.org/api/v1/data/740628
+14  https://kc.kobotoolbox.org/api/v1/data/363466
+15  https://kc.kobotoolbox.org/api/v1/data/411469
+16  https://kc.kobotoolbox.org/api/v1/data/740630
+17  https://kc.kobotoolbox.org/api/v1/data/411388
+18  https://kc.kobotoolbox.org/api/v1/data/740624
+19  https://kc.kobotoolbox.org/api/v1/data/363381
+20  https://kc.kobotoolbox.org/api/v1/data/740626
+21  https://kc.kobotoolbox.org/api/v1/data/331848
+22  https://kc.kobotoolbox.org/api/v1/data/740629
+23  https://kc.kobotoolbox.org/api/v1/data/408149
+24  https://kc.kobotoolbox.org/api/v1/data/740627</code></pre>
+</div>
+</div>
+<section id="save-selected-raw-files-to-local-directory" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="save-selected-raw-files-to-local-directory">Save selected raw files to local directory</h3>
+<p>Prepare to retrieve all home visit files.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n_files <span class="ot">&lt;-</span> <span class="fu">dim</span>(kb_home)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are <span class="math inline">\(n=\)</span> 24 home visit data files.</p>
+<pre><code>tar_target(
+  home_visit_downloads,
+  retrieve_kobo_xlsx(kb_home, 
+    "data/xlsx/home_visit/raw"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_downloads,
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
+  )
+)</code></pre>
+</section>
+<section id="normalize-file-names" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="normalize-file-names">Normalize file names</h3>
+<p>Some of the form names are inconsistent, so we normalize them to fit the following pattern:</p>
+<p><code>&lt;form_id&gt;_PLAY_HomeQuestionnaires_&lt;age_group&gt;_&lt;lang_group&gt;.xlsx</code></p>
+<pre><code>tar_target(
+  home_visit_renamed,
+  rename_home_xlsx(home_visit_downloads,
+                     "data/xlsx/home_visit/std_name"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_renamed,
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
+  )
+)</code></pre>
+</section>
+<section id="save-xlsx-as-csv" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="save-xlsx-as-csv">Save xlsx as csv</h3>
+<pre><code>tar_target(
+  home_visit_xlsx_to_csv,
+  load_xlsx_save_many_csvs_2(home_visit_renamed, 
+    "data/csv/home_visit/raw")
+)</code></pre>
+</section>
+<section id="split-mb-cdi-from-other-questions" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="split-mb-cdi-from-other-questions">Split MB-CDI from other questions</h3>
+<p>Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.</p>
+<p>By default, the document presumes that we want to convert <strong>all</strong> of the CSV files</p>
+<p>Extract the ‘non-mbcdi’ questions first and add ‘non_mbcdi’ to the filename.</p>
+<pre><code>tar_target(
+  home_visit_non_mbcdi,
+  split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
+                        "data/csv/home_visit/non_mbcdi")
+)</code></pre>
+<p>Extracting the MB-CDI data has nearly the same function call, but the <code>these_questions</code> parameter is set to ‘mbcdi’.</p>
+<pre><code>tar_target(
+  home_visit_mbcdi,
+  split_mbcdi_csvs(home_visit_xlsx_to_csv,
+                    "data/csv/home_visit/mbcdi")
+)</code></pre>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -288,18 +540,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -331,7 +572,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -366,7 +647,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -642,12 +927,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./screen-data-dictionary.html" class="pagination-link  aria-label=" &lt;span="" data="" dictionary&lt;="" span&gt;"="">
+      <a href="./screen-data-dictionary.html" class="pagination-link" aria-label="Screening: Data dictionary">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Screening: Data dictionary</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./home-visit-clean.html" class="pagination-link" aria-label="<span class='chapter-number'>8</span>&nbsp; <span class='chapter-title'>Home visit: Cleaning</span>">
+      <a href="./home-visit-clean.html" class="pagination-link" aria-label="Home visit: Cleaning">
         <span class="nav-page-text"><span class="chapter-title">Home visit: Cleaning</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -657,4 +942,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/home-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/home-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

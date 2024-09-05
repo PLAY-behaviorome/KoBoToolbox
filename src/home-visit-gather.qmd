@@ -1,2 +1,106 @@
 # Home visit: Gathering
 
+## Download data {-}
+
+Data files for each of the language by age-group conditions are stored on KoBoToolbox (KBT).
+
+Store all of the data files on KBT in `kb_df`.
+
+```
+tar_target(kb_df, list_kobo_data()),
+```
+
+```{r home-visit-list-forms, eval=FALSE}
+library(targets)
+targets::tar_load(kb_df, store="../_targets")
+kb_df
+```
+
+List data forms specific to the home visit by filtering the files with names that contain "Home".
+
+```
+tar_target(kb_home, dplyr::filter(kb_df, stringr::str_detect(title, "Home")))
+```
+
+```{r home-visit}
+targets::tar_load(kb_home, store="../_targets")
+kb_home
+```
+
+### Save selected raw files to local directory {-}
+
+Prepare to retrieve all home visit files.
+
+```{r}
+n_files <- dim(kb_home)[1]
+```
+
+There are $n=$ `r dim(kb_home)[1]` home visit data files.
+
+```
+tar_target(
+  home_visit_downloads,
+  retrieve_kobo_xlsx(kb_home, 
+    "data/xlsx/home_visit/raw"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_downloads,
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
+  )
+)
+```
+
+### Normalize file names {-}
+
+Some of the form names are inconsistent, so we normalize them to fit the following pattern:
+
+`<form_id>_PLAY_HomeQuestionnaires_<age_group>_<lang_group>.xlsx`
+
+```
+tar_target(
+  home_visit_renamed,
+  rename_home_xlsx(home_visit_downloads,
+                     "data/xlsx/home_visit/std_name"),
+  cue = tarchetypes::tar_cue_age(
+    name = home_visit_renamed,
+    age = as.difftime(update_interval, 
+      units = update_interval_units)
+  )
+)
+```
+
+### Save xlsx as csv {-}
+
+```
+tar_target(
+  home_visit_xlsx_to_csv,
+  load_xlsx_save_many_csvs_2(home_visit_renamed, 
+    "data/csv/home_visit/raw")
+)
+```
+
+### Split MB-CDI from other questions {-}
+
+Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.
+
+By default, the document presumes that we want to convert **all** of the CSV files
+
+Extract the 'non-mbcdi' questions first and add 'non_mbcdi' to the filename.
+
+```
+tar_target(
+  home_visit_non_mbcdi,
+  split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
+                        "data/csv/home_visit/non_mbcdi")
+)
+```
+
+Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
+
+```
+tar_target(
+  home_visit_mbcdi,
+  split_mbcdi_csvs(home_visit_xlsx_to_csv,
+                    "data/csv/home_visit/mbcdi")
+)
+```

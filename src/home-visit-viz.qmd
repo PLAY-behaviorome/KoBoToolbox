@@ -1,1 +1,342 @@
 # Home visit: Visualizations
+
+## Demographics {-}
+
+```{r}
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store="../_targets")
+}
+```
+
+### Child age {-}
+
+Child age in months (`age_group`) by `child_sex`.
+
+Note: The child's exact age in months is part of the Databrary-related data. 
+That is on the work plan.
+
+```{r filter-home-visit}
+home_visit_filtered <- home_visit_df |>
+  dplyr::filter(!is.na(age_group),
+                !is.na(child_sex))
+```
+
+```{r}
+xtabs(formula = ~ age_group + child_sex, 
+      data = home_visit_filtered)
+```
+
+A total of $n=$ `r dim(home_visit_filtered)[1]` mother-infant dyads have been tested.
+This includes training and pilot visits.
+
+```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
+home_visit_filtered |>
+  ggplot() +
+  aes(age_group, fill = child_sex) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+### Time series {-}
+
+To calculate cumulative visits, we have to add an index variable
+
+```{r}
+df <- home_visit_filtered |>
+  dplyr::select(test_date, site_id) |>
+  dplyr::mutate(test_date = as.Date(test_date)) |>
+  dplyr::arrange(test_date) |>
+  dplyr::mutate(n_visits = seq_along(test_date))
+```
+
+```{r fig-home-visit-time-series, fig.cap="Cumulative home visits by year"}
+df |>
+  dplyr::filter(!is.na(test_date),
+                !is.na(n_visits),
+                !is.na(site_id)) |>
+  ggplot() +
+  aes(test_date, n_visits) +
+  geom_point()
+```
+
+```{r}
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store="../_targets")
+}
+
+library(wordcloud)
+library(RColorBrewer)
+```
+
+## Language exposure {-}
+
+```{r clean-lang-df}
+df <- home_visit_df |>
+  dplyr::mutate(language_child = stringr::str_replace_all(language_child, " ", "_"))
+xtabs(formula = ~ child_sex + language_child, data = df)
+```
+
+## MB-CDI {-}
+
+### 12-mo-old English speakers {-}
+
+```{r}
+eng_12 <-
+  readr::read_csv(
+    "../data/csv/home_visit/agg/mcdi_english_12_combined.csv",
+    col_types = readr::cols(.default = 'c'),
+    show_col_types = FALSE
+  )
+```
+
+There are $n=$ `r (n_12_eng <- dim(eng_12)[1])` participant records.
+
+```{r mcdi-12-english}
+eng_12_long <- eng_12 |>
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+                        names_to = "word",
+                        values_to = "understands_or_says")
+
+#xtabs(~ word + understands_or_says, eng_12_long)
+```
+
+```{r}
+word_ct <- eng_12_long |>
+  dplyr::filter(!is.na(understands_or_says)) |>
+  dplyr::filter(understands_or_says == "understands") |>
+  dplyr::count(word, sort = TRUE)
+
+quant_25 <- round(n_12_eng*.25, 0)
+```
+
+```{r 12-eng-wordcloud}
+# rcb_color_paired <- RColorBrewer::brewer.pal(12, 'Paired')
+# wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
+
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_12)[1], quantile = .40)
+```
+
+### 18-mo-old English speakers {-}
+
+```{r}
+eng_18 <-
+  readr::read_csv(
+    "../data/csv/home_visit/agg/mcdi_english_18_combined.csv",
+    col_types = readr::cols(.default = 'c'),
+    show_col_types = FALSE
+  )
+
+```
+
+There are $n=$ `r (n_18_eng <- dim(eng_18)[1])` participant records.
+
+```{r}
+word_ct <- eng_18 |>
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+                        names_to = "word",
+                        values_to = "says") |>
+  dplyr::filter(!is.na(says)) |>
+  dplyr::filter(says == TRUE) |>
+  dplyr::count(word, sort = TRUE)
+
+quant_25 <- round(n_18_eng*.25, 0)
+```
+
+```{r 18-eng-wordcloud}
+#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_18)[1], quantile = .50)
+```
+
+### 24-mo-old English speakers {-}
+
+```{r}
+eng_24 <-
+  readr::read_csv(
+    "../data/csv/home_visit/agg/mcdi_english_24_combined.csv",
+    col_types = readr::cols(.default = 'c'),
+    show_col_types = FALSE
+  )
+```
+
+There are $n=$ `r dim(eng_24)[1]` participant records.
+
+```{r mcdi-24-english}
+word_ct <- eng_24 |>
+  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+                        names_to = "word",
+                        values_to = "says") |>
+  dplyr::filter(!is.na(says)) |>
+  dplyr::filter(says == TRUE) |>
+  dplyr::count(word, sort = TRUE)
+```
+
+```{r mcdi-24-eng-word-cloud}
+mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_24)[1], quantile = .60)
+```
+
+```{r mcdi-24-eng-rare-words-cloud}
+rare_word_ct <- word_ct |>
+  dplyr::filter(n < dim(eng_24)[1]*.25)
+# 
+# wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
+mcdi_viz_wordcloud(rare_word_ct, n_participants = dim(eng_24)[1], quantile = .25)
+```
+
+```{r}
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store="../_targets")
+}
+```
+
+## Locomotion
+
+### Select & Summarize {-}
+
+```{r make-loco-df}
+play_loco <- home_visit_df %>%
+  dplyr::select(
+    .,
+    age_group,
+    child_sex,
+    language_child,
+    site_id,
+    subject_number,
+    locomotor_milestones.who_walk.who_walk_onset_mo,
+    locomotor_milestones.k_walk.k_walk_onset_mo,
+    locomotor_milestones.crawl_onset.crawl_onset_mo
+  ) %>%
+  dplyr::rename(
+    .,
+    walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+    walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+    crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo
+  ) %>%
+  dplyr::mutate(
+    .,
+    walk_mos_who = as.numeric(walk_mos_who),
+    walk_mos_kea = as.numeric(walk_mos_kea),
+    crawl_mos = as.numeric(crawl_mos)
+  )
+```
+
+```{r}
+xtabs(formula = ~ child_sex + age_group, data = play_loco)
+```
+
+### Check for anomalous values {-}
+
+```{r}
+crawl_mos_min <- 4
+walk_mos_min <- 6
+```
+
+#### Anomalous crawling onset {-}
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, crawl_mos) %>%
+  dplyr::filter(., crawl_mos < crawl_mos_min) %>%
+  knitr::kable(format = 'html') 
+```
+
+#### Anomalous walking onset (KEA criteria) {-}
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, walk_mos_kea) %>%
+  dplyr::filter(., walk_mos_kea < walk_mos_min) %>%
+  knitr::kable(format = 'html') 
+```
+
+#### Anomalous walking onset (WHO criteria) {-}
+
+```{r}
+play_loco %>%
+  dplyr::select(., site_id, subject_number, walk_mos_who) %>%
+  dplyr::filter(., walk_mos_who < walk_mos_min) %>%
+  knitr::kable(format = 'html') 
+```
+
+### Crawl onset {-}
+
+```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
+play_loco %>%
+  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos)) %>%
+  ggplot(.) +
+  aes(crawl_mos, fill = child_sex) +
+  geom_histogram(bins = 12) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+### Walk onset {-}
+
+```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
+play_loco %>%
+  dplyr::filter(., walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
+  ggplot(.) +
+  aes(walk_mos_kea, fill = child_sex) +
+  theme(legend.position="bottom") +
+  geom_histogram(bins = 10)
+```
+
+```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"}
+play_loco %>%
+  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who)) %>%
+  ggplot(.) +
+  aes(walk_mos_who, fill = child_sex) +
+  geom_histogram(bins=12) +
+  theme(legend.position="bottom") +
+  theme(legend.title = element_blank())
+```
+
+```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
+play_loco %>%
+  dplyr::filter(., walk_mos_who > walk_mos_min, !is.na(walk_mos_who), 
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
+  ggplot(.) +
+  aes(walk_mos_who, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  xlim(8, 18) +
+  ylim(8, 18) +
+  theme(legend.position = "bottom") +
+  theme(aspect.ratio = 1) +
+  theme(legend.title = element_blank()) -> walk_p
+
+ggExtra::ggMarginal(
+  walk_p,
+  play_loco,
+  walk_mos_who,
+  walk_mos_kea,
+  type = "density",
+  margins = "both",
+  groupColour = TRUE,
+  groupFill = TRUE
+)
+```
+
+```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"}
+play_loco %>%
+  dplyr::filter(., crawl_mos > crawl_mos_min, !is.na(crawl_mos), 
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) %>%
+  ggplot(.) +
+  aes(crawl_mos, walk_mos_kea, color = child_sex) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme(legend.position = "bottom") +
+  theme(aspect.ratio = 1) +
+  theme(legend.title = element_blank()) -> walk_p
+
+ggExtra::ggMarginal(
+  walk_p,
+  play_loco,
+  walk_mos_who,
+  walk_mos_kea,
+  type = "density",
+  margins = "both",
+  groupColour = TRUE,
+  groupFill = TRUE
+)
+```
