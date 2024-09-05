@@ -85,9 +85,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">age_group</span> <span class="op">+</span> <span class="va">feeding_breastfeed</span>, data <span class="op">=</span> <span class="va">health_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          feeding_breastfeed
 ## age_group donotknow  no refused yes
-##      12mo         0  12       0 253
-##      18mo         1  13       0 258
-##      24mo         0  10       1 207</code></pre>
+##      12mo         0  13       0 260
+##      18mo         1  13       0 268
+##      24mo         0  10       1 212</code></pre>
 <div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">health_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">child_sex</span>, <span class="va">feeding_solidfood_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -129,6 +129,14 @@ a4T7C3F1A
 </tr>
 <tr>
 <td style="text-align:left;">
+i9P3B3K2A
+</td>
+<td style="text-align:right;">
+995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 e5M1S1R3A
 </td>
 <td style="text-align:right;">
@@ -164,15 +172,15 @@ Other sleeping data are in the screening questionnaire.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">child_sleeping_position</span> <span class="op">+</span> <span class="va">age_group</span>, data <span class="op">=</span> <span class="va">sleeping_pos</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                        age_group
 ## child_sleeping_position 12mo 18mo 24mo
-##            back          244  260  205
+##            back          252  269  209
 ##            changed         4    3    2
 ##            donotknow       0    1    0
-##            other           4    1    0
+##            other           4    1    1
 ##            refused         0    0    1
 ##            side            3    2    5
 ##            sitting         1    0    1
 ##            stomach_down    1    1    1
-##            stomach_side    8    4    3</code></pre>
+##            stomach_side    8    5    3</code></pre>
 </div>
 <div id="smokingdrinking" class="section level2 unnumbered">
 <h2>Smoking/drinking<a class="anchor" aria-label="anchor" href="#smokingdrinking"><i class="fas fa-link"></i></a>
@@ -189,7 +197,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##                 pregnant_drinking
 ## pregnant_smoking donotknow  no refused yes
 ##        donotknow         2   1       0   0
-##        no                0 611       1 133
+##        no                0 631       1 136
 ##        refused           0   0       1   0
 ##        yes               0   1       0   2</code></pre>
 <div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
@@ -197,7 +205,7 @@ Other sleeping data are in the screening questionnaire.</p>
 <pre><code>##              smoking_car
 ## smoking_house donotknow  no refused yes
 ##     donotknow         1   1       0   0
-##     no                3 730       0   3
+##     no                3 753       0   3
 ##     refused           0   3       1   0
 ##     yes               0  10       0   3</code></pre>
 <div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
@@ -503,6 +511,11 @@ Couple sips of drink
 </tr>
 <tr>
 <td style="text-align:left;">
+Christmas and new years - had a drink if that
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Drank alocoholic beverages prior to knowing she was pregnant.
 </td>
 </tr>
@@ -784,10 +797,10 @@ Figure 12: PHQ4 responses by age group and child sex
 <pre><code>##             age_group
 ## child_health 12mo 18mo 24mo
 ##    poor         0    0    0
-##    fair         1    1    1
+##    fair         2    1    1
 ##    good        12   16   14
-##    verygood    68   63   56
-##    excellent  184  191  146
+##    verygood    69   65   57
+##    excellent  190  199  150
 ##    donotknow    0    1    0
 ##    refused      0    0    1</code></pre>
 </div>
@@ -803,8 +816,8 @@ Figure 12: PHQ4 responses by age group and child sex
 <pre><code>##                  age_group
 ## child_vaccination 12mo 18mo 24mo
 ##         donotknow    0    2    4
-##         no         147  187  168
-##         yes        118   83   46</code></pre>
+##         no         154  197  173
+##         yes        119   83   46</code></pre>
 </div>
 <div id="seen-medical-specialist" class="section level3 unnumbered">
 <h3>Seen medical specialist<a class="anchor" aria-label="anchor" href="#seen-medical-specialist"><i class="fas fa-link"></i></a>
@@ -818,9 +831,9 @@ Figure 12: PHQ4 responses by age group and child sex
 <pre><code>##                         age_group
 ## child_medical_specialist 12mo 18mo 24mo
 ##                donotknow    0    1    2
-##                no         134  122  100
+##                no         138  125  100
 ##                refused      0    0    1
-##                yes        131  149  115</code></pre>
+##                yes        135  156  120</code></pre>
 <div class="rmdnote">
 <p>Manual inspection shows some possible identifying information (names) in the comments.</p>
 </div>
@@ -892,7 +905,7 @@ Figure 12: PHQ4 responses by age group and child sex
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-08-27.</p>
+    <p>"<strong>PLAY Project: Surveys</strong>" was written by Rick Gilmore. It was last built on 2024-09-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
