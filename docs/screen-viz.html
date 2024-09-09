@@ -363,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 816 Columns: 68
+<pre><code>Rows: 822 Columns: 68
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (55): session_name, session_release, participant_ID, participant_gender...
@@ -384,12 +384,12 @@ date  (2): session_date, participant_birthdate
 <div class="cell-output cell-output-stdout">
 <pre><code>               group_name
 session_release PLAY_Gold PLAY_Silver
-       EXCERPTS       542          86
+       EXCERPTS       546          87
        PRIVATE          0           4
-       SHARED         154          30</code></pre>
+       SHARED         155          30</code></pre>
 </div>
 </div>
-<p>Of the <em>n</em>=816 sessions so far, 77% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
+<p>Of the <em>n</em>=822 sessions so far, 77% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
 </section>
 <section id="dates-times" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dates-times">Dates &amp; times</h2>
@@ -479,8 +479,18 @@ Figure&nbsp;5.3: Histogram of child age at time of recruiting call.
 </div>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Some of the code to clean the <code>screen_df</code> variables could be incorporated into an earlier stage of the workflow.</p>
+</div>
 </div>
 </section>
 </section>
@@ -501,8 +511,8 @@ Figure&nbsp;5.3: Histogram of child age at time of recruiting call.
 <div class="cell-output cell-output-stdout">
 <pre><code>         language_spoken_child
 child_sex english english_other english_spanish english_spanish_other spanish
-   female     325             3              58                     3      18
-   male       316             5              64                     1      15</code></pre>
+   female     326             3              59                     3      19
+   male       317             6              65                     1      15</code></pre>
 </div>
 </div>
 </section>
@@ -513,9 +523,9 @@ child_sex english english_other english_spanish english_spanish_other spanish
 <div class="cell-output cell-output-stdout">
 <pre><code>                       child_sex
 language_spoken_home    female male
-  english                  331  299
+  english                  332  300
   english_other              5    4
-  english_spanish           47   78
+  english_spanish           49   80
   english_spanish_other      1    2
   other                      1    3
   spanish                   18   14</code></pre>
@@ -529,11 +539,11 @@ language_spoken_home    female male
 <div class="cell-output cell-output-stdout">
 <pre><code>                       language_spoken_home
 language_spoken_child   english english_other english_spanish
-  english                   605             3              24
-  english_other               2             6               0
-  english_spanish            18             0              91
+  english                   606             3              25
+  english_other               3             6               0
+  english_spanish            18             0              93
   english_spanish_other       3             0               1
-  spanish                     2             0               9
+  spanish                     2             0              10
                        language_spoken_home
 language_spoken_child   english_spanish_other other spanish
   english                                   2     2       4
@@ -555,12 +565,22 @@ language_spoken_child   english_spanish_other other spanish
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_bornonduedate
 child_sex  no yes
-   female   8 394
-   male     9 391</code></pre>
+   female   8 397
+   male     9 394</code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>There are <em>n</em>=14 NAs.</p>
+</div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
@@ -653,7 +673,7 @@ Table&nbsp;5.1
 <pre><code>                   child_onterm
 child_bornonduedate  no yes
                 no    1  16
-                yes   1 670</code></pre>
+                yes   1 676</code></pre>
 </div>
 </div>
 </figure>
@@ -697,12 +717,22 @@ Figure&nbsp;5.4: Histogram of reported child birthweights in pounds.
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_birth_complications
 child_sex  no yes
-   female 363  39
-   male   368  28</code></pre>
+   female 366  39
+   male   371  28</code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>There are some first names in the <code>child_birth_complications_specify</code> field, so it is not shown here.</p>
+</div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
@@ -720,8 +750,8 @@ child_sex  no yes
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_major_illnesses_injuries
 child_sex  no yes
-   female 389  13
-   male   382  14</code></pre>
+   female 392  13
+   male   385  14</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -886,8 +916,8 @@ child_sex  no yes
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_vision_disabilities
 child_sex  no yes
-   female 399   3
-   male   394   2</code></pre>
+   female 402   3
+   male   397   2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -946,8 +976,8 @@ child_sex  no yes
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_hearing_disabilities
 child_sex  no yes
-   female 402   0
-   male   395   1</code></pre>
+   female 405   0
+   male   398   1</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -986,12 +1016,22 @@ child_sex  no yes
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_developmentaldelays
 child_sex  no yes
-   female 336   3
-   male   336   5</code></pre>
+   female 339   3
+   male   339   5</code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>There may be first names in the <code>child_developmentaldelays_specify</code> field, so it is not shown here.</p>
+</div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
@@ -1028,13 +1068,13 @@ child_sex  no yes
 <span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
 <span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-bed-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<div id="fig-bed-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bed-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="screen-viz_files/figure-html/fig-bed-time-hist-1.png" id="fig-bed-time-hist" class="img-fluid figure-img" width="672">
+<img src="screen-viz_files/figure-html/fig-bed-time-hist-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bed-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.5
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bed-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 </figcaption>
 </figure>
 </div>
@@ -1170,13 +1210,13 @@ Figure&nbsp;5.5
 <span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-wake-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<div id="fig-wake-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wake-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="screen-viz_files/figure-html/fig-wake-time-hist-1.png" id="fig-wake-time-hist" class="img-fluid figure-img" width="672">
+<img src="screen-viz_files/figure-html/fig-wake-time-hist-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-wake-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.6
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wake-time-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Histogram of parent-reported child wake times (24 hr scale).
 </figcaption>
 </figure>
 </div>
@@ -1849,8 +1889,8 @@ Figure&nbsp;5.8
 <div class="cell-output cell-output-stdout">
 <pre><code>         mom_bio
 child_sex no_adoptive no_partnerchild yes
-   female           2               1 385
-   male             0               0 391</code></pre>
+   female           2               1 387
+   male             0               0 394</code></pre>
 </div>
 </div>
 </section>
@@ -1923,9 +1963,9 @@ Figure&nbsp;5.9
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_race
 american_indian           asian           black   more_than_one  nativehawaiian 
-              3              25              36              43               1 
+              3              26              36              43               1 
           other         refused           white 
-             48               2             634 </code></pre>
+             48               2             638 </code></pre>
 </div>
 </div>
 </section>
@@ -1946,7 +1986,7 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_birth_country
      Other puertorico         US 
-        87          3        702 </code></pre>
+        89          3        705 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1965,10 +2005,11 @@ american_indian           asian           black   more_than_one  nativehawaiian
 [16] "Kenya"              "England"            "China"             
 [19] "Ireland"            "El Salvador"        "Colombia"          
 [22] "Chile"              "Haiti"              "Guatemala"         
-[25] "Ecuador"            "Costa Rica"         "Italy"             
-[28] "Malaysia"           "Phillipines"        "Dominican Republic"
-[31] "Nigeria"            "Honduras"           "Colomobia"         
-[34] "Columbia"           "Peru"               "Panama"            </code></pre>
+[25] "Ecuador"            "Guadalajara Mexico" "Costa Rica"        
+[28] "Italy"              "Malaysia"           "Phillipines"       
+[31] "Dominican Republic" "Nigeria"            "Honduras"          
+[34] "Colomobia"          "Columbia"           "Peru"              
+[37] "Panama"            </code></pre>
 </div>
 </div>
 </section>
@@ -1983,17 +2024,27 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_education
        associates    bachelor_s_deg         bachelors           diploma 
-               27                 3               254                27 
+               27                 3               255                28 
         doctorate          eleventh               ged graduate_nodegree 
-               98                 1                 3                24 
+               98                 1                 3                25 
    master_s_degre           masters             ninth      professional 
-                2               268                 1                35 
+                2               270                 1                35 
    professional_d       somecollege       voc_diplima     voc_nodiplima 
                 2                42                 3                 1 </code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>This requires some recoding work.</p>
+</div>
 </div>
 </section>
 <section id="employment" class="level3 unnumbered">
@@ -2006,7 +2057,7 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_employment
 full_time        no part_time 
-      451       183       157 </code></pre>
+      454       185       157 </code></pre>
 </div>
 </div>
 </section>
@@ -2024,7 +2075,7 @@ full_time        no part_time
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_jobs_number
     0     1     2     3     4 5more 
-    1   543    60     1     1     1 </code></pre>
+    1   546    60     1     1     1 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2037,7 +2088,7 @@ full_time        no part_time
 <pre><code>               mom_employment
 mom_jobs_number full_time part_time
           0             0         1
-          1           413       130
+          1           416       130
           2            35        25
           3             1         0
           4             1         0
@@ -2055,7 +2106,7 @@ mom_jobs_number full_time part_time
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_training
  no yes 
-769  20 </code></pre>
+774  20 </code></pre>
 </div>
 </div>
 </section>
@@ -2099,9 +2150,9 @@ Caused by warning:
   american_indian             asian             black       do_not_know 
                 4                28                43                 5 
     more_than_one                NA nativehawaiian_NA             other 
-               35                31                 2                65 
+               35                32                 2                65 
           refused             white 
-                3               594 </code></pre>
+                3               599 </code></pre>
 </div>
 </div>
 </section>
@@ -2146,7 +2197,7 @@ Figure&nbsp;5.10
                             nanny                    nanny_babysitt 
                                 4                                 1 
                        nanny_home              nanny_home childcare 
-                               39                                13 
+                               41                                13 
          nanny_home nanny_nothome nanny_home nanny_nothome relative 
                                 2                                 1 
               nanny_home relative                     nanny_nothome 
@@ -2154,13 +2205,23 @@ Figure&nbsp;5.10
           nanny_nothome childcare            nanny_nothome relative 
                                 3                                 3 
                              none                          relative 
-                              178                                94 
+                              181                                94 
                relative childcare 
                                19 </code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>This requires some cleaning.</p>
+</div>
 </div>
 </section>
 <section id="hours" class="level3 unnumbered">
@@ -2243,8 +2304,18 @@ Figure&nbsp;5.10
 [69] "9"                                           </code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>This requires some cleaning.</p>
+</div>
 </div>
 </section>
 <section id="language-1" class="level3 unnumbered">
@@ -2292,8 +2363,18 @@ Figure&nbsp;5.10
 [35] "English and Portuguese"                                                    </code></pre>
 </div>
 </div>
-<div class="rmdnote">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>This requires some cleaning.</p>
+</div>
 </div>
 
 

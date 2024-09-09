@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Post-visit: Visualization – Play Survey Data</title>
+<title>Screening: Gathering – Play Survey Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./post-visit-data-dictionary.html" rel="next">
-<link href="./post-visit-clean.html" rel="prev">
+<link href="./screen-clean.html" rel="next">
+<link href="./setup.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./post-visit-gather.html">Post visit</a></li><li class="breadcrumb-item"><a href="./post-visit-viz.html"><span class="chapter-title">Post-visit: Visualization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./screen-gather.html">Screening</a></li><li class="breadcrumb-item"><a href="./screen-gather.html"><span class="chapter-title">Screening: Gathering</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./screen-gather.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Screening: Gathering</span></a>
+  <a href="./screen-gather.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Screening: Gathering</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -203,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./post-visit-viz.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Post-visit: Visualization</span></a>
+  <a href="./post-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Post-visit: Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -218,15 +252,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#collection-protocol" id="toc-collection-protocol" class="nav-link active" data-scroll-target="#collection-protocol">Collection protocol</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  </ul></li>
+  <li><a href="#retrieve-from-kobotoolbox-kbt" id="toc-retrieve-from-kobotoolbox-kbt" class="nav-link" data-scroll-target="#retrieve-from-kobotoolbox-kbt">Retrieve from KoBoToolbox (KBT)</a>
+  <ul class="collapse">
+  <li><a href="#download" id="toc-download" class="nav-link" data-scroll-target="#download">Download</a></li>
+  <li><a href="#survey-questions" id="toc-survey-questions" class="nav-link" data-scroll-target="#survey-questions">Survey questions</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./post-visit-gather.html">Post visit</a></li><li class="breadcrumb-item"><a href="./post-visit-viz.html"><span class="chapter-title">Post-visit: Visualization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./screen-gather.html">Screening</a></li><li class="breadcrumb-item"><a href="./screen-gather.html"><span class="chapter-title">Screening: Gathering</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Post-visit: Visualization</span></h1>
+<h1 class="title"><span class="chapter-title">Screening: Gathering</span></h1>
 </div>
 
 
@@ -249,21 +297,130 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="collection-protocol" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="collection-protocol">Collection protocol</h2>
+<p>Details about the data collection <a href="https://www.play-project.org/collection.html#Participant_Recruitment">protocol for participant screening and recruiting</a> can be found on the <a href="https://play-project.org">PLAY Project website</a>.</p>
+<section id="setup" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="setup">Setup</h3>
+<p>We load functions needed to download KBT screening/demographic questionnaire files.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"R"</span>), <span class="st">"^kobo_|^file_|^screen_|CONSTANTS"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">walk</span>(fl, source)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for the `magrittr` pipe `%&gt;%`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="callout-title-container flex-fill">
-Warning
+</div>
+</section>
+</section>
+<section id="retrieve-from-kobotoolbox-kbt" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="retrieve-from-kobotoolbox-kbt">Retrieve from KoBoToolbox (KBT)</h2>
+<p>We make use of the <code>targets</code> package for downloading data files from KoBoToolbox and for saving local XLSX and CSV copies. This allows us to download and process those files on a regular basis.</p>
+<p>This excerpt from <code>_targets.R</code> shows two of these ‘targets’:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Download screening/demographic survey</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    kb_screen_df,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kobo_list_data_filtered</span>(kb_df, <span class="st">"[Dd]emographic"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cue =</span> tarchetypes<span class="sc">::</span><span class="fu">tar_cue_age</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> kb_screen,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="fu">as.difftime</span>(update_interval, <span class="at">units =</span> update_interval_units)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    screen_download,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">screen_download_convert</span>(kb_screen_df, <span class="st">"data/xlsx/screening"</span>, <span class="st">"data/csv/screening"</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">cue =</span> tarchetypes<span class="sc">::</span><span class="fu">tar_cue_age</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> screen_df,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="fu">as.difftime</span>(update_interval, <span class="at">units =</span> update_interval_units)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  ),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>kb_df</code> data frame is input to the first target <code>kb_screen_df</code>. <code>kb_df</code> is generated when the following target is generated (by <code>kobo_list_data()</code>).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    kb_df,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kobo_list_data</span>(),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cue =</span> tarchetypes<span class="sc">::</span><span class="fu">tar_cue_age</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> kb_df,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="fu">as.difftime</span>(update_interval, <span class="at">units =</span> update_interval_units)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="download" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="download">Download</h3>
+<p>We have two targets specified in <code>_targets.R</code> that handle the regular downloading of screening data files.</p>
+<p>First, we generate a data frame of KoBoToolbox forms that contain the screening (“Demographic”) data. Here is the target for that process:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Not evaluated</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    kb_screen_df,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kobo_list_data_filtered</span>(<span class="st">"[Dd]emographic"</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cue =</span> tarchetypes<span class="sc">::</span><span class="fu">tar_cue_age</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> kb_screen,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="fu">as.difftime</span>(update_interval, <span class="at">units =</span> update_interval_units)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  ),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we download and save the raw XLSX files to <code>../data/xlsx/screening</code> using <code>kobo_retrieve_save_many_xlsx(kb_screen_df, save_dir = "../data/xlsx/screening")</code>. Finally, we convert the XLSX files to CSVs via <code>file_load_xlsx_save_many_csv("../data/xlsx/screening", "../data/csv/screening", "Demographic")</code>. The latter two steps are handled by the wrapper function <code>screen_download_convert(kb_screen_df, "data/xlsx/screening", "data/csv/screening")</code>. Here is the accompanying target:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download screening/demographic survey</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    screen_download,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">screen_download_convert</span>(kb_screen_df, <span class="st">"data/xlsx/screening"</span>, <span class="st">"data/csv/screening"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cue =</span> tarchetypes<span class="sc">::</span><span class="fu">tar_cue_age</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> screen_df,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> <span class="fu">as.difftime</span>(update_interval, <span class="at">units =</span> update_interval_units)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can confirm that these functions have run properly, as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>screening_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"../data/csv/screening/"</span>, <span class="at">pattern =</span> <span class="st">"*.csv$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="survey-questions" class="level3">
+<h3 class="anchored" data-anchor-id="survey-questions">Survey questions</h3>
+<p>There are <em>n</em>=3 screening/demographic data files.</p>
+<p>The KoBoToolbox API enables us to download a table with the questions, as follows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>targets<span class="sc">::</span><span class="fu">tar_load</span>(kb_screen_df, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>kb_screen_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id              id_string                                    title
+1 334134 agChfbnGHc6fiUdfYUaZ2z PLAY Demographic Questionnaire (Spanish)
+2 359546 aGLEqT7eRBhuPgizCQBeqA           PLAY Demographic Questionnaire
+3 275882 anqhvxKtQieo7gc9uPqJ3y           PLAY Demographic Questionnaire
+                               description
+1 PLAY Demographic Questionnaire (Spanish)
+2            New Demographic Questionnaire
+3                 PLAY Phone Questionnaire
+                                            url
+1 https://kc.kobotoolbox.org/api/v1/data/334134
+2 https://kc.kobotoolbox.org/api/v1/data/359546
+3 https://kc.kobotoolbox.org/api/v1/data/275882
+                                                             form_url
+1 https://kf.kobotoolbox.org/api/v2/assets/agChfbnGHc6fiUdfYUaZ2z.xls
+2 https://kf.kobotoolbox.org/api/v2/assets/aGLEqT7eRBhuPgizCQBeqA.xls
+3 https://kf.kobotoolbox.org/api/v2/assets/anqhvxKtQieo7gc9uPqJ3y.xls</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>This page is under construction.</p>
+<p>Based on this information, we know that the questionnaires may be downloaded from the following URLs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"https://kf.kobotoolbox.org/api/v2/assets/"</span>, kb_screen_df<span class="sc">$</span>id_string, <span class="st">".xls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "https://kf.kobotoolbox.org/api/v2/assets/agChfbnGHc6fiUdfYUaZ2z.xls"
+[2] "https://kf.kobotoolbox.org/api/v2/assets/aGLEqT7eRBhuPgizCQBeqA.xls"
+[3] "https://kf.kobotoolbox.org/api/v2/assets/anqhvxKtQieo7gc9uPqJ3y.xls"</code></pre>
 </div>
 </div>
+<p>We import and clean the screening/demographic data in the next section.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -688,13 +845,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./post-visit-clean.html" class="pagination-link" aria-label="Post-visit: Cleaning">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Post-visit: Cleaning</span></span>
+      <a href="./setup.html" class="pagination-link" aria-label="Setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Setup</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./post-visit-data-dictionary.html" class="pagination-link" aria-label="Post-visit: Data dictionary">
-        <span class="nav-page-text"><span class="chapter-title">Post-visit: Data dictionary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./screen-clean.html" class="pagination-link" aria-label="Screening: Cleaning">
+        <span class="nav-page-text"><span class="chapter-title">Screening: Cleaning</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -703,4 +860,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
