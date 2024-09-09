@@ -434,19 +434,31 @@ df <- screen_df |>
     united_states = "US",
     othercountry = "Other",
     other_country = "Other",
+    puertorico = "Puerto Rico",
     refused = "Refused"
   ))
 
-xtabs(~ mom_birth_country, data = df)
+xtabs(~ mom_birth_country + child_sex, data = df)
 ```
 
 ```{r table-mom-birth-country-non-us}
 df <- screen_df |>
-  dplyr::mutate(mom_birth_country_specify = stringr::str_to_title(mom_birth_country_specify)) |>
+  dplyr::mutate(mom_birth_country_specify = 
+                  stringr::str_to_title(mom_birth_country_specify)) |>
   dplyr::filter(!is.na(mom_birth_country_specify)) |>
+  dplyr::mutate(mom_birth_country_specify = dplyr::recode(
+    mom_birth_country_specify,
+    Uk = "United Kingdom",
+    Colomobia = "Colombia",
+    Columbia = "Colombia"
+  )) |>
+  dplyr::arrange(mom_birth_country_specify) |>
   dplyr::select(child_sex, mom_birth_country_specify)
 
 unique(df$mom_birth_country_specify)
+```
+```{r}
+xtabs(~ mom_birth_country_specify + child_sex , data = df)
 ```
 
 ### Education {-}
