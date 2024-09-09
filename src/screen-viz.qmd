@@ -1,0 +1,604 @@
+# Screening: Visualizations
+
+These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow.
+
+## Setup {-}
+
+```{r load-viz-pkgs}
+library(targets)
+library(tidyverse)
+library(forcats)
+```
+
+```{r}
+screen_df <- readr::read_csv(file.path(here::here(), "data/csv/screening/agg/PLAY-screening-datab-latest.csv"))
+```
+
+## Sharing permission {-}
+
+```{r}
+(s <- xtabs(~ session_release + group_name, screen_df))
+```
+
+Of the *n*=`{r} sum(s)` sessions so far, `{r} round(100*(s[1,1]+s[1,2])/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.
+Conversely, only *n*=`{r} s[2,1]+s[2,2]` or `{r} round(100*(s[2,1]+s[2,2])/sum(s), 1)`% have declined to share at all.
+
+## Dates & times {-}
+
+To calculate cumulative screening/recruiting calls by site, we have to add an index variable
+
+```{r}
+df <- screen_df |>
+  dplyr::arrange(submit_date) %>%
+  dplyr::mutate(n_calls = seq_along(submit_date))
+```
+
+### Calls across time {-}
+
+```{r fig-screening-calls-time-series, fig.cap="Cumulative screening calls by year and site"}
+df |>
+    dplyr::filter(!is.na(submit_date), !is.na(n_calls), !is.na(site_id)) %>%
+    ggplot() +
+    aes(submit_date, n_calls, color = site_id) +
+    geom_point()
+```
+
+### Calls by site {-}
+
+```{r fig-screening-calls-by-site, fig.cap="Cumulative screening calls by site"}
+calls_by_site_plot <- function(df) {
+  df |>
+    filter(!is.na(site_id)) %>%
+    ggplot() +
+    aes(fct_infreq(site_id), fill = site_id) +
+    geom_bar() +
+    theme(axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    )) + # Rotate text
+    labs(x = "site") +
+    theme(legend.position = "none")
+}
+
+calls_by_site_plot(df)
+```
+
+## Demographics {-}
+
+### Child age {-}
+
+Child age in months (`child_age_mos`) by `child_sex`.
+
+```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}
+screen_df |>
+  dplyr::filter(!is.na(child_age_mos), !is.na(child_sex)) |>
+  ggplot() +
+  aes(child_age_mos, fill = child_sex) +
+  geom_histogram(bins = 50)
+```
+
+::: {.callout-note}
+
+Some of the code to clean the `screen_df` variables could be incorporated into an earlier stage of the workflow.
+
+:::
+
+## Language {-}
+
+### To child {-}
+
+Language(s) spoken to child by `child_sex`.
+
+```{r xtabs-language-by-sex}
+df <- screen_df |>
+  dplyr::mutate(
+    language_spoken_child = stringr::str_replace_all(language_spoken_child, " ", "_"),
+    language_spoken_home = stringr::str_replace_all(language_spoken_home, " ", "_")
+  )
+
+xtabs(formula = ~ child_sex + language_spoken_child,
+      data = df)
+```
+
+### At home {-}
+
+```{r xtabs-language-at-home-by-sex}
+xtabs(formula = ~ language_spoken_home + child_sex, data = df)
+```
+
+### To child vs. at home {-}
+
+```{r xtabs-language-child-vs-home}
+xtabs(formula = ~ language_spoken_child + language_spoken_home, data = df)
+```
+
+## Child health {-}
+
+### Child born on due date {-}
+
+```{r xtabs-duedate-born-on}
+xtabs(formula = ~ child_sex + child_bornonduedate,
+      data = screen_df)
+```
+
+::: {.callout-note}
+
+There are *n*=`r sum(is.na(screen_df$child_bornonduedate))` NAs.
+
+:::
+
+```{r}
+screen_df |>
+  dplyr::filter(is.na(child_bornonduedate)) |>
+  dplyr::select(vol_id, participant_ID) |>
+  knitr::kable(format = 'html')
+```
+
+### Child term {-}
+
+```{r}
+#| label: tbl-xtabs-duedate
+xtabs(formula = ~ child_bornonduedate + child_onterm,
+      data = screen_df)
+```
+
+### Child weight {-}
+
+Must convert pounds and ounces to decimal pounds.
+
+```{r}
+#| label: fig-birthwt-hist
+#| fig-cap: "Histogram of reported child birthweights in pounds."
+df <- screen_df %>%
+  dplyr::mutate(.,
+                birth_weight_lbs = child_weight_pounds + child_weight_ounces/16)
+
+df |>
+  dplyr::filter(!is.na(birth_weight_lbs), !is.na(child_sex)) |>
+  dplyr::filter(birth_weight_lbs > 0) |>
+  ggplot() +
+  aes(x = birth_weight_lbs, fill = child_sex) +
+  geom_histogram(binwidth = 0.33) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+### Birth complications {-}
+
+```{r xtabs-birth-compl}
+xtabs(formula = ~ child_sex + child_birth_complications,
+      data = screen_df)
+```
+
+::: {.callout-note}
+
+There are some first names in the `child_birth_complications_specify` field, so it is not shown here.
+
+:::
+
+```{r table-birth-compl, eval=FALSE}
+screen_df |>
+  dplyr::filter(!is.na(child_birth_complications_specify)) |>
+  dplyr::select(child_age_mos, child_sex, child_birth_complications_specify) |>
+  dplyr::arrange(child_age_mos) |>
+  knitr::kable(format = 'html')
+```
+
+### Major illnesses or injuries {-}
+
+```{r xtabs-illness-injuries}
+xtabs(formula = ~ child_sex + child_major_illnesses_injuries,
+      data = screen_df)
+```
+
+```{r table-illness-injuries}
+screen_df |>
+  dplyr::filter(!is.na(child_illnesses_injuries_specify),
+                !stringr::str_detect(child_illnesses_injuries_specify, "OK")) |>
+  dplyr::select(child_age_mos, child_sex, child_illnesses_injuries_specify) |>
+  dplyr::arrange(child_age_mos) |>
+  knitr::kable(format = 'html')
+```
+
+### Child vision {-}
+
+```{r xtabs-vision}
+xtabs(formula = ~ child_sex + child_vision_disabilities,
+      data = screen_df)
+```
+
+```{r table-vision}
+screen_df |>
+  dplyr::filter(!is.na(child_vision_disabilities_specify)) |>
+  dplyr::select(child_age_mos, child_sex, child_vision_disabilities_specify) |>
+  dplyr::arrange(child_age_mos) |>
+  knitr::kable(format = 'html')
+```
+
+### Child hearing {-}
+
+```{r xtabs-hearing}
+xtabs(formula = ~ child_sex + child_hearing_disabilities,
+      data = screen_df)
+```
+
+```{r table-hearing}
+screen_df |>
+  dplyr::filter(!is.na(child_hearing_disabilities_specify)) |>
+  dplyr::select(child_age_mos, child_sex, child_hearing_disabilities_specify) |>
+  dplyr::arrange(child_age_mos) |>
+  knitr::kable(format = 'html')
+```
+
+### Child developmental delays {-}
+
+```{r xtabs-dev-delays}
+xtabs(formula = ~ child_sex + child_developmentaldelays,
+      data = screen_df)
+```
+
+::: {.callout-note}
+
+There may be first names in the `child_developmentaldelays_specify` field, so it is not shown here.
+
+:::
+
+```{r table-dev-delays, eval=FALSE}
+screen_df |>
+  dplyr::filter(!is.na(child_developmentaldelays_specify)) |>
+  dplyr::select(child_age_mos, child_sex, child_developmentaldelays_specify) |>
+  dplyr::arrange(child_age_mos) |>
+  knitr::kable(format = 'html')
+```
+
+### Child sleep {-}
+
+::: {.rmdimportant}
+
+This is work yet-to-be-done. The time stamps need to be reformatted prior to
+visualization.
+
+:::
+
+#### Bed time {-}
+
+```{r}
+#| label: fig-bed-time-hist
+#| fig-cap: "Histogram of parent-reported child bedtimes (24 hr scale)."
+extract_sleep_hr <- function(t) {
+  t |>
+    stringr::str_extract("^[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}") |>
+    hms::as_hms()
+}
+
+df <- screen_df |>
+  dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time)) |>
+  dplyr::filter(!is.na(child_sleep_time)) 
+
+df |>
+  dplyr::filter(!is.na(child_sleep_time),
+                !is.na(child_sex)) |>
+  ggplot() +
+  aes(child_sleep_time, fill = child_sex) +
+  geom_histogram(bins = 18) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+Some of the bed times are probably not in correct 24 hr time.
+
+```{r}
+df |>
+  dplyr::filter(child_sleep_time < hms::as_hms("16:00:00")) |>
+  dplyr::select(site_id, participant_ID, child_sleep_time) |>
+  dplyr::arrange(site_id, participant_ID) |>
+  knitr::kable('html')
+```
+
+#### Wake time {-}
+
+```{r}
+#| label: fig-wake-time-hist
+#| fig-cap: "Histogram of parent-reported child wake times (24 hr scale)."
+df <- screen_df |>
+  dplyr::mutate(child_wake_time = extract_sleep_hr(child_wake_time)) |>
+  dplyr::filter(!is.na(child_wake_time)) 
+
+df |>
+  dplyr::filter(!is.na(child_wake_time),
+                !is.na(child_sex)) |>
+  ggplot() +
+  aes(child_wake_time, fill = child_sex) +
+  geom_histogram(bins = 18) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+There are some unusual wake times, too.
+
+```{r table-wake-time}
+df |>
+  dplyr::filter(child_wake_time > hms::as_hms("16:00:00")) |>
+  dplyr::select(site_id, participant_ID, child_wake_time) |>
+  dplyr::arrange(site_id, participant_ID) |>
+  knitr::kable('html')
+```
+
+#### Sleep duration {-}
+
+```{r fig-sleep-dur-hist}
+df <- screen_df |>
+  dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time),
+                  child_wake_time = extract_sleep_hr(child_wake_time)) |>
+  dplyr::filter(!is.na(child_sleep_time),
+                !is.na(child_wake_time)) |>
+  dplyr::mutate(child_sleep_secs = (child_sleep_time - child_wake_time))
+
+df |>
+  dplyr::filter(!is.na(child_sleep_secs)) |>
+  ggplot() +
+  aes(child_sleep_secs, fill = child_sex) +
+  geom_histogram(bins = 18) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+Again, there are some unusual values.
+
+```{r table-sleep-dur}
+df |>
+  dplyr::filter(child_sleep_secs < 12000) |>
+  dplyr::select(site_id, participant_ID, child_sleep_time, child_wake_time, child_sleep_secs) |>
+  dplyr::arrange(site_id, participant_ID) |>
+  knitr::kable('html')
+```
+
+#### Nap hours {-}
+
+```{r fig-nap-hrs-hist}
+df <- screen_df |>
+  dplyr::mutate(child_nap_hours = as.numeric(child_nap_hours)) |>
+  dplyr::filter(!is.na(child_sleep_time)) 
+
+df |>
+  dplyr::filter(!is.na(child_nap_hours),
+                !is.na(child_sex)) |>
+  ggplot() +
+  aes(child_nap_hours, fill = child_sex) +
+  geom_histogram(bins = 18) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+And there are some very long nappers or null values we need to capture.
+
+```{r table-nap-hrs}
+df |>
+  dplyr::filter(child_nap_hours > 5) |>
+  dplyr::select(site_id, participant_ID, child_nap_hours) |>
+  dplyr::arrange(site_id, participant_ID) |>
+  knitr::kable('html')
+```
+
+#### Sleep location {-}
+
+```{r, eval=FALSE}
+xtabs(formula = ~ child_sex + child_sleep_location,
+      data = screen_df)
+```
+
+## Mother {-}
+
+### Biological or adoptive {-}
+
+```{r xtabs-mom-bio}
+xtabs(formula = ~ child_sex + mom_bio,
+      data = screen_df)
+```
+
+### Age at childbirth {-}
+
+```{r fig-mom-age-childbirth}
+screen_df |>
+  dplyr::filter(!is.na(mom_childbirth_age), !is.na(child_sex)) |>
+  ggplot() +
+  aes(x = mom_childbirth_age, fill = child_sex) +
+  geom_histogram(bins = 25) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+Clearly, there are some impossible (erroneous) maternal ages > 100. Here are details:
+
+```{r table-mom-childbirth}
+old_moms <- screen_df |>
+  dplyr::filter(mom_childbirth_age > 55)
+
+old_moms |>
+  dplyr::select(submit_date, vol_id, participant_ID, mom_childbirth_age) |>
+  knitr::kable(format = 'html')
+```
+
+### Race {-}
+
+```{r xtabs-mom-race, fig.cap="Histogram of child age at time of recruiting call."}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_race)) |>
+  dplyr::mutate(mom_race = dplyr::recode(
+    mom_race,
+    morethanone = "more_than_one",
+    americanindian = "american_indian"))
+
+xtabs(~mom_race, df)
+```
+
+### Birth country {-}
+
+```{r xtabs-mom-birth-country}
+df <- screen_df |>
+  dplyr::mutate(mom_birth_country = dplyr::recode(
+    mom_birth_country, 
+    unitedstates = "US",
+    united_states = "US",
+    othercountry = "Other",
+    other_country = "Other",
+    refused = "Refused"
+  ))
+
+xtabs(~ mom_birth_country, data = df)
+```
+
+```{r table-mom-birth-country-non-us}
+df <- screen_df |>
+  dplyr::mutate(mom_birth_country_specify = stringr::str_to_title(mom_birth_country_specify)) |>
+  dplyr::filter(!is.na(mom_birth_country_specify)) |>
+  dplyr::select(child_sex, mom_birth_country_specify)
+
+unique(df$mom_birth_country_specify)
+```
+
+### Education {-}
+
+```{r xtabs-mom-educ}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_education)) |>
+  dplyr::select(child_sex, mom_education)
+
+xtabs(~ mom_education, data = df)
+```
+
+::: {.callout-note}
+
+This requires some recoding work.
+
+:::
+
+### Employment {-}
+
+```{r xtabs-mom-employ}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_employment))
+
+xtabs(~ mom_employment, data = df)
+```
+
+### Occupation {-}
+
+This information is available, but would need to be substantially recoded to be useful in summary form.
+
+### Jobs number {-}
+
+```{r xtabs-mom-jobs-number}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_jobs_number))
+
+xtabs(~ mom_jobs_number, data = df)
+```
+
+```{r xtabs-mom-jobs-vs-employ}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_jobs_number),
+                !is.na(mom_employment))
+
+xtabs(~ mom_jobs_number + mom_employment, data = df)
+```
+
+### Job training {-}
+
+```{r}
+df <- screen_df |>
+  dplyr::filter(!is.na(mom_training))
+
+xtabs(~ mom_training, data = df)
+```
+
+## Biological father {-}
+
+### Race {-}
+
+```{r xtabs-biodad-race}
+df <- screen_df |>
+  dplyr::select(biodad_childbirth_age, biodad_race, child_sex) |>
+  dplyr::mutate(
+    biodad_race =
+      dplyr::recode(
+        biodad_race,
+        americanindian_NA = "american_indian",
+        asian_NA = "asian",
+        NA_asian = "asian",
+        black_NA = "black",
+        donotknow_NA = "do_not_know",
+        NA_NA = "NA",
+        NA_white = "white",
+        other_NA = "other",
+        refused_NA = "refused",
+        white_NA = "white",
+        morethanone_NA = "more_than_one"
+      )
+  ) |>
+  dplyr::mutate(biodad_childbirth_age = stringr::str_remove_all(biodad_childbirth_age, "[_NA]")) |>
+  # dplyr::filter(!is.na(biodad_childbirth_age), !is.na(biodad_race)) |>
+  dplyr::mutate(biodad_childbirth_age = as.numeric(biodad_childbirth_age))
+
+xtabs(~ biodad_race, df)
+```
+### Age at child birth {-}
+
+```{r fig-biodad-age-childbirth}
+df |>
+  dplyr::filter(!is.na(biodad_childbirth_age)) |>
+  ggplot() +
+  aes(x = biodad_childbirth_age, fill = child_sex) +
+  geom_histogram(bins = 25) +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+## Childcare {-}
+
+### Types {-}
+
+```{r xtabs-childcare-types}
+df <- screen_df |>
+  dplyr::filter(!is.na(childcare_types))
+                
+xtabs(~ childcare_types, data = df)
+```
+
+::: {.callout-note}
+
+This requires some cleaning.
+
+:::
+
+### Hours {-}
+
+```{r childcare-hrs}
+df <- screen_df |>
+  dplyr::filter(!is.na(childcare_hours)) |>
+  dplyr::arrange(childcare_hours)
+
+unique(df$childcare_hours)
+```
+
+::: {.callout-note}
+
+This requires some cleaning.
+
+:::
+
+### Language {-}
+
+```{r child-care-language}
+df <- screen_df |>
+  dplyr::filter(!is.na(childcare_language))
+
+unique(df$childcare_language)
+```
+
+::: {.callout-note}
+
+This requires some cleaning.
+
+:::
