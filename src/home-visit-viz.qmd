@@ -344,3 +344,258 @@ ggExtra::ggMarginal(
   groupFill = TRUE
 )
 ```
+
+## Health visualizations {-}
+
+```{r health-load-home-visit-df}
+# Load home_visit_df if not in environment
+if (!("health_df" %in% ls())) {
+ targets::tar_load(health_df, store="../_targets") 
+}
+```
+
+### Feeding {-}
+
+```{r}
+xtabs(formula = ~ age_group + feeding_breastfeed, data = health_df)
+```
+
+```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
+health_df %>%
+  dplyr::select(child_sex, feeding_solidfood_age) |>
+  dplyr::filter(feeding_solidfood_age < 12) |>
+  ggplot() +
+  aes(x = feeding_solidfood_age, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 14) +
+  theme(legend.title = element_blank())
+```
+
+Clearly, there are some impossible values here.
+
+```{r anomalous-feeding}
+health_df |>
+  dplyr::select(participant_id, 
+                feeding_solidfood_age) |>
+  dplyr::filter(feeding_solidfood_age > 12 | feeding_solidfood_age < 3) %>%
+  knitr::kable(format = 'html')
+```
+
+A preliminary look at `feeding_comments_feeding` shows that there are some names mentioned.
+
+::: {.rmdnote}
+
+We should consider flagging these in the QA process.
+
+:::
+
+### Sleeping position {-}
+
+These data only focus on `child_sleeping_position`.
+Other sleeping data are in the screening questionnaire.
+
+```{r}
+sleeping_pos <- health_df |>
+  dplyr::select(child_sex, age_group, 
+                child_sleeping_position) |>
+  dplyr::filter(!is.na(child_sleeping_position))
+
+xtabs(formula = ~ child_sleeping_position + age_group, data = sleeping_pos)
+```
+
+### Smoking/drinking {-}
+
+```{r tab-smoking-drinking}
+smoking_drinking <- health_df |>
+  dplyr::select(age_group,
+    child_sex,
+    contains("smoking"),
+    contains("drinking")
+  )
+
+xtabs(formula = ~ pregnant_smoking + pregnant_drinking, smoking_drinking)
+```
+
+```{r tab-smoking-house-car}
+xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
+```
+
+```{r tab-comments-smoking}
+smoking_drinking |>
+  dplyr::select(comments_smoking) |>
+  dplyr::filter(!is.na(comments_smoking)) |>
+  knitr::kable(format = 'html')
+```
+
+```{r tab-comments-drinking}
+smoking_drinking |>
+  dplyr::select(comments_drinking) |>
+  dplyr::filter(!is.na(comments_drinking)) |>
+  knitr::kable(format = 'html')
+```
+
+### Patient Health Questionnaire (PHQ-4) {-}
+
+```{r fig-phq4, fig.cap="PHQ4 responses by age group and child sex"}
+phq4 <- health_df |>
+  dplyr::select(child_sex, age_group, contains("phq4_"))
+
+names(phq4) <- gsub(pattern = "phq4_", 
+                    replacement = "",
+                    names(phq4))
+
+phq4 |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'), 
+                      names_to = "question", 
+                      values_to = "response") |>
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(response = factor(response,
+                                  c("notatall",
+                                    "severaldays",
+                                    "morethanhalf",
+                                    "nearly")),
+                ordered = TRUE) |>
+  ggplot() +
+  aes(x = response, fill = child_sex) +
+  geom_bar() +
+  facet_grid(cols = vars(question), rows = vars(age_group)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  xlab("") +
+  theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+### Child health {-}
+
+#### Overall rating  {-}
+
+```{r tab-child-health-rating}
+child_health_rating <- health_df |>
+  dplyr::select(child_sex, age_group, child_health) |>
+  dplyr::filter(!is.na(child_health)) |>
+  dplyr::mutate(child_health = factor(child_health,
+                                      c("poor",
+                                        "fair",
+                                        "good",
+                                        "verygood",
+                                        "excellent",
+                                        "donotknow",
+                                        "refused"),
+                                      ordered = TRUE))
+
+xtabs(formula = ~ child_health + age_group, data = child_health_rating)
+```
+
+#### Recent vaccination {-}
+
+```{r}
+recent_vax <- health_df |>
+  dplyr::select(child_sex, age_group, child_vaccination) |>
+  dplyr::filter(!is.na(child_vaccination))
+
+xtabs(formula = ~ child_vaccination + age_group, data = recent_vax)
+```
+
+#### Seen medical specialist {-}
+
+```{r}
+seen_specialist <- health_df |>
+  dplyr::select(child_sex, age_group, child_medical_specialist) |>
+  dplyr::filter(!is.na(child_medical_specialist))
+
+xtabs(formula = ~ child_medical_specialist + age_group, data = seen_specialist)
+```
+
+::: {.callout-warning}
+Manual inspection shows some possible identifying information (names) in the comments.
+:::
+
+#### Illnesses and allergies {-}
+
+```{r fig-illness-allergies}
+illness_allergy <- health_df |>
+  dplyr::select(child_sex, age_group, contains("illness_"))
+
+
+names(illness_allergy) <- gsub(pattern = "illness_",
+                               replacement = "",
+                               names(illness_allergy))
+
+illness_allergy |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'),
+                      names_to = "type",
+                      values_to = "response") |>
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(response = factor(response,
+                                  c("no", "yes", "donotknow", "refused"))) |>
+  ggplot() +
+  aes(x = response, fill = child_sex) +
+  geom_bar() +
+  facet_grid(cols = vars(type), rows = vars(age_group)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  xlab("") +
+  theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+## Temperament visualizations {-}
+
+This page provides visualizations of the Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.
+
+### Setup {-}
+
+As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for *English-speaking families only*.
+
+The functions are found in `R/` with the prefix `ecbq_`.
+
+We create a "wide" data frame `ecbq_wide_df` as one of the targets of `targets:tar_make()`.
+We attempt to load that here and ensure that all `R/ecbq_` functions are in the local environment.
+
+```{r}
+if (!('ecbq_wide_df' %in% ls())) {
+  targets::tar_load(ecbq_wide_df, store="../_targets")
+}
+
+if (!('ecbq_plot_all' %in% ls())) {
+  ecbq_fl <- list.files("../R", "^ecbq_", full.names = TRUE)
+  purrr::walk(ecbq_fl, source)
+}
+```
+
+### Summarize {-}
+
+```{r}
+ecbq_complete <- ecbq_wide_df |>
+  tidyr::complete()
+
+str(ecbq_complete)
+```
+
+```{r tab-ecbq-age-by-sex-cases}
+xtabs(formula = ~ age_group + child_sex, ecbq_complete)
+```
+
+### Visualize {-}
+
+```{r}
+ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+
+# Omit comments
+ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments")]
+```
+
+We use `purrr::map()` to plot all of the responses to individual ECBQ items.
+
+```{r purrr-map-ecbq-figs}
+purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete)
+```
+
+#### Comments {-}
+
+Manual inspection shows that the comments field has some names.
+We omit printing the comments here until we can be assured that there is no identifiying information in the comments.
+
+```{r ecbq-comments, eval=FALSE}
+ecbq_complete |>
+  dplyr::select(participant_id, age_group, rothbart_comments) |>
+  dplyr::filter(!is.na(rothbart_comments)) |>
+  dplyr::arrange(age_group) |>
+  knitr::kable(format = 'html')
+```

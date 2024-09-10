@@ -306,6 +306,20 @@ window.Quarto = {
   <li><a href="#crawl-onset" id="toc-crawl-onset" class="nav-link" data-scroll-target="#crawl-onset">Crawl onset</a></li>
   <li><a href="#walk-onset" id="toc-walk-onset" class="nav-link" data-scroll-target="#walk-onset">Walk onset</a></li>
   </ul></li>
+  <li><a href="#health-visualizations" id="toc-health-visualizations" class="nav-link" data-scroll-target="#health-visualizations">Health visualizations</a>
+  <ul class="collapse">
+  <li><a href="#feeding" id="toc-feeding" class="nav-link" data-scroll-target="#feeding">Feeding</a></li>
+  <li><a href="#sleeping-position" id="toc-sleeping-position" class="nav-link" data-scroll-target="#sleeping-position">Sleeping position</a></li>
+  <li><a href="#smokingdrinking" id="toc-smokingdrinking" class="nav-link" data-scroll-target="#smokingdrinking">Smoking/drinking</a></li>
+  <li><a href="#patient-health-questionnaire-phq-4" id="toc-patient-health-questionnaire-phq-4" class="nav-link" data-scroll-target="#patient-health-questionnaire-phq-4">Patient Health Questionnaire (PHQ-4)</a></li>
+  <li><a href="#child-health" id="toc-child-health" class="nav-link" data-scroll-target="#child-health">Child health</a></li>
+  </ul></li>
+  <li><a href="#temperament-visualizations" id="toc-temperament-visualizations" class="nav-link" data-scroll-target="#temperament-visualizations">Temperament visualizations</a>
+  <ul class="collapse">
+  <li><a href="#setup-1" id="toc-setup-1" class="nav-link" data-scroll-target="#setup-1">Setup</a></li>
+  <li><a href="#summarize" id="toc-summarize" class="nav-link" data-scroll-target="#summarize">Summarize</a></li>
+  <li><a href="#visualize" id="toc-visualize" class="nav-link" data-scroll-target="#visualize">Visualize</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/home-visit-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -326,7 +340,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">September 5, 2024</p>
+      <p class="date-modified">September 10, 2024</p>
     </div>
   </div>
     
@@ -533,7 +547,11 @@ child_sex english english_spanish
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_18)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : daddy could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -547,104 +565,28 @@ my_thresh, : quackquack could not be fit on page. It will not be plotted.</code>
 <section id="mo-old-english-speakers-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="mo-old-english-speakers-2">24-mo-old English speakers</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">'c'</span>),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"../data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">'c'</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are <span class="math inline">\(n=\)</span> 144 participant records.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">"word"</span>,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"says"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">"word"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"says"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : uhoh could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : walk could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : go could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : kiss could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : vroom could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : no could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : two could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : apple could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : strawberry could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : banana could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : arm could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : eat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hair could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : dirty could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : frog could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : more could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -652,79 +594,7 @@ my_thresh, : rain_2 could not be fit on page. It will not be plotted.</code></pr
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : out could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : buttocks could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : off could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : brush could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : down could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : pants could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : light could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : moon could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hand could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : door could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : tummy could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : truck could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cup could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : duck could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : blanket could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : banana could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -732,11 +602,11 @@ my_thresh, : flower could not be fit on page. It will not be plotted.</code></pr
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : sleep could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : ball could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -744,55 +614,7 @@ my_thresh, : bed could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : rain_1 could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : choochoo could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : ear could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : milk could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : car could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cracker could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : shirt could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : mine could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : allgone could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : play could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : up could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -800,27 +622,39 @@ my_thresh, : tree could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : trash could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : blanket could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : up could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : strawberry could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : shh could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : light could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : sock could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : wet_1 could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : allgone could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : ear could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -828,35 +662,43 @@ my_thresh, : dog could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : three could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : sleep could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : ball could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : soap could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : shh could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : foot could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : cookie could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cold could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : frog could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : two could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : meow could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : hand could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : thankyou could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : out could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : apple could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -864,15 +706,183 @@ my_thresh, : mommy could not be fit on page. It will not be plotted.</code></pre
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : nightnight could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : tummy could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : shoe could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : potty could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : down could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : kiss could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : mine could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : pants could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : wet_1 could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bear could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : door could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hot could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : meow could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : monkey could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : uhoh could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : brush could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hair could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : shirt could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : swing could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : dirty could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : eye could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : choochoo could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : vroom could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : egg could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : milk could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : truck could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : thankyou could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : arm could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : buttocks could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : mouth could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : eat could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cold could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : chair could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : three could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : no could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : rain_1 could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : one could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -883,11 +893,11 @@ my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pr
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
-<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No words meet criterion: n = 36 'know/say' out of n = 144 participants</code></pre>
 </div>
@@ -899,9 +909,9 @@ my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pr
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">'home_visit_df'</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
-<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">'home_visit_df'</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(home_visit_df, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -910,30 +920,30 @@ my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pr
 <section id="select-summarize" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="select-summarize">Select &amp; Summarize</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">|&gt;</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>    age_group,</span>
-<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>    child_sex,</span>
-<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>    language_child,</span>
-<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>    site_id,</span>
-<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>    subject_number,</span>
-<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
-<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb109-17"><a href="#cb109-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb109-18"><a href="#cb109-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
-<span id="cb109-19"><a href="#cb109-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
-<span id="cb109-20"><a href="#cb109-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
-<span id="cb109-21"><a href="#cb109-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="ot">&lt;-</span> home_visit_df <span class="sc">|&gt;</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>    age_group,</span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>    child_sex,</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>    language_child,</span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a>    site_id,</span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a>    subject_number,</span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a>    locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb108-15"><a href="#cb108-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo</span>
+<span id="cb108-16"><a href="#cb108-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb108-17"><a href="#cb108-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb108-18"><a href="#cb108-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
+<span id="cb108-19"><a href="#cb108-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
+<span id="cb108-20"><a href="#cb108-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
+<span id="cb108-21"><a href="#cb108-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> age_group, <span class="at">data =</span> play_loco)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> age_group, <span class="at">data =</span> play_loco)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         age_group
 child_sex 12mo 18mo 24mo
@@ -945,16 +955,16 @@ child_sex 12mo 18mo 24mo
 <section id="check-for-anomalous-values" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="check-for-anomalous-values">Check for anomalous values</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>crawl_mos_min <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>walk_mos_min <span class="ot">&lt;-</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="anomalous-crawling-onset" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="anomalous-crawling-onset">Anomalous crawling onset</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, crawl_mos) <span class="sc">|&gt;</span></span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">|&gt;</span></span>
-<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, crawl_mos) <span class="sc">|&gt;</span></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&lt;</span> crawl_mos_min) <span class="sc">|&gt;</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -985,10 +995,10 @@ child_sex 12mo 18mo 24mo
 <section id="anomalous-walking-onset-kea-criteria" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="anomalous-walking-onset-kea-criteria">Anomalous walking onset (KEA criteria)</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, walk_mos_kea) <span class="sc">|&gt;</span></span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">|&gt;</span></span>
-<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, walk_mos_kea) <span class="sc">|&gt;</span></span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_kea <span class="sc">&lt;</span> walk_mos_min) <span class="sc">|&gt;</span></span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1024,10 +1034,10 @@ child_sex 12mo 18mo 24mo
 <section id="anomalous-walking-onset-who-criteria" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="anomalous-walking-onset-who-criteria">Anomalous walking onset (WHO criteria)</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, walk_mos_who) <span class="sc">|&gt;</span></span>
-<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">|&gt;</span></span>
-<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, subject_number, walk_mos_who) <span class="sc">|&gt;</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&lt;</span> walk_mos_min) <span class="sc">|&gt;</span></span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1054,13 +1064,13 @@ child_sex 12mo 18mo 24mo
 <section id="crawl-onset" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="crawl-onset">Crawl onset</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">|&gt;</span></span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos)) <span class="sc">|&gt;</span></span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-crawl-onset-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1078,12 +1088,12 @@ Figure&nbsp;9.3: Age of crawling onset (mos) by sex
 <section id="walk-onset" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="walk-onset">Walk onset</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_kea, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-kea" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1098,13 +1108,13 @@ Figure&nbsp;9.4: Age (mos) of walking onset (KEA criteria) by sex
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">|&gt;</span></span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who)) <span class="sc">|&gt;</span></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-who" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1119,29 +1129,29 @@ Figure&nbsp;9.5: Age (mos) of walking onset (WHO criteria) by sex
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), </span>
-<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>                walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
-<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb119-5"><a href="#cb119-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb119-6"><a href="#cb119-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb119-7"><a href="#cb119-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb119-8"><a href="#cb119-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb119-9"><a href="#cb119-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb119-10"><a href="#cb119-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb119-11"><a href="#cb119-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb119-12"><a href="#cb119-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb119-13"><a href="#cb119-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb119-14"><a href="#cb119-14" aria-hidden="true" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb119-15"><a href="#cb119-15" aria-hidden="true" tabindex="-1"></a>  walk_p,</span>
-<span id="cb119-16"><a href="#cb119-16" aria-hidden="true" tabindex="-1"></a>  play_loco,</span>
-<span id="cb119-17"><a href="#cb119-17" aria-hidden="true" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb119-18"><a href="#cb119-18" aria-hidden="true" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb119-19"><a href="#cb119-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"density"</span>,</span>
-<span id="cb119-20"><a href="#cb119-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">"both"</span>,</span>
-<span id="cb119-21"><a href="#cb119-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb119-22"><a href="#cb119-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb119-23"><a href="#cb119-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(walk_mos_who <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_who), </span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>                walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(walk_mos_who, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">8</span>, <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a>  walk_p,</span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a>  play_loco,</span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"density"</span>,</span>
+<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">"both"</span>,</span>
+<span id="cb118-21"><a href="#cb118-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb118-22"><a href="#cb118-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb118-23"><a href="#cb118-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -1178,27 +1188,27 @@ Figure&nbsp;9.6: Walking onset by WHO vs.&nbsp;KEA criteria
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), </span>
-<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>                walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
-<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
-<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
-<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
-<span id="cb126-13"><a href="#cb126-13" aria-hidden="true" tabindex="-1"></a>  walk_p,</span>
-<span id="cb126-14"><a href="#cb126-14" aria-hidden="true" tabindex="-1"></a>  play_loco,</span>
-<span id="cb126-15"><a href="#cb126-15" aria-hidden="true" tabindex="-1"></a>  walk_mos_who,</span>
-<span id="cb126-16"><a href="#cb126-16" aria-hidden="true" tabindex="-1"></a>  walk_mos_kea,</span>
-<span id="cb126-17"><a href="#cb126-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"density"</span>,</span>
-<span id="cb126-18"><a href="#cb126-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">"both"</span>,</span>
-<span id="cb126-19"><a href="#cb126-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb126-20"><a href="#cb126-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
-<span id="cb126-21"><a href="#cb126-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>play_loco <span class="sc">|&gt;</span></span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(crawl_mos <span class="sc">&gt;</span> crawl_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(crawl_mos), </span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>                walk_mos_kea <span class="sc">&gt;</span> walk_mos_min, <span class="sc">!</span><span class="fu">is.na</span>(walk_mos_kea)) <span class="sc">|&gt;</span></span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(crawl_mos, walk_mos_kea, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="ot">-&gt;</span> walk_p</span>
+<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>ggExtra<span class="sc">::</span><span class="fu">ggMarginal</span>(</span>
+<span id="cb125-13"><a href="#cb125-13" aria-hidden="true" tabindex="-1"></a>  walk_p,</span>
+<span id="cb125-14"><a href="#cb125-14" aria-hidden="true" tabindex="-1"></a>  play_loco,</span>
+<span id="cb125-15"><a href="#cb125-15" aria-hidden="true" tabindex="-1"></a>  walk_mos_who,</span>
+<span id="cb125-16"><a href="#cb125-16" aria-hidden="true" tabindex="-1"></a>  walk_mos_kea,</span>
+<span id="cb125-17"><a href="#cb125-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"density"</span>,</span>
+<span id="cb125-18"><a href="#cb125-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">margins =</span> <span class="st">"both"</span>,</span>
+<span id="cb125-19"><a href="#cb125-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupColour =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-20"><a href="#cb125-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">groupFill =</span> <span class="cn">TRUE</span></span>
+<span id="cb125-21"><a href="#cb125-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -1216,8 +1226,1151 @@ Figure&nbsp;9.7: Walking onset vs.&nbsp;Crawling
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="health-visualizations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="health-visualizations">Health visualizations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load home_visit_df if not in environment</span></span>
+<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"health_df"</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a> targets<span class="sc">::</span><span class="fu">tar_load</span>(health_df, <span class="at">store=</span><span class="st">"../_targets"</span>) </span>
+<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="feeding" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="feeding">Feeding</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> feeding_breastfeed, <span class="at">data =</span> health_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         feeding_breastfeed
+age_group donotknow  no refused yes
+     12mo         0  13       0 260
+     18mo         1  13       0 268
+     24mo         0  10       1 212</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>health_df <span class="sc">%&gt;%</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, feeding_solidfood_age) <span class="sc">|&gt;</span></span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&lt;</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> feeding_solidfood_age, <span class="at">color =</span> child_sex, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb130-7"><a href="#cb130-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-solid-food-mos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-solid-food-mos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="home-visit-viz_files/figure-html/fig-solid-food-mos-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-solid-food-mos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Age at introduction of solid foods
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Clearly, there are some impossible values here.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>health_df <span class="sc">|&gt;</span></span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, </span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>                feeding_solidfood_age) <span class="sc">|&gt;</span></span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(feeding_solidfood_age <span class="sc">&gt;</span> <span class="dv">12</span> <span class="sc">|</span> feeding_solidfood_age <span class="sc">&lt;</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">participant_id</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">feeding_solidfood_age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">a4T7C3F1A</td>
+<td style="text-align: right;">990</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">i9P3B3K2A</td>
+<td style="text-align: right;">995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">e5M1S1R3A</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">a9M6Q1C1A</td>
+<td style="text-align: right;">999</td>
+</tr>
+</tbody>
+</table>
 
 
+</div>
+</div>
+<p>A preliminary look at <code>feeding_comments_feeding</code> shows that there are some names mentioned.</p>
+<div class="rmdnote">
+<p>We should consider flagging these in the QA process.</p>
+</div>
+</section>
+<section id="sleeping-position" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="sleeping-position">Sleeping position</h3>
+<p>These data only focus on <code>child_sleeping_position</code>. Other sleeping data are in the screening questionnaire.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>sleeping_pos <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, </span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>                child_sleeping_position) <span class="sc">|&gt;</span></span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleeping_position))</span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sleeping_position <span class="sc">+</span> age_group, <span class="at">data =</span> sleeping_pos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       age_group
+child_sleeping_position 12mo 18mo 24mo
+           back          252  269  209
+           changed         4    3    2
+           donotknow       0    1    0
+           other           4    1    1
+           refused         0    0    1
+           side            3    2    5
+           sitting         1    0    1
+           stomach_down    1    1    1
+           stomach_side    8    5    3</code></pre>
+</div>
+</div>
+</section>
+<section id="smokingdrinking" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="smokingdrinking">Smoking/drinking</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>smoking_drinking <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(age_group,</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>    child_sex,</span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"smoking"</span>),</span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"drinking"</span>)</span>
+<span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-8"><a href="#cb134-8" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> pregnant_smoking <span class="sc">+</span> pregnant_drinking, smoking_drinking)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                pregnant_drinking
+pregnant_smoking donotknow  no refused yes
+       donotknow         2   1       0   0
+       no                0 631       1 136
+       refused           0   0       1   0
+       yes               0   1       0   2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> smoking_house <span class="sc">+</span> smoking_car, smoking_drinking)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             smoking_car
+smoking_house donotknow  no refused yes
+    donotknow         1   1       0   0
+    no                3 753       0   3
+    refused           0   3       1   0
+    yes               0  10       0   3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_smoking) <span class="sc">|&gt;</span></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_smoking)) <span class="sc">|&gt;</span></span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">comments_smoking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">D8 not asked/ answered, as questionnaire did not have this question included.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Was not in the paper questionnaire</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Family does not have a car.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Family doesn’t have a car</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vape with THC and THC so!etimes smoke when he's asleep</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Changed answer for D1 from "refused" to "no" during QA. Experimenter had accidentally pressed wrong answer)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mom stated dad smokes marijuana occasionally outside of house</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dad vapes in the house</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(QA Note: D8 was not answered during the home visit. Changed answer from "No" to "Don't Know" as a result)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Only smoking is at grandma's house. Grandma smokes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoked half an FT (?) every other day until she found out about pregnancy at 5 weeks; grandmother smokes inside her bedroom</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">maybe husband vapes in the house</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Her husband smokes in the car.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Father vapes in the house, non-tobacco</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Child's birth mother did not smoke cigarettes while she was pregnant with child.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dad smokes but not in the house</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">uncle smokes outside</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Husband smokes occasionally</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">smoking stopped after pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dad vapes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vaping in the home/car</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Charlotte was adopted. Asked if she knew if birth mom smoked when pregnant, and she said probably.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vape</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">With her, no. Dad smokes, but different househokld.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vapes inside the house</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Husband smokes outside of the house.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">"Smoked a little pot" when pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">QA: Answered by non-target mom</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mom does not smoke cigarettes, only marijuana; mom would smoke every other day or so during pregnancy</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>smoking_drinking <span class="sc">|&gt;</span></span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(comments_drinking) <span class="sc">|&gt;</span></span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(comments_drinking)) <span class="sc">|&gt;</span></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">comments_drinking</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">8 months drank 1 glass of wine</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Only drank before knowing she was pregnant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Drank before knowing she was pregnant.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E4- Indicated she drank one glass of wine every two weeks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sip of champagne one</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom said she stopped drinking when she realized she was pregnant.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8 months drank 1 glass of wine</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Had one drink when unaware of pregnancy and night before before water broke</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glass of champagne during new years</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom drank prior to finding out she was pregnant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Some events had up to 4oz nonliquor drinks - rule for herself, not more than that</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">One glass of wine early in pregnancy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A sip here and there to try, no full drinks while pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Entire pregnancy is maybe around 5 drinks total</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Drank one Margarita when 3 weeks pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Had half an alcoholic beverage during second half of second trimester</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Had a drink before she found out she was pregnant. Towards the end of the pregnancy at a birthday party had less than 1 drink.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom only drank one time during pregnancy (before mom knew she was pregnant) at a wine excursion</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Had about five drinks total during pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">She had a few sips of wine throughout the entire pregnancy. Maybe twice total during the pregnancy.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Only 3 glasses of wine in the total pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Occasionally had one drink during third trimester</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mom is unsure if child's birth mom drank during pregnancy.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">had wine before she found out pregnant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Couple sips of drink</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 drinks total during first trimester</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Christmas and new years - had a drink if that</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Drank alocoholic beverages prior to knowing she was pregnant.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">once a month a glass of wine</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom drank about one drink per week on average (would never be three per week) in second 3 months of pregnancy; closer to two drinks per week on average in third 3 months</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Not since knew pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8 weeks in found out</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Drank during first month of pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">only had on average two drinks a week during the first month of the pregnancy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Maybe a sip of wine one time</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Occassional sips of wine, but never a full drink</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Very very occasional</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maybe one drink during pregnancy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mom had two glasses of wine during her last trimester but it wasn't an average week</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">had the occasional glass of red wine</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E2. Parent had 2 drinks in the first 3 months of pregnancy total (not weekly) prior to finding out she was pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Only a glass of red wine</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2 total drinks during pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Only sips of wine, very infrequently.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">QA: Mom indicated she had drinks before knowing she pregnant. When asked how many drinks during first 3 months, mom said "0." She said it wasn't even within first 3 months, she found out she was pregnant very early.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">before knowing pregnant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">had sip of champagne at wedding</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Charlotte is adopted. Mom did not know if birth mom drank during pregnancy.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Once before she knew she was pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom indicated she had sip of husbands wine at a party, but not much</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">She drank before she knew she was pregnant. Had one sip of wine on her birthday when she was about 40 weeks.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mom mentioned that she sipped on a few drinks in second and third trimesters.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Just one drink ever during pregnancy in 3rd trimester. Had some on her birthdya which was in first month of being pregnant.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">During the first 3 weeks before she knew she was pregnant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Took a sip whisky in third trimester</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">only during 3rd trimester</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Drank before she knew she was pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Answered by mom who carried the child she did not participate in natural play</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">One or two before found out about pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Had 1 glass of wine at 9.5 months pregnant.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Only had one drink</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Only drank before she found out she was pregnant.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1 glass of wine 1 month before bith and had a drink before she knew she pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A few drinks every week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">only had one drink before she knew she was pregnant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Half glasses of wine 5x through pregnancy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">QA: Answered by non-target mom</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">First 5 weeks, unaware of pregnancy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Drank the first five weeks when she did not know about her pregnancy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Just during the last weeks of her maybe one glass of wine</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Had a drink before knowing she was pregnant</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="patient-health-questionnaire-phq-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="patient-health-questionnaire-phq-4">Patient Health Questionnaire (PHQ-4)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>phq4 <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">"phq4_"</span>))</span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(phq4) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">"phq4_"</span>, </span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">replacement =</span> <span class="st">""</span>,</span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">names</span>(phq4))</span>
+<span id="cb140-7"><a href="#cb140-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-8"><a href="#cb140-8" aria-hidden="true" tabindex="-1"></a>phq4 <span class="sc">|&gt;</span></span>
+<span id="cb140-9"><a href="#cb140-9" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">'child_sex'</span>, <span class="st">'age_group'</span>), </span>
+<span id="cb140-10"><a href="#cb140-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">"question"</span>, </span>
+<span id="cb140-11"><a href="#cb140-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb140-12"><a href="#cb140-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb140-13"><a href="#cb140-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb140-14"><a href="#cb140-14" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">"notatall"</span>,</span>
+<span id="cb140-15"><a href="#cb140-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"severaldays"</span>,</span>
+<span id="cb140-16"><a href="#cb140-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"morethanhalf"</span>,</span>
+<span id="cb140-17"><a href="#cb140-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"nearly"</span>)),</span>
+<span id="cb140-18"><a href="#cb140-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb140-19"><a href="#cb140-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb140-20"><a href="#cb140-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb140-21"><a href="#cb140-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb140-22"><a href="#cb140-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(question), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb140-23"><a href="#cb140-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb140-24"><a href="#cb140-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb140-25"><a href="#cb140-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-phq4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-phq4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="home-visit-viz_files/figure-html/fig-phq4-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phq4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: PHQ4 responses by age group and child sex
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="child-health" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="child-health">Child health</h3>
+<section id="overall-rating" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="overall-rating">Overall rating</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>child_health_rating <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_health) <span class="sc">|&gt;</span></span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_health)) <span class="sc">|&gt;</span></span>
+<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_health =</span> <span class="fu">factor</span>(child_health,</span>
+<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">c</span>(<span class="st">"poor"</span>,</span>
+<span id="cb141-6"><a href="#cb141-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"fair"</span>,</span>
+<span id="cb141-7"><a href="#cb141-7" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"good"</span>,</span>
+<span id="cb141-8"><a href="#cb141-8" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"verygood"</span>,</span>
+<span id="cb141-9"><a href="#cb141-9" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"excellent"</span>,</span>
+<span id="cb141-10"><a href="#cb141-10" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"donotknow"</span>,</span>
+<span id="cb141-11"><a href="#cb141-11" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"refused"</span>),</span>
+<span id="cb141-12"><a href="#cb141-12" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb141-13"><a href="#cb141-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-14"><a href="#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_health <span class="sc">+</span> age_group, <span class="at">data =</span> child_health_rating)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            age_group
+child_health 12mo 18mo 24mo
+   poor         0    0    0
+   fair         2    1    1
+   good        12   16   14
+   verygood    69   65   57
+   excellent  190  199  150
+   donotknow    0    1    0
+   refused      0    0    1</code></pre>
+</div>
+</div>
+</section>
+<section id="recent-vaccination" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="recent-vaccination">Recent vaccination</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>recent_vax <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_vaccination) <span class="sc">|&gt;</span></span>
+<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vaccination))</span>
+<span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-5"><a href="#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_vaccination <span class="sc">+</span> age_group, <span class="at">data =</span> recent_vax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 age_group
+child_vaccination 12mo 18mo 24mo
+        donotknow    0    2    4
+        no         154  197  173
+        yes        119   83   46</code></pre>
+</div>
+</div>
+</section>
+<section id="seen-medical-specialist" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="seen-medical-specialist">Seen medical specialist</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>seen_specialist <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, child_medical_specialist) <span class="sc">|&gt;</span></span>
+<span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_medical_specialist))</span>
+<span id="cb145-4"><a href="#cb145-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-5"><a href="#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_medical_specialist <span class="sc">+</span> age_group, <span class="at">data =</span> seen_specialist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        age_group
+child_medical_specialist 12mo 18mo 24mo
+               donotknow    0    1    2
+               no         138  125  100
+               refused      0    0    1
+               yes        135  156  120</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Manual inspection shows some possible identifying information (names) in the comments.</p>
+</div>
+</div>
+</section>
+<section id="illnesses-and-allergies" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="illnesses-and-allergies">Illnesses and allergies</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>illness_allergy <span class="ot">&lt;-</span> health_df <span class="sc">|&gt;</span></span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, age_group, <span class="fu">contains</span>(<span class="st">"illness_"</span>))</span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(illness_allergy) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">"illness_"</span>,</span>
+<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">replacement =</span> <span class="st">""</span>,</span>
+<span id="cb147-7"><a href="#cb147-7" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">names</span>(illness_allergy))</span>
+<span id="cb147-8"><a href="#cb147-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a>illness_allergy <span class="sc">|&gt;</span></span>
+<span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">'child_sex'</span>, <span class="st">'age_group'</span>),</span>
+<span id="cb147-11"><a href="#cb147-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">"type"</span>,</span>
+<span id="cb147-12"><a href="#cb147-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values_to =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb147-13"><a href="#cb147-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(response)) <span class="sc">|&gt;</span></span>
+<span id="cb147-14"><a href="#cb147-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">factor</span>(response,</span>
+<span id="cb147-15"><a href="#cb147-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"yes"</span>, <span class="st">"donotknow"</span>, <span class="st">"refused"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb147-16"><a href="#cb147-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb147-17"><a href="#cb147-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb147-18"><a href="#cb147-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb147-19"><a href="#cb147-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(type), <span class="at">rows =</span> <span class="fu">vars</span>(age_group)) <span class="sc">+</span></span>
+<span id="cb147-20"><a href="#cb147-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb147-21"><a href="#cb147-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb147-22"><a href="#cb147-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-illness-allergies" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-illness-allergies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="home-visit-viz_files/figure-html/fig-illness-allergies-1.png" id="fig-illness-allergies" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-illness-allergies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="temperament-visualizations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="temperament-visualizations">Temperament visualizations</h2>
+<p>This page provides visualizations of the Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.</p>
+<section id="setup-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="setup-1">Setup</h3>
+<p>As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for <em>English-speaking families only</em>.</p>
+<p>The functions are found in <code>R/</code> with the prefix <code>ecbq_</code>.</p>
+<p>We create a “wide” data frame <code>ecbq_wide_df</code> as one of the targets of <code>targets:tar_make()</code>. We attempt to load that here and ensure that all <code>R/ecbq_</code> functions are in the local environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">'ecbq_wide_df'</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>  targets<span class="sc">::</span><span class="fu">tar_load</span>(ecbq_wide_df, <span class="at">store=</span><span class="st">"../_targets"</span>)</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">'ecbq_plot_all'</span> <span class="sc">%in%</span> <span class="fu">ls</span>())) {</span>
+<span id="cb148-6"><a href="#cb148-6" aria-hidden="true" tabindex="-1"></a>  ecbq_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"../R"</span>, <span class="st">"^ecbq_"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb148-7"><a href="#cb148-7" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">walk</span>(ecbq_fl, source)</span>
+<span id="cb148-8"><a href="#cb148-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summarize" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="summarize">Summarize</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>ecbq_complete <span class="ot">&lt;-</span> ecbq_wide_df <span class="sc">|&gt;</span></span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>()</span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ecbq_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [783 × 40] (S3: tbl_df/tbl/data.frame)
+ $ participant_id              : chr [1:783] "PILOT" "o6Ri9H8Ka0A" "U1Ro3M7Ri" "e0N4H8O2A" ...
+ $ child_sex                   : chr [1:783] "male" "female" "male" "female" ...
+ $ age_group                   : chr [1:783] "18mo" "18mo" "24mo" "12mo" ...
+ $ rothbart_unfamiliarperson   : chr [1:783] "very_rarely" "very_rarely" "always" "very_rarely" ...
+ $ rothbart_troubletask        : chr [1:783] "less_than_half" "less_than_half" "less_than_half" "very_rarely" ...
+ $ rothbart_companyofchild     : chr [1:783] "more_than_half" NA "always" "almost_always" ...
+ $ rothbart_choiceactivities   : chr [1:783] "almost_always" "always" "almost_always" "almost_always" ...
+ $ rothbart_quietlysung        : chr [1:783] NA "almost_always" "less_than_half" "more_than_half" ...
+ $ rothbart_playingoutdoors    : chr [1:783] "about_half" "more_than_half" "always" "always" ...
+ $ rothbart_morethan10         : chr [1:783] "less_than_half" "never" "more_than_half" "more_than_half" ...
+ $ rothbart_respondingremarks  : chr [1:783] "almost_always" "almost_always" "about_half" "about_half" ...
+ $ rothbart_excitedlovedadults : chr [1:783] NA "very_rarely" "almost_always" NA ...
+ $ rothbart_fiddlehair         : chr [1:783] "about_half" "very_rarely" "very_rarely" "more_than_half" ...
+ $ rothbart_roughrowdy         : chr [1:783] "about_half" "very_rarely" "more_than_half" "about_half" ...
+ $ rothbart_rockedhugged       : chr [1:783] "never" "about_half" "less_than_half" "less_than_half" ...
+ $ rothbart_involvednewactivity: chr [1:783] "almost_always" "more_than_half" "more_than_half" "almost_always" ...
+ $ rothbart_tirequickly        : chr [1:783] "very_rarely" "almost_always" "about_half" "less_than_half" ...
+ $ rothbart_callattention      : chr [1:783] "more_than_half" "more_than_half" "almost_always" "more_than_half" ...
+ $ rothbart_tags               : chr [1:783] "never" "never" "never" "never" ...
+ $ rothbart_noisyenvironment   : chr [1:783] "very_rarely" "never" NA "never" ...
+ $ rothbart_energy             : chr [1:783] "almost_always" "more_than_half" "almost_always" "almost_always" ...
+ $ rothbart_vehicles           : chr [1:783] "very_rarely" "never" "never" "very_rarely" ...
+ $ rothbart_active             : chr [1:783] "almost_always" "never" "less_than_half" "almost_always" ...
+ $ rothbart_forbidden          : chr [1:783] "more_than_half" "almost_always" "very_rarely" "almost_always" ...
+ $ rothbart_sadlytearful       : chr [1:783] "less_than_half" "very_rarely" "almost_always" "very_rarely" ...
+ $ rothbart_downblue           : chr [1:783] "never" "never" "very_rarely" "never" ...
+ $ rothbart_runhouse           : chr [1:783] "less_than_half" "about_half" "always" NA ...
+ $ rothbart_excitingevent      : chr [1:783] "less_than_half" NA "almost_always" "almost_always" ...
+ $ rothbart_tempertantrum      : chr [1:783] "very_rarely" "more_than_half" "about_half" "very_rarely" ...
+ $ rothbart_waitpatiently      : chr [1:783] "about_half" "very_rarely" "very_rarely" "almost_always" ...
+ $ rothbart_rockedsmile        : chr [1:783] "almost_always" NA NA "almost_always" ...
+ $ rothbart_mold               : chr [1:783] "almost_always" "about_half" "more_than_half" "more_than_half" ...
+ $ rothbart_interactadult      : chr [1:783] "always" "always" "always" "always" ...
+ $ rothbart_careful            : chr [1:783] NA "almost_always" "almost_always" NA ...
+ $ rothbart_enternewplace      : chr [1:783] "never" "never" "almost_always" "very_rarely" ...
+ $ rothbart_crymorethan3       : chr [1:783] "never" "never" "less_than_half" "very_rarely" ...
+ $ rothbart_easilysoothed      : chr [1:783] "almost_always" "almost_always" "almost_always" "almost_always" ...
+ $ rothbart_busyother          : chr [1:783] "less_than_half" "about_half" "more_than_half" "almost_always" ...
+ $ rothbart_differentpeople    : chr [1:783] "always" "more_than_half" "almost_always" "always" ...
+ $ rothbart_comments           : chr [1:783] NA NA NA NA ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> age_group <span class="sc">+</span> child_sex, ecbq_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         child_sex
+age_group female male
+     12mo    149  124
+     18mo    129  153
+     24mo    110  118</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="visualize">Visualize</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ecbq_complete)[stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(ecbq_complete),<span class="st">"rothbart_"</span>)]</span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Omit comments</span></span>
+<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a>ecbq_vars <span class="ot">&lt;-</span> ecbq_vars[<span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(ecbq_vars, <span class="st">"comments"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use <code>purrr::map()</code> to plot all of the responses to individual ECBQ items.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map</span>(ecbq_vars, <span class="fu">suppressMessages</span>(ecbq_plot), <span class="at">df =</span> ecbq_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[3]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[4]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[5]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[6]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[7]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[8]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[9]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[10]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[11]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[12]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-12.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[13]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-13.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[14]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-14.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[15]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-15.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[16]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-16.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[17]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-17.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[18]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-18.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[19]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-19.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[20]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-20.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[21]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-21.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[22]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-22.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[23]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-23.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[24]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-24.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[25]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-25.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[26]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-26.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[27]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-27.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[28]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-28.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[29]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-29.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[30]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-30.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[31]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-31.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[32]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-32.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[33]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-33.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[34]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-34.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[35]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-35.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[36]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="home-visit-viz_files/figure-html/purrr-map-ecbq-figs-36.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="comments" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="comments">Comments</h4>
+<p>Manual inspection shows that the comments field has some names. We omit printing the comments here until we can be assured that there is no identifiying information in the comments.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a>ecbq_complete <span class="sc">|&gt;</span></span>
+<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(participant_id, age_group, rothbart_comments) <span class="sc">|&gt;</span></span>
+<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(rothbart_comments)) <span class="sc">|&gt;</span></span>
+<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(age_group) <span class="sc">|&gt;</span></span>
+<span id="cb191-5"><a href="#cb191-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
 </section>
 </section>
 
