@@ -43,8 +43,8 @@ tar_option_set(
   )
 )
 
-update_interval <- 3
-update_interval_units <- "days"
+update_interval <- 1
+update_interval_units <- "mins"
 
 list(
   tar_target(
@@ -125,6 +125,7 @@ list(
   #     age = as.difftime(update_interval, units = update_interval_units)
   #   )
   # ),
+  # Process the questionnaire form for the data dictionary
   tar_target(
     home_visit_clean_forms,
     purrr::map(
@@ -140,7 +141,7 @@ list(
   tar_target(
     home_visit_non_mbcdi,
     split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi"),
+                         "data/csv/home_visit/non_mbcdi/raw"),
     cue = tarchetypes::tar_cue_age(
       name = home_visit_non_mbcdi,
       age = as.difftime(update_interval, units = update_interval_units)

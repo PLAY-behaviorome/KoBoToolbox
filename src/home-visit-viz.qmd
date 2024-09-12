@@ -1,18 +1,25 @@
 # Home visit: Visualizations
 
+## Background
+
+This page shows some simple visualizations of the cleaned aggregate data file.
+
 ## Setup
 
+Load dependencies.
+
 ```{r}
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(wordcloud))
+suppressPackageStartupMessages(library(RColorBrewer))
+
 source("../R/mcdi_viz_wordcloud.R")
 ```
 
-## Demographics {-}
+Load saved "latest" data file.
 
 ```{r}
-if (!('home_visit_df' %in% ls())) {
-  targets::tar_load(home_visit_df, store="../_targets")
-}
+hv <- readr::read_csv("../data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv", show_col_types = FALSE)
 ```
 
 ### Child age {-}
@@ -23,7 +30,7 @@ Note: The child's exact age in months is part of the Databrary-related data.
 That is on the work plan.
 
 ```{r filter-home-visit}
-home_visit_filtered <- home_visit_df |>
+home_visit_filtered <- hv |>
   dplyr::filter(!is.na(age_group),
                 !is.na(child_sex))
 ```
@@ -36,7 +43,9 @@ xtabs(formula = ~ age_group + child_sex,
 A total of $n=$ `r dim(home_visit_filtered)[1]` mother-infant dyads have been tested.
 This includes training and pilot visits.
 
-```{r fig-age-grp-by-sex, fig.cap="Participants by age group and sex"}
+```{r}
+#| label: fig-age-grp-by-sex
+#| fig-cap: Participants by age group and sex
 home_visit_filtered |>
   ggplot() +
   aes(age_group, fill = child_sex) +
@@ -57,7 +66,9 @@ df <- home_visit_filtered |>
   dplyr::mutate(n_visits = seq_along(test_date))
 ```
 
-```{r fig-home-visit-time-series, fig.cap="Cumulative home visits by year"}
+```{r}
+#| label: fig-home-visit-time-series
+#| fig-cap: "Cumulative home visits by year"
 df |>
   dplyr::filter(!is.na(test_date),
                 !is.na(n_visits),
@@ -67,23 +78,13 @@ df |>
   geom_point()
 ```
 
-```{r}
-if (!('home_visit_df' %in% ls())) {
-  targets::tar_load(home_visit_df, store="../_targets")
-}
-
-library(wordcloud)
-library(RColorBrewer)
-```
-
 ## Language exposure {-}
 
 ```{r clean-lang-df}
-df <- home_visit_df |>
+df <- hv |>
   dplyr::mutate(language_child = stringr::str_replace_all(language_child, " ", "_"))
 xtabs(formula = ~ child_sex + language_child, data = df)
 ```
-
 ## MB-CDI {-}
 
 ### 12-mo-old English speakers {-}
@@ -200,32 +201,34 @@ if (!('home_visit_df' %in% ls())) {
 
 ### Select & Summarize {-}
 
-```{r make-loco-df}
-play_loco <- home_visit_df |>
-  dplyr::select(
-    age_group,
-    child_sex,
-    language_child,
-    site_id,
-    subject_number,
-    locomotor_milestones.who_walk.who_walk_onset_mo,
-    locomotor_milestones.k_walk.k_walk_onset_mo,
-    locomotor_milestones.crawl_onset.crawl_onset_mo
-  ) |>
-  dplyr::rename(
-    walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
-    walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
-    crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo
-  ) |>
-  dplyr::mutate(
-    walk_mos_who = as.numeric(walk_mos_who),
-    walk_mos_kea = as.numeric(walk_mos_kea),
-    crawl_mos = as.numeric(crawl_mos)
-  )
+```{r}
+# # label: make-loco-df
+# 
+# play_loco <- hv |>
+#   dplyr::select(
+#     age_group,
+#     child_sex,
+#     language_child,
+#     site_id,
+#     subject_number,
+#     locomotor_milestones.who_walk.who_walk_onset_mo,
+#     locomotor_milestones.k_walk.k_walk_onset_mo,
+#     locomotor_milestones.crawl_onset.crawl_onset_mo
+#   ) |>
+#   dplyr::rename(
+#     walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+#     walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+#     crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo
+#   ) |>
+#   dplyr::mutate(
+#     walk_mos_who = as.numeric(walk_mos_who),
+#     walk_mos_kea = as.numeric(walk_mos_kea),
+#     crawl_mos = as.numeric(crawl_mos)
+#   )
 ```
 
 ```{r}
-xtabs(formula = ~ child_sex + age_group, data = play_loco)
+# xtabs(formula = ~ child_sex + age_group, data = play_loco)
 ```
 
 ### Check for anomalous values {-}
@@ -238,7 +241,7 @@ walk_mos_min <- 6
 #### Anomalous crawling onset {-}
 
 ```{r}
-play_loco |>
+hv |>
   dplyr::select(site_id, subject_number, crawl_mos) |>
   dplyr::filter(crawl_mos < crawl_mos_min) |>
   knitr::kable(format = 'html') 
@@ -247,7 +250,7 @@ play_loco |>
 #### Anomalous walking onset (KEA criteria) {-}
 
 ```{r}
-play_loco |>
+hv |>
   dplyr::select(site_id, subject_number, walk_mos_kea) |>
   dplyr::filter(walk_mos_kea < walk_mos_min) |>
   knitr::kable(format = 'html') 
@@ -256,7 +259,7 @@ play_loco |>
 #### Anomalous walking onset (WHO criteria) {-}
 
 ```{r}
-play_loco |>
+hv |>
   dplyr::select(site_id, subject_number, walk_mos_who) |>
   dplyr::filter(walk_mos_who < walk_mos_min) |>
   knitr::kable(format = 'html') 
@@ -264,8 +267,10 @@ play_loco |>
 
 ### Crawl onset {-}
 
-```{r fig-crawl-onset-hist, fig.cap="Age of crawling onset (mos) by sex"}
-play_loco |>
+```{r , fig.cap="Age of crawling onset (mos) by sex"}
+#| label: fig-crawl-onset-hist
+#| fig-cap: "Age of crawling onset (mos) by sex"
+hv |>
   dplyr::filter(crawl_mos > crawl_mos_min, !is.na(crawl_mos)) |>
   ggplot() +
   aes(crawl_mos, fill = child_sex) +
@@ -276,29 +281,46 @@ play_loco |>
 
 ### Walk onset {-}
 
-```{r fig-walk-mos-kea, fig.cap="Age (mos) of walking onset (KEA criteria) by sex"}
-play_loco |>
+```{r}
+#| label: fig-walk-mos-kea
+#| fig-cap: "Age (mos) of walking onset (KEA criteria) by sex"
+hv |>
   dplyr::filter(walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) |>
   ggplot() +
   aes(walk_mos_kea, fill = child_sex) +
   theme(legend.position="bottom") +
   geom_histogram(bins = 10)
+
+message("Tukey's five number summary (minimum, lower-hinge, median, upper-hinge, maximum): ")
+
+hv$walk_mos_kea |> fivenum()
 ```
 
-```{r fig-walk-mos-who, fig.cap="Age (mos) of walking onset (WHO criteria) by sex"}
-play_loco |>
+```{r}
+#| label: fig-walk-mos-who
+#| fig-cap: "Age (mos) of walking onset (WHO criteria) by sex"
+hv |>
   dplyr::filter(walk_mos_who > walk_mos_min, !is.na(walk_mos_who)) |>
   ggplot() +
   aes(walk_mos_who, fill = child_sex) +
   geom_histogram(bins=12) +
   theme(legend.position="bottom") +
   theme(legend.title = element_blank())
+
+message("Tukey's five number summary (minimum, lower-hinge, median, upper-hinge, maximum): ")
+
+hv$walk_mos_who |> fivenum()
 ```
 
-```{r fig-walk-mos-kea-who, fig.cap="Walking onset by WHO vs. KEA criteria"}
-play_loco |>
+```{r}
+#| label: fig-walk-mos-kea-who
+#| fig-cap: "Walking onset by WHO vs. KEA criteria"
+
+filtered_walk_mos <- hv |>
   dplyr::filter(walk_mos_who > walk_mos_min, !is.na(walk_mos_who), 
-                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) |>
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) 
+
+filtered_walk_mos |>
   ggplot() +
   aes(walk_mos_who, walk_mos_kea, color = child_sex) +
   geom_point() +
@@ -319,73 +341,80 @@ ggExtra::ggMarginal(
   groupColour = TRUE,
   groupFill = TRUE
 )
+
+cor.test(filtered_walk_mos$walk_mos_who, filtered_walk_mos$walk_mos_kea)
 ```
 
-```{r fig-walk-mos-kea-crawl-mos, fig.cap="Walking onset vs. Crawling"}
-play_loco |>
+```{r , fig.cap=}
+#| label: fig-walk-mos-kea-crawl-mos
+#| fig-cap: "Walking onset vs. Crawling"
+
+filtered_walk_crawl_mos <- hv |>
   dplyr::filter(crawl_mos > crawl_mos_min, !is.na(crawl_mos), 
-                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea)) |>
+                walk_mos_kea > walk_mos_min, !is.na(walk_mos_kea))
+
+filtered_walk_crawl_mos |>
   ggplot() +
   aes(crawl_mos, walk_mos_kea, color = child_sex) +
   geom_point() +
   geom_smooth(method = "lm") +
   theme(legend.position = "bottom") +
   theme(aspect.ratio = 1) +
-  theme(legend.title = element_blank()) -> walk_p
+  theme(legend.title = element_blank()) -> walk_crawl_p
 
 ggExtra::ggMarginal(
-  walk_p,
-  play_loco,
-  walk_mos_who,
+  walk_crawl_p,
+  filtered_walk_crawl_mos,
+  crawl_mos,
   walk_mos_kea,
   type = "density",
   margins = "both",
   groupColour = TRUE,
   groupFill = TRUE
 )
+
+cor.test(filtered_walk_crawl_mos$crawl_mos, filtered_walk_crawl_mos$walk_mos_kea)
 ```
 
 ## Health visualizations {-}
 
-```{r health-load-home-visit-df}
-# Load home_visit_df if not in environment
-if (!("health_df" %in% ls())) {
- targets::tar_load(health_df, store="../_targets") 
-}
-```
-
 ### Feeding {-}
 
 ```{r}
-xtabs(formula = ~ age_group + feeding_breastfeed, data = health_df)
+#| label: tbl-breastfeeding-by-age-grp
+xtabs(formula = ~ age_group + feeding_breastfeed, data = hv)
 ```
 
-```{r fig-solid-food-mos, fig.cap="Age at introduction of solid foods"}
-health_df %>%
+```{r , fig.cap=}
+#| label: fig-solid-food-mos
+#| fig-cap: "Age at introduction of solid foods"
+#| 
+hv %>%
   dplyr::select(child_sex, feeding_solidfood_age) |>
   dplyr::filter(feeding_solidfood_age < 12) |>
   ggplot() +
   aes(x = feeding_solidfood_age, color = child_sex, fill = child_sex) +
-  geom_histogram(bins = 14) +
+  geom_histogram(bins = 6) +
+  xlab("Introduction of solid foods (mos)") +
   theme(legend.title = element_blank())
 ```
 
-Clearly, there are some impossible values here.
+There are some unlikely values here.
 
 ```{r anomalous-feeding}
-health_df |>
+hv |>
   dplyr::select(participant_id, 
                 feeding_solidfood_age) |>
   dplyr::filter(feeding_solidfood_age > 12 | feeding_solidfood_age < 3) %>%
   knitr::kable(format = 'html')
 ```
 
-A preliminary look at `feeding_comments_feeding` shows that there are some names mentioned.
 
-::: {.rmdnote}
+::: {.callout-warning}
+A preliminary look at `feeding_comments` shows that there are some names mentioned.
+So, we do not view them here.
 
 We should consider flagging these in the QA process.
-
 :::
 
 ### Sleeping position {-}
@@ -394,82 +423,17 @@ These data only focus on `child_sleeping_position`.
 Other sleeping data are in the screening questionnaire.
 
 ```{r}
-sleeping_pos <- health_df |>
-  dplyr::select(child_sex, age_group, 
-                child_sleeping_position) |>
-  dplyr::filter(!is.na(child_sleeping_position))
-
-xtabs(formula = ~ child_sleeping_position + age_group, data = sleeping_pos)
+#| label: tbl-child-sleeping-position
+xtabs(formula = ~ child_sleeping_position + age_group, data = hv)
 ```
-
-### Smoking/drinking {-}
-
-```{r tab-smoking-drinking}
-smoking_drinking <- health_df |>
-  dplyr::select(age_group,
-    child_sex,
-    contains("smoking"),
-    contains("drinking")
-  )
-
-xtabs(formula = ~ pregnant_smoking + pregnant_drinking, smoking_drinking)
-```
-
-```{r tab-smoking-house-car}
-xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
-```
-
-```{r tab-comments-smoking}
-smoking_drinking |>
-  dplyr::select(comments_smoking) |>
-  dplyr::filter(!is.na(comments_smoking)) |>
-  knitr::kable(format = 'html')
-```
-
-```{r tab-comments-drinking}
-smoking_drinking |>
-  dplyr::select(comments_drinking) |>
-  dplyr::filter(!is.na(comments_drinking)) |>
-  knitr::kable(format = 'html')
-```
-
-### Patient Health Questionnaire (PHQ-4) {-}
-
-```{r fig-phq4, fig.cap="PHQ4 responses by age group and child sex"}
-phq4 <- health_df |>
-  dplyr::select(child_sex, age_group, contains("phq4_"))
-
-names(phq4) <- gsub(pattern = "phq4_", 
-                    replacement = "",
-                    names(phq4))
-
-phq4 |>
-  tidyr::pivot_longer(!c('child_sex', 'age_group'), 
-                      names_to = "question", 
-                      values_to = "response") |>
-  dplyr::filter(!is.na(response)) |>
-  dplyr::mutate(response = factor(response,
-                                  c("notatall",
-                                    "severaldays",
-                                    "morethanhalf",
-                                    "nearly")),
-                ordered = TRUE) |>
-  ggplot() +
-  aes(x = response, fill = child_sex) +
-  geom_bar() +
-  facet_grid(cols = vars(question), rows = vars(age_group)) +
-  scale_x_discrete(guide = guide_axis(angle = 90)) +
-  xlab("") +
-  theme(legend.position = "bottom", legend.title = element_blank())
-```
-
 ### Child health {-}
 
 #### Overall rating  {-}
 
-```{r tab-child-health-rating}
-child_health_rating <- health_df |>
-  dplyr::select(child_sex, age_group, child_health) |>
+```{r}
+#| label: tbl-child-health-rating
+child_health_rating <- hv |>
+  # dplyr::select(child_sex, age_group, child_health) |>
   dplyr::filter(!is.na(child_health)) |>
   dplyr::mutate(child_health = factor(child_health,
                                       c("poor",
@@ -487,17 +451,19 @@ xtabs(formula = ~ child_health + age_group, data = child_health_rating)
 #### Recent vaccination {-}
 
 ```{r}
-recent_vax <- health_df |>
-  dplyr::select(child_sex, age_group, child_vaccination) |>
-  dplyr::filter(!is.na(child_vaccination))
+#| label: tbl-recent-vaccination
+recent_vax <- hv |>
+  dplyr::select(child_sex, age_group, child_recent_vaccination) |>
+  dplyr::filter(!is.na(child_recent_vaccination))
 
-xtabs(formula = ~ child_vaccination + age_group, data = recent_vax)
+xtabs(formula = ~ child_recent_vaccination + age_group, data = recent_vax)
 ```
 
 #### Seen medical specialist {-}
 
 ```{r}
-seen_specialist <- health_df |>
+#| label: tbl-seen-specialist
+seen_specialist <- hv |>
   dplyr::select(child_sex, age_group, child_medical_specialist) |>
   dplyr::filter(!is.na(child_medical_specialist))
 
@@ -505,19 +471,41 @@ xtabs(formula = ~ child_medical_specialist + age_group, data = seen_specialist)
 ```
 
 ::: {.callout-warning}
-Manual inspection shows some possible identifying information (names) in the comments.
+Manual inspection shows some possible identifying information (names) in `child_medical_specialist_comments`.
 :::
+
+#### Hearing tested
+
+```{r}
+#| label: tbl-hearing-tested
+hearing_tested <- hv |>
+  dplyr::select(child_sex, age_group, child_hearing_tested) |>
+  dplyr::filter(!is.na(child_hearing_tested))
+
+xtabs(formula = ~ child_hearing_tested + age_group, data = hearing_tested)
+```
+
+#### Vision tested
+
+```{r}
+#| label: tbl-vision-tested
+vision_tested <- hv |>
+  dplyr::select(child_sex, age_group, child_vision_tested) |>
+  dplyr::filter(!is.na(child_vision_tested))
+
+xtabs(formula = ~ child_vision_tested + age_group, data = vision_tested)
+```
 
 #### Illnesses and allergies {-}
 
-```{r fig-illness-allergies}
-illness_allergy <- health_df |>
-  dplyr::select(child_sex, age_group, contains("illness_"))
-
-
-names(illness_allergy) <- gsub(pattern = "illness_",
-                               replacement = "",
-                               names(illness_allergy))
+```{r}
+#| label: fig-illness-allergies
+#| fig-cap: "Parent reports of child illnesses or allergies."
+illness_allergy <- hv |>
+  dplyr::select(child_sex, age_group, contains(c("allergies", "ear_infection", 
+                                                 "asthma",
+                                                 "respiratory",
+                                                 "gastrointestinal")))
 
 illness_allergy |>
   tidyr::pivot_longer(!c('child_sex', 'age_group'),
@@ -535,67 +523,854 @@ illness_allergy |>
   theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
-## Temperament visualizations {-}
-
-This page provides visualizations of the Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.
-
-### Setup {-}
-
-As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for *English-speaking families only*.
-
-The functions are found in `R/` with the prefix `ecbq_`.
-
-We create a "wide" data frame `ecbq_wide_df` as one of the targets of `targets:tar_make()`.
-We attempt to load that here and ensure that all `R/ecbq_` functions are in the local environment.
+#### Injuries
 
 ```{r}
-if (!('ecbq_wide_df' %in% ls())) {
-  targets::tar_load(ecbq_wide_df, store="../_targets")
-}
-
-if (!('ecbq_plot_all' %in% ls())) {
-  ecbq_fl <- list.files("../R", "^ecbq_", full.names = TRUE)
-  purrr::walk(ecbq_fl, source)
-}
+#| label: tbl-injuries
+xtabs(formula = ~ child_injury_times + age_group, data = hv)
 ```
+### Mom health
 
-### Summarize {-}
+#### Smoking & drinking {-}
 
 ```{r}
-ecbq_complete <- ecbq_wide_df |>
-  tidyr::complete()
+#| label: tbl-smoking-drinking
+smoking_drinking <- hv |>
+  dplyr::select(age_group,
+    child_sex,
+    contains("smoking"),
+    contains("drinking")
+  )
 
-str(ecbq_complete)
+xtabs(formula = ~ mom_pregnant_smoking + mom_pregnant_drinking, smoking_drinking)
 ```
-
-```{r tab-ecbq-age-by-sex-cases}
-xtabs(formula = ~ age_group + child_sex, ecbq_complete)
-```
-
-### Visualize {-}
 
 ```{r}
-ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+#|  label: tbl-smoking-house-car
+xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
+```
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
 
-# Omit comments
-ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments")]
+```{r, eval=FALSE}
+#| label: tbl-comments-smoking
+smoking_drinking |>
+  dplyr::select(smoking_comments) |>
+  dplyr::filter(!is.na(smoking_comments)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
 ```
 
-We use `purrr::map()` to plot all of the responses to individual ECBQ items.
-
-```{r purrr-map-ecbq-figs}
-purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete)
+```{r}
+#| label: tbl-smoking-now
+xtabs(formula = ~ mom_smoking_now, smoking_drinking)
 ```
 
-#### Comments {-}
+```{r}
+#| label: tbl-smoking-now-amt
+smoking_drinking$mom_smoking_now_amount[!is.na(smoking_drinking$mom_smoking_now_amount)]
+```
 
-Manual inspection shows that the comments field has some names.
-We omit printing the comments here until we can be assured that there is no identifiying information in the comments.
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
 
-```{r ecbq-comments, eval=FALSE}
-ecbq_complete |>
-  dplyr::select(participant_id, age_group, rothbart_comments) |>
-  dplyr::filter(!is.na(rothbart_comments)) |>
-  dplyr::arrange(age_group) |>
-  knitr::kable(format = 'html')
+```{r, eval=FALSE}
+#| label: tbl-comments-drinking
+smoking_drinking |>
+  dplyr::select(mom_drinking_comments) |>
+  dplyr::filter(!is.na(mom_drinking_comments)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+#### Patient Health Questionnaire (PHQ-4) {-}
+
+```{r}
+#| label: fig-phq4
+#| fig-cap: "PHQ4 responses by age group and child sex"
+phq4 <- hv |>
+  dplyr::select(child_sex, age_group, contains("phq4_")) |>
+  dplyr::select(-contains("comments"))
+
+names(phq4) <- gsub(pattern = "phq4_", replacement = "", names(phq4))
+
+phq4 |>
+  tidyr::pivot_longer(!c('child_sex', 'age_group'),
+                      names_to = "question",
+                      values_to = "response") |>
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(response = factor(
+    response,
+    c("notatall", "severaldays", "morethanhalf", "nearly")
+  ), ordered = TRUE) |>
+  ggplot() +
+  aes(x = response, fill = child_sex) +
+  geom_bar() +
+  facet_grid(cols = vars(question), rows = vars(age_group)) +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  xlab("") +
+  theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+## Rothbart visualizations {-}
+
+The next section provides visualizations of the Rothbart Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.
+
+::: {.callout-warning}
+As of 2024-09-12, this next section has been disabled temporarily.
+
+:::
+
+<!-- ### Setup {-} -->
+
+<!-- As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for *English-speaking families only*. -->
+
+<!-- The functions are found in `R/` with the prefix `ecbq_`. -->
+
+<!-- We create a "wide" data frame `ecbq_wide_df` as one of the targets of `targets:tar_make()`. -->
+<!-- We attempt to load that here and ensure that all `R/ecbq_` functions are in the local environment. -->
+
+<!-- ```{r} -->
+<!-- if (!('ecbq_wide_df' %in% ls())) { -->
+<!--   targets::tar_load(ecbq_wide_df, store="../_targets") -->
+<!-- } -->
+
+<!-- if (!('ecbq_plot_all' %in% ls())) { -->
+<!--   ecbq_fl <- list.files("../R", "^ecbq_", full.names = TRUE) -->
+<!--   purrr::walk(ecbq_fl, source) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ### Summarize {-} -->
+
+<!-- ```{r} -->
+<!-- ecbq_complete <- ecbq_wide_df |> -->
+<!--   tidyr::complete() -->
+
+<!-- str(ecbq_complete) -->
+<!-- ``` -->
+
+<!-- ```{r tab-ecbq-age-by-sex-cases} -->
+<!-- xtabs(formula = ~ age_group + child_sex, ecbq_complete) -->
+<!-- ``` -->
+
+<!-- ### Visualize {-} -->
+
+<!-- ```{r} -->
+<!-- ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")] -->
+
+<!-- # Omit comments -->
+<!-- ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments")] -->
+<!-- ``` -->
+
+<!-- We use `purrr::map()` to plot all of the responses to individual ECBQ items. -->
+
+<!-- ```{r purrr-map-ecbq-figs} -->
+<!-- purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete) -->
+<!-- ``` -->
+
+<!-- #### Comments {-} -->
+
+<!-- Manual inspection shows that the comments field has some names. -->
+<!-- We omit printing the comments here until we can be assured that there is no identifiying information in the comments. -->
+
+<!-- ```{r ecbq-comments, eval=FALSE} -->
+<!-- ecbq_complete |> -->
+<!--   dplyr::select(participant_id, age_group, rothbart_comments) |> -->
+<!--   dplyr::filter(!is.na(rothbart_comments)) |> -->
+<!--   dplyr::arrange(age_group) |> -->
+<!--   knitr::kable(format = 'html') -->
+<!-- ``` -->
+
+## Media use
+
+::: {.callout-warning}
+Visualization code for these variables has not been generated yet.
+:::
+
+### Home technology
+
+```{r}
+#| label: tbl-mediause.home_technology.tv
+xtabs(formula = ~ mediause.home_technology.tv, hv)
+```
+
+```{r}
+#| label: tbl-mediause.home_technology.dvd
+xtabs(formula = ~ mediause.home_technology.dvd, hv)
+```
+
+```{r}
+#| label: tbl-mediause.home_technology.computer
+xtabs(formula = ~ mediause.home_technology.computer, hv)
+```
+
+```{r}
+#| label: tbl-mediause.home_technology.ipad
+xtabs(formula = ~ mediause.home_technology.ipad, hv)
+```
+
+```{r}
+#| label: tbl-mediause.home_technology.educationalgame
+xtabs(formula = ~ mediause.home_technology.educationalgame, hv)
+```
+
+```{r}
+#| label: tbl-mediause.home_technology.videogame
+xtabs(formula = ~ mediause.home_technology.videogame, hv)
+```
+
+### Child TV
+
+```{r}
+#| label: tbl-mediause_technology_child_tv
+xtabs(formula = ~ mediause_technology_child_tv, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_tv_how
+hv |>
+  dplyr::select(mediause_tv_how) |>
+  dplyr::filter(!is.na(mediause_tv_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Child DVD
+
+```{r}
+#| label: tbl-mediause_technology_child_dvd
+xtabs(formula = ~ mediause_technology_child_dvd, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_dvd_how
+hv |>
+  dplyr::select(mediause_dvd_how) |>
+  dplyr::filter(!is.na(mediause_dvd_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Child computer
+
+```{r}
+#| label: tbl-mediause_technology_child_computer
+xtabs(formula = ~ mediause_technology_child_computer, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_computer_how
+hv |>
+  dplyr::select(mediause_computer_how) |>
+  dplyr::filter(!is.na(mediause_computer_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Child iPad
+
+```{r}
+#| label: tbl-mediause_technology_child_ipad
+xtabs(formula = ~ mediause_technology_child_ipad, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_ipad_how
+hv |>
+  dplyr::select(mediause_ipad_how) |>
+  dplyr::filter(!is.na(mediause_ipad_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Child educational
+
+```{r}
+#| label: tbl-mediause_technology_child_educational
+xtabs(formula = ~ mediause_technology_child_educational, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_educational_how
+hv |>
+  dplyr::select(mediause_educational_how) |>
+  dplyr::filter(!is.na(mediause_educational_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Child videogame
+
+```{r}
+#| label: tbl-mediause_technology_child_videogame
+xtabs(formula = ~ mediause_technology_child_videogame, hv)
+```
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r eval=FALSE}
+#| label: tbl-mediause_videogame_how
+hv |>
+  dplyr::select(mediause_videogame_how) |>
+  dplyr::filter(!is.na(mediause_videogame_how)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### TV hrs/day
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r, eval=FALSE}
+#| label: mediause_tv_hrs_per_day
+
+hv |>
+  dplyr::select(mediause_tv_hrs_per_day) |>
+  dplyr::filter(!is.na(mediause_tv_hrs_per_day)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+### Use meals
+
+```{r}
+#| label: tbl-mediause_techuse_meals
+xtabs(formula = ~ mediause_techuse_meals, hv)
+```
+
+### Use playtime
+
+```{r}
+#| label: tbl-mediause_techuse_playtime
+xtabs(formula = ~ mediause_techuse_playtime, hv)
+```
+
+### Use bedtime
+
+```{r}
+#| label: tbl-mediause_techuse_bedtime
+xtabs(formula = ~ mediause_techuse_bedtime, hv)
+```
+
+### Use transportation
+
+```{r}
+#| label: tbl-mediause_techuse_transportation
+xtabs(formula = ~ mediause_techuse_transportation, hv)
+```
+
+### Media use comments
+
+::: {.callout-warning}
+The following *may* contain identifiable data.
+:::
+
+```{r, eval=FALSE}
+#| label: mediause_comments
+
+hv |>
+  dplyr::select(mediause_comments) |>
+  dplyr::filter(!is.na(mediause_comments)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+## Pets
+
+```{r}
+#| label: tbl-pets-at-home
+xtabs(formula = ~ pets_at_home, hv)
+```
+
+
+```{r}
+hv$pets_types_number[!is.na(hv$pets_types_number)] |> head(20)
+```
+
+These data need further cleaning to be visualized properly.
+
+```{r}
+hv_pets <- hv |>
+  dplyr::mutate(dogs = stringr::str_detect(pets_types_number, "[dD]og"),
+                cats = stringr::str_detect(pets_types_number, "[cC]at"))
+```
+
+```{r}
+#| label: tbl-n-dyads-dogs-cats
+
+xtabs(formula = ~ dogs + cats, hv_pets)
+```
+
+```{r}
+#| label: tbl-pets-indoors
+xtabs(formula = ~ pets_indoors_outdoors, hv)
+```
+
+::: {.callout-warning}
+There are some identifiable elements in the `comments_pets` field.
+:::
+
+```{r, eval=FALSE}
+#| label: pets-comments
+
+hv |>
+  dplyr::select(comments_pets) |>
+  dplyr::filter(!is.na(comments_pets)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+## Division of Labor
+
+::: {.callout-warning}
+Visualization code for these variables has not been generated yet.
+:::
+
+### Laundry
+
+```{r}
+#| label: fig-laundry_self
+hv |>
+  ggplot() +
+  aes(x = laundry_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-laundry_partner
+hv |>
+  ggplot() +
+  aes(x = laundry_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-laundry_otherperson
+hv |>
+  ggplot() +
+  aes(x = laundry_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_laundry_otherperson
+hv |>
+  dplyr::select(labor_laundry_otherperson) |>
+  dplyr::filter(!is.na(labor_laundry_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+
+### Cleaning
+
+```{r}
+#| label: fig-cleaning_self
+hv |>
+  ggplot() +
+  aes(x = cleaning_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-cleaning_partner
+hv |>
+  ggplot() +
+  aes(x = cleaning_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-cleaning_otherperson
+hv |>
+  ggplot() +
+  aes(x = cleaning_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_cleaning_otherperson
+hv |>
+  dplyr::select(labor_cleaning_otherperson) |>
+  dplyr::filter(!is.na(labor_cleaning_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Dishes
+
+```{r}
+#| label: fig-dishes_self
+hv |>
+  ggplot() +
+  aes(x = dishes_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-dishes_partner
+hv |>
+  ggplot() +
+  aes(x = dishes_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-dishes_otherperson
+hv |>
+  ggplot() +
+  aes(x = dishes_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_dishes_otherperson
+hv |>
+  dplyr::select(labor_dishes_otherperson) |>
+  dplyr::filter(!is.na(labor_dishes_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Cooking
+
+```{r}
+#| label: fig-cooking_self
+hv |>
+  ggplot() +
+  aes(x = cooking_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-cooking_partner
+hv |>
+  ggplot() +
+  aes(x = cooking_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-cooking_otherperson
+hv |>
+  ggplot() +
+  aes(x = cooking_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_cooking_otherperson
+hv |>
+  dplyr::select(labor_cooking_otherperson) |>
+  dplyr::filter(!is.na(labor_cooking_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Feeding
+
+```{r}
+#| label: fig-feeding_self
+hv |>
+  ggplot() +
+  aes(x = feeding_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-feeding_partner
+hv |>
+  ggplot() +
+  aes(x = feeding_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-feeding_otherperson
+hv |>
+  ggplot() +
+  aes(x = feeding_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_feeding_otherperson
+hv |>
+  dplyr::select(labor_feeding_otherperson) |>
+  dplyr::filter(!is.na(labor_feeding_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Drop-off/pick-up
+
+```{r}
+#| label: fig-droppick_self
+hv |>
+  ggplot() +
+  aes(x = droppick_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-droppick_partner
+hv |>
+  ggplot() +
+  aes(x = droppick_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-droppick_otherperson
+hv |>
+  ggplot() +
+  aes(x = droppick_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_droppick_otherperson
+hv |>
+  dplyr::select(labor_droppick_otherperson) |>
+  dplyr::filter(!is.na(labor_droppick_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Bedtime
+
+```{r}
+#| label: fig-bed_self
+hv |>
+  ggplot() +
+  aes(x = bed_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-bed_partner
+hv |>
+  ggplot() +
+  aes(x = bed_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-bed_otherperson
+hv |>
+  ggplot() +
+  aes(x = droppick_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_bed_otherperson
+hv |>
+  dplyr::select(labor_bed_otherperson) |>
+  dplyr::filter(!is.na(labor_bed_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Disciplining
+
+```{r}
+#| label: fig-disciplining_self
+hv |>
+  ggplot() +
+  aes(x = disciplining_self, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-disciplining_partner
+hv |>
+  ggplot() +
+  aes(x = disciplining_partner, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+#| label: fig-disciplining_otherperson
+hv |>
+  ggplot() +
+  aes(x = disciplining_otherperson, color = child_sex, fill = child_sex) +
+  geom_histogram(bins = 6) +
+  theme(legend.title = element_blank())
+```
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-labor_disciplining_otherperson
+hv |>
+  dplyr::select(labor_disciplining_otherperson) |>
+  dplyr::filter(!is.na(labor_disciplining_otherperson)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+### Comments
+
+::: {.callout-warning}
+There may be identifiable elements in the next field, so we do not render it.
+:::
+
+```{r, eval=FALSE}
+#| label: tbl-comments_division_labor
+hv |>
+  dplyr::select(comments_division_labor) |>
+  dplyr::filter(!is.na(comments_division_labor)) |>
+  kableExtra::kable(format = 'html') |>
+    kableExtra::kable_classic()
+```
+
+## Typical day
+
+```{r}
+#| label: tbl-typical-behavior
+xtabs(formula = ~ typical_behavior, hv)
+```
+
+::: {.callout-warning}
+The following code will permit visualization of the comments, but the data should be checked for identifiable information before putting it in this document.
+:::
+
+```{r eval=FALSE}
+hv |>
+  dplyr::select(typical_behavior_specifics) |>
+  dplyr::filter(!is.na(typical_behavior_specifics)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+```{r}
+#| label: tbl-typical_activities
+xtabs(formula = ~ typical_activities, hv)
+```
+
+::: {.callout-warning}
+The following code will permit visualization of the comments, but the data should be checked for identifiable information before putting it in this document.
+:::
+
+```{r eval=FALSE}
+hv |>
+  dplyr::select(typical_activities_specifics) |>
+  dplyr::filter(!is.na(typical_activities_specifics)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+```{r}
+#| label: tbl-typical_nightmorning
+xtabs(formula = ~ typical_nightmorning, hv)
+```
+
+::: {.callout-warning}
+The following code will permit visualization of the comments, but the data should be checked for identifiable information before putting it in this document.
+:::
+
+```{r eval=FALSE}
+hv |>
+  dplyr::select(typical_nightmorning_specifics) |>
+  dplyr::filter(!is.na(typical_nightmorning_specifics)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
+
+```{r}
+#| label: tbl-typical_otherthanme
+xtabs(formula = ~ typical_otherthanme, hv)
+```
+
+::: {.callout-warning}
+The following code will permit visualization of the comments, but the data should be checked for identifiable information before putting it in this document.
+:::
+
+```{r eval=FALSE}
+hv |>
+  dplyr::select(typical_otherthanme_specifics) |>
+  dplyr::filter(!is.na(typical_otherthanme_specifics)) |>
+  knitr::kable(format = 'html') |>
+  kableExtra::kable_classic()
 ```

@@ -1,695 +1,256 @@
-# Home visit: Cleaning
+# Home visit: Clean variables
 
-## Setup
+## Background
 
-```{r}
-suppressPackageStartupMessages(library("tidyverse"))
-```
+This page describes how the aggregate files are cleaned, measure by measure.
 
-
-## Remove identifiers {-}
-
-The function `remove_identifiers()` in `R/kobo_export` detects the presence of names, addresses, phone numbers, email, and dates in the field names for an input file and removes these fields.
-It also modifies the file name by appending `_deidentified`.
-
-The `remove_identifiers()` function detects these fields
-For clarity, we print it here.
+## Load data file
 
 ```{r}
-source("~/rrr/KoBoToolbox/R/_OLD/functions.R", echo = FALSE, print.eval = FALSE)
-remove_identifiers
-```
-
-The **non-MBCDI file** contains the identifiers, so that is the target of this removal process.
-
-::: {.rmdnote}
-Note that we have added `data` to `.gitignore` in `protocol/`, the root directory for the HTML protocol, so *none* of the data files should be made available via git or GitHub. This also means that there is **no version control** being done on raw data files themselves.
-:::
-
-```
-tar_target(
-  home_visit_remove_identifiers,
-  purrr::map_chr(
-    home_visit_non_mbcdi,
-    open_deidentify_save,
-    csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
-      these_questions = 'non_mbcdi'
-  )
-)
-```
-
-## Quality assurance (QA) reviews {-}
-
-### MB-CDI files {-}
-
-::: {.callout-note}
-
-To be completed.
-
-:::
-
-### Non-MB-CDI files {-}
-
-Create a helper function to create a data set with summary information about the data files.
-
-```{r define-qa-helper}
-summarize_non_mbcdi_qs <- function(fn) {
-  stopifnot(is.character(fn))
-  
-  if (!file.exists(fn)) {
-    stop('File not found `', fn, '`')
-  } else {
-    df <- readr::read_csv(fn, show_col_types = FALSE)
-    if (!is.data.frame(df)) {
-      stop('Error reading data frame')
-    } else {
-      out_df <-
-        tibble(
-          file_name = basename(fn),
-          n_rows = dim(df)[1],
-          n_vars = dim(df)[2]
-        )
-      dplyr::arrange(out_df, file_name)
-    }
-  }
+if (!('home_visit_df' %in% ls())) {
+  targets::tar_load(home_visit_df, store="../_targets")
 }
 ```
 
-Select the de-identified CSVs to examine.
-
-```{r generate-qa-report}
-fl <-
-  list.files(
-    file.path("../data/csv/home_visit/non_mbcdi/deid"),
-    '^[0-9]+_non_mbcdi_[12|18|24].*deidentified',
-    full.names = TRUE
-  )
-
-PLAY_forms <- purrr::map_df(fl, summarize_non_mbcdi_qs)
-
-PLAY_forms %>%
-  knitr::kable(., format = 'html') %>%
-  kableExtra::kable_classic()
-```
-
-The later forms (with higher form numbers--the leading integers in the file names) are the newer ones.
-These generally have the largest number of entries and have similar numbers of columns--either 287 or 288.
-Accordingly, we focus our cleaning efforts here first.
-
-We start with the data files that have $n=288$ columns.
+## Remove metadata variables
 
 ```{r}
-df740623 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv",
-    show_col_types = FALSE
-  )
+metadata_cols <- stringr::str_detect(names(home_visit_df), "note|instructions|acknowledge")
 
-df740624 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv",
-    show_col_types = FALSE
-  )
+no_metadata_cols_index <- seq_along(home_visit_df)[!metadata_cols]
 
-sum(names(df740623) == names(df740624))
+home_visit_df_trim <- home_visit_df |>
+  dplyr::select(all_of(no_metadata_cols_index)) |>
+  dplyr::select(-start,
+                -end)
 ```
+
+The untrimmed data frame had `r dim(home_visit_df)[2]` variables.
+The trimmed data frame has `r dim(home_visit_df_trim)[2]` variables.
+
+## Language variables
+
+The raw file contains separate variables indicating whether the child is exposed to English and Spanish at home. We leave those for now.
+
+## Locomotion variables
 
 ```{r}
-df740625 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740623) == names(df740625))
-```
-
-```{r}
-df740628 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740623) == names(df740628))
-```
-
-So, four of the most recent data files with $n=288$ columns can be aggregated without modification.
-
-Let's turn to the more recent files with $n=287$ columns.
-
-```{r}
-df740626 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-df740627 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740626) == names(df740627))
-```
-
-Where does the misalignment arise?
-
-```{r}
-names(df740626) == names(df740627)
-```
-
-The misalignment arises somewhere near column 92.
-
-```{r}
-df740629 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740626) == names(df740629))
-```
-
-So, `df740626` and `df740629` are aligned and can be merged.
-
-```{r}
-df740630 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740626) == names(df740630))
-names(df740626) == names(df740630)
-```
-
-These files also fall out of alignment near column 92.
-
-```{r}
-df740631 <-
-  readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-
-sum(names(df740626) == names(df740631))
-names(df740626) == names(df740631)
-```
-
-And these files fall out of alignment near column 92.
-
-Let's see if `df740627`, `df740630`, and `df740631` are aligned with one another.
-
-```{r}
-sum(names(df740627) == names(df740630))
-sum(names(df740627) == names(df740631))
-```
-
-Yes, they are. So, these three can be merged. 
-We do that first, then address the discrepancies between aggregates.
-
-### 'Older' forms {-}
-
-The "older" forms have varied numbers of columns.
-We focus on thos with data (n_vars > 0)
-
-```{r}
-df307736 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df331453 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df331848 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df334099 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df363349 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df363381 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df363431 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df408149 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv",
-    show_col_types = FALSE
-  )
-df411456 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv",
-    show_col_types = FALSE
-  )
-df411469 <-
-  read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv",
-    show_col_types = FALSE
-  )
-```
-
-Let's look at the two forms that have the same number of columns, $n=274$, 307736 and 331453.
-
-```{r}
-names(df307736) == names(df331453)
-length(names(df307736) == names(df331453)) == length(names(df307736))
-```
-So, these two are identical and could be merged.
-
-```
-tar_target(files_274_cols, stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)"))
-
-tar_target(df_merge_274_cols, make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]))
-```
-
-How about the files with $n=267$ columns, 331848 and 334099?
-
-```{r}
-names(df331848) == names(df334099)
-length(names(df331848) == names(df334099)) == length(names(df331848))
-```
-
-```{r}
-names(df331848) |> head()
-names(df334099) |> head()
-```
-There is an odd difference in the group label, `group_combinedquestionnaires` vs. `group_jo84c13`.
-
-Let's try deleting the initial group labels and compare again.
-
-```{r}
-n1 <- names(df331848)
-n2 <- names(df334099)
-
-names(df331848) %>% stringr::str_remove("group_combinedquestionnaires/") |> head()
-names(df334099) %>% stringr::str_remove("group_jo84c13/") |> head()
-```
-
-That looks promising.
-
-```{r}
-names(df331848) %>% stringr::str_remove("group_combinedquestionnaires/") -> n1
-names(df334099) %>% stringr::str_remove("group_jo84c13/") -> n2
-n1 == n2
-```
-```{r}
-cbind(n1[8:15], n2[8:15])
-```
-
-`n2` or `df334099` has a `child_birth_date` field in position 9 that the other data frame does not have.
-
-```{r}
-n1 |> str_detect("child_birth_date") |> sum()
-```
-
-If we delete that variable, the data frames will no longer have the same number of columns.
-Let's explore that anyway.
-
-```{r}
-n2_2 <- n2[-9]
-
-n1 == n2_2
-```
-
-That helps a bit, but we diverge around column 29.
-
-```{r}
-cbind(n1[28:51], n2_2[28:51])
-```
-
-These question labels looks very similar.
-There are just some minor changes in the variable names.
-`n2_2` has an extra variable in column 40.
-
-```{r}
-n2_3 <- n2_2[-40]
-```
-
-Then, we can rename some of the columns in `n2_3` using corresponding names from `n1`.
-
-```{r}
-n2_3 |> stringr::str_replace("yes__in_the_bi", "birthhospital") |> stringr::str_replace("yes__after_goi", "afterhome") |> stringr::str_replace("don_t_know", "donotknow") -> n2_4
-
-n1 == n2_4
-```
-
-```{r}
-cbind(n1[39:51], n2_4[39:51])
-```
-
-`n1` has a `group_medicalprof` label from `allergies` through `gastrointestinal`; `n2_4` has `child_allergies_infections_ill` for the same questions.
-
-```{r}
-n2_4 |> stringr::str_replace("child_allergies_infections_ill", "group_medicalprof") -> n2_5
-n1 == n2_5
-```
-
-
-```{r}
-cbind(n1[49:60], n2_5[49:60])
-```
-
-It looks like these could be reconciled by deleting `prenatal_care` from `n1`.
-
-```{r}
-n1_2 <- n1[-50]
-n1_2 == n2_5
-```
-```{r}
-cbind(n1_2[64:75], n2_5[64:75])
-```
-
-It looks like the phq4 is *not* in `n2_5`.
-
-Let's check.
-
-```{r}
-n2_5 |> stringr::str_detect("phq4") |> sum()
-```
-
-Yes, there are only two PHQ4-related questions in `df334099`.
-
-```{r}
-df334099 |> names() |> stringr::str_detect("phq4") |> sum()
-```
-
-This path of reconciliation does not appear fruitful.
-
-## Make aggregate files {-}
-
-### non-MB-CDI files with $n=288$ columns {-}
-
-```
-tar_target(files_288_cols, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-                      "2[3458]_non_mbcdi.*_deidentified\\.csv")
+loco_admin_cols <- names(home_visit_df_trim) %in% c(
+  "locomotor_milestones.date_format",
+  "locomotor_milestones.calc_5mo",
+  "locomotor_milestones.calc_6mo",
+  "locomotor_milestones.calc_7mo",
+  "locomotor_milestones.calc_8mo",
+  "locomotor_milestones.calc_9mo",
+  "locomotor_milestones.calc_10mo",
+  "locomotor_milestones.calc_11mo",
+  "locomotor_milestones.calc_12mo",
+  "locomotor_milestones.calc_13mo",
+  "locomotor_milestones.calc_14mo",
+  "locomotor_milestones.calc_15mo",
+  "locomotor_milestones.calc_16mo",
+  "locomotor_milestones.who_walk.walk_onset_check",
+  "locomotor_milestones.holiday1.holiday_jan",
+  "locomotor_milestones.holiday1.holiday_feb",
+  "locomotor_milestones.holiday1.holiday_marchapril",
+  "locomotor_milestones.holiday1.holiday_may",
+  "locomotor_milestones.holiday1.holiday_june",
+  "locomotor_milestones.holiday1.holiday_july",
+  "locomotor_milestones.holiday1.holiday_sep",
+  "locomotor_milestones.holiday1.holiday_oct",
+  "locomotor_milestones.holiday1.holiday_nov",
+  "locomotor_milestones.holiday1.holiday_dec",
+  "locomotor_milestones.holiday1.memorable_events",
+  "locomotor_milestones.k_walk.k_walk_onset_check",
+  "locomotor_milestones.crawl_onset.crawl_onset_check",
+  "locomotor_milestones.holiday2.holiday_jan2",
+  "locomotor_milestones.holiday2.holiday_feb2",
+  "locomotor_milestones.holiday2.holiday_marchapril2",
+  "locomotor_milestones.holiday2.holiday_may2",
+  "locomotor_milestones.holiday2.holiday_june2",
+  "locomotor_milestones.holiday2.holiday_july2",
+  "locomotor_milestones.holiday2.holiday_sep2",
+  "locomotor_milestones.holiday2.holiday_oct2",
+  "locomotor_milestones.holiday2.holiday_nov2",
+  "locomotor_milestones.holiday2.holiday_dec2",
+  "locomotor_milestones.holiday2.memorable_events2"
 )
 
-tar_target(df_merge_288_cols,
-    make_aggregate_data_file(
-        home_visit_remove_identifiers[files_288_cols])
-)
+loco_admin_index <- seq_along(home_visit_df_trim)[!loco_admin_cols]
+
+home_visit_df_loco <- home_visit_df_trim |>
+  dplyr::select(all_of(loco_admin_index)) |>
+  dplyr::rename(
+    walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
+    walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
+    crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo,
+    walk_onset_date_kea = locomotor_milestones.k_walk.k_walk_onset_date,
+    walk_onset_date_who = locomotor_milestones.who_walk.who_walk_onset_date,
+    walk_onset_comments_who = locomotor_milestones.who_walk.comments_who_walk_onset,
+    walk_onset_comments_kea = locomotor_milestones.k_walk.comments_k_walk_onset,
+    crawl_onset_date = locomotor_milestones.crawl_onset.crawl_onset_date,
+    crawl_onset_comments = locomotor_milestones.crawl_onset.comments_crawl_onset
+  ) |>
+  dplyr::mutate(
+    walk_mos_who = as.numeric(walk_mos_who),
+    walk_mos_kea = as.numeric(walk_mos_kea),
+    crawl_mos = as.numeric(crawl_mos)
+  )
 ```
 
-### non-MB-CDI files with $n=287$ columns {-}
-
-```
-tar_target(files_287_cols_1, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-          "2[69]_non_mbcdi.*_deidentified\\.csv")),
-tar_target(files_287_cols_2, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-          "(740627|740630|740631)_non.*_deidentified\\.csv")),
-tar_target(df_merge_287_cols_1,
-  make_aggregate_data_file(
-          home_visit_remove_identifiers[files_287_cols_1])),
-tar_target(df_merge_287_cols_2,
-  make_aggregate_data_file(
-          home_visit_remove_identifiers[files_287_cols_2])),
-```
-
-### Examine groups with $n=287$ cols {-}
-
-We focus on the starting column where the column names diverge, column 92.
+## Health variables
 
 ```{r}
-targets::tar_load(df_merge_287_cols_1, store="../_targets")
-targets::tar_load(df_merge_287_cols_2, store="../_targets")
-names(df_merge_287_cols_1)[92]
-names(df_merge_287_cols_2)[92]
+health_admin_cols <- names(home_visit_df_loco) %in% c('instructions',
+                                                      'note',
+                                                      'doctor_told_you')
+
+health_admin_index <- seq_along(home_visit_df_loco)[!health_admin_cols]
+
+home_visit_df_health <- home_visit_df_loco |>
+   dplyr::select(all_of(health_admin_index)) |>
+  dplyr::rename(
+    feeding_breastfeed = health.feeding_nutrition.breastfeed,
+    feeding_solidfood_age = health.feeding_nutrition.solidfood_age,
+    feeding_comments = health.feeding_nutrition.comments_feeding,
+    child_sleeping_position = health.general_health.child_sleeping_position,
+    child_health = health.general_health.child_health,
+    child_recent_vaccination = health.general_health.child_vaccination,
+    child_medical_specialist = health.general_health.child_medical_specialist,
+    child_medical_specialist_comments = health.general_health.comments_child_medical_special,
+    child_hearing_tested = health.general_health.child_hearing_tested,
+    child_vision_tested = health.general_health.child_vision_tested,
+    child_allergies = health.general_health.child_allergies_infections_ill.allergies,
+    child_ear_infection = health.general_health.child_allergies_infections_ill.ear_infection,
+    child_asthma = health.general_health.child_allergies_infections_ill.asthma,
+    child_respiratory = health.general_health.child_allergies_infections_ill.respiratory,
+    child_gastrointestinal = health.general_health.child_allergies_infections_ill.gastrointestinal,
+    child_allergy_illness_comments = health.general_health.comments_allergy_etc,
+    child_injury_times = health.general_health.child_injury_times,
+    child_injury_comments = health.general_health.comment_injury,
+    child_health_comments = health.general_health.comments_general_health,
+    mom_prenatal_care = health.prenatal.prenatal_care,
+    mom_prenatal_care_comments = health.prenatal.comments_prenatal,
+    mom_pregnant_smoking = health.smoking.pregnant_smoking,
+    mom_pregnant_smoking_trimester_1 = health.smoking.smoking_trimester_1,
+    mom_pregnant_smoking_trimester_2 = health.smoking.smoking_trimester_2,
+    mom_pregnant_smoking_trimester_3 = health.smoking.smoking_trimester_3,
+    mom_smoking_now = health.smoking.mom_smoking_now,
+    mom_smoking_now_amount = health.smoking.mom_smoking_now_amount,
+    smoking_house = health.smoking.smoking_house,
+    smoking_car = health.smoking.smoking_car,
+    smoking_comments = health.smoking.comments_smoking,
+    mom_pregnant_drinking = health.drinking.pregnant_drinking,
+    mom_drinking_trimester_1 = health.drinking.drinking_trimester_1,
+    mom_drinking_trimester_2 = health.drinking.drinking_trimester_2,
+    mom_drinking_trimester_3 = health.drinking.drinking_trimester_3,
+    mom_drinking_comments = health.drinking.comments_drinking,
+    phq4_nervous = health.phq4.phq4_nervous,
+    phq4_worrying = health.phq4.phq4_worrying,
+    phq4_littleinterest = health.phq4.phq4_littleinterest,
+    phq4_down = health.phq4.phq4_down,
+    phq4_comments = health.phq4.comments_phq4
+  ) |>
+  # Remove duplicating variables
+  dplyr::select(-health.general_health.child_hearing_tested.birthhospital,
+                -health.general_health.child_hearing_tested.afterhome,
+                -health.general_health.child_hearing_tested.no,
+                -health.general_health.child_hearing_tested.refused,
+                -health.general_health.child_hearing_tested.donotknow,
+                -health.general_health.child_vision_tested.birthhospital,
+                -health.general_health.child_vision_tested.afterhome,
+                -health.general_health.child_vision_tested.no,
+                -health.general_health.child_vision_tested.refused,
+                -health.general_health.child_vision_tested.donotknow)
 ```
 
-There is an erroneous `group_locomotor_milestones.` in the `df_merge_287_cols_2` column name.
-
-A bit of sleuthing determines that this `group_locomotor_milestones.` label is characteristic of columns 92 to 273.
+## Rothbart ECBQ
 
 ```{r}
-names(df_merge_287_cols_2)[92:273] |> stringr::str_detect(pattern = "group_locomotor_milestones")
+rothbart_vars <- stringr::str_detect(names(home_visit_df_health), 'rothbart')
+
+new_rothbart_var_names <- stringr::str_replace(names(home_visit_df_health)[rothbart_vars], "rothbart\\.rothbartquestions\\.", "")
+
+names(home_visit_df_health)[rothbart_vars] <- new_rothbart_var_names
+
+home_visit_ecbq <- home_visit_df_health |>
+  dplyr::rename(comments_rothbart = rothbart.comments_rothbart)
 ```
 
-The following should fix this.
+## Media use
 
 ```{r}
-old_names <- names(df_merge_287_cols_2)
-new_names <- old_names
-new_names[92:273] <-
-  stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
-names(df_merge_287_cols_2) <- new_names
+home_visit_mediause <- home_visit_df_health |>
+  dplyr::rename(mediause_home_technology = mediause.home_technology,
+                mediause_technology_child_tv = mediause.technology_child_tv,
+                mediause_technology_child_computer = mediause.technology_child_computer,
+                mediause_technology_child_ipad = mediause.technology_child_ipad,
+                mediause_technology_child_dvd = mediause.technology_child_dvd,
+                mediause_technology_child_educational = mediause.technology_child_educational,
+                mediause_technology_child_videogame = mediause.technology_child_videogame,
+                mediause_tv_how = mediause.tv_how,
+                mediause_dvd_how = mediause.dvd_how,
+                mediause_computer_how = mediause.computer_how,
+                mediause_ipad_how = mediause.ipad_how,
+                mediause_educational_how = mediause.educational_how,
+                mediause_videogame_how = mediause.videogame_how,
+                mediause_tv_hrs_per_day = mediause.tv_hours_per_day,
+                mediause_techuse_meals = mediause.techuse.meals,
+                mediause_techuse_playtime = mediause.techuse.playtime,
+                mediause_techuse_bedtime = mediause.techuse.bedtime,
+                mediause_techuse_transportation = mediause.techuse.transportation,
+                mediause_comments = mediause.comments_technology)
 ```
+
+## Pets
 
 ```{r}
-names(df_merge_287_cols_2) == names(df_merge_287_cols_1)
+home_visit_pets <- home_visit_mediause |>
+  dplyr::rename(pets_at_home = pets.pets_at_home,
+                pets_types_number = pets.pets_types_number,
+                pets_indoors_outdoors = pets.pets_indoors_outdoors,
+                comments_pets = pets.comments_pets)
+
+unique(home_visit_pets$pets_types_number) |> head(20)
 ```
 
-We have a second problem with columns from 114 to 210.
+## Division of labor
 
 ```{r}
-rbind(names(df_merge_287_cols_1)[113:115], names(df_merge_287_cols_2)[113:115])
+home_visit_labor <- home_visit_pets
+names(home_visit_labor) <- stringr::str_remove(names(home_visit_labor), "division_labor\\.") |>
+  stringr::str_remove("laundry\\.") |>
+  stringr::str_remove("cleaning\\.") |>
+  stringr::str_remove("dishwashing\\.") |>
+  stringr::str_remove("cooking\\.") |>
+  stringr::str_remove("feeding\\.") |>
+  stringr::str_remove("droppick\\.") |>
+  stringr::str_remove("bed\\.") |>
+  stringr::str_remove("disciplining\\.")
+
+home_visit_labor <- home_visit_labor |>
+  dplyr::select(-instruction_dishes)
 ```
 
-One of the problems has to do with column 114. There is a question ending `doctor_told_you` in `names(df_merge_287_cols_1)` but not in `names(df_merge_287_cols_2)`.
+## Typical day
 
 ```{r}
-names(df_merge_287_cols_1) |> stringr::str_detect(pattern = "doctor_told_you") |> sum()
-names(df_merge_287_cols_2) |> stringr::str_detect(pattern = "doctor_told_you") |> sum()
+home_visit_clean <- home_visit_labor
+names(home_visit_clean) <- stringr::str_remove(names(home_visit_clean), "typical_day\\.")
+names(home_visit_clean)
 ```
 
-Deleting this question would create additional misalignments and further problems.
-We cannot proceed without further discussion with our team.
+## Save cleaned file
 
-For now, let's generate an array with all of the remaining differences in column names.
+Save with "latest" label.
 
 ```{r}
-names_differ <- (names(df_merge_287_cols_2) != names(df_merge_287_cols_1))
-sum(names_differ)
+readr::write_csv(home_visit_clean, "../data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv")
 ```
+
+Save with date-stamp for quality control.
 
 ```{r}
-rbind(names(df_merge_287_cols_1)[names_differ], names(df_merge_287_cols_2)[names_differ])
+fn <- paste0("../data/csv/home_visit/agg/PLAY-non-mcdi-", Sys.Date(), ".csv")
+readr::write_csv(home_visit_clean, fn)
 ```
-
-Visual inspection suggests that these are similar with the following deviations:
-
-- As noted, `df_merge_287_cols_1` has a column ending `doctor_told_you` that is not present in `df_merge_287_cols_2`.
-- `df_merge_287_cols_2` has a column ending `technology_use_scale` that is not present in the `df_merge_287_cols_1`
-- There are a set of fields in `group_databrary` that do not align exactly. We will almost certainly delete these, so the misalignment is not a huge problem.
-
-As an exploration, let's see if we can reconcile these by deleting the non-aligning columns.
-
-```{r}
-df1 <- df_merge_287_cols_1
-df2 <- df_merge_287_cols_2
-
-df1 <- df1 %>%
-  dplyr::select(., -contains('doctor_told_you'))
-
-df2 <- df2 %>%
-  dplyr::select(., -contains('technology_use_scale'))
-
-old_names <- names(df2)
-new_names <- old_names
-new_names[92:273] <- stringr::str_remove(new_names[92:273], "group_locomotor_milestones\\.")
-names(df2) <- new_names
-
-names(df1) == names(df2)
-```
-
-This looks promising.
-
-```{r}
-rbind(names(df1)[263], names(df2)[263])
-```
-
-This is easily fixed.
-
-```{r}
-names(df1)[263] <- names(df2)[263]
-```
-
-```{r}
-rbind(names(df1)[273:275], names(df2)[273:275])
-```
-
-The last misalignments relate to Databrary fields.
-
-```{r}
-df1 <- df1 %>%
-  dplyr::select(., -contains('group_databrary'))
-
-df2 <- df2 %>%
-  dplyr::select(., -contains('group_databrary'))
-
-names(df1) == names(df2)
-```
-
-Success!
-
-## Combining the two groups of datasets {-}
-
-Now, let's go back to the data frame with 288 cols and see if we can bring these into alignment.
-
-```{r}
-targets::tar_load(df_merge_288_cols, store="../_targets")
-
-df3 <- df_merge_288_cols
-
-df3 <- df3 %>%
-  dplyr::select(., -contains('group_databrary'))
-
-c(dim(df1), dim(df2), dim(df3))
-
-names(df1) == names(df3)
-rbind(names(df1)[114:115], names(df3)[114:115])
-```
-
-Once again, there appears to be a problem with the 'doctor_told_you' field. We'll delete it to see if this fixes one of the problems.
-
-```{r}
-df3 <- df3 %>%
-  dplyr::select(., -contains('doctor_told_you'))
-
-names(df1) == names(df3)
-```
-
-We still have misalignments at column 210.
-
-```{r}
-rbind(names(df1)[210:213], names(df3)[210:213])
-```
-
-The 'technology_use_scale` exists in one but not the other.
-
-```{r}
-df3 <- df3 %>%
-  dplyr::select(., -contains('technology_use_scale'))
-
-rbind(dim(df1), dim(df3))
-
-names(df1) == names(df3)
-```
-
-:::{.rmdimportant}
-Future versions of the workflow will need to handle this more elegantly. 
-
-Option 1: Fix the underlying forms.
-
-Option 2: Add the 'missing' columns as NA in post-processing.
-:::
-
-For now, I'm going to create functions that align these data frames.
-These are incorporated into `R/functions.R` so we do not source them again here.
-
-```{r, eval=FALSE}
-remove_technology_use_scale <- function(df) {
-  dplyr::select(df, -contains('technology_use_scale'))
-}
-
-remove_doctor_told_you <- function(df) {
-  dplyr::select(df, -contains('doctor_told_you'))
-}
-
-remove_databrary_fields <- function(df) {
-  dplyr::select(df, -contains('group_databrary'))
-}
-
-reconcile_typicalday <- function(df) {
-  names(df) <- stringr::str_replace_all(names(df), 'typicalday', 'typical_day')
-  df
-}
-
-remove_permissive_locomotor_milestones_label <- function(df) {
-  old_names <- names(df)
-  new_names <- old_names
-  contains_locomotor <-
-    stringr::str_detect(new_names, pattern = "locomotor_milestones.*health|division|rothbart|mediause|pets|typical|acknowledge")
-  new_names[contains_locomotor] <-
-    stringr::str_remove(new_names[contains_locomotor], "group_locomotor_milestones\\.")
-  names(df) <- new_names
-  df
-}
-
-remove_X_meta_cols <- function(df) {
-  dplyr::select(df, -contains("X_"), -contains("meta.instanceID"))
-}
-
-remove_redundant_group_labels <- function(df) {
-  names(df) <- stringr::str_remove_all(names(df), 'group_homevisitquestionnaires\\.')
-  names(df) <- stringr::str_remove_all(names(df), 'group_combinedquestionnaires\\.')
-  df
-}
-
-clean_dfs <- function(df) {
-  df %>%
-    reconcile_typicalday() %>%
-    remove_technology_use_scale() %>%
-    remove_doctor_told_you() %>%
-    remove_permissive_locomotor_milestones_label() %>%
-    remove_databrary_fields() %>%
-    remove_X_meta_cols() %>%
-    remove_redundant_group_labels()
-}
-```
-
-Let's test this workflow with the unmodified files.
-
-```{r}
-targets::tar_load(df_merge_287_cols_1, store="../_targets")
-targets::tar_load(df_merge_287_cols_2, store="../_targets")
-targets::tar_load(df_merge_288_cols, store="../_targets")
-
-df1m <- clean_dfs(df_merge_287_cols_1)
-dim(df1m)
-
-df2m <- clean_dfs(df_merge_287_cols_2)
-dim(df2m)
-
-df3m <- clean_dfs(df_merge_288_cols)
-dim(df3m)
-
-(names(df1m) == names(df2m)) |> sum()
-(names(df1m) == names(df3m)) |> sum()
-```
-
-### Merging files at last {-}
-
-```{r, eval=FALSE}
-df <- rbind(df1m, df2m, df3m)
-```
-
-::: {.rmdnote}
-As of 2022-12-15, the above has now been incorporated into `R/functions.R` and into the `_targets.R` workflow.
-:::
-
-## Merge with Databrary info {-}
-
-For each session (row) in the merged data frame, we pull data from the associated Databrary volume and session.
-These data are merged with that drawn from KBT.
-
-```
-tar_target(
-  home_visit_w_databrary_df,
-  add_databrary_info_to_home_visit_df(home_visit_df)
-)
-```
-
-The `add_databrary_info_to_home_visit()` function in `R/functions.R` does most of the work.

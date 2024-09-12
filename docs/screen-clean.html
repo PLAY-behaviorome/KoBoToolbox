@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Screening: Cleaning – Play Survey Data</title>
+<title>Screening: Cleaning – PLAY Survey Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Play Survey Data</a> 
+      <a href="./">PLAY Survey Data</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/PLAY-behaviorome/KoBoToolbox/tree/main/src/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -201,7 +201,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./home-visit-clean.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Home visit: Cleaning</span></a>
+  <a href="./home-visit-aggregate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Home visit: Create aggregates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./home-visit-clean.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Home visit: Clean variables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -808,10 +813,10 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>group_name
    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
-          1          43          86         669         112 </code></pre>
+          1          43          86         670         113 </code></pre>
 </div>
 </div>
-<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=43 sessions with NA in the <code>group_name</code>.</p>
+<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=41 sessions with NA in the <code>group_name</code>.</p>
 <p>Let’s modify those values that specify no visit on one of these forms to conform with one another.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df_sessions <span class="ot">&lt;-</span> df_sessions <span class="sc">|&gt;</span></span>
@@ -831,8 +836,8 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>             session_release
 group_name    EXCERPTS PRIVATE SHARED
-  PLAY_Gold        528       0    141
-  PLAY_Silver       81       4     27</code></pre>
+  PLAY_Gold        529       0    141
+  PLAY_Silver       81       4     28</code></pre>
 </div>
 </div>
 <p>There was one session marked <code>PRIVATE</code>.</p>

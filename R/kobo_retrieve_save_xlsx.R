@@ -16,7 +16,8 @@ kobo_retrieve_save_xlsx <-
   function(form_index = 13,
            kb_df = kobo_list_data(),
            save_dir = 'tmp',
-           save_form = TRUE) {
+           save_form = TRUE,
+           vb = TRUE) {
     
     if (!is.numeric(form_index)) {
       stop('`form_index` must be a number')
@@ -72,12 +73,13 @@ kobo_retrieve_save_xlsx <-
       #   "NULL"
       # }
       
+      message("Retrieving questionnaire responses...")
       rq <- make_kobo_request(form_URL)
       resp <- tryCatch(
         httr2::req_perform(rq),
         httr2_error = function(cnd) {
           if (vb)
-            message("Error retrieving data.")
+            message("Error retrieving : ", form_URL)
           NULL
         }
       )
@@ -92,6 +94,7 @@ kobo_retrieve_save_xlsx <-
       
       # Questionnaire forms
       if (save_form) {
+        message("Retrieving questions...")
         if (!dir.exists(file.path(save_dir, "form"))) {
           message("Directory does not exist: ", file.path(save_dir, "form"))
           return(NULL)
@@ -102,7 +105,7 @@ kobo_retrieve_save_xlsx <-
           httr2::req_perform(rq),
           httr2_error = function(cnd) {
             if (vb)
-              message("Error retrieving data.")
+              message("Error retrieving : ", questions_URL)
             NULL
           }
         )
@@ -110,7 +113,7 @@ kobo_retrieve_save_xlsx <-
         if (!is.null(resp)) {
           body <- httr2::resp_body_raw(resp)
           writeBin(body, file_name_qs)
-          message('Saved `', file_name, '`')
+          message('Saved `', file_name_qs, '`')
         } else {
           resp
         }
