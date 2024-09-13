@@ -10,6 +10,13 @@ export_site_csvs <- function(site_id, vb = FALSE) {
   
   assertthat::assert_that(is.logical(vb))
   
+  deps <- c("screen_select_site_data", "home_select_site_data", 
+            "home_mbcdi_select_site_data" )
+  unsourced_deps <- deps[!(deps %in% ls())]
+  source_fns <- paste0("R/", unsourced_deps, ".R")
+  
+  purrr::walk(source_fns, source)
+  
   if (vb) message("Generating CSVs for site: ", site_id)
   screen_select_site_data(site_id, vb = vb)
   home_select_site_data(site_id, vb = vb)

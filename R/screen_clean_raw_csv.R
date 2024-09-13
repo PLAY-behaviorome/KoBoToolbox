@@ -12,8 +12,8 @@ screen_clean_raw_csv <- function(fn) {
 
   df |>
     screen_remove_variable_headers() |>
-    # geo$make_addresses("new") |>
-    # geo$get_multiple_census_geos() |>
+    # added screen_add_fips on 2024-09-13
+    screen_add_fips() |>
     screen_remove_identifiers() |>
     screen_remove_metadata_fields() |>
     screen_remove_databrary_fields()

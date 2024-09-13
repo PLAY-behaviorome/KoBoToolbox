@@ -34,6 +34,7 @@ screen_select_site_data <- function(this_site_id = "UCSCR",
       message("Filtering for data from site: ", this_site_id)
     df |>
       dplyr::filter(site_id == this_site_id) |>
+      dplyr::arrange(participant_ID) |>
       readr::write_csv(out_fn)
     out_fn
   } else {

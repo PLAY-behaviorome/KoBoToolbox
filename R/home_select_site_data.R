@@ -1,6 +1,6 @@
 home_select_site_data <- function(this_site_id = "UCSCR",
                                   in_dir = "data/csv/home_visit/agg",
-                                  in_fn = "PLAY-non-mcdi-latest.csv",
+                                  in_fn = "PLAY-non-mcdi-kobo-latest.csv",
                                   out_dir = "data/csv/home_visit/agg/by-site",
                                   vb = FALSE) {
   assertthat::is.string(this_site_id)
@@ -31,6 +31,7 @@ home_select_site_data <- function(this_site_id = "UCSCR",
       message("Filtering for data from site: ", this_site_id)
     df |>
       dplyr::filter(site_id == this_site_id) |>
+      dplyr::arrange(participant_ID) |>
       readr::write_csv(out_fn)
     out_fn
   } else {

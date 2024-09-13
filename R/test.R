@@ -1,11 +1,19 @@
-hv <- readr::read_csv("data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv")
+library(tibble)
+library(tidygeocoder)
 
-session_fl <- list.files("data/csv/site_sessions", "\\.csv$", full.names = TRUE)
+address_single <- tibble::tibble(singlelineaddress = c(
+  "608 E Prospect Ave, State College, PA",
+  "600 Peachtree Street NE, Atlanta, Georgia"
+))
 
-make_augmented_sess_df <- function(fn) {
-  df <- readr::read_csv(fn, col_types = readr::cols(.default = "c"))
-  dplyr::mutate(df, site_id = )
-}
-db <- purrr::map(list.files("data/csv/site_sessions", "\\.csv$", full.names = TRUE), readr::read_csv, col_types = readr::cols(.default = "c"))
+census_s1 <- address_single %>%
+  tidygeocoder::geocode(address = singlelineaddress, method = "census", verbose = TRUE)
 
-db |> purrr::list_rbind() -> db_agg
+census_s1
+
+census_full1 <- address_single %>% geocode(
+  address = singlelineaddress,
+  method = "census", full_results = TRUE, api_options = list(census_return_type = 'geographies')
+)
+
+census_full1

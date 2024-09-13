@@ -62,25 +62,21 @@ head(names(df3), 15)
 
 We remove the unneeded 'play_demo_*' and 'play_phone_questionnaire_' variable headers using `screen_remove_variable_headers()`.
 
-We remove fields that contain administrative metadata with `screen_remove_metadata_fields()`.
+We next add Census FIPS codes for the home state and county so that we can link with county-level Census data at a later date.
+This depends on address, city, and state information.
 
-We remove fields used only by staff in uploading data to Databrary using `screen_remove_databrary_fields()`.
+::: {.callout-note}
+The Census queries stopped working around 2023-06-16, but should be restored as of 2024-09-13, using `R/screen_add_fips.R`.
+
+It would be more efficient to query the Census geocoding database once.
+:::
 
 We have name and address information in the screening data (e.g., '..parent_phone', '..parent_email', etc.).
 We remove this and other identifiable information using `screen_remove_identifiers()`.
 
-::: {.callout-note}
+We remove fields that contain administrative metadata with `screen_remove_metadata_fields()`.
 
-In a future workflow, we will add Census FIPS IDs for the State and Country 
-**before** removing the address information.
-
-The Census queries stopped working around 2023-06-16.
-
-For now, we remove identifiers without querying the Census.
-
-:::
-
-We remove identifiable information using `screen_remove_identifiers()`.
+We remove fields used only by staff in uploading data to Databrary using `screen_remove_databrary_fields()`.
 
 Then, we use `dplyr::full_join()` to combine the set of individually 
 cleaned data files.
