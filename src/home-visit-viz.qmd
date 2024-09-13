@@ -14,6 +14,7 @@ suppressPackageStartupMessages(library(wordcloud))
 suppressPackageStartupMessages(library(RColorBrewer))
 
 source("../R/mcdi_viz_wordcloud.R")
+source("../R/ecbq_plot.R")
 ```
 
 Load saved "latest" data file.
@@ -199,38 +200,6 @@ if (!('home_visit_df' %in% ls())) {
 
 ## Locomotion
 
-### Select & Summarize {-}
-
-```{r}
-# # label: make-loco-df
-# 
-# play_loco <- hv |>
-#   dplyr::select(
-#     age_group,
-#     child_sex,
-#     language_child,
-#     site_id,
-#     subject_number,
-#     locomotor_milestones.who_walk.who_walk_onset_mo,
-#     locomotor_milestones.k_walk.k_walk_onset_mo,
-#     locomotor_milestones.crawl_onset.crawl_onset_mo
-#   ) |>
-#   dplyr::rename(
-#     walk_mos_who = locomotor_milestones.who_walk.who_walk_onset_mo,
-#     walk_mos_kea = locomotor_milestones.k_walk.k_walk_onset_mo,
-#     crawl_mos = locomotor_milestones.crawl_onset.crawl_onset_mo
-#   ) |>
-#   dplyr::mutate(
-#     walk_mos_who = as.numeric(walk_mos_who),
-#     walk_mos_kea = as.numeric(walk_mos_kea),
-#     crawl_mos = as.numeric(crawl_mos)
-#   )
-```
-
-```{r}
-# xtabs(formula = ~ child_sex + age_group, data = play_loco)
-```
-
 ### Check for anomalous values {-}
 
 ```{r}
@@ -244,7 +213,8 @@ walk_mos_min <- 6
 hv |>
   dplyr::select(site_id, subject_number, crawl_mos) |>
   dplyr::filter(crawl_mos < crawl_mos_min) |>
-  knitr::kable(format = 'html') 
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
 ```
 
 #### Anomalous walking onset (KEA criteria) {-}
@@ -253,7 +223,8 @@ hv |>
 hv |>
   dplyr::select(site_id, subject_number, walk_mos_kea) |>
   dplyr::filter(walk_mos_kea < walk_mos_min) |>
-  knitr::kable(format = 'html') 
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
 ```
 
 #### Anomalous walking onset (WHO criteria) {-}
@@ -262,7 +233,8 @@ hv |>
 hv |>
   dplyr::select(site_id, subject_number, walk_mos_who) |>
   dplyr::filter(walk_mos_who < walk_mos_min) |>
-  knitr::kable(format = 'html') 
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
 ```
 
 ### Crawl onset {-}
@@ -376,7 +348,7 @@ ggExtra::ggMarginal(
 cor.test(filtered_walk_crawl_mos$crawl_mos, filtered_walk_crawl_mos$walk_mos_kea)
 ```
 
-## Health visualizations {-}
+## Health {-}
 
 ### Feeding {-}
 
@@ -409,7 +381,6 @@ hv |>
   knitr::kable(format = 'html')
 ```
 
-
 ::: {.callout-warning}
 A preliminary look at `feeding_comments` shows that there are some names mentioned.
 So, we do not view them here.
@@ -426,6 +397,7 @@ Other sleeping data are in the screening questionnaire.
 #| label: tbl-child-sleeping-position
 xtabs(formula = ~ child_sleeping_position + age_group, data = hv)
 ```
+
 ### Child health {-}
 
 #### Overall rating  {-}
@@ -529,6 +501,7 @@ illness_allergy |>
 #| label: tbl-injuries
 xtabs(formula = ~ child_injury_times + age_group, data = hv)
 ```
+
 ### Mom health
 
 #### Smoking & drinking {-}
@@ -549,6 +522,7 @@ xtabs(formula = ~ mom_pregnant_smoking + mom_pregnant_drinking, smoking_drinking
 #|  label: tbl-smoking-house-car
 xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
 ```
+
 ::: {.callout-warning}
 The following *may* contain identifiable data.
 :::
@@ -614,81 +588,45 @@ phq4 |>
   theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
-## Rothbart visualizations {-}
+## Rothbart ECBQ {-}
 
 The next section provides visualizations of the Rothbart Early Childhood Behavior Questionnaire (ECBQ) data related to child temperament.
 
-::: {.callout-warning}
-As of 2024-09-12, this next section has been disabled temporarily.
+```{r}
+#| label: select-rothbart-vars
+ecbq <- hv |>
+  dplyr::select(child_sex, age_group, contains("rothbart"))
 
+ecbq_complete <- ecbq |>
+  tidyr::complete() |>
+  dplyr::select(-comments_rothbart)
+
+ecbq_vars <- names(ecbq)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments_rothbart")]
+```
+
+```{r}
+#| label: plot-all-rothbart
+purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete)
+```
+
+### Comments {-}
+
+::: {.callout-warning}
+Manual inspection shows that the comments field has some names.
+We omit printing the comments here until we can be assured that there is no identifiying information in the comments.
 :::
 
-<!-- ### Setup {-} -->
-
-<!-- As of 2023-09-21, this workflow uses a separate set of functions specifically designed to extract ECBQ data from the raw KoBoToolbox files for *English-speaking families only*. -->
-
-<!-- The functions are found in `R/` with the prefix `ecbq_`. -->
-
-<!-- We create a "wide" data frame `ecbq_wide_df` as one of the targets of `targets:tar_make()`. -->
-<!-- We attempt to load that here and ensure that all `R/ecbq_` functions are in the local environment. -->
-
-<!-- ```{r} -->
-<!-- if (!('ecbq_wide_df' %in% ls())) { -->
-<!--   targets::tar_load(ecbq_wide_df, store="../_targets") -->
-<!-- } -->
-
-<!-- if (!('ecbq_plot_all' %in% ls())) { -->
-<!--   ecbq_fl <- list.files("../R", "^ecbq_", full.names = TRUE) -->
-<!--   purrr::walk(ecbq_fl, source) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- ### Summarize {-} -->
-
-<!-- ```{r} -->
-<!-- ecbq_complete <- ecbq_wide_df |> -->
-<!--   tidyr::complete() -->
-
-<!-- str(ecbq_complete) -->
-<!-- ``` -->
-
-<!-- ```{r tab-ecbq-age-by-sex-cases} -->
-<!-- xtabs(formula = ~ age_group + child_sex, ecbq_complete) -->
-<!-- ``` -->
-
-<!-- ### Visualize {-} -->
-
-<!-- ```{r} -->
-<!-- ecbq_vars <- names(ecbq_complete)[stringr::str_detect(names(ecbq_complete),"rothbart_")] -->
-
-<!-- # Omit comments -->
-<!-- ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments")] -->
-<!-- ``` -->
-
-<!-- We use `purrr::map()` to plot all of the responses to individual ECBQ items. -->
-
-<!-- ```{r purrr-map-ecbq-figs} -->
-<!-- purrr::map(ecbq_vars, suppressMessages(ecbq_plot), df = ecbq_complete) -->
-<!-- ``` -->
-
-<!-- #### Comments {-} -->
-
-<!-- Manual inspection shows that the comments field has some names. -->
-<!-- We omit printing the comments here until we can be assured that there is no identifiying information in the comments. -->
-
-<!-- ```{r ecbq-comments, eval=FALSE} -->
-<!-- ecbq_complete |> -->
-<!--   dplyr::select(participant_id, age_group, rothbart_comments) |> -->
-<!--   dplyr::filter(!is.na(rothbart_comments)) |> -->
-<!--   dplyr::arrange(age_group) |> -->
-<!--   knitr::kable(format = 'html') -->
-<!-- ``` -->
+```{r, eval=FALSE}
+#| label:  ecbq-comments
+ecbq |>
+  dplyr::select(comments_rothbart) |>
+  dplyr::filter(!is.na(comments_rothbart)) |>
+  kableExtra::kable(format = 'html') |>
+  kableExtra::kable_classic()
+```
 
 ## Media use
-
-::: {.callout-warning}
-Visualization code for these variables has not been generated yet.
-:::
 
 ### Home technology
 

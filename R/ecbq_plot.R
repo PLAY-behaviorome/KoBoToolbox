@@ -1,21 +1,14 @@
 #' Generate a barplot of a single question from the
 #' Rothbart Early Childhood Questionnaire (ECBQ)
 #'
-#' @param df A data frame with aggregate (across participants) ecbq data
+#' @param df A data frame with by participant ECBQ data
 ecbq_plot <- function(var_lbl = "rothbart_unfamiliarperson", df) {
   stopifnot(is.data.frame(df))
   stopifnot(is.character(var_lbl))
   
-  # df |> select(participant_id, child_sex, age_group, tidyr::matches(var_lbl))
-  # for matching by variable name
-  
   require(ggplot2)
   
-  df <-
-    df |> dplyr::select(participant_id,
-                 child_sex,
-                 age_group,
-                 {{ var_lbl }})
+  df <- df |> dplyr::select(child_sex, age_group, {{ var_lbl }})
   
   df <- df |>
     dplyr::filter(!is.na(.data[[var_lbl]])) |>
@@ -23,11 +16,11 @@ ecbq_plot <- function(var_lbl = "rothbart_unfamiliarperson", df) {
       .data[[var_lbl]],
       c(
         "never",
-        "very_rarely",
-        "less_than_half",
-        "about_half",
-        "more_than_half",
-        "almost_always",
+        "veryrarely",
+        "lessthanhalf",
+        "abouthalf",
+        "morethanhalf",
+        "almostalways",
         "always"
       ),
       ordered = TRUE
