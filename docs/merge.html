@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rick Gilmore">
 
-<title>PLAY Survey Data</title>
+<title>Merge files – PLAY Survey Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./setup.html" rel="next">
+<link href="./post-visit-data-dictionary.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,6 +101,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="include/css/style.css">
@@ -82,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Overview</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./merge.html">Export</a></li><li class="breadcrumb-item"><a href="./merge.html"><span class="chapter-title">Merge files</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -112,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Overview</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./merge.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Merge files</span></a>
+  <a href="./merge.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Merge files</span></a>
   </div>
 </li>
       </ul>
@@ -244,39 +280,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#overview-of-data-sets" id="toc-overview-of-data-sets" class="nav-link" data-scroll-target="#overview-of-data-sets">Overview of data sets</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#home-visit-with-databrary" id="toc-home-visit-with-databrary" class="nav-link" data-scroll-target="#home-visit-with-databrary">Home visit with Databrary</a>
   <ul class="collapse">
-  <li><a href="#data-access-and-processing" id="toc-data-access-and-processing" class="nav-link" data-scroll-target="#data-access-and-processing">Data access and processing</a></li>
-  <li><a href="#home-visit-data" id="toc-home-visit-data" class="nav-link" data-scroll-target="#home-visit-data">Home visit data</a></li>
+  <li><a href="#save-files" id="toc-save-files" class="nav-link" data-scroll-target="#save-files">Save files</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/merge.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./merge.html">Export</a></li><li class="breadcrumb-item"><a href="./merge.html"><span class="chapter-title">Merge files</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">PLAY Survey Data</h1>
+<h1 class="title"><span class="chapter-title">Merge files</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rick Gilmore </p>
-          </div>
-  </div>
     
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">September 9, 2024</p>
+      <p class="date-modified">September 13, 2024</p>
     </div>
   </div>
     
@@ -287,35 +316,91 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="cell" data-layout-align="center">
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>This page describes the process of merging data files.</p>
+</section>
+<section id="home-visit-with-databrary" class="level2">
+<h2 class="anchored" data-anchor-id="home-visit-with-databrary">Home visit with Databrary</h2>
+<div class="cell" data-layout-align="default">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://play-project.org"><img src="include/img/PLAY-logo.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></a></p>
-</figure>
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A[Home_visit] --&gt; C[Home_all]
+  B[Databrary] --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-<section id="purpose" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="purpose">Purpose</h2>
-<p>PLAY project researchers use <a href="https://www.kobotoolbox.org/">KoBoToolbox</a> to collect data from participant families. Data from all sessions at all PLAY data collection sites are pushed to a common set of files on the KoBoToolbox server.</p>
-<p>This document describes the process of i) downloading, ii) parsing, iii) cleaning, and iv) exporting these files into forms more suitable for data analysis.</p>
-<p>For details about the PLAY Project data collection protocol, see <a href="https://PLAY-behaviorome.github.io/protocol/" class="uri">https://PLAY-behaviorome.github.io/protocol/</a>.</p>
-</section>
-<section id="overview-of-data-sets" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="overview-of-data-sets">Overview of data sets</h2>
-<p>There are three sets of data collected using KoBoToolbox.</p>
-<p>One set is collected during the recruiting and screening calls for the study. This is called the screening or demographic data.</p>
-<p>The second set is collected during the home visit. This is called the home visit data.</p>
-<p>The third set consists of notes generated by the experimenter after the visit. This data is called the post-visit data.</p>
-<section id="data-access-and-processing" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="data-access-and-processing">Data access and processing</h3>
-<p>All data are downloaded and manipulated locally but are <strong>not</strong> synched to GitHub. This is accomplished by adding <code>data</code> to <a href=".gitignore"><code>.gitignore</code></a>.</p>
-<p>There are separate processes for detecting and deleting personal identifiers from specific data files and exporting ‘cleaned’ versions that may be shared on Databrary.</p>
-</section>
-<section id="home-visit-data" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="home-visit-data">Home visit data</h3>
-<p>There are three (3) age groups (12-, 18-, and 24-month-olds) and four (4) different language environment groups (English-only, Spanish-only, Bilingual-English-dominant, Bilingual-Spanish-dominant). Since the language of the questions and some of the specific questions vary by age group and by language environment group, there multiple KoBoToolbox survey form files that must be processed.</p>
+<p>First, we load the latest home visit CSV.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"PLAY-non-mcdi-kobo-latest.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>hv <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(fn,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">"c"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We create a helper function for the site_session data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>make_augmented_sess_df <span class="ot">&lt;-</span> <span class="cf">function</span>(fn) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(fn, <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">"c"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  this_site <span class="ot">&lt;-</span> <span class="fu">basename</span>(fn) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(df, <span class="at">site_id =</span> this_site)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We then map the helper function across the list of session CSVs in <code>data/csv/site_sessions</code> and combine the results into a single aggregate data frame, <code>db_agg</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"site_sessions"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>session_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(f_path, <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(<span class="fu">length</span>(session_fl))) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"No session file data"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  db <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(session_fl, make_augmented_sess_df)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  db_agg <span class="ot">&lt;-</span> db <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Omit NA in session_date</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(session_date))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">dim</span>(db_agg)[<span class="dv">1</span>], <span class="st">" rows imported."</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>845 rows imported.</code></pre>
+</div>
+</div>
+<p>Finally, we join the KoBoToolbox data with the Databrary session data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hv_db <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">full_join</span>(hv,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                          db_agg,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">by =</span> dplyr<span class="sc">::</span><span class="fu">join_by</span>(site_id <span class="sc">==</span> site_id, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                              participant_ID <span class="sc">==</span> participant_ID))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We export this merged file.</p>
+<section id="save-files" class="level3">
+<h3 class="anchored" data-anchor-id="save-files">Save files</h3>
+<p>Save the file in <code>data/csv/home_visit/agg/</code> with the name <code>PLAY-non-mcdi-kobo-db-merged-latest.csv</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"PLAY-non-mcdi-kobo-db-merged-latest.csv"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(hv_db, fn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Save with date-stamp for quality control, e.g., <code>PLAY-non-mcdi-db-merged-2024-09-13.csv</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"home_visit"</span>, <span class="st">"agg"</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">paste0</span>(<span class="st">"PLAY-non-mcdi-kobo-db-merged-"</span>, <span class="fu">Sys.Date</span>(), <span class="st">".csv"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(hv_db, fn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -744,11 +829,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./post-visit-data-dictionary.html" class="pagination-link" aria-label="Post-visit: Data dictionary">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Post-visit: Data dictionary</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./setup.html" class="pagination-link" aria-label="Setup">
-        <span class="nav-page-text"><span class="chapter-title">Setup</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -756,4 +841,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/merge.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -28,6 +28,16 @@ home_visit_df_trim <- home_visit_df |>
 The untrimmed data frame had `r dim(home_visit_df)[2]` variables.
 The trimmed data frame has `r dim(home_visit_df_trim)[2]` variables.
 
+## Change variable names
+
+We change some variable names to conform with later stages of processing when we merge the KoBoToolbox data with those from the Databrary session spreadsheet.
+
+```{r}
+home_visit_df_trim <- home_visit_df_trim |>
+  dplyr::rename(participant_guid = participant_id,
+                participant_ID = subject_number)
+```
+
 ## Language variables
 
 The raw file contains separate variables indicating whether the child is exposed to English and Spanish at home. We leave those for now.
@@ -245,12 +255,12 @@ names(home_visit_clean)
 Save with "latest" label.
 
 ```{r}
-readr::write_csv(home_visit_clean, "../data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv")
+readr::write_csv(home_visit_clean, "../data/csv/home_visit/agg/PLAY-non-mcdi-kobo-latest.csv")
 ```
 
 Save with date-stamp for quality control.
 
 ```{r}
-fn <- paste0("../data/csv/home_visit/agg/PLAY-non-mcdi-", Sys.Date(), ".csv")
+fn <- paste0("../data/csv/home_visit/agg/PLAY-non-mcdi-kobo-", Sys.Date(), ".csv")
 readr::write_csv(home_visit_clean, fn)
 ```

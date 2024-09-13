@@ -20,7 +20,7 @@ source("../R/ecbq_plot.R")
 Load saved "latest" data file.
 
 ```{r}
-hv <- readr::read_csv("../data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv", show_col_types = FALSE)
+hv <- readr::read_csv("../data/csv/home_visit/agg/PLAY-non-mcdi-kobo-latest.csv", show_col_types = FALSE)
 ```
 
 ### Child age {-}
@@ -94,9 +94,13 @@ This must be investigated further.
 
 ## MB-CDI {-}
 
+::: {.callout-warning}
+We have temporarily disabled these visualizations while we conform them to a newer workflow.
+:::
+
 ### 12-mo-old English speakers {-}
 
-```{r}
+```{r, eval=FALSE}
 eng_12 <-
   readr::read_csv(
     "../data/csv/home_visit/agg/mcdi_english_12_combined.csv",
@@ -105,18 +109,16 @@ eng_12 <-
   )
 ```
 
-There are $n=$ `r (n_12_eng <- dim(eng_12)[1])` participant records.
-
-```{r mcdi-12-english}
+```{r mcdi-12-english, eval=FALSE}
 eng_12_long <- eng_12 |>
-  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+  tidyr::pivot_longer(cols = !(play_id | site_id | participant_ID),
                         names_to = "word",
                         values_to = "understands_or_says")
 
 #xtabs(~ word + understands_or_says, eng_12_long)
 ```
 
-```{r}
+```{r, eval=FALSE}
 word_ct <- eng_12_long |>
   dplyr::filter(!is.na(understands_or_says)) |>
   dplyr::filter(understands_or_says == "understands") |>
@@ -125,7 +127,7 @@ word_ct <- eng_12_long |>
 quant_25 <- round(n_12_eng*.25, 0)
 ```
 
-```{r 12-eng-wordcloud}
+```{r 12-eng-wordcloud, eval=FALSE}
 # rcb_color_paired <- RColorBrewer::brewer.pal(12, 'Paired')
 # wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
 
@@ -134,7 +136,7 @@ mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_12)[1], quantile = .40)
 
 ### 18-mo-old English speakers {-}
 
-```{r}
+```{r, eval=FALSE}
 eng_18 <-
   readr::read_csv(
     "../data/csv/home_visit/agg/mcdi_english_18_combined.csv",
@@ -144,11 +146,9 @@ eng_18 <-
 
 ```
 
-There are $n=$ `r (n_18_eng <- dim(eng_18)[1])` participant records.
-
-```{r}
+```{r, eval=FALSE}
 word_ct <- eng_18 |>
-  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+  tidyr::pivot_longer(cols = !(play_id | site_id | participant_ID),
                         names_to = "word",
                         values_to = "says") |>
   dplyr::filter(!is.na(says)) |>
@@ -158,14 +158,14 @@ word_ct <- eng_18 |>
 quant_25 <- round(n_18_eng*.25, 0)
 ```
 
-```{r 18-eng-wordcloud}
+```{r 18-eng-wordcloud, eval=FALSE}
 #wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)
 mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_18)[1], quantile = .50)
 ```
 
 ### 24-mo-old English speakers {-}
 
-```{r}
+```{r, eval=FALSE}
 eng_24 <-
   readr::read_csv(
     "../data/csv/home_visit/agg/mcdi_english_24_combined.csv",
@@ -174,11 +174,9 @@ eng_24 <-
   )
 ```
 
-There are $n=$ `r dim(eng_24)[1]` participant records.
-
-```{r mcdi-24-english}
+```{r mcdi-24-english, eval=FALSE}
 word_ct <- eng_24 |>
-  tidyr::pivot_longer(cols = !(play_id | site_id | subject_number),
+  tidyr::pivot_longer(cols = !(play_id | site_id | participant_ID),
                         names_to = "word",
                         values_to = "says") |>
   dplyr::filter(!is.na(says)) |>
@@ -186,22 +184,16 @@ word_ct <- eng_24 |>
   dplyr::count(word, sort = TRUE)
 ```
 
-```{r mcdi-24-eng-word-cloud}
+```{r mcdi-24-eng-word-cloud, eval=FALSE}
 mcdi_viz_wordcloud(word_ct, n_participants = dim(eng_24)[1], quantile = .60)
 ```
 
-```{r mcdi-24-eng-rare-words-cloud}
+```{r mcdi-24-eng-rare-words-cloud, eval=FALSE}
 rare_word_ct <- word_ct |>
   dplyr::filter(n < dim(eng_24)[1]*.25)
 # 
 # wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)
 mcdi_viz_wordcloud(rare_word_ct, n_participants = dim(eng_24)[1], quantile = .25)
-```
-
-```{r}
-if (!('home_visit_df' %in% ls())) {
-  targets::tar_load(home_visit_df, store="../_targets")
-}
 ```
 
 ## Locomotion
@@ -217,7 +209,7 @@ walk_mos_min <- 6
 
 ```{r}
 hv |>
-  dplyr::select(site_id, subject_number, crawl_mos) |>
+  dplyr::select(site_id, participant_ID, crawl_mos) |>
   dplyr::filter(crawl_mos < crawl_mos_min) |>
   kableExtra::kable(format = 'html') |>
   kableExtra::kable_classic()
@@ -227,7 +219,7 @@ hv |>
 
 ```{r}
 hv |>
-  dplyr::select(site_id, subject_number, walk_mos_kea) |>
+  dplyr::select(site_id, participant_ID, walk_mos_kea) |>
   dplyr::filter(walk_mos_kea < walk_mos_min) |>
   kableExtra::kable(format = 'html') |>
   kableExtra::kable_classic()
@@ -237,7 +229,7 @@ hv |>
 
 ```{r}
 hv |>
-  dplyr::select(site_id, subject_number, walk_mos_who) |>
+  dplyr::select(site_id, participant_ID, walk_mos_who) |>
   dplyr::filter(walk_mos_who < walk_mos_min) |>
   kableExtra::kable(format = 'html') |>
   kableExtra::kable_classic()
@@ -382,7 +374,7 @@ There are some unlikely values here.
 
 ```{r anomalous-feeding}
 hv |>
-  dplyr::select(participant_id, 
+  dplyr::select(participant_ID, 
                 feeding_solidfood_age) |>
   dplyr::filter(feeding_solidfood_age > 12 | feeding_solidfood_age < 3) %>%
   knitr::kable(format = 'html')

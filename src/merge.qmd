@@ -1,0 +1,88 @@
+# Merge files
+
+## Background
+
+This page describes the process of merging data files.
+
+## Home visit with Databrary
+
+```{mermaid}
+flowchart TD
+  A[Home_visit] --> C[Home_all]
+  B[Databrary] --> C
+```
+
+First, we load the latest home visit CSV.
+
+```{r}
+fn <- file.path(here::here(), "data", "csv", "home_visit", "agg",
+                "PLAY-non-mcdi-kobo-latest.csv")
+
+hv <- readr::read_csv(fn,
+                      col_types = readr::cols(.default = "c"),
+                      show_col_types = FALSE)
+```
+
+We create a helper function for the site_session data.
+
+```{r}
+make_augmented_sess_df <- function(fn) {
+  df <- readr::read_csv(fn, col_types = readr::cols(.default = "c"))
+  
+  this_site <- basename(fn) |>
+    stringr::str_remove("\\.csv")
+  
+  dplyr::mutate(df, site_id = this_site)
+}
+```
+
+We then map the helper function across the list of session CSVs in `data/csv/site_sessions` and combine the results into a single aggregate data frame, `db_agg`.
+
+```{r}
+f_path <- file.path(here::here(), "data", "csv", "site_sessions")
+session_fl <- list.files(f_path, "\\.csv$", full.names = TRUE)
+
+if (is.null(length(session_fl))) {
+  warning("No session file data")
+} else {
+  db <- purrr::map(session_fl, make_augmented_sess_df)
+  
+  db_agg <- db |>
+    purrr::list_rbind() |>
+    # Omit NA in session_date
+    dplyr::filter(!is.na(session_date))
+  
+  message(dim(db_agg)[1], " rows imported.")
+}
+```
+
+Finally, we join the KoBoToolbox data with the Databrary session data.
+
+```{r}
+hv_db <- dplyr::full_join(hv,
+                          db_agg,
+                          by = dplyr::join_by(site_id == site_id, 
+                                              participant_ID == participant_ID))
+```
+
+We export this merged file.
+
+### Save files
+
+Save the file in `data/csv/home_visit/agg/` with the name `PLAY-non-mcdi-kobo-db-merged-latest.csv`.
+
+```{r}
+fn <- file.path(here::here(), "data", "csv", "home_visit", "agg",
+                "PLAY-non-mcdi-kobo-db-merged-latest.csv")
+
+readr::write_csv(hv_db, fn)
+```
+
+Save with date-stamp for quality control, e.g., `PLAY-non-mcdi-db-merged-2024-09-13.csv`.
+
+```{r}
+fn <- file.path(here::here(), "data", "csv", "home_visit", "agg",
+                paste0("PLAY-non-mcdi-kobo-db-merged-", Sys.Date(), ".csv"))
+
+readr::write_csv(hv_db, fn)
+```

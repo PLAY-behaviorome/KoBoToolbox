@@ -252,6 +252,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Export</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./merge.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Merge files</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -265,6 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
   <li><a href="#load-data-file" id="toc-load-data-file" class="nav-link" data-scroll-target="#load-data-file">Load data file</a></li>
   <li><a href="#remove-metadata-variables" id="toc-remove-metadata-variables" class="nav-link" data-scroll-target="#remove-metadata-variables">Remove metadata variables</a></li>
+  <li><a href="#change-variable-names" id="toc-change-variable-names" class="nav-link" data-scroll-target="#change-variable-names">Change variable names</a></li>
   <li><a href="#language-variables" id="toc-language-variables" class="nav-link" data-scroll-target="#language-variables">Language variables</a></li>
   <li><a href="#locomotion-variables" id="toc-locomotion-variables" class="nav-link" data-scroll-target="#locomotion-variables">Locomotion variables</a></li>
   <li><a href="#health-variables" id="toc-health-variables" class="nav-link" data-scroll-target="#health-variables">Health variables</a></li>
@@ -331,6 +348,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The untrimmed data frame had 272 variables. The trimmed data frame has 216 variables.</p>
 </section>
+<section id="change-variable-names" class="level2">
+<h2 class="anchored" data-anchor-id="change-variable-names">Change variable names</h2>
+<p>We change some variable names to conform with later stages of processing when we merge the KoBoToolbox data with those from the Databrary session spreadsheet.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>home_visit_df_trim <span class="ot">&lt;-</span> home_visit_df_trim <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">participant_guid =</span> participant_id,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">participant_ID =</span> subject_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="language-variables" class="level2">
 <h2 class="anchored" data-anchor-id="language-variables">Language variables</h2>
 <p>The raw file contains separate variables indicating whether the child is exposed to English and Spanish at home. We leave those for now.</p>
@@ -338,183 +364,183 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="locomotion-variables" class="level2">
 <h2 class="anchored" data-anchor-id="locomotion-variables">Locomotion variables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>loco_admin_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(home_visit_df_trim) <span class="sc">%in%</span> <span class="fu">c</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.date_format"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_5mo"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_6mo"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_7mo"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_8mo"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_9mo"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_10mo"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_11mo"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_12mo"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_13mo"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_14mo"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_15mo"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_16mo"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.who_walk.walk_onset_check"</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_jan"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_feb"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_marchapril"</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_may"</span>,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_june"</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_july"</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_sep"</span>,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_oct"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_nov"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_dec"</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.memorable_events"</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.k_walk.k_walk_onset_check"</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.crawl_onset.crawl_onset_check"</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_jan2"</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_feb2"</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_marchapril2"</span>,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_may2"</span>,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_june2"</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_july2"</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_sep2"</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_oct2"</span>,</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_nov2"</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_dec2"</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.memorable_events2"</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>loco_admin_index <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(home_visit_df_trim)[<span class="sc">!</span>loco_admin_cols]</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>home_visit_df_loco <span class="ot">&lt;-</span> home_visit_df_trim <span class="sc">|&gt;</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(loco_admin_index)) <span class="sc">|&gt;</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo,</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_date_kea =</span> locomotor_milestones.k_walk.k_walk_onset_date,</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_date_who =</span> locomotor_milestones.who_walk.who_walk_onset_date,</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_comments_who =</span> locomotor_milestones.who_walk.comments_who_walk_onset,</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_comments_kea =</span> locomotor_milestones.k_walk.comments_k_walk_onset,</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_onset_date =</span> locomotor_milestones.crawl_onset.crawl_onset_date,</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_onset_comments =</span> locomotor_milestones.crawl_onset.comments_crawl_onset</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loco_admin_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(home_visit_df_trim) <span class="sc">%in%</span> <span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.date_format"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_5mo"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_6mo"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_7mo"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_8mo"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_9mo"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_10mo"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_11mo"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_12mo"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_13mo"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_14mo"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_15mo"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.calc_16mo"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.who_walk.walk_onset_check"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_jan"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_feb"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_marchapril"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_may"</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_june"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_july"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_sep"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_oct"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_nov"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.holiday_dec"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday1.memorable_events"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.k_walk.k_walk_onset_check"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.crawl_onset.crawl_onset_check"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_jan2"</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_feb2"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_marchapril2"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_may2"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_june2"</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_july2"</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_sep2"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_oct2"</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_nov2"</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.holiday_dec2"</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"locomotor_milestones.holiday2.memorable_events2"</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>loco_admin_index <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(home_visit_df_trim)[<span class="sc">!</span>loco_admin_cols]</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>home_visit_df_loco <span class="ot">&lt;-</span> home_visit_df_trim <span class="sc">|&gt;</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(loco_admin_index)) <span class="sc">|&gt;</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> locomotor_milestones.who_walk.who_walk_onset_mo,</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> locomotor_milestones.k_walk.k_walk_onset_mo,</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> locomotor_milestones.crawl_onset.crawl_onset_mo,</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_date_kea =</span> locomotor_milestones.k_walk.k_walk_onset_date,</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_date_who =</span> locomotor_milestones.who_walk.who_walk_onset_date,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_comments_who =</span> locomotor_milestones.who_walk.comments_who_walk_onset,</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_onset_comments_kea =</span> locomotor_milestones.k_walk.comments_k_walk_onset,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_onset_date =</span> locomotor_milestones.crawl_onset.crawl_onset_date,</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_onset_comments =</span> locomotor_milestones.crawl_onset.comments_crawl_onset</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_who =</span> <span class="fu">as.numeric</span>(walk_mos_who),</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">walk_mos_kea =</span> <span class="fu">as.numeric</span>(walk_mos_kea),</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">crawl_mos =</span> <span class="fu">as.numeric</span>(crawl_mos)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="health-variables" class="level2">
 <h2 class="anchored" data-anchor-id="health-variables">Health variables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>health_admin_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(home_visit_df_loco) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'instructions'</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'note'</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'doctor_told_you'</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>health_admin_index <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(home_visit_df_loco)[<span class="sc">!</span>health_admin_cols]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>home_visit_df_health <span class="ot">&lt;-</span> home_visit_df_loco <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(health_admin_index)) <span class="sc">|&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_breastfeed =</span> health.feeding_nutrition.breastfeed,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_solidfood_age =</span> health.feeding_nutrition.solidfood_age,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_comments =</span> health.feeding_nutrition.comments_feeding,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_sleeping_position =</span> health.general_health.child_sleeping_position,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_health =</span> health.general_health.child_health,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_recent_vaccination =</span> health.general_health.child_vaccination,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_medical_specialist =</span> health.general_health.child_medical_specialist,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_medical_specialist_comments =</span> health.general_health.comments_child_medical_special,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_hearing_tested =</span> health.general_health.child_hearing_tested,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_vision_tested =</span> health.general_health.child_vision_tested,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_allergies =</span> health.general_health.child_allergies_infections_ill.allergies,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_ear_infection =</span> health.general_health.child_allergies_infections_ill.ear_infection,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_asthma =</span> health.general_health.child_allergies_infections_ill.asthma,</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_respiratory =</span> health.general_health.child_allergies_infections_ill.respiratory,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_gastrointestinal =</span> health.general_health.child_allergies_infections_ill.gastrointestinal,</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_allergy_illness_comments =</span> health.general_health.comments_allergy_etc,</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_injury_times =</span> health.general_health.child_injury_times,</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_injury_comments =</span> health.general_health.comment_injury,</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_health_comments =</span> health.general_health.comments_general_health,</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_prenatal_care =</span> health.prenatal.prenatal_care,</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_prenatal_care_comments =</span> health.prenatal.comments_prenatal,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking =</span> health.smoking.pregnant_smoking,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_1 =</span> health.smoking.smoking_trimester_1,</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_2 =</span> health.smoking.smoking_trimester_2,</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_3 =</span> health.smoking.smoking_trimester_3,</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_smoking_now =</span> health.smoking.mom_smoking_now,</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_smoking_now_amount =</span> health.smoking.mom_smoking_now_amount,</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_house =</span> health.smoking.smoking_house,</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_car =</span> health.smoking.smoking_car,</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_comments =</span> health.smoking.comments_smoking,</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_drinking =</span> health.drinking.pregnant_drinking,</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_1 =</span> health.drinking.drinking_trimester_1,</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_2 =</span> health.drinking.drinking_trimester_2,</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_3 =</span> health.drinking.drinking_trimester_3,</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_comments =</span> health.drinking.comments_drinking,</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_nervous =</span> health.phq4.phq4_nervous,</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_worrying =</span> health.phq4.phq4_worrying,</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_littleinterest =</span> health.phq4.phq4_littleinterest,</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_down =</span> health.phq4.phq4_down,</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_comments =</span> health.phq4.comments_phq4</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove duplicating variables</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>health.general_health.child_hearing_tested.birthhospital,</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.afterhome,</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.no,</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.refused,</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.donotknow,</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.birthhospital,</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.afterhome,</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.no,</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.refused,</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.donotknow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>health_admin_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(home_visit_df_loco) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'instructions'</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'note'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'doctor_told_you'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>health_admin_index <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(home_visit_df_loco)[<span class="sc">!</span>health_admin_cols]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>home_visit_df_health <span class="ot">&lt;-</span> home_visit_df_loco <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(health_admin_index)) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_breastfeed =</span> health.feeding_nutrition.breastfeed,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_solidfood_age =</span> health.feeding_nutrition.solidfood_age,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">feeding_comments =</span> health.feeding_nutrition.comments_feeding,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_sleeping_position =</span> health.general_health.child_sleeping_position,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_health =</span> health.general_health.child_health,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_recent_vaccination =</span> health.general_health.child_vaccination,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_medical_specialist =</span> health.general_health.child_medical_specialist,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_medical_specialist_comments =</span> health.general_health.comments_child_medical_special,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_hearing_tested =</span> health.general_health.child_hearing_tested,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_vision_tested =</span> health.general_health.child_vision_tested,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_allergies =</span> health.general_health.child_allergies_infections_ill.allergies,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_ear_infection =</span> health.general_health.child_allergies_infections_ill.ear_infection,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_asthma =</span> health.general_health.child_allergies_infections_ill.asthma,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_respiratory =</span> health.general_health.child_allergies_infections_ill.respiratory,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_gastrointestinal =</span> health.general_health.child_allergies_infections_ill.gastrointestinal,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_allergy_illness_comments =</span> health.general_health.comments_allergy_etc,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_injury_times =</span> health.general_health.child_injury_times,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_injury_comments =</span> health.general_health.comment_injury,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">child_health_comments =</span> health.general_health.comments_general_health,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_prenatal_care =</span> health.prenatal.prenatal_care,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_prenatal_care_comments =</span> health.prenatal.comments_prenatal,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking =</span> health.smoking.pregnant_smoking,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_1 =</span> health.smoking.smoking_trimester_1,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_2 =</span> health.smoking.smoking_trimester_2,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_smoking_trimester_3 =</span> health.smoking.smoking_trimester_3,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_smoking_now =</span> health.smoking.mom_smoking_now,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_smoking_now_amount =</span> health.smoking.mom_smoking_now_amount,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_house =</span> health.smoking.smoking_house,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_car =</span> health.smoking.smoking_car,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">smoking_comments =</span> health.smoking.comments_smoking,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_pregnant_drinking =</span> health.drinking.pregnant_drinking,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_1 =</span> health.drinking.drinking_trimester_1,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_2 =</span> health.drinking.drinking_trimester_2,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_trimester_3 =</span> health.drinking.drinking_trimester_3,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">mom_drinking_comments =</span> health.drinking.comments_drinking,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_nervous =</span> health.phq4.phq4_nervous,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_worrying =</span> health.phq4.phq4_worrying,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_littleinterest =</span> health.phq4.phq4_littleinterest,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_down =</span> health.phq4.phq4_down,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">phq4_comments =</span> health.phq4.comments_phq4</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove duplicating variables</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>health.general_health.child_hearing_tested.birthhospital,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.afterhome,</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.no,</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.refused,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_hearing_tested.donotknow,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.birthhospital,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.afterhome,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.no,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.refused,</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>health.general_health.child_vision_tested.donotknow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="rothbart-ecbq" class="level2">
 <h2 class="anchored" data-anchor-id="rothbart-ecbq">Rothbart ECBQ</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rothbart_vars <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(home_visit_df_health), <span class="st">'rothbart'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>new_rothbart_var_names <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="fu">names</span>(home_visit_df_health)[rothbart_vars], <span class="st">"rothbart</span><span class="sc">\\</span><span class="st">.rothbartquestions</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">""</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_df_health)[rothbart_vars] <span class="ot">&lt;-</span> new_rothbart_var_names</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>home_visit_ecbq <span class="ot">&lt;-</span> home_visit_df_health <span class="sc">|&gt;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">comments_rothbart =</span> rothbart.comments_rothbart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rothbart_vars <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="fu">names</span>(home_visit_df_health), <span class="st">'rothbart'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>new_rothbart_var_names <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="fu">names</span>(home_visit_df_health)[rothbart_vars], <span class="st">"rothbart</span><span class="sc">\\</span><span class="st">.rothbartquestions</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">""</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_df_health)[rothbart_vars] <span class="ot">&lt;-</span> new_rothbart_var_names</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>home_visit_ecbq <span class="ot">&lt;-</span> home_visit_df_health <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">comments_rothbart =</span> rothbart.comments_rothbart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="media-use" class="level2">
 <h2 class="anchored" data-anchor-id="media-use">Media use</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>home_visit_mediause <span class="ot">&lt;-</span> home_visit_ecbq <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">mediause_home_technology =</span> mediause.home_technology,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_tv =</span> mediause.technology_child_tv,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_computer =</span> mediause.technology_child_computer,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_ipad =</span> mediause.technology_child_ipad,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_dvd =</span> mediause.technology_child_dvd,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_educational =</span> mediause.technology_child_educational,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_videogame =</span> mediause.technology_child_videogame,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_tv_how =</span> mediause.tv_how,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_dvd_how =</span> mediause.dvd_how,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_computer_how =</span> mediause.computer_how,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_ipad_how =</span> mediause.ipad_how,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_educational_how =</span> mediause.educational_how,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_videogame_how =</span> mediause.videogame_how,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_tv_hrs_per_day =</span> mediause.tv_hours_per_day,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_meals =</span> mediause.techuse.meals,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_playtime =</span> mediause.techuse.playtime,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_bedtime =</span> mediause.techuse.bedtime,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_transportation =</span> mediause.techuse.transportation,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_comments =</span> mediause.comments_technology)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>home_visit_mediause <span class="ot">&lt;-</span> home_visit_ecbq <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">mediause_home_technology =</span> mediause.home_technology,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_tv =</span> mediause.technology_child_tv,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_computer =</span> mediause.technology_child_computer,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_ipad =</span> mediause.technology_child_ipad,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_dvd =</span> mediause.technology_child_dvd,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_educational =</span> mediause.technology_child_educational,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_technology_child_videogame =</span> mediause.technology_child_videogame,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_tv_how =</span> mediause.tv_how,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_dvd_how =</span> mediause.dvd_how,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_computer_how =</span> mediause.computer_how,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_ipad_how =</span> mediause.ipad_how,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_educational_how =</span> mediause.educational_how,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_videogame_how =</span> mediause.videogame_how,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_tv_hrs_per_day =</span> mediause.tv_hours_per_day,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_meals =</span> mediause.techuse.meals,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_playtime =</span> mediause.techuse.playtime,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_bedtime =</span> mediause.techuse.bedtime,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_techuse_transportation =</span> mediause.techuse.transportation,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">mediause_comments =</span> mediause.comments_technology)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="pets" class="level2">
 <h2 class="anchored" data-anchor-id="pets">Pets</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>home_visit_pets <span class="ot">&lt;-</span> home_visit_mediause <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pets_at_home =</span> pets.pets_at_home,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">pets_types_number =</span> pets.pets_types_number,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">pets_indoors_outdoors =</span> pets.pets_indoors_outdoors,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">comments_pets =</span> pets.comments_pets)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(home_visit_pets<span class="sc">$</span>pets_types_number) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>home_visit_pets <span class="ot">&lt;-</span> home_visit_mediause <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">pets_at_home =</span> pets.pets_at_home,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">pets_types_number =</span> pets.pets_types_number,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">pets_indoors_outdoors =</span> pets.pets_indoors_outdoors,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">comments_pets =</span> pets.comments_pets)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(home_visit_pets<span class="sc">$</span>pets_types_number) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] NA                                             
  [2] "One dog"                                      
@@ -542,32 +568,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="division-of-labor" class="level2">
 <h2 class="anchored" data-anchor-id="division-of-labor">Division of labor</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>home_visit_labor <span class="ot">&lt;-</span> home_visit_pets</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_labor) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">names</span>(home_visit_labor), <span class="st">"division_labor</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"laundry</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"cleaning</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"dishwashing</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"cooking</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"feeding</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"droppick</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"bed</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"disciplining</span><span class="sc">\\</span><span class="st">."</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>home_visit_labor <span class="ot">&lt;-</span> home_visit_labor <span class="sc">|&gt;</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>instruction_dishes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>home_visit_labor <span class="ot">&lt;-</span> home_visit_pets</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_labor) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">names</span>(home_visit_labor), <span class="st">"division_labor</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"laundry</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"cleaning</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"dishwashing</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"cooking</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"feeding</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"droppick</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"bed</span><span class="sc">\\</span><span class="st">."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"disciplining</span><span class="sc">\\</span><span class="st">."</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>home_visit_labor <span class="ot">&lt;-</span> home_visit_labor <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>instruction_dishes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="typical-day" class="level2">
 <h2 class="anchored" data-anchor-id="typical-day">Typical day</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>home_visit_clean <span class="ot">&lt;-</span> home_visit_labor</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_clean) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">names</span>(home_visit_clean), <span class="st">"typical_day</span><span class="sc">\\</span><span class="st">."</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>home_visit_clean <span class="ot">&lt;-</span> home_visit_labor</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_clean) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">names</span>(home_visit_clean), <span class="st">"typical_day</span><span class="sc">\\</span><span class="st">."</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(home_visit_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] "participant_id"                          
+<pre><code>  [1] "participant_guid"                        
   [2] "date_today"                              
   [3] "site_id"                                 
-  [4] "subject_number"                          
+  [4] "participant_ID"                          
   [5] "test_date"                               
   [6] "child_sex"                               
   [7] "age_group"                               
@@ -738,12 +764,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="save-cleaned-file">Save cleaned file</h2>
 <p>Save with “latest” label.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(home_visit_clean, <span class="st">"../data/csv/home_visit/agg/PLAY-non-mcdi-latest.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(home_visit_clean, <span class="st">"../data/csv/home_visit/agg/PLAY-non-mcdi-kobo-latest.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Save with date-stamp for quality control.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/csv/home_visit/agg/PLAY-non-mcdi-"</span>, <span class="fu">Sys.Date</span>(), <span class="st">".csv"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(home_visit_clean, fn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/csv/home_visit/agg/PLAY-non-mcdi-kobo-"</span>, <span class="fu">Sys.Date</span>(), <span class="st">".csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(home_visit_clean, fn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
