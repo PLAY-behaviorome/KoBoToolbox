@@ -354,6 +354,7 @@ cor.test(filtered_walk_crawl_mos$crawl_mos, filtered_walk_crawl_mos$walk_mos_kea
 
 ```{r}
 #| label: tbl-breastfeeding-by-age-grp
+#| tbl-cap: Breastfeeding by age group
 xtabs(formula = ~ age_group + feeding_breastfeed, data = hv)
 ```
 
@@ -395,6 +396,7 @@ Other sleeping data are in the screening questionnaire.
 
 ```{r}
 #| label: tbl-child-sleeping-position
+#| tbl-cap: Child sleeping position by age group
 xtabs(formula = ~ child_sleeping_position + age_group, data = hv)
 ```
 
@@ -404,6 +406,7 @@ xtabs(formula = ~ child_sleeping_position + age_group, data = hv)
 
 ```{r}
 #| label: tbl-child-health-rating
+#| tbl-cap: Parent-report of overall child health
 child_health_rating <- hv |>
   # dplyr::select(child_sex, age_group, child_health) |>
   dplyr::filter(!is.na(child_health)) |>
@@ -435,6 +438,7 @@ xtabs(formula = ~ child_recent_vaccination + age_group, data = recent_vax)
 
 ```{r}
 #| label: tbl-seen-specialist
+#| tbl-cap: Children who have seen a medical specialist
 seen_specialist <- hv |>
   dplyr::select(child_sex, age_group, child_medical_specialist) |>
   dplyr::filter(!is.na(child_medical_specialist))
@@ -450,6 +454,7 @@ Manual inspection shows some possible identifying information (names) in `child_
 
 ```{r}
 #| label: tbl-hearing-tested
+#| tbl-cap: Hearing test and context
 hearing_tested <- hv |>
   dplyr::select(child_sex, age_group, child_hearing_tested) |>
   dplyr::filter(!is.na(child_hearing_tested))
@@ -461,6 +466,7 @@ xtabs(formula = ~ child_hearing_tested + age_group, data = hearing_tested)
 
 ```{r}
 #| label: tbl-vision-tested
+#| tbl-cap: Vision test and context
 vision_tested <- hv |>
   dplyr::select(child_sex, age_group, child_vision_tested) |>
   dplyr::filter(!is.na(child_vision_tested))
@@ -499,6 +505,7 @@ illness_allergy |>
 
 ```{r}
 #| label: tbl-injuries
+#| tbl-cap: Child injuries
 xtabs(formula = ~ child_injury_times + age_group, data = hv)
 ```
 
@@ -508,6 +515,7 @@ xtabs(formula = ~ child_injury_times + age_group, data = hv)
 
 ```{r}
 #| label: tbl-smoking-drinking
+#| tbl-cap: Smoking or drinking during pregancy
 smoking_drinking <- hv |>
   dplyr::select(age_group,
     child_sex,
@@ -520,6 +528,7 @@ xtabs(formula = ~ mom_pregnant_smoking + mom_pregnant_drinking, smoking_drinking
 
 ```{r}
 #|  label: tbl-smoking-house-car
+#|  tbl-cap: Smoking in the house or car
 xtabs(formula = ~ smoking_house + smoking_car, smoking_drinking)
 ```
 
@@ -538,11 +547,13 @@ smoking_drinking |>
 
 ```{r}
 #| label: tbl-smoking-now
+#| tbl-cap: Smoking currently
 xtabs(formula = ~ mom_smoking_now, smoking_drinking)
 ```
 
 ```{r}
 #| label: tbl-smoking-now-amt
+#| tbl-cap: Amount if smoking currently
 smoking_drinking$mom_smoking_now_amount[!is.na(smoking_drinking$mom_smoking_now_amount)]
 ```
 
@@ -552,6 +563,7 @@ The following *may* contain identifiable data.
 
 ```{r, eval=FALSE}
 #| label: tbl-comments-drinking
+#| tbl-cap: "Drinking comments"
 smoking_drinking |>
   dplyr::select(mom_drinking_comments) |>
   dplyr::filter(!is.na(mom_drinking_comments)) |>
@@ -632,31 +644,37 @@ ecbq |>
 
 ```{r}
 #| label: tbl-mediause.home_technology.tv
+#| tbl-cap: Use of TV at home
 xtabs(formula = ~ mediause.home_technology.tv, hv)
 ```
 
 ```{r}
 #| label: tbl-mediause.home_technology.dvd
+#| tbl-cap: Use of DVD at home
 xtabs(formula = ~ mediause.home_technology.dvd, hv)
 ```
 
 ```{r}
 #| label: tbl-mediause.home_technology.computer
+#| tbl-cap: Use of computer at home
 xtabs(formula = ~ mediause.home_technology.computer, hv)
 ```
 
 ```{r}
 #| label: tbl-mediause.home_technology.ipad
+#| tbl-cap: Use of iPad/tablet at home
 xtabs(formula = ~ mediause.home_technology.ipad, hv)
 ```
 
 ```{r}
 #| label: tbl-mediause.home_technology.educationalgame
+#| tbl-cap: Use of educational games at home
 xtabs(formula = ~ mediause.home_technology.educationalgame, hv)
 ```
 
 ```{r}
 #| label: tbl-mediause.home_technology.videogame
+#| tbl-cap: Use of video games at home
 xtabs(formula = ~ mediause.home_technology.videogame, hv)
 ```
 
@@ -664,6 +682,7 @@ xtabs(formula = ~ mediause.home_technology.videogame, hv)
 
 ```{r}
 #| label: tbl-mediause_technology_child_tv
+#| tbl-cap: Use of TV by child
 xtabs(formula = ~ mediause_technology_child_tv, hv)
 ```
 
@@ -684,6 +703,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_technology_child_dvd
+#| tbl-cap: Use of DVD by child
 xtabs(formula = ~ mediause_technology_child_dvd, hv)
 ```
 
@@ -704,6 +724,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_technology_child_computer
+#| tbl-cap: Use of computer by child
 xtabs(formula = ~ mediause_technology_child_computer, hv)
 ```
 
@@ -724,6 +745,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_technology_child_ipad
+#| tbl-cap: Use of iPad/tablet by child
 xtabs(formula = ~ mediause_technology_child_ipad, hv)
 ```
 
@@ -744,6 +766,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_technology_child_educational
+#| tbl-cap: Use of educational games by child
 xtabs(formula = ~ mediause_technology_child_educational, hv)
 ```
 
@@ -764,6 +787,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_technology_child_videogame
+#| tbl-cap: Use of video games by child
 xtabs(formula = ~ mediause_technology_child_videogame, hv)
 ```
 
@@ -784,10 +808,12 @@ hv |>
 
 ::: {.callout-warning}
 The following *may* contain identifiable data.
+
+Moreover, this is a free-text field that requires further processing to be visualized.
 :::
 
 ```{r, eval=FALSE}
-#| label: mediause_tv_hrs_per_day
+#| label: tbl-mediause_tv_hrs_per_day
 
 hv |>
   dplyr::select(mediause_tv_hrs_per_day) |>
@@ -800,6 +826,7 @@ hv |>
 
 ```{r}
 #| label: tbl-mediause_techuse_meals
+#| tbl-cap: Use of technology at meals
 xtabs(formula = ~ mediause_techuse_meals, hv)
 ```
 
@@ -807,6 +834,7 @@ xtabs(formula = ~ mediause_techuse_meals, hv)
 
 ```{r}
 #| label: tbl-mediause_techuse_playtime
+#| tbl-cap: Use of technology at playtime
 xtabs(formula = ~ mediause_techuse_playtime, hv)
 ```
 
@@ -814,6 +842,7 @@ xtabs(formula = ~ mediause_techuse_playtime, hv)
 
 ```{r}
 #| label: tbl-mediause_techuse_bedtime
+#| tbl-cap: Use of technology at bedtime
 xtabs(formula = ~ mediause_techuse_bedtime, hv)
 ```
 
@@ -821,6 +850,7 @@ xtabs(formula = ~ mediause_techuse_bedtime, hv)
 
 ```{r}
 #| label: tbl-mediause_techuse_transportation
+#| tbl-cap: Use of technology during transportation
 xtabs(formula = ~ mediause_techuse_transportation, hv)
 ```
 
@@ -831,7 +861,7 @@ The following *may* contain identifiable data.
 :::
 
 ```{r, eval=FALSE}
-#| label: mediause_comments
+#| label: tbl-mediause_comments
 
 hv |>
   dplyr::select(mediause_comments) |>
@@ -844,6 +874,7 @@ hv |>
 
 ```{r}
 #| label: tbl-pets-at-home
+#| tbl-cap: Pets at home
 xtabs(formula = ~ pets_at_home, hv)
 ```
 
@@ -862,12 +893,13 @@ hv_pets <- hv |>
 
 ```{r}
 #| label: tbl-n-dyads-dogs-cats
-
+#| tbl-cap: "Dogs and/or cats"
 xtabs(formula = ~ dogs + cats, hv_pets)
 ```
 
 ```{r}
 #| label: tbl-pets-indoors
+#| tbl-cap: Pets indoors or out
 xtabs(formula = ~ pets_indoors_outdoors, hv)
 ```
 
@@ -876,7 +908,7 @@ There are some identifiable elements in the `comments_pets` field.
 :::
 
 ```{r, eval=FALSE}
-#| label: pets-comments
+#| label: tbl-pets-comments
 
 hv |>
   dplyr::select(comments_pets) |>
@@ -886,10 +918,6 @@ hv |>
 ```
 
 ## Division of Labor
-
-::: {.callout-warning}
-Visualization code for these variables has not been generated yet.
-:::
 
 ### Laundry
 
@@ -932,7 +960,6 @@ hv |>
   kableExtra::kable(format = 'html') |>
     kableExtra::kable_classic()
 ```
-
 
 ### Cleaning
 
@@ -1255,6 +1282,7 @@ The following code will permit visualization of the comments, but the data shoul
 :::
 
 ```{r eval=FALSE}
+#| label: tbl-typical_behavior_specifics
 hv |>
   dplyr::select(typical_behavior_specifics) |>
   dplyr::filter(!is.na(typical_behavior_specifics)) |>
@@ -1272,6 +1300,7 @@ The following code will permit visualization of the comments, but the data shoul
 :::
 
 ```{r eval=FALSE}
+#| label: tbl-typical_activities_specifics
 hv |>
   dplyr::select(typical_activities_specifics) |>
   dplyr::filter(!is.na(typical_activities_specifics)) |>
@@ -1289,6 +1318,7 @@ The following code will permit visualization of the comments, but the data shoul
 :::
 
 ```{r eval=FALSE}
+#| label: tbl-typical_nightmorning_specifics
 hv |>
   dplyr::select(typical_nightmorning_specifics) |>
   dplyr::filter(!is.na(typical_nightmorning_specifics)) |>
@@ -1306,6 +1336,7 @@ The following code will permit visualization of the comments, but the data shoul
 :::
 
 ```{r eval=FALSE}
+#| label: tbl-typical_otherthanme_specifics
 hv |>
   dplyr::select(typical_otherthanme_specifics) |>
   dplyr::filter(!is.na(typical_otherthanme_specifics)) |>
