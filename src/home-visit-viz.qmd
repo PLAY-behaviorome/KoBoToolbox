@@ -86,6 +86,12 @@ df <- hv |>
   dplyr::mutate(language_child = stringr::str_replace_all(language_child, " ", "_"))
 xtabs(formula = ~ child_sex + language_child, data = df)
 ```
+
+::: {.callout-note}
+The current workflow seems to omit Spanish-only families.
+This must be investigated further.
+:::
+
 ## MB-CDI {-}
 
 ### 12-mo-old English speakers {-}
