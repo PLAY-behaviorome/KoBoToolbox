@@ -11,7 +11,7 @@ screen_add_fips <- function(df) {
   single_addr
   
   census_full <- single_addr |>
-    geocode(
+    tidygeocoder::geocode(
       address = singlelineaddress,
       method = "census",
       full_results = TRUE,

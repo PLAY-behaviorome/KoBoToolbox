@@ -1,5 +1,42 @@
-# Post-visit: Gathering
+# Gather
 
 ::: {.callout-warning}
 This page is under construction.
 :::
+
+## Background
+
+This page describes the process for "gathering" the post-visit data.
+Most of the work is done via specific targets.
+
+## Select, download, save CSVs
+
+Three targets handle selecting the post-visit files, downloading 
+.xlsx files and saving the CSVs.
+
+```
+  tar_target(
+    kb_post_visit_df,
+    kobo_list_data_filtered(kb_df, "Post\\-Visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_post_visit,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_download,
+    kobo_retrieve_save_many_xlsx(kb_post_visit_df, "data/xlsx/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_csvs,
+    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
+    cue = tarchetypes::tar_cue_age(
+      name = post_visit_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+```

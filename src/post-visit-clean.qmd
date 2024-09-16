@@ -1,5 +1,47 @@
-# Post-visit: Cleaning
+# Clean
 
 ::: {.callout-warning}
 This page is under construction.
 :::
+
+## Background
+
+This page describes the process of cleaning the post-visit survey data.
+
+## Import
+
+We import the two CSVs in `data/csv/post_visit`.
+
+```{r import-post-visit-csvs}
+fl <- list.files(file.path(here::here(), "data", "csv", "post_visit"), 
+                 "\\.csv$", full.names = TRUE)
+
+pvs <- purrr::map(fl, readr::read_csv, col_types = readr::cols(.default = "c"),
+                      show_col_types = FALSE)
+```
+
+## Examine 
+
+```{r}
+names(pvs[[1]])
+dim(pvs[[1]])
+```
+
+```{r}
+names(pvs[[2]])
+dim(pvs[[2]])
+```
+
+Most of the entries are in the second form, so we start there.
+
+```{r}
+pv <- pvs[[2]]
+```
+
+## Remove metadata variables
+
+## Remove administrative variables
+
+Some variables are intended for project staff only.
+
+
