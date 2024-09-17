@@ -1,27 +1,24 @@
 # Aggregate
 
-## Background
+## About
 
 This page documents the process for combining separate files into aggregate files containing data from many participants.
 
 ## Setup
 
-```{r}
-suppressPackageStartupMessages(library("tidyverse"))
+```{r setup}
+fl <-
+  list.files(
+    file.path(here::here(), "R"),
+    "^load|^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS|utils",
+    full.names = TRUE
+  )
+purrr::walk(fl, source)
+
+suppressPackageStartupMessages(library(tidyverse))
 ```
 
 ## Remove identifiers {-}
-
-The function `remove_identifiers()` in `R/kobo_export` detects the presence of names, addresses, phone numbers, email, and dates in the field names for an input file and removes these fields.
-It also modifies the file name by appending `_deidentified`.
-
-The `remove_identifiers()` function detects these fields
-For clarity, we print it here.
-
-```{r}
-source("~/rrr/KoBoToolbox/R/_OLD/functions.R", echo = FALSE, print.eval = FALSE)
-remove_identifiers
-```
 
 The **non-MBCDI file** contains the identifiers, so that is the target of this removal process.
 
@@ -39,6 +36,17 @@ tar_target(
       these_questions = 'non_mbcdi'
   )
 )
+```
+
+```{r home-visit-remove-identifiers}
+home_visit_non_mbcdi <- list.files(file.path(here::here(), "data/csv/home_visit/non_mbcdi/raw"),
+                 "\\.csv$", full.names = TRUE)
+purrr::map_chr(
+    home_visit_non_mbcdi,
+    file_open_deidentify_save,
+    csv_save_dir = file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid"),
+      these_questions = 'non_mbcdi'
+  )
 ```
 
 ## Quality assurance (QA) reviews {-}
@@ -83,7 +91,7 @@ Select the de-identified CSVs to examine.
 ```{r generate-qa-report}
 fl <-
   list.files(
-    file.path("../data/csv/home_visit/non_mbcdi/deid"),
+    file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid"),
     '^[0-9]+_non_mbcdi_[12|18|24].*deidentified',
     full.names = TRUE
   )
@@ -106,13 +114,19 @@ We start with the data files that have $n=288$ columns.
 ```{r}
 df740623 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
 df740624 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -122,7 +136,10 @@ sum(names(df740623) == names(df740624))
 ```{r}
 df740625 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -132,7 +149,10 @@ sum(names(df740623) == names(df740625))
 ```{r}
 df740628 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -146,13 +166,19 @@ Let's turn to the more recent files with $n=287$ columns.
 ```{r}
 df740626 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
 df740627 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -170,7 +196,10 @@ The misalignment arises somewhere near column 92.
 ```{r}
 df740629 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -182,7 +211,7 @@ So, `df740626` and `df740629` are aligned and can be merged.
 ```{r}
 df740630 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv",
+    file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv"),
     show_col_types = FALSE
   )
 
@@ -195,7 +224,10 @@ These files also fall out of alignment near column 92.
 ```{r}
 df740631 <-
   readr::read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 
@@ -223,52 +255,98 @@ We focus on thos with data (n_vars > 0)
 ```{r}
 df307736 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
+
 df331453 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df331848 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df334099 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
+
 df363349 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df363381 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df363431 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df408149 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df411456 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv"
+    )
+    ,
     show_col_types = FALSE
   )
+
 df411469 <-
   read_csv(
-    "../data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv",
+    file.path(
+      here::here(),
+      "data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv"
+    ),
     show_col_types = FALSE
   )
 ```
@@ -279,12 +357,15 @@ Let's look at the two forms that have the same number of columns, $n=274$, 30773
 names(df307736) == names(df331453)
 length(names(df307736) == names(df331453)) == length(names(df307736))
 ```
+
 So, these two are identical and could be merged.
 
-```
-tar_target(files_274_cols, stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)"))
+```{r}
+hv_deid_fl <- list.files(file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid"), "\\.csv$", full.names = TRUE)
 
-tar_target(df_merge_274_cols, make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]))
+files_274_cols <- stringr::str_detect(hv_deid_fl, "/(307736|331453)")
+
+df_merge_274_cols <- file_make_aggregate_from_csvs(hv_deid_fl[files_274_cols])
 ```
 
 How about the files with $n=267$ columns, 331848 and 334099?
@@ -318,6 +399,7 @@ names(df331848) %>% stringr::str_remove("group_combinedquestionnaires/") -> n1
 names(df334099) %>% stringr::str_remove("group_jo84c13/") -> n2
 n1 == n2
 ```
+
 ```{r}
 cbind(n1[8:15], n2[8:15])
 ```
@@ -381,6 +463,7 @@ It looks like these could be reconciled by deleting `prenatal_care` from `n1`.
 n1_2 <- n1[-50]
 n1_2 == n2_5
 ```
+
 ```{r}
 cbind(n1_2[64:75], n2_5[64:75])
 ```
@@ -405,33 +488,22 @@ This path of reconciliation does not appear fruitful.
 
 ### non-MB-CDI files with $n=288$ columns {-}
 
-```
-tar_target(files_288_cols, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-                      "2[3458]_non_mbcdi.*_deidentified\\.csv")
-)
+```{r}
+files_288_cols <- stringr::str_detect(hv_deid_fl, "2[3458]_non_mbcdi.*_deidentified\\.csv")
 
-tar_target(df_merge_288_cols,
-    make_aggregate_data_file(
-        home_visit_remove_identifiers[files_288_cols])
-)
+df_merge_288_cols <- file_make_aggregate_from_csvs(hv_deid_fl[files_288_cols])
 ```
 
 ### non-MB-CDI files with $n=287$ columns {-}
 
-```
-tar_target(files_287_cols_1, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-          "2[69]_non_mbcdi.*_deidentified\\.csv")),
-tar_target(files_287_cols_2, 
-  stringr::str_detect(home_visit_remove_identifiers, 
-          "(740627|740630|740631)_non.*_deidentified\\.csv")),
-tar_target(df_merge_287_cols_1,
-  make_aggregate_data_file(
-          home_visit_remove_identifiers[files_287_cols_1])),
-tar_target(df_merge_287_cols_2,
-  make_aggregate_data_file(
-          home_visit_remove_identifiers[files_287_cols_2])),
+```{r}
+files_287_cols_1 <- stringr::str_detect(hv_deid_fl, "2[69]_non_mbcdi.*_deidentified\\.csv")
+
+files_287_cols_2 <- stringr::str_detect(hv_deid_fl, "(740627|740630|740631)_non.*_deidentified\\.csv")
+
+df_merge_287_cols_1 <- file_make_aggregate_from_csvs(hv_deid_fl[files_287_cols_1])
+
+df_merge_287_cols_2 <- file_make_aggregate_from_csvs(hv_deid_fl[files_287_cols_2])
 ```
 
 ### Examine groups with $n=287$ cols {-}
@@ -439,8 +511,8 @@ tar_target(df_merge_287_cols_2,
 We focus on the starting column where the column names diverge, column 92.
 
 ```{r}
-targets::tar_load(df_merge_287_cols_1, store="../_targets")
-targets::tar_load(df_merge_287_cols_2, store="../_targets")
+# targets::tar_load(df_merge_287_cols_1, store="../_targets")
+# targets::tar_load(df_merge_287_cols_2, store="../_targets")
 names(df_merge_287_cols_1)[92]
 names(df_merge_287_cols_2)[92]
 ```
@@ -555,8 +627,6 @@ Success!
 Now, let's go back to the data frame with 288 cols and see if we can bring these into alignment.
 
 ```{r}
-targets::tar_load(df_merge_288_cols, store="../_targets")
-
 df3 <- df_merge_288_cols
 
 df3 <- df3 %>%
@@ -603,7 +673,7 @@ Option 2: Add the 'missing' columns as NA in post-processing.
 :::
 
 For now, I'm going to create functions that align these data frames.
-These are incorporated into `R/functions.R` so we do not source them again here.
+These are incorporated into `R/utils.R` so we do not source them again here.
 
 ```{r, eval=FALSE}
 remove_technology_use_scale <- function(df) {
@@ -659,10 +729,6 @@ clean_dfs <- function(df) {
 Let's test this workflow with the unmodified files.
 
 ```{r}
-targets::tar_load(df_merge_287_cols_1, store="../_targets")
-targets::tar_load(df_merge_287_cols_2, store="../_targets")
-targets::tar_load(df_merge_288_cols, store="../_targets")
-
 df1m <- clean_dfs(df_merge_287_cols_1)
 dim(df1m)
 
@@ -676,30 +742,14 @@ dim(df3m)
 (names(df1m) == names(df3m)) |> sum()
 ```
 
-### Merging files at last {-}
+## Merging and exporting {-}
 
-```{r, eval=FALSE}
+```{r}
 df <- rbind(df1m, df2m, df3m)
 ```
 
-::: {.rmdnote}
-As of 2022-12-15, the above has now been incorporated into `R/functions.R` and into the `_targets.R` workflow.
-:::
+Save exported aggregate file.
 
-## Merge with Databrary info {-}
-
-::: {.callout-warning}
-This code is not working as of 2024-09-11.
-:::
-
-For each session (row) in the merged data frame, we pull data from the associated Databrary volume and session.
-These data are merged with that drawn from KBT.
-
+```{r}
+readr::write_csv(df, file = file.path(here::here(), "data/csv/home_visit/agg", "PLAY-non-mcdi-raw-latest.csv"))
 ```
-tar_target(
-  home_visit_w_databrary_df,
-  add_databrary_info_to_home_visit_df(home_visit_df)
-)
-```
-
-The `add_databrary_info_to_home_visit()` function in `R/functions.R` does most of the work.

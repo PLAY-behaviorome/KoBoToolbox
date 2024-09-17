@@ -16,6 +16,8 @@ kobo_retrieve_save_xlsx <-
   function(form_index = 13,
            kb_df = kobo_list_data(),
            save_dir = 'tmp',
+           ans_dir = 'ans',
+           qs_dir = 'qs',
            save_form = TRUE,
            vb = TRUE) {
     
@@ -47,8 +49,8 @@ kobo_retrieve_save_xlsx <-
         kobo_create_cleaned_augmented_form_name(form_index, kb_df)
       
       # Must export as .xlsx even though API queries for .xls
-      file_name <- file.path(save_dir, paste0(form_name, '.xlsx'))
-      file_name_qs <- file.path(save_dir, "form", paste0(form_name, '-forms.xlsx'))
+      file_name_ans <- file.path(save_dir, ans_dir, paste0(form_name, '.xlsx'))
+      file_name_qs <- file.path(save_dir, qs_dir, paste0(form_name, '-forms.xlsx'))
       
       # kobo_api_key <- Sys.getenv("KOBO_API_KEY")
       # if (!is.character(kobo_api_key)) {
@@ -86,8 +88,8 @@ kobo_retrieve_save_xlsx <-
       
       if (!is.null(resp)) {
         body <- httr2::resp_body_raw(resp)
-        writeBin(body, file_name)
-        message('Saved `', file_name, '`')
+        writeBin(body, file_name_ans)
+        message('Saved `', file_name_ans, '`')
       } else {
         resp
       }
@@ -95,8 +97,8 @@ kobo_retrieve_save_xlsx <-
       # Questionnaire forms
       if (save_form) {
         message("Retrieving questions...")
-        if (!dir.exists(file.path(save_dir, "form"))) {
-          message("Directory does not exist: ", file.path(save_dir, "form"))
+        if (!dir.exists(file.path(save_dir, qs_dir))) {
+          message("Directory does not exist: ", file.path(save_dir, qs_dir))
           return(NULL)
         }
         

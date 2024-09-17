@@ -3,11 +3,11 @@
 library(targets)
 library(tarchetypes)
 
-source("R/_OLD/functions.R")
+#source("R/_OLD/functions.R")
 fl <-
   list.files(
     "R",
-    "^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS",
+    "^load|^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS",
     full.names = TRUE
   )
 purrr::walk(fl, source)
@@ -43,8 +43,8 @@ tar_option_set(
   )
 )
 
-update_interval <- 1
-update_interval_units <- "mins"
+update_interval <- 2
+update_interval_units <- "days"
 
 list(
   tar_target(
@@ -84,28 +84,24 @@ list(
     )
   ),
   # Home visit data
-  tar_target(
-    kb_home_df,
-    kobo_list_data_filtered(kb_df, "Home"),
-    cue = tarchetypes::tar_cue_age(
-      name = kb_home,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    home_visit_downloads,
-    retrieve_kobo_xlsx(kb_home_df, "data/xlsx/home_visit/raw")
-  ),
-  tar_target(
-    home_visit_renamed,
-    rename_home_xlsx(list.files("data/xlsx/home_visit/raw", "\\.xlsx$", full.names = TRUE),
-                     "data/xlsx/home_visit/std_name")
-  ),
-  tar_target(
-    home_visit_xlsx_to_csv,
-    load_xlsx_save_many_csvs_2(list.files("data/xlsx/home_visit/std_name", "\\.xlsx$", 
-                                          full.names = TRUE), "data/csv/home_visit/raw")
-  ),
+  # tar_target(
+  #   kb_home_df,
+  #   kobo_list_data_filtered(kb_df, "Home")
+  # ),
+  # tar_target(
+  #   home_visit_downloads,
+  #   kobo_retrieve_save_many_xlsx(kb_home_df, "data/xlsx/home_visit/raw")
+  # ),
+  # tar_target(
+  #   home_visit_renamed,
+  #   rename_home_xlsx(list.files("data/xlsx/home_visit/raw", "\\.xlsx$", full.names = TRUE),
+  #                    "data/xlsx/home_visit/std_name")
+  # ),
+  # tar_target(
+  #   home_visit_xlsx_to_csv,
+  #   load_xlsx_save_many_csvs_2(list.files("data/xlsx/home_visit/std_name", "\\.xlsx$", 
+  #                                         full.names = TRUE), "data/csv/home_visit/raw")
+  # ),
   # tar_target(
   #   home_visit_forms,
   #   home_visit_retrieve_forms(kb_home, "data/xlsx/home_visit/forms"),
@@ -127,110 +123,106 @@ list(
     )
   ),
   # Non-MB-CDIs
-  tar_target(
-    home_visit_non_mbcdi,
-    split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi/raw")
-  ),
-  tar_target(
-    home_visit_remove_identifiers,
-    purrr::map_chr(
-      home_visit_non_mbcdi,
-      open_deidentify_save,
-      csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
-      these_questions = 'non_mbcdi'
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_remove_identifiers,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   home_visit_non_mbcdi,
+  #   split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
+  #                        "data/csv/home_visit/non_mbcdi/raw")
+  # ),
+  # tar_target(
+  #   home_visit_remove_identifiers,
+  #   purrr::map_chr(
+  #     home_visit_non_mbcdi,
+  #     open_deidentify_save,
+  #     csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",
+  #     these_questions = 'non_mbcdi'
+  #   )
+  # ),
   # Merge non-MB-CDI datafiles
-  tar_target(
-    files_288_cols,
-    stringr::str_detect(
-      home_visit_remove_identifiers,
-      "2[3458]_non_mbcdi.*_deidentified\\.csv"
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = files_288_cols,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    files_287_cols_1,
-    stringr::str_detect(
-      home_visit_remove_identifiers,
-      "2[69]_non_mbcdi.*_deidentified\\.csv"
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = files_287_cols_1,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    files_287_cols_2,
-    stringr::str_detect(
-      home_visit_remove_identifiers,
-      "(740627|740630|740631)_non.*_deidentified\\.csv"
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = files_287_cols_2,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    df_merge_288_cols,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_288_cols]),
-    cue = tarchetypes::tar_cue_age(
-      name = df_merge_288_cols,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    df_merge_287_cols_1,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_1]),
-    cue = tarchetypes::tar_cue_age(
-      name = df_merge_287_cols_1,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    df_merge_287_cols_2,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_2]),
-    cue = tarchetypes::tar_cue_age(
-      name = df_merge_287_cols_2,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    home_visit_df,
-    rbind(
-      clean_dfs(df_merge_287_cols_2),
-      clean_dfs(df_merge_287_cols_1),
-      clean_dfs(df_merge_288_cols)
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    files_274_cols,
-    stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)"),
-    cue = tarchetypes::tar_cue_age(
-      name = files_274_cols,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  tar_target(
-    df_merge_274_cols,
-    make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]),
-    cue = tarchetypes::tar_cue_age(
-      name = df_merge_274_cols,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   files_288_cols,
+  #   stringr::str_detect(
+  #     home_visit_remove_identifiers,
+  #     "2[3458]_non_mbcdi.*_deidentified\\.csv"
+  #   ),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = files_288_cols,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   files_287_cols_1,
+  #   stringr::str_detect(
+  #     home_visit_remove_identifiers,
+  #     "2[69]_non_mbcdi.*_deidentified\\.csv"
+  #   ),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = files_287_cols_1,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   files_287_cols_2,
+  #   stringr::str_detect(
+  #     home_visit_remove_identifiers,
+  #     "(740627|740630|740631)_non.*_deidentified\\.csv"
+  #   ),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = files_287_cols_2,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   df_merge_288_cols,
+  #   make_aggregate_data_file(home_visit_remove_identifiers[files_288_cols]),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = df_merge_288_cols,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   df_merge_287_cols_1,
+  #   make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_1]),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = df_merge_287_cols_1,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   df_merge_287_cols_2,
+  #   make_aggregate_data_file(home_visit_remove_identifiers[files_287_cols_2]),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = df_merge_287_cols_2,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   home_visit_df,
+  #   rbind(
+  #     clean_dfs(df_merge_287_cols_2),
+  #     clean_dfs(df_merge_287_cols_1),
+  #     clean_dfs(df_merge_288_cols)
+  #   ),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = home_visit_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   files_274_cols,
+  #   stringr::str_detect(home_visit_remove_identifiers, "/(307736|331453)"),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = files_274_cols,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # tar_target(
+  #   df_merge_274_cols,
+  #   make_aggregate_data_file(home_visit_remove_identifiers[files_274_cols]),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = df_merge_274_cols,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   # tar_target(
   #   home_visit_w_databrary_df,
   #   add_databrary_info_to_home_visit_df(home_visit_df, vb = TRUE),
@@ -240,29 +232,29 @@ list(
   #   )
   # ),
   # MB-CDI CSVs
-  tar_target(
-    home_visit_mbcdi,
-    split_mbcdi_csvs(home_visit_xlsx_to_csv,
-                     "data/csv/home_visit/mbcdi")
-  ),
+  # tar_target(
+  #   home_visit_mbcdi,
+  #   split_mbcdi_csvs(home_visit_xlsx_to_csv,
+  #                    "data/csv/home_visit/mbcdi")
+  # ),
   # ECBQ data
-  tar_target(
-    ecbq_wide_df,
-    ecbq_clean_make_agg_df(),
-    cue = tarchetypes::tar_cue_age(
-      name = ecbq_wide_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
-  # Health data
-  tar_target(
-    health_df,
-    health_clean_make_agg_df(),
-    cue = tarchetypes::tar_cue_age(
-      name = health_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   ecbq_wide_df,
+  #   ecbq_clean_make_agg_df(),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = ecbq_wide_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
+  # # Health data
+  # tar_target(
+  #   health_df,
+  #   health_clean_make_agg_df(),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = health_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   # Databrary session info
   # tar_target(
   #   play_databrary_sess_df,
@@ -319,22 +311,22 @@ list(
   ),
   tar_target(
     post_visit_csvs,
-    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
+    load_xlsx_save_many_csvs("data/xlsx/post_visit/ans", "data/csv/post_visit", "PLAY_Post"),
     cue = tarchetypes::tar_cue_age(
       name = post_visit_csvs,
       age = as.difftime(update_interval, units = update_interval_units)
     )
-  ),
-  tar_target(
-    post_visit_combined_df,
-    post_visit_make_df(
-      kb_post_visit_df,
-      "data/xlsx/post_visit",
-      "data/csv/post_visit"
-    ),
-    cue = tarchetypes::tar_cue_age(
-      name = screen_df,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
   )
+  # tar_target(
+  #   post_visit_combined_df,
+  #   post_visit_make_df(
+  #     kb_post_visit_df,
+  #     "data/xlsx/post_visit",
+  #     "data/csv/post_visit"
+  #   ),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = screen_df,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # )
 )

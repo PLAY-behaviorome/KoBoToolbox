@@ -14,7 +14,7 @@
 #' @export
 kobo_retrieve_save_many_xlsx <-
   function(df = kobo_list_data(),
-           save_dir = 'tmp',
+           save_dir = "data/xlsx/home_visit/raw",
            save_form = TRUE) {
     
     stopifnot(is.data.frame(df))

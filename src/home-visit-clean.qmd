@@ -1,15 +1,30 @@
 # Clean
 
-## Background
+## About
 
-This page describes how the aggregate files are cleaned, measure by measure.
+This page describes how the aggregate home visit survey files are cleaned, measure by measure.
+
+## Setup
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+```
 
 ## Load data file
 
 ```{r}
-if (!('home_visit_df' %in% ls())) {
-  targets::tar_load(home_visit_df, store="../_targets")
-}
+# if (!('home_visit_df' %in% ls())) {
+#   targets::tar_load(home_visit_df, store="../_targets")
+# }
+home_visit_df <- readr::read_csv(
+  file.path(
+    here::here(),
+    "data/csv/home_visit/agg",
+    "PLAY-non-mcdi-raw-latest.csv"
+  ),
+  col_types = cols(.default = "c"),
+  show_col_types = FALSE
+)
 ```
 
 ## Remove metadata variables

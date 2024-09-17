@@ -1,60 +1,63 @@
 # Gather
 
-## Download data {-}
+## About
+
+This page gathers KoBoToolbox files from the home visit questionnaires.
+
+## Setup
+
+Load helper functions and required package dependencies.
+
+```{r setup}
+fl <-
+  list.files(
+    file.path(here::here(), "R"),
+    "^load|^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS",
+    full.names = TRUE
+  )
+purrr::walk(fl, source)
+
+suppressPackageStartupMessages(library(tidyverse))
+```
 
 Data files for each of the language by age-group conditions are stored on KoBoToolbox (KBT).
 
-Store all of the data files on KBT in `kb_df`.
+The data files on KBT are stored in `kb_df`, a data frame that is generated as one of the workflow targets.
 
-```
-tar_target(kb_df, list_kobo_data()),
-```
-
-```{r home-visit-list-forms, eval=FALSE}
-library(targets)
-targets::tar_load(kb_df, store="../_targets")
+```{r home-visit-list-forms}
+targets::tar_load(kb_df, store=file.path(here::here(), "_targets"))
 kb_df
 ```
 
+## Download data {-}
+
 List data forms specific to the home visit by filtering the files with names that contain "Home".
 
-```
-tar_target(kb_home, dplyr::filter(kb_df, stringr::str_detect(title, "Home")))
-```
-
-```{r home-visit}
-targets::tar_load(kb_home, store="../_targets")
-kb_home
+```{r filter-home-visits}
+kb_home_df <- kobo_list_data_filtered(kb_df, "Home")
+kb_home_df
 ```
 
-### Save selected raw files to local directory {-}
+There are *n*= {r dim(kb_home_df)[1]} separate data files.
 
-Prepare to retrieve all home visit files.
+## Retrieve and save files {-}
 
-```{r}
-n_files <- dim(kb_home)[1]
-```
+We save the answer files in `data/xlsx/home_visit/raw/ans` and the question files in `data/xlsx/home_visit/raw/qs`.
+To extract the answer data only, we would set `save_form = FALSE`.
 
-There are $n=$ `r dim(kb_home)[1]` home visit data files.
+::: {.callout-note}
+This process seems inefficient.
+Most of the time most of the files do not change.
+But, it ensures that if there are any upstream changes to the raw KoBoToolbox data forms that those get propagated to our local copies.
+:::
 
-```
-tar_target(
-  home_visit_downloads,
-  retrieve_kobo_xlsx(kb_home, 
-    "data/xlsx/home_visit/raw"),
-  cue = tarchetypes::tar_cue_age(
-    name = home_visit_downloads,
-    age = as.difftime(update_interval, 
-      units = update_interval_units)
-  )
+```{r retrieve-home-xlsx-from-kobo}
+kobo_retrieve_save_many_xlsx(
+  kb_home_df,
+  save_dir = file.path(here::here(), "data/xlsx/home_visit/raw"),
+  save_form = TRUE
 )
 ```
-
-```{r}
-n_home <- dim(kb_home)[1]
-kobo_retrieve_save_xlsx(kb_df, save_dir = "data/xlsx/home_visit/ans/raw")
-```
-
 
 ### Normalize file names {-}
 
@@ -62,30 +65,30 @@ Some of the form names are inconsistent, so we normalize them to fit the followi
 
 `<form_id>_PLAY_HomeQuestionnaires_<age_group>_<lang_group>.xlsx`
 
-```
-tar_target(
-  home_visit_renamed,
-  rename_home_xlsx(home_visit_downloads,
-                     "data/xlsx/home_visit/std_name"),
-  cue = tarchetypes::tar_cue_age(
-    name = home_visit_renamed,
-    age = as.difftime(update_interval, 
-      units = update_interval_units)
-  )
+```{r rename-home-visit}
+rename_home_xlsx(
+  fl = list.files(
+    file.path(here::here(), "data/xlsx/home_visit/raw/ans"),
+    "\\.xlsx$",
+    full.names = TRUE
+  ),
+  out_dir = file.path(here::here(), "data/xlsx/home_visit/std_name")
 )
 ```
 
-### Save xlsx as csv {-}
+### Save renamed xlsx as csv {-}
 
-```
-tar_target(
-  home_visit_xlsx_to_csv,
-  load_xlsx_save_many_csvs_2(home_visit_renamed, 
-    "data/csv/home_visit/raw")
+We save the (answer) CSVs in `data/csv/home_visit/raw`.
+
+```{r load-xlsx-save-csvs}
+file_load_xlsx_save_many_csv(
+  in_dir = file.path(here::here(), "data/xlsx/home_visit/std_name"),
+  out_dir = file.path(here::here(), "data/csv/home_visit/raw"),
+  filter_str = ".*"
 )
 ```
 
-### Split MB-CDI from other questions {-}
+## Split MB-CDI from non {-}
 
 Next we import a CSV for a given form year, age group, and language group, and create two new CSV files: one with the MB-CDI data and one with all of the other survey questions.
 
@@ -93,20 +96,26 @@ By default, the document presumes that we want to convert **all** of the CSV fil
 
 Extract the 'non-mbcdi' questions first and add 'non_mbcdi' to the filename.
 
-```
-tar_target(
-  home_visit_non_mbcdi,
-  split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                        "data/csv/home_visit/non_mbcdi")
+```{r split-non-mbcdi}
+file_split_non_mbcdi_csvs(
+  fl = list.files(
+    file.path(here::here(), "data/csv/home_visit/raw"),
+    "\\.csv$",
+    full.names = TRUE
+  ),
+  out_dir = file.path(here::here(), "data/csv/home_visit/non_mbcdi/raw")
 )
 ```
 
-Extracting the MB-CDI data has nearly the same function call, but the `these_questions` parameter is set to 'mbcdi'.
+Creating a separate MBCDI CSV relies on a very similar function `file_split_mbcdi_csvs`.
 
-```
-tar_target(
-  home_visit_mbcdi,
-  split_mbcdi_csvs(home_visit_xlsx_to_csv,
-                    "data/csv/home_visit/mbcdi")
+```{r split-mbcdi}
+file_split_mbcdi_csvs(
+  fl = list.files(
+    file.path(here::here(), "data/csv/home_visit/raw"),
+    "\\.csv$",
+    full.names = TRUE
+  ),
+  out_dir = file.path(here::here(), "data/csv/home_visit/mbcdi")
 )
 ```

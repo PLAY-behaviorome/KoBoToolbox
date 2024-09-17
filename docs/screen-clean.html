@@ -505,7 +505,7 @@ Note
 <pre><code>Passing 8 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.7 seconds</code></pre>
+<pre><code>Query completed in: 1.7 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 31 of 172 columns.</code></pre>
@@ -534,7 +534,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Passing 8 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.7 seconds</code></pre>
+<pre><code>Query completed in: 1.3 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 47 of 240 columns.</code></pre>
@@ -546,7 +546,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Passing 942 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 32.9 seconds</code></pre>
+<pre><code>Query completed in: 123.3 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 47 of 243 columns.</code></pre>
@@ -847,10 +847,10 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>group_name
    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
-          1          43          86         670         113 </code></pre>
+          1          43          86         672         113 </code></pre>
 </div>
 </div>
-<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=43 sessions with NA in the <code>group_name</code>.</p>
+<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=42 sessions with NA in the <code>group_name</code>.</p>
 <p>Let’s modify those values that specify no visit on one of these forms to conform with one another.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df_sessions <span class="ot">&lt;-</span> df_sessions <span class="sc">|&gt;</span></span>
@@ -870,7 +870,7 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>             session_release
 group_name    EXCERPTS PRIVATE SHARED
-  PLAY_Gold        529       0    141
+  PLAY_Gold        529       0    143
   PLAY_Silver       81       4     28</code></pre>
 </div>
 </div>
