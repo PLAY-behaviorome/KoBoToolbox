@@ -94,28 +94,17 @@ list(
   ),
   tar_target(
     home_visit_downloads,
-    retrieve_kobo_xlsx(kb_home_df, "data/xlsx/home_visit/raw"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_downloads,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+    retrieve_kobo_xlsx(kb_home_df, "data/xlsx/home_visit/raw")
   ),
   tar_target(
     home_visit_renamed,
-    rename_home_xlsx(home_visit_downloads,
-                     "data/xlsx/home_visit/std_name"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_renamed,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+    rename_home_xlsx(list.files("data/xlsx/home_visit/raw", "\\.xlsx$", full.names = TRUE),
+                     "data/xlsx/home_visit/std_name")
   ),
   tar_target(
     home_visit_xlsx_to_csv,
-    load_xlsx_save_many_csvs_2(home_visit_renamed, "data/csv/home_visit/raw"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_xlsx_to_csv,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+    load_xlsx_save_many_csvs_2(list.files("data/xlsx/home_visit/std_name", "\\.xlsx$", 
+                                          full.names = TRUE), "data/csv/home_visit/raw")
   ),
   # tar_target(
   #   home_visit_forms,
@@ -141,11 +130,7 @@ list(
   tar_target(
     home_visit_non_mbcdi,
     split_non_mbcdi_csvs(home_visit_xlsx_to_csv,
-                         "data/csv/home_visit/non_mbcdi/raw"),
-    cue = tarchetypes::tar_cue_age(
-      name = home_visit_non_mbcdi,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
+                         "data/csv/home_visit/non_mbcdi/raw")
   ),
   tar_target(
     home_visit_remove_identifiers,

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -177,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./home-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Home visit: Visualizations</span></a>
+  <a href="./home-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visualize</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./post-visit-data-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Post-visit: Data dictionary</span></a>
+  <a href="./post-visit-data-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data dictionary</span></a>
   </div>
 </li>
       </ul>
@@ -239,8 +273,18 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
+  <li><a href="#examine" id="toc-examine" class="nav-link" data-scroll-target="#examine">Examine</a></li>
+  <li><a href="#remove-metadata-variables" id="toc-remove-metadata-variables" class="nav-link" data-scroll-target="#remove-metadata-variables">Remove metadata variables</a></li>
+  <li><a href="#remove-administrative-variables" id="toc-remove-administrative-variables" class="nav-link" data-scroll-target="#remove-administrative-variables">Remove administrative variables</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-clean.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -283,8 +327,373 @@ Warning
 <p>This page is under construction.</p>
 </div>
 </div>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>This page describes the process of cleaning the post-visit survey data.</p>
+</section>
+<section id="import" class="level2">
+<h2 class="anchored" data-anchor-id="import">Import</h2>
+<p>We import the two CSVs in <code>data/csv/post_visit</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data"</span>, <span class="st">"csv"</span>, <span class="st">"post_visit"</span>), </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pvs <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(fl, readr<span class="sc">::</span>read_csv, <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">"c"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="examine" class="level2">
+<h2 class="anchored" data-anchor-id="examine">Examine</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pvs[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "start"                                                                                                 
+  [2] "end"                                                                                                   
+  [3] "group_postvisitnotes/last_update"                                                                      
+  [4] "group_postvisitnotes/note_cleanup"                                                                     
+  [5] "group_postvisitnotes/site_id"                                                                          
+  [6] "group_postvisitnotes/date_today"                                                                       
+  [7] "group_postvisitnotes/child_first_name"                                                                 
+  [8] "group_postvisitnotes/child_middle_name"                                                                
+  [9] "group_postvisitnotes/child_last_name"                                                                  
+ [10] "group_postvisitnotes/child_birthdate"                                                                  
+ [11] "group_postvisitnotes/child_birth_city"                                                                 
+ [12] "group_postvisitnotes/testdate"                                                                         
+ [13] "group_postvisitnotes/child_sex"                                                                        
+ [14] "group_postvisitnotes/child_agegroup"                                                                   
+ [15] "group_postvisitnotes/subject_number"                                                                   
+ [16] "group_postvisitnotes/city1"                                                                            
+ [17] "group_postvisitnotes/city2"                                                                            
+ [18] "group_postvisitnotes/last1"                                                                            
+ [19] "group_postvisitnotes/first1"                                                                           
+ [20] "group_postvisitnotes/year"                                                                             
+ [21] "group_postvisitnotes/year2"                                                                            
+ [22] "group_postvisitnotes/day"                                                                              
+ [23] "group_postvisitnotes/day2"                                                                             
+ [24] "group_postvisitnotes/day1"                                                                             
+ [25] "group_postvisitnotes/month"                                                                            
+ [26] "group_postvisitnotes/month2"                                                                           
+ [27] "group_postvisitnotes/play_id"                                                                          
+ [28] "group_postvisitnotes/play_id_test"                                                                     
+ [29] "group_postvisitnotes/participant_id"                                                                   
+ [30] "group_postvisitnotes/protocol_date"                                                                    
+ [31] "group_postvisitnotes/languange_spoken_child"                                                           
+ [32] "group_postvisitnotes/languange_spoken_child/english"                                                   
+ [33] "group_postvisitnotes/languange_spoken_child/spanish"                                                   
+ [34] "group_postvisitnotes/acknowledge_geninfo"                                                              
+ [35] "group_postvisitnotes/group_housingchecklist/rooms"                                                     
+ [36] "group_postvisitnotes/group_housingchecklist/rooms/basement"                                            
+ [37] "group_postvisitnotes/group_housingchecklist/rooms/kitchen"                                             
+ [38] "group_postvisitnotes/group_housingchecklist/rooms/eatingarea"                                          
+ [39] "group_postvisitnotes/group_housingchecklist/rooms/bathroom"                                            
+ [40] "group_postvisitnotes/group_housingchecklist/rooms/bedroom"                                             
+ [41] "group_postvisitnotes/group_housingchecklist/rooms/livingroom"                                          
+ [42] "group_postvisitnotes/group_housingchecklist/rooms/familyroom"                                          
+ [43] "group_postvisitnotes/group_housingchecklist/rooms/studyroom"                                           
+ [44] "group_postvisitnotes/group_housingchecklist/group_basement/basement_access"                            
+ [45] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_use"      
+ [46] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_playspace"
+ [47] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_odors"    
+ [48] "group_postvisitnotes/group_housingchecklist/group_kitchen/kitchen_odors"                               
+ [49] "group_postvisitnotes/group_housingchecklist/group_bathroom/number_bathroom"                            
+ [50] "group_postvisitnotes/group_housingchecklist/group_bathroom/note_bathroomsep"                           
+ [51] "group_postvisitnotes/group_housingchecklist/group_bathroom/group_bathroomsep_count"                    
+ [52] "group_postvisitnotes/group_housingchecklist/group_childroom/childroom_whoseroom"                       
+ [53] "group_postvisitnotes/group_housingchecklist/group_childroom/childroom_inhabitants"                     
+ [54] "group_postvisitnotes/group_housingchecklist/group_bedroom/number_bedrooms"                             
+ [55] "group_postvisitnotes/group_housingchecklist/group_bedroom/note_bedrooms"                               
+ [56] "group_postvisitnotes/group_housingchecklist/group_bedroom/group_bedrooomsep_count"                     
+ [57] "group_postvisitnotes/group_housingchecklist/group_livingroom/living_couchcondition"                    
+ [58] "group_postvisitnotes/group_housingchecklist/group_familyroom/family_couchcondition"                    
+ [59] "group_postvisitnotes/group_housingchecklist/group_houseinside/frontdoorlock"                           
+ [60] "group_postvisitnotes/group_housingchecklist/group_houseinside/number_insidestairs"                     
+ [61] "group_postvisitnotes/group_housingchecklist/group_houseinside/group_insidestairs_count"                
+ [62] "group_postvisitnotes/group_housingchecklist/group_houseoutside/front_maintenance"                      
+ [63] "group_postvisitnotes/group_housingchecklist/group_houseoutside/outside_playarea"                       
+ [64] "group_postvisitnotes/group_housingchecklist/group_houseoutside/front_exteriorwall"                     
+ [65] "group_postvisitnotes/group_housingchecklist/group_houseoutside/house_type"                             
+ [66] "group_postvisitnotes/group_housingchecklist/group_houseoutside/building_floors"                        
+ [67] "group_postvisitnotes/group_housingchecklist/group_houseoutside/home_floor"                             
+ [68] "group_postvisitnotes/group_housingchecklist/group_houseoutside/number_outsidestairs"                   
+ [69] "group_postvisitnotes/group_housingchecklist/group_houseoutside/group_outsidestairs/outstairs_handrail" 
+ [70] "group_postvisitnotes/group_housingchecklist/group_neighborhood/neighbor_distance"                      
+ [71] "group_postvisitnotes/group_housingchecklist/group_neighborhood/group_street/busy_street"               
+ [72] "group_postvisitnotes/group_housingchecklist/group_neighborhood/group_street/number_streetlanes"        
+ [73] "group_postvisitnotes/group_housingchecklist/group_neighborhood/sidewalk_condition"                     
+ [74] "group_postvisitnotes/group_housingchecklist/group_neighborhood/litter"                                 
+ [75] "group_postvisitnotes/group_housingchecklist/acknowledge_housingchecklist"                              
+ [76] "group_postvisitnotes/group_cleanupnotes/group_timerecording/actual_time_start"                         
+ [77] "group_postvisitnotes/group_cleanupnotes/group_timerecording/total_record_time"                         
+ [78] "group_postvisitnotes/group_cleanupnotes/study_parts"                                                   
+ [79] "group_postvisitnotes/group_cleanupnotes/study_parts/natural"                                           
+ [80] "group_postvisitnotes/group_cleanupnotes/study_parts/housewalkthrough"                                  
+ [81] "group_postvisitnotes/group_cleanupnotes/study_parts/structured"                                        
+ [82] "group_postvisitnotes/group_cleanupnotes/study_parts/mcdi"                                              
+ [83] "group_postvisitnotes/group_cleanupnotes/study_parts/health"                                            
+ [84] "group_postvisitnotes/group_cleanupnotes/study_parts/rothbart"                                          
+ [85] "group_postvisitnotes/group_cleanupnotes/study_parts/locomotor"                                         
+ [86] "group_postvisitnotes/group_cleanupnotes/study_parts/media"                                             
+ [87] "group_postvisitnotes/group_cleanupnotes/study_parts/pets"                                              
+ [88] "group_postvisitnotes/group_cleanupnotes/study_parts/division"                                          
+ [89] "group_postvisitnotes/group_cleanupnotes/study_parts/typical_day"                                       
+ [90] "group_postvisitnotes/group_cleanupnotes/group_decibel/tablet_location"                                 
+ [91] "group_postvisitnotes/group_cleanupnotes/group_housewalk/housewalk_completion"                          
+ [92] "group_postvisitnotes/group_cleanupnotes/group_housewalk/room_missing"                                  
+ [93] "group_postvisitnotes/group_cleanupnotes/group_housewalk/notes_missing"                                 
+ [94] "group_postvisitnotes/group_cleanupnotes/group_housewalk/room_refuse"                                   
+ [95] "group_postvisitnotes/group_cleanupnotes/group_housewalk/notes_why"                                     
+ [96] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers"                                       
+ [97] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/configuration"                         
+ [98] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/items"                                 
+ [99] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/position"                              
+[100] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/other"                                 
+[101] "group_postvisitnotes/group_cleanupnotes/group_barriers/notes_barriers"                                 
+[102] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior"                                  
+[103] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/talk"                             
+[104] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/engage"                           
+[105] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/perform"                          
+[106] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/exp_care"                         
+[107] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/other"                            
+[108] "group_postvisitnotes/group_cleanupnotes/group_mother/notes_mother"                                     
+[109] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior"                                    
+[110] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/talk"                               
+[111] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/engage"                             
+[112] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/perform"                            
+[113] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/other"                              
+[114] "group_postvisitnotes/group_cleanupnotes/group_child/notes_child"                                       
+[115] "group_postvisitnotes/group_cleanupnotes/group_violations/criteria_deviations"                          
+[116] "group_postvisitnotes/group_cleanupnotes/group_violations/note_criteria_deviations"                     
+[117] "group_postvisitnotes/group_cleanupnotes/group_violations/equipment_issues"                             
+[118] "group_postvisitnotes/group_cleanupnotes/group_violations/notes_equipment_issues"                       
+[119] "group_postvisitnotes/group_cleanupnotes/group_violations/breaks_pauses"                                
+[120] "group_postvisitnotes/group_cleanupnotes/group_violations/notes_breaks_pauses"                          
+[121] "group_postvisitnotes/group_cleanupnotes/group_violations/incorrect_protocol"                           
+[122] "group_postvisitnotes/group_cleanupnotes/group_violations/notes_incorrect_protocol"                     
+[123] "group_postvisitnotes/group_cleanupnotes/group_violations/questionnaire_mother"                         
+[124] "group_postvisitnotes/group_cleanupnotes/group_violations/notes_questionnaire_mother"                   
+[125] "group_postvisitnotes/group_cleanupnotes/group_safetyexp/experimenter_safety"                           
+[126] "group_postvisitnotes/group_cleanupnotes/group_safetypart/injured_upset"                                
+[127] "group_postvisitnotes/group_cleanupnotes/notes_othercomments"                                           
+[128] "group_postvisitnotes/group_cleanupnotes/acknowledge_cleanup"                                           
+[129] "__version__"                                                                                           
+[130] "_version_"                                                                                             
+[131] "_version__001"                                                                                         
+[132] "meta/instanceID"                                                                                       
+[133] "_id"                                                                                                   
+[134] "_uuid"                                                                                                 
+[135] "_submission_time"                                                                                      
+[136] "_index"                                                                                                
+[137] "_parent_table_name"                                                                                    
+[138] "_parent_index"                                                                                         
+[139] "_tags"                                                                                                 
+[140] "_notes"                                                                                                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pvs[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   6 140</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pvs[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "start"                                                                                                 
+  [2] "end"                                                                                                   
+  [3] "group_postvisitnotes/last_update"                                                                      
+  [4] "group_postvisitnotes/note_cleanup"                                                                     
+  [5] "group_postvisitnotes/site_id"                                                                          
+  [6] "group_postvisitnotes/subject_number"                                                                   
+  [7] "group_postvisitnotes/testdate"                                                                         
+  [8] "group_postvisitnotes/date_today"                                                                       
+  [9] "group_postvisitnotes/experimenter_name"                                                                
+ [10] "group_postvisitnotes/child_first_name"                                                                 
+ [11] "group_postvisitnotes/child_middle_name"                                                                
+ [12] "group_postvisitnotes/child_last_name"                                                                  
+ [13] "group_postvisitnotes/child_birthdate"                                                                  
+ [14] "group_postvisitnotes/child_birth_city"                                                                 
+ [15] "group_postvisitnotes/child_sex"                                                                        
+ [16] "group_postvisitnotes/child_agegroup"                                                                   
+ [17] "group_postvisitnotes/city1"                                                                            
+ [18] "group_postvisitnotes/city2"                                                                            
+ [19] "group_postvisitnotes/last1"                                                                            
+ [20] "group_postvisitnotes/first1"                                                                           
+ [21] "group_postvisitnotes/year"                                                                             
+ [22] "group_postvisitnotes/year2"                                                                            
+ [23] "group_postvisitnotes/day"                                                                              
+ [24] "group_postvisitnotes/day2"                                                                             
+ [25] "group_postvisitnotes/day1"                                                                             
+ [26] "group_postvisitnotes/month"                                                                            
+ [27] "group_postvisitnotes/month2"                                                                           
+ [28] "group_postvisitnotes/play_id"                                                                          
+ [29] "group_postvisitnotes/db_session"                                                                       
+ [30] "group_postvisitnotes/db_naturalplay"                                                                   
+ [31] "group_postvisitnotes/db_housewalkthrough"                                                              
+ [32] "group_postvisitnotes/db_structuredplay"                                                                
+ [33] "group_postvisitnotes/db_questionnaires"                                                                
+ [34] "group_postvisitnotes/db_decibel"                                                                       
+ [35] "group_postvisitnotes/databrary/note_upload"                                                            
+ [36] "group_postvisitnotes/databrary/databrary_session"                                                      
+ [37] "group_postvisitnotes/databrary/databrary_naturalplay"                                                  
+ [38] "group_postvisitnotes/databrary/databrary_housewalkthrough"                                             
+ [39] "group_postvisitnotes/databrary/databrary_structuredplay"                                               
+ [40] "group_postvisitnotes/databrary/databrary_questionnaires"                                               
+ [41] "group_postvisitnotes/decibel/note_decibel"                                                             
+ [42] "group_postvisitnotes/protocol_date"                                                                    
+ [43] "group_postvisitnotes/languange_spoken_child"                                                           
+ [44] "group_postvisitnotes/languange_spoken_child/english"                                                   
+ [45] "group_postvisitnotes/languange_spoken_child/spanish"                                                   
+ [46] "group_postvisitnotes/acknowledge_geninfo"                                                              
+ [47] "group_postvisitnotes/group_housingchecklist/rooms"                                                     
+ [48] "group_postvisitnotes/group_housingchecklist/rooms/basement"                                            
+ [49] "group_postvisitnotes/group_housingchecklist/rooms/kitchen"                                             
+ [50] "group_postvisitnotes/group_housingchecklist/rooms/eatingarea"                                          
+ [51] "group_postvisitnotes/group_housingchecklist/rooms/bathroom"                                            
+ [52] "group_postvisitnotes/group_housingchecklist/rooms/bedroom"                                             
+ [53] "group_postvisitnotes/group_housingchecklist/rooms/livingroom"                                          
+ [54] "group_postvisitnotes/group_housingchecklist/rooms/familyroom"                                          
+ [55] "group_postvisitnotes/group_housingchecklist/rooms/studyroom"                                           
+ [56] "group_postvisitnotes/group_housingchecklist/group_basement/basement_access"                            
+ [57] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_use"      
+ [58] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_playspace"
+ [59] "group_postvisitnotes/group_housingchecklist/group_basement/group_accessiblebasement/basement_odors"    
+ [60] "group_postvisitnotes/group_housingchecklist/group_kitchen/kitchen_odors"                               
+ [61] "group_postvisitnotes/group_housingchecklist/group_bathroom/number_bathroom"                            
+ [62] "group_postvisitnotes/group_housingchecklist/group_bathroom/note_bathroomsep"                           
+ [63] "group_postvisitnotes/group_housingchecklist/group_bathroom/group_bathroomsep_count"                    
+ [64] "group_postvisitnotes/group_housingchecklist/group_childroom/childroom_whoseroom"                       
+ [65] "group_postvisitnotes/group_housingchecklist/group_childroom/childroom_inhabitants"                     
+ [66] "group_postvisitnotes/group_housingchecklist/group_bedroom/number_bedrooms"                             
+ [67] "group_postvisitnotes/group_housingchecklist/group_bedroom/note_bedrooms"                               
+ [68] "group_postvisitnotes/group_housingchecklist/group_bedroom/group_bedrooomsep_count"                     
+ [69] "group_postvisitnotes/group_housingchecklist/group_livingroom/living_couchcondition"                    
+ [70] "group_postvisitnotes/group_housingchecklist/group_familyroom/family_couchcondition"                    
+ [71] "group_postvisitnotes/group_housingchecklist/group_houseinside/frontdoorlock"                           
+ [72] "group_postvisitnotes/group_housingchecklist/group_houseinside/number_insidestairs"                     
+ [73] "group_postvisitnotes/group_housingchecklist/group_houseinside/group_insidestairs_count"                
+ [74] "group_postvisitnotes/group_housingchecklist/group_houseoutside/front_maintenance"                      
+ [75] "group_postvisitnotes/group_housingchecklist/group_houseoutside/outside_playarea"                       
+ [76] "group_postvisitnotes/group_housingchecklist/group_houseoutside/front_exteriorwall"                     
+ [77] "group_postvisitnotes/group_housingchecklist/group_houseoutside/house_type"                             
+ [78] "group_postvisitnotes/group_housingchecklist/group_houseoutside/building_floors"                        
+ [79] "group_postvisitnotes/group_housingchecklist/group_houseoutside/home_floor"                             
+ [80] "group_postvisitnotes/group_housingchecklist/group_houseoutside/number_outsidestairs"                   
+ [81] "group_postvisitnotes/group_housingchecklist/group_houseoutside/group_outsidestairs/outstairs_handrail" 
+ [82] "group_postvisitnotes/group_housingchecklist/group_neighborhood/neighbor_distance"                      
+ [83] "group_postvisitnotes/group_housingchecklist/group_neighborhood/group_street/busy_street"               
+ [84] "group_postvisitnotes/group_housingchecklist/group_neighborhood/group_street/number_streetlanes"        
+ [85] "group_postvisitnotes/group_housingchecklist/group_neighborhood/sidewalk_condition"                     
+ [86] "group_postvisitnotes/group_housingchecklist/group_neighborhood/litter"                                 
+ [87] "group_postvisitnotes/group_housingchecklist/acknowledge_housingchecklist"                              
+ [88] "group_postvisitnotes/group_cleanupnotes/group_timerecording/actual_time_start"                         
+ [89] "group_postvisitnotes/group_cleanupnotes/group_timerecording/total_record_time"                         
+ [90] "group_postvisitnotes/group_cleanupnotes/study_parts"                                                   
+ [91] "group_postvisitnotes/group_cleanupnotes/study_parts/natural"                                           
+ [92] "group_postvisitnotes/group_cleanupnotes/study_parts/housewalkthrough"                                  
+ [93] "group_postvisitnotes/group_cleanupnotes/study_parts/structured"                                        
+ [94] "group_postvisitnotes/group_cleanupnotes/study_parts/locomotor"                                         
+ [95] "group_postvisitnotes/group_cleanupnotes/study_parts/mcdi_short_eng"                                    
+ [96] "group_postvisitnotes/group_cleanupnotes/study_parts/mcdi_short_spa"                                    
+ [97] "group_postvisitnotes/group_cleanupnotes/study_parts/dlles_short_eng"                                   
+ [98] "group_postvisitnotes/group_cleanupnotes/study_parts/dlles_short_spa"                                   
+ [99] "group_postvisitnotes/group_cleanupnotes/study_parts/dlles_extended"                                    
+[100] "group_postvisitnotes/group_cleanupnotes/study_parts/spacial_math_tech"                                 
+[101] "group_postvisitnotes/group_cleanupnotes/study_parts/health"                                            
+[102] "group_postvisitnotes/group_cleanupnotes/study_parts/rothbart"                                          
+[103] "group_postvisitnotes/group_cleanupnotes/study_parts/media"                                             
+[104] "group_postvisitnotes/group_cleanupnotes/study_parts/pets"                                              
+[105] "group_postvisitnotes/group_cleanupnotes/study_parts/division"                                          
+[106] "group_postvisitnotes/group_cleanupnotes/study_parts/typical_day"                                       
+[107] "group_postvisitnotes/group_cleanupnotes/zoom"                                                          
+[108] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires"                                           
+[109] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/locomotor"                                 
+[110] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/mcdi_short_eng"                            
+[111] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/mcdi_short_spa"                            
+[112] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/dlles_short_eng"                           
+[113] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/dlles_short_spa"                           
+[114] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/dlles_extended"                            
+[115] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/spacial_math_tech"                         
+[116] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/health"                                    
+[117] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/rothbart"                                  
+[118] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/media"                                     
+[119] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/pets"                                      
+[120] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/division"                                  
+[121] "group_postvisitnotes/group_cleanupnotes/zoom_questionnaires/typical_day"                               
+[122] "group_postvisitnotes/group_cleanupnotes/comments_zoom_questionnaires"                                  
+[123] "group_postvisitnotes/group_cleanupnotes/group_decibel/tablet_location"                                 
+[124] "group_postvisitnotes/group_cleanupnotes/group_housewalk/housewalk_completion"                          
+[125] "group_postvisitnotes/group_cleanupnotes/group_housewalk/room_missing"                                  
+[126] "group_postvisitnotes/group_cleanupnotes/group_housewalk/comments_missing"                              
+[127] "group_postvisitnotes/group_cleanupnotes/group_housewalk/room_refuse"                                   
+[128] "group_postvisitnotes/group_cleanupnotes/group_housewalk/comments_why"                                  
+[129] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers"                                       
+[130] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/configuration"                         
+[131] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/items"                                 
+[132] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/position"                              
+[133] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/other"                                 
+[134] "group_postvisitnotes/group_cleanupnotes/group_barriers/barriers/doesnotapply"                          
+[135] "group_postvisitnotes/group_cleanupnotes/group_barriers/comments_barriers"                              
+[136] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior"                                  
+[137] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/talk"                             
+[138] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/engage"                           
+[139] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/perform"                          
+[140] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/exp_care"                         
+[141] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/other"                            
+[142] "group_postvisitnotes/group_cleanupnotes/group_mother/mother_behavior/doesnotapply"                     
+[143] "group_postvisitnotes/group_cleanupnotes/group_mother/comments_mother"                                  
+[144] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior"                                    
+[145] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/talk"                               
+[146] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/engage"                             
+[147] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/perform"                            
+[148] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/other"                              
+[149] "group_postvisitnotes/group_cleanupnotes/group_child/child_behavior/doesnotapply"                       
+[150] "group_postvisitnotes/group_cleanupnotes/group_child/comments_child"                                    
+[151] "group_postvisitnotes/group_cleanupnotes/group_violations/criteria_deviations"                          
+[152] "group_postvisitnotes/group_cleanupnotes/group_violations/comments_criteria_deviations"                 
+[153] "group_postvisitnotes/group_cleanupnotes/group_violations/equipment_issues"                             
+[154] "group_postvisitnotes/group_cleanupnotes/group_violations/comments_equipment_issues"                    
+[155] "group_postvisitnotes/group_cleanupnotes/group_violations/breaks_pauses"                                
+[156] "group_postvisitnotes/group_cleanupnotes/group_violations/comments_breaks_pauses"                       
+[157] "group_postvisitnotes/group_cleanupnotes/group_violations/incorrect_protocol"                           
+[158] "group_postvisitnotes/group_cleanupnotes/group_violations/comments_incorrect_protocol"                  
+[159] "group_postvisitnotes/group_cleanupnotes/group_violations/questionnaire_mother"                         
+[160] "group_postvisitnotes/group_cleanupnotes/group_violations/comments_questionnaire_mother"                
+[161] "group_postvisitnotes/group_cleanupnotes/group_safetyexp/experimenter_safety"                           
+[162] "group_postvisitnotes/group_cleanupnotes/group_safetyexp/comments_experimenter_safety"                  
+[163] "group_postvisitnotes/group_cleanupnotes/group_safetypart/adverse_event"                                
+[164] "group_postvisitnotes/group_cleanupnotes/group_safetypart/comments_adverse_event"                       
+[165] "group_postvisitnotes/group_cleanupnotes/notes_othercomments"                                           
+[166] "group_postvisitnotes/group_cleanupnotes/acknowledge_cleanup"                                           
+[167] "group_postvisitnotes/note_submission"                                                                  
+[168] "group_postvisitnotes/note_googleform"                                                                  
+[169] "__version__"                                                                                           
+[170] "meta/instanceID"                                                                                       
+[171] "_id"                                                                                                   
+[172] "_uuid"                                                                                                 
+[173] "_submission_time"                                                                                      
+[174] "_index"                                                                                                
+[175] "_parent_table_name"                                                                                    
+[176] "_parent_index"                                                                                         
+[177] "_tags"                                                                                                 
+[178] "_notes"                                                                                                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pvs[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 818 178</code></pre>
+</div>
+</div>
+<p>Most of the entries are in the second form, so we start there.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pv <span class="ot">&lt;-</span> pvs[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="remove-metadata-variables" class="level2">
+<h2 class="anchored" data-anchor-id="remove-metadata-variables">Remove metadata variables</h2>
+</section>
+<section id="remove-administrative-variables" class="level2">
+<h2 class="anchored" data-anchor-id="remove-administrative-variables">Remove administrative variables</h2>
+<p>Some variables are intended for project staff only.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -724,4 +1133,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-clean.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-clean.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

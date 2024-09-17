@@ -177,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./home-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Home visit: Visualizations</span></a>
+  <a href="./home-visit-viz.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Visualize</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./post-visit-data-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Post-visit: Data dictionary</span></a>
+  <a href="./post-visit-data-dictionary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data dictionary</span></a>
   </div>
 </li>
       </ul>
@@ -239,8 +239,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#select-download-save-csvs" id="toc-select-download-save-csvs" class="nav-link" data-scroll-target="#select-download-save-csvs">Select, download, save CSVs</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -283,8 +290,40 @@ Warning
 <p>This page is under construction.</p>
 </div>
 </div>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>This page describes the process for “gathering” the post-visit data. Most of the work is done via specific targets.</p>
+</section>
+<section id="select-download-save-csvs" class="level2">
+<h2 class="anchored" data-anchor-id="select-download-save-csvs">Select, download, save CSVs</h2>
+<p>Three targets handle selecting the post-visit files, downloading .xlsx files and saving the CSVs.</p>
+<pre><code>  tar_target(
+    kb_post_visit_df,
+    kobo_list_data_filtered(kb_df, "Post\\-Visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = kb_post_visit,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_download,
+    kobo_retrieve_save_many_xlsx(kb_post_visit_df, "data/xlsx/post_visit"),
+    cue = tarchetypes::tar_cue_age(
+      name = screen_df,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),
+  tar_target(
+    post_visit_csvs,
+    load_xlsx_save_many_csvs("data/xlsx/post_visit", "data/csv/post_visit", "PLAY_Post"),
+    cue = tarchetypes::tar_cue_age(
+      name = post_visit_csvs,
+      age = as.difftime(update_interval, units = update_interval_units)
+    )
+  ),</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -724,4 +763,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/post-visit-gather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

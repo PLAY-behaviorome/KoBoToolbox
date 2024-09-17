@@ -166,51 +166,51 @@ retrieve_save_xls_export <-
     }
   }
 
-###################################################################
-#' Normalizes the file/form names of files on KoBoToolbox
-#'
-#' @param form_index An integer value indicating which row (KoBoToolbox form)
-#' should be retrieved and saved. The default value for testing purposes is 13.
-#' @param kb_df A data frame with the available KoBoToolbox data, typically
-#' output of list_kobo_data(). The default is to call list_kobo_data().
-#' @return An array of strings
-create_cleaned_augmented_form_name <-
-  function(form_index = 13,
-           kb_df = list_kobo_data()) {
-    if (!is.numeric(form_index)) {
-      stop('`form_index` must be a number')
-    }
-    if (form_index <= 0) {
-      stop('`form_index` must be > 0')
-    }
-    if (is.null(kb_df)) {
-      message('Unable to return list of KoBoToolbox forms.')
-      NULL
-    } else {
-      paste0(
-        extract_kb_form_id(form_index, kb_df),
-        "_",
-        clean_kobo_form_name(extract_kb_form_name(form_index, kb_df))
-      )
-    }
-  }
+#' ###################################################################
+#' #' Normalizes the file/form names of files on KoBoToolbox
+#' #'
+#' #' @param form_index An integer value indicating which row (KoBoToolbox form)
+#' #' should be retrieved and saved. The default value for testing purposes is 13.
+#' #' @param kb_df A data frame with the available KoBoToolbox data, typically
+#' #' output of list_kobo_data(). The default is to call list_kobo_data().
+#' #' @return An array of strings
+#' create_cleaned_augmented_form_name <-
+#'   function(form_index = 13,
+#'            kb_df = list_kobo_data()) {
+#'     if (!is.numeric(form_index)) {
+#'       stop('`form_index` must be a number')
+#'     }
+#'     if (form_index <= 0) {
+#'       stop('`form_index` must be > 0')
+#'     }
+#'     if (is.null(kb_df)) {
+#'       message('Unable to return list of KoBoToolbox forms.')
+#'       NULL
+#'     } else {
+#'       paste0(
+#'         extract_kb_form_id(form_index, kb_df),
+#'         "_",
+#'         clean_kobo_form_name(extract_kb_form_name(form_index, kb_df))
+#'       )
+#'     }
+#'   }
 
-###################################################################
-#' Remove spaces and parentheses from a KoBoToolbox form name.
-#'
-#' @param kb_form_name A form name.
-#' @return A string containing the reformatted filename.
-clean_kobo_form_name <- function(kb_form_name) {
-  if (!is.character(kb_form_name)) {
-    stop('`kb_form_name` must be a character string')
-  }
-  
-  require(stringr)
-  
-  fn <-
-    stringr::str_replace_all(kb_form_name, pattern = "[ ]+", "_")
-  stringr::str_replace_all(fn, pattern = '[\\(,\\)]', "")
-}
+#' ###################################################################
+#' #' Remove spaces and parentheses from a KoBoToolbox form name.
+#' #'
+#' #' @param kb_form_name A form name.
+#' #' @return A string containing the reformatted filename.
+#' clean_kobo_form_name <- function(kb_form_name) {
+#'   if (!is.character(kb_form_name)) {
+#'     stop('`kb_form_name` must be a character string')
+#'   }
+#'   
+#'   require(stringr)
+#'   
+#'   fn <-
+#'     stringr::str_replace_all(kb_form_name, pattern = "[ ]+", "_")
+#'   stringr::str_replace_all(fn, pattern = '[\\(,\\)]', "")
+#' }
 
 ###################################################################
 #' Extract the id of an available dataset from a list of
@@ -264,25 +264,25 @@ extract_kb_form_name <-
     }
   }
 
-###################################################################
-#' Retrieves demographic/screening or home visit forms from KoBoToolbox and
-#' saves them in a local directory.
-#'
-#' @param df A dataframe of the selected forms from the KoBoToolbox API
-#' @param save_dir A character string indicating the directory to save
-#' the downloaded files.
-#' @returns NULL
-retrieve_kobo_xlsx <- function(df, save_dir) {
-  require(purrr)
-  stopifnot(is.data.frame(df))
-  stopifnot(dir.exists(save_dir))
-  
-  n_files <- dim(df)[1]
-  purrr::map_chr(1:n_files,
-                 retrieve_save_xls_export,
-                 kb_df = df,
-                 save_dir = save_dir)
-}
+#' ###################################################################
+#' #' Retrieves demographic/screening or home visit forms from KoBoToolbox and
+#' #' saves them in a local directory.
+#' #'
+#' #' @param df A dataframe of the selected forms from the KoBoToolbox API
+#' #' @param save_dir A character string indicating the directory to save
+#' #' the downloaded files.
+#' #' @returns NULL
+#' retrieve_kobo_xlsx <- function(df, save_dir) {
+#'   require(purrr)
+#'   stopifnot(is.data.frame(df))
+#'   stopifnot(dir.exists(save_dir))
+#'   
+#'   n_files <- dim(df)[1]
+#'   purrr::map_chr(1:n_files,
+#'                  retrieve_save_xls_export,
+#'                  kb_df = df,
+#'                  save_dir = save_dir)
+#' }
 
 ###################################################################
 make_screening_df <- function(kb_screen, xlsx_dir, csv_dir) {
