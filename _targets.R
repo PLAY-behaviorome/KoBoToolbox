@@ -284,14 +284,14 @@ list(
     )
   ),
   # Export site-specific CSVs
-  tar_target(
-    export_all_site_csvs,
-    purrr::walk(play_vols_df$site_id, export_site_csvs, vb = FALSE),
-    cue = tarchetypes::tar_cue_age(
-      name = export_all_site_csvs,
-      age = as.difftime(update_interval, units = update_interval_units)
-    )
-  ),
+  # tar_target(
+  #   export_all_site_csvs,
+  #   purrr::walk(play_vols_df$site_id, export_site_csvs, vb = FALSE),
+  #   cue = tarchetypes::tar_cue_age(
+  #     name = export_all_site_csvs,
+  #     age = as.difftime(update_interval, units = update_interval_units)
+  #   )
+  # ),
   # Post-visit surveys
   tar_target(
     kb_post_visit_df,

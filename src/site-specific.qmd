@@ -1,0 +1,56 @@
+# Site-specific files
+
+## About
+
+This page produces site-specific files.
+
+## Set-up
+
+```{r set-up}
+suppressPackageStartupMessages(library(tidyverse))
+
+deps <- c("screen_select_site_data", "home_select_site_data", 
+            "home_mbcdi_select_site_data" )
+unsourced_deps <- deps[!(deps %in% ls())]
+source_fns <- paste0("../R/", unsourced_deps, ".R")
+purrr::walk(source_fns, source)
+```
+
+```{r load-play-vols-df}
+play_vols_df <- readr::read_csv(file.path(here::here(), "data/csv/_meta/play_site_vols.csv"),
+                              show_col_types = FALSE)
+```
+
+## Screening
+
+::: {.callout-warning}
+This section is under construction.
+:::
+
+## Home visit
+
+### Non-MBCDI data
+
+```{r export-site-specific-home-visit-csvs}
+purrr::walk(play_vols_df$site_id, home_select_site_data, 
+            in_dir = file.path(here::here(), "data/csv/home_visit/agg"), 
+            out_dir = file.path(here::here(), "data/csv/home_visit/agg/by-site"),
+            vb = FALSE,
+            .progress = "Export site home visit CSVs")
+```
+
+### MB-CDI data
+
+```{r export-site-specific-home-visit-non-mbcdi-csvs}
+purrr::walk(play_vols_df$site_id, home_mbcdi_select_site_data, 
+            in_dir = file.path(here::here(), "data/csv/home_visit/agg"), 
+            out_dir = file.path(here::here(), "data/csv/home_visit/agg/by-site"),
+            vb = FALSE,
+            .progress = "Export site home visit CSVs")
+```
+
+## Post-visit
+
+::: {.callout-warning}
+This section is under construction.
+:::
