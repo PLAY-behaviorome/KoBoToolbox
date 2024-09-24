@@ -1,0 +1,95 @@
+---
+title: "test_meta"
+format: html
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+return_section <- function(dataset, var){
+  a <- knitr::knit_expand(text = c(
+               "## Frequency table for variable: {{variable}}",
+                create_table(dataset, var)),
+                variable = var)
+  cat(a, sep = "\n")
+}
+
+return_hist_section <- function(dataset, var){
+  a <- knitr::knit_expand(text = c(
+               "## Histogram for variable: `{{variable}}`",
+               "\n"), 
+                variable = var)
+  cat(a, sep = "\n")
+  create_hist(dataset, var)
+}
+```
+
+```{r}
+create_table <- function(dataset, var){
+  table(dataset[var]) |>
+    knitr::kable()
+}
+
+create_hist <- function(dataset, var) {
+  dataset |>
+    dplyr::mutate(i = seq_along(var)) |>
+    ggplot() +
+    aes(x = i, y = var) +
+    geom_point() -> p
+  p
+}
+```
+
+```{r}
+create_table(mtcars, "am")
+create_hist(mtcars, "am")
+```
+
+```{r, results = "asis", eval = FALSE}
+invisible(lapply(colnames(mtcars), return_section, dataset = mtcars))
+```
+
+```{r, results = "asis"}
+invisible(lapply(colnames(mtcars), return_hist_section, dataset = mtcars))
+```
+
+```{r}
+source(file.path(here::here(), "R/ecbq_plot_chunk.R"))
+source(file.path(here::here(), "R/ecbq_plot.R"))
+
+library(tidyverse)
+
+hv <- readr::read_csv(file.path(here::here(), "data/csv/home_visit/agg/PLAY-non-mcdi-kobo-latest.csv"), show_col_types = FALSE)
+```
+
+```{r}
+#| label: select-rothbart-vars
+ecbq <- hv |>
+  dplyr::select(child_sex, age_group, contains("rothbart"))
+
+ecbq_complete <- ecbq |>
+  tidyr::complete() |>
+  dplyr::select(-comments_rothbart)
+
+ecbq_vars <- names(ecbq)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+# Drop comments
+ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments_rothbart")]
+
+ecbq_qs_all <- readr::read_csv(file = file.path(here::here(), "data/csv/_meta", "ecbq_questions.csv"), show_col_types = FALSE)
+
+ecbq_qs <- ecbq_qs_all |>
+  dplyr::select(question)
+```
+
+```{r}
+ecbq_plot(ecbq_vars[2], 
+          df = ecbq_complete)
+```
+
+
+```{r, results = "asis", eval=FALSE}
+invisible(lapply(ecbq_vars, ecbq_plot, dataset = ecbq_complete))
+```
