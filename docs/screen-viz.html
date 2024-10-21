@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 849 Columns: 68
+<pre><code>Rows: 855 Columns: 68
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (55): session_name, session_release, participant_ID, participant_gender...
@@ -399,12 +399,12 @@ date  (2): session_date, participant_birthdate
 <div class="cell-output cell-output-stdout">
 <pre><code>               group_name
 session_release PLAY_Gold PLAY_Silver
-       EXCERPTS       565          84
+       EXCERPTS       569          84
        PRIVATE          0           4
-       SHARED         164          32</code></pre>
+       SHARED         165          33</code></pre>
 </div>
 </div>
-<p>Of the <em>n</em>=849 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
+<p>Of the <em>n</em>=855 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
 </section>
 <section id="dates-times" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dates-times">Dates &amp; times</h2>
@@ -527,7 +527,7 @@ Note
 <pre><code>         language_spoken_child
 child_sex english english_other english_spanish english_spanish_other spanish
    female     331             3              59                     3      20
-   male       323             6              66                     1      15</code></pre>
+   male       324             6              66                     1      15</code></pre>
 </div>
 </div>
 </section>
@@ -538,7 +538,7 @@ child_sex english english_other english_spanish english_spanish_other spanish
 <div class="cell-output cell-output-stdout">
 <pre><code>                       child_sex
 language_spoken_home    female male
-  english                  338  305
+  english                  338  306
   english_other              5    4
   english_spanish           50   81
   english_spanish_other      1    2
@@ -554,7 +554,7 @@ language_spoken_home    female male
 <div class="cell-output cell-output-stdout">
 <pre><code>                       language_spoken_home
 language_spoken_child   english english_other english_spanish
-  english                   616             3              25
+  english                   617             3              25
   english_other               3             6               0
   english_spanish            19             0              94
   english_spanish_other       3             0               1
@@ -581,7 +581,7 @@ language_spoken_child   english_spanish_other other spanish
 <pre><code>         child_bornonduedate
 child_sex  no yes
    female   8 403
-   male     9 401</code></pre>
+   male     9 402</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -594,7 +594,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are <em>n</em>=28 NAs.</p>
+<p>There are <em>n</em>=33 NAs.</p>
 </div>
 </div>
 <div class="cell">
@@ -648,72 +648,88 @@ Note
 <td style="text-align: left;">027</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">1576</td>
+<td style="text-align: left;">028</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">1481</td>
 <td style="text-align: left;">006</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">954</td>
 <td style="text-align: left;">001</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">015</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">016</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">017</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">899</td>
 <td style="text-align: left;">088</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1103</td>
 <td style="text-align: left;">001</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">013</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">024</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">025</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">027</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">003</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1657</td>
+<td style="text-align: left;">007</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">979</td>
 <td style="text-align: left;">026</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">1696</td>
+<td style="text-align: left;">016</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">996</td>
 <td style="text-align: left;">015</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">033</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">034</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1663</td>
+<td style="text-align: left;">036</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">1517</td>
@@ -722,6 +738,10 @@ Note
 <tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">057</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1517</td>
+<td style="text-align: left;">058</td>
 </tr>
 </tbody>
 </table>
@@ -744,7 +764,7 @@ Table&nbsp;5.1
 <pre><code>                   child_onterm
 child_bornonduedate  no yes
                 no    1  16
-                yes   1 695</code></pre>
+                yes   1 696</code></pre>
 </div>
 </div>
 </figure>
@@ -789,7 +809,7 @@ Figure&nbsp;5.4: Histogram of reported child birthweights in pounds.
 <pre><code>         child_birth_complications
 child_sex  no yes
    female 373  38
-   male   378  28</code></pre>
+   male   379  28</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -822,7 +842,7 @@ Note
 <pre><code>         child_major_illnesses_injuries
 child_sex  no yes
    female 397  14
-   male   392  14</code></pre>
+   male   393  14</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -993,7 +1013,7 @@ child_sex  no yes
 <pre><code>         child_vision_disabilities
 child_sex  no yes
    female 408   3
-   male   404   2</code></pre>
+   male   405   2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1053,7 +1073,7 @@ child_sex  no yes
 <pre><code>         child_hearing_disabilities
 child_sex  no yes
    female 411   0
-   male   405   1</code></pre>
+   male   406   1</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1093,7 +1113,7 @@ child_sex  no yes
 <pre><code>         child_developmentaldelays
 child_sex  no yes
    female 349   3
-   male   348   5</code></pre>
+   male   349   5</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1990,7 +2010,7 @@ Figure&nbsp;5.8
 <pre><code>         mom_bio
 child_sex no_adoptive no_partnerchild yes
    female           2               1 397
-   male             0               0 403</code></pre>
+   male             0               0 404</code></pre>
 </div>
 </div>
 </section>
@@ -2065,7 +2085,7 @@ Figure&nbsp;5.9
 american_indian           asian           black   more_than_one  nativehawaiian 
               3              26              36              42               1 
           other         refused           white 
-             50               2             650 </code></pre>
+             50               2             651 </code></pre>
 </div>
 </div>
 </section>
@@ -2086,7 +2106,7 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_birth_country
      Other puertorico         US 
-        89          3        718 </code></pre>
+        89          3        719 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -2124,7 +2144,7 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_education
        associates    bachelor_s_deg         bachelors           diploma 
-               28                 1               261                28 
+               28                 1               262                28 
         doctorate          eleventh               ged graduate_nodegree 
               100                 1                 4                25 
           masters             ninth      professional       somecollege 
@@ -2157,7 +2177,7 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_employment
 full_time        no part_time 
-      459       192       158 </code></pre>
+      459       193       158 </code></pre>
 </div>
 </div>
 </section>
@@ -2206,7 +2226,7 @@ mom_jobs_number full_time part_time
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_training
  no yes 
-787  20 </code></pre>
+788  20 </code></pre>
 </div>
 </div>
 </section>
@@ -2252,7 +2272,7 @@ Caused by warning:
     more_than_one                NA nativehawaiian_NA             other 
                36                32                 2                66 
           refused             white 
-                3               609 </code></pre>
+                3               610 </code></pre>
 </div>
 </div>
 </section>
@@ -2303,7 +2323,7 @@ Figure&nbsp;5.10
           nanny_nothome childcare            nanny_nothome relative 
                                 3                                 3 
                              none                          relative 
-                              190                                95 
+                              191                                95 
                relative childcare 
                                19 </code></pre>
 </div>
@@ -2915,7 +2935,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom"});
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
