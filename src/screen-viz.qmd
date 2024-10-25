@@ -73,7 +73,9 @@ screen_df |>
   dplyr::filter(!is.na(child_age_mos), !is.na(child_sex)) |>
   ggplot() +
   aes(child_age_mos, fill = child_sex) +
-  geom_histogram(bins = 50)
+  geom_histogram(bins = 50) +
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
 ```
 
 ::: {.callout-note}
@@ -158,8 +160,8 @@ df |>
   ggplot() +
   aes(x = birth_weight_lbs, fill = child_sex) +
   geom_histogram(binwidth = 0.33) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
 ```
 
 ### Birth complications {-}
@@ -276,13 +278,29 @@ df <- screen_df |>
 
 df |>
   dplyr::filter(!is.na(child_sleep_time),
-                !is.na(child_sex)) |>
+                !is.na(child_sex),
+                !is.na(child_sleep_location)) |>
   ggplot() +
   aes(child_sleep_time, fill = child_sex) +
   geom_histogram(bins = 18) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(rows = vars(child_sex), cols = vars(child_sleep_location)) +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90))
 ```
+
+```{r}
+df |>
+  dplyr::filter(!is.na(child_sleep_time),
+                !is.na(child_sex),
+                !is.na(child_sleep_location)) |>
+  ggplot() +
+  aes(child_sleep_time, child_age_mos, color = child_sex) +
+  facet_grid(cols = vars(child_sex)) +
+  geom_point(alpha = .3) +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
 
 Some of the bed times are probably not in correct 24 hr time.
 
@@ -305,12 +323,14 @@ df <- screen_df |>
 
 df |>
   dplyr::filter(!is.na(child_wake_time),
-                !is.na(child_sex)) |>
+                !is.na(child_sex),
+                !is.na(child_sleep_location)) |>
   ggplot() +
   aes(child_wake_time, fill = child_sex) +
   geom_histogram(bins = 18) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(rows = vars(child_sex), cols = vars(child_sleep_location)) +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 There are some unusual wake times, too.
@@ -326,6 +346,8 @@ df |>
 #### Sleep duration {-}
 
 ```{r fig-sleep-dur-hist}
+#| label: fig-sleep-hrs-by-location
+#| fig-cap: "Sleep (hours) by location"
 df <- screen_df |>
   dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time),
                   child_wake_time = extract_sleep_hr(child_wake_time)) |>
@@ -334,12 +356,30 @@ df <- screen_df |>
   dplyr::mutate(child_sleep_secs = (child_sleep_time - child_wake_time))
 
 df |>
-  dplyr::filter(!is.na(child_sleep_secs)) |>
+  dplyr::filter(!is.na(child_sleep_secs),
+                !is.na(child_sleep_location)) |>
+  dplyr::mutate(sleep_hrs = child_sleep_secs/(60*60)) |>
   ggplot() +
-  aes(child_sleep_secs, fill = child_sex) +
+  aes(sleep_hrs, fill = child_sex) +
   geom_histogram(bins = 18) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(rows = vars(child_sex), cols = vars(child_sleep_location)) +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+```{r}
+#| label: fig-sleep-hrs-by-location-age
+#| fig-cap: "Child sleep (hours) by location and age"
+df |>
+  dplyr::filter(!is.na(child_sleep_secs),
+                !is.na(child_sleep_location)) |>
+  dplyr::mutate(sleep_hrs = child_sleep_secs/(60*60)) |>
+  ggplot() +
+  aes(child_age_mos, sleep_hrs, color = child_sex) +
+  geom_point(alpha = .2) +
+  facet_grid(rows = vars(child_sex), cols = vars(child_sleep_location)) +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 Again, there are some unusual values.
@@ -398,13 +438,16 @@ xtabs(formula = ~ child_sex + mom_bio,
 ### Age at childbirth {-}
 
 ```{r fig-mom-age-childbirth}
+#| label: fig-mom-age-at-childbirth
+#| fig-cap: "Mother's age at childbirth (years)"
 screen_df |>
-  dplyr::filter(!is.na(mom_childbirth_age), !is.na(child_sex)) |>
+  dplyr::filter(!is.na(mom_childbirth_age), 
+                !is.na(child_sex)) |>
   ggplot() +
   aes(x = mom_childbirth_age, fill = child_sex) +
   geom_histogram(bins = 25) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
 ```
 
 Clearly, there are some impossible (erroneous) maternal ages > 100. Here are details:
@@ -517,7 +560,7 @@ xtabs(~ mom_training, data = df)
 
 ```{r xtabs-biodad-race}
 df <- screen_df |>
-  dplyr::select(biodad_childbirth_age, biodad_race, child_sex) |>
+  dplyr::select(mom_childbirth_age, biodad_childbirth_age, biodad_race, child_sex) |>
   dplyr::mutate(
     biodad_race =
       dplyr::recode(
@@ -541,16 +584,36 @@ df <- screen_df |>
 
 xtabs(~ biodad_race, df)
 ```
+
 ### Age at child birth {-}
 
 ```{r fig-biodad-age-childbirth}
+#| label: fig-biodad-age-at-childbirth
+#| fig-cap: "Biological father's age at childbirth (years)"
+
 df |>
-  dplyr::filter(!is.na(biodad_childbirth_age)) |>
+  dplyr::filter(!is.na(biodad_childbirth_age), 
+                !is.na(child_sex)) |>
   ggplot() +
   aes(x = biodad_childbirth_age, fill = child_sex) +
   geom_histogram(bins = 25) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: fig-mom-biodad-age-at-childbirth
+#| fig-cap: "Mother's and biological father's age at childbirth (years)"
+
+df |>
+  dplyr::filter(!is.na(biodad_childbirth_age),
+                !is.na(mom_childbirth_age),
+                !is.na(child_sex)) |>
+  ggplot() +
+  aes(x = mom_childbirth_age, y = biodad_childbirth_age, color = child_sex) +
+  geom_point() +
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
 ```
 
 ## Childcare {-}
