@@ -405,8 +405,21 @@ df |>
   ggplot() +
   aes(child_nap_hours, fill = child_sex) +
   geom_histogram(bins = 18) +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
+```
+```{r}
+#| label: fig-nap-hrs-by-age
+#| fig-cap: "Nap hours by age and sex"
+df |>
+  dplyr::filter(!is.na(child_nap_hours),
+                !is.na(child_sex)) |>
+  ggplot() +
+  aes(child_age_mos, child_nap_hours, color = child_sex) +
+  geom_point(alpha = .3) +
+  geom_smooth() +
+  facet_grid(cols = vars(child_sex)) +
+  theme(legend.position = "none")
 ```
 
 And there are some very long nappers or null values we need to capture.
