@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 855 Columns: 68
+<pre><code>Rows: 864 Columns: 68
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (55): session_name, session_release, participant_ID, participant_gender...
@@ -399,12 +399,12 @@ date  (2): session_date, participant_birthdate
 <div class="cell-output cell-output-stdout">
 <pre><code>               group_name
 session_release PLAY_Gold PLAY_Silver
-       EXCERPTS       569          84
+       EXCERPTS       576          84
        PRIVATE          0           4
-       SHARED         165          33</code></pre>
+       SHARED         166          34</code></pre>
 </div>
 </div>
-<p>Of the <em>n</em>=855 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
+<p>Of the <em>n</em>=864 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
 </section>
 <section id="dates-times" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dates-times">Dates &amp; times</h2>
@@ -596,7 +596,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are <em>n</em>=33 NAs.</p>
+<p>There are <em>n</em>=42 NAs.</p>
 </div>
 </div>
 <div class="cell">
@@ -662,64 +662,96 @@ Note
 <td style="text-align: left;">001</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1590</td>
-<td style="text-align: left;">015</td>
+<td style="text-align: right;">954</td>
+<td style="text-align: left;">076</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1590</td>
-<td style="text-align: left;">016</td>
+<td style="text-align: left;">015</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">1590</td>
+<td style="text-align: left;">016</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">017</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">899</td>
 <td style="text-align: left;">088</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1103</td>
 <td style="text-align: left;">001</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">013</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">024</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">025</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">027</td>
 </tr>
+<tr class="even">
+<td style="text-align: right;">1596</td>
+<td style="text-align: left;">028</td>
+</tr>
 <tr class="odd">
+<td style="text-align: right;">1596</td>
+<td style="text-align: left;">030</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">003</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">007</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">979</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">016</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">996</td>
 <td style="text-align: left;">015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">019</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">021</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">023</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1663</td>
@@ -744,6 +776,10 @@ Note
 <tr class="odd">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">058</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1517</td>
+<td style="text-align: left;">059</td>
 </tr>
 </tbody>
 </table>
@@ -3042,7 +3078,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
