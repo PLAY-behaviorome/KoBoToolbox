@@ -346,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./screen-gather.html">Screening</a></li><li class="breadcrumb-item"><a href="./screen-viz.html"><span class="chapter-title">Visualize</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Visualize</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Visualize</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -373,12 +373,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 864 Columns: 68
+<pre><code>Rows: 868 Columns: 68
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (55): session_name, session_release, participant_ID, participant_gender...
@@ -395,33 +401,42 @@ date  (2): session_date, participant_birthdate
 <section id="sharing-permission" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="sharing-permission">Sharing permission</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(s <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> session_release <span class="sc">+</span> group_name, screen_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>               group_name
 session_release PLAY_Gold PLAY_Silver
-       EXCERPTS       576          84
+       EXCERPTS       579          84
        PRIVATE          0           4
-       SHARED         166          34</code></pre>
+       SHARED         167          34</code></pre>
 </div>
 </div>
-<p>Of the <em>n</em>=864 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
+<p>Of the <em>n</em>=868 sessions so far, 76.4% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.5% have declined to share at all.</p>
 </section>
 <section id="dates-times" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dates-times">Dates &amp; times</h2>
 <p>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(submit_date) <span class="sc">%&gt;%</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">n_calls =</span> <span class="fu">seq_along</span>(submit_date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="calls-across-time" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="calls-across-time">Calls across time</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(submit_date), <span class="sc">!</span><span class="fu">is.na</span>(n_calls), <span class="sc">!</span><span class="fu">is.na</span>(site_id)) <span class="sc">%&gt;%</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(submit_date, n_calls, <span class="at">color =</span> site_id) <span class="sc">+</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-screening-calls-time-series" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -439,6 +454,8 @@ Figure&nbsp;5.1: Cumulative screening calls by year and site
 <section id="calls-by-site" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="calls-by-site">Calls by site</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>calls_by_site_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(site_id)) <span class="sc">%&gt;%</span></span>
@@ -455,6 +472,7 @@ Figure&nbsp;5.1: Cumulative screening calls by year and site
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">calls_by_site_plot</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-screening-calls-by-site" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -476,6 +494,8 @@ Figure&nbsp;5.2: Cumulative screening calls by site
 <h3 class="unnumbered anchored" data-anchor-id="child-age">Child age</h3>
 <p>Child age in months (<code>child_age_mos</code>) by <code>child_sex</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_age_mos), <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -483,6 +503,7 @@ Figure&nbsp;5.2: Cumulative screening calls by site
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>) <span class="sc">+</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-age-hist-screening" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -517,6 +538,8 @@ Note
 <h3 class="unnumbered anchored" data-anchor-id="to-child">To child</h3>
 <p>Language(s) spoken to child by <code>child_sex</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_spoken_child =</span> stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(language_spoken_child, <span class="st">" "</span>, <span class="st">"_"</span>),</span>
@@ -525,6 +548,7 @@ Note
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> language_spoken_child,</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         language_spoken_child
 child_sex english english_other english_spanish english_spanish_other spanish
@@ -536,7 +560,10 @@ child_sex english english_other english_spanish english_spanish_other spanish
 <section id="at-home" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="at-home">At home</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> language_spoken_home <span class="sc">+</span> child_sex, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       child_sex
 language_spoken_home    female male
@@ -552,7 +579,10 @@ language_spoken_home    female male
 <section id="to-child-vs.-at-home" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="to-child-vs.-at-home">To child vs.&nbsp;at home</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> language_spoken_child <span class="sc">+</span> language_spoken_home, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       language_spoken_home
 language_spoken_child   english english_other english_spanish
@@ -577,8 +607,11 @@ language_spoken_child   english_spanish_other other spanish
 <section id="child-born-on-due-date" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="child-born-on-due-date">Child born on due date</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_bornonduedate,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_bornonduedate
 child_sex  no yes
@@ -596,14 +629,17 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are <em>n</em>=42 NAs.</p>
+<p>There are <em>n</em>=46 NAs.</p>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">is.na</span>(child_bornonduedate)) <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vol_id, participant_ID) <span class="sc">|&gt;</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -654,80 +690,96 @@ Note
 <td style="text-align: left;">028</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">1576</td>
+<td style="text-align: left;">029</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">1481</td>
 <td style="text-align: left;">006</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">954</td>
 <td style="text-align: left;">001</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">954</td>
 <td style="text-align: left;">076</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">015</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">016</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">017</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">899</td>
 <td style="text-align: left;">088</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1103</td>
 <td style="text-align: left;">001</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">013</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">024</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">025</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">027</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">028</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1596</td>
 <td style="text-align: left;">030</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">003</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">007</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">979</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1705</td>
+<td style="text-align: left;">023</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1705</td>
+<td style="text-align: left;">024</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">966</td>
+<td style="text-align: left;">026</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">996</td>
@@ -790,14 +842,17 @@ Note
 </section>
 <section id="child-term" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="child-term">Child term</h3>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_bornonduedate <span class="sc">+</span> child_onterm,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div id="tbl-xtabs-duedate" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-xtabs-duedate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5.1
 </figcaption>
 <div aria-describedby="tbl-xtabs-duedate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_bornonduedate <span class="sc">+</span> child_onterm,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   child_onterm
 child_bornonduedate  no yes
@@ -812,6 +867,8 @@ child_bornonduedate  no yes
 <h3 class="unnumbered anchored" data-anchor-id="child-weight">Child weight</h3>
 <p>Must convert pounds and ounces to decimal pounds.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(.,</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">birth_weight_lbs =</span> child_weight_pounds <span class="sc">+</span> child_weight_ounces<span class="sc">/</span><span class="dv">16</span>)</span>
@@ -824,6 +881,7 @@ child_bornonduedate  no yes
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.33</span>) <span class="sc">+</span></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-birthwt-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -841,8 +899,11 @@ Figure&nbsp;5.4: Histogram of reported child birthweights in pounds.
 <section id="birth-complications" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="birth-complications">Birth complications</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_birth_complications,</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_birth_complications
 child_sex  no yes
@@ -864,18 +925,24 @@ Note
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_birth_complications_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_birth_complications_specify) <span class="sc">|&gt;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(child_age_mos) <span class="sc">|&gt;</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="major-illnesses-or-injuries" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="major-illnesses-or-injuries">Major illnesses or injuries</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_major_illnesses_injuries,</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_major_illnesses_injuries
 child_sex  no yes
@@ -884,12 +951,15 @@ child_sex  no yes
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_illnesses_injuries_specify),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span>stringr<span class="sc">::</span><span class="fu">str_detect</span>(child_illnesses_injuries_specify, <span class="st">"OK"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_illnesses_injuries_specify) <span class="sc">|&gt;</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(child_age_mos) <span class="sc">|&gt;</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1045,8 +1115,11 @@ child_sex  no yes
 <section id="child-vision" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="child-vision">Child vision</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_vision_disabilities,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_vision_disabilities
 child_sex  no yes
@@ -1055,11 +1128,14 @@ child_sex  no yes
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_vision_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_vision_disabilities_specify) <span class="sc">|&gt;</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(child_age_mos) <span class="sc">|&gt;</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1105,8 +1181,11 @@ child_sex  no yes
 <section id="child-hearing" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="child-hearing">Child hearing</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_hearing_disabilities,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_hearing_disabilities
 child_sex  no yes
@@ -1115,11 +1194,14 @@ child_sex  no yes
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_hearing_disabilities_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_hearing_disabilities_specify) <span class="sc">|&gt;</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(child_age_mos) <span class="sc">|&gt;</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1145,8 +1227,11 @@ child_sex  no yes
 <section id="child-developmental-delays" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="child-developmental-delays">Child developmental delays</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_developmentaldelays,</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_developmentaldelays
 child_sex  no yes
@@ -1168,11 +1253,14 @@ Note
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_developmentaldelays_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_age_mos, child_sex, child_developmentaldelays_specify) <span class="sc">|&gt;</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(child_age_mos) <span class="sc">|&gt;</span></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="child-sleep" class="level3 unnumbered">
@@ -1183,6 +1271,8 @@ Note
 <section id="bed-time" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="bed-time">Bed time</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>extract_sleep_hr <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  t <span class="sc">|&gt;</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_extract</span>(<span class="st">"^[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}"</span>) <span class="sc">|&gt;</span></span>
@@ -1203,6 +1293,7 @@ Note
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-bed-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1217,6 +1308,8 @@ Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time),</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex),</span>
@@ -1227,6 +1320,7 @@ Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1237,11 +1331,14 @@ Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 </div>
 <p>Some of the bed times are probably not in correct 24 hr time.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_sleep_time <span class="sc">&lt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(<span class="st">"16:00:00"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, participant_ID, child_sleep_time) <span class="sc">|&gt;</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, participant_ID) <span class="sc">|&gt;</span></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1352,6 +1449,8 @@ Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 <section id="wake-time" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="wake-time">Wake time</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_wake_time =</span> <span class="fu">extract_sleep_hr</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_wake_time)) </span>
@@ -1366,6 +1465,7 @@ Figure&nbsp;5.5: Histogram of parent-reported child bedtimes (24 hr scale).
 <span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
 <span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-wake-time-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1381,11 +1481,14 @@ Figure&nbsp;5.6: Histogram of parent-reported child wake times (24 hr scale).
 </div>
 <p>There are some unusual wake times, too.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_wake_time <span class="sc">&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(<span class="st">"16:00:00"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, participant_ID, child_wake_time) <span class="sc">|&gt;</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, participant_ID) <span class="sc">|&gt;</span></span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1586,6 +1689,8 @@ Figure&nbsp;5.6: Histogram of parent-reported child wake times (24 hr scale).
 <section id="sleep-duration" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="sleep-duration">Sleep duration</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_sleep_time =</span> <span class="fu">extract_sleep_hr</span>(child_sleep_time),</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">child_wake_time =</span> <span class="fu">extract_sleep_hr</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
@@ -1603,6 +1708,7 @@ Figure&nbsp;5.6: Histogram of parent-reported child wake times (24 hr scale).
 <span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
 <span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Don't know how to automatically pick scale for object of type &lt;difftime&gt;.
 Defaulting to continuous.</code></pre>
@@ -1621,6 +1727,8 @@ Figure&nbsp;5.7: Sleep (hours) by location
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_secs),</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sleep_location)) <span class="sc">|&gt;</span></span>
@@ -1631,6 +1739,7 @@ Figure&nbsp;5.7: Sleep (hours) by location
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Don't know how to automatically pick scale for object of type &lt;difftime&gt;.
 Defaulting to continuous.</code></pre>
@@ -1650,11 +1759,14 @@ Figure&nbsp;5.8: Child sleep (hours) by location and age
 </div>
 <p>Again, there are some unusual values.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_sleep_secs <span class="sc">&lt;</span> <span class="dv">12000</span>) <span class="sc">|&gt;</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, participant_ID, child_sleep_time, child_wake_time, child_sleep_secs) <span class="sc">|&gt;</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, participant_ID) <span class="sc">|&gt;</span></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -2013,15 +2125,20 @@ Figure&nbsp;5.8: Child sleep (hours) by location and age
 <section id="nap-hours" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="nap-hours">Nap hours</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_nap_hours =</span> <span class="fu">as.numeric</span>(child_nap_hours)) <span class="sc">|&gt;</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
 ℹ In argument: `child_nap_hours = as.numeric(child_nap_hours)`.
 Caused by warning:
 ! NAs introduced by coercion</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_nap_hours),</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
@@ -2030,6 +2147,7 @@ Caused by warning:
 <span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
 <span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-nap-hrs-hist" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2044,6 +2162,8 @@ Figure&nbsp;5.9
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_nap_hours),</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
@@ -2053,6 +2173,7 @@ Figure&nbsp;5.9
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
@@ -2071,11 +2192,14 @@ Figure&nbsp;5.10: Nap hours by age and sex
 </div>
 <p>And there are some very long nappers or null values we need to capture.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_nap_hours <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, participant_ID, child_nap_hours) <span class="sc">|&gt;</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, participant_ID) <span class="sc">|&gt;</span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -2111,8 +2235,11 @@ Figure&nbsp;5.10: Nap hours by age and sex
 <section id="sleep-location" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="sleep-location">Sleep location</h4>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> child_sleep_location,</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 </section>
@@ -2122,8 +2249,11 @@ Figure&nbsp;5.10: Nap hours by age and sex
 <section id="biological-or-adoptive" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="biological-or-adoptive">Biological or adoptive</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_sex <span class="sc">+</span> mom_bio,</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mom_bio
 child_sex no_adoptive no_partnerchild yes
@@ -2135,6 +2265,8 @@ child_sex no_adoptive no_partnerchild yes
 <section id="age-at-childbirth" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="age-at-childbirth">Age at childbirth</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_childbirth_age), </span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
@@ -2143,6 +2275,7 @@ child_sex no_adoptive no_partnerchild yes
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
 <span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-mom-age-at-childbirth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2158,12 +2291,15 @@ Figure&nbsp;5.11: Mother’s age at childbirth (years)
 </div>
 <p>Clearly, there are some impossible (erroneous) maternal ages &gt; 100. Here are details:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>old_moms <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(mom_childbirth_age <span class="sc">&gt;</span> <span class="dv">55</span>)</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>old_moms <span class="sc">|&gt;</span></span>
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(submit_date, vol_id, participant_ID, mom_childbirth_age) <span class="sc">|&gt;</span></span>
 <span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -2191,6 +2327,8 @@ Figure&nbsp;5.11: Mother’s age at childbirth (years)
 <section id="race" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="race">Race</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_race)) <span class="sc">|&gt;</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_race =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
@@ -2199,6 +2337,7 @@ Figure&nbsp;5.11: Mother’s age at childbirth (years)
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">americanindian =</span> <span class="st">"american_indian"</span>))</span>
 <span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>mom_race, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_race
 american_indian           asian           black   more_than_one  nativehawaiian 
@@ -2211,6 +2350,8 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <section id="birth-country" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="birth-country">Birth country</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    mom_birth_country, </span>
@@ -2222,6 +2363,7 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_birth_country, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_birth_country
      Other puertorico         US 
@@ -2229,12 +2371,15 @@ american_indian           asian           black   more_than_one  nativehawaiian
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mom_birth_country_specify =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_birth_country_specify)) <span class="sc">|&gt;</span></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_birth_country_specify)</span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>mom_birth_country_specify)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Mexico"             "South Korea"        "Argentina"         
  [4] "Spain"              "Zimbabwe"           "Canada"            
@@ -2255,11 +2400,14 @@ american_indian           asian           black   more_than_one  nativehawaiian
 <section id="education" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="education">Education</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_education)) <span class="sc">|&gt;</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(child_sex, mom_education)</span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_education, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_education
        associates    bachelor_s_deg         bachelors           diploma 
@@ -2289,10 +2437,13 @@ Note
 <section id="employment" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="employment">Employment</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_employment, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_employment
 full_time        no part_time 
@@ -2307,10 +2458,13 @@ full_time        no part_time
 <section id="jobs-number" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="jobs-number">Jobs number</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number))</span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_jobs_number
     0     1     2     3     4 5more 
@@ -2318,11 +2472,14 @@ full_time        no part_time
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_jobs_number),</span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_employment))</span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_jobs_number <span class="sc">+</span> mom_employment, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>               mom_employment
 mom_jobs_number full_time part_time
@@ -2338,10 +2495,13 @@ mom_jobs_number full_time part_time
 <section id="job-training" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="job-training">Job training</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_training))</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_training, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_training
  no yes 
@@ -2355,6 +2515,8 @@ mom_jobs_number full_time part_time
 <section id="race-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="race-1">Race</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(mom_childbirth_age, biodad_childbirth_age, biodad_race, child_sex) <span class="sc">|&gt;</span></span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
@@ -2377,13 +2539,17 @@ mom_jobs_number full_time part_time
 <span id="cb74-20"><a href="#cb74-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">biodad_childbirth_age =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(biodad_childbirth_age, <span class="st">"[_NA]"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb74-21"><a href="#cb74-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dplyr::filter(!is.na(biodad_childbirth_age), !is.na(biodad_race)) |&gt;</span></span>
 <span id="cb74-22"><a href="#cb74-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">biodad_childbirth_age =</span> <span class="fu">as.numeric</span>(biodad_childbirth_age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
 ℹ In argument: `biodad_childbirth_age = as.numeric(biodad_childbirth_age)`.
 Caused by warning:
 ! NAs introduced by coercion</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> biodad_race, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>biodad_race
   american_indian             asian             black       do_not_know 
@@ -2398,6 +2564,8 @@ Caused by warning:
 <section id="age-at-child-birth" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="age-at-child-birth">Age at child birth</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(biodad_childbirth_age), </span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
@@ -2406,6 +2574,7 @@ Caused by warning:
 <span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>) <span class="sc">+</span></span>
 <span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-biodad-age-at-childbirth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2420,6 +2589,8 @@ Figure&nbsp;5.12: Biological father’s age at childbirth (years)
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(biodad_childbirth_age),</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_childbirth_age),</span>
@@ -2429,6 +2600,7 @@ Figure&nbsp;5.12: Biological father’s age at childbirth (years)
 <span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
 <span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-mom-biodad-age-at-childbirth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2449,10 +2621,13 @@ Figure&nbsp;5.13: Mother’s and biological father’s age at childbirth (years)
 <section id="types" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="types">Types</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_types))</span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>                </span>
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> childcare_types, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>childcare_types
                         childcare                             nanny 
@@ -2488,11 +2663,14 @@ Note
 <section id="hours" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="hours">Hours</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_hours)) <span class="sc">|&gt;</span></span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(childcare_hours)</span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_hours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "1"                                           
  [2] "10"                                          
@@ -2583,10 +2761,13 @@ Note
 <section id="language-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="language-1">Language</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(childcare_language))</span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(df<span class="sc">$</span>childcare_language)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Spanish and English (half and half)"                                       
  [2] "English"                                                                   
@@ -2640,6 +2821,8 @@ Note
 </div>
 </div>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -2734,6 +2917,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -3076,9 +3310,689 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-title">Data dictionary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb86" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Visualize</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>These visualizations are intended as a way to test the integrity and utility of the data export and cleaning workflow.</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup {-}</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-viz-pkgs}</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a><span class="in">suppressPackageStartupMessages(library(tidyverse))</span></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sharing permission {-}</span></span>
+<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-21"><a href="#cb86-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-22"><a href="#cb86-22" aria-hidden="true" tabindex="-1"></a>(s <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span> session_release <span class="sc">+</span> group_name, screen_df))</span>
+<span id="cb86-23"><a href="#cb86-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-24"><a href="#cb86-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-25"><a href="#cb86-25" aria-hidden="true" tabindex="-1"></a>Of the *n*=`{r} sum(s)` sessions so far, `{r} round(100*(s<span class="co">[</span><span class="ot">1,1</span><span class="co">]</span>+s<span class="co">[</span><span class="ot">1,2</span><span class="co">]</span>)/sum(s), 1)`% have agreed to EXCERPTS or "Learning Audiences" sharing.</span>
+<span id="cb86-26"><a href="#cb86-26" aria-hidden="true" tabindex="-1"></a>Conversely, only *n*=`{r} s[2,1]+s[2,2]` or `{r} round(100*(s<span class="co">[</span><span class="ot">2,1</span><span class="co">]</span>+s<span class="co">[</span><span class="ot">2,2</span><span class="co">]</span>)/sum(s), 1)`% have declined to share at all.</span>
+<span id="cb86-27"><a href="#cb86-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-28"><a href="#cb86-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dates &amp; times {-}</span></span>
+<span id="cb86-29"><a href="#cb86-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-30"><a href="#cb86-30" aria-hidden="true" tabindex="-1"></a>To calculate cumulative screening/recruiting calls by site, we have to add an index variable</span>
+<span id="cb86-31"><a href="#cb86-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-34"><a href="#cb86-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-35"><a href="#cb86-35" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb86-36"><a href="#cb86-36" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(submit_date) <span class="sc">%&gt;%</span></span>
+<span id="cb86-37"><a href="#cb86-37" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">n_calls =</span> <span class="fu">seq_along</span>(submit_date))</span>
+<span id="cb86-38"><a href="#cb86-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-39"><a href="#cb86-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-40"><a href="#cb86-40" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calls across time {-}</span></span>
+<span id="cb86-41"><a href="#cb86-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-42"><a href="#cb86-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-screening-calls-time-series, fig.cap="Cumulative screening calls by year and site"}</span></span>
+<span id="cb86-43"><a href="#cb86-43" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-44"><a href="#cb86-44" aria-hidden="true" tabindex="-1"></a><span class="in">    dplyr::filter(!is.na(submit_date), !is.na(n_calls), !is.na(site_id)) %&gt;%</span></span>
+<span id="cb86-45"><a href="#cb86-45" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot() +</span></span>
+<span id="cb86-46"><a href="#cb86-46" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(submit_date, n_calls, color = site_id) +</span></span>
+<span id="cb86-47"><a href="#cb86-47" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_point()</span></span>
+<span id="cb86-48"><a href="#cb86-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-49"><a href="#cb86-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-50"><a href="#cb86-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calls by site {-}</span></span>
+<span id="cb86-51"><a href="#cb86-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-52"><a href="#cb86-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-screening-calls-by-site, fig.cap="Cumulative screening calls by site"}</span></span>
+<span id="cb86-53"><a href="#cb86-53" aria-hidden="true" tabindex="-1"></a><span class="in">calls_by_site_plot &lt;- function(df) {</span></span>
+<span id="cb86-54"><a href="#cb86-54" aria-hidden="true" tabindex="-1"></a><span class="in">  df |&gt;</span></span>
+<span id="cb86-55"><a href="#cb86-55" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(!is.na(site_id)) %&gt;%</span></span>
+<span id="cb86-56"><a href="#cb86-56" aria-hidden="true" tabindex="-1"></a><span class="in">    ggplot() +</span></span>
+<span id="cb86-57"><a href="#cb86-57" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(fct_infreq(site_id), fill = site_id) +</span></span>
+<span id="cb86-58"><a href="#cb86-58" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_bar() +</span></span>
+<span id="cb86-59"><a href="#cb86-59" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(axis.text.x = element_text(</span></span>
+<span id="cb86-60"><a href="#cb86-60" aria-hidden="true" tabindex="-1"></a><span class="in">      angle = 90,</span></span>
+<span id="cb86-61"><a href="#cb86-61" aria-hidden="true" tabindex="-1"></a><span class="in">      vjust = 0.5,</span></span>
+<span id="cb86-62"><a href="#cb86-62" aria-hidden="true" tabindex="-1"></a><span class="in">      hjust = 1</span></span>
+<span id="cb86-63"><a href="#cb86-63" aria-hidden="true" tabindex="-1"></a><span class="in">    )) + # Rotate text</span></span>
+<span id="cb86-64"><a href="#cb86-64" aria-hidden="true" tabindex="-1"></a><span class="in">    labs(x = "site") +</span></span>
+<span id="cb86-65"><a href="#cb86-65" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position = "none")</span></span>
+<span id="cb86-66"><a href="#cb86-66" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb86-67"><a href="#cb86-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-68"><a href="#cb86-68" aria-hidden="true" tabindex="-1"></a><span class="in">calls_by_site_plot(df)</span></span>
+<span id="cb86-69"><a href="#cb86-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-70"><a href="#cb86-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-71"><a href="#cb86-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Demographics {-}</span></span>
+<span id="cb86-72"><a href="#cb86-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-73"><a href="#cb86-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child age {-}</span></span>
+<span id="cb86-74"><a href="#cb86-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-75"><a href="#cb86-75" aria-hidden="true" tabindex="-1"></a>Child age in months (<span class="in">`child_age_mos`</span>) by <span class="in">`child_sex`</span>.</span>
+<span id="cb86-76"><a href="#cb86-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-77"><a href="#cb86-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-age-hist-screening, fig.cap="Histogram of child age at time of recruiting call."}</span></span>
+<span id="cb86-78"><a href="#cb86-78" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-79"><a href="#cb86-79" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_age_mos), !is.na(child_sex)) |&gt;</span></span>
+<span id="cb86-80"><a href="#cb86-80" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() +</span></span>
+<span id="cb86-81"><a href="#cb86-81" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(child_age_mos, fill = child_sex) +</span></span>
+<span id="cb86-82"><a href="#cb86-82" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 50) +</span></span>
+<span id="cb86-83"><a href="#cb86-83" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_grid(cols = vars(child_sex)) +</span></span>
+<span id="cb86-84"><a href="#cb86-84" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb86-85"><a href="#cb86-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-86"><a href="#cb86-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-87"><a href="#cb86-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-88"><a href="#cb86-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-89"><a href="#cb86-89" aria-hidden="true" tabindex="-1"></a>Some of the code to clean the <span class="in">`screen_df`</span> variables could be incorporated into an earlier stage of the workflow.</span>
+<span id="cb86-90"><a href="#cb86-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-91"><a href="#cb86-91" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-92"><a href="#cb86-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-93"><a href="#cb86-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Language {-}</span></span>
+<span id="cb86-94"><a href="#cb86-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-95"><a href="#cb86-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### To child {-}</span></span>
+<span id="cb86-96"><a href="#cb86-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-97"><a href="#cb86-97" aria-hidden="true" tabindex="-1"></a>Language(s) spoken to child by <span class="in">`child_sex`</span>.</span>
+<span id="cb86-98"><a href="#cb86-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-99"><a href="#cb86-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-language-by-sex}</span></span>
+<span id="cb86-100"><a href="#cb86-100" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-101"><a href="#cb86-101" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(</span></span>
+<span id="cb86-102"><a href="#cb86-102" aria-hidden="true" tabindex="-1"></a><span class="in">    language_spoken_child = stringr::str_replace_all(language_spoken_child, " ", "_"),</span></span>
+<span id="cb86-103"><a href="#cb86-103" aria-hidden="true" tabindex="-1"></a><span class="in">    language_spoken_home = stringr::str_replace_all(language_spoken_home, " ", "_")</span></span>
+<span id="cb86-104"><a href="#cb86-104" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb86-105"><a href="#cb86-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-106"><a href="#cb86-106" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + language_spoken_child,</span></span>
+<span id="cb86-107"><a href="#cb86-107" aria-hidden="true" tabindex="-1"></a><span class="in">      data = df)</span></span>
+<span id="cb86-108"><a href="#cb86-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-109"><a href="#cb86-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-110"><a href="#cb86-110" aria-hidden="true" tabindex="-1"></a><span class="fu">### At home {-}</span></span>
+<span id="cb86-111"><a href="#cb86-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-112"><a href="#cb86-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-language-at-home-by-sex}</span></span>
+<span id="cb86-113"><a href="#cb86-113" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ language_spoken_home + child_sex, data = df)</span></span>
+<span id="cb86-114"><a href="#cb86-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-115"><a href="#cb86-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-116"><a href="#cb86-116" aria-hidden="true" tabindex="-1"></a><span class="fu">### To child vs. at home {-}</span></span>
+<span id="cb86-117"><a href="#cb86-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-118"><a href="#cb86-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-language-child-vs-home}</span></span>
+<span id="cb86-119"><a href="#cb86-119" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ language_spoken_child + language_spoken_home, data = df)</span></span>
+<span id="cb86-120"><a href="#cb86-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-121"><a href="#cb86-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-122"><a href="#cb86-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Child health {-}</span></span>
+<span id="cb86-123"><a href="#cb86-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-124"><a href="#cb86-124" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child born on due date {-}</span></span>
+<span id="cb86-125"><a href="#cb86-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-126"><a href="#cb86-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-duedate-born-on}</span></span>
+<span id="cb86-127"><a href="#cb86-127" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_bornonduedate,</span></span>
+<span id="cb86-128"><a href="#cb86-128" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-129"><a href="#cb86-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-130"><a href="#cb86-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-131"><a href="#cb86-131" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-132"><a href="#cb86-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-133"><a href="#cb86-133" aria-hidden="true" tabindex="-1"></a>There are *n*=<span class="in">`r sum(is.na(screen_df$child_bornonduedate))`</span> NAs.</span>
+<span id="cb86-134"><a href="#cb86-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-135"><a href="#cb86-135" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-136"><a href="#cb86-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-139"><a href="#cb86-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-140"><a href="#cb86-140" aria-hidden="true" tabindex="-1"></a>screen_df <span class="sc">|&gt;</span></span>
+<span id="cb86-141"><a href="#cb86-141" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">is.na</span>(child_bornonduedate)) <span class="sc">|&gt;</span></span>
+<span id="cb86-142"><a href="#cb86-142" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(vol_id, participant_ID) <span class="sc">|&gt;</span></span>
+<span id="cb86-143"><a href="#cb86-143" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>)</span>
+<span id="cb86-144"><a href="#cb86-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-145"><a href="#cb86-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-146"><a href="#cb86-146" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child term {-}</span></span>
+<span id="cb86-147"><a href="#cb86-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-150"><a href="#cb86-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-151"><a href="#cb86-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-xtabs-duedate</span></span>
+<span id="cb86-152"><a href="#cb86-152" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> child_bornonduedate <span class="sc">+</span> child_onterm,</span>
+<span id="cb86-153"><a href="#cb86-153" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> screen_df)</span>
+<span id="cb86-154"><a href="#cb86-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-155"><a href="#cb86-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-156"><a href="#cb86-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child weight {-}</span></span>
+<span id="cb86-157"><a href="#cb86-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-158"><a href="#cb86-158" aria-hidden="true" tabindex="-1"></a>Must convert pounds and ounces to decimal pounds.</span>
+<span id="cb86-159"><a href="#cb86-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-162"><a href="#cb86-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-163"><a href="#cb86-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-birthwt-hist</span></span>
+<span id="cb86-164"><a href="#cb86-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Histogram of reported child birthweights in pounds."</span></span>
+<span id="cb86-165"><a href="#cb86-165" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">%&gt;%</span></span>
+<span id="cb86-166"><a href="#cb86-166" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(.,</span>
+<span id="cb86-167"><a href="#cb86-167" aria-hidden="true" tabindex="-1"></a>                <span class="at">birth_weight_lbs =</span> child_weight_pounds <span class="sc">+</span> child_weight_ounces<span class="sc">/</span><span class="dv">16</span>)</span>
+<span id="cb86-168"><a href="#cb86-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-169"><a href="#cb86-169" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-170"><a href="#cb86-170" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(birth_weight_lbs), <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb86-171"><a href="#cb86-171" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(birth_weight_lbs <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb86-172"><a href="#cb86-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-173"><a href="#cb86-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> birth_weight_lbs, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-174"><a href="#cb86-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.33</span>) <span class="sc">+</span></span>
+<span id="cb86-175"><a href="#cb86-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
+<span id="cb86-176"><a href="#cb86-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb86-177"><a href="#cb86-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-178"><a href="#cb86-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-179"><a href="#cb86-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Birth complications {-}</span></span>
+<span id="cb86-180"><a href="#cb86-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-181"><a href="#cb86-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-birth-compl}</span></span>
+<span id="cb86-182"><a href="#cb86-182" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_birth_complications,</span></span>
+<span id="cb86-183"><a href="#cb86-183" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-184"><a href="#cb86-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-185"><a href="#cb86-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-186"><a href="#cb86-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-187"><a href="#cb86-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-188"><a href="#cb86-188" aria-hidden="true" tabindex="-1"></a>There are some first names in the <span class="in">`child_birth_complications_specify`</span> field, so it is not shown here.</span>
+<span id="cb86-189"><a href="#cb86-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-190"><a href="#cb86-190" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-191"><a href="#cb86-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-192"><a href="#cb86-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-birth-compl, eval=FALSE}</span></span>
+<span id="cb86-193"><a href="#cb86-193" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-194"><a href="#cb86-194" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_birth_complications_specify)) |&gt;</span></span>
+<span id="cb86-195"><a href="#cb86-195" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_age_mos, child_sex, child_birth_complications_specify) |&gt;</span></span>
+<span id="cb86-196"><a href="#cb86-196" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(child_age_mos) |&gt;</span></span>
+<span id="cb86-197"><a href="#cb86-197" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-198"><a href="#cb86-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-199"><a href="#cb86-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-200"><a href="#cb86-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Major illnesses or injuries {-}</span></span>
+<span id="cb86-201"><a href="#cb86-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-202"><a href="#cb86-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-illness-injuries}</span></span>
+<span id="cb86-203"><a href="#cb86-203" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_major_illnesses_injuries,</span></span>
+<span id="cb86-204"><a href="#cb86-204" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-205"><a href="#cb86-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-206"><a href="#cb86-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-207"><a href="#cb86-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-illness-injuries}</span></span>
+<span id="cb86-208"><a href="#cb86-208" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-209"><a href="#cb86-209" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_illnesses_injuries_specify),</span></span>
+<span id="cb86-210"><a href="#cb86-210" aria-hidden="true" tabindex="-1"></a><span class="in">                !stringr::str_detect(child_illnesses_injuries_specify, "OK")) |&gt;</span></span>
+<span id="cb86-211"><a href="#cb86-211" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_age_mos, child_sex, child_illnesses_injuries_specify) |&gt;</span></span>
+<span id="cb86-212"><a href="#cb86-212" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(child_age_mos) |&gt;</span></span>
+<span id="cb86-213"><a href="#cb86-213" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-214"><a href="#cb86-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-215"><a href="#cb86-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-216"><a href="#cb86-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child vision {-}</span></span>
+<span id="cb86-217"><a href="#cb86-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-218"><a href="#cb86-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-vision}</span></span>
+<span id="cb86-219"><a href="#cb86-219" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_vision_disabilities,</span></span>
+<span id="cb86-220"><a href="#cb86-220" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-221"><a href="#cb86-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-222"><a href="#cb86-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-223"><a href="#cb86-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-vision}</span></span>
+<span id="cb86-224"><a href="#cb86-224" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-225"><a href="#cb86-225" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_vision_disabilities_specify)) |&gt;</span></span>
+<span id="cb86-226"><a href="#cb86-226" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_age_mos, child_sex, child_vision_disabilities_specify) |&gt;</span></span>
+<span id="cb86-227"><a href="#cb86-227" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(child_age_mos) |&gt;</span></span>
+<span id="cb86-228"><a href="#cb86-228" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-229"><a href="#cb86-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-230"><a href="#cb86-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-231"><a href="#cb86-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child hearing {-}</span></span>
+<span id="cb86-232"><a href="#cb86-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-233"><a href="#cb86-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-hearing}</span></span>
+<span id="cb86-234"><a href="#cb86-234" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_hearing_disabilities,</span></span>
+<span id="cb86-235"><a href="#cb86-235" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-236"><a href="#cb86-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-237"><a href="#cb86-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-238"><a href="#cb86-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-hearing}</span></span>
+<span id="cb86-239"><a href="#cb86-239" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-240"><a href="#cb86-240" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_hearing_disabilities_specify)) |&gt;</span></span>
+<span id="cb86-241"><a href="#cb86-241" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_age_mos, child_sex, child_hearing_disabilities_specify) |&gt;</span></span>
+<span id="cb86-242"><a href="#cb86-242" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(child_age_mos) |&gt;</span></span>
+<span id="cb86-243"><a href="#cb86-243" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-244"><a href="#cb86-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-245"><a href="#cb86-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-246"><a href="#cb86-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child developmental delays {-}</span></span>
+<span id="cb86-247"><a href="#cb86-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-248"><a href="#cb86-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-dev-delays}</span></span>
+<span id="cb86-249"><a href="#cb86-249" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_developmentaldelays,</span></span>
+<span id="cb86-250"><a href="#cb86-250" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-251"><a href="#cb86-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-252"><a href="#cb86-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-253"><a href="#cb86-253" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-254"><a href="#cb86-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-255"><a href="#cb86-255" aria-hidden="true" tabindex="-1"></a>There may be first names in the <span class="in">`child_developmentaldelays_specify`</span> field, so it is not shown here.</span>
+<span id="cb86-256"><a href="#cb86-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-257"><a href="#cb86-257" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-258"><a href="#cb86-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-259"><a href="#cb86-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-dev-delays, eval=FALSE}</span></span>
+<span id="cb86-260"><a href="#cb86-260" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-261"><a href="#cb86-261" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_developmentaldelays_specify)) |&gt;</span></span>
+<span id="cb86-262"><a href="#cb86-262" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_age_mos, child_sex, child_developmentaldelays_specify) |&gt;</span></span>
+<span id="cb86-263"><a href="#cb86-263" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(child_age_mos) |&gt;</span></span>
+<span id="cb86-264"><a href="#cb86-264" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-265"><a href="#cb86-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-266"><a href="#cb86-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-267"><a href="#cb86-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### Child sleep {-}</span></span>
+<span id="cb86-268"><a href="#cb86-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-269"><a href="#cb86-269" aria-hidden="true" tabindex="-1"></a>::: {.rmdimportant}</span>
+<span id="cb86-270"><a href="#cb86-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-271"><a href="#cb86-271" aria-hidden="true" tabindex="-1"></a>This is work yet-to-be-done. The time stamps need to be reformatted prior to</span>
+<span id="cb86-272"><a href="#cb86-272" aria-hidden="true" tabindex="-1"></a>visualization.</span>
+<span id="cb86-273"><a href="#cb86-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-274"><a href="#cb86-274" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-275"><a href="#cb86-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-276"><a href="#cb86-276" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Bed time {-}</span></span>
+<span id="cb86-277"><a href="#cb86-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-280"><a href="#cb86-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-281"><a href="#cb86-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-bed-time-hist</span></span>
+<span id="cb86-282"><a href="#cb86-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Histogram of parent-reported child bedtimes (24 hr scale)."</span></span>
+<span id="cb86-283"><a href="#cb86-283" aria-hidden="true" tabindex="-1"></a>extract_sleep_hr <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb86-284"><a href="#cb86-284" aria-hidden="true" tabindex="-1"></a>  t <span class="sc">|&gt;</span></span>
+<span id="cb86-285"><a href="#cb86-285" aria-hidden="true" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_extract</span>(<span class="st">"^[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}</span><span class="sc">\\</span><span class="st">:[0-9]{2}"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb86-286"><a href="#cb86-286" aria-hidden="true" tabindex="-1"></a>    hms<span class="sc">::</span><span class="fu">as_hms</span>()</span>
+<span id="cb86-287"><a href="#cb86-287" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb86-288"><a href="#cb86-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-289"><a href="#cb86-289" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb86-290"><a href="#cb86-290" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_sleep_time =</span> <span class="fu">extract_sleep_hr</span>(child_sleep_time)) <span class="sc">|&gt;</span></span>
+<span id="cb86-291"><a href="#cb86-291" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time)) </span>
+<span id="cb86-292"><a href="#cb86-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-293"><a href="#cb86-293" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-294"><a href="#cb86-294" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time),</span>
+<span id="cb86-295"><a href="#cb86-295" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex),</span>
+<span id="cb86-296"><a href="#cb86-296" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sleep_location)) <span class="sc">|&gt;</span></span>
+<span id="cb86-297"><a href="#cb86-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-298"><a href="#cb86-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(child_sleep_time, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-299"><a href="#cb86-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb86-300"><a href="#cb86-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
+<span id="cb86-301"><a href="#cb86-301" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb86-302"><a href="#cb86-302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
+<span id="cb86-303"><a href="#cb86-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-304"><a href="#cb86-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-307"><a href="#cb86-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-308"><a href="#cb86-308" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-309"><a href="#cb86-309" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_time),</span>
+<span id="cb86-310"><a href="#cb86-310" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex),</span>
+<span id="cb86-311"><a href="#cb86-311" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sleep_location)) <span class="sc">|&gt;</span></span>
+<span id="cb86-312"><a href="#cb86-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-313"><a href="#cb86-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(child_sleep_time, child_age_mos, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-314"><a href="#cb86-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
+<span id="cb86-315"><a href="#cb86-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb86-316"><a href="#cb86-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb86-317"><a href="#cb86-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
+<span id="cb86-318"><a href="#cb86-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-319"><a href="#cb86-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-320"><a href="#cb86-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-321"><a href="#cb86-321" aria-hidden="true" tabindex="-1"></a>Some of the bed times are probably not in correct 24 hr time.</span>
+<span id="cb86-322"><a href="#cb86-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-325"><a href="#cb86-325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-326"><a href="#cb86-326" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-327"><a href="#cb86-327" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(child_sleep_time <span class="sc">&lt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(<span class="st">"16:00:00"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb86-328"><a href="#cb86-328" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(site_id, participant_ID, child_sleep_time) <span class="sc">|&gt;</span></span>
+<span id="cb86-329"><a href="#cb86-329" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(site_id, participant_ID) <span class="sc">|&gt;</span></span>
+<span id="cb86-330"><a href="#cb86-330" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="st">'html'</span>)</span>
+<span id="cb86-331"><a href="#cb86-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-332"><a href="#cb86-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-333"><a href="#cb86-333" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Wake time {-}</span></span>
+<span id="cb86-334"><a href="#cb86-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-337"><a href="#cb86-337" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-338"><a href="#cb86-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-wake-time-hist</span></span>
+<span id="cb86-339"><a href="#cb86-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Histogram of parent-reported child wake times (24 hr scale)."</span></span>
+<span id="cb86-340"><a href="#cb86-340" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb86-341"><a href="#cb86-341" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">child_wake_time =</span> <span class="fu">extract_sleep_hr</span>(child_wake_time)) <span class="sc">|&gt;</span></span>
+<span id="cb86-342"><a href="#cb86-342" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_wake_time)) </span>
+<span id="cb86-343"><a href="#cb86-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-344"><a href="#cb86-344" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-345"><a href="#cb86-345" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_wake_time),</span>
+<span id="cb86-346"><a href="#cb86-346" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex),</span>
+<span id="cb86-347"><a href="#cb86-347" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sleep_location)) <span class="sc">|&gt;</span></span>
+<span id="cb86-348"><a href="#cb86-348" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-349"><a href="#cb86-349" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(child_wake_time, <span class="at">fill =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-350"><a href="#cb86-350" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb86-351"><a href="#cb86-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
+<span id="cb86-352"><a href="#cb86-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb86-353"><a href="#cb86-353" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
+<span id="cb86-354"><a href="#cb86-354" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-355"><a href="#cb86-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-356"><a href="#cb86-356" aria-hidden="true" tabindex="-1"></a>There are some unusual wake times, too.</span>
+<span id="cb86-357"><a href="#cb86-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-358"><a href="#cb86-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-wake-time}</span></span>
+<span id="cb86-359"><a href="#cb86-359" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-360"><a href="#cb86-360" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(child_wake_time &gt; hms::as_hms("16:00:00")) |&gt;</span></span>
+<span id="cb86-361"><a href="#cb86-361" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(site_id, participant_ID, child_wake_time) |&gt;</span></span>
+<span id="cb86-362"><a href="#cb86-362" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(site_id, participant_ID) |&gt;</span></span>
+<span id="cb86-363"><a href="#cb86-363" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable('html')</span></span>
+<span id="cb86-364"><a href="#cb86-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-365"><a href="#cb86-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-366"><a href="#cb86-366" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sleep duration {-}</span></span>
+<span id="cb86-367"><a href="#cb86-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-368"><a href="#cb86-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-sleep-dur-hist}</span></span>
+<span id="cb86-369"><a href="#cb86-369" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-sleep-hrs-by-location</span></span>
+<span id="cb86-370"><a href="#cb86-370" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Sleep (hours) by location"</span></span>
+<span id="cb86-371"><a href="#cb86-371" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-372"><a href="#cb86-372" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(child_sleep_time = extract_sleep_hr(child_sleep_time),</span></span>
+<span id="cb86-373"><a href="#cb86-373" aria-hidden="true" tabindex="-1"></a><span class="in">                  child_wake_time = extract_sleep_hr(child_wake_time)) |&gt;</span></span>
+<span id="cb86-374"><a href="#cb86-374" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_sleep_time),</span></span>
+<span id="cb86-375"><a href="#cb86-375" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(child_wake_time)) |&gt;</span></span>
+<span id="cb86-376"><a href="#cb86-376" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(child_sleep_secs = (child_sleep_time - child_wake_time))</span></span>
+<span id="cb86-377"><a href="#cb86-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-378"><a href="#cb86-378" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-379"><a href="#cb86-379" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_sleep_secs),</span></span>
+<span id="cb86-380"><a href="#cb86-380" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(child_sleep_location)) |&gt;</span></span>
+<span id="cb86-381"><a href="#cb86-381" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(sleep_hrs = child_sleep_secs/(60*60)) |&gt;</span></span>
+<span id="cb86-382"><a href="#cb86-382" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() +</span></span>
+<span id="cb86-383"><a href="#cb86-383" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(sleep_hrs, fill = child_sex) +</span></span>
+<span id="cb86-384"><a href="#cb86-384" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 18) +</span></span>
+<span id="cb86-385"><a href="#cb86-385" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_grid(rows = vars(child_sex), cols = vars(child_sleep_location)) +</span></span>
+<span id="cb86-386"><a href="#cb86-386" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
+<span id="cb86-387"><a href="#cb86-387" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(axis.text.x = element_text(angle = 90))</span></span>
+<span id="cb86-388"><a href="#cb86-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-389"><a href="#cb86-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-392"><a href="#cb86-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-393"><a href="#cb86-393" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-sleep-hrs-by-location-age</span></span>
+<span id="cb86-394"><a href="#cb86-394" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Child sleep (hours) by location and age"</span></span>
+<span id="cb86-395"><a href="#cb86-395" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-396"><a href="#cb86-396" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_sleep_secs),</span>
+<span id="cb86-397"><a href="#cb86-397" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sleep_location)) <span class="sc">|&gt;</span></span>
+<span id="cb86-398"><a href="#cb86-398" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sleep_hrs =</span> child_sleep_secs<span class="sc">/</span>(<span class="dv">60</span><span class="sc">*</span><span class="dv">60</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb86-399"><a href="#cb86-399" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-400"><a href="#cb86-400" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(child_age_mos, sleep_hrs, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-401"><a href="#cb86-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb86-402"><a href="#cb86-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(child_sex), <span class="at">cols =</span> <span class="fu">vars</span>(child_sleep_location)) <span class="sc">+</span></span>
+<span id="cb86-403"><a href="#cb86-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb86-404"><a href="#cb86-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
+<span id="cb86-405"><a href="#cb86-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-406"><a href="#cb86-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-407"><a href="#cb86-407" aria-hidden="true" tabindex="-1"></a>Again, there are some unusual values.</span>
+<span id="cb86-408"><a href="#cb86-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-409"><a href="#cb86-409" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-sleep-dur}</span></span>
+<span id="cb86-410"><a href="#cb86-410" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-411"><a href="#cb86-411" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(child_sleep_secs &lt; 12000) |&gt;</span></span>
+<span id="cb86-412"><a href="#cb86-412" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(site_id, participant_ID, child_sleep_time, child_wake_time, child_sleep_secs) |&gt;</span></span>
+<span id="cb86-413"><a href="#cb86-413" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(site_id, participant_ID) |&gt;</span></span>
+<span id="cb86-414"><a href="#cb86-414" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable('html')</span></span>
+<span id="cb86-415"><a href="#cb86-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-416"><a href="#cb86-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-417"><a href="#cb86-417" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Nap hours {-}</span></span>
+<span id="cb86-418"><a href="#cb86-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-419"><a href="#cb86-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-nap-hrs-hist}</span></span>
+<span id="cb86-420"><a href="#cb86-420" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-421"><a href="#cb86-421" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(child_nap_hours = as.numeric(child_nap_hours)) |&gt;</span></span>
+<span id="cb86-422"><a href="#cb86-422" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_sleep_time)) </span></span>
+<span id="cb86-423"><a href="#cb86-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-424"><a href="#cb86-424" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-425"><a href="#cb86-425" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(child_nap_hours),</span></span>
+<span id="cb86-426"><a href="#cb86-426" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(child_sex)) |&gt;</span></span>
+<span id="cb86-427"><a href="#cb86-427" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() +</span></span>
+<span id="cb86-428"><a href="#cb86-428" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(child_nap_hours, fill = child_sex) +</span></span>
+<span id="cb86-429"><a href="#cb86-429" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 18) +</span></span>
+<span id="cb86-430"><a href="#cb86-430" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_grid(cols = vars(child_sex)) +</span></span>
+<span id="cb86-431"><a href="#cb86-431" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb86-432"><a href="#cb86-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-435"><a href="#cb86-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-436"><a href="#cb86-436" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-nap-hrs-by-age</span></span>
+<span id="cb86-437"><a href="#cb86-437" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Nap hours by age and sex"</span></span>
+<span id="cb86-438"><a href="#cb86-438" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-439"><a href="#cb86-439" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(child_nap_hours),</span>
+<span id="cb86-440"><a href="#cb86-440" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb86-441"><a href="#cb86-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-442"><a href="#cb86-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(child_age_mos, child_nap_hours, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-443"><a href="#cb86-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb86-444"><a href="#cb86-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb86-445"><a href="#cb86-445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
+<span id="cb86-446"><a href="#cb86-446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb86-447"><a href="#cb86-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-448"><a href="#cb86-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-449"><a href="#cb86-449" aria-hidden="true" tabindex="-1"></a>And there are some very long nappers or null values we need to capture.</span>
+<span id="cb86-450"><a href="#cb86-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-451"><a href="#cb86-451" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-nap-hrs}</span></span>
+<span id="cb86-452"><a href="#cb86-452" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-453"><a href="#cb86-453" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(child_nap_hours &gt; 5) |&gt;</span></span>
+<span id="cb86-454"><a href="#cb86-454" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(site_id, participant_ID, child_nap_hours) |&gt;</span></span>
+<span id="cb86-455"><a href="#cb86-455" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(site_id, participant_ID) |&gt;</span></span>
+<span id="cb86-456"><a href="#cb86-456" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable('html')</span></span>
+<span id="cb86-457"><a href="#cb86-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-458"><a href="#cb86-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-459"><a href="#cb86-459" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sleep location {-}</span></span>
+<span id="cb86-460"><a href="#cb86-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-461"><a href="#cb86-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb86-462"><a href="#cb86-462" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + child_sleep_location,</span></span>
+<span id="cb86-463"><a href="#cb86-463" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-464"><a href="#cb86-464" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-465"><a href="#cb86-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-466"><a href="#cb86-466" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mother {-}</span></span>
+<span id="cb86-467"><a href="#cb86-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-468"><a href="#cb86-468" aria-hidden="true" tabindex="-1"></a><span class="fu">### Biological or adoptive {-}</span></span>
+<span id="cb86-469"><a href="#cb86-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-470"><a href="#cb86-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-bio}</span></span>
+<span id="cb86-471"><a href="#cb86-471" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(formula = ~ child_sex + mom_bio,</span></span>
+<span id="cb86-472"><a href="#cb86-472" aria-hidden="true" tabindex="-1"></a><span class="in">      data = screen_df)</span></span>
+<span id="cb86-473"><a href="#cb86-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-474"><a href="#cb86-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-475"><a href="#cb86-475" aria-hidden="true" tabindex="-1"></a><span class="fu">### Age at childbirth {-}</span></span>
+<span id="cb86-476"><a href="#cb86-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-477"><a href="#cb86-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-mom-age-childbirth}</span></span>
+<span id="cb86-478"><a href="#cb86-478" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-mom-age-at-childbirth</span></span>
+<span id="cb86-479"><a href="#cb86-479" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Mother's age at childbirth (years)"</span></span>
+<span id="cb86-480"><a href="#cb86-480" aria-hidden="true" tabindex="-1"></a><span class="in">screen_df |&gt;</span></span>
+<span id="cb86-481"><a href="#cb86-481" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_childbirth_age), </span></span>
+<span id="cb86-482"><a href="#cb86-482" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(child_sex)) |&gt;</span></span>
+<span id="cb86-483"><a href="#cb86-483" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() +</span></span>
+<span id="cb86-484"><a href="#cb86-484" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = mom_childbirth_age, fill = child_sex) +</span></span>
+<span id="cb86-485"><a href="#cb86-485" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 25) +</span></span>
+<span id="cb86-486"><a href="#cb86-486" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_grid(cols = vars(child_sex)) +</span></span>
+<span id="cb86-487"><a href="#cb86-487" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb86-488"><a href="#cb86-488" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-489"><a href="#cb86-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-490"><a href="#cb86-490" aria-hidden="true" tabindex="-1"></a>Clearly, there are some impossible (erroneous) maternal ages &gt; 100. Here are details:</span>
+<span id="cb86-491"><a href="#cb86-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-492"><a href="#cb86-492" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-mom-childbirth}</span></span>
+<span id="cb86-493"><a href="#cb86-493" aria-hidden="true" tabindex="-1"></a><span class="in">old_moms &lt;- screen_df |&gt;</span></span>
+<span id="cb86-494"><a href="#cb86-494" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(mom_childbirth_age &gt; 55)</span></span>
+<span id="cb86-495"><a href="#cb86-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-496"><a href="#cb86-496" aria-hidden="true" tabindex="-1"></a><span class="in">old_moms |&gt;</span></span>
+<span id="cb86-497"><a href="#cb86-497" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(submit_date, vol_id, participant_ID, mom_childbirth_age) |&gt;</span></span>
+<span id="cb86-498"><a href="#cb86-498" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(format = 'html')</span></span>
+<span id="cb86-499"><a href="#cb86-499" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-500"><a href="#cb86-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-501"><a href="#cb86-501" aria-hidden="true" tabindex="-1"></a><span class="fu">### Race {-}</span></span>
+<span id="cb86-502"><a href="#cb86-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-503"><a href="#cb86-503" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-race, fig.cap="Histogram of child age at time of recruiting call."}</span></span>
+<span id="cb86-504"><a href="#cb86-504" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-505"><a href="#cb86-505" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_race)) |&gt;</span></span>
+<span id="cb86-506"><a href="#cb86-506" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(mom_race = dplyr::recode(</span></span>
+<span id="cb86-507"><a href="#cb86-507" aria-hidden="true" tabindex="-1"></a><span class="in">    mom_race,</span></span>
+<span id="cb86-508"><a href="#cb86-508" aria-hidden="true" tabindex="-1"></a><span class="in">    morethanone = "more_than_one",</span></span>
+<span id="cb86-509"><a href="#cb86-509" aria-hidden="true" tabindex="-1"></a><span class="in">    americanindian = "american_indian"))</span></span>
+<span id="cb86-510"><a href="#cb86-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-511"><a href="#cb86-511" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~mom_race, df)</span></span>
+<span id="cb86-512"><a href="#cb86-512" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-513"><a href="#cb86-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-514"><a href="#cb86-514" aria-hidden="true" tabindex="-1"></a><span class="fu">### Birth country {-}</span></span>
+<span id="cb86-515"><a href="#cb86-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-516"><a href="#cb86-516" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-birth-country}</span></span>
+<span id="cb86-517"><a href="#cb86-517" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-518"><a href="#cb86-518" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(mom_birth_country = dplyr::recode(</span></span>
+<span id="cb86-519"><a href="#cb86-519" aria-hidden="true" tabindex="-1"></a><span class="in">    mom_birth_country, </span></span>
+<span id="cb86-520"><a href="#cb86-520" aria-hidden="true" tabindex="-1"></a><span class="in">    unitedstates = "US",</span></span>
+<span id="cb86-521"><a href="#cb86-521" aria-hidden="true" tabindex="-1"></a><span class="in">    united_states = "US",</span></span>
+<span id="cb86-522"><a href="#cb86-522" aria-hidden="true" tabindex="-1"></a><span class="in">    othercountry = "Other",</span></span>
+<span id="cb86-523"><a href="#cb86-523" aria-hidden="true" tabindex="-1"></a><span class="in">    other_country = "Other",</span></span>
+<span id="cb86-524"><a href="#cb86-524" aria-hidden="true" tabindex="-1"></a><span class="in">    refused = "Refused"</span></span>
+<span id="cb86-525"><a href="#cb86-525" aria-hidden="true" tabindex="-1"></a><span class="in">  ))</span></span>
+<span id="cb86-526"><a href="#cb86-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-527"><a href="#cb86-527" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ mom_birth_country, data = df)</span></span>
+<span id="cb86-528"><a href="#cb86-528" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-529"><a href="#cb86-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-530"><a href="#cb86-530" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table-mom-birth-country-non-us}</span></span>
+<span id="cb86-531"><a href="#cb86-531" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-532"><a href="#cb86-532" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(mom_birth_country_specify = stringr::str_to_title(mom_birth_country_specify)) |&gt;</span></span>
+<span id="cb86-533"><a href="#cb86-533" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_birth_country_specify)) |&gt;</span></span>
+<span id="cb86-534"><a href="#cb86-534" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_sex, mom_birth_country_specify)</span></span>
+<span id="cb86-535"><a href="#cb86-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-536"><a href="#cb86-536" aria-hidden="true" tabindex="-1"></a><span class="in">unique(df$mom_birth_country_specify)</span></span>
+<span id="cb86-537"><a href="#cb86-537" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-538"><a href="#cb86-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-539"><a href="#cb86-539" aria-hidden="true" tabindex="-1"></a><span class="fu">### Education {-}</span></span>
+<span id="cb86-540"><a href="#cb86-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-541"><a href="#cb86-541" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-educ}</span></span>
+<span id="cb86-542"><a href="#cb86-542" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-543"><a href="#cb86-543" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_education)) |&gt;</span></span>
+<span id="cb86-544"><a href="#cb86-544" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(child_sex, mom_education)</span></span>
+<span id="cb86-545"><a href="#cb86-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-546"><a href="#cb86-546" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ mom_education, data = df)</span></span>
+<span id="cb86-547"><a href="#cb86-547" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-548"><a href="#cb86-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-549"><a href="#cb86-549" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-550"><a href="#cb86-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-551"><a href="#cb86-551" aria-hidden="true" tabindex="-1"></a>This requires some recoding work.</span>
+<span id="cb86-552"><a href="#cb86-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-553"><a href="#cb86-553" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-554"><a href="#cb86-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-555"><a href="#cb86-555" aria-hidden="true" tabindex="-1"></a><span class="fu">### Employment {-}</span></span>
+<span id="cb86-556"><a href="#cb86-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-557"><a href="#cb86-557" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-employ}</span></span>
+<span id="cb86-558"><a href="#cb86-558" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-559"><a href="#cb86-559" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_employment))</span></span>
+<span id="cb86-560"><a href="#cb86-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-561"><a href="#cb86-561" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ mom_employment, data = df)</span></span>
+<span id="cb86-562"><a href="#cb86-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-563"><a href="#cb86-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-564"><a href="#cb86-564" aria-hidden="true" tabindex="-1"></a><span class="fu">### Occupation {-}</span></span>
+<span id="cb86-565"><a href="#cb86-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-566"><a href="#cb86-566" aria-hidden="true" tabindex="-1"></a>This information is available, but would need to be substantially recoded to be useful in summary form.</span>
+<span id="cb86-567"><a href="#cb86-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-568"><a href="#cb86-568" aria-hidden="true" tabindex="-1"></a><span class="fu">### Jobs number {-}</span></span>
+<span id="cb86-569"><a href="#cb86-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-570"><a href="#cb86-570" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-jobs-number}</span></span>
+<span id="cb86-571"><a href="#cb86-571" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-572"><a href="#cb86-572" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_jobs_number))</span></span>
+<span id="cb86-573"><a href="#cb86-573" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-574"><a href="#cb86-574" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ mom_jobs_number, data = df)</span></span>
+<span id="cb86-575"><a href="#cb86-575" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-576"><a href="#cb86-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-577"><a href="#cb86-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-mom-jobs-vs-employ}</span></span>
+<span id="cb86-578"><a href="#cb86-578" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-579"><a href="#cb86-579" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(mom_jobs_number),</span></span>
+<span id="cb86-580"><a href="#cb86-580" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(mom_employment))</span></span>
+<span id="cb86-581"><a href="#cb86-581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-582"><a href="#cb86-582" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ mom_jobs_number + mom_employment, data = df)</span></span>
+<span id="cb86-583"><a href="#cb86-583" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-584"><a href="#cb86-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-585"><a href="#cb86-585" aria-hidden="true" tabindex="-1"></a><span class="fu">### Job training {-}</span></span>
+<span id="cb86-586"><a href="#cb86-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-589"><a href="#cb86-589" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-590"><a href="#cb86-590" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> screen_df <span class="sc">|&gt;</span></span>
+<span id="cb86-591"><a href="#cb86-591" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mom_training))</span>
+<span id="cb86-592"><a href="#cb86-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-593"><a href="#cb86-593" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> mom_training, <span class="at">data =</span> df)</span>
+<span id="cb86-594"><a href="#cb86-594" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-595"><a href="#cb86-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-596"><a href="#cb86-596" aria-hidden="true" tabindex="-1"></a><span class="fu">## Biological father {-}</span></span>
+<span id="cb86-597"><a href="#cb86-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-598"><a href="#cb86-598" aria-hidden="true" tabindex="-1"></a><span class="fu">### Race {-}</span></span>
+<span id="cb86-599"><a href="#cb86-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-600"><a href="#cb86-600" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-biodad-race}</span></span>
+<span id="cb86-601"><a href="#cb86-601" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-602"><a href="#cb86-602" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(mom_childbirth_age, biodad_childbirth_age, biodad_race, child_sex) |&gt;</span></span>
+<span id="cb86-603"><a href="#cb86-603" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(</span></span>
+<span id="cb86-604"><a href="#cb86-604" aria-hidden="true" tabindex="-1"></a><span class="in">    biodad_race =</span></span>
+<span id="cb86-605"><a href="#cb86-605" aria-hidden="true" tabindex="-1"></a><span class="in">      dplyr::recode(</span></span>
+<span id="cb86-606"><a href="#cb86-606" aria-hidden="true" tabindex="-1"></a><span class="in">        biodad_race,</span></span>
+<span id="cb86-607"><a href="#cb86-607" aria-hidden="true" tabindex="-1"></a><span class="in">        americanindian_NA = "american_indian",</span></span>
+<span id="cb86-608"><a href="#cb86-608" aria-hidden="true" tabindex="-1"></a><span class="in">        asian_NA = "asian",</span></span>
+<span id="cb86-609"><a href="#cb86-609" aria-hidden="true" tabindex="-1"></a><span class="in">        NA_asian = "asian",</span></span>
+<span id="cb86-610"><a href="#cb86-610" aria-hidden="true" tabindex="-1"></a><span class="in">        black_NA = "black",</span></span>
+<span id="cb86-611"><a href="#cb86-611" aria-hidden="true" tabindex="-1"></a><span class="in">        donotknow_NA = "do_not_know",</span></span>
+<span id="cb86-612"><a href="#cb86-612" aria-hidden="true" tabindex="-1"></a><span class="in">        NA_NA = "NA",</span></span>
+<span id="cb86-613"><a href="#cb86-613" aria-hidden="true" tabindex="-1"></a><span class="in">        NA_white = "white",</span></span>
+<span id="cb86-614"><a href="#cb86-614" aria-hidden="true" tabindex="-1"></a><span class="in">        other_NA = "other",</span></span>
+<span id="cb86-615"><a href="#cb86-615" aria-hidden="true" tabindex="-1"></a><span class="in">        refused_NA = "refused",</span></span>
+<span id="cb86-616"><a href="#cb86-616" aria-hidden="true" tabindex="-1"></a><span class="in">        white_NA = "white",</span></span>
+<span id="cb86-617"><a href="#cb86-617" aria-hidden="true" tabindex="-1"></a><span class="in">        morethanone_NA = "more_than_one"</span></span>
+<span id="cb86-618"><a href="#cb86-618" aria-hidden="true" tabindex="-1"></a><span class="in">      )</span></span>
+<span id="cb86-619"><a href="#cb86-619" aria-hidden="true" tabindex="-1"></a><span class="in">  ) |&gt;</span></span>
+<span id="cb86-620"><a href="#cb86-620" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(biodad_childbirth_age = stringr::str_remove_all(biodad_childbirth_age, "[_NA]")) |&gt;</span></span>
+<span id="cb86-621"><a href="#cb86-621" aria-hidden="true" tabindex="-1"></a><span class="in">  # dplyr::filter(!is.na(biodad_childbirth_age), !is.na(biodad_race)) |&gt;</span></span>
+<span id="cb86-622"><a href="#cb86-622" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(biodad_childbirth_age = as.numeric(biodad_childbirth_age))</span></span>
+<span id="cb86-623"><a href="#cb86-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-624"><a href="#cb86-624" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ biodad_race, df)</span></span>
+<span id="cb86-625"><a href="#cb86-625" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-626"><a href="#cb86-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-627"><a href="#cb86-627" aria-hidden="true" tabindex="-1"></a><span class="fu">### Age at child birth {-}</span></span>
+<span id="cb86-628"><a href="#cb86-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-629"><a href="#cb86-629" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-biodad-age-childbirth}</span></span>
+<span id="cb86-630"><a href="#cb86-630" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-biodad-age-at-childbirth</span></span>
+<span id="cb86-631"><a href="#cb86-631" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Biological father's age at childbirth (years)"</span></span>
+<span id="cb86-632"><a href="#cb86-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-633"><a href="#cb86-633" aria-hidden="true" tabindex="-1"></a><span class="in">df |&gt;</span></span>
+<span id="cb86-634"><a href="#cb86-634" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(biodad_childbirth_age), </span></span>
+<span id="cb86-635"><a href="#cb86-635" aria-hidden="true" tabindex="-1"></a><span class="in">                !is.na(child_sex)) |&gt;</span></span>
+<span id="cb86-636"><a href="#cb86-636" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() +</span></span>
+<span id="cb86-637"><a href="#cb86-637" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = biodad_childbirth_age, fill = child_sex) +</span></span>
+<span id="cb86-638"><a href="#cb86-638" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 25) +</span></span>
+<span id="cb86-639"><a href="#cb86-639" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_grid(cols = vars(child_sex)) +</span></span>
+<span id="cb86-640"><a href="#cb86-640" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb86-641"><a href="#cb86-641" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-642"><a href="#cb86-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-645"><a href="#cb86-645" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb86-646"><a href="#cb86-646" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mom-biodad-age-at-childbirth</span></span>
+<span id="cb86-647"><a href="#cb86-647" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Mother's and biological father's age at childbirth (years)"</span></span>
+<span id="cb86-648"><a href="#cb86-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-649"><a href="#cb86-649" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb86-650"><a href="#cb86-650" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(biodad_childbirth_age),</span>
+<span id="cb86-651"><a href="#cb86-651" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(mom_childbirth_age),</span>
+<span id="cb86-652"><a href="#cb86-652" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span><span class="fu">is.na</span>(child_sex)) <span class="sc">|&gt;</span></span>
+<span id="cb86-653"><a href="#cb86-653" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb86-654"><a href="#cb86-654" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> mom_childbirth_age, <span class="at">y =</span> biodad_childbirth_age, <span class="at">color =</span> child_sex) <span class="sc">+</span></span>
+<span id="cb86-655"><a href="#cb86-655" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb86-656"><a href="#cb86-656" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(child_sex)) <span class="sc">+</span></span>
+<span id="cb86-657"><a href="#cb86-657" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb86-658"><a href="#cb86-658" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-659"><a href="#cb86-659" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-660"><a href="#cb86-660" aria-hidden="true" tabindex="-1"></a><span class="fu">## Childcare {-}</span></span>
+<span id="cb86-661"><a href="#cb86-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-662"><a href="#cb86-662" aria-hidden="true" tabindex="-1"></a><span class="fu">### Types {-}</span></span>
+<span id="cb86-663"><a href="#cb86-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-664"><a href="#cb86-664" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xtabs-childcare-types}</span></span>
+<span id="cb86-665"><a href="#cb86-665" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-666"><a href="#cb86-666" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(childcare_types))</span></span>
+<span id="cb86-667"><a href="#cb86-667" aria-hidden="true" tabindex="-1"></a><span class="in">                </span></span>
+<span id="cb86-668"><a href="#cb86-668" aria-hidden="true" tabindex="-1"></a><span class="in">xtabs(~ childcare_types, data = df)</span></span>
+<span id="cb86-669"><a href="#cb86-669" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-670"><a href="#cb86-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-671"><a href="#cb86-671" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-672"><a href="#cb86-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-673"><a href="#cb86-673" aria-hidden="true" tabindex="-1"></a>This requires some cleaning.</span>
+<span id="cb86-674"><a href="#cb86-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-675"><a href="#cb86-675" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-676"><a href="#cb86-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-677"><a href="#cb86-677" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hours {-}</span></span>
+<span id="cb86-678"><a href="#cb86-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-679"><a href="#cb86-679" aria-hidden="true" tabindex="-1"></a><span class="in">```{r childcare-hrs}</span></span>
+<span id="cb86-680"><a href="#cb86-680" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-681"><a href="#cb86-681" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(childcare_hours)) |&gt;</span></span>
+<span id="cb86-682"><a href="#cb86-682" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::arrange(childcare_hours)</span></span>
+<span id="cb86-683"><a href="#cb86-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-684"><a href="#cb86-684" aria-hidden="true" tabindex="-1"></a><span class="in">unique(df$childcare_hours)</span></span>
+<span id="cb86-685"><a href="#cb86-685" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-686"><a href="#cb86-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-687"><a href="#cb86-687" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-688"><a href="#cb86-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-689"><a href="#cb86-689" aria-hidden="true" tabindex="-1"></a>This requires some cleaning.</span>
+<span id="cb86-690"><a href="#cb86-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-691"><a href="#cb86-691" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb86-692"><a href="#cb86-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-693"><a href="#cb86-693" aria-hidden="true" tabindex="-1"></a><span class="fu">### Language {-}</span></span>
+<span id="cb86-694"><a href="#cb86-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-695"><a href="#cb86-695" aria-hidden="true" tabindex="-1"></a><span class="in">```{r child-care-language}</span></span>
+<span id="cb86-696"><a href="#cb86-696" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- screen_df |&gt;</span></span>
+<span id="cb86-697"><a href="#cb86-697" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::filter(!is.na(childcare_language))</span></span>
+<span id="cb86-698"><a href="#cb86-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-699"><a href="#cb86-699" aria-hidden="true" tabindex="-1"></a><span class="in">unique(df$childcare_language)</span></span>
+<span id="cb86-700"><a href="#cb86-700" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb86-701"><a href="#cb86-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-702"><a href="#cb86-702" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb86-703"><a href="#cb86-703" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-704"><a href="#cb86-704" aria-hidden="true" tabindex="-1"></a>This requires some cleaning.</span>
+<span id="cb86-705"><a href="#cb86-705" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-706"><a href="#cb86-706" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

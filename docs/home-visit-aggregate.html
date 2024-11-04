@@ -339,7 +339,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./home-visit-gather.html">Home visit</a></li><li class="breadcrumb-item"><a href="./home-visit-aggregate.html"><span class="chapter-title">Aggregate</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Aggregate</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Aggregate</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -369,6 +369,8 @@ window.Quarto = {
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fl <span class="ot">&lt;-</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list.files</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"R"</span>),</span>
@@ -378,6 +380,7 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">walk</span>(fl, source)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="remove-identifiers" class="level2 unnumbered">
@@ -396,6 +399,8 @@ window.Quarto = {
   )
 )</code></pre>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>home_visit_non_mbcdi <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/raw"</span>),</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_chr</span>(</span>
@@ -404,6 +409,7 @@ window.Quarto = {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">csv_save_dir =</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid"</span>),</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">these_questions =</span> <span class="st">'non_mbcdi'</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saved `/Users/rog1/rrr/KoBoToolbox/data/csv/home_visit/non_mbcdi/deid/1136694_non_mbcdi_18_english_deidentified.csv`</code></pre>
 </div>
@@ -526,6 +532,8 @@ Note
 <h3 class="unnumbered anchored" data-anchor-id="non-mb-cdi-files">Non-MB-CDI files</h3>
 <p>Create a helper function to create a data set with summary information about the data files.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>summarize_non_mbcdi_qs <span class="ot">&lt;-</span> <span class="cf">function</span>(fn) {</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(fn))</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -546,9 +554,12 @@ Note
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Select the de-identified CSVs to examine.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fl <span class="ot">&lt;-</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list.files</span>(</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid"</span>),</span>
@@ -561,6 +572,7 @@ Note
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>PLAY_forms <span class="sc">%&gt;%</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(., <span class="at">format =</span> <span class="st">'html'</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="lightable-classic caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -658,7 +670,7 @@ Note
 </tr>
 <tr class="even">
 <td style="text-align: left;">740625_non_mbcdi_12_english_deidentified.csv</td>
-<td style="text-align: right;">239</td>
+<td style="text-align: right;">240</td>
 <td style="text-align: right;">288</td>
 </tr>
 <tr class="odd">
@@ -673,12 +685,12 @@ Note
 </tr>
 <tr class="odd">
 <td style="text-align: left;">740628_non_mbcdi_18_english_deidentified.csv</td>
-<td style="text-align: right;">224</td>
+<td style="text-align: right;">226</td>
 <td style="text-align: right;">288</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">740629_non_mbcdi_24_english_deidentified.csv</td>
-<td style="text-align: right;">182</td>
+<td style="text-align: right;">184</td>
 <td style="text-align: right;">287</td>
 </tr>
 <tr class="odd">
@@ -700,6 +712,8 @@ Note
 <p>The later forms (with higher form numbers–the leading integers in the file names) are the newer ones. These generally have the largest number of entries and have similar numbers of columns–either 287 or 288. Accordingly, we focus our cleaning efforts here first.</p>
 <p>We start with the data files that have <span class="math inline">\(n=288\)</span> columns.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df740623 <span class="ot">&lt;-</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -719,11 +733,14 @@ Note
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740624))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 288</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df740625 <span class="ot">&lt;-</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -734,11 +751,14 @@ Note
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740625))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 288</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df740628 <span class="ot">&lt;-</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -749,6 +769,7 @@ Note
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740628))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 288</code></pre>
 </div>
@@ -756,6 +777,8 @@ Note
 <p>So, four of the most recent data files with <span class="math inline">\(n=288\)</span> columns can be aggregated without modification.</p>
 <p>Let’s turn to the more recent files with <span class="math inline">\(n=287\)</span> columns.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df740626 <span class="ot">&lt;-</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -775,13 +798,17 @@ Note
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740627))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 100</code></pre>
 </div>
 </div>
 <p>Where does the misalignment arise?</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740627)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -811,6 +838,8 @@ Note
 </div>
 <p>The misalignment arises somewhere near column 92.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df740629 <span class="ot">&lt;-</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -821,12 +850,15 @@ Note
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740629))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 287</code></pre>
 </div>
 </div>
 <p>So, <code>df740626</code> and <code>df740629</code> are aligned and can be merged.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df740630 <span class="ot">&lt;-</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv"</span>),</span>
@@ -834,10 +866,14 @@ Note
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 100</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -867,6 +903,8 @@ Note
 </div>
 <p>These files also fall out of alignment near column 92.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df740631 <span class="ot">&lt;-</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -877,10 +915,14 @@ Note
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 100</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -911,11 +953,17 @@ Note
 <p>And these files fall out of alignment near column 92.</p>
 <p>Let’s see if <code>df740627</code>, <code>df740630</code>, and <code>df740631</code> are aligned with one another.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740627) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 287</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740627) <span class="sc">==</span> <span class="fu">names</span>(df740631))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 287</code></pre>
 </div>
@@ -926,6 +974,8 @@ Note
 <h3 class="unnumbered anchored" data-anchor-id="older-forms">‘Older’ forms</h3>
 <p>The “older” forms have varied numbers of columns. We focus on thos with data (n_vars &gt; 0)</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>df307736 <span class="ot">&lt;-</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
@@ -1022,10 +1072,14 @@ Note
 <span id="cb55-94"><a href="#cb55-94" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb55-95"><a href="#cb55-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
 <span id="cb55-96"><a href="#cb55-96" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Let’s look at the two forms that have the same number of columns, <span class="math inline">\(n=274\)</span>, 307736 and 331453.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
@@ -1047,22 +1101,31 @@ Note
 [256] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 [271] TRUE TRUE TRUE TRUE</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df307736))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>So, these two are identical and could be merged.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>hv_deid_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid"</span>), <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>files_274_cols <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"/(307736|331453)"</span>)</span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>df_merge_274_cols <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_274_cols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>How about the files with <span class="math inline">\(n=267\)</span> columns, 331848 and 334099?</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -1088,13 +1151,19 @@ Note
 [253] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 [265]  TRUE  TRUE  TRUE</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df331848))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "group_combinedquestionnaires/participant_id"             
 [2] "start"                                                   
@@ -1103,7 +1172,10 @@ Note
 [5] "group_combinedquestionnaires/site_id"                    
 [6] "group_combinedquestionnaires/subject_number"             </code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "group_jo84c13/participant_id"             
 [2] "start"                                    
@@ -1116,16 +1188,22 @@ Note
 <p>There is an odd difference in the group label, <code>group_combinedquestionnaires</code> vs.&nbsp;<code>group_jo84c13</code>.</p>
 <p>Let’s try deleting the initial group labels and compare again.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">names</span>(df331848)</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">names</span>(df334099)</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_combinedquestionnaires/"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "participant_id"              "start"                      
 [3] "end"                         "note_fillthisoutbeforestudy"
 [5] "site_id"                     "subject_number"             </code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_jo84c13/"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "participant_id"              "start"                      
 [3] "end"                         "note_fillthisoutbeforestudy"
@@ -1134,9 +1212,12 @@ Note
 </div>
 <p>That looks promising.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_combinedquestionnaires/"</span>) <span class="ot">-&gt;</span> n1</span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_jo84c13/"</span>) <span class="ot">-&gt;</span> n2</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -1164,7 +1245,10 @@ Note
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>], n2[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                     [,2]                    
 [1,] "test_date"              "test_date"             
@@ -1179,16 +1263,22 @@ Note
 </div>
 <p><code>n2</code> or <code>df334099</code> has a <code>child_birth_date</code> field in position 9 that the other data frame does not have.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">|&gt;</span> <span class="fu">str_detect</span>(<span class="st">"child_birth_date"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
 <p>If we delete that variable, the data frames will no longer have the same number of columns. Let’s explore that anyway.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>n2_2 <span class="ot">&lt;-</span> n2[<span class="sc">-</span><span class="dv">9</span>]</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in n1 == n2_2: longer object length is not a multiple of shorter object
 length</code></pre>
@@ -1221,7 +1311,10 @@ length</code></pre>
 </div>
 <p>That helps a bit, but we diverge around column 29.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>], n2_2[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]                                                                                                
  [1,] "group_homevisitquestionnaires/group_health/group_general_health/child_hearing_tested"              
@@ -1277,13 +1370,19 @@ length</code></pre>
 </div>
 <p>These question labels looks very similar. There are just some minor changes in the variable names. <code>n2_2</code> has an extra variable in column 40.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>n2_3 <span class="ot">&lt;-</span> n2_2[<span class="sc">-</span><span class="dv">40</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Then, we can rename some of the columns in <code>n2_3</code> using corresponding names from <code>n1</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>n2_3 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"yes__in_the_bi"</span>, <span class="st">"birthhospital"</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"yes__after_goi"</span>, <span class="st">"afterhome"</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"don_t_know"</span>, <span class="st">"donotknow"</span>) <span class="ot">-&gt;</span> n2_4</span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in n1 == n2_4: longer object length is not a multiple of shorter object
 length</code></pre>
@@ -1315,7 +1414,10 @@ length</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>], n2_4[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]                                                                                                
  [1,] "group_homevisitquestionnaires/group_health/group_general_health/child_vision_tested/donotknow"     
@@ -1349,8 +1451,11 @@ length</code></pre>
 </div>
 <p><code>n1</code> has a <code>group_medicalprof</code> label from <code>allergies</code> through <code>gastrointestinal</code>; <code>n2_4</code> has <code>child_allergies_infections_ill</code> for the same questions.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>n2_4 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"child_allergies_infections_ill"</span>, <span class="st">"group_medicalprof"</span>) <span class="ot">-&gt;</span> n2_5</span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in n1 == n2_5: longer object length is not a multiple of shorter object
 length</code></pre>
@@ -1382,7 +1487,10 @@ length</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>], n2_5[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]                                                                             
  [1,] "group_homevisitquestionnaires/group_health/group_prenatal/instructions_prenatal"
@@ -1414,8 +1522,11 @@ length</code></pre>
 </div>
 <p>It looks like these could be reconciled by deleting <code>prenatal_care</code> from <code>n1</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>n1_2 <span class="ot">&lt;-</span> n1[<span class="sc">-</span><span class="dv">50</span>]</span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>n1_2 <span class="sc">==</span> n2_5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in n1_2 == n2_5: longer object length is not a multiple of shorter
 object length</code></pre>
@@ -1447,7 +1558,10 @@ object length</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1_2[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>], n2_5[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]                                                                                                          
  [1,] "group_homevisitquestionnaires/group_health/group_drinking/comments_drinking"                                 
@@ -1480,14 +1594,20 @@ object length</code></pre>
 <p>It looks like the phq4 is <em>not</em> in <code>n2_5</code>.</p>
 <p>Let’s check.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>n2_5 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="st">"phq4"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
 <p>Yes, there are only two PHQ4-related questions in <code>df334099</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>df334099 <span class="sc">|&gt;</span> <span class="fu">names</span>() <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="st">"phq4"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -1500,14 +1620,19 @@ object length</code></pre>
 <section id="non-mb-cdi-files-with-n288-columns" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="non-mb-cdi-files-with-n288-columns">non-MB-CDI files with <span class="math inline">\(n=288\)</span> columns</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>files_288_cols <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"2[3458]_non_mbcdi.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
 <span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>df_merge_288_cols <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_288_cols])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="non-mb-cdi-files-with-n287-columns" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="non-mb-cdi-files-with-n287-columns">non-MB-CDI files with <span class="math inline">\(n=287\)</span> columns</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>files_287_cols_1 <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"2[69]_non_mbcdi.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>files_287_cols_2 <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"(740627|740630|740631)_non.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
@@ -1515,19 +1640,26 @@ object length</code></pre>
 <span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>df_merge_287_cols_1 <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_287_cols_1])</span>
 <span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>df_merge_287_cols_2 <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_287_cols_2])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="examine-groups-with-n287-cols" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="examine-groups-with-n287-cols">Examine groups with <span class="math inline">\(n=287\)</span> cols</h3>
 <p>We focus on the starting column where the column names diverge, column 92.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># targets::tar_load(df_merge_287_cols_1, store="../_targets")</span></span>
 <span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co"># targets::tar_load(df_merge_287_cols_2, store="../_targets")</span></span>
 <span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_1)[<span class="dv">92</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_feeding_nutrition.instructions_feeding"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">92</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "group_combinedquestionnaires.group_homevisitquestionnaires.group_locomotor_milestones.group_health.group_feeding_nutrition.instructions_feeding"</code></pre>
 </div>
@@ -1535,7 +1667,10 @@ object length</code></pre>
 <p>There is an erroneous <code>group_locomotor_milestones.</code> in the <code>df_merge_287_cols_2</code> column name.</p>
 <p>A bit of sleuthing determines that this <code>group_locomotor_milestones.</code> label is characteristic of columns 92 to 273.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"group_locomotor_milestones"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
@@ -1554,14 +1689,20 @@ object length</code></pre>
 </div>
 <p>The following should fix this.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>old_names <span class="ot">&lt;-</span> <span class="fu">names</span>(df_merge_287_cols_2)</span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> old_names</span>
 <span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="ot">&lt;-</span></span>
 <span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>], <span class="st">"group_locomotor_milestones</span><span class="sc">\\</span><span class="st">."</span>)</span>
 <span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="ot">&lt;-</span> new_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">==</span> <span class="fu">names</span>(df_merge_287_cols_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -1591,7 +1732,10 @@ object length</code></pre>
 </div>
 <p>We have a second problem with columns from 114 to 210.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df_merge_287_cols_1)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                                                        
 [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_vision_tested.donotknow"
@@ -1606,11 +1750,17 @@ object length</code></pre>
 </div>
 <p>One of the problems has to do with column 114. There is a question ending <code>doctor_told_you</code> in <code>names(df_merge_287_cols_1)</code> but not in <code>names(df_merge_287_cols_2)</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_1) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"doctor_told_you"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"doctor_told_you"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
@@ -1618,14 +1768,20 @@ object length</code></pre>
 <p>Deleting this question would create additional misalignments and further problems. We cannot proceed without further discussion with our team.</p>
 <p>For now, let’s generate an array with all of the remaining differences in column names.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>names_differ <span class="ot">&lt;-</span> (<span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">!=</span> <span class="fu">names</span>(df_merge_287_cols_1))</span>
 <span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(names_differ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 103</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df_merge_287_cols_1)[names_differ], <span class="fu">names</span>(df_merge_287_cols_2)[names_differ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                                                                         
 [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.doctor_told_you"
@@ -1946,6 +2102,8 @@ object length</code></pre>
 </ul>
 <p>As an exploration, let’s see if we can reconcile these by deleting the non-aligning columns.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df_merge_287_cols_1</span>
 <span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df_merge_287_cols_2</span>
 <span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1961,6 +2119,7 @@ object length</code></pre>
 <span id="cb125-13"><a href="#cb125-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df2) <span class="ot">&lt;-</span> new_names</span>
 <span id="cb125-14"><a href="#cb125-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb125-15"><a href="#cb125-15" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -1990,7 +2149,10 @@ object length</code></pre>
 </div>
 <p>This looks promising.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">263</span>], <span class="fu">names</span>(df2)[<span class="dv">263</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                                   
 [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_typical_day.instructions_typicalday" 
@@ -1999,10 +2161,16 @@ object length</code></pre>
 </div>
 <p>This is easily fixed.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1)[<span class="dv">263</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(df2)[<span class="dv">263</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">273</span><span class="sc">:</span><span class="dv">275</span>], <span class="fu">names</span>(df2)[<span class="dv">273</span><span class="sc">:</span><span class="dv">275</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                             
 [1,] "group_combinedquestionnaires.group_databrary.note_databraryspiel1"                              
@@ -2017,6 +2185,8 @@ object length</code></pre>
 </div>
 <p>The last misalignments relate to Databrary fields.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span></span>
 <span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
 <span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2024,6 +2194,7 @@ object length</code></pre>
 <span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
 <span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
@@ -2053,16 +2224,22 @@ object length</code></pre>
 <h2 class="unnumbered anchored" data-anchor-id="combining-the-two-groups-of-datasets">Combining the two groups of datasets</h2>
 <p>Now, let’s go back to the data frame with 288 cols and see if we can bring these into alignment.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df_merge_288_cols</span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
 <span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
 <span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 245 281  58 281 513 283</code></pre>
+<pre><code>[1] 247 281  58 281 516 283</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in names(df1) == names(df3): longer object length is not a multiple of
 shorter object length</code></pre>
@@ -2093,7 +2270,10 @@ shorter object length</code></pre>
 [265] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 [277] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df3)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                                                                         
 [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_health.group_general_health.child_allergies_infections_ill.allergies"      
@@ -2105,10 +2285,13 @@ shorter object length</code></pre>
 </div>
 <p>Once again, there appears to be a problem with the ‘doctor_told_you’ field. We’ll delete it to see if this fixes one of the problems.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
 <span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'doctor_told_you'</span>))</span>
 <span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in names(df1) == names(df3): longer object length is not a multiple of
 shorter object length</code></pre>
@@ -2142,7 +2325,10 @@ shorter object length</code></pre>
 </div>
 <p>We still have misalignments at column 210.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>], <span class="fu">names</span>(df3)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]                                                                                                          
 [1,] "group_combinedquestionnaires.group_homevisitquestionnaires.group_mediause.group_techuse.meals"               
@@ -2160,16 +2346,22 @@ shorter object length</code></pre>
 </div>
 <p>The ’technology_use_scale` exists in one but not the other.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
 <span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'technology_use_scale'</span>))</span>
 <span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
-[1,]  245  281
-[2,]  513  281</code></pre>
+[1,]  247  281
+[2,]  516  281</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
@@ -2204,6 +2396,8 @@ shorter object length</code></pre>
 </div>
 <p>For now, I’m going to create functions that align these data frames. These are incorporated into <code>R/utils.R</code> so we do not source them again here.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>remove_technology_use_scale <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
 <span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(df, <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'technology_use_scale'</span>))</span>
 <span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -2252,29 +2446,45 @@ shorter object length</code></pre>
 <span id="cb150-46"><a href="#cb150-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_X_meta_cols</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb150-47"><a href="#cb150-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_redundant_group_labels</span>()</span>
 <span id="cb150-48"><a href="#cb150-48" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Let’s test this workflow with the unmodified files.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>df1m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_1)</span>
 <span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df1m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 245 272</code></pre>
+<pre><code>[1] 247 272</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>df2m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_2)</span>
 <span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df2m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  58 272</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>df3m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_288_cols)</span>
 <span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 513 272</code></pre>
+<pre><code>[1] 516 272</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df2m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 272</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df3m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 272</code></pre>
 </div>
@@ -2283,13 +2493,21 @@ shorter object length</code></pre>
 <section id="merging-and-exporting" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="merging-and-exporting">Merging and exporting</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df1m, df2m, df3m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Save exported aggregate file.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(df, <span class="at">file =</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/agg"</span>, <span class="st">"PLAY-non-mcdi-raw-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
+
+<!-- -->
 
 </section>
 
@@ -2383,6 +2601,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -2725,7 +2994,764 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-title">Clean</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb163" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Aggregate</span></span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## About</span></span>
+<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a>This page documents the process for combining separate files into aggregate files containing data from many participants.</span>
+<span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
+<span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-9"><a href="#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb163-10"><a href="#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="in">fl &lt;-</span></span>
+<span id="cb163-11"><a href="#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="in">  list.files(</span></span>
+<span id="cb163-12"><a href="#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="in">    file.path(here::here(), "R"),</span></span>
+<span id="cb163-13"><a href="#cb163-13" aria-hidden="true" tabindex="-1"></a><span class="in">    "^load|^kobo_|^file_|^screen_|^ecbq_|^health_|^databrary|^home|^make|^export|^post_visit|CONSTANTS|utils",</span></span>
+<span id="cb163-14"><a href="#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="in">    full.names = TRUE</span></span>
+<span id="cb163-15"><a href="#cb163-15" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb163-16"><a href="#cb163-16" aria-hidden="true" tabindex="-1"></a><span class="in">purrr::walk(fl, source)</span></span>
+<span id="cb163-17"><a href="#cb163-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-18"><a href="#cb163-18" aria-hidden="true" tabindex="-1"></a><span class="in">suppressPackageStartupMessages(library(tidyverse))</span></span>
+<span id="cb163-19"><a href="#cb163-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-20"><a href="#cb163-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-21"><a href="#cb163-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Remove identifiers {-}</span></span>
+<span id="cb163-22"><a href="#cb163-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-23"><a href="#cb163-23" aria-hidden="true" tabindex="-1"></a>The **non-MBCDI file** contains the identifiers, so that is the target of this removal process.</span>
+<span id="cb163-24"><a href="#cb163-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-25"><a href="#cb163-25" aria-hidden="true" tabindex="-1"></a>::: {.rmdnote}</span>
+<span id="cb163-26"><a href="#cb163-26" aria-hidden="true" tabindex="-1"></a>Note that we have added <span class="in">`data`</span> to <span class="in">`.gitignore`</span> in <span class="in">`protocol/`</span>, the root directory for the HTML protocol, so *none* of the data files should be made available via git or GitHub. This also means that there is **no version control** being done on raw data files themselves.</span>
+<span id="cb163-27"><a href="#cb163-27" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb163-28"><a href="#cb163-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-29"><a href="#cb163-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-30"><a href="#cb163-30" aria-hidden="true" tabindex="-1"></a><span class="in">tar_target(</span></span>
+<span id="cb163-31"><a href="#cb163-31" aria-hidden="true" tabindex="-1"></a><span class="in">  home_visit_remove_identifiers,</span></span>
+<span id="cb163-32"><a href="#cb163-32" aria-hidden="true" tabindex="-1"></a><span class="in">  purrr::map_chr(</span></span>
+<span id="cb163-33"><a href="#cb163-33" aria-hidden="true" tabindex="-1"></a><span class="in">    home_visit_non_mbcdi,</span></span>
+<span id="cb163-34"><a href="#cb163-34" aria-hidden="true" tabindex="-1"></a><span class="in">    open_deidentify_save,</span></span>
+<span id="cb163-35"><a href="#cb163-35" aria-hidden="true" tabindex="-1"></a><span class="in">    csv_save_dir = "data/csv/home_visit/non_mbcdi/deid",</span></span>
+<span id="cb163-36"><a href="#cb163-36" aria-hidden="true" tabindex="-1"></a><span class="in">      these_questions = 'non_mbcdi'</span></span>
+<span id="cb163-37"><a href="#cb163-37" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb163-38"><a href="#cb163-38" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb163-39"><a href="#cb163-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-40"><a href="#cb163-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-41"><a href="#cb163-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r home-visit-remove-identifiers}</span></span>
+<span id="cb163-42"><a href="#cb163-42" aria-hidden="true" tabindex="-1"></a><span class="in">home_visit_non_mbcdi &lt;- list.files(file.path(here::here(), "data/csv/home_visit/non_mbcdi/raw"),</span></span>
+<span id="cb163-43"><a href="#cb163-43" aria-hidden="true" tabindex="-1"></a><span class="in">                 "\\.csv$", full.names = TRUE)</span></span>
+<span id="cb163-44"><a href="#cb163-44" aria-hidden="true" tabindex="-1"></a><span class="in">purrr::map_chr(</span></span>
+<span id="cb163-45"><a href="#cb163-45" aria-hidden="true" tabindex="-1"></a><span class="in">    home_visit_non_mbcdi,</span></span>
+<span id="cb163-46"><a href="#cb163-46" aria-hidden="true" tabindex="-1"></a><span class="in">    file_open_deidentify_save,</span></span>
+<span id="cb163-47"><a href="#cb163-47" aria-hidden="true" tabindex="-1"></a><span class="in">    csv_save_dir = file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid"),</span></span>
+<span id="cb163-48"><a href="#cb163-48" aria-hidden="true" tabindex="-1"></a><span class="in">      these_questions = 'non_mbcdi'</span></span>
+<span id="cb163-49"><a href="#cb163-49" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb163-50"><a href="#cb163-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-51"><a href="#cb163-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-52"><a href="#cb163-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quality assurance (QA) reviews {-}</span></span>
+<span id="cb163-53"><a href="#cb163-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-54"><a href="#cb163-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### MB-CDI files {-}</span></span>
+<span id="cb163-55"><a href="#cb163-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-56"><a href="#cb163-56" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb163-57"><a href="#cb163-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-58"><a href="#cb163-58" aria-hidden="true" tabindex="-1"></a>To be completed.</span>
+<span id="cb163-59"><a href="#cb163-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-60"><a href="#cb163-60" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb163-61"><a href="#cb163-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-62"><a href="#cb163-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Non-MB-CDI files {-}</span></span>
+<span id="cb163-63"><a href="#cb163-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-64"><a href="#cb163-64" aria-hidden="true" tabindex="-1"></a>Create a helper function to create a data set with summary information about the data files.</span>
+<span id="cb163-65"><a href="#cb163-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-66"><a href="#cb163-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r define-qa-helper}</span></span>
+<span id="cb163-67"><a href="#cb163-67" aria-hidden="true" tabindex="-1"></a><span class="in">summarize_non_mbcdi_qs &lt;- function(fn) {</span></span>
+<span id="cb163-68"><a href="#cb163-68" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot(is.character(fn))</span></span>
+<span id="cb163-69"><a href="#cb163-69" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb163-70"><a href="#cb163-70" aria-hidden="true" tabindex="-1"></a><span class="in">  if (!file.exists(fn)) {</span></span>
+<span id="cb163-71"><a href="#cb163-71" aria-hidden="true" tabindex="-1"></a><span class="in">    stop('File not found `', fn, '`')</span></span>
+<span id="cb163-72"><a href="#cb163-72" aria-hidden="true" tabindex="-1"></a><span class="in">  } else {</span></span>
+<span id="cb163-73"><a href="#cb163-73" aria-hidden="true" tabindex="-1"></a><span class="in">    df &lt;- readr::read_csv(fn, show_col_types = FALSE)</span></span>
+<span id="cb163-74"><a href="#cb163-74" aria-hidden="true" tabindex="-1"></a><span class="in">    if (!is.data.frame(df)) {</span></span>
+<span id="cb163-75"><a href="#cb163-75" aria-hidden="true" tabindex="-1"></a><span class="in">      stop('Error reading data frame')</span></span>
+<span id="cb163-76"><a href="#cb163-76" aria-hidden="true" tabindex="-1"></a><span class="in">    } else {</span></span>
+<span id="cb163-77"><a href="#cb163-77" aria-hidden="true" tabindex="-1"></a><span class="in">      out_df &lt;-</span></span>
+<span id="cb163-78"><a href="#cb163-78" aria-hidden="true" tabindex="-1"></a><span class="in">        tibble(</span></span>
+<span id="cb163-79"><a href="#cb163-79" aria-hidden="true" tabindex="-1"></a><span class="in">          file_name = basename(fn),</span></span>
+<span id="cb163-80"><a href="#cb163-80" aria-hidden="true" tabindex="-1"></a><span class="in">          n_rows = dim(df)[1],</span></span>
+<span id="cb163-81"><a href="#cb163-81" aria-hidden="true" tabindex="-1"></a><span class="in">          n_vars = dim(df)[2]</span></span>
+<span id="cb163-82"><a href="#cb163-82" aria-hidden="true" tabindex="-1"></a><span class="in">        )</span></span>
+<span id="cb163-83"><a href="#cb163-83" aria-hidden="true" tabindex="-1"></a><span class="in">      dplyr::arrange(out_df, file_name)</span></span>
+<span id="cb163-84"><a href="#cb163-84" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb163-85"><a href="#cb163-85" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb163-86"><a href="#cb163-86" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-87"><a href="#cb163-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-88"><a href="#cb163-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-89"><a href="#cb163-89" aria-hidden="true" tabindex="-1"></a>Select the de-identified CSVs to examine.</span>
+<span id="cb163-90"><a href="#cb163-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-91"><a href="#cb163-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r generate-qa-report}</span></span>
+<span id="cb163-92"><a href="#cb163-92" aria-hidden="true" tabindex="-1"></a><span class="in">fl &lt;-</span></span>
+<span id="cb163-93"><a href="#cb163-93" aria-hidden="true" tabindex="-1"></a><span class="in">  list.files(</span></span>
+<span id="cb163-94"><a href="#cb163-94" aria-hidden="true" tabindex="-1"></a><span class="in">    file.path(here::here(), "data/csv/home_visit/non_mbcdi/deid"),</span></span>
+<span id="cb163-95"><a href="#cb163-95" aria-hidden="true" tabindex="-1"></a><span class="in">    '^[0-9]+_non_mbcdi_[12|18|24].*deidentified',</span></span>
+<span id="cb163-96"><a href="#cb163-96" aria-hidden="true" tabindex="-1"></a><span class="in">    full.names = TRUE</span></span>
+<span id="cb163-97"><a href="#cb163-97" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb163-98"><a href="#cb163-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-99"><a href="#cb163-99" aria-hidden="true" tabindex="-1"></a><span class="in">PLAY_forms &lt;- purrr::map_df(fl, summarize_non_mbcdi_qs)</span></span>
+<span id="cb163-100"><a href="#cb163-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-101"><a href="#cb163-101" aria-hidden="true" tabindex="-1"></a><span class="in">PLAY_forms %&gt;%</span></span>
+<span id="cb163-102"><a href="#cb163-102" aria-hidden="true" tabindex="-1"></a><span class="in">  knitr::kable(., format = 'html') %&gt;%</span></span>
+<span id="cb163-103"><a href="#cb163-103" aria-hidden="true" tabindex="-1"></a><span class="in">  kableExtra::kable_classic()</span></span>
+<span id="cb163-104"><a href="#cb163-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-105"><a href="#cb163-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-106"><a href="#cb163-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-107"><a href="#cb163-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-108"><a href="#cb163-108" aria-hidden="true" tabindex="-1"></a>The later forms (with higher form numbers--the leading integers in the file names) are the newer ones.</span>
+<span id="cb163-109"><a href="#cb163-109" aria-hidden="true" tabindex="-1"></a>These generally have the largest number of entries and have similar numbers of columns--either 287 or 288.</span>
+<span id="cb163-110"><a href="#cb163-110" aria-hidden="true" tabindex="-1"></a>Accordingly, we focus our cleaning efforts here first.</span>
+<span id="cb163-111"><a href="#cb163-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-112"><a href="#cb163-112" aria-hidden="true" tabindex="-1"></a>We start with the data files that have $n=288$ columns.</span>
+<span id="cb163-113"><a href="#cb163-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-116"><a href="#cb163-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-117"><a href="#cb163-117" aria-hidden="true" tabindex="-1"></a>df740623 <span class="ot">&lt;-</span></span>
+<span id="cb163-118"><a href="#cb163-118" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-119"><a href="#cb163-119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-120"><a href="#cb163-120" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-121"><a href="#cb163-121" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740623_non_mbcdi_12_bilingual_english_deidentified.csv"</span></span>
+<span id="cb163-122"><a href="#cb163-122" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-123"><a href="#cb163-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-124"><a href="#cb163-124" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-125"><a href="#cb163-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-126"><a href="#cb163-126" aria-hidden="true" tabindex="-1"></a>df740624 <span class="ot">&lt;-</span></span>
+<span id="cb163-127"><a href="#cb163-127" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-128"><a href="#cb163-128" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-129"><a href="#cb163-129" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-130"><a href="#cb163-130" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740624_non_mbcdi_12_bilingual_spanish_deidentified.csv"</span></span>
+<span id="cb163-131"><a href="#cb163-131" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-132"><a href="#cb163-132" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-133"><a href="#cb163-133" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-134"><a href="#cb163-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-135"><a href="#cb163-135" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740624))</span>
+<span id="cb163-136"><a href="#cb163-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-137"><a href="#cb163-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-140"><a href="#cb163-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-141"><a href="#cb163-141" aria-hidden="true" tabindex="-1"></a>df740625 <span class="ot">&lt;-</span></span>
+<span id="cb163-142"><a href="#cb163-142" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-143"><a href="#cb163-143" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-144"><a href="#cb163-144" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-145"><a href="#cb163-145" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740625_non_mbcdi_12_english_deidentified.csv"</span></span>
+<span id="cb163-146"><a href="#cb163-146" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-147"><a href="#cb163-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-148"><a href="#cb163-148" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-149"><a href="#cb163-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-150"><a href="#cb163-150" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740625))</span>
+<span id="cb163-151"><a href="#cb163-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-152"><a href="#cb163-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-155"><a href="#cb163-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-156"><a href="#cb163-156" aria-hidden="true" tabindex="-1"></a>df740628 <span class="ot">&lt;-</span></span>
+<span id="cb163-157"><a href="#cb163-157" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-158"><a href="#cb163-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-159"><a href="#cb163-159" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-160"><a href="#cb163-160" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740628_non_mbcdi_18_english_deidentified.csv"</span></span>
+<span id="cb163-161"><a href="#cb163-161" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-162"><a href="#cb163-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-163"><a href="#cb163-163" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-164"><a href="#cb163-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-165"><a href="#cb163-165" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740623) <span class="sc">==</span> <span class="fu">names</span>(df740628))</span>
+<span id="cb163-166"><a href="#cb163-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-167"><a href="#cb163-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-168"><a href="#cb163-168" aria-hidden="true" tabindex="-1"></a>So, four of the most recent data files with $n=288$ columns can be aggregated without modification.</span>
+<span id="cb163-169"><a href="#cb163-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-170"><a href="#cb163-170" aria-hidden="true" tabindex="-1"></a>Let's turn to the more recent files with $n=287$ columns.</span>
+<span id="cb163-171"><a href="#cb163-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-174"><a href="#cb163-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-175"><a href="#cb163-175" aria-hidden="true" tabindex="-1"></a>df740626 <span class="ot">&lt;-</span></span>
+<span id="cb163-176"><a href="#cb163-176" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-177"><a href="#cb163-177" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-178"><a href="#cb163-178" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-179"><a href="#cb163-179" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740626_non_mbcdi_18_bilingual_english_deidentified.csv"</span></span>
+<span id="cb163-180"><a href="#cb163-180" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-181"><a href="#cb163-181" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-182"><a href="#cb163-182" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-183"><a href="#cb163-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-184"><a href="#cb163-184" aria-hidden="true" tabindex="-1"></a>df740627 <span class="ot">&lt;-</span></span>
+<span id="cb163-185"><a href="#cb163-185" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-186"><a href="#cb163-186" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-187"><a href="#cb163-187" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-188"><a href="#cb163-188" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740627_non_mbcdi_18_bilingual_spanish_deidentified.csv"</span></span>
+<span id="cb163-189"><a href="#cb163-189" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-190"><a href="#cb163-190" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-191"><a href="#cb163-191" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-192"><a href="#cb163-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-193"><a href="#cb163-193" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740627))</span>
+<span id="cb163-194"><a href="#cb163-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-195"><a href="#cb163-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-196"><a href="#cb163-196" aria-hidden="true" tabindex="-1"></a>Where does the misalignment arise?</span>
+<span id="cb163-197"><a href="#cb163-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-200"><a href="#cb163-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-201"><a href="#cb163-201" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740627)</span>
+<span id="cb163-202"><a href="#cb163-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-203"><a href="#cb163-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-204"><a href="#cb163-204" aria-hidden="true" tabindex="-1"></a>The misalignment arises somewhere near column 92.</span>
+<span id="cb163-205"><a href="#cb163-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-208"><a href="#cb163-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-209"><a href="#cb163-209" aria-hidden="true" tabindex="-1"></a>df740629 <span class="ot">&lt;-</span></span>
+<span id="cb163-210"><a href="#cb163-210" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-211"><a href="#cb163-211" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-212"><a href="#cb163-212" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-213"><a href="#cb163-213" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740629_non_mbcdi_24_english_deidentified.csv"</span></span>
+<span id="cb163-214"><a href="#cb163-214" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-215"><a href="#cb163-215" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-216"><a href="#cb163-216" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-217"><a href="#cb163-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-218"><a href="#cb163-218" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740629))</span>
+<span id="cb163-219"><a href="#cb163-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-220"><a href="#cb163-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-221"><a href="#cb163-221" aria-hidden="true" tabindex="-1"></a>So, <span class="in">`df740626`</span> and <span class="in">`df740629`</span> are aligned and can be merged.</span>
+<span id="cb163-222"><a href="#cb163-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-225"><a href="#cb163-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-226"><a href="#cb163-226" aria-hidden="true" tabindex="-1"></a>df740630 <span class="ot">&lt;-</span></span>
+<span id="cb163-227"><a href="#cb163-227" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-228"><a href="#cb163-228" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid/740630_non_mbcdi_24_bilingual_spanish_deidentified.csv"</span>),</span>
+<span id="cb163-229"><a href="#cb163-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-230"><a href="#cb163-230" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-231"><a href="#cb163-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-232"><a href="#cb163-232" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span>
+<span id="cb163-233"><a href="#cb163-233" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740630)</span>
+<span id="cb163-234"><a href="#cb163-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-235"><a href="#cb163-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-236"><a href="#cb163-236" aria-hidden="true" tabindex="-1"></a>These files also fall out of alignment near column 92.</span>
+<span id="cb163-237"><a href="#cb163-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-240"><a href="#cb163-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-241"><a href="#cb163-241" aria-hidden="true" tabindex="-1"></a>df740631 <span class="ot">&lt;-</span></span>
+<span id="cb163-242"><a href="#cb163-242" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb163-243"><a href="#cb163-243" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-244"><a href="#cb163-244" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-245"><a href="#cb163-245" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/740631_non_mbcdi_24_bilingual_english_deidentified.csv"</span></span>
+<span id="cb163-246"><a href="#cb163-246" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-247"><a href="#cb163-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-248"><a href="#cb163-248" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-249"><a href="#cb163-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-250"><a href="#cb163-250" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631))</span>
+<span id="cb163-251"><a href="#cb163-251" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df740626) <span class="sc">==</span> <span class="fu">names</span>(df740631)</span>
+<span id="cb163-252"><a href="#cb163-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-253"><a href="#cb163-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-254"><a href="#cb163-254" aria-hidden="true" tabindex="-1"></a>And these files fall out of alignment near column 92.</span>
+<span id="cb163-255"><a href="#cb163-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-256"><a href="#cb163-256" aria-hidden="true" tabindex="-1"></a>Let's see if <span class="in">`df740627`</span>, <span class="in">`df740630`</span>, and <span class="in">`df740631`</span> are aligned with one another.</span>
+<span id="cb163-257"><a href="#cb163-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-260"><a href="#cb163-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-261"><a href="#cb163-261" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740627) <span class="sc">==</span> <span class="fu">names</span>(df740630))</span>
+<span id="cb163-262"><a href="#cb163-262" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">names</span>(df740627) <span class="sc">==</span> <span class="fu">names</span>(df740631))</span>
+<span id="cb163-263"><a href="#cb163-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-264"><a href="#cb163-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-265"><a href="#cb163-265" aria-hidden="true" tabindex="-1"></a>Yes, they are. So, these three can be merged. </span>
+<span id="cb163-266"><a href="#cb163-266" aria-hidden="true" tabindex="-1"></a>We do that first, then address the discrepancies between aggregates.</span>
+<span id="cb163-267"><a href="#cb163-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-268"><a href="#cb163-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### 'Older' forms {-}</span></span>
+<span id="cb163-269"><a href="#cb163-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-270"><a href="#cb163-270" aria-hidden="true" tabindex="-1"></a>The "older" forms have varied numbers of columns.</span>
+<span id="cb163-271"><a href="#cb163-271" aria-hidden="true" tabindex="-1"></a>We focus on thos with data (n_vars &gt; 0)</span>
+<span id="cb163-272"><a href="#cb163-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-275"><a href="#cb163-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-276"><a href="#cb163-276" aria-hidden="true" tabindex="-1"></a>df307736 <span class="ot">&lt;-</span></span>
+<span id="cb163-277"><a href="#cb163-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-278"><a href="#cb163-278" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-279"><a href="#cb163-279" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-280"><a href="#cb163-280" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/307736_non_mbcdi_18_english_deidentified.csv"</span></span>
+<span id="cb163-281"><a href="#cb163-281" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-282"><a href="#cb163-282" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-283"><a href="#cb163-283" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-284"><a href="#cb163-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-285"><a href="#cb163-285" aria-hidden="true" tabindex="-1"></a>df331453 <span class="ot">&lt;-</span></span>
+<span id="cb163-286"><a href="#cb163-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-287"><a href="#cb163-287" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-288"><a href="#cb163-288" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-289"><a href="#cb163-289" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/331453_non_mbcdi_24_english_deidentified.csv"</span></span>
+<span id="cb163-290"><a href="#cb163-290" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-291"><a href="#cb163-291" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-292"><a href="#cb163-292" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-293"><a href="#cb163-293" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-294"><a href="#cb163-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-295"><a href="#cb163-295" aria-hidden="true" tabindex="-1"></a>df331848 <span class="ot">&lt;-</span></span>
+<span id="cb163-296"><a href="#cb163-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-297"><a href="#cb163-297" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-298"><a href="#cb163-298" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-299"><a href="#cb163-299" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/331848_non_mbcdi_12_english_deidentified.csv"</span></span>
+<span id="cb163-300"><a href="#cb163-300" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-301"><a href="#cb163-301" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-302"><a href="#cb163-302" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-303"><a href="#cb163-303" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-304"><a href="#cb163-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-305"><a href="#cb163-305" aria-hidden="true" tabindex="-1"></a>df334099 <span class="ot">&lt;-</span></span>
+<span id="cb163-306"><a href="#cb163-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-307"><a href="#cb163-307" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-308"><a href="#cb163-308" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-309"><a href="#cb163-309" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/334099_non_mbcdi_12_bilingual_english_deidentified.csv"</span></span>
+<span id="cb163-310"><a href="#cb163-310" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-311"><a href="#cb163-311" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-312"><a href="#cb163-312" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-313"><a href="#cb163-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-314"><a href="#cb163-314" aria-hidden="true" tabindex="-1"></a>df363349 <span class="ot">&lt;-</span></span>
+<span id="cb163-315"><a href="#cb163-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-316"><a href="#cb163-316" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-317"><a href="#cb163-317" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-318"><a href="#cb163-318" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/363349_non_mbcdi_18_english_deidentified.csv"</span></span>
+<span id="cb163-319"><a href="#cb163-319" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-320"><a href="#cb163-320" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-321"><a href="#cb163-321" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-322"><a href="#cb163-322" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-323"><a href="#cb163-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-324"><a href="#cb163-324" aria-hidden="true" tabindex="-1"></a>df363381 <span class="ot">&lt;-</span></span>
+<span id="cb163-325"><a href="#cb163-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-326"><a href="#cb163-326" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-327"><a href="#cb163-327" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-328"><a href="#cb163-328" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/363381_non_mbcdi_24_english_deidentified.csv"</span></span>
+<span id="cb163-329"><a href="#cb163-329" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-330"><a href="#cb163-330" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-331"><a href="#cb163-331" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-332"><a href="#cb163-332" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-333"><a href="#cb163-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-334"><a href="#cb163-334" aria-hidden="true" tabindex="-1"></a>df363431 <span class="ot">&lt;-</span></span>
+<span id="cb163-335"><a href="#cb163-335" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-336"><a href="#cb163-336" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-337"><a href="#cb163-337" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-338"><a href="#cb163-338" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/363431_non_mbcdi_12_english_deidentified.csv"</span></span>
+<span id="cb163-339"><a href="#cb163-339" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-340"><a href="#cb163-340" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-341"><a href="#cb163-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-342"><a href="#cb163-342" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-343"><a href="#cb163-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-344"><a href="#cb163-344" aria-hidden="true" tabindex="-1"></a>df408149 <span class="ot">&lt;-</span></span>
+<span id="cb163-345"><a href="#cb163-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-346"><a href="#cb163-346" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-347"><a href="#cb163-347" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-348"><a href="#cb163-348" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/408149_non_mbcdi_24_bilingual_spanish_deidentified.csv"</span></span>
+<span id="cb163-349"><a href="#cb163-349" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-350"><a href="#cb163-350" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-351"><a href="#cb163-351" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-352"><a href="#cb163-352" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-353"><a href="#cb163-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-354"><a href="#cb163-354" aria-hidden="true" tabindex="-1"></a>df411456 <span class="ot">&lt;-</span></span>
+<span id="cb163-355"><a href="#cb163-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-356"><a href="#cb163-356" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-357"><a href="#cb163-357" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-358"><a href="#cb163-358" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/411456_non_mbcdi_12_bilingual_english_deidentified.csv"</span></span>
+<span id="cb163-359"><a href="#cb163-359" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb163-360"><a href="#cb163-360" aria-hidden="true" tabindex="-1"></a>    ,</span>
+<span id="cb163-361"><a href="#cb163-361" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-362"><a href="#cb163-362" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-363"><a href="#cb163-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-364"><a href="#cb163-364" aria-hidden="true" tabindex="-1"></a>df411469 <span class="ot">&lt;-</span></span>
+<span id="cb163-365"><a href="#cb163-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
+<span id="cb163-366"><a href="#cb163-366" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(</span>
+<span id="cb163-367"><a href="#cb163-367" aria-hidden="true" tabindex="-1"></a>      here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb163-368"><a href="#cb163-368" aria-hidden="true" tabindex="-1"></a>      <span class="st">"data/csv/home_visit/non_mbcdi/deid/411469_non_mbcdi_12_bilingual_spanish_deidentified.csv"</span></span>
+<span id="cb163-369"><a href="#cb163-369" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb163-370"><a href="#cb163-370" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb163-371"><a href="#cb163-371" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb163-372"><a href="#cb163-372" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-373"><a href="#cb163-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-374"><a href="#cb163-374" aria-hidden="true" tabindex="-1"></a>Let's look at the two forms that have the same number of columns, $n=274$, 307736 and 331453.</span>
+<span id="cb163-375"><a href="#cb163-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-378"><a href="#cb163-378" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-379"><a href="#cb163-379" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)</span>
+<span id="cb163-380"><a href="#cb163-380" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df307736) <span class="sc">==</span> <span class="fu">names</span>(df331453)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df307736))</span>
+<span id="cb163-381"><a href="#cb163-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-382"><a href="#cb163-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-383"><a href="#cb163-383" aria-hidden="true" tabindex="-1"></a>So, these two are identical and could be merged.</span>
+<span id="cb163-384"><a href="#cb163-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-387"><a href="#cb163-387" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-388"><a href="#cb163-388" aria-hidden="true" tabindex="-1"></a>hv_deid_fl <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/non_mbcdi/deid"</span>), <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb163-389"><a href="#cb163-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-390"><a href="#cb163-390" aria-hidden="true" tabindex="-1"></a>files_274_cols <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"/(307736|331453)"</span>)</span>
+<span id="cb163-391"><a href="#cb163-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-392"><a href="#cb163-392" aria-hidden="true" tabindex="-1"></a>df_merge_274_cols <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_274_cols])</span>
+<span id="cb163-393"><a href="#cb163-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-394"><a href="#cb163-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-395"><a href="#cb163-395" aria-hidden="true" tabindex="-1"></a>How about the files with $n=267$ columns, 331848 and 334099?</span>
+<span id="cb163-396"><a href="#cb163-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-399"><a href="#cb163-399" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-400"><a href="#cb163-400" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)</span>
+<span id="cb163-401"><a href="#cb163-401" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">names</span>(df331848) <span class="sc">==</span> <span class="fu">names</span>(df334099)) <span class="sc">==</span> <span class="fu">length</span>(<span class="fu">names</span>(df331848))</span>
+<span id="cb163-402"><a href="#cb163-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-403"><a href="#cb163-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-406"><a href="#cb163-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-407"><a href="#cb163-407" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb163-408"><a href="#cb163-408" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb163-409"><a href="#cb163-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-410"><a href="#cb163-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-411"><a href="#cb163-411" aria-hidden="true" tabindex="-1"></a>There is an odd difference in the group label, <span class="in">`group_combinedquestionnaires`</span> vs. <span class="in">`group_jo84c13`</span>.</span>
+<span id="cb163-412"><a href="#cb163-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-413"><a href="#cb163-413" aria-hidden="true" tabindex="-1"></a>Let's try deleting the initial group labels and compare again.</span>
+<span id="cb163-414"><a href="#cb163-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-417"><a href="#cb163-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-418"><a href="#cb163-418" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">names</span>(df331848)</span>
+<span id="cb163-419"><a href="#cb163-419" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">names</span>(df334099)</span>
+<span id="cb163-420"><a href="#cb163-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-421"><a href="#cb163-421" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_combinedquestionnaires/"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb163-422"><a href="#cb163-422" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_jo84c13/"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb163-423"><a href="#cb163-423" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-424"><a href="#cb163-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-425"><a href="#cb163-425" aria-hidden="true" tabindex="-1"></a>That looks promising.</span>
+<span id="cb163-426"><a href="#cb163-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-429"><a href="#cb163-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-430"><a href="#cb163-430" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df331848) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_combinedquestionnaires/"</span>) <span class="ot">-&gt;</span> n1</span>
+<span id="cb163-431"><a href="#cb163-431" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df334099) <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"group_jo84c13/"</span>) <span class="ot">-&gt;</span> n2</span>
+<span id="cb163-432"><a href="#cb163-432" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2</span>
+<span id="cb163-433"><a href="#cb163-433" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-434"><a href="#cb163-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-437"><a href="#cb163-437" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-438"><a href="#cb163-438" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>], n2[<span class="dv">8</span><span class="sc">:</span><span class="dv">15</span>])</span>
+<span id="cb163-439"><a href="#cb163-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-440"><a href="#cb163-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-441"><a href="#cb163-441" aria-hidden="true" tabindex="-1"></a><span class="in">`n2`</span> or <span class="in">`df334099`</span> has a <span class="in">`child_birth_date`</span> field in position 9 that the other data frame does not have.</span>
+<span id="cb163-442"><a href="#cb163-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-445"><a href="#cb163-445" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-446"><a href="#cb163-446" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">|&gt;</span> <span class="fu">str_detect</span>(<span class="st">"child_birth_date"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-447"><a href="#cb163-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-448"><a href="#cb163-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-449"><a href="#cb163-449" aria-hidden="true" tabindex="-1"></a>If we delete that variable, the data frames will no longer have the same number of columns.</span>
+<span id="cb163-450"><a href="#cb163-450" aria-hidden="true" tabindex="-1"></a>Let's explore that anyway.</span>
+<span id="cb163-451"><a href="#cb163-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-454"><a href="#cb163-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-455"><a href="#cb163-455" aria-hidden="true" tabindex="-1"></a>n2_2 <span class="ot">&lt;-</span> n2[<span class="sc">-</span><span class="dv">9</span>]</span>
+<span id="cb163-456"><a href="#cb163-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-457"><a href="#cb163-457" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_2</span>
+<span id="cb163-458"><a href="#cb163-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-459"><a href="#cb163-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-460"><a href="#cb163-460" aria-hidden="true" tabindex="-1"></a>That helps a bit, but we diverge around column 29.</span>
+<span id="cb163-461"><a href="#cb163-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-464"><a href="#cb163-464" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-465"><a href="#cb163-465" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>], n2_2[<span class="dv">28</span><span class="sc">:</span><span class="dv">51</span>])</span>
+<span id="cb163-466"><a href="#cb163-466" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-467"><a href="#cb163-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-468"><a href="#cb163-468" aria-hidden="true" tabindex="-1"></a>These question labels looks very similar.</span>
+<span id="cb163-469"><a href="#cb163-469" aria-hidden="true" tabindex="-1"></a>There are just some minor changes in the variable names.</span>
+<span id="cb163-470"><a href="#cb163-470" aria-hidden="true" tabindex="-1"></a><span class="in">`n2_2`</span> has an extra variable in column 40.</span>
+<span id="cb163-471"><a href="#cb163-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-474"><a href="#cb163-474" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-475"><a href="#cb163-475" aria-hidden="true" tabindex="-1"></a>n2_3 <span class="ot">&lt;-</span> n2_2[<span class="sc">-</span><span class="dv">40</span>]</span>
+<span id="cb163-476"><a href="#cb163-476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-477"><a href="#cb163-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-478"><a href="#cb163-478" aria-hidden="true" tabindex="-1"></a>Then, we can rename some of the columns in <span class="in">`n2_3`</span> using corresponding names from <span class="in">`n1`</span>.</span>
+<span id="cb163-479"><a href="#cb163-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-482"><a href="#cb163-482" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-483"><a href="#cb163-483" aria-hidden="true" tabindex="-1"></a>n2_3 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"yes__in_the_bi"</span>, <span class="st">"birthhospital"</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"yes__after_goi"</span>, <span class="st">"afterhome"</span>) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"don_t_know"</span>, <span class="st">"donotknow"</span>) <span class="ot">-&gt;</span> n2_4</span>
+<span id="cb163-484"><a href="#cb163-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-485"><a href="#cb163-485" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_4</span>
+<span id="cb163-486"><a href="#cb163-486" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-487"><a href="#cb163-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-490"><a href="#cb163-490" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-491"><a href="#cb163-491" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>], n2_4[<span class="dv">39</span><span class="sc">:</span><span class="dv">51</span>])</span>
+<span id="cb163-492"><a href="#cb163-492" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-493"><a href="#cb163-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-494"><a href="#cb163-494" aria-hidden="true" tabindex="-1"></a><span class="in">`n1`</span> has a <span class="in">`group_medicalprof`</span> label from <span class="in">`allergies`</span> through <span class="in">`gastrointestinal`</span>; <span class="in">`n2_4`</span> has <span class="in">`child_allergies_infections_ill`</span> for the same questions.</span>
+<span id="cb163-495"><a href="#cb163-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-498"><a href="#cb163-498" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-499"><a href="#cb163-499" aria-hidden="true" tabindex="-1"></a>n2_4 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">"child_allergies_infections_ill"</span>, <span class="st">"group_medicalprof"</span>) <span class="ot">-&gt;</span> n2_5</span>
+<span id="cb163-500"><a href="#cb163-500" aria-hidden="true" tabindex="-1"></a>n1 <span class="sc">==</span> n2_5</span>
+<span id="cb163-501"><a href="#cb163-501" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-502"><a href="#cb163-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-503"><a href="#cb163-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-506"><a href="#cb163-506" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-507"><a href="#cb163-507" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>], n2_5[<span class="dv">49</span><span class="sc">:</span><span class="dv">60</span>])</span>
+<span id="cb163-508"><a href="#cb163-508" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-509"><a href="#cb163-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-510"><a href="#cb163-510" aria-hidden="true" tabindex="-1"></a>It looks like these could be reconciled by deleting <span class="in">`prenatal_care`</span> from <span class="in">`n1`</span>.</span>
+<span id="cb163-511"><a href="#cb163-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-514"><a href="#cb163-514" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-515"><a href="#cb163-515" aria-hidden="true" tabindex="-1"></a>n1_2 <span class="ot">&lt;-</span> n1[<span class="sc">-</span><span class="dv">50</span>]</span>
+<span id="cb163-516"><a href="#cb163-516" aria-hidden="true" tabindex="-1"></a>n1_2 <span class="sc">==</span> n2_5</span>
+<span id="cb163-517"><a href="#cb163-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-518"><a href="#cb163-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-521"><a href="#cb163-521" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-522"><a href="#cb163-522" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(n1_2[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>], n2_5[<span class="dv">64</span><span class="sc">:</span><span class="dv">75</span>])</span>
+<span id="cb163-523"><a href="#cb163-523" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-524"><a href="#cb163-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-525"><a href="#cb163-525" aria-hidden="true" tabindex="-1"></a>It looks like the phq4 is *not* in <span class="in">`n2_5`</span>.</span>
+<span id="cb163-526"><a href="#cb163-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-527"><a href="#cb163-527" aria-hidden="true" tabindex="-1"></a>Let's check.</span>
+<span id="cb163-528"><a href="#cb163-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-531"><a href="#cb163-531" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-532"><a href="#cb163-532" aria-hidden="true" tabindex="-1"></a>n2_5 <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="st">"phq4"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-533"><a href="#cb163-533" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-534"><a href="#cb163-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-535"><a href="#cb163-535" aria-hidden="true" tabindex="-1"></a>Yes, there are only two PHQ4-related questions in <span class="in">`df334099`</span>.</span>
+<span id="cb163-536"><a href="#cb163-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-539"><a href="#cb163-539" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-540"><a href="#cb163-540" aria-hidden="true" tabindex="-1"></a>df334099 <span class="sc">|&gt;</span> <span class="fu">names</span>() <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="st">"phq4"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-541"><a href="#cb163-541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-542"><a href="#cb163-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-543"><a href="#cb163-543" aria-hidden="true" tabindex="-1"></a>This path of reconciliation does not appear fruitful.</span>
+<span id="cb163-544"><a href="#cb163-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-545"><a href="#cb163-545" aria-hidden="true" tabindex="-1"></a><span class="fu">## Make aggregate files {-}</span></span>
+<span id="cb163-546"><a href="#cb163-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-547"><a href="#cb163-547" aria-hidden="true" tabindex="-1"></a><span class="fu">### non-MB-CDI files with $n=288$ columns {-}</span></span>
+<span id="cb163-548"><a href="#cb163-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-551"><a href="#cb163-551" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-552"><a href="#cb163-552" aria-hidden="true" tabindex="-1"></a>files_288_cols <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"2[3458]_non_mbcdi.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
+<span id="cb163-553"><a href="#cb163-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-554"><a href="#cb163-554" aria-hidden="true" tabindex="-1"></a>df_merge_288_cols <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_288_cols])</span>
+<span id="cb163-555"><a href="#cb163-555" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-556"><a href="#cb163-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-557"><a href="#cb163-557" aria-hidden="true" tabindex="-1"></a><span class="fu">### non-MB-CDI files with $n=287$ columns {-}</span></span>
+<span id="cb163-558"><a href="#cb163-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-561"><a href="#cb163-561" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-562"><a href="#cb163-562" aria-hidden="true" tabindex="-1"></a>files_287_cols_1 <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"2[69]_non_mbcdi.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
+<span id="cb163-563"><a href="#cb163-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-564"><a href="#cb163-564" aria-hidden="true" tabindex="-1"></a>files_287_cols_2 <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(hv_deid_fl, <span class="st">"(740627|740630|740631)_non.*_deidentified</span><span class="sc">\\</span><span class="st">.csv"</span>)</span>
+<span id="cb163-565"><a href="#cb163-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-566"><a href="#cb163-566" aria-hidden="true" tabindex="-1"></a>df_merge_287_cols_1 <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_287_cols_1])</span>
+<span id="cb163-567"><a href="#cb163-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-568"><a href="#cb163-568" aria-hidden="true" tabindex="-1"></a>df_merge_287_cols_2 <span class="ot">&lt;-</span> <span class="fu">file_make_aggregate_from_csvs</span>(hv_deid_fl[files_287_cols_2])</span>
+<span id="cb163-569"><a href="#cb163-569" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-570"><a href="#cb163-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-571"><a href="#cb163-571" aria-hidden="true" tabindex="-1"></a><span class="fu">### Examine groups with $n=287$ cols {-}</span></span>
+<span id="cb163-572"><a href="#cb163-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-573"><a href="#cb163-573" aria-hidden="true" tabindex="-1"></a>We focus on the starting column where the column names diverge, column 92.</span>
+<span id="cb163-574"><a href="#cb163-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-577"><a href="#cb163-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-578"><a href="#cb163-578" aria-hidden="true" tabindex="-1"></a><span class="co"># targets::tar_load(df_merge_287_cols_1, store="../_targets")</span></span>
+<span id="cb163-579"><a href="#cb163-579" aria-hidden="true" tabindex="-1"></a><span class="co"># targets::tar_load(df_merge_287_cols_2, store="../_targets")</span></span>
+<span id="cb163-580"><a href="#cb163-580" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_1)[<span class="dv">92</span>]</span>
+<span id="cb163-581"><a href="#cb163-581" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">92</span>]</span>
+<span id="cb163-582"><a href="#cb163-582" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-583"><a href="#cb163-583" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-584"><a href="#cb163-584" aria-hidden="true" tabindex="-1"></a>There is an erroneous <span class="in">`group_locomotor_milestones.`</span> in the <span class="in">`df_merge_287_cols_2`</span> column name.</span>
+<span id="cb163-585"><a href="#cb163-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-586"><a href="#cb163-586" aria-hidden="true" tabindex="-1"></a>A bit of sleuthing determines that this <span class="in">`group_locomotor_milestones.`</span> label is characteristic of columns 92 to 273.</span>
+<span id="cb163-587"><a href="#cb163-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-590"><a href="#cb163-590" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-591"><a href="#cb163-591" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"group_locomotor_milestones"</span>)</span>
+<span id="cb163-592"><a href="#cb163-592" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-593"><a href="#cb163-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-594"><a href="#cb163-594" aria-hidden="true" tabindex="-1"></a>The following should fix this.</span>
+<span id="cb163-595"><a href="#cb163-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-598"><a href="#cb163-598" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-599"><a href="#cb163-599" aria-hidden="true" tabindex="-1"></a>old_names <span class="ot">&lt;-</span> <span class="fu">names</span>(df_merge_287_cols_2)</span>
+<span id="cb163-600"><a href="#cb163-600" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> old_names</span>
+<span id="cb163-601"><a href="#cb163-601" aria-hidden="true" tabindex="-1"></a>new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="ot">&lt;-</span></span>
+<span id="cb163-602"><a href="#cb163-602" aria-hidden="true" tabindex="-1"></a>  stringr<span class="sc">::</span><span class="fu">str_remove</span>(new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>], <span class="st">"group_locomotor_milestones</span><span class="sc">\\</span><span class="st">."</span>)</span>
+<span id="cb163-603"><a href="#cb163-603" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="ot">&lt;-</span> new_names</span>
+<span id="cb163-604"><a href="#cb163-604" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-605"><a href="#cb163-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-608"><a href="#cb163-608" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-609"><a href="#cb163-609" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">==</span> <span class="fu">names</span>(df_merge_287_cols_1)</span>
+<span id="cb163-610"><a href="#cb163-610" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-611"><a href="#cb163-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-612"><a href="#cb163-612" aria-hidden="true" tabindex="-1"></a>We have a second problem with columns from 114 to 210.</span>
+<span id="cb163-613"><a href="#cb163-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-616"><a href="#cb163-616" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-617"><a href="#cb163-617" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df_merge_287_cols_1)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df_merge_287_cols_2)[<span class="dv">113</span><span class="sc">:</span><span class="dv">115</span>])</span>
+<span id="cb163-618"><a href="#cb163-618" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-619"><a href="#cb163-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-620"><a href="#cb163-620" aria-hidden="true" tabindex="-1"></a>One of the problems has to do with column 114. There is a question ending <span class="in">`doctor_told_you`</span> in <span class="in">`names(df_merge_287_cols_1)`</span> but not in <span class="in">`names(df_merge_287_cols_2)`</span>.</span>
+<span id="cb163-621"><a href="#cb163-621" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-624"><a href="#cb163-624" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-625"><a href="#cb163-625" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_1) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"doctor_told_you"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-626"><a href="#cb163-626" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">|&gt;</span> stringr<span class="sc">::</span><span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">"doctor_told_you"</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-627"><a href="#cb163-627" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-628"><a href="#cb163-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-629"><a href="#cb163-629" aria-hidden="true" tabindex="-1"></a>Deleting this question would create additional misalignments and further problems.</span>
+<span id="cb163-630"><a href="#cb163-630" aria-hidden="true" tabindex="-1"></a>We cannot proceed without further discussion with our team.</span>
+<span id="cb163-631"><a href="#cb163-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-632"><a href="#cb163-632" aria-hidden="true" tabindex="-1"></a>For now, let's generate an array with all of the remaining differences in column names.</span>
+<span id="cb163-633"><a href="#cb163-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-636"><a href="#cb163-636" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-637"><a href="#cb163-637" aria-hidden="true" tabindex="-1"></a>names_differ <span class="ot">&lt;-</span> (<span class="fu">names</span>(df_merge_287_cols_2) <span class="sc">!=</span> <span class="fu">names</span>(df_merge_287_cols_1))</span>
+<span id="cb163-638"><a href="#cb163-638" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(names_differ)</span>
+<span id="cb163-639"><a href="#cb163-639" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-640"><a href="#cb163-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-643"><a href="#cb163-643" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-644"><a href="#cb163-644" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df_merge_287_cols_1)[names_differ], <span class="fu">names</span>(df_merge_287_cols_2)[names_differ])</span>
+<span id="cb163-645"><a href="#cb163-645" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-646"><a href="#cb163-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-647"><a href="#cb163-647" aria-hidden="true" tabindex="-1"></a>Visual inspection suggests that these are similar with the following deviations:</span>
+<span id="cb163-648"><a href="#cb163-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-649"><a href="#cb163-649" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>As noted, <span class="in">`df_merge_287_cols_1`</span> has a column ending <span class="in">`doctor_told_you`</span> that is not present in <span class="in">`df_merge_287_cols_2`</span>.</span>
+<span id="cb163-650"><a href="#cb163-650" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`df_merge_287_cols_2`</span> has a column ending <span class="in">`technology_use_scale`</span> that is not present in the <span class="in">`df_merge_287_cols_1`</span></span>
+<span id="cb163-651"><a href="#cb163-651" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>There are a set of fields in <span class="in">`group_databrary`</span> that do not align exactly. We will almost certainly delete these, so the misalignment is not a huge problem.</span>
+<span id="cb163-652"><a href="#cb163-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-653"><a href="#cb163-653" aria-hidden="true" tabindex="-1"></a>As an exploration, let's see if we can reconcile these by deleting the non-aligning columns.</span>
+<span id="cb163-654"><a href="#cb163-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-657"><a href="#cb163-657" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-658"><a href="#cb163-658" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df_merge_287_cols_1</span>
+<span id="cb163-659"><a href="#cb163-659" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df_merge_287_cols_2</span>
+<span id="cb163-660"><a href="#cb163-660" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-661"><a href="#cb163-661" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span></span>
+<span id="cb163-662"><a href="#cb163-662" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'doctor_told_you'</span>))</span>
+<span id="cb163-663"><a href="#cb163-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-664"><a href="#cb163-664" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
+<span id="cb163-665"><a href="#cb163-665" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'technology_use_scale'</span>))</span>
+<span id="cb163-666"><a href="#cb163-666" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-667"><a href="#cb163-667" aria-hidden="true" tabindex="-1"></a>old_names <span class="ot">&lt;-</span> <span class="fu">names</span>(df2)</span>
+<span id="cb163-668"><a href="#cb163-668" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> old_names</span>
+<span id="cb163-669"><a href="#cb163-669" aria-hidden="true" tabindex="-1"></a>new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>] <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(new_names[<span class="dv">92</span><span class="sc">:</span><span class="dv">273</span>], <span class="st">"group_locomotor_milestones</span><span class="sc">\\</span><span class="st">."</span>)</span>
+<span id="cb163-670"><a href="#cb163-670" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df2) <span class="ot">&lt;-</span> new_names</span>
+<span id="cb163-671"><a href="#cb163-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-672"><a href="#cb163-672" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span>
+<span id="cb163-673"><a href="#cb163-673" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-674"><a href="#cb163-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-675"><a href="#cb163-675" aria-hidden="true" tabindex="-1"></a>This looks promising.</span>
+<span id="cb163-676"><a href="#cb163-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-679"><a href="#cb163-679" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-680"><a href="#cb163-680" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">263</span>], <span class="fu">names</span>(df2)[<span class="dv">263</span>])</span>
+<span id="cb163-681"><a href="#cb163-681" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-682"><a href="#cb163-682" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-683"><a href="#cb163-683" aria-hidden="true" tabindex="-1"></a>This is easily fixed.</span>
+<span id="cb163-684"><a href="#cb163-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-687"><a href="#cb163-687" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-688"><a href="#cb163-688" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1)[<span class="dv">263</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(df2)[<span class="dv">263</span>]</span>
+<span id="cb163-689"><a href="#cb163-689" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-690"><a href="#cb163-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-693"><a href="#cb163-693" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-694"><a href="#cb163-694" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">273</span><span class="sc">:</span><span class="dv">275</span>], <span class="fu">names</span>(df2)[<span class="dv">273</span><span class="sc">:</span><span class="dv">275</span>])</span>
+<span id="cb163-695"><a href="#cb163-695" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-696"><a href="#cb163-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-697"><a href="#cb163-697" aria-hidden="true" tabindex="-1"></a>The last misalignments relate to Databrary fields.</span>
+<span id="cb163-698"><a href="#cb163-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-701"><a href="#cb163-701" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-702"><a href="#cb163-702" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span></span>
+<span id="cb163-703"><a href="#cb163-703" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
+<span id="cb163-704"><a href="#cb163-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-705"><a href="#cb163-705" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
+<span id="cb163-706"><a href="#cb163-706" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
+<span id="cb163-707"><a href="#cb163-707" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-708"><a href="#cb163-708" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df2)</span>
+<span id="cb163-709"><a href="#cb163-709" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-710"><a href="#cb163-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-711"><a href="#cb163-711" aria-hidden="true" tabindex="-1"></a>Success!</span>
+<span id="cb163-712"><a href="#cb163-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-713"><a href="#cb163-713" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combining the two groups of datasets {-}</span></span>
+<span id="cb163-714"><a href="#cb163-714" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-715"><a href="#cb163-715" aria-hidden="true" tabindex="-1"></a>Now, let's go back to the data frame with 288 cols and see if we can bring these into alignment.</span>
+<span id="cb163-716"><a href="#cb163-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-719"><a href="#cb163-719" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-720"><a href="#cb163-720" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df_merge_288_cols</span>
+<span id="cb163-721"><a href="#cb163-721" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-722"><a href="#cb163-722" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
+<span id="cb163-723"><a href="#cb163-723" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'group_databrary'</span>))</span>
+<span id="cb163-724"><a href="#cb163-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-725"><a href="#cb163-725" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span>
+<span id="cb163-726"><a href="#cb163-726" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-727"><a href="#cb163-727" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span>
+<span id="cb163-728"><a href="#cb163-728" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>], <span class="fu">names</span>(df3)[<span class="dv">114</span><span class="sc">:</span><span class="dv">115</span>])</span>
+<span id="cb163-729"><a href="#cb163-729" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-730"><a href="#cb163-730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-731"><a href="#cb163-731" aria-hidden="true" tabindex="-1"></a>Once again, there appears to be a problem with the 'doctor_told_you' field. We'll delete it to see if this fixes one of the problems.</span>
+<span id="cb163-732"><a href="#cb163-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-735"><a href="#cb163-735" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-736"><a href="#cb163-736" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
+<span id="cb163-737"><a href="#cb163-737" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'doctor_told_you'</span>))</span>
+<span id="cb163-738"><a href="#cb163-738" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-739"><a href="#cb163-739" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span>
+<span id="cb163-740"><a href="#cb163-740" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-741"><a href="#cb163-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-742"><a href="#cb163-742" aria-hidden="true" tabindex="-1"></a>We still have misalignments at column 210.</span>
+<span id="cb163-743"><a href="#cb163-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-746"><a href="#cb163-746" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-747"><a href="#cb163-747" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">names</span>(df1)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>], <span class="fu">names</span>(df3)[<span class="dv">210</span><span class="sc">:</span><span class="dv">213</span>])</span>
+<span id="cb163-748"><a href="#cb163-748" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-749"><a href="#cb163-749" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-750"><a href="#cb163-750" aria-hidden="true" tabindex="-1"></a>The 'technology_use_scale` exists in one but not the other.</span>
+<span id="cb163-751"><a href="#cb163-751" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-754"><a href="#cb163-754" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-755"><a href="#cb163-755" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span></span>
+<span id="cb163-756"><a href="#cb163-756" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(., <span class="sc">-</span><span class="fu">contains</span>(<span class="st">'technology_use_scale'</span>))</span>
+<span id="cb163-757"><a href="#cb163-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-758"><a href="#cb163-758" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df3))</span>
+<span id="cb163-759"><a href="#cb163-759" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-760"><a href="#cb163-760" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="sc">==</span> <span class="fu">names</span>(df3)</span>
+<span id="cb163-761"><a href="#cb163-761" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-762"><a href="#cb163-762" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-763"><a href="#cb163-763" aria-hidden="true" tabindex="-1"></a>:::{.rmdimportant}</span>
+<span id="cb163-764"><a href="#cb163-764" aria-hidden="true" tabindex="-1"></a>Future versions of the workflow will need to handle this more elegantly. </span>
+<span id="cb163-765"><a href="#cb163-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-766"><a href="#cb163-766" aria-hidden="true" tabindex="-1"></a>Option 1: Fix the underlying forms.</span>
+<span id="cb163-767"><a href="#cb163-767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-768"><a href="#cb163-768" aria-hidden="true" tabindex="-1"></a>Option 2: Add the 'missing' columns as NA in post-processing.</span>
+<span id="cb163-769"><a href="#cb163-769" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb163-770"><a href="#cb163-770" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-771"><a href="#cb163-771" aria-hidden="true" tabindex="-1"></a>For now, I'm going to create functions that align these data frames.</span>
+<span id="cb163-772"><a href="#cb163-772" aria-hidden="true" tabindex="-1"></a>These are incorporated into <span class="in">`R/utils.R`</span> so we do not source them again here.</span>
+<span id="cb163-773"><a href="#cb163-773" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-774"><a href="#cb163-774" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb163-775"><a href="#cb163-775" aria-hidden="true" tabindex="-1"></a><span class="in">remove_technology_use_scale &lt;- function(df) {</span></span>
+<span id="cb163-776"><a href="#cb163-776" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(df, -contains('technology_use_scale'))</span></span>
+<span id="cb163-777"><a href="#cb163-777" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-778"><a href="#cb163-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-779"><a href="#cb163-779" aria-hidden="true" tabindex="-1"></a><span class="in">remove_doctor_told_you &lt;- function(df) {</span></span>
+<span id="cb163-780"><a href="#cb163-780" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(df, -contains('doctor_told_you'))</span></span>
+<span id="cb163-781"><a href="#cb163-781" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-782"><a href="#cb163-782" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-783"><a href="#cb163-783" aria-hidden="true" tabindex="-1"></a><span class="in">remove_databrary_fields &lt;- function(df) {</span></span>
+<span id="cb163-784"><a href="#cb163-784" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(df, -contains('group_databrary'))</span></span>
+<span id="cb163-785"><a href="#cb163-785" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-786"><a href="#cb163-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-787"><a href="#cb163-787" aria-hidden="true" tabindex="-1"></a><span class="in">reconcile_typicalday &lt;- function(df) {</span></span>
+<span id="cb163-788"><a href="#cb163-788" aria-hidden="true" tabindex="-1"></a><span class="in">  names(df) &lt;- stringr::str_replace_all(names(df), 'typicalday', 'typical_day')</span></span>
+<span id="cb163-789"><a href="#cb163-789" aria-hidden="true" tabindex="-1"></a><span class="in">  df</span></span>
+<span id="cb163-790"><a href="#cb163-790" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-791"><a href="#cb163-791" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-792"><a href="#cb163-792" aria-hidden="true" tabindex="-1"></a><span class="in">remove_permissive_locomotor_milestones_label &lt;- function(df) {</span></span>
+<span id="cb163-793"><a href="#cb163-793" aria-hidden="true" tabindex="-1"></a><span class="in">  old_names &lt;- names(df)</span></span>
+<span id="cb163-794"><a href="#cb163-794" aria-hidden="true" tabindex="-1"></a><span class="in">  new_names &lt;- old_names</span></span>
+<span id="cb163-795"><a href="#cb163-795" aria-hidden="true" tabindex="-1"></a><span class="in">  contains_locomotor &lt;-</span></span>
+<span id="cb163-796"><a href="#cb163-796" aria-hidden="true" tabindex="-1"></a><span class="in">    stringr::str_detect(new_names, pattern = "locomotor_milestones.*health|division|rothbart|mediause|pets|typical|acknowledge")</span></span>
+<span id="cb163-797"><a href="#cb163-797" aria-hidden="true" tabindex="-1"></a><span class="in">  new_names[contains_locomotor] &lt;-</span></span>
+<span id="cb163-798"><a href="#cb163-798" aria-hidden="true" tabindex="-1"></a><span class="in">    stringr::str_remove(new_names[contains_locomotor], "group_locomotor_milestones\\.")</span></span>
+<span id="cb163-799"><a href="#cb163-799" aria-hidden="true" tabindex="-1"></a><span class="in">  names(df) &lt;- new_names</span></span>
+<span id="cb163-800"><a href="#cb163-800" aria-hidden="true" tabindex="-1"></a><span class="in">  df</span></span>
+<span id="cb163-801"><a href="#cb163-801" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-802"><a href="#cb163-802" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-803"><a href="#cb163-803" aria-hidden="true" tabindex="-1"></a><span class="in">remove_X_meta_cols &lt;- function(df) {</span></span>
+<span id="cb163-804"><a href="#cb163-804" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(df, -contains("X_"), -contains("meta.instanceID"))</span></span>
+<span id="cb163-805"><a href="#cb163-805" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-806"><a href="#cb163-806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-807"><a href="#cb163-807" aria-hidden="true" tabindex="-1"></a><span class="in">remove_redundant_group_labels &lt;- function(df) {</span></span>
+<span id="cb163-808"><a href="#cb163-808" aria-hidden="true" tabindex="-1"></a><span class="in">  names(df) &lt;- stringr::str_remove_all(names(df), 'group_homevisitquestionnaires\\.')</span></span>
+<span id="cb163-809"><a href="#cb163-809" aria-hidden="true" tabindex="-1"></a><span class="in">  names(df) &lt;- stringr::str_remove_all(names(df), 'group_combinedquestionnaires\\.')</span></span>
+<span id="cb163-810"><a href="#cb163-810" aria-hidden="true" tabindex="-1"></a><span class="in">  df</span></span>
+<span id="cb163-811"><a href="#cb163-811" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-812"><a href="#cb163-812" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-813"><a href="#cb163-813" aria-hidden="true" tabindex="-1"></a><span class="in">clean_dfs &lt;- function(df) {</span></span>
+<span id="cb163-814"><a href="#cb163-814" aria-hidden="true" tabindex="-1"></a><span class="in">  df %&gt;%</span></span>
+<span id="cb163-815"><a href="#cb163-815" aria-hidden="true" tabindex="-1"></a><span class="in">    reconcile_typicalday() %&gt;%</span></span>
+<span id="cb163-816"><a href="#cb163-816" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_technology_use_scale() %&gt;%</span></span>
+<span id="cb163-817"><a href="#cb163-817" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_doctor_told_you() %&gt;%</span></span>
+<span id="cb163-818"><a href="#cb163-818" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_permissive_locomotor_milestones_label() %&gt;%</span></span>
+<span id="cb163-819"><a href="#cb163-819" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_databrary_fields() %&gt;%</span></span>
+<span id="cb163-820"><a href="#cb163-820" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_X_meta_cols() %&gt;%</span></span>
+<span id="cb163-821"><a href="#cb163-821" aria-hidden="true" tabindex="-1"></a><span class="in">    remove_redundant_group_labels()</span></span>
+<span id="cb163-822"><a href="#cb163-822" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb163-823"><a href="#cb163-823" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-824"><a href="#cb163-824" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-825"><a href="#cb163-825" aria-hidden="true" tabindex="-1"></a>Let's test this workflow with the unmodified files.</span>
+<span id="cb163-826"><a href="#cb163-826" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-829"><a href="#cb163-829" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-830"><a href="#cb163-830" aria-hidden="true" tabindex="-1"></a>df1m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_1)</span>
+<span id="cb163-831"><a href="#cb163-831" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df1m)</span>
+<span id="cb163-832"><a href="#cb163-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-833"><a href="#cb163-833" aria-hidden="true" tabindex="-1"></a>df2m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_287_cols_2)</span>
+<span id="cb163-834"><a href="#cb163-834" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df2m)</span>
+<span id="cb163-835"><a href="#cb163-835" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-836"><a href="#cb163-836" aria-hidden="true" tabindex="-1"></a>df3m <span class="ot">&lt;-</span> <span class="fu">clean_dfs</span>(df_merge_288_cols)</span>
+<span id="cb163-837"><a href="#cb163-837" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span>
+<span id="cb163-838"><a href="#cb163-838" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-839"><a href="#cb163-839" aria-hidden="true" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df2m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-840"><a href="#cb163-840" aria-hidden="true" tabindex="-1"></a>(<span class="fu">names</span>(df1m) <span class="sc">==</span> <span class="fu">names</span>(df3m)) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb163-841"><a href="#cb163-841" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-842"><a href="#cb163-842" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-843"><a href="#cb163-843" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging and exporting {-}</span></span>
+<span id="cb163-844"><a href="#cb163-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-847"><a href="#cb163-847" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-848"><a href="#cb163-848" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df1m, df2m, df3m)</span>
+<span id="cb163-849"><a href="#cb163-849" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb163-850"><a href="#cb163-850" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-851"><a href="#cb163-851" aria-hidden="true" tabindex="-1"></a>Save exported aggregate file.</span>
+<span id="cb163-852"><a href="#cb163-852" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-855"><a href="#cb163-855" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-856"><a href="#cb163-856" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(df, <span class="at">file =</span> <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/agg"</span>, <span class="st">"PLAY-non-mcdi-raw-latest.csv"</span>))</span>
+<span id="cb163-857"><a href="#cb163-857" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

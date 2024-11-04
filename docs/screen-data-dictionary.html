@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./screen-gather.html">Screening</a></li><li class="breadcrumb-item"><a href="./screen-data-dictionary.html"><span class="chapter-title">Data dictionary</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Data dictionary</span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">Data dictionary</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -353,18 +353,24 @@ Note
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"/data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>),</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>scr_dd <span class="ot">&lt;-</span> datadictionary<span class="sc">::</span><span class="fu">create_dictionary</span>(scr_df)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(scr_dd, <span class="fu">paste0</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"/data/csv/screening/dd/PLAY-screening-data-dictionary.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Here are the data this package provides:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>scr_dd <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="lightable-classic caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -382,7 +388,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Rows in dataset</td>
-<td style="text-align: left;">864</td>
+<td style="text-align: left;">868</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -396,14 +402,14 @@ Note
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">mean</td>
-<td style="text-align: left;">66262</td>
+<td style="text-align: left;">66300</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">median</td>
-<td style="text-align: left;">67228</td>
+<td style="text-align: left;">67280</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -417,7 +423,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">max</td>
-<td style="text-align: left;">74570</td>
+<td style="text-align: left;">74649</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -431,7 +437,7 @@ Note
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">unique responses</td>
-<td style="text-align: left;">829</td>
+<td style="text-align: left;">833</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -445,7 +451,7 @@ Note
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">Date</td>
 <td style="text-align: left;">mean</td>
-<td style="text-align: left;">2023-07-06</td>
+<td style="text-align: left;">2023-07-08</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -466,7 +472,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">max</td>
-<td style="text-align: left;">2024-10-19</td>
+<td style="text-align: left;">2024-10-20</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -508,7 +514,7 @@ Note
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">Date</td>
 <td style="text-align: left;">mean</td>
-<td style="text-align: left;">2022-01-09</td>
+<td style="text-align: left;">2022-01-11</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -571,14 +577,14 @@ Note
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">character</td>
 <td style="text-align: left;">unique responses</td>
-<td style="text-align: left;">4</td>
+<td style="text-align: left;">3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">participant_language</td>
@@ -606,7 +612,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">803</td>
+<td style="text-align: left;">807</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">group_name</td>
@@ -662,14 +668,14 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">35</td>
+<td style="text-align: left;">36</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">vol_id</td>
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">mean</td>
-<td style="text-align: left;">1289</td>
+<td style="text-align: left;">1290</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -711,14 +717,14 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">705</td>
+<td style="text-align: left;">709</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">pilot_pilot</td>
 <td style="text-align: left;">No label</td>
 <td style="text-align: left;">logical</td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">864</td>
+<td style="text-align: left;">868</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">submit_date</td>
@@ -753,7 +759,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">34</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">site_id</td>
@@ -767,7 +773,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">34</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">play_id</td>
@@ -781,7 +787,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">156</td>
+<td style="text-align: left;">160</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_age_mos</td>
@@ -816,7 +822,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">36</td>
+<td style="text-align: left;">40</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">child_sex</td>
@@ -830,7 +836,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">36</td>
+<td style="text-align: left;">40</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">child_bornonduedate</td>
@@ -844,7 +850,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">42</td>
+<td style="text-align: left;">46</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">child_onterm</td>
@@ -858,7 +864,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">150</td>
+<td style="text-align: left;">154</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">child_birthage</td>
@@ -893,7 +899,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">63</td>
+<td style="text-align: left;">67</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_weight_pounds</td>
@@ -928,7 +934,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">46</td>
+<td style="text-align: left;">50</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">child_weight_ounces</td>
@@ -963,7 +969,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">58</td>
+<td style="text-align: left;">62</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_birth_complications</td>
@@ -977,7 +983,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">46</td>
+<td style="text-align: left;">50</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_birth_complications_specify</td>
@@ -991,7 +997,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">798</td>
+<td style="text-align: left;">802</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_hearing_disabilities</td>
@@ -1005,7 +1011,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">46</td>
+<td style="text-align: left;">50</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_hearing_disabilities_specify</td>
@@ -1019,7 +1025,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">863</td>
+<td style="text-align: left;">867</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_vision_disabilities</td>
@@ -1033,7 +1039,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">46</td>
+<td style="text-align: left;">50</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_vision_disabilities_specify</td>
@@ -1047,7 +1053,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">859</td>
+<td style="text-align: left;">863</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_major_illnesses_injuries</td>
@@ -1061,7 +1067,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">46</td>
+<td style="text-align: left;">50</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_illnesses_injuries_specify</td>
@@ -1075,7 +1081,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">831</td>
+<td style="text-align: left;">835</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_developmentaldelays</td>
@@ -1089,7 +1095,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">158</td>
+<td style="text-align: left;">162</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_developmentaldelays_specify</td>
@@ -1103,7 +1109,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">856</td>
+<td style="text-align: left;">860</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_sleep_time</td>
@@ -1117,7 +1123,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">47</td>
+<td style="text-align: left;">51</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_wake_time</td>
@@ -1131,7 +1137,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">48</td>
+<td style="text-align: left;">52</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_nap_hours</td>
@@ -1145,7 +1151,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">48</td>
+<td style="text-align: left;">52</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">child_sleep_location</td>
@@ -1159,7 +1165,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">48</td>
+<td style="text-align: left;">52</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">mom_bio</td>
@@ -1173,7 +1179,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">60</td>
+<td style="text-align: left;">64</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">mom_childbirth_age</td>
@@ -1208,7 +1214,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">63</td>
+<td style="text-align: left;">67</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_race</td>
@@ -1222,7 +1228,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">53</td>
+<td style="text-align: left;">57</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_birth_country</td>
@@ -1236,7 +1242,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">53</td>
+<td style="text-align: left;">57</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_birth_country_specify</td>
@@ -1250,7 +1256,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">776</td>
+<td style="text-align: left;">780</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_education</td>
@@ -1264,7 +1270,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">54</td>
+<td style="text-align: left;">58</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_employment</td>
@@ -1278,7 +1284,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">54</td>
+<td style="text-align: left;">58</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_occupation</td>
@@ -1292,7 +1298,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">250</td>
+<td style="text-align: left;">254</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_jobs_number</td>
@@ -1306,7 +1312,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">248</td>
+<td style="text-align: left;">252</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mom_training</td>
@@ -1320,7 +1326,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">56</td>
+<td style="text-align: left;">60</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">biodad_childbirth_age</td>
@@ -1334,7 +1340,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">34</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">biodad_race</td>
@@ -1348,7 +1354,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">34</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_mom</td>
@@ -1362,7 +1368,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">42</td>
+<td style="text-align: left;">46</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_mom_comments</td>
@@ -1376,7 +1382,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">848</td>
+<td style="text-align: left;">852</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_child</td>
@@ -1390,7 +1396,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">36</td>
+<td style="text-align: left;">40</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_home_comments</td>
@@ -1404,7 +1410,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">34</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_child_comments</td>
@@ -1418,7 +1424,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">851</td>
+<td style="text-align: left;">855</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_home</td>
@@ -1432,7 +1438,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">41</td>
+<td style="text-align: left;">45</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_house_other</td>
@@ -1446,7 +1452,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">850</td>
+<td style="text-align: left;">854</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">language_spoken_home_other</td>
@@ -1460,7 +1466,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">863</td>
+<td style="text-align: left;">867</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childcare_types</td>
@@ -1474,7 +1480,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">241</td>
+<td style="text-align: left;">245</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childcare_location</td>
@@ -1488,7 +1494,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">839</td>
+<td style="text-align: left;">843</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childcare_hours</td>
@@ -1502,7 +1508,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">432</td>
+<td style="text-align: left;">436</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childcare_number</td>
@@ -1537,7 +1543,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">435</td>
+<td style="text-align: left;">439</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">childcare_age</td>
@@ -1572,7 +1578,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">545</td>
+<td style="text-align: left;">549</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">childcare_language</td>
@@ -1586,7 +1592,7 @@ Note
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: left;">431</td>
+<td style="text-align: left;">435</td>
 </tr>
 </tbody>
 </table>
@@ -1599,6 +1605,8 @@ Note
 <h2 class="anchored" data-anchor-id="extracting-questions">Extracting questions</h2>
 <p>An alternative approach to generating the data dictionary starts with the questionnaire files themselves.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -1692,6 +1700,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -2034,7 +2093,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-title">Gather</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data dictionary</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background {-}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>We make use of the <span class="in">`datadictionary`</span> package here.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>This is not a perfect solution.</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Among other challenges, this package throws many warnings.</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>But we will use it for the time being.</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>This data dictionary workflow does _not_ include the questions that were</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>asked.</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Adding that, and more descriptive information, is a high priority.</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load data and generate dictionary</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>This data dictionary workflow does _not_ include the questions that were</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>asked.</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>Adding that, and more descriptive information, is a high priority.</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>scr_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"/data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                          <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>scr_dd <span class="ot">&lt;-</span> datadictionary<span class="sc">::</span><span class="fu">create_dictionary</span>(scr_df)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(scr_dd, <span class="fu">paste0</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"/data/csv/screening/dd/PLAY-screening-data-dictionary.csv"</span>))</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>Here are the data this package provides:</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>scr_dd <span class="sc">|&gt;</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>()</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extracting questions</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>An alternative approach to generating the data dictionary starts with the</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>questionnaire files themselves.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

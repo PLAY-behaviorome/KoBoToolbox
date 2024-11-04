@@ -687,11 +687,11 @@ my_ecbq_plot <- function(var_lbl = "rothbart_unfamiliarperson", df) {
       .data[[var_lbl]],
       c(
         "never",
-        "veryrarely",
-        "lessthanhalf",
-        "abouthalf",
-        "morethanhalf",
-        "almostalways",
+        "very_rarely",
+        "less_than_half",
+        "about_half",
+        "more_than_half",
+        "almost_always",
         "always"
       ),
       ordered = TRUE
@@ -744,6 +744,74 @@ these_vars <- names(df)
 res <- invisible(lapply(ecbq_vars, return_section, data = ecbq_complete))
 cat(unlist(res), sep = "\n")
 ```
+
+### Cross correlation {-}
+
+We make use of the `ggcorrplot` package for some simple visualizations of the ECBQ data.
+
+```{r, eval=FALSE}
+drop_rothbart_lbl <- function(x) {
+  stringr::str_remove(x, "rothbart_")
+}
+
+make_ecbq_lvls_numeric <- function(x) {
+  nas <- stringr::str_detect(x, "na")
+  x[nas] <- NA
+  x |>
+    stringr::str_replace_all("never", "1") |>
+    stringr::str_replace_all("veryrarely", "2") |>
+    stringr::str_replace_all("lessthanhalf", "3") |>
+    stringr::str_replace_all("abouthalf", "4") |>
+    stringr::str_replace_all("morethanhalf", "5") |>
+    stringr::str_replace_all("almostalways", "6") |>
+    stringr::str_replace_all("always", "7") |>
+    as.numeric()
+}
+
+recode_ecbq_lvls <- function(df_col, df) {
+  df |>
+    dplyr::case_match(.data[[df_col]], "never" ~ 1,
+                      "veryrarely" ~ 2,
+                      "lessthanhalf" ~ 3,
+                      "abouthalf" ~ 4,
+                      "morethanhalf" ~ 5,
+                      "almostalways" ~ 6,
+                      "always" ~ 7,
+                      "na" ~ NA)
+}
+
+make_ecbq_lvls_nonNA <- function(x) {
+  these_na_rows <- stringr::str_detect(x, "na")
+  x[these_na_rows] <- NA
+  x
+}
+
+clean_ecbq_var <- function(x) {
+  x |> 
+    make_ecbq_lvls_numeric() |>
+    make_ecbq_lvls_nonNA() |>
+    as.numeric()
+}
+
+ecbq_only <- ecbq_complete |>
+  dplyr::select(-child_sex, -age_group) |>
+  dplyr::rename_with(drop_rothbart_lbl)
+
+make_numeric_ecbq <- function(var_lbl, df) {
+  stopifnot(is.data.frame(df))
+  stopifnot(is.character(var_lbl))
+  
+  df <- df |> 
+    dplyr::select({{ var_lbl }})
+  df
+}
+
+# ecbq_only <- ecbq_only |>
+#   purrr::map(names(ecbq), make_rothbart_lvls_numeric)
+  
+# ecbq_corr <- round(cor(ecbq_only), 1)
+```
+
 
 ### Comments {-}
 
