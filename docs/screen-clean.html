@@ -540,7 +540,7 @@ Note
 <pre><code>Passing 8 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 1.5 seconds</code></pre>
+<pre><code>Query completed in: 1.1 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 31 of 172 columns.</code></pre>
@@ -569,7 +569,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Passing 8 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 1.4 seconds</code></pre>
+<pre><code>Query completed in: 1 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 47 of 240 columns.</code></pre>
@@ -581,7 +581,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>Passing 942 addresses to the US Census batch geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 85.1 seconds</code></pre>
+<pre><code>Query completed in: 45.3 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Removed n = 47 of 243 columns.</code></pre>
@@ -903,10 +903,10 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>group_name
    No visit    No_visit    No_Visit   PLAY_Gold PLAY_Silver 
-          1          48          88         716         117 </code></pre>
+          1          49          88         726         118 </code></pre>
 </div>
 </div>
-<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=34 sessions with NA in the <code>group_name</code>.</p>
+<p>We note that there are three different versions of no visit: “No visit”, “No_visit”, and “No_Visit”. In addition, there are <em>n</em>=32 sessions with NA in the <code>group_name</code>.</p>
 <p>Let’s modify those values that specify no visit on one of these forms to conform with one another.</p>
 <div class="cell">
 <details class="code-fold">
@@ -935,8 +935,8 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>             session_release
 group_name    EXCERPTS PRIVATE SHARED
-  PLAY_Gold        562       0    154
-  PLAY_Silver       82       4     31</code></pre>
+  PLAY_Gold        570       0    156
+  PLAY_Silver       82       4     32</code></pre>
 </div>
 </div>
 <p>There was one session marked <code>PRIVATE</code>.</p>
