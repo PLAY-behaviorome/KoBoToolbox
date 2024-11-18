@@ -492,12 +492,12 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>         child_sex
 age_group female male
-     12mo    156  136
-     18mo    138  158
-     24mo    116  121</code></pre>
+     12mo    160  136
+     18mo    139  159
+     24mo    117  121</code></pre>
 </div>
 </div>
-<p>A total of <span class="math inline">\(n=\)</span> 825 mother-infant dyads have been tested. This includes training and pilot visits.</p>
+<p>A total of <span class="math inline">\(n=\)</span> 832 mother-infant dyads have been tested. This includes training and pilot visits.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -573,8 +573,8 @@ Figure&nbsp;10.2: Cumulative home visits by year
 <div class="cell-output cell-output-stdout">
 <pre><code>         language_child
 child_sex english english_spanish
-   female     332              78
-   male       322              93</code></pre>
+   female     336              80
+   male       323              93</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1255,10 +1255,6 @@ word             understands understands_says
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#wordcloud::wordcloud(words = word_ct$word, freq = word_ct$n, min.freq = quant_25, colors = rcb_color_paired)</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_18)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1273,278 +1269,34 @@ my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>),</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">'c'</span>),</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>eng_24 <span class="ot">&lt;-</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/home_visit/agg/mcdi_english_24_combined.csv"</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">.default =</span> <span class="st">'c'</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">"word"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"says"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>word_ct <span class="ot">&lt;-</span> eng_24 <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>(play_id <span class="sc">|</span> site_id <span class="sc">|</span> subject_number),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">"word"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"says"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(says)) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(says <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : close could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hot could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : shoe could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yucky could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : flower could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : wash could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : boat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : egg could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : two could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : dance could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : light could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : happy could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : toothbrush could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cracker could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : moon could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : telephone could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : three could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : no could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : chair could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : you could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : brush could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yogurt could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : mouth could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : sun could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : allgone could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : walk could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : eat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : drink could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : pants could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : pillow could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : truck could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cake could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : towel could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bottle could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : eye could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : here could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
 my_thresh, : thankyou could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : potty could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : diaper could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : off could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : down could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : nightnight could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : banana could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : door could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : spoon could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : apple could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : rain_2 could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : vroom could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : car could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : one could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : grapes could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : tree could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : ouch could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : play could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : shh could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -1552,63 +1304,11 @@ my_thresh, : keys could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cookie could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : cheek could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cold could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : plate could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : fast could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bathtub could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : kiss could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : uhoh could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : house could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : mommy could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : face could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : star could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : soap could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : cow could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -1616,127 +1316,11 @@ my_thresh, : choochoo could not be fit on page. It will not be plotted.</code></
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : out could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : down could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bug could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : ear could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : inside could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bear could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : fall could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : airplane could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : knee could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : dirty could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : head could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : finger could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : more could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : big could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : orange could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : ball could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : box could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : swing could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bellybutton could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hair could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : mine could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : arm could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : hand could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : tooth could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : monkey could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : cat could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : buttocks could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : soap could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -1744,35 +1328,27 @@ my_thresh, : dog could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : mommy could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : sit could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : one could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : trash could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : close could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : sleep could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : tooth could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : strawberry could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : toothbrush could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : sock could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : tummy could not be fit on page. It will not be plotted.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : see could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : meow could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -1780,11 +1356,271 @@ my_thresh, : rain_1 could not be fit on page. It will not be plotted.</code></pr
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : daddy could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : juice could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : duck could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : hug could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cake could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : airplane could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hat could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bellybutton could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bye could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : blanket could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : tree could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hot could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cup could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : flower could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : door could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : jump could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : more could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : yumyum could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : arm could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cat could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : you could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hair could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : eat could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : light could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : dirty could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : play could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : run could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : yucky could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : box could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : towel could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : sleep could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bottle could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : wash could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : shh could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : please could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : park could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : woofwoof could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : letsgo could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bathtub could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : sun could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : trash could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : see could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : nightnight could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : shoe could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hand could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : potty could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : open could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : apple could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : butterfly could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : this could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : foot could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : chair could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bear could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : couch could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : grapes could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : off could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : hi could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : walk could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : stairs could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : icecream could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : paper could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : cookie could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : ball could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : head could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : rain_2 could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : yogurt could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : monkey could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : orange could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : out could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
@@ -1792,7 +1628,167 @@ my_thresh, : bird could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
-my_thresh, : foot could not be fit on page. It will not be plotted.</code></pre>
+my_thresh, : plate could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : here could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : house could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : shirt could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : spoon could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : baabaa could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : kiss could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : circle could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : sit could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : swing could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : bed could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : look could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : inside could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : happy could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : help could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : milk could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : quackquack could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : allgone could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : eye could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : pants could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : wet_1 could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : mine could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : big could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : sky could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : yes could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : rock could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : telephone could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : knee could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : ouch could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : strawberry could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : three could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : pillow could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : buttocks could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : vroom could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : two could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : balloon could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : lion could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : book could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : daddy could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : ear could not be fit on page. It will not be plotted.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : baby could not be fit on page. It will not be plotted.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1806,12 +1802,16 @@ my_thresh, : foot could not be fit on page. It will not be plotted.</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
-<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
-<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>rare_word_ct <span class="ot">&lt;-</span> word_ct <span class="sc">|&gt;</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>]<span class="sc">*</span>.<span class="dv">25</span>)</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wordcloud::wordcloud(words = rare_word_ct$word, freq = rare_word_ct$n)</span></span>
+<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mcdi_viz_wordcloud</span>(rare_word_ct, <span class="at">n_participants =</span> <span class="fu">dim</span>(eng_24)[<span class="dv">1</span>], <span class="at">quantile =</span> .<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wordcloud::wordcloud(words = wd_ct$word, freq = wd_ct$n, min.freq =
+my_thresh, : know could not be fit on page. It will not be plotted.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1997,7 +1997,7 @@ Figure&nbsp;10.3: Age of crawling onset (mos) by sex
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>hv<span class="sc">$</span>walk_mos_kea <span class="sc">|&gt;</span> <span class="fu">fivenum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -2.93 11.70 12.73 14.27 19.00</code></pre>
+<pre><code>[1] -2.93 11.70 12.72 14.27 19.00</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-kea" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2033,7 +2033,7 @@ Figure&nbsp;10.4: Age (mos) of walking onset (KEA criteria) by sex
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>hv<span class="sc">$</span>walk_mos_who <span class="sc">|&gt;</span> <span class="fu">fivenum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -3.29 11.11 12.13 13.64 25.08</code></pre>
+<pre><code>[1] -3.29 11.11 12.13 13.58 25.08</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-who" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2108,13 +2108,13 @@ Figure&nbsp;10.5: Age (mos) of walking onset (WHO criteria) by sex
     Pearson's product-moment correlation
 
 data:  filtered_walk_mos$walk_mos_who and filtered_walk_mos$walk_mos_kea
-t = 53.846, df = 620, p-value &lt; 2.2e-16
+t = 54.006, df = 624, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.8927406 0.9205807
+ 0.8927456 0.9205072
 sample estimates:
       cor 
-0.9076539 </code></pre>
+0.9076137 </code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-kea-who" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2169,13 +2169,13 @@ Figure&nbsp;10.6: Walking onset by WHO vs.&nbsp;KEA criteria
     Pearson's product-moment correlation
 
 data:  filtered_walk_crawl_mos$crawl_mos and filtered_walk_crawl_mos$walk_mos_kea
-t = 15.022, df = 591, p-value &lt; 2.2e-16
+t = 15.01, df = 594, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.4648118 0.5815573
+ 0.4635972 0.5802608
 sample estimates:
       cor 
-0.5256551 </code></pre>
+0.5243856 </code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-walk-mos-kea-crawl-mos" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2209,9 +2209,9 @@ Table&nbsp;10.1: Breastfeeding by age group
 <div class="cell-output cell-output-stdout">
 <pre><code>         feeding_breastfeed
 age_group donotknow  no refused yes
-     12mo         0  15       0 277
-     18mo         1  14       0 281
-     24mo         0  11       1 220</code></pre>
+     12mo         0  15       0 281
+     18mo         1  14       0 283
+     24mo         0  11       1 221</code></pre>
 </div>
 </div>
 </figure>
@@ -2317,12 +2317,12 @@ Table&nbsp;10.2: Child sleeping position by age group
 <div class="cell-output cell-output-stdout">
 <pre><code>                       age_group
 child_sleeping_position 12mo 18mo 24mo
-           back          269  283  216
+           back          273  284  217
            changed         4    3    2
            donotknow       0    1    0
            other           4    1    1
            refused         0    0    1
-           side            4    2    6
+           side            4    3    6
            sitting         2    0    1
            stomach_down    1    1    2
            stomach_side    8    5    3</code></pre>
@@ -2363,9 +2363,9 @@ Table&nbsp;10.3: Parent-report of overall child health
 child_health 12mo 18mo 24mo
    poor         0    0    0
    fair         2    1    1
-   good        12   18   15
-   verygood    77   69   61
-   excellent  201  207  154
+   good        13   18   15
+   verygood    78   69   61
+   excellent  203  209  155
    donotknow    0    1    0
    refused      0    0    1</code></pre>
 </div>
@@ -2393,8 +2393,8 @@ Table&nbsp;10.4
 <pre><code>                        age_group
 child_recent_vaccination 12mo 18mo 24mo
                donotknow    0    2    4
-               no         162  204  180
-               yes        130   90   48</code></pre>
+               no         162  205  181
+               yes        134   91   48</code></pre>
 </div>
 </div>
 </figure>
@@ -2420,9 +2420,9 @@ Table&nbsp;10.5: Children who have seen a medical specialist
 <pre><code>                        age_group
 child_medical_specialist 12mo 18mo 24mo
                donotknow    0    1    2
-               no         149  132  104
+               no         152  132  104
                refused      0    0    1
-               yes        143  163  125</code></pre>
+               yes        144  165  126</code></pre>
 </div>
 </div>
 </figure>
@@ -2460,8 +2460,8 @@ Table&nbsp;10.6: Hearing test and context
 <div class="cell-output cell-output-stdout">
 <pre><code>                         age_group
 child_hearing_tested      12mo 18mo 24mo
-  afterhome                  6   17   11
-  birthhospital            240  220  160
+  afterhome                  6   18   11
+  birthhospital            244  221  161
   birthhospital afterhome   36   47   44
   birthhospital donotknow    1    1    1
   donotknow                  1    5    6
@@ -2491,13 +2491,13 @@ Table&nbsp;10.7: Vision test and context
 <div class="cell-output cell-output-stdout">
 <pre><code>                         age_group
 child_vision_tested       12mo 18mo 24mo
-  afterhome                 46   54   48
+  afterhome                 46   56   48
   afterhome donotknow        0    1    0
-  birthhospital             71   78   58
-  birthhospital afterhome   26   32   29
+  birthhospital             72   78   58
+  birthhospital afterhome   27   32   29
   birthhospital donotknow    1    1    1
-  donotknow                 38   41   27
-  no                       109   87   66
+  donotknow                 39   41   27
+  no                       110   87   67
   no donotknow               1    2    2
   refused                    0    0    1</code></pre>
 </div>
@@ -2561,8 +2561,8 @@ Table&nbsp;10.8: Child injuries
 <pre><code>                  age_group
 child_injury_times 12mo 18mo 24mo
          donotknow    1    2    1
-         never      265  256  167
-         once        20   31   54
+         never      268  258  168
+         once        21   31   54
          refused      0    0    1
          threemore    3    0    1
          twice        3    7    8</code></pre>
@@ -2597,7 +2597,7 @@ Table&nbsp;10.9: Smoking or drinking during pregancy
 <pre><code>                    mom_pregnant_drinking
 mom_pregnant_smoking donotknow  no refused yes
            donotknow         2   1       0   0
-           no                0 677       1 132
+           no                0 683       1 133
            refused           0   0       1   0
            yes               0   1       0   2</code></pre>
 </div>
@@ -2613,7 +2613,7 @@ mom_pregnant_smoking donotknow  no refused yes
 <pre><code>             smoking_car
 smoking_house donotknow  no refused yes
     donotknow         1   1       0   0
-    no                1 796       0   3
+    no                1 803       0   3
     refused           0   4       1   0
     yes               0  10       0   3</code></pre>
 </div>
@@ -2661,7 +2661,7 @@ Table&nbsp;10.11: Smoking currently
 <div class="cell-output cell-output-stdout">
 <pre><code>mom_smoking_now
 donotknow        no   refused       yes 
-        1       811         4         4 </code></pre>
+        1       818         4         4 </code></pre>
 </div>
 </div>
 </figure>
@@ -3626,7 +3626,7 @@ Table&nbsp;10.14: Use of TV at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.tv
 FALSE  TRUE 
-   25   792 </code></pre>
+   25   799 </code></pre>
 </div>
 </div>
 </figure>
@@ -3644,7 +3644,7 @@ Table&nbsp;10.15: Use of DVD at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.dvd
 FALSE  TRUE 
-  539   278 </code></pre>
+  544   280 </code></pre>
 </div>
 </div>
 </figure>
@@ -3662,7 +3662,7 @@ Table&nbsp;10.16: Use of computer at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.computer
 FALSE  TRUE 
-   31   786 </code></pre>
+   32   792 </code></pre>
 </div>
 </div>
 </figure>
@@ -3680,7 +3680,7 @@ Table&nbsp;10.17: Use of iPad/tablet at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.ipad
 FALSE  TRUE 
-  214   603 </code></pre>
+  219   605 </code></pre>
 </div>
 </div>
 </figure>
@@ -3698,7 +3698,7 @@ Table&nbsp;10.18: Use of educational games at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.educationalgame
 FALSE  TRUE 
-  630   187 </code></pre>
+  635   189 </code></pre>
 </div>
 </div>
 </figure>
@@ -3716,7 +3716,7 @@ Table&nbsp;10.19: Use of video games at home
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause.home_technology.videogame
 FALSE  TRUE 
-  337   480 </code></pre>
+  339   485 </code></pre>
 </div>
 </div>
 </figure>
@@ -3737,7 +3737,7 @@ Table&nbsp;10.20: Use of TV by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_tv
  no yes 
-116 674 </code></pre>
+117 680 </code></pre>
 </div>
 </div>
 </figure>
@@ -3788,7 +3788,7 @@ Table&nbsp;10.22: Use of DVD by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_dvd
  no yes 
-238  40 </code></pre>
+239  41 </code></pre>
 </div>
 </div>
 </figure>
@@ -3839,7 +3839,7 @@ Table&nbsp;10.24: Use of computer by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_computer
  no yes 
-560 225 </code></pre>
+565 226 </code></pre>
 </div>
 </div>
 </figure>
@@ -3890,7 +3890,7 @@ Table&nbsp;10.26: Use of iPad/tablet by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_ipad
  no yes 
-335 268 </code></pre>
+336 269 </code></pre>
 </div>
 </div>
 </figure>
@@ -3941,7 +3941,7 @@ Table&nbsp;10.28: Use of educational games by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_educational
  no yes 
- 56 131 </code></pre>
+ 56 133 </code></pre>
 </div>
 </div>
 </figure>
@@ -3992,7 +3992,7 @@ Table&nbsp;10.30: Use of video games by child
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_technology_child_videogame
  no yes 
-412  68 </code></pre>
+417  68 </code></pre>
 </div>
 </div>
 </figure>
@@ -4077,7 +4077,7 @@ Table&nbsp;10.33: Use of technology at meals
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_techuse_meals
        likely       neutral   neverdothis notverylikely    verylikely 
-          129           103           133           394            57 </code></pre>
+          129           105           134           398            57 </code></pre>
 </div>
 </div>
 </figure>
@@ -4098,7 +4098,7 @@ Table&nbsp;10.34: Use of technology at playtime
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_techuse_playtime
        likely       neutral   neverdothis notverylikely    verylikely 
-          271           251            23           224            47 </code></pre>
+          274           254            24           224            47 </code></pre>
 </div>
 </div>
 </figure>
@@ -4119,7 +4119,7 @@ Table&nbsp;10.35: Use of technology at bedtime
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_techuse_bedtime
        likely       neutral   neverdothis notverylikely    verylikely 
-           52            49           447           237            28 </code></pre>
+           52            49           450           241            28 </code></pre>
 </div>
 </div>
 </figure>
@@ -4140,7 +4140,7 @@ Table&nbsp;10.36: Use of technology during transportation
 <div class="cell-output cell-output-stdout">
 <pre><code>mediause_techuse_transportation
        likely       neutral   neverdothis notverylikely    verylikely 
-          113            78           361           226            35 </code></pre>
+          113            80           364           228            35 </code></pre>
 </div>
 </div>
 </figure>
@@ -4195,7 +4195,7 @@ Table&nbsp;10.38: Pets at home
 <div class="cell-output cell-output-stdout">
 <pre><code>pets_at_home
  no yes 
-296 522 </code></pre>
+298 527 </code></pre>
 </div>
 </div>
 </figure>
@@ -4251,7 +4251,7 @@ Table&nbsp;10.39: Dogs and/or cats
 <pre><code>       cats
 dogs    FALSE TRUE
   FALSE    20  144
-  TRUE    275   82</code></pre>
+  TRUE    279   83</code></pre>
 </div>
 </div>
 </figure>
@@ -4269,7 +4269,7 @@ Table&nbsp;10.40: Pets indoors or out
 <div class="cell-output cell-output-stdout">
 <pre><code>pets_indoors_outdoors
  indoors outdoors 
-     491       29 </code></pre>
+     496       29 </code></pre>
 </div>
 </div>
 </figure>
@@ -5594,7 +5594,7 @@ Table&nbsp;10.51: Typical behavior
 <div class="cell-output cell-output-stdout">
 <pre><code>typical_behavior
  no yes 
- 95 720 </code></pre>
+ 96 726 </code></pre>
 </div>
 </div>
 </figure>
@@ -5642,7 +5642,7 @@ Table&nbsp;10.53: Typical activities
 <div class="cell-output cell-output-stdout">
 <pre><code>typical_activities
  no yes 
-133 685 </code></pre>
+133 692 </code></pre>
 </div>
 </div>
 </figure>
@@ -5690,7 +5690,7 @@ Table&nbsp;10.55: Typical night and morning
 <div class="cell-output cell-output-stdout">
 <pre><code>typical_nightmorning
  no yes 
-196 620 </code></pre>
+199 624 </code></pre>
 </div>
 </div>
 </figure>
@@ -5738,7 +5738,7 @@ Table&nbsp;10.57: Typical other than me
 <div class="cell-output cell-output-stdout">
 <pre><code>typical_otherthanme
  no yes 
-105 713 </code></pre>
+107 718 </code></pre>
 </div>
 </div>
 </figure>
