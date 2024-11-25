@@ -40,8 +40,51 @@ pv <- pvs[[2]]
 
 ## Remove metadata variables
 
+The following variables are metadata variables that can be removed from the dataset:
+
+```{r}
+metadata_vars <- c("start",
+                   "end",
+                   "__version__", 
+                   "meta/instanceID",
+                   "_id",
+                   "_uuid",
+                   "_submission_time",
+                   "_index",
+                   "_parent_table_name",
+                   "_parent_index",
+                   "_tags",
+                   "_notes")
+```
+
+We omit these.
+
+```{r}
+pv <- pv |>
+  dplyr::select(-metadata_vars)
+```
+
 ## Remove administrative variables
 
 Some variables are intended for project staff only.
 
+## Clean housing checklist
 
+The housing checklist items are in `group_postvisitnotes/group_housingchecklist`.
+
+We select them.
+
+```{r}
+housing_checklist <- pv |>
+  dplyr::select(contains("group_housingchecklist"))
+```
+
+Remove the variable header (`group_postvisitnotes/group_housingchecklist`).
+
+```{r}
+(names(housing_checklist) <- stringr::str_remove(string = names(housing_checklist), "group_postvisitnotes\\/group_housingchecklist\\/"))
+```
+
+::: {.callout-note}
+Discuss further cleaning with Kasey before proceeding further.
+:::

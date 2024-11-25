@@ -13,11 +13,14 @@ update_report_render <- function(src_dir = 'src',
   assertthat::is.readable(rpt_URL)
   
   message("\n-------Updating data-------")
-  library(targets)
+  if (!require(targets)) {
+    error("Package `targets` not available. Cannot continue")
+  }
   tar_make()
   
   message("\n-------Rendering report-------")
-  bookdown::render_book(src_dir)
+  #bookdown::render_book(src_dir)
+  quarto::quarto_render(src_dir)
   
   if (open_rpt)
     browseURL(rpt_URL)
