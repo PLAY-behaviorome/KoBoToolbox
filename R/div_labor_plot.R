@@ -1,11 +1,11 @@
 div_labor_plot <- function(var_lbl = "laundry_self",
                            df,
                            levels = c(0:4),
-                           labels = c("Never",
-                                      "Some of the time",
-                                      "About half the time",
-                                      "Most of the time",
-                                      "All of the time")) {
+                           labels = c("never",
+                                      "some_of_the_time",
+                                      "about_half_the_time",
+                                      "most_of_the_time",
+                                      "all_of_the_time")) {
   
   assertthat::is.string(var_lbl)
   assertthat::assert_that(is.data.frame(df))
@@ -36,11 +36,11 @@ div_labor_plot <- function(var_lbl = "laundry_self",
 div_labor_plot_by_person <- function(var_prefix = "laundry",
                            df,
                            levels = c(0:4),
-                           labels = c("Never",
-                                      "Some of the time",
-                                      "About half the time",
-                                      "Most of the time",
-                                      "All of the time")) {
+                           labels = c("never",
+                                                 "some_of_the_time",
+                                                 "about_half_the_time",
+                                                 "most_of_the_time",
+                                                 "all_of_the_time")) {
   
   assertthat::is.string(var_prefix)
   assertthat::assert_that(is.data.frame(df))

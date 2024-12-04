@@ -642,15 +642,15 @@ The next section provides visualizations of the Rothbart Early Childhood Behavio
 ```{r}
 #| label: select-rothbart-vars
 ecbq <- hv |>
-  dplyr::select(child_sex, age_group, contains("rothbart"))
+  dplyr::select(child_sex, age_group, contains("ecbq"))
 
 ecbq_complete <- ecbq |>
   tidyr::complete() |>
-  dplyr::select(-comments_rothbart)
+  dplyr::select(-ecbq_comments)
 
-ecbq_vars <- names(ecbq)[stringr::str_detect(names(ecbq_complete),"rothbart_")]
+ecbq_vars <- names(ecbq)[stringr::str_detect(names(ecbq_complete),"ecbq_")]
 # Drop comments
-ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "comments_rothbart")]
+ecbq_vars <- ecbq_vars[!stringr::str_detect(ecbq_vars, "ecbq_comments")]
 
 # Read questions CSV
 ecbq_qs_all <- readr::read_csv(file = file.path(here::here(), "data/csv/_meta", "ecbq_questions.csv"), show_col_types = FALSE)
@@ -687,11 +687,11 @@ my_ecbq_plot <- function(var_lbl = "rothbart_unfamiliarperson", df) {
       .data[[var_lbl]],
       c(
         "never",
-        "veryrarely",
-        "lessthanhalf",
-        "abouthalf",
-        "morethanhalf",
-        "almostalways",
+        "very_rarely",
+        "less_than_half",
+        "about_half",
+        "more_than_half",
+        "almost_always",
         "always"
       ),
       ordered = TRUE
@@ -759,11 +759,11 @@ make_ecbq_lvls_numeric <- function(x) {
   x[nas] <- NA
   x |>
     stringr::str_replace_all("never", "1") |>
-    stringr::str_replace_all("veryrarely", "2") |>
-    stringr::str_replace_all("lessthanhalf", "3") |>
-    stringr::str_replace_all("abouthalf", "4") |>
-    stringr::str_replace_all("morethanhalf", "5") |>
-    stringr::str_replace_all("almostalways", "6") |>
+    stringr::str_replace_all("very_rarely", "2") |>
+    stringr::str_replace_all("less_than_half", "3") |>
+    stringr::str_replace_all("about_half", "4") |>
+    stringr::str_replace_all("more_than_half", "5") |>
+    stringr::str_replace_all("almost_always", "6") |>
     stringr::str_replace_all("always", "7") |>
     as.numeric()
 }
@@ -771,11 +771,11 @@ make_ecbq_lvls_numeric <- function(x) {
 recode_ecbq_lvls <- function(df_col, df) {
   df |>
     dplyr::case_match(.data[[df_col]], "never" ~ 1,
-                      "veryrarely" ~ 2,
-                      "lessthanhalf" ~ 3,
-                      "abouthalf" ~ 4,
-                      "morethanhalf" ~ 5,
-                      "almostalways" ~ 6,
+                      "very_rarely" ~ 2,
+                      "less_than_half" ~ 3,
+                      "about_half" ~ 4,
+                      "more_than_half" ~ 5,
+                      "almost_always" ~ 6,
                       "always" ~ 7,
                       "na" ~ NA)
 }
@@ -1111,7 +1111,7 @@ hv |>
 
 ```{r}
 div_labor_levels <- c(0:4)
-div_labor_lbls <- c("Never", "Some of the time", "About half the time", "Most of the time", "All of the time")
+div_labor_lbls <- c("never", "some_of_the_time", "about_half_the_time", "most_of_the_time", "all_of_the_time")
 source("../R/div_labor_plot.R")
 ```
 
@@ -1122,66 +1122,19 @@ source("../R/div_labor_plot.R")
 #| fig-cap: "Laundry self"
 
 div_labor_plot("laundry_self", hv)
-# hv |>
-#   dplyr::mutate(
-#     laundry_self = factor(
-#       laundry_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = laundry_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-laundry_partner
 #| fig-cap: "Laundry partner"
+#| 
 div_labor_plot("laundry_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     laundry_partner = factor(
-#       laundry_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = laundry_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-laundry_otherperson
 #| fig-cap: "Laundry other person"
 div_labor_plot("laundry_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     laundry_otherperson = factor(
-#       laundry_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = laundry_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1209,22 +1162,6 @@ hv |>
 #| fig-cap: "Cleaning self"
 
 div_labor_plot("cleaning_self", hv)
-# hv |>
-#   dplyr::mutate(
-#     cleaning_self = factor(
-#       cleaning_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cleaning_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1232,22 +1169,6 @@ div_labor_plot("cleaning_self", hv)
 #| fig-cap: "Cleaning partner"
 
 div_labor_plot("cleaning_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     cleaning_partner = factor(
-#       cleaning_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cleaning_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1255,22 +1176,6 @@ div_labor_plot("cleaning_partner", hv)
 #| fig-cap: "Cleaning other person"
 
 div_labor_plot("cleaning_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     cleaning_otherperson = factor(
-#       cleaning_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cleaning_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1298,67 +1203,18 @@ hv |>
 #| fig-cap: "Dishes self"
 
 div_labor_plot("dishes_self", hv)
-
-# hv |>
-#   dplyr::mutate(
-#     dishes_self = factor(
-#       dishes_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = dishes_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-dishes_partner
 #| fig-cap: "Dishes partner"
 div_labor_plot("dishes_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     dishes_partner = factor(
-#       dishes_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = dishes_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-dishes_otherperson
 #| fig-cap: "Dishes other person"
 div_labor_plot("dishes_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     dishes_otherperson = factor(
-#       dishes_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = dishes_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1385,66 +1241,18 @@ hv |>
 #| label: fig-cooking_self
 #| fig-cap: "Cooking self"
 div_labor_plot("cooking_self", hv)
-# hv |>
-#   dplyr::mutate(
-#     cooking_self = factor(
-#       cooking_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cooking_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-cooking_partner
 #| fig-cap: "Cooking partner"
 div_labor_plot("cooking_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     cooking_partner = factor(
-#       cooking_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cooking_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-cooking_otherperson
 #| fig-cap: "Cooking other person"
 div_labor_plot("cooking_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     cooking_otherperson = factor(
-#       cooking_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = cooking_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1472,23 +1280,6 @@ hv |>
 #| fig-cap: "Feeding self"
 
 div_labor_plot("feeding_self", hv)
-
-# hv |>
-#   dplyr::mutate(
-#     feeding_self = factor(
-#       feeding_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = feeding_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1496,45 +1287,12 @@ div_labor_plot("feeding_self", hv)
 #| fig-cap: "Feeding partner"
 
 div_labor_plot("feeding_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     feeding_partner = factor(
-#       feeding_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = feeding_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-feeding_otherperson
 #| fig-cap: "Feeding other person"
 div_labor_plot("feeding_otherperson", hv)
-
-# hv |>
-#   dplyr::mutate(
-#     feeding_otherperson = factor(
-#       feeding_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = feeding_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ::: {.callout-warning}
@@ -1566,23 +1324,6 @@ hv |>
 #| label: fig-droppick_self
 #| fig-cap: "Drop-off/pick-up self"
 div_labor_plot("droppick_self", hv)
-
-# hv |>
-#   dplyr::mutate(
-#     droppick_self = factor(
-#       droppick_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = droppick_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1590,45 +1331,13 @@ div_labor_plot("droppick_self", hv)
 #| fig-cap: "Drop-off/pick-up partner"
 
 div_labor_plot("droppick_partner", hv)
-
-# hv |>
-#   dplyr::mutate(
-#     droppick_partner = factor(
-#       droppick_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = droppick_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-droppick_otherperson
 #| fig-cap: "Drop-off/pick-up other person"
+
 div_labor_plot("droppick_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     droppick_otherperson = factor(
-#       droppick_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = droppick_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1654,67 +1363,22 @@ div_labor_plot("dishes_self", hv)hv |>
 ```{r}
 #| label: fig-bed_self
 #| fig-cap: "Bed self"
+
 div_labor_plot("bed_self", hv)
-# hv |>
-#   dplyr::mutate(
-#     bed_self = factor(
-#       bed_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = bed_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-bed_partner
 #| fig-cap: "Bed partner"
+
 div_labor_plot("bed_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     bed_partner = factor(
-#       bed_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = bed_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-bed_otherperson
 #| fig-cap: "Bed other person"
+
 div_labor_plot("bed_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     bed_otherperson = factor(
-#       bed_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = bed_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
@@ -1740,67 +1404,22 @@ hv |>
 ```{r}
 #| label: fig-disciplining_self
 #| fig-cap: "Disciplining self"
+ 
 div_labor_plot("disciplining_self", hv)
-# hv |>
-#   dplyr::mutate(
-#     disciplining_self = factor(
-#       disciplining_self,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = disciplining_self, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-disciplining_partner
 #| fig-cap: "Disciplining partner"
+
 div_labor_plot("disciplining_partner", hv)
-# hv |>
-#   dplyr::mutate(
-#     disciplining_partner = factor(
-#       disciplining_partner,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = disciplining_partner, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
 #| label: fig-disciplining_otherperson
 #| fig-cap: "Disciplining other person"
+
 div_labor_plot("disciplining_otherperson", hv)
-# hv |>
-#   dplyr::mutate(
-#     disciplining_otherperson = factor(
-#       disciplining_otherperson,
-#       levels = div_labor_levels,
-#       labels = div_labor_lbls,
-#       ordered = TRUE
-#     )
-#   ) |>
-#   ggplot() +
-#   aes(x = disciplining_otherperson, color = child_sex, fill = child_sex) +
-#   geom_bar() +
-#   facet_grid(cols = vars(age_group), rows = vars(child_sex)) +
-#   theme(legend.title = element_blank(),
-#         legend.position = "none") +
-#   theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
