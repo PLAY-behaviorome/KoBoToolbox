@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e2915e4d4df5928b2b0a61215b328b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -670,7 +670,7 @@ Note
 </tr>
 <tr class="even">
 <td style="text-align: left;">740625_non_mbcdi_12_english_deidentified.csv</td>
-<td style="text-align: right;">251</td>
+<td style="text-align: right;">255</td>
 <td style="text-align: right;">288</td>
 </tr>
 <tr class="odd">
@@ -685,12 +685,12 @@ Note
 </tr>
 <tr class="odd">
 <td style="text-align: left;">740628_non_mbcdi_18_english_deidentified.csv</td>
-<td style="text-align: right;">237</td>
+<td style="text-align: right;">246</td>
 <td style="text-align: right;">288</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">740629_non_mbcdi_24_english_deidentified.csv</td>
-<td style="text-align: right;">195</td>
+<td style="text-align: right;">200</td>
 <td style="text-align: right;">287</td>
 </tr>
 <tr class="odd">
@@ -2234,7 +2234,7 @@ object length</code></pre>
 <span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">dim</span>(df1), <span class="fu">dim</span>(df2), <span class="fu">dim</span>(df3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 258 281  62 281 543 283</code></pre>
+<pre><code>[1] 263 281  62 281 556 283</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2355,8 +2355,8 @@ shorter object length</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
-[1,]  258  281
-[2,]  543  281</code></pre>
+[1,]  263  281
+[2,]  556  281</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2456,7 +2456,7 @@ shorter object length</code></pre>
 <span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df1m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 258 272</code></pre>
+<pre><code>[1] 263 272</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2472,7 +2472,7 @@ shorter object length</code></pre>
 <span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df3m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 543 272</code></pre>
+<pre><code>[1] 556 272</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2594,8 +2594,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -2757,7 +2755,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

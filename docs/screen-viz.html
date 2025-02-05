@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e2915e4d4df5928b2b0a61215b328b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>screen_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/csv/screening/agg/PLAY-screening-datab-latest.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 914 Columns: 68
+<pre><code>Rows: 933 Columns: 68
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr  (55): session_name, session_release, participant_ID, participant_gender...
@@ -408,12 +408,12 @@ date  (2): session_date, participant_birthdate
 <div class="cell-output cell-output-stdout">
 <pre><code>               group_name
 session_release PLAY_Gold PLAY_Silver
-       EXCERPTS       611          88
+       EXCERPTS       627          88
        PRIVATE          0           4
-       SHARED         175          36</code></pre>
+       SHARED         178          36</code></pre>
 </div>
 </div>
-<p>Of the <em>n</em>=914 sessions so far, 76.5% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.4% have declined to share at all.</p>
+<p>Of the <em>n</em>=933 sessions so far, 76.6% have agreed to EXCERPTS or “Learning Audiences” sharing. Conversely, only <em>n</em>=4 or 0.4% have declined to share at all.</p>
 </section>
 <section id="dates-times" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dates-times">Dates &amp; times</h2>
@@ -629,7 +629,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are <em>n</em>=91 NAs.</p>
+<p>There are <em>n</em>=110 NAs.</p>
 </div>
 </div>
 <div class="cell">
@@ -738,6 +738,22 @@ Note
 <td style="text-align: left;">078</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">954</td>
+<td style="text-align: left;">079</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">954</td>
+<td style="text-align: left;">080</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">954</td>
+<td style="text-align: left;">081</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">954</td>
+<td style="text-align: left;">082</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">1590</td>
 <td style="text-align: left;">015</td>
 </tr>
@@ -756,6 +772,22 @@ Note
 <tr class="odd">
 <td style="text-align: right;">899</td>
 <td style="text-align: left;">089</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">899</td>
+<td style="text-align: left;">090</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">899</td>
+<td style="text-align: left;">091</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">899</td>
+<td style="text-align: left;">092</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">899</td>
+<td style="text-align: left;">094</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1103</td>
@@ -806,68 +838,84 @@ Note
 <td style="text-align: left;">034</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">1596</td>
+<td style="text-align: left;">035</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">003</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">007</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1657</td>
 <td style="text-align: left;">008</td>
 </tr>
+<tr class="even">
+<td style="text-align: right;">1657</td>
+<td style="text-align: left;">009</td>
+</tr>
 <tr class="odd">
+<td style="text-align: right;">1657</td>
+<td style="text-align: left;">010</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">979</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">016</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">017</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">018</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">019</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1696</td>
 <td style="text-align: left;">020</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">023</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">024</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">025</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">027</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">026</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">028</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1705</td>
 <td style="text-align: left;">029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1705</td>
+<td style="text-align: left;">030</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">966</td>
@@ -954,62 +1002,90 @@ Note
 <td style="text-align: left;">029</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">030</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">031</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">032</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">033</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1459</td>
+<td style="text-align: left;">034</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">033</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">034</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">035</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">036</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">037</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1663</td>
 <td style="text-align: left;">038</td>
 </tr>
+<tr class="even">
+<td style="text-align: right;">1663</td>
+<td style="text-align: left;">040</td>
+</tr>
 <tr class="odd">
+<td style="text-align: right;">1663</td>
+<td style="text-align: left;">041</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">056</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">057</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">058</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">059</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">060</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">061</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">062</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">063</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">1517</td>
 <td style="text-align: left;">064</td>
 </tr>
@@ -3091,8 +3167,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -3254,7 +3328,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -4173,7 +4246,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/edit/main/src/screen-viz.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/PLAY-behaviorome/KoBoToolbox/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
